@@ -1,0 +1,17 @@
+Table,Method,Run,Seed,Acc,Bal_Acc,ECE,Leakage_z_lesion,OOD_Maha_AUROC,OOD_Maha_FPR95,Notes
+MainAggregate,Baseline Soft,aggregate,n=3,0.7842 +- 0.0119,0.6621 +- 0.0091,0.1005 +- 0.0051,0.9791 +- 0.0010,0.8765 +- 0.0191,0.4503 +- 0.0610,From results/table1_baseline_soft_aggregate.json
+MainAggregate,Run A / GRL,aggregate,n=3,0.8099 +- 0.0074,0.6997 +- 0.0104,0.0948 +- 0.0053,0.7099 +- 0.0108,0.3917 +- 0.0210,0.9857 +- 0.0076,From results/table1_runA_grl_aggregate.json
+MainAggregate,Run B (orth=5.0),aggregate,n=3,0.8112 +- 0.0006,0.6920 +- 0.0108,0.1003 +- 0.0109,0.7241 +- 0.0127,0.4112 +- 0.0175,0.9689 +- 0.0183,From results/table1_runB_aggregate.json
+MainAggregate,Run B (orth=1.0),aggregate,n=3,0.8090 +- 0.0082,0.7006 +- 0.0026,0.0917 +- 0.0022,0.7131 +- 0.0133,0.4083 +- 0.0244,0.9853 +- 0.0102,From results/table1_runB_orth1_aggregate.json
+PerSeed,Baseline Soft,baseline_soft_s42,42,0.7673,0.6557,0.1076,0.9795,0.8797,0.4409,Best ckpt best-20.ckpt
+PerSeed,Baseline Soft,baseline_soft_s52,52,0.7924,0.6750,0.0962,0.9778,0.8981,0.3807,Best ckpt best-24.ckpt
+PerSeed,Baseline Soft,baseline_soft_s62,62,0.7928,0.6557,0.0976,0.9801,0.8516,0.5293,Best ckpt best-29.ckpt
+PerSeed,Run A / GRL,runA_grl_s42,42,0.8099,0.7043,0.0963,0.6959,0.3700,0.9917,Best ckpt best-38.ckpt
+PerSeed,Run A / GRL,runA_grl_s52,52,0.8190,0.6854,0.0878,0.7113,0.4201,0.9905,Best ckpt best-37.ckpt
+PerSeed,Run A / GRL,runA_grl_s62,62,0.8009,0.7095,0.1004,0.7223,0.3849,0.9749,Best ckpt best-34.ckpt
+PerSeed,Run B (orth=5.0),runB_s42,42,0.8115,0.6967,0.1128,0.7234,0.4303,0.9432,Best ckpt best-39.ckpt
+PerSeed,Run B (orth=5.0),runB_s52,52,0.8117,0.6771,0.0863,0.7089,0.4152,0.9842,Best ckpt best-28.ckpt
+PerSeed,Run B (orth=5.0),runB_s62,62,0.8103,0.7023,0.1018,0.7400,0.3881,0.9793,Best ckpt best-39.ckpt
+PerSeed,Run B (orth=1.0),runB_orth1_s42,42,0.8206,0.7042,0.0886,0.6998,0.3814,0.9976,Best ckpt best-36.ckpt
+PerSeed,Run B (orth=1.0),runB_orth1_s52,52,0.8021,0.6995,0.0933,0.7081,0.4030,0.9856,Best ckpt best-32.ckpt
+PerSeed,Run B (orth=1.0),runB_orth1_s62,62,0.8044,0.6981,0.0932,0.7312,0.4405,0.9728,Best ckpt best-34.ckpt

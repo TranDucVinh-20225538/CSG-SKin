@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Experiments & checkpoints (adjust as needed)
+lightning_logs/
+checkpoints/
+wandb/
+mlruns/
+
+# Raw and processed datasets (large; do not commit)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+# ======================================
+# Research artifacts
+# ======================================
+
+results/
+outputs/
+runs/
+logs/
+cache/
+tmp/
+
+# Models
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.pkl
+
+# Ignore all data
+data/*
+!data/.gitkeep
+!data/README.md
+
+# Generated figures
+figures/generated/
+
+# Generated experiment files
+*_predictions.csv
+*_embeddings.csv
+*_features.npy

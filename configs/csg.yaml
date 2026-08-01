@@ -1,0 +1,24 @@
+# CSG (lite or full) training — keep all sweeps in version control or W&B/MLflow.
+
+seed: 42
+data:
+  root: data
+  metadata_csv: data/master_metadata.csv
+  batch_size: 32
+  num_workers: 8
+model:
+  variant: csg_lite  # or csg_full
+  num_classes: 8
+  pretrained: true
+loss:
+  indep_weight: 1.0
+  adv_weight: 1.0
+optimizer:
+  name: adamw
+  lr: 1.0e-4
+  weight_decay: 1.0e-2
+trainer:
+  max_epochs: 50
+  accelerator: auto
+  devices: 1
+  precision: 32

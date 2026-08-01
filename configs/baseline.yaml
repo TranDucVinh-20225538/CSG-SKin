@@ -1,0 +1,24 @@
+# Baseline training — version control hyperparameters for reproducibility.
+# Training scripts use CLI defaults; metadata lives at data/master_metadata.csv.
+
+seed: 42
+data:
+  root: data
+  metadata_csv: data/master_metadata.csv
+  batch_size: 32
+  num_workers: 8
+  train_split: train
+  val_split: val
+model:
+  name: baseline
+  num_classes: 8
+  pretrained: true
+optimizer:
+  name: adamw
+  lr: 1.0e-4
+  weight_decay: 1.0e-2
+trainer:
+  max_epochs: 50
+  accelerator: auto
+  devices: 1
+  precision: 32
