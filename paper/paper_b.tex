@@ -1,0 +1,703 @@
+% ============================================================
+%  Paper B -- draft manuscript
+%  Target: Medical Image Analysis (swap \documentclass to
+%  elsarticle when submitting) or TMLR.
+%
+%  PLACEHOLDERS marked [PENDING] must be filled before
+%  submission. Search the file for "PENDING".
+% ============================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{siunitx}
+\sisetup{detect-weight=true}
+
+\newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
+\newcommand{\lam}{\lambda_{\mathrm{adv}}}
+
+% ============================================================
+%  FILL-IN BLOCK -- every outstanding value lives here.
+%  Replace each \pending{...} with the number; the text and
+%  tables update themselves. Run scripts/emit_tex_values.py on
+%  the HPC to print these lines ready to paste.
+% ============================================================
+\newcommand{\xdomHalf}{0.270\,$\pm$\,0.034}
+\newcommand{\xdomOne}{0.261\,$\pm$\,0.016}
+\newcommand{\xdomFour}{0.276\,$\pm$\,0.025}
+\newcommand{\xdomEight}{0.269\,$\pm$\,0.023}
+\newcommand{\xdomEffb}{0.298\,$\pm$\,0.010}
+\newcommand{\nAK}{202}      % AK count in pad\_heldout
+\newcommand{\nSCC}{66}     % SCC count in pad\_heldout
+\newcommand{\nMEL}{9}               % melanoma count in pad\_heldout
+\newcommand{\repolink}{\pending{repository link}}
+% ============================================================
+
+% Degrade gracefully when a figure file is not present, so the manuscript
+% compiles before the figures are copied in. Replace with plain
+% \includegraphics once results/paperB/figures/ is available locally.
+\newcommand{\figorbox}[2]{%
+  \IfFileExists{#2}{\includegraphics[width=#1]{#2}}{%
+    \fbox{\parbox[c][45mm][c]{0.96\linewidth}{\centering\ttfamily
+    \small missing figure:\\\detokenize{#2}}}}}
+
+\title{\textbf{Confidently Wrong on Unseen Domains:\\
+Domain-Adversarial Training Silently Disables\\
+Out-of-Distribution Monitoring}}
+
+\author{\pending{author list and affiliations}}
+\date{}
+
+\begin{document}
+\maketitle
+
+% ------------------------------------------------------------
+\begin{abstract}
+\noindent\textbf{Background.} Domain-adversarial invariance training is widely
+recommended for removing acquisition shortcuts from medical imaging models.
+Its effect on the out-of-distribution (OOD) monitoring that such models rely
+on at deployment has not been measured.
+
+\noindent\textbf{Methods.} We trained a dual-encoder factorization model on
+ISIC~2019 (dermoscopy, 25{,}331 images) and PAD-UFES-20 (clinical photographs,
+2{,}298 images), sweeping the adversarial weight $\lam$ across seven values
+with three to five seeds each (27 runs). At every $\lam$ we measured domain
+leakage by linear probe, in-distribution balanced accuracy, calibration on
+in-distribution and out-of-domain data, OOD detection with five scoring rules,
+and zero-shot cross-domain diagnostic accuracy on a patient-level held-out
+PAD split. We validated on Fitzpatrick17k, a third dataset never seen by the
+adversary.
+
+\noindent\textbf{Results.} Domain leakage fell to its chance floor at the
+smallest non-zero weight tested (balanced accuracy $0.915 \to 0.553$, floor
+$0.5$), while in-distribution balanced accuracy did not degrade
+($0.692 \to 0.707$). Over the same range, OOD detection fell from
+AUROC~$0.863$ to $0.508$ and inverted below chance ($0.413$), with OOD samples
+ranked as more in-distribution than in-distribution data throughout the score
+distribution rather than only in the tails. Cross-domain diagnostic accuracy
+did not improve at any $\lam$ (balanced accuracy $0.249$--$0.291$ against a
+six-class floor of $0.167$, and below the $0.298$ of a non-adversarial control
+at every setting), and predictions collapsed toward the benign majority class:
+actinic keratosis recall fell from $0.244$ to $0.016$ ($n = 202$). Mean confidence on
+never-seen-domain images rose from $0.489$ to $0.930$, overtaking
+in-distribution confidence, so that out-of-domain calibration error tripled
+($\mathrm{ECE}\ 0.247 \to 0.746$) while in-distribution ECE stayed flat at
+$\approx 0.10$. Leakage did not mediate the OOD collapse: it saturated at
+chance while AUROC kept falling, and at the backbone leakage was flat while
+AUROC fell $0.749 \to 0.475$. Six candidate explanations were tested and
+refuted.
+
+\noindent\textbf{Conclusions.} When domain-adversarial training succeeds,
+models become confidently wrong on unseen domains and their OOD monitoring
+fails, while in-distribution metrics improve. OOD detection and out-of-domain
+calibration should be reported as a function of achieved invariance rather
+than at a single operating point.
+\end{abstract}
+
+\noindent\textbf{Keywords:} domain-adversarial training; out-of-distribution
+detection; calibration; distribution shift; skin lesion classification;
+model monitoring
+
+% ------------------------------------------------------------
+\section{Introduction}
+
+Deep models for skin lesion classification are known to exploit acquisition
+artefacts rather than pathology: ruler marks, ink annotations, imaging
+hardware and site identity all correlate with diagnosis in public benchmarks
+\cite{winkler2019,bissoto2020,daneshjou2022}. The standard remedy is to make
+the representation invariant to the acquisition domain, most often through
+domain-adversarial training with a gradient reversal layer
+\cite{ganin2016,bousmalis2016}. The stated purpose of this remedy is safe
+deployment across sites.
+
+Deployment across sites also relies on a second mechanism: out-of-distribution
+monitoring. A deployed system is expected to flag inputs unlike its training
+data so that a human reviews them rather than the model acting alone. This
+paper asks what invariance training does to that mechanism.
+
+The answer is that it destroys it, and does so invisibly. Sweeping the
+adversarial weight in a controlled setting, we find that OOD detection
+collapses from AUROC $0.863$ to $0.508$ at the smallest non-zero weight tested
+and then inverts below chance, so that images from an unseen clinic are ranked
+as \emph{more} routine than familiar ones. Over the same range the model
+becomes more confident on those unseen images than on its own held-out test
+data, and its predictions collapse toward the benign majority class. None of
+this is visible to the metrics a developer monitors: in-distribution accuracy
+does not fall, in-distribution calibration does not change, and the domain
+leakage probe --- the very metric the technique is adopted to improve ---
+improves as intended.
+
+The irony is the point. The technique is adopted for cross-site robustness and
+it degrades precisely the cross-site safety machinery, while every monitored
+number moves in the direction its user is hoping for.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item A controlled intervention: a seven-point sweep of the adversarial weight
+with 27 training runs in a fixed architecture, isolating the effect of
+invariance pressure from architectural and data confounds.
+\item The safety failure: OOD detection collapses as a cliff rather than a
+trade-off curve, inverts below chance, and does so on a third domain the
+adversary never saw.
+\item The invisibility: in-distribution accuracy, in-distribution calibration
+and the domain leakage probe all fail to reveal it.
+\item Evidence that the leakage probe does not mediate the collapse, so it
+cannot serve as a proxy for it.
+\item Six candidate explanations tested and refuted, plus a pre-registered
+synthetic reproduction that failed --- delimiting the phenomenon for future
+work.
+\item A reporting protocol that makes the failure visible at near-zero cost.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Related work}
+
+\paragraph{Shortcut learning in dermatology.}
+Winkler et al.~\cite{winkler2019} showed that ink markings shift melanoma
+predictions; Bissoto et al.~\cite{bissoto2020} showed that classifiers retain
+competitive accuracy on ISIC data when the lesion itself is masked;
+Daneshjou et al.~\cite{daneshjou2022} documented degraded performance on
+darker skin tones. These motivate invariance-based remedies.
+
+\paragraph{Invariant representation learning.}
+Domain-adversarial training \cite{ganin2016} and domain separation networks
+\cite{bousmalis2016} remove domain information by adversarial or
+orthogonality constraints. \textbf{The architecture used here is
+equivalent to a domain separation network and is not a contribution of this
+paper.} It is a vehicle for the intervention.
+
+\paragraph{Covariate shift versus semantic novelty.}
+Full-spectrum OOD detection \cite{yang2023} argues that the OOD literature
+conflates two distinct shifts, and proposes a four-way taxonomy: training ID,
+\emph{covariate-shifted ID}, near-OOD and far-OOD. Crucially, it prescribes
+that covariate-shifted in-distribution samples should be \textbf{tolerated as
+in-distribution rather than flagged}, on the grounds that rejecting them
+contradicts the goal of generalization. OpenOOD v1.5 \cite{zhang2023} adopts
+the same full-spectrum setting at ImageNet scale and for foundation models.
+
+Our setting falls squarely in the covariate-shifted-ID cell: PAD-UFES-20
+contains the same diagnostic classes as ISIC, photographed differently. A
+reader of \cite{yang2023} might therefore regard a model that accepts these
+images as in-distribution as behaving \emph{correctly}.
+
+We argue this is exactly the gap. \textbf{Tolerance of covariate shift is safe
+only when accompanied by generalization, and the two are evaluated
+separately or not at all.} Our models achieve the prescribed tolerance --- by
+$\lam = 2$ they rank out-of-domain images as more in-distribution than their
+own test data --- while cross-domain balanced accuracy sits at $0.249$ against
+a floor of $0.167$, plain accuracy is below the majority-class rate, and
+confidence on those images exceeds in-distribution confidence. Tolerating
+inputs one cannot classify is worse than flagging them, and no current
+protocol separates the two cases. We therefore report acceptance and
+cross-domain accuracy jointly throughout.
+
+\paragraph{Calibration as a route to invariance --- and the reverse.}
+Ovadia et al.~\cite{ovadia2019} showed that calibration degrades under shift
+for ordinary training. Wald et al.~\cite{wald2021} went further and
+established the forward direction: enforcing \emph{multi-domain calibration}
+yields invariance, with models so calibrated provably free of certain spurious
+correlations, and they propose a calibration loss (CLOvE) validated on WILDS.
+
+Our results show the reverse implication does not hold. Obtaining invariance
+adversarially does not yield calibration; it \emph{destroys} out-of-domain
+calibration in a dose-dependent way while leaving in-distribution calibration
+untouched. Calibration and adversarial invariance are therefore not
+interchangeable routes to the same representation, and the direction of
+enforcement matters.
+
+\paragraph{What is new here.}
+(i) The \emph{shape} of the dependence --- a cliff at the smallest effective
+adversarial weight rather than a graded trade-off; (ii) \emph{sub-chance}
+inversion, in which out-of-domain data is ranked as more typical than
+in-distribution data throughout the score distribution; (iii) the
+demonstration that the failure is invisible to every routinely monitored
+metric; (iv) the finding that the standard domain leakage probe neither
+mediates nor predicts it; (v) the consequence for calibration and for
+diagnostic decisions on out-of-domain data; and (vi) the observation that
+full-spectrum tolerance is achieved here without the generalization that would
+make it safe.
+
+% ------------------------------------------------------------
+\section{Materials and methods}
+
+\subsection{Data}
+
+\textbf{ISIC 2019} \cite{isic2019}: 25{,}331 dermoscopic images, eight
+diagnostic classes (MEL, NV, BCC, AK, BKL, DF, VASC, SCC), CC~BY-NC~4.0.
+\textbf{PAD-UFES-20} \cite{pacheco2020}: 2{,}298 smartphone clinical
+photographs, six classes mapping into the same label space (DF and VASC
+absent), CC~BY~4.0. \textbf{Fitzpatrick17k} \cite{groh2021}: 3{,}887 of
+16{,}577 images obtained; annotations CC~BY-NC-SA~3.0, images web-scraped
+under mixed copyright, used for evaluation only and not redistributed.
+
+Images were cropped to a soft lesion-centred bounding box via Otsu
+thresholding on the deviation from the border median, expanded by a 0.30
+margin with a 0.70 minimum crop ratio, and resized to $224\times224$.
+
+\subsection{Splits and the PAD held-out set}
+
+ISIC was split $60/20/20$ into train/validation/test, stratified by label
+(\texttt{random\_state}~$=42$).
+
+\textbf{PAD appears in training and would otherwise also be the OOD set.}
+The classification loss never sees PAD labels (\texttt{ignore\_index}$=-1$),
+but PAD images enter the context and adversarial branches. To remove the
+resulting circularity we partitioned PAD \emph{at patient level} into
+\texttt{pad\_adv} (1{,}582 images, 961 patients), visible to those branches
+during training, and \texttt{pad\_heldout} (716 images, 412 patients), never
+seen in any form. No patient and no lesion appears in both. \textbf{All OOD
+and cross-domain numbers reported in the main text use
+\texttt{pad\_heldout}.} Fitzpatrick17k provides a second never-adversarial
+domain.
+
+\subsection{Architecture and objective}
+
+A dual-encoder model with EfficientNet-B3 backbones produces a lesion latent
+$z_{\ell} \in \mathbb{R}^{16}$ (batch-normalised, denoted
+$z_{\ell}^{\mathrm{norm}}$) and a context latent $z_{c} \in \mathbb{R}^{64}$.
+Diagnosis uses $z_{\ell}^{\mathrm{norm}}$ only, through a linear head. The
+objective is
+\begin{equation}
+\mathcal{L} = \mathcal{L}_{\mathrm{cls}}
++ \lambda_{\mathrm{ctx}}\mathcal{L}_{\mathrm{ctx}}
++ \lam\,\mathcal{L}_{\mathrm{adv}}
++ \lambda_{\mathrm{orth}}\mathcal{L}_{\mathrm{orth}},
+\end{equation}
+with $\mathcal{L}_{\mathrm{cls}}$ on ISIC only, $\mathcal{L}_{\mathrm{ctx}}$ a
+domain cross-entropy on $z_c$, $\mathcal{L}_{\mathrm{adv}}$ a domain
+cross-entropy on $z_{\ell}^{\mathrm{norm}}$ behind a gradient reversal layer,
+and $\mathcal{L}_{\mathrm{orth}}$ a squared-cosine penalty between the two
+latents ($\lambda_{\mathrm{orth}} = 1$ throughout).
+
+AdamW, base learning rate $10^{-4}$, adversary learning rate multiplier $30$,
+classifier multiplier $0.2$, 40 epochs, batches balanced across domains,
+checkpoint selected on validation accuracy.
+
+\subsection{The intervention}
+
+$\lam \in \{0,\,0.25,\,0.5,\,1,\,2,\,4,\,8\}$; five seeds at
+$\lam \in \{0, 2, 8\}$ and three at the interior points, for 27 runs.
+Everything else is held fixed, so $\lam$ is the only manipulated variable.
+
+\subsection{Measurements}
+
+\paragraph{Domain leakage.} Logistic probe on frozen features predicting the
+source dataset, reported as \textbf{balanced accuracy, whose chance floor is
+$0.5$ for this two-domain problem}. Earlier work on this dataset pair reports
+plain accuracy against a majority floor of $0.688$; the two scales must not be
+compared to each other. Both are stated where relevant.
+
+\paragraph{OOD detection.} MSP, free energy, maximum cosine to a class
+centroid, class-conditional Mahalanobis with shared covariance, and $k$-NN
+distance ($k \in \{10,50,200\}$). All statistics are fit on the ISIC training
+split alone. \textbf{These five rules are not independent evidence}: the
+classifier is a linear map from $z_{\ell}^{\mathrm{norm}}$, so all five are
+functions of the same 16-dimensional vector. Independent evidence comes from
+repeating the analysis on the pre-projection backbone representation
+(Section~\ref{sec:nonmediation}).
+
+\paragraph{Calibration.} Expected calibration error, 15 bins, computed
+separately on ISIC test and on \texttt{pad\_heldout} restricted to the six
+shared classes. \textbf{Note that out-of-domain ECE here is arithmetically
+close to mean confidence minus accuracy}, so the confidence, accuracy and ECE
+results in Section~\ref{sec:confidently} are three views of one phenomenon,
+not three independent findings.
+
+\paragraph{Cross-domain diagnosis.} Zero-shot evaluation on
+\texttt{pad\_heldout} over the six shared classes. PAD labels were never used
+for $\mathcal{L}_{\mathrm{cls}}$.
+
+% ------------------------------------------------------------
+\section{Results}
+
+\subsection{The dial}
+
+Table~\ref{tab:dial} reports every measurement as a function of $\lam$.
+Figure~\ref{fig:dial} shows the four quantities that matter most on a shared
+axis.
+
+\begin{table}[t]
+\centering
+\small
+\caption{The intervention. Mean $\pm$ s.d.\ across seeds. Leakage is balanced
+accuracy (chance $0.5$); cross-domain accuracy is balanced over six classes
+(chance $0.167$). Arrows mark the direction a practitioner would call
+favourable.}
+\label{tab:dial}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccccc}
+\toprule
+$\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
+& OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
+\midrule
+0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.863\,$\pm$\,0.025} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
+0.25 & 3 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.508\,$\pm$\,0.022} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
+0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.449\,$\pm$\,0.008 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
+1    & 3 & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.439\,$\pm$\,0.040 & 0.457\,$\pm$\,0.088 & \xdomOne \\
+2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.413\,$\pm$\,0.021} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
+4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.443\,$\pm$\,0.038 & 0.431\,$\pm$\,0.036 & \xdomFour \\
+8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.481\,$\pm$\,0.026 & 0.474\,$\pm$\,0.060 & \xdomEight \\
+\midrule
+\multicolumn{2}{l}{EffNet-B3 control} & 0.802 & 0.683 & 0.096 & --- & 0.726\,$\pm$\,0.021 & 0.649 & \xdomEffb \\
+\multicolumn{2}{l}{ResNet-50 baseline} & 0.979 & 0.655 & 0.101 & --- & 0.868\,$\pm$\,0.019 & 0.994 & 0.391 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\figorbox{\textwidth}{results/paperB/figures/fig1_dial_four_panel.pdf}
+\caption{\textbf{The intervention, four views, one axis.} Leakage falls to its
+chance floor and in-distribution balanced accuracy does not degrade --- both
+favourable. Over the same range OOD AUROC collapses through chance and
+inverts, and out-of-domain calibration error triples. A developer monitoring
+the first two panels would see nothing wrong.}
+\label{fig:dial}
+\end{figure}
+
+\subsection{Invariance is achieved, and in-distribution metrics do not warn}
+
+Leakage falls from $0.915$ to $0.553$ at $\lam = 0.25$, against a chance floor
+of $0.5$ --- that is, essentially complete invariance by the smallest non-zero
+weight tested. In-distribution balanced accuracy does not degrade over the
+useful range ($0.692 \to 0.707$; we claim no improvement, the difference being
+small relative to seed variance) and in-distribution ECE is flat at
+$\approx 0.10$ at every $\lam$.
+
+\subsection{OOD detection collapses as a cliff, and inverts}
+
+Mahalanobis AUROC falls $0.863 \to 0.508$ between $\lam = 0$ and
+$\lam = 0.25$, and reaches $0.413$ at $\lam = 2$. \textbf{The collapse is
+essentially complete at the smallest non-zero weight}; between $\lam = 0.5$
+and $\lam = 8$ the value varies only between $0.413$ and $0.481$. This is a
+cliff, not a trade-off curve, and there is no safe operating point on it.
+
+All five scoring rules move together (MSP $0.970 \to 0.437$, energy
+$0.983 \to 0.441$, cosine $0.901 \to 0.435$, $k$-NN $0.941 \to 0.424$, stable
+across $k \in \{10,50,200\}$). As noted in the methods, these are five views of
+one 16-dimensional representation and are not independent.
+
+The inversion is a \textbf{bulk location shift, not a tail artefact}. At
+$\lam = 2$, removing the pooled $90$th, $95$th or $99$th percentile leaves
+AUROC at $0.412$, $0.416$ and $0.424$ against $0.427$ for the full set, and the
+medians themselves invert (ISIC $13.8$ versus \texttt{pad\_heldout} $10.0$).
+Out-of-domain images are scored as more typical than in-distribution images
+throughout the distribution.
+
+It is not a numerical artefact of the covariance estimate: Ledoit--Wolf
+shrinkage leaves $0.413$ unchanged, and effective dimensionality barely moves
+(participation ratio $4.879 \to 4.500$ while leakage falls $0.914 \to 0.553$).
+
+It holds on a domain the adversary never saw: Fitzpatrick17k
+$0.764 \to 0.391$, while a non-adversarial baseline reaches $0.994$ on the same
+images.
+
+\subsection{Models become confidently wrong on unseen domains}
+\label{sec:confidently}
+
+At $\lam = 0$, mean maximum-softmax confidence is $0.915$ on ISIC test and
+$0.489$ on \texttt{pad\_heldout} --- the model is appropriately hesitant on
+unfamiliar data. By $\lam = 0.25$ that gap has vanished ($0.913$ versus
+$0.898$), and by $\lam = 2$ it has inverted: the model is \emph{more}
+confident on images from a clinic it has never seen ($0.930$) than on its own
+held-out test set ($0.910$).
+
+Cross-domain diagnostic accuracy does not improve at any $\lam$. Balanced
+accuracy spans $0.249$--$0.291$ against a six-class floor of $0.167$, with no
+setting exceeding the $0.291$ obtained at $\lam = 0$ and every setting below
+the $0.298$ of the non-adversarial EfficientNet-B3 control; plain accuracy
+falls $0.245 \to 0.184$, below the $0.385$ majority-class rate throughout. Macro AUC is roughly preserved ($0.605 \to 0.581$), so
+discrimination survives while the decision rule does not: predictions collapse
+toward the benign majority class, with nevus predictions rising from 113 to
+374 of 716 images and \textbf{actinic keratosis recall falling from $0.244$ to
+$0.016$} ($49/\nAK \to 3/\nAK$ images, mean over five seeds). Squamous cell
+carcinoma moves the same way ($0.088 \to 0.021$, $6/\nSCC \to 1/\nSCC$) but the
+count is too small to carry a claim on its own, and melanoma ($n = \nMEL$)
+supports none.
+
+Confidence rising while accuracy falls is what drives out-of-domain
+calibration error from $0.247$ to $0.746$. We stress that these are three
+views of a single phenomenon rather than three independent results.
+
+\subsection{Leakage does not mediate the collapse}
+\label{sec:nonmediation}
+
+Two results rule out the natural hypothesis that removing domain information
+is what breaks OOD detection.
+
+First, leakage \textbf{saturates at its chance floor by $\lam = 0.25$}
+($0.553$, floor $0.5$) while AUROC continues to fall from $0.508$ to $0.413$
+as $\lam$ rises further. The damage continues after invariance is complete.
+
+Second, at the pre-projection backbone, leakage is essentially flat across the
+whole sweep ($0.982 \to 0.941$) while backbone Mahalanobis AUROC falls
+$0.749 \to 0.475$. Domain information remains linearly decodable and OOD
+detection collapses anyway. \textbf{This is the independent evidence that the
+five-detector agreement does not provide}, since the backbone is a different
+representation.
+
+We therefore report leakage as a measured quantity and never as the
+explanatory variable, and plot all results against $\lam$.
+
+\subsection{What the phenomenon is not}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Candidate explanations tested and refuted. Each was a pre-specified
+prediction with a defined test.}
+\label{tab:refuted}
+\begin{tabular}{p{3.2cm}p{5.4cm}p{6.0cm}}
+\toprule
+Explanation & Test & Result \\
+\midrule
+Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
+Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.414$ vs $0.409$; reweighting \emph{strengthens} the inversion to $0.240$ \\
+Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.399$; baseline reaches $0.994$ on the same images \\
+Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
+Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam=0$; the adversary \emph{decompresses} it \\
+Tail asymmetry & Recompute AUROC after truncating the pooled upper tail & $0.412$--$0.424$ versus $0.427$; medians invert \\
+\midrule
+Synthetic reproduction & Pre-registered toy model, heavy-tailed ID, grid locked before fitting & No inversion ($\lam{=}0$: $0.693$; $\lam{=}2$: $0.786$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:refuted} summarises six refuted accounts and one failed
+controlled synthetic reproduction. We report these prominently because they
+are why the remaining claims are credible, and because delimiting the
+phenomenon is useful to whoever explains it.
+
+\subsection{A domain monitor is cheap}
+
+A linear domain head on a frozen ImageNet ResNet-50 that has never seen this
+data reaches AUROC $0.998$; on the trained baseline, $0.997$
+(Table~\ref{tab:monitor}). Detecting the domain is easy from almost any
+representation, so retaining a monitor is not in itself a contribution. What
+distinguishes the context branch is \emph{concentration}: a single principal
+component carries $84.5\%$ of its variance and already separates the domains,
+against $0.55$--$0.70$ at $k{=}1$ for every other representation tested.
+
+\begin{table}[t]
+\centering
+\small
+\caption{A domain monitor is obtainable from almost any representation. The
+$k{=}1$ column, not the AUROC column, is where the factorized model differs.}
+\label{tab:monitor}
+\begin{tabular}{lcc}
+\toprule
+Representation & Linear domain AUROC & AUROC at PCA $k{=}1$ \\
+\midrule
+Frozen ImageNet ResNet-50 & 0.998 & 0.65 \\
+Frozen ImageNet EfficientNet-B3 & 0.994 & 0.55 \\
+Trained ResNet-50 baseline & 0.997 & 0.65 \\
+Trained EfficientNet-B3 control & 0.991 & 0.70 \\
+Context branch $z_c$ & $>0.9999$\,\footnotesize{(2 discordant pairs / 11.6M)} & \textbf{1.00} (84.5\% var.) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Semantic novelty is not affected in the same way}
+
+With the domain held constant and diagnostic classes held out of training
+instead, both branches land between $0.6$ and $0.8$ and the ordering depends
+on which class is withheld (DF+VASC: lesion $0.648$, context $0.641$, baseline
+$0.687$; SCC: lesion $0.806$, context $0.607$, baseline $0.684$). No near/far
+structure organises the difference (Pearson $-0.12$ against a
+centroid-similarity index). We report this as a null result. The failure
+documented above is specific to covariate shift.
+
+% ------------------------------------------------------------
+\section{Discussion}
+
+\subsection{The deployment pathway}
+
+The results compose into a concrete failure sequence. A model is trained with
+invariance to acquisition domain, as recommended, and deployed at a new site.
+On images from that site the model increasingly predicts the benign majority
+class, with actinic keratosis recall falling from $0.244$ to $0.016$
+($49$ of $202$ images correctly recalled, then $3$). It does so with
+higher confidence than on its own test data. The OOD monitor that should flag
+those images for human review scores them as more routine than familiar ones.
+And the developer's evaluation shows in-distribution accuracy holding,
+in-distribution calibration unchanged, and the leakage metric improved exactly
+as intended.
+
+\subsection{The danger zone is where the method succeeds}
+
+Risk scales with \emph{achieved} invariance, not with the nominal weight or
+with the presence of an adversarial term. In a separate setting we ran the
+same objective with an adversary that failed to train; leakage stayed at
+$0.94$ across four orders of magnitude of $\lam$, and the safety failure did
+not appear either. A weak adversary produces neither debiasing nor harm. This
+matters practically: many deployed configurations may be too weak to induce
+invariance, and are correspondingly harmless.
+
+\subsection{Tolerance without generalization}
+
+Full-spectrum OOD detection \cite{yang2023} prescribes that covariate-shifted
+in-distribution inputs be accepted rather than flagged. Our models achieve
+that prescription and are unsafe because of it. By $\lam = 2$ they accept
+out-of-domain images more readily than their own test data, while classifying
+them at $0.249$ balanced accuracy against a floor of $0.167$ and reporting
+higher confidence than in distribution.
+
+Acceptance and competence are separate properties, and current protocols
+evaluate them separately or not at all. We suggest that any claim of tolerance
+to covariate shift be accompanied by cross-domain accuracy on the same inputs,
+since tolerance of inputs a model cannot classify is a failure mode rather
+than a success.
+
+\subsection{Two routes to invariance are not interchangeable}
+
+Wald et al.~\cite{wald2021} showed that enforcing multi-domain calibration
+produces invariance. We find the converse fails: enforcing invariance
+adversarially destroys out-of-domain calibration, driving ECE from $0.247$ to
+$0.746$. The property that one route uses as its foundation is the property
+the other route removes.
+
+This suggests a concrete design preference. Where invariance is the goal,
+calibration-based objectives may be preferable to adversarial ones, because
+they arrive at invariance through a constraint that keeps the out-of-domain
+uncertainty signal intact rather than destroying it. We have not tested this
+directly and offer it as a hypothesis the present results motivate.
+
+\subsection{Recommendation}
+
+Report OOD detection and out-of-domain calibration \textbf{as a function of
+achieved invariance}, not at a single operating point; report cross-domain
+accuracy alongside any claim of tolerance to covariate shift; and do not use a
+separate dataset as the OOD set without saying that this measures covariate
+shift rather than semantic novelty. Practitioners tuning $\lam$ already train
+at multiple values, so this is a change in what is reported rather than
+additional work. It converts an invisible failure into a visible number.
+
+\subsection{An open mechanism}
+
+Six accounts were tested and refuted and a pre-registered synthetic
+reproduction failed. We do not know why the inversion occurs. We note only
+that it is a bulk location shift, survives shrinkage estimation, is not
+mediated by linear domain-decodability, and appears on domains the adversary
+never saw. We report the eliminations so that the search space is smaller for
+whoever resolves it.
+
+% ------------------------------------------------------------
+\section{Limitations}
+
+\textbf{Absolute cross-domain performance is poor for every model here.}
+Plain accuracy on \texttt{pad\_heldout} is $0.245$ for the factorized model and
+$0.391$ for the baseline, against a $0.385$ majority rate. No model in this
+study is deployable. Our claim concerns the \emph{effect of $\lam$} within a
+controlled intervention, not the deployability of any particular model, and
+the deployment pathway in the discussion should be read as a mechanism of harm
+rather than as a description of a fielded system.
+
+\textbf{One domain pair, one modality contrast.} ISIC is dermoscopy; PAD-UFES
+and Fitzpatrick17k are clinical photography. The construct we call domain is
+confounded with imaging modality, and Fitzpatrick17k does not resolve this
+because it is also clinical photography. Generality beyond dermatology is
+untested.
+
+\textbf{Architecture scope.} All results are obtained with a dual-encoder
+factorization model. The $\lam$ sweep is a controlled intervention
+\emph{within} that architecture; whether single-encoder domain-adversarial
+training behaves identically is not established here. An attempt to replicate
+on Camelyon17 was \textbf{inconclusive}: the adversary head never trained
+(cross-entropy $\ln 3$ from the first epoch at every $\lam$, while a post-hoc
+probe read $0.94$), despite a gradient graph verified correct
+(head cosine $+1.000$, encoder $-1.000$). \textbf{We report no Camelyon17
+result and make no claim that Camelyon17 resists invariance.} We record the
+diagnostic --- an adversary failing to train under a verified-correct
+reversal --- for future work.
+
+\textbf{Detector non-independence.} The five scoring rules are functions of the
+same 16-dimensional latent. The backbone analysis provides the independent
+replication.
+
+\textbf{Calibration arithmetic.} Out-of-domain ECE is close to mean confidence
+minus accuracy in this setting; the confidence, accuracy and ECE results are
+one phenomenon viewed three ways.
+
+\textbf{Seeds.} Five seeds at the endpoints, three at interior points. Effect
+sizes are large relative to seed variance, but formal testing across seven
+points at $n = 3$ is not claimed.
+
+\textbf{Splits.} ISIC splits are image-level, not patient-level; some patients
+may contribute images to both partitions. Because in-distribution accuracy is
+compared \emph{across $\lam$ under an identical split}, any inflation applies
+equally to every row and does not threaten the reported pattern, though
+absolute values may be optimistic. PAD splits are patient-level.
+
+\textbf{Third-domain coverage.} 3{,}887 of 16{,}577 Fitzpatrick17k images were
+obtained; the set is web-scraped under mixed copyright, used for evaluation
+only, and not redistributed.
+
+% ------------------------------------------------------------
+\section{Conclusion}
+
+Domain-adversarial invariance training, applied successfully, leaves a skin
+lesion classifier confidently wrong on images from clinics it has never seen
+and removes its ability to flag them. In-distribution accuracy, in-distribution
+calibration and the domain leakage probe all continue to look correct while
+this happens. The model achieves the tolerance of covariate shift that current
+OOD taxonomies prescribe, without the generalization that would make that
+tolerance safe. We could not explain the inversion after refuting six
+candidate accounts, but explaining it is not required to act on it: reporting
+OOD detection, out-of-domain calibration and cross-domain accuracy as
+functions of achieved invariance costs almost nothing and makes the failure
+visible.
+
+% ------------------------------------------------------------
+\section*{Data and code availability}
+\repolink. ISIC 2019 CC~BY-NC~4.0; PAD-UFES-20 CC~BY~4.0;
+Fitzpatrick17k annotations CC~BY-NC-SA~3.0 with images used for evaluation
+only and not redistributed.
+
+\section*{Declaration of competing interest}
+The authors declare no competing interests.
+
+% ------------------------------------------------------------
+\begin{thebibliography}{99}
+\bibitem{winkler2019} Winkler, J.K. et al. Association between surgical skin
+markings in dermoscopic images and diagnostic performance of a deep learning
+convolutional neural network for melanoma recognition. \emph{JAMA Dermatology}
+155(10), 2019.
+\bibitem{bissoto2020} Bissoto, A., Valle, E., Avila, S. Debiasing skin lesion
+datasets and models? Not so fast. \emph{CVPR Workshops}, 2020.
+\bibitem{daneshjou2022} Daneshjou, R. et al. Disparities in dermatology AI
+performance on a diverse, curated clinical image set. \emph{Science Advances}
+8(32), 2022.
+\bibitem{ganin2016} Ganin, Y. et al. Domain-adversarial training of neural
+networks. \emph{JMLR} 17(59), 2016.
+\bibitem{bousmalis2016} Bousmalis, K. et al. Domain separation networks.
+\emph{NeurIPS}, 2016.
+\bibitem{yang2023} Yang, J. et al. Full-spectrum out-of-distribution
+detection. \emph{IJCV}, 2023.
+\bibitem{zhang2023} Zhang, J. et al. OpenOOD v1.5: enhanced benchmark for
+out-of-distribution detection. \emph{arXiv:2306.09301}, 2023.
+\bibitem{ovadia2019} Ovadia, Y. et al. Can you trust your model's
+uncertainty? Evaluating predictive uncertainty under dataset shift.
+\emph{NeurIPS}, 2019.
+\bibitem{wald2021} Wald, Y., Feder, A., Greenfeld, D., Shalit, U. On
+calibration and out-of-domain generalization. \emph{NeurIPS}, 2021.
+arXiv:2102.10395.
+\bibitem{isic2019} Tschandl, P., Rosendahl, C., Kittler, H. The HAM10000
+dataset. \emph{Scientific Data} 5, 2018; Combalia, M. et al. BCN20000.
+\emph{arXiv:1908.02288}, 2019.
+\bibitem{pacheco2020} Pacheco, A.G.C. et al. PAD-UFES-20: a skin lesion
+dataset composed of patient data and clinical images collected from
+smartphones. \emph{Data in Brief} 32, 2020.
+\bibitem{groh2021} Groh, M. et al. Evaluating deep neural networks trained on
+clinical images in dermatology with the Fitzpatrick 17k dataset.
+\emph{CVPR Workshops}, 2021.
+\end{thebibliography}
+
+\end{document}

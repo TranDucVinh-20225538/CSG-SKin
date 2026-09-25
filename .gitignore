@@ -63,3 +63,6 @@ figures/generated/
 *_predictions.csv
 *_embeddings.csv
 *_features.npy
+
+# Local artifact symlink (absolute path, machine-specific)
+/checkpoints
