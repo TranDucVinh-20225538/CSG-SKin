@@ -1,7 +1,11 @@
 torch
 torchvision
 pytorch-lightning
+torchmetrics
+numpy
 pandas
+scipy
 scikit-learn
 matplotlib
-opencv-python
+seaborn
+Pillow

@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "CSG-Skin: domain-adversarial training and out-of-distribution monitoring in skin lesion classification"
+message: "If you use this code or the accompanying manuscript, please cite this repository."
+type: software
+authors:
+  - family-names: "Tran"
+    given-names: "Duc Vinh"
+    email: "tranducvinh2004@gmail.com"
+repository-code: "https://github.com/TranDucVinh-20225538/CSG-SKin"
+abstract: >-
+  Code and manuscript for a controlled study of what domain-adversarial
+  invariance training does to out-of-distribution monitoring. Sweeping the
+  adversarial weight shows OOD detection collapsing below chance while
+  in-distribution accuracy, in-distribution calibration and the domain leakage
+  probe all continue to look correct.
+keywords:
+  - domain-adversarial training
+  - out-of-distribution detection
+  - calibration
+  - distribution shift
+  - skin lesion classification
