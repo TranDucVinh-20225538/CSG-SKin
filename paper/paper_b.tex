@@ -49,9 +49,8 @@
     \fbox{\parbox[c][45mm][c]{0.96\linewidth}{\centering\ttfamily
     \small missing figure:\\\detokenize{#2}}}}}
 
-\title{\textbf{Confidently Wrong on Unseen Domains:\\
-Domain-Adversarial Training Silently Disables\\
-Out-of-Distribution Monitoring}}
+\title{\textbf{Out-of-Distribution Detection Inverts\\
+Under Domain-Adversarial Training}}
 
 \author{\pending{author list and affiliations}}
 \date{}
@@ -66,40 +65,41 @@ recommended for removing acquisition shortcuts from medical imaging models.
 Its effect on the out-of-distribution (OOD) monitoring that such models rely
 on at deployment has not been measured.
 
-\noindent\textbf{Methods.} We trained a dual-encoder factorization model on
-ISIC~2019 (dermoscopy, 25{,}331 images) and PAD-UFES-20 (clinical photographs,
-2{,}298 images), sweeping the adversarial weight $\lam$ across seven values
-with three to five seeds each (27 runs). At every $\lam$ we measured domain
-leakage by linear probe, in-distribution balanced accuracy, calibration on
-in-distribution and out-of-domain data, OOD detection with five scoring rules,
-and zero-shot cross-domain diagnostic accuracy on a patient-level held-out
-PAD split. We validated on Fitzpatrick17k, a third dataset never seen by the
-adversary.
+\noindent\textbf{Methods.} We swept the adversarial weight $\lam$ across seven
+values with three to five seeds each (27 runs) on ISIC~2019 (dermoscopy,
+25{,}331 images) and PAD-UFES-20 (clinical photographs, 2{,}298 images),
+holding everything else fixed. At every $\lam$ we measured domain leakage by
+linear probe, in-distribution balanced accuracy, calibration on in-distribution
+and out-of-domain data, OOD detection with five scoring rules, and zero-shot
+cross-domain diagnostic accuracy on a patient-level held-out PAD partition. We
+repeated the sweep with plain single-encoder adversarial training and with four
+non-adversarial invariance objectives, and validated on Fitzpatrick17k, a third
+dataset never seen by the adversary.
 
-\noindent\textbf{Results.} Domain leakage fell to its chance floor at the
-smallest non-zero weight tested (balanced accuracy $0.915 \to 0.553$, floor
-$0.5$), while in-distribution balanced accuracy did not degrade
-($0.692 \to 0.707$). Over the same range, OOD detection fell from
-AUROC~$0.863$ to $0.508$ and inverted below chance ($0.413$), with OOD samples
-ranked as more in-distribution than in-distribution data throughout the score
-distribution rather than only in the tails. Cross-domain diagnostic accuracy
-did not improve at any $\lam$ (balanced accuracy $0.249$--$0.291$ against a
-six-class floor of $0.167$, and below the $0.298$ of a non-adversarial control
-at every setting), and predictions collapsed toward the benign majority class:
-actinic keratosis recall fell from $0.244$ to $0.016$ ($n = 202$). Mean confidence on
-never-seen-domain images rose from $0.489$ to $0.930$, overtaking
-in-distribution confidence, so that out-of-domain calibration error tripled
-($\mathrm{ECE}\ 0.247 \to 0.746$) while in-distribution ECE stayed flat at
-$\approx 0.10$. Leakage did not mediate the OOD collapse: it saturated at
-chance while AUROC kept falling, and at the backbone leakage was flat while
-AUROC fell $0.749 \to 0.475$. Six candidate explanations were tested and
-refuted.
+\noindent\textbf{Results.} At the smallest non-zero weight tested, OOD detection
+fell from AUROC $0.863$ to $0.508$; by $\lam = 2$ it had \textbf{inverted below
+chance to $0.413$}, ranking images from a clinic the model had never seen as
+more in-distribution than its own test data, throughout the score distribution
+rather than only in the tails. All five scoring rules collapsed together, the
+inversion held on the third dataset ($0.399$, against $0.994$ for a
+non-adversarial baseline) and survived shrinkage estimation. The collapse was a
+cliff rather than a trade-off: no operating point combined invariance with
+detection. It was invisible to routine monitoring --- domain leakage fell to its
+chance floor ($0.915 \to 0.553$, floor $0.5$) and in-distribution balanced
+accuracy did not degrade ($0.692 \to 0.707$). Confidence on never-seen-domain
+images rose from $0.489$ to $0.930$, overtaking in-distribution confidence,
+while cross-domain accuracy did not improve at any $\lam$ and predictions
+collapsed toward the benign majority class (actinic keratosis recall
+$0.244 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
+adversarial training but not in moment-matching objectives, which reduced
+leakage comparably without collapsing any detector. Seven candidate
+explanations were tested and refuted.
 
-\noindent\textbf{Conclusions.} When domain-adversarial training succeeds,
-models become confidently wrong on unseen domains and their OOD monitoring
-fails, while in-distribution metrics improve. OOD detection and out-of-domain
-calibration should be reported as a function of achieved invariance rather
-than at a single operating point.
+\noindent\textbf{Conclusions.} Domain-adversarial training does not merely
+weaken out-of-distribution monitoring; it reverses it, while every routinely
+monitored metric improves. OOD detection and out-of-domain calibration should
+be reported as a function of achieved invariance rather than at a single
+operating point.
 \end{abstract}
 
 \noindent\textbf{Keywords:} domain-adversarial training; out-of-distribution
@@ -123,37 +123,51 @@ monitoring. A deployed system is expected to flag inputs unlike its training
 data so that a human reviews them rather than the model acting alone. This
 paper asks what invariance training does to that mechanism.
 
-The answer is that it destroys it, and does so invisibly. Sweeping the
-adversarial weight in a controlled setting, we find that OOD detection
-collapses from AUROC $0.863$ to $0.508$ at the smallest non-zero weight tested
-and then inverts below chance, so that images from an unseen clinic are ranked
-as \emph{more} routine than familiar ones. Over the same range the model
-becomes more confident on those unseen images than on its own held-out test
-data, and its predictions collapse toward the benign majority class. None of
-this is visible to the metrics a developer monitors: in-distribution accuracy
-does not fall, in-distribution calibration does not change, and the domain
-leakage probe --- the very metric the technique is adopted to improve ---
-improves as intended.
+The answer is that it reverses it. Sweeping the adversarial weight in a
+controlled setting, we find that out-of-distribution detection does not merely
+weaken as domain information is removed --- it passes through chance and
+inverts. At the weights that achieve invariance, a model asked which inputs are
+unlike its training data answers with its own test split, and ranks images from
+a clinic it has never seen as the more routine of the two. AUROC falls from
+$0.863$ to $0.413$, below chance, across every scoring rule we tried.
 
-The irony is the point. The technique is adopted for cross-site robustness and
-it degrades precisely the cross-site safety machinery, while every monitored
-number moves in the direction its user is hoping for.
+Degradation would be unsurprising. A representation stripped of domain
+information should be worse at recognising a domain, and chance is what that
+argument predicts. Inversion is not predicted by it, and after testing and
+refuting six explanations and one pre-registered synthetic reproduction, we
+cannot account for it.
+
+What makes the reversal consequential rather than merely odd is that nothing in
+a standard evaluation reveals it. Over the same range the model becomes more
+confident on unseen-domain images than on its own held-out test data, and its
+predictions collapse toward the benign majority class. Meanwhile
+in-distribution accuracy does not fall, in-distribution calibration does not
+change, and the domain leakage probe --- the very metric the technique is
+adopted to improve --- improves exactly as intended.
+
+The technique is adopted for safe deployment across sites, and it disables the
+cross-site safety machinery while every monitored number moves in the direction
+its user is hoping for.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item A controlled intervention: a seven-point sweep of the adversarial weight
-with 27 training runs in a fixed architecture, isolating the effect of
-invariance pressure from architectural and data confounds.
-\item The safety failure: OOD detection collapses as a cliff rather than a
-trade-off curve, inverts below chance, and does so on a third domain the
-adversary never saw.
+\item A controlled intervention: a seven-point sweep of the adversarial weight,
+27 training runs with everything else held fixed, isolating invariance pressure
+from architectural and data confounds.
+\item The inversion: OOD detection passes through chance and reverses, as a
+cliff rather than a trade-off curve, across five scoring rules, on a third
+dataset the adversary never saw, and robustly to shrinkage estimation and tail
+truncation.
 \item The invisibility: in-distribution accuracy, in-distribution calibration
-and the domain leakage probe all fail to reveal it.
-\item Evidence that the leakage probe does not mediate the collapse, so it
-cannot serve as a proxy for it.
+and the domain leakage probe all fail to reveal it, and the leakage probe does
+not mediate it, so it cannot serve as a proxy.
+\item Scope: the failure reproduces in plain single-encoder adversarial
+training, so it is not an artefact of the factorized architecture; and it does
+not appear under moment-matching objectives that reduce leakage along the same
+axis, so it belongs to adversarial optimisation rather than to invariance.
 \item Six candidate explanations tested and refuted, plus a pre-registered
-synthetic reproduction that failed --- delimiting the phenomenon for future
-work.
+synthetic reproduction that failed --- delimiting the phenomenon for whoever
+explains it.
 \item A reporting protocol that makes the failure visible at near-zero cost.
 \end{enumerate}
 
@@ -633,34 +647,69 @@ centroid-similarity index). We report this as a null result.
 % ------------------------------------------------------------
 \section{Discussion}
 
+\subsection{An inversion, not a degradation}
+
+The result we consider central is not that out-of-distribution detection weakens
+under adversarial invariance training. It is that the ordering reverses. At
+$\lam = 2$, a model asked which images are unlike its training data answers with
+its own test split, and ranks images from a clinic it has never seen as the more
+routine of the two. Every scoring rule we tried agrees, the effect holds on a
+third dataset the adversary never saw, and it survives shrinkage estimation and
+truncation of the score distribution's tails.
+
+Degradation would be unsurprising: a representation stripped of domain
+information should be less able to recognise a domain. Chance performance is
+what the obvious argument predicts, and chance is what a single-encoder model
+reaches at $\lam = 0.25$ ($0.525$). Going \emph{past} chance is not predicted by
+that argument, and we cannot currently explain it.
+
 \subsection{The deployment pathway}
 
 The results compose into a concrete failure sequence. A model is trained with
-invariance to acquisition domain, as recommended, and deployed at a new site.
-On images from that site the model increasingly predicts the benign majority
-class, with actinic keratosis recall falling from $0.244$ to $0.016$
-($49$ of $202$ images correctly recalled, then $3$). It does so with
-higher confidence than on its own test data. The OOD monitor that should flag
-those images for human review scores them as more routine than familiar ones.
-And the developer's evaluation shows in-distribution accuracy holding,
-in-distribution calibration unchanged, and the leakage metric improved exactly
-as intended.
+invariance to acquisition domain, as recommended, and deployed at a new site. On
+images from that site the model increasingly predicts the benign majority class,
+with actinic keratosis recall falling from $0.244$ to $0.016$ ($49$ of $\nAK$
+images correctly recalled, then $3$). It does so with higher confidence than on
+its own test data. The monitor that should flag those images for human review
+scores them as more routine than familiar ones --- not merely failing to flag
+them, but actively ranking them as safer. And the developer's evaluation shows
+in-distribution accuracy holding, in-distribution calibration unchanged, and the
+leakage metric improved exactly as intended.
+
+\subsection{The failure belongs to adversarial optimisation, not to invariance}
+
+Reducing domain leakage is not sufficient to produce the failure. MMD reduces
+leakage along the same axis and collapses nothing: at the leakage levels it
+reaches with the classifier intact, every detector remains well above chance.
+Gradient reversal at comparable leakage has already inverted.
+
+The two objectives also fail in opposite manners. As MMD is pushed harder it
+becomes less accurate \emph{and less confident}, and its out-of-domain
+calibration error falls. Under gradient reversal accuracy falls while confidence
+rises, and calibration error triples. One degrades honestly; the other is
+confidently wrong. Whatever drives the inversion is a property of how invariance
+is obtained, not of invariance itself.
+
+We cannot rule out that MMD would behave the same way at the invariance level
+gradient reversal reaches, because it never got there without destroying the
+task. The claim is bounded accordingly.
 
 \subsection{The danger zone is where the method succeeds}
 
-Risk scales with \emph{achieved} invariance, not with the nominal weight or
-with the presence of an adversarial term. In a separate setting we ran the
-same objective with an adversary that failed to train; leakage stayed at
-$0.94$ across four orders of magnitude of $\lam$, and the safety failure did
-not appear either. A weak adversary produces neither debiasing nor harm. This
-matters practically: many deployed configurations may be too weak to induce
-invariance, and are correspondingly harmless.
+Risk scales with \emph{achieved} invariance, not with the nominal weight or with
+the presence of an adversarial term in the loss. In a separate setting we ran
+the same objective with an adversary that never learned; leakage stayed at
+$0.94$ across four orders of magnitude of $\lam$, and the safety failure did not
+appear either. A weak adversary produces neither debiasing nor harm. Many
+deployed configurations may be too weak to induce invariance, and are
+correspondingly harmless --- which also means that a configuration's safety
+cannot be read off its hyperparameters.
 
-\subsection{Tolerance without generalization}
+\subsection{Tolerance without generalisation}
 
 Full-spectrum OOD detection \cite{yang2023} prescribes that covariate-shifted
-in-distribution inputs be accepted rather than flagged. Our models achieve
-that prescription and are unsafe because of it. By $\lam = 2$ they accept
+in-distribution inputs be accepted rather than flagged. Our models achieve that
+prescription and are unsafe because of it. By $\lam = 2$ they accept
 out-of-domain images more readily than their own test data, while classifying
 them at $0.249$ balanced accuracy against a floor of $0.167$ and reporting
 higher confidence than in distribution.
@@ -668,78 +717,80 @@ higher confidence than in distribution.
 Acceptance and competence are separate properties, and current protocols
 evaluate them separately or not at all. We suggest that any claim of tolerance
 to covariate shift be accompanied by cross-domain accuracy on the same inputs,
-since tolerance of inputs a model cannot classify is a failure mode rather
-than a success.
+since tolerating inputs a model cannot classify is a failure mode rather than a
+success.
 
 \subsection{Two routes to invariance are not interchangeable}
 
 Wald et al.~\cite{wald2021} showed that enforcing multi-domain calibration
-produces invariance. We find the converse fails: enforcing invariance
+produces invariance. We find the converse fails: obtaining invariance
 adversarially destroys out-of-domain calibration, driving ECE from $0.247$ to
-$0.746$. The property that one route uses as its foundation is the property
-the other route removes.
+$0.746$. The property one route uses as its foundation is the property the other
+route removes.
 
-This suggests a concrete design preference. Where invariance is the goal,
-calibration-based objectives may be preferable to adversarial ones, because
-they arrive at invariance through a constraint that keeps the out-of-domain
-uncertainty signal intact rather than destroying it. We have not tested this
-directly and offer it as a hypothesis the present results motivate.
+This suggests a design preference. Where invariance is the goal,
+calibration-based or moment-matching objectives may be preferable to adversarial
+ones, because they reach invariance through constraints that leave the
+out-of-domain uncertainty signal intact. Our MMD results are consistent with
+this, but we have not tested it directly and offer it as a hypothesis the
+present results motivate.
 
 \subsection{Recommendation}
 
 Report OOD detection and out-of-domain calibration \textbf{as a function of
 achieved invariance}, not at a single operating point; report cross-domain
-accuracy alongside any claim of tolerance to covariate shift; and do not use a
-separate dataset as the OOD set without saying that this measures covariate
-shift rather than semantic novelty. Practitioners tuning $\lam$ already train
-at multiple values, so this is a change in what is reported rather than
-additional work. It converts an invisible failure into a visible number.
+accuracy alongside any claim of tolerance to covariate shift; and state, when a
+separate dataset serves as the OOD set, that this measures covariate shift
+rather than semantic novelty. Practitioners tuning $\lam$ already train at
+multiple values, so this is a change in what is reported rather than additional
+work. It converts an invisible failure into a visible number.
 
 \subsection{An open mechanism}
 
-Six accounts were tested and refuted and a pre-registered synthetic
-reproduction failed. We do not know why the inversion occurs. We note only
-that it is a bulk location shift, survives shrinkage estimation, is not
-mediated by linear domain-decodability, and appears on domains the adversary
-never saw. We report the eliminations so that the search space is smaller for
-whoever resolves it.
+Six accounts were tested and refuted and a pre-registered synthetic reproduction
+failed. We do not know why the inversion occurs. We know that it is a bulk
+location shift rather than a tail effect, that it survives shrinkage estimation,
+that it is not mediated by linear domain-decodability, that it appears on
+domains the adversary never saw, that it reproduces without the factorized
+architecture, and that moment-matching objectives do not produce it. We report
+the eliminations so that the search space is smaller for whoever resolves it.
 
 % ------------------------------------------------------------
 \section{Limitations}
 
-\textbf{Absolute cross-domain performance is poor for every model here.}
-Plain accuracy on \texttt{pad\_heldout} is $0.245$ for the factorized model and
+\textbf{Absolute cross-domain performance is poor for every model here.} Plain
+accuracy on \texttt{pad\_heldout} is $0.245$ for the factorized model and
 $0.391$ for the baseline, against a $0.385$ majority rate. No model in this
 study is deployable. Our claim concerns the \emph{effect of $\lam$} within a
-controlled intervention, not the deployability of any particular model, and
-the deployment pathway in the discussion should be read as a mechanism of harm
-rather than as a description of a fielded system.
+controlled intervention, not the deployability of any particular model, and the
+deployment pathway above should be read as a mechanism of harm rather than as a
+description of a fielded system.
 
 \textbf{One domain pair, one modality contrast.} ISIC is dermoscopy; PAD-UFES
 and Fitzpatrick17k are clinical photography. The construct we call domain is
 confounded with imaging modality, and Fitzpatrick17k does not resolve this
-because it is also clinical photography. Generality beyond dermatology is
-untested.
+because it is also clinical photography. Two attempts to replicate outside
+dermatology did not settle the question. On Camelyon17 the adversary head never
+trained (cross-entropy $\ln 3$ from the first epoch at every $\lam$, while a
+post-hoc probe read $0.94$) despite a gradient graph verified correct (head
+cosine $+1.000$, encoder $-1.000$); \textbf{we therefore report no Camelyon17
+result and make no claim that Camelyon17 resists invariance}, and record the
+diagnostic for future work. \pending{iWildCam status and outcome, or removal of
+this clause.} Generality beyond dermatology remains untested.
 
-\textbf{Architecture scope.} All results are obtained with a dual-encoder
-factorization model. The $\lam$ sweep is a controlled intervention
-\emph{within} that architecture; whether single-encoder domain-adversarial
-training behaves identically is not established here. An attempt to replicate
-on Camelyon17 was \textbf{inconclusive}: the adversary head never trained
-(cross-entropy $\ln 3$ from the first epoch at every $\lam$, while a post-hoc
-probe read $0.94$), despite a gradient graph verified correct
-(head cosine $+1.000$, encoder $-1.000$). \textbf{We report no Camelyon17
-result and make no claim that Camelyon17 resists invariance.} We record the
-diagnostic --- an adversary failing to train under a verified-correct
-reversal --- for future work.
+\textbf{The objective comparison is bounded.} MMD never reached the invariance
+level gradient reversal attains; it could only approach it by destroying the
+classifier. We therefore cannot say what moment-matching would do at matched
+invariance, only that at the leakage levels it reaches, gradient reversal has
+already inverted and MMD has not.
 
 \textbf{Detector non-independence.} The five scoring rules are functions of the
-same 16-dimensional latent. The backbone analysis provides the independent
-replication.
+same 16-dimensional latent. The backbone analysis and the single-encoder
+replication provide the independent evidence.
 
 \textbf{Calibration arithmetic.} Out-of-domain ECE is close to mean confidence
-minus accuracy in this setting; the confidence, accuracy and ECE results are
-one phenomenon viewed three ways.
+minus accuracy in this setting; the confidence, accuracy and ECE results are one
+phenomenon viewed three ways, not three independent findings.
 
 \textbf{Seeds.} Five seeds at the endpoints, three at interior points. Effect
 sizes are large relative to seed variance, but formal testing across seven
@@ -748,27 +799,36 @@ points at $n = 3$ is not claimed.
 \textbf{Splits.} ISIC splits are image-level, not patient-level; some patients
 may contribute images to both partitions. Because in-distribution accuracy is
 compared \emph{across $\lam$ under an identical split}, any inflation applies
-equally to every row and does not threaten the reported pattern, though
-absolute values may be optimistic. PAD splits are patient-level.
+equally to every row and does not threaten the reported pattern, though absolute
+values may be optimistic. PAD splits are patient-level, disjoint by patient and
+by lesion.
 
 \textbf{Third-domain coverage.} 3{,}887 of 16{,}577 Fitzpatrick17k images were
-obtained; the set is web-scraped under mixed copyright, used for evaluation
-only, and not redistributed.
+obtained; the set is web-scraped under mixed copyright, used for evaluation only,
+and not redistributed.
 
 % ------------------------------------------------------------
 \section{Conclusion}
 
-Domain-adversarial invariance training, applied successfully, leaves a skin
-lesion classifier confidently wrong on images from clinics it has never seen
-and removes its ability to flag them. In-distribution accuracy, in-distribution
-calibration and the domain leakage probe all continue to look correct while
-this happens. The model achieves the tolerance of covariate shift that current
-OOD taxonomies prescribe, without the generalization that would make that
-tolerance safe. We could not explain the inversion after refuting six
-candidate accounts, but explaining it is not required to act on it: reporting
-OOD detection, out-of-domain calibration and cross-domain accuracy as
-functions of achieved invariance costs almost nothing and makes the failure
-visible.
+Under domain-adversarial training, out-of-distribution detection does not merely
+weaken. It reverses: a model asked which inputs are unfamiliar answers with its
+own test data and ranks a new clinic's images as the more routine of the two.
+The reversal appears at the smallest adversarial weight that achieves
+invariance, holds on a dataset the adversary never saw, reproduces without the
+factorized architecture, and does not appear under moment-matching objectives
+that reduce leakage along the same axis.
+
+It is invisible to everything a developer monitors. In-distribution accuracy
+holds, in-distribution calibration is unchanged, and the domain leakage probe
+improves exactly as intended, while confidence on unseen domains overtakes
+confidence on familiar data and recall for a premalignant class falls to
+$0.016$.
+
+We could not explain the inversion after refuting six candidate accounts and a
+pre-registered synthetic reproduction. Explaining it is not required to act on
+it: reporting out-of-distribution detection, out-of-domain calibration and
+cross-domain accuracy as functions of achieved invariance costs almost nothing
+and makes the failure visible.
 
 % ------------------------------------------------------------
 \section*{Data and code availability}
