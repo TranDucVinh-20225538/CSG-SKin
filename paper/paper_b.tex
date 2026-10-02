@@ -318,18 +318,21 @@ for $\mathcal{L}_{\mathrm{cls}}$.
 % ------------------------------------------------------------
 \section{Results}
 
-\subsection{The dial}
+\subsection{The intervention}
 
-Table~\ref{tab:dial} reports every measurement as a function of $\lam$.
-Figure~\ref{fig:dial} shows the four quantities that matter most on a shared
-axis.
+Table~\ref{tab:dial} reports every measurement as a function of $\lam$, the only
+manipulated variable. Figure~\ref{fig:dial} shows the four quantities that matter most
+on a shared axis.
+
+Read across a single row and nothing is wrong. Read down the columns and two of them
+improve while two collapse.
 
 \begin{table}[t]
 \centering
 \small
-\caption{The intervention. Mean $\pm$ s.d.\ across seeds. Leakage is balanced
-accuracy (chance $0.5$); cross-domain accuracy is balanced over six classes
-(chance $0.167$). Arrows mark the direction a practitioner would call
+\caption{The intervention. Mean $\pm$ s.d.\ across seeds. Leakage is balanced accuracy
+(chance $0.5$); cross-domain accuracy is balanced over the six classes shared with
+PAD-UFES (chance $0.167$). Arrows mark the direction a practitioner would call
 favourable.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
@@ -355,165 +358,277 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 \begin{figure}[t]
 \centering
 \figorbox{\textwidth}{results/paperB/figures/fig1_dial_four_panel.pdf}
-\caption{\textbf{The intervention, four views, one axis.} Leakage falls to its
-chance floor and in-distribution balanced accuracy does not degrade --- both
-favourable. Over the same range OOD AUROC collapses through chance and
-inverts, and out-of-domain calibration error triples. A developer monitoring
-the first two panels would see nothing wrong.}
+\caption{\textbf{The intervention, four views, one axis.} Leakage falls to its chance
+floor and in-distribution balanced accuracy does not degrade --- both favourable. Over
+the same range OOD AUROC collapses through chance and inverts, and out-of-domain
+calibration error triples. A developer monitoring the first two panels would see
+nothing wrong.}
 \label{fig:dial}
 \end{figure}
 
 \subsection{Invariance is achieved, and in-distribution metrics do not warn}
 
-Leakage falls from $0.915$ to $0.553$ at $\lam = 0.25$, against a chance floor
-of $0.5$ --- that is, essentially complete invariance by the smallest non-zero
-weight tested. In-distribution balanced accuracy does not degrade over the
-useful range ($0.692 \to 0.707$; we claim no improvement, the difference being
-small relative to seed variance) and in-distribution ECE is flat at
-$\approx 0.10$ at every $\lam$.
+Domain leakage falls from $0.915$ to $0.553$ between $\lam = 0$ and $\lam = 0.25$,
+against a chance floor of $0.5$. By the smallest non-zero weight tested, the lesion
+representation is very nearly uninformative about the acquisition source: the intended
+effect of the method, obtained essentially in full.
 
-\subsection{OOD detection collapses as a cliff, and inverts}
+It is obtained without an in-distribution cost. Balanced accuracy on the ISIC test
+split moves from $0.692$ to $0.707$ over the useful range --- we claim no improvement,
+the difference being small relative to seed variance --- and in-distribution expected
+calibration error is flat at $\approx 0.10$ at every $\lam$. A practitioner tracking
+accuracy, in-distribution calibration and the leakage probe would conclude that the
+method had worked exactly as advertised.
 
-Mahalanobis AUROC falls $0.863 \to 0.508$ between $\lam = 0$ and
-$\lam = 0.25$, and reaches $0.413$ at $\lam = 2$. \textbf{The collapse is
-essentially complete at the smallest non-zero weight}; between $\lam = 0.5$
-and $\lam = 8$ the value varies only between $0.413$ and $0.481$. This is a
-cliff, not a trade-off curve, and there is no safe operating point on it.
+\subsection{Out-of-distribution detection collapses, and inverts}
 
-All five scoring rules move together (MSP $0.970 \to 0.437$, energy
-$0.983 \to 0.441$, cosine $0.901 \to 0.435$, $k$-NN $0.941 \to 0.424$, stable
-across $k \in \{10,50,200\}$). As noted in the methods, these are five views of
-one 16-dimensional representation and are not independent.
+Over the same interval, Mahalanobis AUROC against the held-out PAD partition falls from
+$0.863$ to $0.508$, and reaches $0.413$ at $\lam = 2$.
 
-The inversion is a \textbf{bulk location shift, not a tail artefact}. At
-$\lam = 2$, removing the pooled $90$th, $95$th or $99$th percentile leaves
-AUROC at $0.412$, $0.416$ and $0.424$ against $0.427$ for the full set, and the
-medians themselves invert (ISIC $13.8$ versus \texttt{pad\_heldout} $10.0$).
-Out-of-domain images are scored as more typical than in-distribution images
-throughout the distribution.
+Two features of this collapse matter more than its size.
 
-It is not a numerical artefact of the covariance estimate: Ledoit--Wolf
-shrinkage leaves $0.413$ unchanged, and effective dimensionality barely moves
-(participation ratio $4.879 \to 4.500$ while leakage falls $0.914 \to 0.553$).
+\paragraph{It is a cliff, not a trade-off curve.} The transition is essentially complete
+at the smallest non-zero weight tested. Between $\lam = 0.5$ and $\lam = 8$ the value
+moves only between $0.413$ and $0.481$, with no ordering that would let a practitioner
+tune for a safe compromise. There is no operating point on this curve at which
+invariance has been obtained and detection survives.
 
-It holds on a domain the adversary never saw: Fitzpatrick17k
-$0.764 \to 0.391$, while a non-adversarial baseline reaches $0.994$ on the same
-images.
+\paragraph{It goes below chance.} At $\lam = 2$ the detector ranks images from a clinic
+the model has never seen as \emph{more} in-distribution than images from its own test
+split. This is not a tail artefact. Removing the pooled $90$th, $95$th or $99$th
+percentile of scores leaves AUROC at $0.412$, $0.416$ and $0.424$ respectively against
+$0.427$ for the full set, and the medians themselves invert (ISIC $13.8$ versus
+\texttt{pad\_heldout} $10.0$). The shift is distributional throughout.
 
-\subsection{Models become confidently wrong on unseen domains}
+All five scoring rules move together --- MSP $0.970 \to 0.437$, energy
+$0.983 \to 0.441$, cosine $0.901 \to 0.435$, $k$-NN $0.941 \to 0.424$ (stable across
+$k \in \{10, 50, 200\}$). As noted in the methods these are five views of one
+$16$-dimensional representation and are not independent evidence; the independent
+replication is at the backbone (Section~\ref{sec:nonmediation}) and in the
+single-encoder model (Section~\ref{sec:arch}).
+
+The collapse is not a numerical artefact of the covariance estimate. Ledoit--Wolf
+shrinkage leaves the $\lam = 2$ value unchanged at $0.413$, and effective
+dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
+while leakage falls $0.914 \to 0.553$).
+
+It is not confined to the domain the adversary was trained against. On Fitzpatrick17k,
+absent from every training branch, AUROC falls $0.764 \to 0.391$, while a
+non-adversarial baseline reaches $0.994$ on the same images.
+
+\subsection{The model becomes confidently wrong on unseen domains}
 \label{sec:confidently}
 
-At $\lam = 0$, mean maximum-softmax confidence is $0.915$ on ISIC test and
-$0.489$ on \texttt{pad\_heldout} --- the model is appropriately hesitant on
-unfamiliar data. By $\lam = 0.25$ that gap has vanished ($0.913$ versus
-$0.898$), and by $\lam = 2$ it has inverted: the model is \emph{more}
-confident on images from a clinic it has never seen ($0.930$) than on its own
-held-out test set ($0.910$).
+At $\lam = 0$ the model is appropriately hesitant on unfamiliar data: mean
+maximum-softmax confidence is $0.915$ on the ISIC test split and $0.489$ on
+\texttt{pad\_heldout}. By $\lam = 0.25$ that gap has closed ($0.913$ versus $0.898$),
+and by $\lam = 2$ it has inverted --- the model is \emph{more} confident on images from
+a clinic it has never seen ($0.930$) than on its own held-out test set ($0.910$).
 
-Cross-domain diagnostic accuracy does not improve at any $\lam$. Balanced
-accuracy spans $0.249$--$0.291$ against a six-class floor of $0.167$, with no
-setting exceeding the $0.291$ obtained at $\lam = 0$ and every setting below
-the $0.298$ of the non-adversarial EfficientNet-B3 control; plain accuracy
-falls $0.245 \to 0.184$, below the $0.385$ majority-class rate throughout. Macro AUC is roughly preserved ($0.605 \to 0.581$), so
-discrimination survives while the decision rule does not: predictions collapse
-toward the benign majority class, with nevus predictions rising from 113 to
-374 of 716 images and \textbf{actinic keratosis recall falling from $0.244$ to
-$0.016$} ($49/\nAK \to 3/\nAK$ images, mean over five seeds). Squamous cell
-carcinoma moves the same way ($0.088 \to 0.021$, $6/\nSCC \to 1/\nSCC$) but the
-count is too small to carry a claim on its own, and melanoma ($n = \nMEL$)
-supports none.
+Confidence rises while accuracy falls. Cross-domain diagnostic accuracy does not
+improve at any $\lam$: balanced accuracy spans $0.249$--$0.291$ against a six-class
+floor of $0.167$, no setting exceeds the $0.291$ obtained at $\lam = 0$, and every
+setting is below the $0.298$ of the non-adversarial EfficientNet-B3 control. Plain
+accuracy falls $0.245 \to 0.184$, beneath the $0.385$ majority-class rate throughout.
 
-Confidence rising while accuracy falls is what drives out-of-domain
-calibration error from $0.247$ to $0.746$. We stress that these are three
-views of a single phenomenon rather than three independent results.
+Macro AUC is roughly preserved ($0.605 \to 0.581$), so discrimination survives while
+the decision rule does not. Predictions collapse toward the benign majority class:
+nevus predictions rise from $113$ to $374$ of $716$ images, and \textbf{actinic
+keratosis recall falls from $0.244$ to $0.016$} ($49/\nAK \to 3/\nAK$ images, mean over
+five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$,
+$6/\nSCC \to 1/\nSCC$) but the count is too small to carry a claim on its own, and
+melanoma ($n = \nMEL$) supports none.
+
+The resulting out-of-domain calibration error triples, from $0.247$ to $0.746$, while
+in-distribution ECE stays flat at $\approx 0.10$. We stress that confidence, accuracy
+and calibration here are three views of a single phenomenon rather than three
+independent results: in this setting out-of-domain ECE is arithmetically close to mean
+confidence minus accuracy.
 
 \subsection{Leakage does not mediate the collapse}
 \label{sec:nonmediation}
 
-Two results rule out the natural hypothesis that removing domain information
-is what breaks OOD detection.
+The natural hypothesis is that removing domain information is what breaks detection.
+Three results rule it out.
 
-First, leakage \textbf{saturates at its chance floor by $\lam = 0.25$}
-($0.553$, floor $0.5$) while AUROC continues to fall from $0.508$ to $0.413$
-as $\lam$ rises further. The damage continues after invariance is complete.
+First, leakage \textbf{saturates at its chance floor by $\lam = 0.25$} ($0.553$ against
+a floor of $0.5$) while AUROC continues to fall from $0.508$ to $0.413$ as $\lam$ rises
+further. The damage continues after invariance is complete.
 
-Second, at the pre-projection backbone, leakage is essentially flat across the
-whole sweep ($0.982 \to 0.941$) while backbone Mahalanobis AUROC falls
-$0.749 \to 0.475$. Domain information remains linearly decodable and OOD
-detection collapses anyway. \textbf{This is the independent evidence that the
-five-detector agreement does not provide}, since the backbone is a different
-representation.
+Second, at the pre-projection backbone, leakage is essentially flat across the whole
+sweep ($0.982 \to 0.941$) while backbone Mahalanobis AUROC falls $0.749 \to 0.475$.
+Domain information remains linearly decodable there, and detection collapses anyway.
+Because the backbone is a different representation from the $16$-dimensional latent,
+this is the independent replication that the five-detector agreement does not provide.
 
-We therefore report leakage as a measured quantity and never as the
-explanatory variable, and plot all results against $\lam$.
+Third, and most directly, two training objectives traverse the same leakage range with
+opposite consequences (Section~\ref{sec:adversarial}). Leakage alone therefore does not
+determine the outcome.
+
+We accordingly report leakage as a measured quantity and never as the explanatory
+variable, and plot all results against $\lam$ rather than against leakage.
+
+\subsection{The failure is specific to adversarial optimisation}
+\label{sec:adversarial}
+
+Adversarial training is one route to invariance among several. Table~\ref{tab:obj}
+sweeps four alternatives on the single-encoder backbone.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Invariance objectives other than gradient reversal, single-encoder backbone,
+3 seeds per cell. Leakage is balanced accuracy, floor $0.5$. \textbf{IRM and GroupDRO
+use PAD labels} through their environment and group risks; the remaining objectives do
+not, so their cross-domain numbers are not comparable and the two regimes are kept in
+separate blocks.}
+\label{tab:obj}
+\begin{tabular}{llcccc}
+\toprule
+Objective & Weight & Leakage & Maha.\ AUROC & ID bal.\ acc & OOD ECE \\
+\midrule
+\multicolumn{6}{l}{\emph{No access to PAD labels}}\\
+ERM          & ---    & 0.973 & 0.838 & 0.761 & --- \\
+CORAL        & 100    & 0.998 & 0.999 & 0.777 & --- \\
+MMD          & 1      & 0.967 & 0.813 & 0.779 & --- \\
+MMD          & 100    & 0.900 & 0.716 & 0.730 & --- \\
+MMD          & 3000   & 0.893 & 0.748 & 0.382 & 0.142 \\
+MMD          & 10000  & 0.836 & 0.665 & 0.337 & 0.267 \\
+\textbf{GRL} & $\lam = 0.25$ & \textbf{0.763} & \textbf{0.525} & \textbf{0.845\rlap{$^\dagger$}} & --- \\
+\midrule
+\multicolumn{6}{l}{\emph{Uses PAD labels --- not comparable on cross-domain accuracy}}\\
+IRM          & 100    & 0.950 & 0.729 & 0.167 & --- \\
+GroupDRO     & 10     & 0.976 & 0.868 & 0.783 & --- \\
+\bottomrule
+\multicolumn{6}{l}{\footnotesize $^\dagger$ plain accuracy for the GRL row; see Table~\ref{tab:single}.}
+\end{tabular}
+\end{table}
+
+Only MMD moves leakage appreciably, and it does so at a price gradient reversal never
+pays. Escalating the MMD weight from $1$ to $10{,}000$ buys $0.13$ of leakage
+($0.967 \to 0.836$, floor $0.5$) at a cost of $0.44$ of in-distribution balanced
+accuracy ($0.779 \to 0.337$), and leaves every detector well above chance
+(Mahalanobis $0.665$, $k$-NN $0.738$, energy $0.694$ at the highest weight). IRM
+reaches the extreme of the same pattern: at weight $100$ its balanced accuracy collapses
+to $0.167$ while leakage remains at $0.950$. CORAL does not induce invariance at all;
+at weight $100$ it makes the representation \emph{more} domain-separable
+(leakage $0.998$). GroupDRO leaves leakage unmoved at every weight tested.
+
+The contrast is cleanest when task health is held constant rather than leakage, since
+MMD only reaches comparable leakage by destroying the classifier:
+
+\begin{quote}
+Gradient reversal reduces leakage $0.970 \to 0.763$ \textbf{at no cost in accuracy}
+($0.845 \to 0.845$) and collapses all five detectors to chance. MMD reduces leakage
+$0.967 \to 0.900$ at a similarly negligible cost ($0.779 \to 0.730$) and collapses
+nothing (Mahalanobis $0.813 \to 0.716$). To go further, MMD must destroy the task.
+\end{quote}
+
+The calibration signatures differ in the same direction. As MMD degrades, its
+out-of-domain ECE \emph{falls} ($0.344 \to 0.142$): the model becomes less confident as
+it becomes less accurate, which is the appropriate response. Under gradient reversal
+out-of-domain ECE triples while accuracy falls. The two objectives move leakage the same
+way and fail in opposite manners --- one degrades honestly, the other is confidently
+wrong.
+
+We do not claim MMD would be safe at the invariance level gradient reversal reaches; it
+never got there. What the data establish is that at the leakage levels MMD does reach,
+it shows none of the failure, while gradient reversal at the same levels has already
+collapsed.
+
+\subsection{It is not specific to the factorized architecture}
+\label{sec:arch}
+
+All results above use a dual-encoder model. Table~\ref{tab:single} repeats the sweep
+with plain single-encoder domain-adversarial training: one backbone, one linear
+classifier, a gradient reversal layer and a domain head, with no context branch and no
+orthogonality term.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Single-encoder DANN on the same data and splits. ID accuracy is plain accuracy;
+leakage is balanced accuracy, floor $0.5$. All five detectors collapse at the smallest
+non-zero weight, and four of five fall below chance by $\lam = 4$.}
+\label{tab:single}
+\begin{tabular}{lccccccccc}
+\toprule
+$\lam$ & $n$ & Leakage & Maha. & $k$-NN & MSP & cosine & Energy & ID acc & X-dom \\
+\midrule
+0    & 5 & 0.970 & 0.700 & \textbf{0.944} & 0.868 & 0.884 & \textbf{0.911} & 0.845 & 0.390 \\
+0.25 & 3 & \textbf{0.763} & 0.525 & \textbf{0.528} & 0.515 & 0.509 & \textbf{0.507} & 0.845 & 0.333 \\
+0.5  & 3 & 0.795 & 0.510 & 0.517 & 0.501 & 0.493 & 0.507 & 0.844 & 0.328 \\
+1    & 3 & 0.795 & 0.548 & 0.521 & 0.462 & 0.482 & 0.448 & 0.840 & 0.334 \\
+2    & 5 & 0.807 & 0.509 & 0.516 & 0.479 & 0.468 & 0.470 & 0.839 & 0.325 \\
+4    & 3 & 0.798 & 0.502 & 0.486 & 0.471 & 0.454 & 0.449 & 0.835 & 0.320 \\
+8    & 3 & 0.787 & 0.520 & 0.532 & 0.519 & 0.490 & 0.500 & 0.832 & 0.321 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The cliff reproduces. Every detector collapses at $\lam = 0.25$ --- $k$-NN
+$0.944 \to 0.528$, energy $0.911 \to 0.507$, cosine $0.884 \to 0.509$, MSP
+$0.868 \to 0.515$ --- and by $\lam = 4$ four of the five sit below chance, cosine most
+clearly at $0.454 \pm 0.014$. In-distribution accuracy is flat throughout
+($0.845 \to 0.832$) and cross-domain accuracy falls from $0.390$ to a plateau near
+$0.32$. The invisibility, the collapse and the inversion are all properties of
+domain-adversarial training rather than of the factorized architecture.
+
+One difference is informative. The single-encoder model plateaus at leakage
+$0.76$--$0.81$ and never reaches the $0.553$ the dual-encoder attains; more adversarial
+pressure buys no further invariance. The dual-encoder has somewhere to put the
+discarded information --- a domain probe on its context branch reads $>0.9999$ --- while
+the single-encoder must destroy it. The architecture that achieves deeper invariance
+also suffers the larger collapse ($0.413$ versus $0.509$ at $\lam = 2$), which is the
+dose--response relationship seen from a second direction.
 
 \subsection{What the phenomenon is not}
 
 \begin{table}[t]
 \centering
 \small
-\caption{Candidate explanations tested and refuted. Each was a pre-specified
-prediction with a defined test.}
+\caption{Candidate explanations tested and refuted. Each was a prediction specified
+before its test.}
 \label{tab:refuted}
-\begin{tabular}{p{3.2cm}p{5.4cm}p{6.0cm}}
+\begin{tabular}{p{3.1cm}p{5.2cm}p{6.1cm}}
 \toprule
 Explanation & Test & Result \\
 \midrule
 Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
 Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.414$ vs $0.409$; reweighting \emph{strengthens} the inversion to $0.240$ \\
-Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.399$; baseline reaches $0.994$ on the same images \\
+Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.399$; a non-adversarial baseline reaches $0.994$ on the same images \\
 Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
-Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam=0$; the adversary \emph{decompresses} it \\
+Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam = 0$; the adversary \emph{decompresses} it \\
 Tail asymmetry & Recompute AUROC after truncating the pooled upper tail & $0.412$--$0.424$ versus $0.427$; medians invert \\
 \midrule
-Synthetic reproduction & Pre-registered toy model, heavy-tailed ID, grid locked before fitting & No inversion ($\lam{=}0$: $0.693$; $\lam{=}2$: $0.786$) \\
+Synthetic reproduction & Pre-registered toy model with heavy-tailed ID structure, grid fixed before fitting & No inversion ($\lam{=}0$: $0.693$; $\lam{=}2$: $0.786$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:refuted} summarises six refuted accounts and one failed
-controlled synthetic reproduction. We report these prominently because they
-are why the remaining claims are credible, and because delimiting the
-phenomenon is useful to whoever explains it.
+Table~\ref{tab:refuted} lists six candidate accounts, each tested against a prediction
+fixed in advance, and each refuted, together with a pre-registered synthetic
+reproduction that failed. We report them prominently because they are the reason the
+remaining claims are credible, and because delimiting a phenomenon is useful to whoever
+eventually explains it. We do not have a mechanism.
 
-\subsection{A domain monitor is cheap}
+\subsection{A domain monitor is cheap, and semantic novelty is unaffected}
 
-A linear domain head on a frozen ImageNet ResNet-50 that has never seen this
-data reaches AUROC $0.998$; on the trained baseline, $0.997$
-(Table~\ref{tab:monitor}). Detecting the domain is easy from almost any
-representation, so retaining a monitor is not in itself a contribution. What
-distinguishes the context branch is \emph{concentration}: a single principal
-component carries $84.5\%$ of its variance and already separates the domains,
-against $0.55$--$0.70$ at $k{=}1$ for every other representation tested.
+A linear domain head on a frozen ImageNet ResNet-50 that has never seen this data
+reaches AUROC $0.998$; on the trained baseline, $0.997$; on the trained EfficientNet-B3
+control, $0.991$. Detecting the acquisition domain is easy from almost any
+representation, so retaining a monitor is not in itself difficult. What distinguishes
+the dual-encoder's context branch is \emph{concentration}: a single principal component
+carries $84.5\%$ of its variance and already separates the domains
+(AUROC $>0.9999$, two discordant pairs in $11.6$M), against $0.55$--$0.70$ at $k = 1$
+for every other representation tested.
 
-\begin{table}[t]
-\centering
-\small
-\caption{A domain monitor is obtainable from almost any representation. The
-$k{=}1$ column, not the AUROC column, is where the factorized model differs.}
-\label{tab:monitor}
-\begin{tabular}{lcc}
-\toprule
-Representation & Linear domain AUROC & AUROC at PCA $k{=}1$ \\
-\midrule
-Frozen ImageNet ResNet-50 & 0.998 & 0.65 \\
-Frozen ImageNet EfficientNet-B3 & 0.994 & 0.55 \\
-Trained ResNet-50 baseline & 0.997 & 0.65 \\
-Trained EfficientNet-B3 control & 0.991 & 0.70 \\
-Context branch $z_c$ & $>0.9999$\,\footnotesize{(2 discordant pairs / 11.6M)} & \textbf{1.00} (84.5\% var.) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Semantic novelty is not affected in the same way}
-
-With the domain held constant and diagnostic classes held out of training
-instead, both branches land between $0.6$ and $0.8$ and the ordering depends
-on which class is withheld (DF+VASC: lesion $0.648$, context $0.641$, baseline
-$0.687$; SCC: lesion $0.806$, context $0.607$, baseline $0.684$). No near/far
-structure organises the difference (Pearson $-0.12$ against a
-centroid-similarity index). We report this as a null result. The failure
-documented above is specific to covariate shift.
+The damage is specific to covariate shift. With the domain held constant and diagnostic
+classes withheld from training instead, both branches land between $0.6$ and $0.8$ and
+the ordering depends on which class is withheld (DF and VASC: lesion $0.648$, context
+$0.641$, baseline $0.687$; SCC: lesion $0.806$, context $0.607$, baseline $0.684$). No
+near/far structure organises the difference (Pearson $-0.12$ against a
+centroid-similarity index). We report this as a null result.
 
 % ------------------------------------------------------------
 \section{Discussion}
