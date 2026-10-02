@@ -77,8 +77,8 @@ non-adversarial invariance objectives, and validated on Fitzpatrick17k, a third
 dataset never seen by the adversary.
 
 \noindent\textbf{Results.} At the smallest non-zero weight tested, OOD detection
-fell from AUROC $0.863$ to $0.508$; by $\lam = 2$ it had \textbf{inverted below
-chance to $0.413$}, ranking images from a clinic the model had never seen as
+fell from AUROC $0.843$ to $0.513$; by $\lam = 2$ it had \textbf{inverted below
+chance to $0.427$}, ranking images from a clinic the model had never seen as
 more in-distribution than its own test data, throughout the score distribution
 rather than only in the tails. All five scoring rules collapsed together, the
 inversion held on the third dataset ($0.391$ at $\lam = 2$ against $0.764$ at
@@ -129,7 +129,7 @@ weaken as domain information is removed --- it passes through chance and
 inverts. At the weights that achieve invariance, a model asked which inputs are
 unlike its training data answers with its own test split, and ranks images from
 a clinic it has never seen as the more routine of the two. AUROC falls from
-$0.863$ to $0.413$, below chance, across every scoring rule we tried.
+$0.843$ to $0.427$, below chance, across every scoring rule we tried.
 
 Degradation would be unsurprising. A representation stripped of domain
 information should be worse at recognising a domain, and chance is what that
@@ -269,7 +269,9 @@ resulting circularity we partitioned PAD \emph{at patient level} into
 during training, and \texttt{pad\_heldout} (716 images, 412 patients), never
 seen in any form. No patient and no lesion appears in both. \textbf{All OOD
 and cross-domain numbers reported in the main text use
-\texttt{pad\_heldout}.} Fitzpatrick17k provides a second never-adversarial
+\texttt{pad\_heldout}.} An earlier draft of this work reported $0.413$ at $\lam = 2$;
+that value was scored on \texttt{pad\_full}, which includes the $1{,}582$ images the
+adversarial branch saw during training. Fitzpatrick17k provides a second never-adversarial
 domain.
 
 \subsection{Architecture and objective}
@@ -356,19 +358,17 @@ favourable.}
 $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 & OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
 \midrule
-0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.863\,$\pm$\,0.025} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
-0.25 & 3 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.508\,$\pm$\,0.022} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
-0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.449\,$\pm$\,0.008 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
-1    & 3 & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.439\,$\pm$\,0.040 & 0.457\,$\pm$\,0.088 & \xdomOne \\
-2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.413\,$\pm$\,0.021}\rlap{$^{\ddagger}$} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
-4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.443\,$\pm$\,0.038 & 0.431\,$\pm$\,0.036 & \xdomFour \\
-8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.481\,$\pm$\,0.026 & 0.474\,$\pm$\,0.060 & \xdomEight \\
+0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
+0.25 & 3 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.513\,$\pm$\,0.018} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
+0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.465\,$\pm$\,0.015 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
+1    & 3 & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
+2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.427\,$\pm$\,0.025} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
+4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.455\,$\pm$\,0.039 & 0.431\,$\pm$\,0.036 & \xdomFour \\
+8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.494\,$\pm$\,0.027 & 0.474\,$\pm$\,0.060 & \xdomEight \\
 \midrule
 \multicolumn{2}{l}{EffNet-B3 control} & 0.802 & 0.683 & 0.096 & --- & 0.726\,$\pm$\,0.021 & 0.649 & \xdomEffb \\
 \multicolumn{2}{l}{ResNet-50 baseline} & 0.979 & 0.655 & 0.101 & --- & 0.868\,$\pm$\,0.019 & 0.994 & 0.391 \\
 \bottomrule
-\multicolumn{9}{l}{\footnotesize $^{\ddagger}$\pending{verify which PAD partition the
-sweep scored: 0.413 matches \texttt{pad\_full}, 0.427 matches \texttt{pad\_heldout}.}}
 \end{tabular}}
 \end{table}
 
@@ -400,13 +400,13 @@ method had worked exactly as advertised.
 \subsection{Out-of-distribution detection collapses, and inverts}
 
 Over the same interval, Mahalanobis AUROC against the held-out PAD partition falls from
-$0.863$ to $0.508$, and reaches $0.413$ at $\lam = 2$.
+$0.843$ to $0.513$, and reaches $0.427$ at $\lam = 2$.
 
 Two features of this collapse matter more than its size.
 
 \paragraph{It is a cliff, not a trade-off curve.} The transition is essentially complete
 at the smallest non-zero weight tested. Between $\lam = 0.5$ and $\lam = 8$ the value
-moves only between $0.413$ and $0.481$, with no ordering that would let a practitioner
+moves only between $0.427$ and $0.494$, with no ordering that would let a practitioner
 tune for a safe compromise. There is no operating point on this curve at which
 invariance has been obtained and detection survives.
 
@@ -425,7 +425,7 @@ replication is at the backbone (Section~\ref{sec:nonmediation}) and in the
 single-encoder model (Section~\ref{sec:arch}).
 
 The collapse is not a numerical artefact of the covariance estimate. Ledoit--Wolf
-shrinkage leaves the $\lam = 2$ value unchanged at $0.413$, and effective
+shrinkage leaves the $\lam = 2$ value unchanged\footnote{\pending{shrinkage check was run on \texttt{pad\_full}; re-run on \texttt{pad\_heldout} to match the main column.}}, and effective
 dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
 while leakage falls $0.914 \to 0.553$).
 
@@ -471,7 +471,7 @@ The natural hypothesis is that removing domain information is what breaks detect
 Three results rule it out.
 
 First, leakage \textbf{saturates at its chance floor by $\lam = 0.25$} ($0.553$ against
-a floor of $0.5$) while AUROC continues to fall from $0.508$ to $0.413$ as $\lam$ rises
+a floor of $0.5$) while AUROC continues to fall from $0.513$ to $0.427$ as $\lam$ rises
 further. The damage continues after invariance is complete.
 
 Second, at the pre-projection backbone, leakage is essentially flat across the whole
@@ -510,7 +510,7 @@ separate blocks.}
 Objective & Weight & Leakage & Maha.\ AUROC & ID bal.\ acc & OOD ECE \\
 \midrule
 \multicolumn{6}{l}{\emph{No access to PAD labels}}\\
-ERM          & ---    & 0.973 & 0.838 & 0.761 & --- \\
+ERM\rlap{$^{\S}$} & ---    & 0.973 & 0.838 & 0.761 & --- \\
 CORAL        & 100    & 0.998 & 0.999 & 0.777 & --- \\
 MMD          & 1      & 0.967 & 0.813 & 0.779 & --- \\
 MMD          & 100    & 0.900 & 0.716 & 0.730 & --- \\
@@ -522,7 +522,10 @@ MMD          & 10000  & 0.836 & 0.665 & 0.337 & 0.267 \\
 IRM          & 100    & 0.950 & 0.729 & 0.167 & --- \\
 GroupDRO     & 10     & 0.976 & 0.868 & 0.783 & --- \\
 \bottomrule
-\multicolumn{6}{l}{\footnotesize $^\dagger$ plain accuracy for the GRL row; see Table~\ref{tab:single}.}
+\multicolumn{6}{l}{\footnotesize $^\dagger$ plain accuracy for the GRL row; see Table~\ref{tab:single}.}\\
+\multicolumn{6}{l}{\footnotesize $^{\S}$ scored on \texttt{pad\_full} with a uniform optimiser and an ISIC-only loss; the}\\
+\multicolumn{6}{l}{\footnotesize \phantom{$^{\S}$} $\lam{=}0$ row of Table~\ref{tab:single} uses \texttt{pad\_heldout}, grouped learning rates and}\\
+\multicolumn{6}{l}{\footnotesize \phantom{$^{\S}$} \texttt{ignore\_index}. They are not the same condition. \pending{harmonise or relabel.}}
 \end{tabular}
 \end{table}
 
@@ -601,7 +604,7 @@ $0.76$--$0.81$ and never reaches the $0.553$ the dual-encoder attains; more adve
 pressure buys no further invariance. The dual-encoder has somewhere to put the
 discarded information --- a domain probe on its context branch reads $>0.9999$ --- while
 the single-encoder must destroy it. The architecture that achieves deeper invariance
-also suffers the larger collapse ($0.413$ versus $0.509$ at $\lam = 2$), which is the
+also suffers the larger collapse ($0.427$ versus $0.509$ at $\lam = 2$), which is the
 dose--response relationship seen from a second direction.
 
 \subsection{What the phenomenon is not}
@@ -617,7 +620,7 @@ before its test.}
 Explanation & Test & Result \\
 \midrule
 Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
-Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.414$ vs $0.409$; reweighting \emph{strengthens} the inversion to $0.240$ \\
+Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.432$ vs $0.427$ on \texttt{pad\_heldout}; reweighting \emph{strengthens} the inversion to $0.240$ \\
 Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.399$; a non-adversarial baseline reaches $0.994$ on the same images \\
 Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
 Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam = 0$; the adversary \emph{decompresses} it \\
