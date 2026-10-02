@@ -779,15 +779,30 @@ description of a fielded system.
 
 \textbf{One domain pair, one modality contrast.} ISIC is dermoscopy; PAD-UFES
 and Fitzpatrick17k are clinical photography. The construct we call domain is
-confounded with imaging modality, and Fitzpatrick17k does not resolve this
-because it is also clinical photography. Two attempts to replicate outside
-dermatology did not settle the question. On Camelyon17 the adversary head never
-trained (cross-entropy $\ln 3$ from the first epoch at every $\lam$, while a
-post-hoc probe read $0.94$) despite a gradient graph verified correct (head
-cosine $+1.000$, encoder $-1.000$); \textbf{we therefore report no Camelyon17
-result and make no claim that Camelyon17 resists invariance}, and record the
-diagnostic for future work. \pending{iWildCam status and outcome, or removal of
-this clause.} Generality beyond dermatology remains untested.
+therefore confounded with imaging modality, and Fitzpatrick17k does not resolve
+this because it is also clinical photography.
+
+Two attempts to replicate outside dermatology failed for different reasons, and
+neither settles the question. On Camelyon17 the adversary head never trained:
+cross-entropy sat at $\ln 3$ from the first epoch at every $\lam$ while a
+post-hoc probe on the same features read $0.94$, despite a gradient graph
+verified correct (head cosine $+1.000$, encoder $-1.000$). On iWildCam the
+adversary did train --- best-epoch cross-entropy $3.13$ against $\ln 243 =
+5.49$ --- but the encoder never became invariant: the binary train-versus-OOD
+site probe moved only from $0.911$ to $0.891$ across $\lam \in [0, 10]$, against
+a floor of $0.5$, and no detector collapsed. \textbf{We therefore report no
+result from either dataset, and make no claim that either resists invariance.}
+In both cases the manipulation did not take, so there was nothing to measure.
+
+One observation survives these failures and may be useful to others. Invariance
+was obtained easily in the two-domain dermatology setting --- leakage fell from
+$0.970$ to $0.763$ at $\lam = 0.25$ --- and was not obtained at any weight in
+either multi-domain setting. Adversarial invariance may be substantially harder
+to achieve as the number of training domains grows, which would bound the
+settings in which the failure reported here can be observed at all. We offer
+this as an observation rather than a claim; it rests on two negative results.
+
+Generality beyond dermatology remains untested.
 
 \textbf{The objective comparison is bounded.} MMD never reached the invariance
 level gradient reversal attains; it could only approach it by destroying the
