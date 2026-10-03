@@ -92,7 +92,10 @@ while cross-domain accuracy did not improve at any $\lam$ and predictions
 collapsed toward the benign majority class (actinic keratosis recall
 $0.244 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
 adversarial training but not in moment-matching objectives, which reduced
-leakage comparably without collapsing any detector. Six candidate explanations were tested and
+leakage comparably without collapsing any detector. In a same-modality shift between
+two hospitals the collapse reproduced ($k$-NN $0.658 \to 0.486$) but the inversion did
+not: with matched baseline detectability, Mahalanobis fell only to $0.683$. Six
+candidate explanations were tested and
 refuted, and a pre-registered synthetic reproduction failed.
 
 \noindent\textbf{Conclusions.} Domain-adversarial training does not merely
@@ -425,7 +428,7 @@ replication is at the backbone (Section~\ref{sec:nonmediation}) and in the
 single-encoder model (Section~\ref{sec:arch}).
 
 The collapse is not a numerical artefact of the covariance estimate. Ledoit--Wolf
-shrinkage leaves the $\lam = 2$ value unchanged\footnote{\pending{shrinkage check was run on \texttt{pad\_full}; re-run on \texttt{pad\_heldout} to match the main column.}}, and effective
+shrinkage leaves the $\lam = 2$ value unchanged on the held-out partition ($0.427$ under both), and effective
 dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
 while leakage falls $0.914 \to 0.553$).
 
@@ -607,6 +610,67 @@ the single-encoder must destroy it. The architecture that achieves deeper invari
 also suffers the larger collapse ($0.427$ versus $0.509$ at $\lam = 2$), which is the
 dose--response relationship seen from a second direction.
 
+\subsection{The collapse generalises to a same-modality site shift; the inversion does not}
+\label{sec:site}
+
+Every result above contrasts dermoscopy with clinical photography, so the construct we
+call domain is confounded with imaging modality. ISIC~2019 contains a contrast that is
+not: its \texttt{lesion\_id} field records the contributing site, with 12{,}413 images
+from Hospital Cl\'inic Barcelona (\texttt{BCN}) and 10{,}015 from the HAM10000
+collection (\texttt{HAM}). Two hospitals, two dermatoscopes, two patient populations ---
+one modality.
+
+\paragraph{The sites are separable, and not for trivial reasons.}
+A logistic probe on frozen ERM features distinguishes them at balanced accuracy
+$0.962 \pm 0.007$ against a floor of $0.5$, comparable to the $0.970$ that
+ISIC$\leftrightarrow$PAD reaches at $\lam = 0$. Masking the dermatoscope vignette
+reduces this only to $0.943 \pm 0.005$, so the border is not the signal. Hand-crafted
+colour and intensity statistics reach $0.901$ at best --- close to the $0.876$ ceiling
+the same features reach on ISIC$\leftrightarrow$PAD, so this pair is no more
+low-level than the original contrast --- while sharpness statistics sit at chance
+($0.532$). A probe given only the ground-truth class label reaches $0.668$, reflecting
+the two sites' different class distributions; the feature probe is far above that
+reference.
+
+\paragraph{The collapse reproduces.}
+Training single-encoder DANN with \texttt{BCN} as the in-distribution set and a
+lesion-disjoint $30\%$ \texttt{HAM} partition held out, leakage falls from
+$0.963 \pm 0.006$ to $0.821 \pm 0.030$ at $\lam = 0.25$, and the detectors that have
+headroom fall through chance: $k$-NN $0.658 \pm 0.041 \to 0.486 \pm 0.009$ and cosine
+$0.576 \pm 0.040 \to 0.477 \pm 0.006$ (3 seeds). The leakage reduction matches the
+single-encoder dermatology sweep almost exactly ($0.970 \to 0.763$), and unlike the
+two multi-domain settings in the limitations, the manipulation took.
+
+Mahalanobis is uninformative in this direction: it reads $0.379$ at $\lam = 0$, already
+below chance before any adversarial training. Reweighting the in-distribution set to the
+out-of-domain class mix raises it to $0.487$, so most of the baseline inversion is class
+composition --- HAM is two-thirds nevus and therefore concentrated near a single
+well-populated centroid --- with a residual we attribute to HAM10000's more
+standardised acquisition and correspondingly lower feature variance.
+
+\paragraph{With the roles reversed, the inversion does not appear.}
+Taking \texttt{HAM} as the in-distribution set restores the headroom: Mahalanobis reads
+$0.846 \pm 0.003$ at $\lam = 0$, essentially identical to the $0.843$ of the
+dermatology sweep. Adversarial training then reduces leakage from $0.95$ to $0.77$ and
+drives Mahalanobis to $0.719 \pm 0.019$ at $\lam = 0.25$ and $0.683 \pm 0.015$ at
+$\lam = 1$. The class-reweighted variant falls from $0.74$ to $0.54$. Detection degrades
+substantially --- and stops at or above chance.
+
+\paragraph{Reading.}
+The comparison is tighter than it first appears. Baseline detectability is the same
+($0.846$ versus $0.843$) and the achieved invariance is the same as the single-encoder
+dermatology run ($0.77$ versus $0.763$), yet the cross-modality contrast reaches $0.427$
+while the same-modality contrast stops at $0.683$. Neither a shortage of headroom nor a
+shortfall in achieved invariance accounts for the difference.
+
+We therefore separate two claims that the earlier sections report together. The
+\emph{collapse} --- detection falling to chance as invariance is obtained, invisibly to
+in-distribution metrics --- reproduces under a same-modality shift between two
+hospitals. The \emph{inversion} does not: in every setting where we observe it, the two
+domains differ in imaging modality. Whether that reflects a threshold in the size of the
+shift, something specific to modality gaps, or a property of these particular datasets,
+we cannot say.
+
 \subsection{What the phenomenon is not}
 
 \begin{table}[t]
@@ -621,7 +685,7 @@ Explanation & Test & Result \\
 \midrule
 Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
 Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.432$ vs $0.427$ on \texttt{pad\_heldout}; reweighting \emph{strengthens} the inversion to $0.240$ \\
-Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.399$; a non-adversarial baseline reaches $0.994$ on the same images \\
+Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.391$ at $\lam = 2$ against $0.764$ at $\lam = 0$, same model and data \\
 Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
 Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam = 0$; the adversary \emph{decompresses} it \\
 Tail asymmetry & Recompute AUROC after truncating the pooled upper tail & $0.412$--$0.424$ versus $0.427$; medians invert \\
@@ -777,10 +841,14 @@ controlled intervention, not the deployability of any particular model, and the
 deployment pathway above should be read as a mechanism of harm rather than as a
 description of a fielded system.
 
-\textbf{One domain pair, one modality contrast.} ISIC is dermoscopy; PAD-UFES
-and Fitzpatrick17k are clinical photography. The construct we call domain is
-therefore confounded with imaging modality, and Fitzpatrick17k does not resolve
-this because it is also clinical photography.
+\textbf{The inversion is observed only across imaging modality.} ISIC is dermoscopy;
+PAD-UFES and Fitzpatrick17k are clinical photography, so the main contrast confounds
+site with modality, and Fitzpatrick17k does not resolve this because it is also
+clinical photography. The same-modality contrast within ISIC
+(Section~\ref{sec:site}) separates the two claims: the collapse reproduces between two
+hospitals, the inversion does not. Every setting in which we observe the inversion is a
+cross-modality one, and we cannot say whether that reflects the size of the shift, a
+property of modality gaps specifically, or these particular datasets.
 
 Two attempts to replicate outside dermatology failed for different reasons, and
 neither settles the question. On Camelyon17 the adversary head never trained:
