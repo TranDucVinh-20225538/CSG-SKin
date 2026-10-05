@@ -98,9 +98,10 @@ not: with matched baseline detectability, Mahalanobis fell only to $0.683$. Six
 candidate explanations were tested and
 refuted, and a pre-registered synthetic reproduction failed.
 
-\noindent\textbf{Conclusions.} Domain-adversarial training does not merely
-weaken out-of-distribution monitoring; it reverses it, while every routinely
-monitored metric improves. OOD detection and out-of-domain calibration should
+\noindent\textbf{Conclusions.} Across imaging modality, domain-adversarial training
+does not merely weaken out-of-distribution monitoring; it reverses it, while every
+routinely monitored metric improves. Between two hospitals sharing a modality the
+collapse persists and the reversal does not, so the two should be claimed separately. OOD detection and out-of-domain calibration should
 be reported as a function of achieved invariance rather than at a single
 operating point.
 \end{abstract}
@@ -216,10 +217,17 @@ inputs one cannot classify is worse than flagging them, and no current
 protocol separates the two cases. We therefore report acceptance and
 cross-domain accuracy jointly throughout.
 
-\paragraph{Calibration as a route to invariance --- and the reverse.}
-Ovadia et al.~\cite{ovadia2019} showed that calibration degrades under shift
-for ordinary training. Wald et al.~\cite{wald2021} went further and
-established the forward direction: enforcing \emph{multi-domain calibration}
+\paragraph{Calibration under adaptation.}
+Ovadia et al.~\cite{ovadia2019} showed that calibration degrades under shift for
+ordinary training, and Wang et al.~\cite{wang2020} established the sharper result that
+domain adaptation methods specifically \emph{trade} calibration for accuracy: adapted
+models are miscalibrated on the target domain, and they propose a post-hoc correction.
+\textbf{The calibration degradation we report in Section~\ref{sec:confidently} is
+therefore not a new phenomenon.} What is new here is its dose-dependence on the
+adversarial weight, its invisibility to in-distribution calibration, and --- separately
+from calibration altogether --- the collapse and inversion of out-of-distribution
+detection, which a post-hoc confidence correction does not address. \paragraph{Calibration as a route to invariance --- and the reverse.}
+Wald et al.~\cite{wald2021} established the forward direction: enforcing \emph{multi-domain calibration}
 yields invariance, with models so calibrated provably free of certain spurious
 correlations, and they propose a calibration loss (CLOvE) validated on WILDS.
 
@@ -462,7 +470,10 @@ $6/\nSCC \to 1/\nSCC$) but the count is too small to carry a claim on its own, a
 melanoma ($n = \nMEL$) supports none.
 
 The resulting out-of-domain calibration error triples, from $0.247$ to $0.746$, while
-in-distribution ECE stays flat at $\approx 0.10$. We stress that confidence, accuracy
+in-distribution ECE stays flat at $\approx 0.10$. That adapted models are miscalibrated
+on the target domain is known \cite{wang2020}; what the sweep adds is that the
+degradation is dose-dependent on the adversarial weight and leaves in-distribution
+calibration untouched, so no in-distribution measurement reveals it. We stress that confidence, accuracy
 and calibration here are three views of a single phenomenon rather than three
 independent results: in this setting out-of-domain ECE is arithmetically close to mean
 confidence minus accuracy.
@@ -973,6 +984,8 @@ features with deep adaptation networks. \emph{ICML}, 2015.
 Invariant risk minimization. \emph{arXiv:1907.02893}, 2019.
 \bibitem{sagawa2020} Sagawa, S., Koh, P.W., Hashimoto, T., Liang, P.
 Distributionally robust neural networks for group shifts. \emph{ICLR}, 2020.
+\bibitem{wang2020} Wang, X., Long, M., Wang, J., Jordan, M.I. Transferable
+calibration with lower bias and variance in domain adaptation. \emph{NeurIPS}, 2020.
 \bibitem{wald2021} Wald, Y., Feder, A., Greenfeld, D., Shalit, U. On
 calibration and out-of-domain generalization. \emph{NeurIPS}, 2021.
 arXiv:2102.10395.
