@@ -665,7 +665,9 @@ $0.846 \pm 0.003$ at $\lam = 0$, essentially identical to the $0.843$ of the
 dermatology sweep. Adversarial training then reduces leakage from $0.95$ to $0.77$ and
 drives Mahalanobis to $0.719 \pm 0.019$ at $\lam = 0.25$ and $0.683 \pm 0.015$ at
 $\lam = 1$. The class-reweighted variant falls from $0.74$ to $0.54$. Detection degrades
-substantially --- and stops at or above chance.
+substantially --- and stops above chance: at $\lam = 1$ the patient-clustered bootstrap
+gives a $95\%$ interval of $[0.666,\, 0.699]$, and all three seeds have individual
+intervals lying entirely above $0.5$.
 
 \paragraph{Reading.}
 The comparison is tighter than it first appears. Baseline detectability is the same
