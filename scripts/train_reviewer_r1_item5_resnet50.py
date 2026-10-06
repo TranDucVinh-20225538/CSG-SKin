@@ -109,8 +109,8 @@ class ResNet50DannLightning(pl.LightningModule):
         self.cls_lr_multiplier = float(cls_lr_multiplier)
         self.net = ResNet50Dann(n_classes=n_classes, n_domains=n_domains, pretrained=True)
         self._last_alpha = 0.0
-        self._g_enc = []
-        self._epoch_rows = []
+        self._acc_adv_epoch = []
+        self._loss_adv_epoch = []
         self.log_path = Path(log_path) if log_path else None
         self.automatic_optimization = True
 
@@ -138,20 +138,28 @@ class ResNet50DannLightning(pl.LightningModule):
         with torch.no_grad():
             adv_pred = dlogits.argmax(1)
             adv_acc = (adv_pred == domain).float().mean()
+        self._acc_adv_epoch.append(float(adv_acc))
+        self._loss_adv_epoch.append(float(loss_adv.detach()))
         self.log("train/loss", loss, prog_bar=True, batch_size=images_ctx.size(0))
-        self.log("train/adv_acc", adv_acc, prog_bar=True, batch_size=images_ctx.size(0))
-        if self.log_path and self.global_step % 20 == 0:
-            row = {
-                "step": int(self.global_step),
-                "epoch": int(self.current_epoch),
-                "alpha": float(alpha),
-                "grl_progress": float(progress),
-                "adv_acc": float(adv_acc),
-                "adv_ce": float(loss_adv),
-            }
+        self.log("train/loss_adv", loss_adv, on_step=False, on_epoch=True, batch_size=images_ctx.size(0))
+        self.log("train/acc_adv", adv_acc, on_step=False, on_epoch=True, batch_size=images_ctx.size(0))
+        return loss
+
+    def on_train_epoch_end(self):
+        if not self._acc_adv_epoch:
+            return
+        row = {
+            "epoch": int(self.current_epoch) + 1,
+            "acc_adv": float(np.mean(self._acc_adv_epoch)),
+            "loss_adv": float(np.mean(self._loss_adv_epoch)),
+            "grl_alpha": float(self._last_alpha),
+            "lnK": LN2,
+        }
+        self._acc_adv_epoch = []
+        self._loss_adv_epoch = []
+        if self.log_path:
             with self.log_path.open("a") as f:
                 f.write(json.dumps(row) + "\n")
-        return loss
 
     def validation_step(self, batch, _batch_idx):
         images, labels = batch

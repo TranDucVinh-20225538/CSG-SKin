@@ -31,13 +31,27 @@
     "ln_k": 0.6931471805599453,
     "ce_margin": 0.02,
     "first_batch": null,
-    "epoch1": null,
-    "best_epoch": null,
-    "last_epoch": null,
-    "n_epochs_logged": 0,
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.65625,
+      "loss_adv": 0.6863087014510081
+    },
+    "best_epoch": {
+      "epoch": 6,
+      "acc_adv": 0.55875,
+      "loss_adv": 0.6859740591049195
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.51375,
+      "loss_adv": 0.6937557983398438
+    },
+    "n_epochs_logged": 40,
     "lambda_adv": 2.0,
     "status": "inconclusive",
-    "reason": "no adversary epoch log"
+    "reason": "adversary never left chance: best-epoch CE 0.6860 is not below ln K \u2212 0.02 = 0.6731. Null experiment, not a scientific negative.",
+    "learned": false,
+    "returned_to_chance": false
   },
   "hygiene": {
     "n_train": 16211,
@@ -46,5 +60,6 @@
     "n_pad_adv": 1582,
     "n_pad_heldout": 716,
     "pad_patient_disjoint": true
-  }
+  },
+  "gate_rescore_note": "From adversary_log.jsonl epoch means; fixes step-only logging bug."
 }

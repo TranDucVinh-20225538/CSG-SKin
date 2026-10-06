@@ -31,10 +31,22 @@
     "ln_k": 0.6931471805599453,
     "ce_margin": 0.02,
     "first_batch": null,
-    "epoch1": null,
-    "best_epoch": null,
-    "last_epoch": null,
-    "n_epochs_logged": 0,
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.4873798076923077,
+      "loss_adv": 0.793231494151629
+    },
+    "best_epoch": {
+      "epoch": 21,
+      "acc_adv": 0.5330528846153846,
+      "loss_adv": 0.7341256691859319
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.501875,
+      "loss_adv": 0.7731485462188721
+    },
+    "n_epochs_logged": 40,
     "lambda_adv": 0.0,
     "status": "valid_control",
     "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
@@ -46,5 +58,6 @@
     "n_pad_adv": 1582,
     "n_pad_heldout": 716,
     "pad_patient_disjoint": true
-  }
+  },
+  "gate_rescore_note": "From adversary_log.jsonl epoch means; fixes step-only logging bug."
 }
