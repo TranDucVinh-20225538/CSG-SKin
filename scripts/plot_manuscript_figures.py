@@ -74,34 +74,24 @@ def fig1_intervention():
     x = pfs.lam_xpos(lams)
 
     panels = [
-        ("a", "Domain leakage (bal. acc.)", lambda r: r["leakage"]["z_lesion"]["bal_acc_mean"], True, False),
-        ("b", "ID balanced accuracy", lambda r: r["id_balanced_acc"], False, False),
-        ("c", "OOD AUROC (PAD held-out)", None, False, True),
-        ("d", "OOD ECE (pad held-out)", None, False, False),
+        ("a", "Leakage", lambda r: r["leakage"]["z_lesion"]["bal_acc_mean"], True, False, True),
+        ("b", "ID bal. acc.", lambda r: r["id_balanced_acc"], False, False, True),
+        ("c", "OOD AUROC", None, False, True, True),
+        ("d", "OOD ECE", None, False, False, False),
     ]
 
     by13 = by_lambda_runs(load_phase13_runs())
 
-    fig = plt.figure(figsize=(7.08, 2.35))
-    gs = GridSpec(1, 4, figure=fig, wspace=0.38)
+    fig = plt.figure(figsize=(9.6, 2.85), constrained_layout=True)
+    gs = GridSpec(1, 4, figure=fig, wspace=0.32)
     x0, x1 = intervention_band_x(lams)
+    shared_ylim = (0.4, 1.0)
 
-    for i, (tag, title, fn, show_floor, show_chance) in enumerate(panels):
+    for i, (tag, title, fn, show_floor, show_chance, shared_scale) in enumerate(panels):
         ax = fig.add_subplot(gs[0, i])
         pfs.style_axis(ax)
         pfs.set_lambda_axis(ax, lams)
         ax.axvspan(x0, x1, color="#CCCCCC", alpha=0.25, zorder=0)
-        if i == 0:
-            ax.text(
-                (x0 + x1) / 2,
-                1.02,
-                r"practitioner-favourable $\lambda$",
-                transform=ax.get_xaxis_transform(),
-                ha="center",
-                va="bottom",
-                fontsize=7,
-                color=pfs.INK,
-            )
         means, stds = [], []
         for lam in lams:
             if tag == "d":
@@ -118,15 +108,35 @@ def fig1_intervention():
             pfs.floor_line(ax, 0.5)
         if show_chance:
             pfs.chance_line(ax)
-        ax.set_title(f"({tag}) {title}", fontsize=8)
-        if tag in ("a", "b"):
-            ax.set_ylabel("Accuracy")
-        elif tag == "c":
-            ax.set_ylabel("AUROC")
-        else:
+        ax.set_title(f"({tag}) {title}", fontsize=8, pad=6)
+        if shared_scale:
+            ax.set_ylim(*shared_ylim)
+        if tag == "a":
+            ax.set_ylabel("Accuracy / AUROC")
+        elif tag == "d":
             ax.set_ylabel("ECE")
+        if tag == "b":
+            lo, hi = float(np.nanmin(means)), float(np.nanmax(means))
+            ax.text(
+                0.97,
+                0.06,
+                f"obs. {lo:.3f}–{hi:.3f}",
+                transform=ax.transAxes,
+                ha="right",
+                va="bottom",
+                fontsize=6,
+                color=pfs.INK,
+            )
 
-    fig.suptitle("Figure 1: intervention sweep (categorical $\\lambda$ spacing)", fontsize=8, y=1.02)
+    fig.text(
+        0.5,
+        0.01,
+        r"shaded: practitioner-favourable $\lambda$ (0.25–2)",
+        ha="center",
+        va="bottom",
+        fontsize=7,
+        color=pfs.INK,
+    )
     pfs.save_figure(fig, "fig1_intervention")
 
 
@@ -200,7 +210,7 @@ def fig3_detectors():
             m, s = agg_lam(by, lam, fn)
             means.append(m)
             stds.append(s)
-        pfs.plot_series(ax, x, means, stds, slot, lab)
+        pfs.plot_series(ax, x, means, stds, slot, lab, ms=5.5, marker_edgewidth=0.9)
     ax.set_ylabel("AUROC (PAD held-out)")
     ax.set_title("Figure 3: detectors on shared 16-d latent")
     ax.legend(frameon=False, ncol=1, loc="upper right")

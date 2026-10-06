@@ -86,21 +86,23 @@ def floor_line(ax, y=0.5):
     ax.axhline(y, color=CHANCE, ls="--", lw=0.8, zorder=1)
 
 
-def plot_series(ax, xpos, means, stds, slot: int, label: str, direct_label=False):
+def plot_series(ax, xpos, means, stds, slot: int, label: str, direct_label=False, ms=8, marker_edgewidth=0.0):
     st = SERIES[slot]
     y = np.asarray(means, dtype=float)
     e = np.asarray(stds, dtype=float)
-    line, = ax.plot(
-        xpos,
-        y,
+    mkw = dict(
         color=st["color"],
         ls=st["ls"],
         marker=st["marker"],
         lw=2,
-        ms=8,
+        ms=ms,
         label=label,
         zorder=3,
     )
+    if marker_edgewidth > 0:
+        mkw["markeredgecolor"] = "white"
+        mkw["markeredgewidth"] = marker_edgewidth
+    line, = ax.plot(xpos, y, **mkw)
     ax.fill_between(xpos, y - e, y + e, color=st["color"], alpha=0.2, linewidth=0, zorder=2)
     if direct_label and len(xpos):
         ax.annotate(

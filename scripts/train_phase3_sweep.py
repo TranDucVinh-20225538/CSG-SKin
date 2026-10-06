@@ -5,7 +5,7 @@ Original grid: λ_adv ∈ {0, 0.25, 0.5, 1, 2, 4, 8}, λ_orth=1, 3 seeds;
 endpoints {0, 2, 8} to 5 seeds → 27 runs.
 
 Additions: Fitzpatrick17k OOD and 6-class-restricted AUROC at every λ.
-λ_adv=2 reuses Phase 2 checkpoints (same recipe, same split) and only re-evals.
+λ_adv=2 reuses Phase 2 checkpoints only at the canonical adv_lr×30; other adv_lr multipliers train fresh.
 """
 
 from __future__ import annotations
@@ -261,7 +261,10 @@ def main():
         (run_dir / "dry_run_ok.json").write_text(json.dumps({"ok": True, **cfg}, indent=2) + "\n")
         return
 
-    reuse_p2 = abs(args.lambda_adv - 2.0) < 1e-12
+    # Phase-2 ckpt reuse only for the canonical ×30 adversary LR at λ=2.
+    reuse_p2 = (
+        abs(args.lambda_adv - 2.0) < 1e-12 and abs(float(args.adv_lr_multiplier) - 30.0) < 1e-9
+    )
     p2_ckpt_dir = PAPERB / "checkpoints" / "phase2" / "runB_orth1_padhold_s{}".format(args.seed)
     best = None
     if reuse_p2:

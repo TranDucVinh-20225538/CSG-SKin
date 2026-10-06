@@ -17,20 +17,11 @@
 
 ## Item 3 — adversary LR ×10 / ×100
 
-**Question:** Is sub-chance / cliff behaviour an artefact of adv_lr×30 being “too strong”?
+**λ=0.25 (retrained ×10/×100):** Mahalanobis stays at chance (×30 **0.513±0.018**; ×10 **0.509±0.037**; ×100 **0.528±0.029**). No sensitivity — **that part stands**.
 
-| Setting | λ=0.25 Mahalanobis (3 seeds) | λ=2 Mahalanobis (3 seeds) |
-|--------|------------------------------|---------------------------|
-| ×30 (baseline) | 0.511, 0.496, 0.532 → **0.513±0.018** | 0.431, 0.409, 0.456 → **0.432±0.024** |
-| ×10 | 0.548, 0.506, 0.474 → **0.509±0.037** | **Same as ×30** (λ=2 reuses Phase-2 ckpts) |
-| ×100 | 0.562, 0.508, 0.514 → **0.528±0.029** | **Same as ×30** |
+**λ=2 (headline claim):** Earlier table cells at ×10/×100 were **invalid** — `train_phase3_sweep.py` reused Phase-2 ckpts whenever λ=2, so AUROC matched ×30 by construction (`reused_phase2_ckpt: true`). **No manuscript sensitivity claim at λ=2 until retrain completes.**
 
-**Verdict:**
-
-- **λ=2 sub-chance inversion persists** at ×10 and ×100 (identical held-out AUROC to ×30 for all three seeds). The “below chance” claim is **not** explained by adversary LR being too high; if anything, weakening the adversary at λ=0.25 **raises** AUROC toward or above 0.5.
-- **λ=0.25 does not show a unique “collapse”** under weaker adversaries — scores stay at chance (~0.51) or move **up** with ×10/×100. The sharp drop in the main λ sweep is tied to the **×30 protocol**, not a generic “over-strong adversary” story.
-
-**Placement:** Put **λ=2 sensitivity** (sub-chance robust to adv LR) in **main text** or a short sensitivity paragraph. The full ×10/×100 grid is suitable for **appendix Table** (12 runs under `phase3_sweep/*_advlr10|100/`).
+**In flight:** 6 fresh GPU trains — adv_lr ∈ {10, 100}, λ=2, seeds {42,52,62}; `slurm/reviewer_r1_item3_lam2_advlr_retrain.sbatch`; reuse disabled unless ×30. Report: `scripts/report_item3_lam2_advlr.py` → `ITEM3_LAM2_ADVLR_REPORT.md`.
 
 ---
 

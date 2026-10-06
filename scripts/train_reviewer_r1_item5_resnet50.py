@@ -139,7 +139,7 @@ class ResNet50DannLightning(pl.LightningModule):
             adv_pred = dlogits.argmax(1)
             adv_acc = (adv_pred == domain).float().mean()
         self.log("train/loss", loss, prog_bar=True, batch_size=images_ctx.size(0))
-        self.log("train/adv_acc", adv_acc, prog_bar=True, batch_size=images.size(0))
+        self.log("train/adv_acc", adv_acc, prog_bar=True, batch_size=images_ctx.size(0))
         if self.log_path and self.global_step % 20 == 0:
             row = {
                 "step": int(self.global_step),
