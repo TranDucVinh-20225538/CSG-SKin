@@ -78,7 +78,8 @@ dataset never seen by the adversary.
 
 \noindent\textbf{Results.} At the smallest non-zero weight tested, OOD detection
 fell from AUROC $0.843$ to $0.513$; by $\lam = 2$ it had \textbf{inverted below
-chance to $0.427$}, ranking images from a clinic the model had never seen as
+chance to $0.427$} ($95\%$ CI $[0.414, 0.439]$; all five seeds individually below
+$0.5$), ranking images from a clinic the model had never seen as
 more in-distribution than its own test data, throughout the score distribution
 rather than only in the tails. All five scoring rules collapsed together, the
 inversion held on the third dataset ($0.391$ at $\lam = 2$ against $0.764$ at
@@ -133,7 +134,8 @@ weaken as domain information is removed --- it passes through chance and
 inverts. At the weights that achieve invariance, a model asked which inputs are
 unlike its training data answers with its own test split, and ranks images from
 a clinic it has never seen as the more routine of the two. AUROC falls from
-$0.843$ to $0.427$, below chance, across every scoring rule we tried.
+$0.843$ to $0.427$, with a $95\%$ confidence interval of $[0.414, 0.439]$ that lies
+entirely below chance, across every scoring rule we tried.
 
 Degradation would be unsurprising. A representation stripped of domain
 information should be worse at recognising a domain, and chance is what that
@@ -339,6 +341,16 @@ close to mean confidence minus accuracy}, so the confidence, accuracy and ECE
 results in Section~\ref{sec:confidently} are three views of one phenomenon,
 not three independent findings.
 
+\paragraph{Uncertainty.} Intervals on AUROC come from a stratified bootstrap with
+2{,}000 resamples, percentile method, fixed in a pre-registration before the values
+were computed. Each draw resamples \textbf{patients} from \texttt{pad\_heldout} and,
+independently, images from the ISIC test split, because AUROC depends on both score
+distributions and resampling only one side understates the interval. Within a draw the
+same resampled sets are used for every seed. We report both the interval on the
+five-seed mean and the number of seeds whose individual interval clears $0.5$.
+Fitzpatrick17k carries no patient identifiers, so its bootstrap is over images and its
+interval is likely anti-conservative.
+
 \paragraph{Cross-domain diagnosis.} Zero-shot evaluation on
 \texttt{pad\_heldout} over the six shared classes. PAD labels were never used
 for $\mathcal{L}_{\mathrm{cls}}$.
@@ -370,7 +382,7 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 & OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
 \midrule
 0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
-0.25 & 3 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.513\,$\pm$\,0.018} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
+0.25 & 5 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.509\,$\pm$\,0.023} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
 0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.465\,$\pm$\,0.015 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
 1    & 3 & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
 2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.427\,$\pm$\,0.025} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
@@ -415,15 +427,20 @@ $0.843$ to $0.513$, and reaches $0.427$ at $\lam = 2$.
 
 Two features of this collapse matter more than its size.
 
-\paragraph{It is a cliff, not a trade-off curve.} The transition is essentially complete
-at the smallest non-zero weight tested. Between $\lam = 0.5$ and $\lam = 8$ the value
-moves only between $0.427$ and $0.494$, with no ordering that would let a practitioner
-tune for a safe compromise. There is no operating point on this curve at which
+\paragraph{The fall to chance is a cliff; the inversion develops after it.} Almost the
+whole descent happens in one step: $0.843$ to $0.509$ between $\lam = 0$ and
+$\lam = 0.25$. The sub-chance region is reached only at $\lam \geq 0.5$, after which the
+value moves between $0.427$ and $0.494$ with no ordering that would let a practitioner
+tune for a safe compromise. We therefore distinguish the two: detection collapses to
+chance at the smallest non-zero weight tested, and inverts under further pressure. There is no operating point on this curve at which
 invariance has been obtained and detection survives.
 
 \paragraph{It goes below chance.} At $\lam = 2$ the detector ranks images from a clinic
 the model has never seen as \emph{more} in-distribution than images from its own test
-split. This is not a tail artefact. Removing the pooled $90$th, $95$th or $99$th
+split. A patient-clustered bootstrap puts the $95\%$ interval at $[0.414, 0.439]$, and
+all five seeds have individual intervals entirely below $0.5$. The same holds for
+$k$-NN ($0.440$, $[0.429, 0.452]$, $5/5$ seeds) and, with one seed short of unanimity,
+for cosine ($0.453$, $[0.441, 0.464]$, $4/5$). This is not a tail artefact. Removing the pooled $90$th, $95$th or $99$th
 percentile of scores leaves AUROC at $0.412$, $0.416$ and $0.424$ respectively against
 $0.427$ for the full set, and the medians themselves invert (ISIC $13.8$ versus
 \texttt{pad\_heldout} $10.0$). The shift is distributional throughout.
@@ -436,12 +453,18 @@ replication is at the backbone (Section~\ref{sec:nonmediation}) and in the
 single-encoder model (Section~\ref{sec:arch}).
 
 The collapse is not a numerical artefact of the covariance estimate. Ledoit--Wolf
-shrinkage leaves the $\lam = 2$ value unchanged on the held-out partition ($0.427$ under both), and effective
+shrinkage leaves the $\lam = 2$ value unchanged on the held-out partition ($0.427$ under
+both). Across float32 and float64 covariance estimation, with and without shrinkage, and
+at one, four and eight BLAS threads, the largest deviation in AUROC is
+$9.4 \times 10^{-4}$. Effective
 dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
 while leakage falls $0.914 \to 0.553$).
 
 It is not confined to the domain the adversary was trained against. On Fitzpatrick17k,
-absent from every training branch, AUROC falls $0.764 \to 0.391$ across the same sweep.
+absent from every training branch, AUROC falls $0.764 \to 0.391$ across the same sweep
+($95\%$ CI $[0.386, 0.396]$, five of five seeds below $0.5$; the bootstrap here is over
+images, since Fitzpatrick17k carries no patient identifiers, so the interval is likely
+narrower than the true sampling uncertainty).
 For context, a ResNet-50 baseline reaches $0.994$ on these images and the
 EfficientNet-B3 single-encoder control $0.649$; the controlled comparison is the
 $\lam = 0$ row, since it differs from $\lam = 2$ only in the adversarial weight.
