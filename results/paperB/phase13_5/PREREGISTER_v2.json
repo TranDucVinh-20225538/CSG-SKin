@@ -1,0 +1,62 @@
+{
+  "phase": "13.5_v2",
+  "written_before_any_v2_fit": true,
+  "do_not_retune": true,
+  "one_revision_only": true,
+  "no_third_revision": true,
+  "why_this_revision": "v1 failed correctly. Linear/BN-off sat at chance (0.510→0.534, 0.524→0.538), matching the closed form. The full-cell sub-chance was a BatchNorm-on-mixed-batches artifact already present at λ=0 (0.327). Item A's tail hypothesis says the missing ingredient is heterogeneous heavy-tailed ID structure that eight equal Gaussians cannot produce. This revision adds that structure to ID only. Everything else stays at the locked configuration. BN OFF is the primary cell because BN-on was the confound.",
+  "locked_from_v1": {
+    "D": 50,
+    "K": 8,
+    "K_ood": 6,
+    "n0": 20000,
+    "n1": 2000,
+    "tau0_homogeneous_was": 1.0,
+    "tau1": 1.0,
+    "delta": 2.0,
+    "delta2": 3.0,
+    "label_scale": 2.0,
+    "encoder": "mlp",
+    "hidden": [128, 128],
+    "m": 16,
+    "cls_domain0_only": true,
+    "adversary": "mlp_derm",
+    "adv_lr_mult": 30.0,
+    "epochs": 40,
+    "batch": 256,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "lams": [0.0, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0],
+    "seeds": [0, 1, 2, 3, 4]
+  },
+  "id_only_heavy_tails": {
+    "class_dependent_variance": "per-class τ_k drawn log-uniform on [0.3, 3.0], one draw per seed, ID domain only. OOD keeps τ=1.",
+    "rare_classes": "2 of 8 ID classes have n=80 each; the other 6 share the remaining n0-160. OOD class mix is unchanged (uniform on K_ood).",
+    "contamination": "3% of ID training and ID test samples are replaced by the same class mean plus ε ~ N(0, 8^2 I). OOD is uncontaminated."
+  },
+  "cells": {
+    "primary": {"name": "heavy_id_bn_off", "bn": false, "role": "primary. BN was the v1 confound."},
+    "bn_on_control": {"name": "heavy_id_bn_on", "bn": true, "role": "reported separately. Not used for the pass/fail gate."}
+  },
+  "expected_outcomes": {
+    "lambda0": "AUROC at λ=0 must be ≥ 0.5. The ID tail plus a clean OOD Gaussian should leave Maha at or above chance before any GRL, as the derm sweep does (0.863). If λ=0 is again < 0.5, this is the same class of artifact as v1 — reject the revision and stop.",
+    "F2": "Sub-chance appears at λ ≥ 0.25 (mean Maha < 0.48). That is F2 with a legal starting point.",
+    "F1_shape": "AUROC falls from a ≥0.5 start as λ rises. A cliff (most of the drop by 0.25) is hoped for but is not required for a pass; criteria 1+2 are the minimum.",
+    "F3": "At λ=2, range of {Maha, MSP, Energy, cosine, kNN50} < 0.08.",
+    "F5": "Reweighting ID to the OOD class mix strengthens the inversion: auc_reweighted < auc_all - 0.03 at λ=2.",
+    "F7": "A never-adversarially-seen third domain also inverts: Maha on domain 2 < 0.48 at λ=2."
+  },
+  "pass_criteria": {
+    "minimum": ["C1_lambda0_at_or_above_chance", "C2_subchance_at_lambda_ge_0.25"],
+    "confirmation": ["C3_detectors_together", "C5_reweight_strengthens", "C7_third_domain_inverts"],
+    "rules": {
+      "C1_lambda0_at_or_above_chance": "primary cell, mean Maha at λ=0 ≥ 0.5. If this fails, reject the revision and stop. Do not interpret later λ.",
+      "C2_subchance_at_lambda_ge_0.25": "primary cell, mean Maha at λ=2 < 0.48 AND mean Maha at λ=0.25 < mean Maha at λ=0. The inversion is produced by λ, not present at the start.",
+      "C3_detectors_together": "primary cell, at λ=2, max-min of {Maha, MSP, Energy, cosine, knn50} < 0.08",
+      "C5_reweight_strengthens": "primary cell, maha_id_reweighted_to_ood_mix < maha - 0.03 at λ=2",
+      "C7_third_domain_inverts": "primary cell, maha_domain2 < 0.48 at λ=2"
+    },
+    "how_to_read": "C1+C2 pass, C3–C7 fail → mechanism not excluded, not confirmed. C1+C2+C3+C5+C7 pass → mechanism confirmed on this construction. C1 fail → reject, close. Do not retune. Do not run a third revision."
+  },
+  "if_it_fails": "Close the mechanism question. The paper reports a robust phenomenon, five refuted explanations (image memorisation, class composition, domain specificity, dimensional collapse, latent compression), and an explicit statement that a controlled synthetic reproduction failed under a pre-registered grid. That is an honest and publishable position."
+}

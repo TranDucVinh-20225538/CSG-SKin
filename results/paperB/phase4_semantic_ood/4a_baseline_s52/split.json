@@ -1,0 +1,31 @@
+{
+  "config": "4a",
+  "hold_out": [
+    "DF",
+    "VASC"
+  ],
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "SCC"
+  ],
+  "label_mapping": {
+    "MEL": 0,
+    "NV": 1,
+    "BCC": 2,
+    "AK": 3,
+    "BKL": 4,
+    "SCC": 5
+  },
+  "n_train": 15896,
+  "n_val": 3975,
+  "n_id_test": 4968,
+  "n_ood_holdout_classes": 492,
+  "pad_involved": false,
+  "split_random_state": 42,
+  "ood_definition": "all ISIC images of held-out classes (never used in train/val)",
+  "id_definition": "ISIC test split restricted to kept classes"
+}

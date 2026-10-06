@@ -1,0 +1,272 @@
+{
+  "run": "phase16_b0",
+  "seed": 42,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase16/b0/best-epoch=29.ckpt",
+  "site_probe_frozen_z": {
+    "acc_mean": 0.9627039627039626,
+    "bal_acc_mean": 0.9616302512436009,
+    "auroc_mean": 0.9940846749188607,
+    "acc_std": 0.007498055444021138,
+    "bal_acc_std": 0.0073431400100544214,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "site_probe_frozen_z_vignette_masked_input": {
+    "acc_mean": 0.9437229437229439,
+    "bal_acc_mean": 0.942889663818398,
+    "auroc_mean": 0.9855022858630843,
+    "acc_std": 0.004037414469857496,
+    "bal_acc_std": 0.004700392168650131,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "label_only_site_reference": {
+    "cohort_rule": {
+      "protocol": "each class \u2192 site with more images in reference frame; predict site from label only",
+      "reference_frame": "full_bcn_ham_cohort",
+      "plain_acc": 0.6662653825575174,
+      "bal_acc": 0.6679469678105898,
+      "bcn_recall": 0.652219447353581,
+      "ham_recall": 0.6836744882675986,
+      "majority_plain_acc": 0.5534599607633316,
+      "per_class_majority_site": {
+        "0": 0,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 1,
+        "7": 0
+      }
+    },
+    "on_probe_split": {
+      "protocol": "each class \u2192 site with more images in reference frame; predict site from label only",
+      "reference_frame": "eval_frame",
+      "plain_acc": 0.6531774580335732,
+      "bal_acc": 0.6534615814056004,
+      "bcn_recall": 0.650384193194292,
+      "ham_recall": 0.6565389696169088,
+      "majority_plain_acc": 0.5461630695443646,
+      "per_class_majority_site": {
+        "0": 0,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 1,
+        "7": 0
+      }
+    },
+    "note": "Replaced erroneous logistic-on-label-index (bal~0.5) with majority-site-per-class rule."
+  },
+  "handcrafted_site_unmasked": {
+    "rgb_moments": {
+      "acc_mean": 0.880919080919081,
+      "acc_std": 0.004529783835666191,
+      "bal_acc_mean": 0.8787213394647619,
+      "bal_acc_std": 0.005893540327015465,
+      "auroc_mean": 0.9545289081815913,
+      "auroc_std": 0.0025386865704904644,
+      "acc_per_seed": [
+        0.8741258741258742,
+        0.8781218781218781,
+        0.8811188811188811,
+        0.8871128871128872,
+        0.8841158841158842
+      ],
+      "majority": 0.5461630695443646
+    },
+    "color_hist": {
+      "acc_mean": 0.9022977022977022,
+      "acc_std": 0.0027828947606761316,
+      "bal_acc_mean": 0.9007542140147702,
+      "bal_acc_std": 0.002189645913632168,
+      "auroc_mean": 0.9671214232215771,
+      "auroc_std": 0.0018999135398817474,
+      "acc_per_seed": [
+        0.906093906093906,
+        0.9000999000999002,
+        0.9010989010989011,
+        0.8991008991008991,
+        0.9050949050949051
+      ],
+      "majority": 0.5461630695443646
+    },
+    "gray_downsample": {
+      "acc_mean": 0.8111888111888111,
+      "acc_std": 0.009747301432687696,
+      "bal_acc_mean": 0.8126718424083308,
+      "bal_acc_std": 0.010994513749811825,
+      "auroc_mean": 0.8849028340407026,
+      "auroc_std": 0.0073233487210257785,
+      "acc_per_seed": [
+        0.8141858141858141,
+        0.8061938061938062,
+        0.7992007992007992,
+        0.8281718281718282,
+        0.8081918081918081
+      ],
+      "majority": 0.5461630695443646
+    },
+    "hsv_moments": {
+      "acc_mean": 0.8755244755244757,
+      "acc_std": 0.0027972027972028215,
+      "bal_acc_mean": 0.8737853248395332,
+      "bal_acc_std": 0.0029985356549484823,
+      "auroc_mean": 0.9423873913778801,
+      "auroc_std": 0.005232503707007451,
+      "acc_per_seed": [
+        0.8761238761238761,
+        0.8761238761238761,
+        0.8701298701298701,
+        0.8771228771228772,
+        0.8781218781218781
+      ],
+      "majority": 0.5461630695443646
+    },
+    "laplacian_stats": {
+      "acc_mean": 0.5612387612387613,
+      "acc_std": 0.008001991766034265,
+      "bal_acc_mean": 0.5321404698435197,
+      "bal_acc_std": 0.00651709445040531,
+      "auroc_mean": 0.5887798081646788,
+      "auroc_std": 0.006257810725283607,
+      "acc_per_seed": [
+        0.5734265734265734,
+        0.5494505494505495,
+        0.5574425574425574,
+        0.5654345654345654,
+        0.5604395604395604
+      ],
+      "majority": 0.5461630695443646
+    }
+  },
+  "handcrafted_site_masked": {
+    "rgb_moments": {
+      "acc_mean": 0.8601398601398602,
+      "acc_std": 0.006950060791578834,
+      "bal_acc_mean": 0.8563006869669565,
+      "bal_acc_std": 0.008084300775922001,
+      "auroc_mean": 0.9378854625550659,
+      "auroc_std": 0.006700859615086841,
+      "acc_per_seed": [
+        0.8481518481518482,
+        0.8671328671328671,
+        0.8621378621378621,
+        0.8661338661338661,
+        0.8571428571428571
+      ],
+      "majority": 0.5461630695443646
+    },
+    "color_hist": {
+      "acc_mean": 0.8793206793206794,
+      "acc_std": 0.005109575165851901,
+      "bal_acc_mean": 0.8756110623424526,
+      "bal_acc_std": 0.005382959071625379,
+      "auroc_mean": 0.9541761631325049,
+      "auroc_std": 0.005260508787944846,
+      "acc_per_seed": [
+        0.8751248751248751,
+        0.8801198801198801,
+        0.8721278721278721,
+        0.8861138861138861,
+        0.8831168831168831
+      ],
+      "majority": 0.5461630695443646
+    },
+    "gray_downsample": {
+      "acc_mean": 0.6755244755244755,
+      "acc_std": 0.008809353720299156,
+      "bal_acc_mean": 0.6731486925077919,
+      "bal_acc_std": 0.008790848458999885,
+      "auroc_mean": 0.7398448888208813,
+      "auroc_std": 0.008195776861952168,
+      "acc_per_seed": [
+        0.6663336663336663,
+        0.6683316683316683,
+        0.6723276723276723,
+        0.6803196803196803,
+        0.6903096903096904
+      ],
+      "majority": 0.5461630695443646
+    },
+    "hsv_moments": {
+      "acc_mean": 0.8469530469530471,
+      "acc_std": 0.007187255044397575,
+      "bal_acc_mean": 0.84423487343862,
+      "bal_acc_std": 0.008283196431194878,
+      "auroc_mean": 0.9199260685034106,
+      "auroc_std": 0.008394929676296363,
+      "acc_per_seed": [
+        0.8351648351648352,
+        0.8561438561438561,
+        0.8441558441558441,
+        0.8521478521478522,
+        0.8471528471528471
+      ],
+      "majority": 0.5461630695443646
+    },
+    "laplacian_stats": {
+      "acc_mean": 0.5938061938061938,
+      "acc_std": 0.00953195639710414,
+      "bal_acc_mean": 0.5951566010840066,
+      "bal_acc_std": 0.009367891445898587,
+      "auroc_mean": 0.6371356779872593,
+      "auroc_std": 0.015263888279574344,
+      "acc_per_seed": [
+        0.5944055944055944,
+        0.5754245754245755,
+        0.6023976023976024,
+        0.5984015984015985,
+        0.5984015984015985
+      ],
+      "majority": 0.5461630695443646
+    }
+  },
+  "thresholds": {
+    "metric": "balanced_accuracy",
+    "threshold": 0.7,
+    "interpretation": "Probe at or above 0.70 counts as a domain signal worth adversarial removal, compared against the label-only reference (~0.67 plain accuracy), not against 0.5.",
+    "stop_rule": "If balanced accuracy is near 0.5 (pre-specified band: 0.45-0.55), report ISIC site homogeneity and do not run B1."
+  },
+  "decision": "proceed_B1",
+  "config": {
+    "phase": "16B0",
+    "preregister": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/PREREGISTER_B.json",
+    "architecture": "single_encoder_erm_effb3 (SingleDannNet, uniform AdamW, no adv loss)",
+    "preprocessing": {
+      "train": "Resize(448+64), RandomResizedCrop(448), robust aug, ImageNet norm",
+      "eval": "Resize(448+64), CenterCrop(448), ImageNet norm",
+      "handcrafted": "Resize((448,448)), ToTensor [0,1]",
+      "vignette_mask": "circular radius 0.45*min(H,W), zero outside before embed"
+    },
+    "seed": 42,
+    "n_train": 15593,
+    "n_val": 3499,
+    "n_probe": 3336,
+    "n_lesions_train": 7732,
+    "n_lesions_probe": 1657,
+    "site_counts_train": {
+      "BCN": 8558,
+      "HAM": 7035
+    },
+    "site_counts_probe": {
+      "BCN": 1822,
+      "HAM": 1514
+    },
+    "max_epochs": 40
+  },
+  "probe_balanced_acc_8class": 0.5290708003754031,
+  "probe_plain_acc_8class": 0.7359112709832134,
+  "label_only_site_reference_legacy_logistic_bug": {
+    "plain_acc_mean": 0.5464535464535465,
+    "bal_acc_mean": 0.5,
+    "reason": "StandardScaler+LogisticRegression on raw class index; do not cite."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "run_name": "mmd_w3000_s42",
+  "objective": "mmd",
+  "weight": 3000.0,
+  "seed": 42,
+  "uses_pad_adv_labels": false,
+  "id_balanced_acc": 0.40120372163350154,
+  "id_acc": 0.6779159265837774,
+  "id_ece": 0.015069132746854005,
+  "id_mean_confidence": 0.6812357902526855,
+  "ood_ece_pad_heldout": 0.22245421008774022,
+  "ood_mean_confidence_pad_heldout": 0.49779948592185974,
+  "leakage": {
+    "acc_mean": 0.8812971342383107,
+    "bal_acc_mean": 0.8601560513602847,
+    "auroc_mean": 0.9402234299516908,
+    "acc_std": 0.001589088047187436,
+    "bal_acc_std": 0.002024690642516051,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "ood_pad_full": {
+    "mahalanobis_classcond": 0.701413976990314,
+    "cosine_max": 0.7251806643887486,
+    "knn_k50": 0.8454258626313407,
+    "MSP": 0.7257239071292375,
+    "Energy_T1": 0.7782937531765379,
+    "fit": "ISIC train split only"
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.28212290502793297,
+    "balanced_accuracy": 0.31990707766428816,
+    "per_class_recall": {
+      "MEL": 0.3333333333333333,
+      "NV": 0.8409090909090909,
+      "BCC": 0.322463768115942,
+      "AK": 0.04455445544554455,
+      "BKL": 0.22666666666666666,
+      "SCC": 0.15151515151515152
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15b/mmd/mmd_w3000_s42/best-04.ckpt",
+  "plot_x": "achieved_leakage_bal_acc",
+  "plot_y": "ood_auroc_maha"
+}

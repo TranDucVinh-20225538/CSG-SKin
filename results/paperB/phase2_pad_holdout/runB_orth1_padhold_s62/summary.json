@@ -1,0 +1,26 @@
+{
+  "run_name": "runB_orth1_padhold_s62",
+  "seed": 62,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase2/runB_orth1_padhold_s62/best-39.ckpt",
+  "id_acc": 0.819617130451944,
+  "id_balanced_acc": 0.7090096493518151,
+  "ood": {
+    "pad_adv": {
+      "z_lesion_maha_auroc": 0.41966660653688115,
+      "z_context_maha_auroc": 1.0,
+      "n_ood": 1582
+    },
+    "pad_heldout": {
+      "z_lesion_maha_auroc": 0.45586652818709733,
+      "z_context_maha_auroc": 0.999667307244929,
+      "n_ood": 716
+    },
+    "pad_full": {
+      "z_lesion_maha_auroc": 0.4309471532294065,
+      "z_context_maha_auroc": 0.999896341160735,
+      "n_ood": 2298
+    }
+  },
+  "n_pad_adv": 1582,
+  "n_pad_heldout": 716
+}

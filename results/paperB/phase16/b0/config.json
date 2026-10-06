@@ -1,0 +1,26 @@
+{
+  "phase": "16B0",
+  "preregister": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/PREREGISTER_B.json",
+  "architecture": "single_encoder_erm_effb3 (SingleDannNet, uniform AdamW, no adv loss)",
+  "preprocessing": {
+    "train": "Resize(448+64), RandomResizedCrop(448), robust aug, ImageNet norm",
+    "eval": "Resize(448+64), CenterCrop(448), ImageNet norm",
+    "handcrafted": "Resize((448,448)), ToTensor [0,1]",
+    "vignette_mask": "circular radius 0.45*min(H,W), zero outside before embed"
+  },
+  "seed": 42,
+  "n_train": 15593,
+  "n_val": 3499,
+  "n_probe": 3336,
+  "n_lesions_train": 7732,
+  "n_lesions_probe": 1657,
+  "site_counts_train": {
+    "BCN": 8558,
+    "HAM": 7035
+  },
+  "site_counts_probe": {
+    "BCN": 1822,
+    "HAM": 1514
+  },
+  "max_epochs": 40
+}

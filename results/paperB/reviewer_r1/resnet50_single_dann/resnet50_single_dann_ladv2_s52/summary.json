@@ -1,0 +1,65 @@
+{
+  "run_name": "resnet50_single_dann_ladv2_s52",
+  "seed": 52,
+  "lambda_adv": 2.0,
+  "architecture": "single_encoder_dann_resnet50",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv2_s52/best-39.ckpt",
+  "id_balanced_acc": 0.6995156737648454,
+  "ood_ece_pad_heldout": 0.6819282478585256,
+  "leakage_pad_heldout": {
+    "acc_mean": 0.9825168107588856,
+    "bal_acc_mean": 0.9434338025295798,
+    "auroc_mean": 0.9957700938392492,
+    "acc_std": 0.002182097347089417,
+    "bal_acc_std": 0.008883951802624513,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "ood_pad_heldout": {
+    "mahalanobis_classcond": 0.7952542081361157,
+    "cosine_max": 0.5789242585113666,
+    "knn_k50": 0.6351760708186281,
+    "MSP": 0.47551345489987246,
+    "Energy_T1": 0.4665253756092935,
+    "fit": "ISIC train split only"
+  },
+  "gate": {
+    "leakage_bal_acc": 0.9434338025295798,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.6171875,
+      "loss_adv": 0.6954779487389785
+    },
+    "best_epoch": {
+      "epoch": 8,
+      "acc_adv": 0.54625,
+      "loss_adv": 0.6881753349304199
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.538125,
+      "loss_adv": 0.6890396118164063
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 2.0,
+    "status": "inconclusive",
+    "reason": "adversary never left chance: best-epoch CE 0.6882 is not below ln K \u2212 0.02 = 0.6731. Null experiment, not a scientific negative.",
+    "learned": false,
+    "returned_to_chance": false
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  },
+  "gate_rescore_note": "From adversary_log.jsonl epoch means; fixes step-only logging bug."
+}

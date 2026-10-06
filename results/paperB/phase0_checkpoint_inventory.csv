@@ -1,0 +1,26 @@
+method,seed,run_dir,dir_exists,best_ckpts,last_ckpts,policy_ckpt,policy_kind,policy_mtime
+baseline_soft,42,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s42,True,best-20.ckpt,,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s42/best-20.ckpt,best,2026-04-23 12:51:52
+baseline_soft,52,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s52,True,best-24.ckpt,,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s52/best-24.ckpt,best,2026-04-23 13:12:00
+baseline_soft,62,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s62,True,best-29.ckpt,,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s62/best-29.ckpt,best,2026-04-23 13:34:59
+baseline_soft,72,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s72,True,best-26.ckpt,,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s72/best-26.ckpt,best,2026-04-24 14:41:34
+baseline_soft,82,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s82,True,best-17.ckpt,,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s82/best-17.ckpt,best,2026-04-24 14:54:21
+effb3_control,42,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s42,True,best-39.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s42/best-39.ckpt,best,2026-04-24 23:31:19
+effb3_control,52,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s52,True,best-30.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s52/best-30.ckpt,best,2026-04-24 23:57:51
+effb3_control,62,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s62,True,best-29.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s62/best-29.ckpt,best,2026-04-25 00:32:51
+effb3_control,72,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s72,True,best-39.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s72/best-39.ckpt,best,2026-04-25 01:27:52
+effb3_control,82,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s82,True,best-25.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s82/best-25.ckpt,best,2026-04-25 01:55:39
+runA_grl,42,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s42,True,best-38.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s42/best-38.ckpt,best,2026-04-23 15:24:59
+runA_grl,52,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s52,True,best-37.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s52/best-37.ckpt,best,2026-04-23 17:31:45
+runA_grl,62,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s62,True,best-34.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s62/best-34.ckpt,best,2026-04-23 18:56:19
+runA_grl,72,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s72,True,best-35.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s72/best-35.ckpt,best,2026-04-24 16:48:04
+runA_grl,82,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s82,True,best-23.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s82/best-23.ckpt,best,2026-04-24 17:52:28
+runB_orth1,42,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s42,True,best-36.ckpt;best-37.ckpt,last-v1.ckpt;last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s42/best-36.ckpt,best,2026-04-24 04:24:46
+runB_orth1,52,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s52,True,best-32.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s52/best-32.ckpt,best,2026-04-24 05:46:49
+runB_orth1,62,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s62,True,best-34.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s62/best-34.ckpt,best,2026-04-24 07:21:30
+runB_orth1,72,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s72,True,best-35.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s72/best-35.ckpt,best,2026-04-24 19:48:55
+runB_orth1,82,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s82,True,best-37.ckpt,last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s82/best-37.ckpt,best,2026-04-24 21:24:59
+runB,42,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s42,True,best-39.ckpt;best-37.ckpt;best-31.ckpt,last-v2.ckpt;last-v1.ckpt;last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s42/best-39.ckpt,best,2026-04-23 23:59:48
+runB,52,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s52,True,best-28.ckpt;best-01.ckpt;best-34.ckpt,last-v2.ckpt;last-v1.ckpt;last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s52/best-28.ckpt,best,2026-04-24 01:06:24
+runB,62,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s62,True,best-39.ckpt;best-28.ckpt,last-v1.ckpt;last.ckpt,/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_s62/best-39.ckpt,best,2026-04-24 03:00:57
+runB,72,,False,,,,MISSING,
+runB,82,,False,,,,MISSING,

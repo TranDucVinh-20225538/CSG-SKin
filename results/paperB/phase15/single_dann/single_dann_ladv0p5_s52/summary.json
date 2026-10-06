@@ -1,0 +1,132 @@
+{
+  "run_name": "single_dann_ladv0p5_s52",
+  "seed": 52,
+  "lambda_adv": 0.5,
+  "architecture": "single_encoder_dann_effb3",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/single_dann/single_dann_ladv0p5_s52/best-34.ckpt",
+  "id_acc": 0.8458654035918689,
+  "id_balanced_acc": 0.7626834259946605,
+  "id_ece": 0.09405943624291496,
+  "id_mean_confidence": 0.9385446906089783,
+  "ood_ece_pad_heldout": 0.6959681604785959,
+  "ood_mean_confidence_pad_heldout": 0.9208283424377441,
+  "leakage": {
+    "pad_full": {
+      "acc_mean": 0.8177978883861238,
+      "bal_acc_mean": 0.7917032163742691,
+      "auroc_mean": 0.8617092550216121,
+      "acc_std": 0.0006911878876253128,
+      "bal_acc_std": 0.0034128533133369545,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "pad_heldout": {
+      "acc_mean": 0.8951008645533142,
+      "bal_acc_mean": 0.733812729498164,
+      "auroc_mean": 0.8514723582211343,
+      "acc_std": 0.011353150203799511,
+      "bal_acc_std": 0.010884008061546714,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "primary": "pad_full matches Phase 3 locked protocol; floor 0.5"
+  },
+  "ood": {
+    "pad_full": {
+      "mahalanobis_classcond": 0.5201476885109421,
+      "cosine_max": 0.5070177120063731,
+      "knn_k50": 0.545297109249546,
+      "MSP": 0.5160409692024177,
+      "Energy_T1": 0.5309624744696093,
+      "fit": "ISIC train split only",
+      "n_ood": 2298
+    },
+    "pad_heldout": {
+      "mahalanobis_classcond": 0.5353552894013515,
+      "cosine_max": 0.53256474967282,
+      "knn_k50": 0.5624213748066412,
+      "MSP": 0.556439520481415,
+      "Energy_T1": 0.5627962398827775,
+      "fit": "ISIC train split only",
+      "n_ood": 716
+    },
+    "pad_adv": {
+      "mahalanobis_classcond": 0.5132634829816489,
+      "cosine_max": 0.49545458741610837,
+      "knn_k50": 0.5375483065481337,
+      "MSP": 0.4977563605960783,
+      "Energy_T1": 0.516554902610955,
+      "fit": "ISIC train split only",
+      "n_ood": 1582
+    }
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.22625698324022347,
+    "balanced_accuracy": 0.3394191266952782,
+    "per_class_recall": {
+      "MEL": 0.6666666666666666,
+      "NV": 0.9204545454545454,
+      "BCC": 0.1956521739130435,
+      "AK": 0.019801980198019802,
+      "BKL": 0.17333333333333334,
+      "SCC": 0.06060606060606061
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "gate": {
+    "status": "open",
+    "reason": "adversary trained; read leakage vs floor in the aggregate",
+    "leakage_bal_acc": 0.7917032163742691,
+    "chance_floor": 0.5,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.76068115234375,
+      "acc_adv": 0.46875,
+      "g_enc_grl": 0.01160416379570961,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.9072690010070801,
+      "loss_adv": 0.23188702762126923,
+      "acc_cls": 0.6196269989013672,
+      "grl_alpha": 0.9185416974472287,
+      "g_enc_grl_mean": 0.031519521769548475,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.5704977512359619,
+      "loss_adv": 0.6745055317878723,
+      "acc_cls": 0.9692440629005432,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.016731410710649056,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

@@ -1,0 +1,555 @@
+{
+  "by_lambda": {
+    "0.0": {
+      "headline_mean": 0.8430513245416448,
+      "headline_std": 0.02272713747006106,
+      "ledoit_mean": 0.8445006190786479,
+      "ledoit_std": 0.02301580922699992,
+      "kappa_ledoit_mean": 829.0651782661644,
+      "per_seed": [
+        {
+          "lambda_adv": 0.0,
+          "seed": 42,
+          "headline_auroc": 0.8521741623143728,
+          "headline_kappa": 1988.935174104301,
+          "ledoit_auroc": 0.8535347020318791,
+          "ledoit_kappa": 1258.37330174654,
+          "ledoit_shrinkage": 0.0024565475274254144
+        },
+        {
+          "lambda_adv": 0.0,
+          "seed": 52,
+          "headline_auroc": 0.8737454423573281,
+          "headline_kappa": 831.3537695441439,
+          "ledoit_auroc": 0.8753783105272036,
+          "ledoit_kappa": 481.17527111352064,
+          "ledoit_shrinkage": 0.0044866458594503555
+        },
+        {
+          "lambda_adv": 0.0,
+          "seed": 62,
+          "headline_auroc": 0.8482579248130913,
+          "headline_kappa": 1185.004831875619,
+          "ledoit_auroc": 0.8503185801874988,
+          "ledoit_kappa": 630.7881467835847,
+          "ledoit_shrinkage": 0.003739576887864311
+        },
+        {
+          "lambda_adv": 0.0,
+          "seed": 72,
+          "headline_auroc": 0.8203563864329713,
+          "headline_kappa": 1081.519910149957,
+          "ledoit_auroc": 0.8201507619132673,
+          "ledoit_kappa": 952.601992567014,
+          "ledoit_shrinkage": 0.0016061168771483703
+        },
+        {
+          "lambda_adv": 0.0,
+          "seed": 82,
+          "headline_auroc": 0.8207227067904604,
+          "headline_kappa": 1185.415306286465,
+          "ledoit_auroc": 0.8231207407333905,
+          "ledoit_kappa": 822.387179120163,
+          "ledoit_shrinkage": 0.0025628956812060546
+        }
+      ]
+    },
+    "0.25": {
+      "headline_mean": 0.5133837857624038,
+      "headline_std": 0.017983754778781506,
+      "ledoit_mean": 0.5137484523033805,
+      "ledoit_std": 0.018238614222012766,
+      "kappa_ledoit_mean": 586.9280294817368,
+      "per_seed": [
+        {
+          "lambda_adv": 0.25,
+          "seed": 42,
+          "headline_auroc": 0.5115226909138219,
+          "headline_kappa": 828.3713610081728,
+          "ledoit_auroc": 0.5116329453479795,
+          "ledoit_kappa": 761.5081209789713,
+          "ledoit_shrinkage": 0.0021176472156993428
+        },
+        {
+          "lambda_adv": 0.25,
+          "seed": 52,
+          "headline_auroc": 0.49640294908560484,
+          "headline_kappa": 728.4493818456548,
+          "ledoit_auroc": 0.4966598419171923,
+          "ledoit_kappa": 590.2882087562078,
+          "ledoit_shrinkage": 0.0028618050109008916
+        },
+        {
+          "lambda_adv": 0.25,
+          "seed": 62,
+          "headline_auroc": 0.532225717287785,
+          "headline_kappa": 543.359730862187,
+          "ledoit_auroc": 0.5329525696449696,
+          "ledoit_kappa": 408.9877587100311,
+          "ledoit_shrinkage": 0.00372468262172844
+        }
+      ]
+    },
+    "0.5": {
+      "headline_mean": 0.4653818533696879,
+      "headline_std": 0.014718786123948897,
+      "ledoit_mean": 0.4657190481808202,
+      "ledoit_std": 0.014596334743618261,
+      "kappa_ledoit_mean": 382.590401553003,
+      "per_seed": [
+        {
+          "lambda_adv": 0.5,
+          "seed": 42,
+          "headline_auroc": 0.48138905151417927,
+          "headline_kappa": 545.6433644044563,
+          "ledoit_auroc": 0.48147560124499306,
+          "ledoit_kappa": 438.9190481805849,
+          "ledoit_shrinkage": 0.0031664568152484484
+        },
+        {
+          "lambda_adv": 0.5,
+          "seed": 52,
+          "headline_auroc": 0.4623249573039704,
+          "headline_kappa": 482.65795175329936,
+          "ledoit_auroc": 0.46302259223610326,
+          "ledoit_kappa": 360.27284820947716,
+          "ledoit_shrinkage": 0.0041463039316460264
+        },
+        {
+          "lambda_adv": 0.5,
+          "seed": 62,
+          "headline_auroc": 0.45243155129091406,
+          "headline_kappa": 392.8279726413012,
+          "ledoit_auroc": 0.4526589510613643,
+          "ledoit_kappa": 348.5793082689469,
+          "ledoit_shrinkage": 0.0026724819442238874
+        }
+      ]
+    },
+    "1.0": {
+      "headline_mean": 0.45470683529714845,
+      "headline_std": 0.036178552448039615,
+      "ledoit_mean": 0.4548998724356197,
+      "ledoit_std": 0.03608317611652367,
+      "kappa_ledoit_mean": 404.0070235791755,
+      "per_seed": [
+        {
+          "lambda_adv": 1.0,
+          "seed": 42,
+          "headline_auroc": 0.49381472624375267,
+          "headline_kappa": 562.02855873024,
+          "ledoit_auroc": 0.4940005049653084,
+          "ledoit_kappa": 464.92534201521164,
+          "ledoit_shrinkage": 0.002992276244094029
+        },
+        {
+          "lambda_adv": 1.0,
+          "seed": 52,
+          "headline_auroc": 0.4224321466648584,
+          "headline_kappa": 407.4673533914222,
+          "ledoit_auroc": 0.42288556802533206,
+          "ledoit_kappa": 365.8317940103768,
+          "ledoit_shrinkage": 0.002706554512361557
+        },
+        {
+          "lambda_adv": 1.0,
+          "seed": 62,
+          "headline_auroc": 0.44787363298283445,
+          "headline_kappa": 497.95649652770925,
+          "ledoit_auroc": 0.44781354431621856,
+          "ledoit_kappa": 381.26393471193813,
+          "ledoit_shrinkage": 0.0034876630478426498
+        }
+      ]
+    },
+    "2.0": {
+      "headline_mean": 0.42665378894875705,
+      "headline_std": 0.024575801801427516,
+      "ledoit_mean": 0.42703521416372564,
+      "ledoit_std": 0.024814372555242846,
+      "kappa_ledoit_mean": 426.11391819510465,
+      "per_seed": [
+        {
+          "lambda_adv": 2.0,
+          "seed": 42,
+          "headline_auroc": 0.4314537157398127,
+          "headline_kappa": 688.9594731757643,
+          "ledoit_auroc": 0.43178944049182294,
+          "ledoit_kappa": 616.4798061119702,
+          "ledoit_shrinkage": 0.0022663269671448407
+        },
+        {
+          "lambda_adv": 2.0,
+          "seed": 52,
+          "headline_auroc": 0.40917901240693144,
+          "headline_kappa": 407.61693413997347,
+          "ledoit_auroc": 0.4094778019234988,
+          "ledoit_kappa": 360.89376766389125,
+          "ledoit_shrinkage": 0.0028212575495969857
+        },
+        {
+          "lambda_adv": 2.0,
+          "seed": 62,
+          "headline_auroc": 0.4559313026671651,
+          "headline_kappa": 460.6922329737099,
+          "ledoit_auroc": 0.456673039372961,
+          "ledoit_kappa": 382.96669444168464,
+          "ledoit_shrinkage": 0.002970194714433241
+        },
+        {
+          "lambda_adv": 2.0,
+          "seed": 72,
+          "headline_auroc": 0.4417241919176884,
+          "headline_kappa": 463.35769866382583,
+          "ledoit_auroc": 0.44219801034848116,
+          "ledoit_kappa": 333.1472454618853,
+          "ledoit_shrinkage": 0.004650628086905255
+        },
+        {
+          "lambda_adv": 2.0,
+          "seed": 82,
+          "headline_auroc": 0.39498072201218754,
+          "headline_kappa": 496.5485975968304,
+          "ledoit_auroc": 0.39503777868186407,
+          "ledoit_kappa": 437.0820772960919,
+          "ledoit_shrinkage": 0.00233175796506312
+        }
+      ]
+    },
+    "4.0": {
+      "headline_mean": 0.4553759878337907,
+      "headline_std": 0.03905714709661886,
+      "ledoit_mean": 0.45598321412991427,
+      "ledoit_std": 0.03930733098399238,
+      "kappa_ledoit_mean": 358.017305597836,
+      "per_seed": [
+        {
+          "lambda_adv": 4.0,
+          "seed": 42,
+          "headline_auroc": 0.41725349589247107,
+          "headline_kappa": 492.8074530885807,
+          "ledoit_auroc": 0.4174188775437076,
+          "ledoit_kappa": 474.09075331861527,
+          "ledoit_shrinkage": 0.0019908840164188147
+        },
+        {
+          "lambda_adv": 4.0,
+          "seed": 52,
+          "headline_auroc": 0.4953050905574795,
+          "headline_kappa": 404.86014304103685,
+          "ledoit_auroc": 0.4959936294987944,
+          "ledoit_kappa": 325.0455457353927,
+          "ledoit_shrinkage": 0.003976661860316756
+        },
+        {
+          "lambda_adv": 4.0,
+          "seed": 62,
+          "headline_auroc": 0.45356937705142153,
+          "headline_kappa": 425.30539968966474,
+          "ledoit_auroc": 0.45453713534724083,
+          "ledoit_kappa": 274.9156177395002,
+          "ledoit_shrinkage": 0.006049042954633667
+        }
+      ]
+    },
+    "8.0": {
+      "headline_mean": 0.49429670350267313,
+      "headline_std": 0.026645054017972014,
+      "ledoit_mean": 0.4943737162249323,
+      "ledoit_std": 0.02661485443364629,
+      "kappa_ledoit_mean": 405.7854821820579,
+      "per_seed": [
+        {
+          "lambda_adv": 8.0,
+          "seed": 42,
+          "headline_auroc": 0.5173851948140724,
+          "headline_kappa": 621.3429885351359,
+          "ledoit_auroc": 0.5173463301260318,
+          "ledoit_kappa": 641.2733509099963,
+          "ledoit_shrinkage": 0.0017022372306952115
+        },
+        {
+          "lambda_adv": 8.0,
+          "seed": 52,
+          "headline_auroc": 0.5043674537730721,
+          "headline_kappa": 444.29648174171155,
+          "ledoit_auroc": 0.5045019641827445,
+          "ledoit_kappa": 418.23004055958324,
+          "ledoit_shrinkage": 0.002344430561685968
+        },
+        {
+          "lambda_adv": 8.0,
+          "seed": 62,
+          "headline_auroc": 0.4965501387552054,
+          "headline_kappa": 372.2437310176862,
+          "ledoit_auroc": 0.4965487605747784,
+          "ledoit_kappa": 359.1935806186488,
+          "ledoit_shrinkage": 0.0020778052625674073
+        },
+        {
+          "lambda_adv": 8.0,
+          "seed": 72,
+          "headline_auroc": 0.5046370258645877,
+          "headline_kappa": 298.73445360484345,
+          "ledoit_auroc": 0.504808471509703,
+          "ledoit_kappa": 282.5785269942346,
+          "ledoit_shrinkage": 0.00239441520325594
+        },
+        {
+          "lambda_adv": 8.0,
+          "seed": 82,
+          "headline_auroc": 0.44854370430642787,
+          "headline_kappa": 349.2040682034435,
+          "ledoit_auroc": 0.44866305473140367,
+          "ledoit_kappa": 327.65191182782627,
+          "ledoit_shrinkage": 0.0024711787561180728
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "lambda_adv": 0.0,
+      "seed": 42,
+      "headline_auroc": 0.8521741623143728,
+      "headline_kappa": 1988.935174104301,
+      "ledoit_auroc": 0.8535347020318791,
+      "ledoit_kappa": 1258.37330174654,
+      "ledoit_shrinkage": 0.0024565475274254144
+    },
+    {
+      "lambda_adv": 0.0,
+      "seed": 52,
+      "headline_auroc": 0.8737454423573281,
+      "headline_kappa": 831.3537695441439,
+      "ledoit_auroc": 0.8753783105272036,
+      "ledoit_kappa": 481.17527111352064,
+      "ledoit_shrinkage": 0.0044866458594503555
+    },
+    {
+      "lambda_adv": 0.0,
+      "seed": 62,
+      "headline_auroc": 0.8482579248130913,
+      "headline_kappa": 1185.004831875619,
+      "ledoit_auroc": 0.8503185801874988,
+      "ledoit_kappa": 630.7881467835847,
+      "ledoit_shrinkage": 0.003739576887864311
+    },
+    {
+      "lambda_adv": 0.0,
+      "seed": 72,
+      "headline_auroc": 0.8203563864329713,
+      "headline_kappa": 1081.519910149957,
+      "ledoit_auroc": 0.8201507619132673,
+      "ledoit_kappa": 952.601992567014,
+      "ledoit_shrinkage": 0.0016061168771483703
+    },
+    {
+      "lambda_adv": 0.0,
+      "seed": 82,
+      "headline_auroc": 0.8207227067904604,
+      "headline_kappa": 1185.415306286465,
+      "ledoit_auroc": 0.8231207407333905,
+      "ledoit_kappa": 822.387179120163,
+      "ledoit_shrinkage": 0.0025628956812060546
+    },
+    {
+      "lambda_adv": 0.25,
+      "seed": 42,
+      "headline_auroc": 0.5115226909138219,
+      "headline_kappa": 828.3713610081728,
+      "ledoit_auroc": 0.5116329453479795,
+      "ledoit_kappa": 761.5081209789713,
+      "ledoit_shrinkage": 0.0021176472156993428
+    },
+    {
+      "lambda_adv": 0.25,
+      "seed": 52,
+      "headline_auroc": 0.49640294908560484,
+      "headline_kappa": 728.4493818456548,
+      "ledoit_auroc": 0.4966598419171923,
+      "ledoit_kappa": 590.2882087562078,
+      "ledoit_shrinkage": 0.0028618050109008916
+    },
+    {
+      "lambda_adv": 0.25,
+      "seed": 62,
+      "headline_auroc": 0.532225717287785,
+      "headline_kappa": 543.359730862187,
+      "ledoit_auroc": 0.5329525696449696,
+      "ledoit_kappa": 408.9877587100311,
+      "ledoit_shrinkage": 0.00372468262172844
+    },
+    {
+      "lambda_adv": 0.5,
+      "seed": 42,
+      "headline_auroc": 0.48138905151417927,
+      "headline_kappa": 545.6433644044563,
+      "ledoit_auroc": 0.48147560124499306,
+      "ledoit_kappa": 438.9190481805849,
+      "ledoit_shrinkage": 0.0031664568152484484
+    },
+    {
+      "lambda_adv": 0.5,
+      "seed": 52,
+      "headline_auroc": 0.4623249573039704,
+      "headline_kappa": 482.65795175329936,
+      "ledoit_auroc": 0.46302259223610326,
+      "ledoit_kappa": 360.27284820947716,
+      "ledoit_shrinkage": 0.0041463039316460264
+    },
+    {
+      "lambda_adv": 0.5,
+      "seed": 62,
+      "headline_auroc": 0.45243155129091406,
+      "headline_kappa": 392.8279726413012,
+      "ledoit_auroc": 0.4526589510613643,
+      "ledoit_kappa": 348.5793082689469,
+      "ledoit_shrinkage": 0.0026724819442238874
+    },
+    {
+      "lambda_adv": 1.0,
+      "seed": 42,
+      "headline_auroc": 0.49381472624375267,
+      "headline_kappa": 562.02855873024,
+      "ledoit_auroc": 0.4940005049653084,
+      "ledoit_kappa": 464.92534201521164,
+      "ledoit_shrinkage": 0.002992276244094029
+    },
+    {
+      "lambda_adv": 1.0,
+      "seed": 52,
+      "headline_auroc": 0.4224321466648584,
+      "headline_kappa": 407.4673533914222,
+      "ledoit_auroc": 0.42288556802533206,
+      "ledoit_kappa": 365.8317940103768,
+      "ledoit_shrinkage": 0.002706554512361557
+    },
+    {
+      "lambda_adv": 1.0,
+      "seed": 62,
+      "headline_auroc": 0.44787363298283445,
+      "headline_kappa": 497.95649652770925,
+      "ledoit_auroc": 0.44781354431621856,
+      "ledoit_kappa": 381.26393471193813,
+      "ledoit_shrinkage": 0.0034876630478426498
+    },
+    {
+      "lambda_adv": 2.0,
+      "seed": 42,
+      "headline_auroc": 0.4314537157398127,
+      "headline_kappa": 688.9594731757643,
+      "ledoit_auroc": 0.43178944049182294,
+      "ledoit_kappa": 616.4798061119702,
+      "ledoit_shrinkage": 0.0022663269671448407
+    },
+    {
+      "lambda_adv": 2.0,
+      "seed": 52,
+      "headline_auroc": 0.40917901240693144,
+      "headline_kappa": 407.61693413997347,
+      "ledoit_auroc": 0.4094778019234988,
+      "ledoit_kappa": 360.89376766389125,
+      "ledoit_shrinkage": 0.0028212575495969857
+    },
+    {
+      "lambda_adv": 2.0,
+      "seed": 62,
+      "headline_auroc": 0.4559313026671651,
+      "headline_kappa": 460.6922329737099,
+      "ledoit_auroc": 0.456673039372961,
+      "ledoit_kappa": 382.96669444168464,
+      "ledoit_shrinkage": 0.002970194714433241
+    },
+    {
+      "lambda_adv": 2.0,
+      "seed": 72,
+      "headline_auroc": 0.4417241919176884,
+      "headline_kappa": 463.35769866382583,
+      "ledoit_auroc": 0.44219801034848116,
+      "ledoit_kappa": 333.1472454618853,
+      "ledoit_shrinkage": 0.004650628086905255
+    },
+    {
+      "lambda_adv": 2.0,
+      "seed": 82,
+      "headline_auroc": 0.39498072201218754,
+      "headline_kappa": 496.5485975968304,
+      "ledoit_auroc": 0.39503777868186407,
+      "ledoit_kappa": 437.0820772960919,
+      "ledoit_shrinkage": 0.00233175796506312
+    },
+    {
+      "lambda_adv": 4.0,
+      "seed": 42,
+      "headline_auroc": 0.41725349589247107,
+      "headline_kappa": 492.8074530885807,
+      "ledoit_auroc": 0.4174188775437076,
+      "ledoit_kappa": 474.09075331861527,
+      "ledoit_shrinkage": 0.0019908840164188147
+    },
+    {
+      "lambda_adv": 4.0,
+      "seed": 52,
+      "headline_auroc": 0.4953050905574795,
+      "headline_kappa": 404.86014304103685,
+      "ledoit_auroc": 0.4959936294987944,
+      "ledoit_kappa": 325.0455457353927,
+      "ledoit_shrinkage": 0.003976661860316756
+    },
+    {
+      "lambda_adv": 4.0,
+      "seed": 62,
+      "headline_auroc": 0.45356937705142153,
+      "headline_kappa": 425.30539968966474,
+      "ledoit_auroc": 0.45453713534724083,
+      "ledoit_kappa": 274.9156177395002,
+      "ledoit_shrinkage": 0.006049042954633667
+    },
+    {
+      "lambda_adv": 8.0,
+      "seed": 42,
+      "headline_auroc": 0.5173851948140724,
+      "headline_kappa": 621.3429885351359,
+      "ledoit_auroc": 0.5173463301260318,
+      "ledoit_kappa": 641.2733509099963,
+      "ledoit_shrinkage": 0.0017022372306952115
+    },
+    {
+      "lambda_adv": 8.0,
+      "seed": 52,
+      "headline_auroc": 0.5043674537730721,
+      "headline_kappa": 444.29648174171155,
+      "ledoit_auroc": 0.5045019641827445,
+      "ledoit_kappa": 418.23004055958324,
+      "ledoit_shrinkage": 0.002344430561685968
+    },
+    {
+      "lambda_adv": 8.0,
+      "seed": 62,
+      "headline_auroc": 0.4965501387552054,
+      "headline_kappa": 372.2437310176862,
+      "ledoit_auroc": 0.4965487605747784,
+      "ledoit_kappa": 359.1935806186488,
+      "ledoit_shrinkage": 0.0020778052625674073
+    },
+    {
+      "lambda_adv": 8.0,
+      "seed": 72,
+      "headline_auroc": 0.5046370258645877,
+      "headline_kappa": 298.73445360484345,
+      "ledoit_auroc": 0.504808471509703,
+      "ledoit_kappa": 282.5785269942346,
+      "ledoit_shrinkage": 0.00239441520325594
+    },
+    {
+      "lambda_adv": 8.0,
+      "seed": 82,
+      "headline_auroc": 0.44854370430642787,
+      "headline_kappa": 349.2040682034435,
+      "ledoit_auroc": 0.44866305473140367,
+      "ledoit_kappa": 327.65191182782627,
+      "ledoit_shrinkage": 0.0024711787561180728
+    }
+  ]
+}

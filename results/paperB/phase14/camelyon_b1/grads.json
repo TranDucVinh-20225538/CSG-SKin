@@ -1,0 +1,284 @@
+[
+  {
+    "lambda_adv": 10.0,
+    "run": "matched_densenet121_ladv10_s42",
+    "ckpt": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase12/camelyon17_matched/matched_densenet121_ladv10_s42/best.pt",
+    "n_batches": 8,
+    "grl_alpha": 0.9999999958776926,
+    "adv_acc_mean": 0.3333333432674408,
+    "adv_loss_mean": 1.098612368106842,
+    "encoder_grad_cls_mean": 0.2699307693024241,
+    "encoder_grad_grl_mean": 0.0,
+    "grl_over_cls_mean": 0.0,
+    "batches": [
+      {
+        "batch": 0,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986123085021973,
+        "cls_loss": 0.036454811692237854,
+        "encoder_grad_cls": 1.000472116158622,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 1,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.0017636721022427082,
+        "encoder_grad_cls": 0.056421083141690816,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 2,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.019541200250387192,
+        "encoder_grad_cls": 0.8434531361593846,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 3,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986123085021973,
+        "cls_loss": 0.00037790098576806486,
+        "encoder_grad_cls": 0.013086801228321645,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 4,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.001445663976483047,
+        "encoder_grad_cls": 0.06548540496565598,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 5,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986123085021973,
+        "cls_loss": 0.0010752008529379964,
+        "encoder_grad_cls": 0.042697369665153036,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 6,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986123085021973,
+        "cls_loss": 0.0008292440907098353,
+        "encoder_grad_cls": 0.05118807651836901,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 7,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.0019814802799373865,
+        "encoder_grad_cls": 0.0866421665821955,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      }
+    ]
+  },
+  {
+    "lambda_adv": 100.0,
+    "run": "matched_densenet121_ladv100_s42",
+    "ckpt": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase12/camelyon17_matched/matched_densenet121_ladv100_s42/best.pt",
+    "n_batches": 8,
+    "grl_alpha": 0.9999999958776926,
+    "adv_acc_mean": 0.3333333432674408,
+    "adv_loss_mean": 1.0986124277114868,
+    "encoder_grad_cls_mean": 0.7139165894090207,
+    "encoder_grad_grl_mean": 0.0,
+    "grl_over_cls_mean": 0.0,
+    "batches": [
+      {
+        "batch": 0,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.13977549970149994,
+        "encoder_grad_cls": 1.7728858156839475,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 1,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.004441510420292616,
+        "encoder_grad_cls": 0.1166564425176048,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 2,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.05903501808643341,
+        "encoder_grad_cls": 2.6221894591695927,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 3,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.0007695656968280673,
+        "encoder_grad_cls": 0.02739293373217075,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 4,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.0018577799201011658,
+        "encoder_grad_cls": 0.06662217687789856,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 5,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.008388829417526722,
+        "encoder_grad_cls": 0.7264751815529159,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 6,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.0011175506515428424,
+        "encoder_grad_cls": 0.03141408822827478,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 7,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986124277114868,
+        "cls_loss": 0.004735076799988747,
+        "encoder_grad_cls": 0.34769661750976105,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      }
+    ]
+  },
+  {
+    "lambda_adv": 300.0,
+    "run": "matched_densenet121_ladv300_s42",
+    "ckpt": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase12/camelyon17_matched/matched_densenet121_ladv300_s42/best.pt",
+    "n_batches": 8,
+    "grl_alpha": 0.9999999958776926,
+    "adv_acc_mean": 0.3333333432674408,
+    "adv_loss_mean": 1.0986121892929077,
+    "encoder_grad_cls_mean": 1.2932740023107894,
+    "encoder_grad_grl_mean": 0.0,
+    "grl_over_cls_mean": 0.0,
+    "batches": [
+      {
+        "batch": 0,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.0540505088865757,
+        "encoder_grad_cls": 2.6931833724675163,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 1,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.05311065912246704,
+        "encoder_grad_cls": 2.280627101134007,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 2,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.03662289306521416,
+        "encoder_grad_cls": 2.481470723632384,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 3,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.0035427319817245007,
+        "encoder_grad_cls": 0.300141669921699,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 4,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.013270681723952293,
+        "encoder_grad_cls": 0.7064557112577939,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 5,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.01617342419922352,
+        "encoder_grad_cls": 0.9525923423859683,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 6,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.00455835647881031,
+        "encoder_grad_cls": 0.2310418351112549,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      },
+      {
+        "batch": 7,
+        "adv_acc": 0.3333333432674408,
+        "adv_loss": 1.0986121892929077,
+        "cls_loss": 0.013373255729675293,
+        "encoder_grad_cls": 0.7006792625756927,
+        "encoder_grad_grl": 0.0,
+        "grl_over_cls": 0.0,
+        "grl_alpha": 0.9999999958776926
+      }
+    ]
+  }
+]

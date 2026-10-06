@@ -1,0 +1,83 @@
+{
+  "kind": "baseline_soft",
+  "run_name": "baseline_soft_s52",
+  "seed": 52,
+  "lambda_adv": null,
+  "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s52/best-24.ckpt",
+  "pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "classes_evaluated": [
+      "MEL",
+      "NV",
+      "BCC",
+      "AK",
+      "BKL",
+      "SCC"
+    ],
+    "classes_missing_from_PAD": [
+      "DF",
+      "VASC"
+    ],
+    "restriction": "6-class: softmax and argmax over MEL,NV,BCC,AK,BKL,SCC (indices 0,1,2,3,4,7). DF and VASC are absent from PAD.",
+    "zero_shot": "PAD labels never entered L_cls (ignore_index=-1)",
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "accuracy": {
+      "point": 0.2877094972067039,
+      "boot_mean": 0.2873959497206704,
+      "ci95": [
+        0.2541899441340782,
+        0.3198324022346369
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "balanced_accuracy": {
+      "point": 0.37671817906428323,
+      "boot_mean": 0.3762331589213509,
+      "ci95": [
+        0.3094680089781099,
+        0.44423855421809805
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "macro_auc_ovr": {
+      "point": 0.6724500598647465,
+      "n": 716
+    },
+    "per_class_recall": {
+      "MEL": 0.5555555555555556,
+      "NV": 0.7954545454545454,
+      "BCC": 0.22826086956521738,
+      "AK": 0.13861386138613863,
+      "BKL": 0.4666666666666667,
+      "SCC": 0.07575757575757576
+    },
+    "melanoma_sens_at_spec_0.85": {
+      "spec_target": 0.85,
+      "n_pos_mel": 9,
+      "n_neg": 707,
+      "note": "pad_heldout melanoma n=9; do not overclaim",
+      "sens": 0.5555555555555556,
+      "achieved_spec": 0.8995756718528995,
+      "threshold": 0.7928606271743774
+    },
+    "pred_class_counts": {
+      "MEL": 134,
+      "NV": 167,
+      "BCC": 103,
+      "AK": 83,
+      "BKL": 205,
+      "SCC": 24
+    }
+  }
+}

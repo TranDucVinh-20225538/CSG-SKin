@@ -1,0 +1,46 @@
+{
+  "disclaimer": "Correlational across heterogeneous models (architecture, dim, supervision). Phase 3 \u03bb_adv sweep is the intervention.",
+  "n_points": 4,
+  "pearson_r": 0.9421358374727848,
+  "ols_slope": 1.7741441672450942,
+  "ols_intercept": -0.80373576573597,
+  "bootstrap": {
+    "slope_mean": 2.061523790429946,
+    "slope_ci95": [
+      0.8022598870056501,
+      6.371980676328494
+    ],
+    "intercept_mean": -1.066666386641234,
+    "n_boot": 1976
+  },
+  "points": [
+    {
+      "name": "z_context",
+      "leakage": 0.9997,
+      "auroc": 0.9999,
+      "bal": null,
+      "color": "#0072B2"
+    },
+    {
+      "name": "ResNet-50 baseline",
+      "leakage": 0.979,
+      "auroc": 0.868,
+      "bal": 0.655,
+      "color": "#D55E00"
+    },
+    {
+      "name": "EffB3 single control",
+      "leakage": 0.802,
+      "auroc": 0.726,
+      "bal": 0.683,
+      "color": "#009E73"
+    },
+    {
+      "name": "z_lesion",
+      "leakage": 0.724,
+      "auroc": 0.409,
+      "bal": 0.702,
+      "color": "#CC79A7"
+    }
+  ]
+}

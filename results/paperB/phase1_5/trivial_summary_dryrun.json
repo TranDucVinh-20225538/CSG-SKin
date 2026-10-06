@@ -1,0 +1,295 @@
+[
+  {
+    "mode": "processed_evalgeom",
+    "blocked": false,
+    "maha_rows": [
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": NaN,
+        "feat_dim": 48,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": NaN,
+        "feat_dim": 48,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": NaN,
+        "feat_dim": 48,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": NaN,
+        "feat_dim": 48,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": NaN,
+        "feat_dim": 256,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": NaN,
+        "feat_dim": 256,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": NaN,
+        "feat_dim": 256,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": NaN,
+        "feat_dim": 256,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": NaN,
+        "feat_dim": 6,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": NaN,
+        "feat_dim": 4,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": NaN,
+        "feat_dim": 4,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": NaN,
+        "feat_dim": 4,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": NaN,
+        "feat_dim": 4,
+        "error": "No samples for class 5; cannot fit Mahalanobis."
+      }
+    ],
+    "probes": [
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "feat_dim": 6,
+        "acc_mean": 0.7799999999999999,
+        "acc_std": 0.07483314773547886,
+        "bal_acc_mean": 0.7799999999999999,
+        "bal_acc_std": 0.07483314773547886,
+        "auroc_mean": 0.9200000000000002,
+        "auroc_std": 0.056568542494923824,
+        "acc_per_seed": [
+          0.8,
+          0.8,
+          0.7,
+          0.9,
+          0.7
+        ],
+        "majority": 0.5
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "feat_dim": 48,
+        "acc_mean": 0.6,
+        "acc_std": 0.08944271909999157,
+        "bal_acc_mean": 0.6,
+        "bal_acc_std": 0.08944271909999157,
+        "auroc_mean": 0.6880000000000001,
+        "auroc_std": 0.11142710621747295,
+        "acc_per_seed": [
+          0.7,
+          0.6,
+          0.5,
+          0.5,
+          0.7
+        ],
+        "majority": 0.5
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "feat_dim": 256,
+        "acc_mean": 0.8,
+        "acc_std": 0.0632455532033676,
+        "bal_acc_mean": 0.8,
+        "bal_acc_std": 0.0632455532033676,
+        "auroc_mean": 0.952,
+        "auroc_std": 0.029933259094191523,
+        "acc_per_seed": [
+          0.8,
+          0.8,
+          0.9,
+          0.7,
+          0.8
+        ],
+        "majority": 0.5
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "feat_dim": 6,
+        "acc_mean": 0.8800000000000001,
+        "acc_std": 0.09797958971132716,
+        "bal_acc_mean": 0.8800000000000001,
+        "bal_acc_std": 0.09797958971132716,
+        "auroc_mean": 0.9200000000000002,
+        "auroc_std": 0.05059644256269404,
+        "acc_per_seed": [
+          0.9,
+          0.9,
+          0.7,
+          1.0,
+          0.9
+        ],
+        "majority": 0.5
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "feat_dim": 4,
+        "acc_mean": 0.8,
+        "acc_std": 0.1264911064067352,
+        "bal_acc_mean": 0.8,
+        "bal_acc_std": 0.12649110640673514,
+        "auroc_mean": 0.8320000000000001,
+        "auroc_std": 0.09260669522232179,
+        "acc_per_seed": [
+          0.7,
+          0.9,
+          0.9,
+          0.6,
+          0.9
+        ],
+        "majority": 0.5
+      }
+    ],
+    "counts": {
+      "isic_train": 16,
+      "isic_test": 16,
+      "pad": 16
+    }
+  },
+  {
+    "mode": "raw_resize224",
+    "blocked": true,
+    "reason": "PAD images unreadable"
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "data_root": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds",
+  "read_only": true,
+  "camelyon17_release": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/camelyon17_v1.0/RELEASE_v1.0.txt",
+    "sha256": "c47aef3703e4b548239c348f454478d0bbc2813f2653229f8d633e977a7c182f",
+    "bytes": 68,
+    "text": "# Release notes for Camelyon17\n\n## v1.0\nDec 9, 2020: First release.\n"
+  },
+  "iwildcam_release": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/iwildcam_v2.0/RELEASE_v2.0.txt",
+    "sha256": "635c4d65c925d01df4dd28910649d739ea645883c08fa53b544b7e92ea3c8dce",
+    "bytes": 645,
+    "text": "# Release notes for iWildCam2020\n\n## v2.0\nFeb 26, 2021: a) Created new split of the dataset such that the splits train, val-ID and test-ID do not overlap on the attribute date. b) For the iWildCam2021 challenge on Kaggle, multiple images are being removed that e.g include humans or pictures from indoors. We made the same updates. c) Resized all images to have height 448, keeping aspect ratio, and saved as jpeg. Jpeg compression is not lossless. d) Added in location 537. e) Put all metadata in one csv instead of multiple\nfiles. f) Added categories.csv that shows what species each label corresponds to.\n\n## v1.0\nDec 9, 2020: First release.\n"
+  },
+  "camelyon17": {
+    "n_metadata_rows": 455954,
+    "n_checked": 455954,
+    "n_missing": 0,
+    "missing_sample": [],
+    "complete": true
+  },
+  "iwildcam": {
+    "n_metadata_rows": 203029,
+    "n_checked": 203029,
+    "n_missing": 0,
+    "missing_sample": [],
+    "complete": true
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "outcome": "c",
+  "balanced_acc_floor": 0.3333333333333333,
+  "plain_majority_is_not_the_floor": true,
+  "range_call": "upward_was_right",
+  "next_action": "Leakage at matched \u03bb=10 is still high (0.942 > 0.8). The upward scan was right. Continue classification on this grid. Do not extend downward.",
+  "next_grid_not_launched": null,
+  "lambda0_leak": 0.9752903675676037,
+  "lambda0_id": 0.9933253873659118,
+  "lambda10_leak": 0.9423837461335346,
+  "lambda10_diverged": false,
+  "lambda300_leak": 0.8940227617662733,
+  "lambda300_diverged": false,
+  "flags": [
+    {
+      "lambda_adv": 0.0,
+      "diverged": false,
+      "why": ""
+    },
+    {
+      "lambda_adv": 10.0,
+      "diverged": false,
+      "why": ""
+    },
+    {
+      "lambda_adv": 30.0,
+      "diverged": false,
+      "why": ""
+    },
+    {
+      "lambda_adv": 100.0,
+      "diverged": false,
+      "why": ""
+    },
+    {
+      "lambda_adv": 300.0,
+      "diverged": false,
+      "why": ""
+    }
+  ],
+  "leakage": [
+    [
+      0.0,
+      0.9752903675676037
+    ],
+    [
+      10.0,
+      0.9423837461335346
+    ],
+    [
+      30.0,
+      0.9465098861943931
+    ],
+    [
+      100.0,
+      0.9434389650472549
+    ],
+    [
+      300.0,
+      0.8940227617662733
+    ]
+  ],
+  "id_acc": [
+    [
+      0.0,
+      0.9933253873659118
+    ],
+    [
+      10.0,
+      0.9916567342073898
+    ],
+    [
+      30.0,
+      0.9879022646007152
+    ],
+    [
+      100.0,
+      0.9889153754469606
+    ],
+    [
+      300.0,
+      0.9786650774731823
+    ]
+  ],
+  "meaning": "Leakage never fell below 0.8 at any non-diverged \u03bb including 300, with a derm-matched adversary. Outcome (c): this adversarial formulation does not induce invariance on Camelyon17. Hard stop. Do not raise \u03bb further. iWildCam stays gated.",
+  "coarse_lambda0_used": false
+}

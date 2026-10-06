@@ -1,0 +1,84 @@
+{
+  "kind": "csg",
+  "run_name": "runB_orth1_ladv2_s72",
+  "seed": 72,
+  "lambda_adv": 2.0,
+  "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase2/runB_orth1_padhold_s72/best-38.ckpt",
+  "reused_phase2_ckpt": true,
+  "pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "classes_evaluated": [
+      "MEL",
+      "NV",
+      "BCC",
+      "AK",
+      "BKL",
+      "SCC"
+    ],
+    "classes_missing_from_PAD": [
+      "DF",
+      "VASC"
+    ],
+    "restriction": "6-class: softmax and argmax over MEL,NV,BCC,AK,BKL,SCC (indices 0,1,2,3,4,7). DF and VASC are absent from PAD.",
+    "zero_shot": "PAD labels never entered L_cls (ignore_index=-1)",
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "accuracy": {
+      "point": 0.18435754189944134,
+      "boot_mean": 0.18444483240223467,
+      "ci95": [
+        0.1564245810055866,
+        0.2122905027932961
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "balanced_accuracy": {
+      "point": 0.23372562980935774,
+      "boot_mean": 0.2347614799908319,
+      "ci95": [
+        0.18886587480786757,
+        0.29290116584944514
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "macro_auc_ovr": {
+      "point": 0.56534644240818,
+      "n": 716
+    },
+    "per_class_recall": {
+      "MEL": 0.2222222222222222,
+      "NV": 0.875,
+      "BCC": 0.14492753623188406,
+      "AK": 0.009900990099009901,
+      "BKL": 0.12,
+      "SCC": 0.030303030303030304
+    },
+    "melanoma_sens_at_spec_0.85": {
+      "spec_target": 0.85,
+      "n_pos_mel": 9,
+      "n_neg": 707,
+      "note": "pad_heldout melanoma n=9; do not overclaim",
+      "sens": 0.1111111111111111,
+      "achieved_spec": 0.8599717114568599,
+      "threshold": 0.9720669388771057
+    },
+    "pred_class_counts": {
+      "MEL": 172,
+      "NV": 409,
+      "BCC": 66,
+      "AK": 7,
+      "BKL": 54,
+      "SCC": 8
+    }
+  }
+}

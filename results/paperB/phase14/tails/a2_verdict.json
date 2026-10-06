@@ -1,0 +1,13 @@
+{
+  "lambda": 2.0,
+  "ood": "pad_heldout",
+  "space": "z_lesion_norm",
+  "full": 0.4266536235671058,
+  "bulk_p90": 0.41177231551547033,
+  "bulk_p95": 0.41631330903760766,
+  "bulk_p99": 0.42445077653847835,
+  "inverted_at_full": true,
+  "tail_is_driver": false,
+  "bulk_still_inverted": true,
+  "reading": "Inversion at \u03bb=2 (0.427) persists in the bulk after dropping p90 (0.412), p95 (0.416), p99 (0.424). The tail hypothesis is wrong. This line closes."
+}

@@ -1,0 +1,156 @@
+{
+  "run_name": "ham_bcn_ladv2_s42",
+  "seed": 42,
+  "lambda_adv": 2.0,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase16/b1_rev/ham_bcn_ladv2_s42/best-19.ckpt",
+  "leakage_bcn_heldout_protocol": {
+    "acc_mean": 0.844017094017094,
+    "bal_acc_mean": 0.7637648731832715,
+    "auroc_mean": 0.8743875455580583,
+    "acc_std": 0.007014855984185271,
+    "bal_acc_std": 0.007877453202339773,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "id_ham_test_balanced_acc": 0.6540318129912298,
+  "id_ham_test_plain_acc": 0.8070866141732284,
+  "ood_bcn_heldout_balanced_acc": 0.4632991730794872,
+  "ood_bcn_heldout_plain_acc": 0.631004366812227,
+  "id_ece": 0.08127366120773037,
+  "id_mean_confidence": 0.8883602619171143,
+  "ood_ece_bcn_heldout": 0.21439856808128316,
+  "ood_mean_confidence_bcn_heldout": 0.8454029560089111,
+  "ood_detectors_bcn_heldout": {
+    "mahalanobis_classcond": 0.6491413046281334,
+    "cosine_max": 0.5181296848674484,
+    "knn_k50": 0.5659397779630713,
+    "MSP": 0.5778256144053227,
+    "Energy_T1": 0.5314524109875185,
+    "fit": "HAM train split only"
+  },
+  "ood_auroc_maha": {
+    "unrestricted": 0.6491413046281334,
+    "shared_classes": 0.6491413046281334,
+    "reweighted_to_ood_class_mix": 0.5452261630505795,
+    "n_shared_classes": 8,
+    "shared_class_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "gate": {
+    "leakage_bal_acc": 0.7637648731832715,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.8643550872802734,
+      "acc_adv": 0.375,
+      "g_enc_grl": 0.013595415279269218,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.6979166865348816,
+      "loss_adv": 0.5855070948600769,
+      "acc_cls": 0.5945512652397156,
+      "grl_alpha": 0.9183379591911622,
+      "g_enc_grl_mean": 0.023386479212114446,
+      "lnK": 0.6931471805599453
+    },
+    "best_epoch": {
+      "epoch": 1,
+      "acc_adv": 0.6979166865348816,
+      "loss_adv": 0.5855070948600769,
+      "acc_cls": 0.5945512652397156,
+      "grl_alpha": 0.9183379591911622,
+      "g_enc_grl_mean": 0.023386479212114446,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.6418269276618958,
+      "loss_adv": 0.6468934416770935,
+      "acc_cls": 0.9720123410224915,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.006968413650198079,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 2.0,
+    "status": "valid",
+    "reason": "adversary learned: best-epoch CE 0.5855 (epoch 1) is below ln K \u2212 0.02.",
+    "learned": true,
+    "returned_to_chance": false
+  },
+  "rev_maha_gate": {
+    "maha_unrestricted_at_eval": 0.6491413046281334,
+    "threshold_ge": 0.65,
+    "pass_continue_coarse": false
+  },
+  "hygiene": {
+    "ham_train": 7991,
+    "ham_val": 1008,
+    "ham_test": 1016,
+    "bcn_adv": 8749,
+    "bcn_heldout": 3664
+  },
+  "config": {
+    "phase": "16B1_rev_coarse",
+    "run_name": "ham_bcn_ladv2_s42",
+    "lambda_adv": 2.0,
+    "seed": 42,
+    "split_seed": 42,
+    "architecture": "single_encoder_dann_effb3",
+    "preprocessing": "unmasked 448 (same as B1)",
+    "image_size": 448,
+    "id_site": "HAM",
+    "ood_site": "BCN_heldout",
+    "split_meta": {
+      "seed": 42,
+      "bcn_heldout_frac": 0.3,
+      "n_ham_train": 7991,
+      "n_ham_val": 1008,
+      "n_ham_test": 1016,
+      "n_bcn_adv": 8749,
+      "n_bcn_heldout": 3664,
+      "lesion_disjoint": true,
+      "orientation": "ID=HAM OOD=BCN_heldout"
+    },
+    "hygiene": {
+      "ham_train": 7991,
+      "ham_val": 1008,
+      "ham_test": 1016,
+      "bcn_adv": 8749,
+      "bcn_heldout": 3664
+    },
+    "split_json": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/b1_rev/b1_rev_split_seed42.json",
+    "coarse_grid": [
+      0,
+      0.1,
+      0.25,
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "fit_ood_on": "HAM train only",
+    "leakage_protocol": "HAM test + BCN heldout embeddings, binary site probe (site_id)",
+    "maha_gate_at_lambda0": {
+      "threshold_ge": 0.65,
+      "pass": "run remaining coarse + dense 3-seed",
+      "fail": "stop rev; narrative same-modality collapse only"
+    }
+  }
+}

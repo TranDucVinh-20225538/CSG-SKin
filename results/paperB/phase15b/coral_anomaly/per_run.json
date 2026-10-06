@@ -1,0 +1,278 @@
+[
+  {
+    "run": "coral_w100_s42",
+    "objective": "coral",
+    "weight": 100.0,
+    "seed": 42,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w100_s42/best-38.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 69.62251281738281,
+      "cov_frobenius": 15.263999938964844,
+      "coral_penalty": 2.4689605601856278e-05,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 67.98072814941406,
+      "cov_frobenius": 64.26089477539062,
+      "coral_penalty": 0.00043757415066162747,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w100_s52",
+    "objective": "coral",
+    "weight": 100.0,
+    "seed": 52,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w100_s52/best-38.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 69.81888580322266,
+      "cov_frobenius": 18.66858673095703,
+      "coral_penalty": 3.693346904280285e-05,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 68.4853286743164,
+      "cov_frobenius": 48.081600189208984,
+      "coral_penalty": 0.0002449715458270576,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w100_s62",
+    "objective": "coral",
+    "weight": 100.0,
+    "seed": 62,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w100_s62/best-35.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 70.81742858886719,
+      "cov_frobenius": 15.875970840454102,
+      "coral_penalty": 2.6709458325058222e-05,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 69.0266342163086,
+      "cov_frobenius": 56.963539123535156,
+      "coral_penalty": 0.00034383681809736625,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w10_s42",
+    "objective": "coral",
+    "weight": 10.0,
+    "seed": 42,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w10_s42/best-35.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 60.39885330200195,
+      "cov_frobenius": 40.746070861816406,
+      "coral_penalty": 0.00017593046908991205,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 59.0101318359375,
+      "cov_frobenius": 55.623931884765625,
+      "coral_penalty": 0.0003278561505592532,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w10_s52",
+    "objective": "coral",
+    "weight": 10.0,
+    "seed": 52,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w10_s52/best-34.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 60.99878692626953,
+      "cov_frobenius": 42.57114028930664,
+      "coral_penalty": 0.00019204280235701136,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 59.671966552734375,
+      "cov_frobenius": 47.74376678466797,
+      "coral_penalty": 0.0002415428300284677,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w10_s62",
+    "objective": "coral",
+    "weight": 10.0,
+    "seed": 62,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w10_s62/best-37.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 62.425086975097656,
+      "cov_frobenius": 38.10810470581055,
+      "coral_penalty": 0.00015388890945663056,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 60.55866241455078,
+      "cov_frobenius": 67.80425262451172,
+      "coral_penalty": 0.00048716143808431097,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w1_s42",
+    "objective": "coral",
+    "weight": 1.0,
+    "seed": 42,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w1_s42/best-35.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 22.49006462097168,
+      "cov_frobenius": 112.94173431396484,
+      "coral_penalty": 0.0013516732595033115,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 21.617204666137695,
+      "cov_frobenius": 119.89995574951172,
+      "coral_penalty": 0.0015233528489867847,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w1_s52",
+    "objective": "coral",
+    "weight": 1.0,
+    "seed": 52,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w1_s52/best-32.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 19.856399536132812,
+      "cov_frobenius": 109.7249755859375,
+      "coral_penalty": 0.0012757745054033068,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 19.259071350097656,
+      "cov_frobenius": 113.64128875732422,
+      "coral_penalty": 0.00136846997257736,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "coral_w1_s62",
+    "objective": "coral",
+    "weight": 1.0,
+    "seed": 62,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w1_s62/best-31.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 19.600751876831055,
+      "cov_frobenius": 113.95328521728516,
+      "coral_penalty": 0.0013759926789336735,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 18.599435806274414,
+      "cov_frobenius": 117.74946594238281,
+      "coral_penalty": 0.0014691997526420488,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "erm_w0_s42",
+    "objective": "erm",
+    "weight": 0.0,
+    "seed": 42,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s42/best-38.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 14.705784797668457,
+      "cov_frobenius": 156.07330322265625,
+      "coral_penalty": 0.002581189903948042,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 14.34399700164795,
+      "cov_frobenius": 162.1116943359375,
+      "coral_penalty": 0.0027847830206155777,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "erm_w0_s52",
+    "objective": "erm",
+    "weight": 0.0,
+    "seed": 52,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s52/best-32.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 14.996591567993164,
+      "cov_frobenius": 162.32774353027344,
+      "coral_penalty": 0.002792211663391855,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 14.34146499633789,
+      "cov_frobenius": 163.85934448242188,
+      "coral_penalty": 0.002845148659414715,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  },
+  {
+    "run": "erm_w0_s62",
+    "objective": "erm",
+    "weight": 0.0,
+    "seed": 62,
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s62/best-31.ckpt",
+    "train_vs_pad_adv": {
+      "mean_l2": 13.68606185913086,
+      "cov_frobenius": 158.35862731933594,
+      "coral_penalty": 0.0026573335958851706,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 1582
+    },
+    "train_vs_pad_heldout": {
+      "mean_l2": 13.125550270080566,
+      "cov_frobenius": 159.74208068847656,
+      "coral_penalty": 0.0027039628475904465,
+      "dim": 1536,
+      "n_src": 16211,
+      "n_tgt": 716
+    }
+  }
+]

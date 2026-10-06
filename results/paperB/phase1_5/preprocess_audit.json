@@ -1,0 +1,242 @@
+{
+  "eval_transform": "torchvision Resize(256, bilinear) \u2192 CenterCrop(224) \u2192 ToTensor \u2192 ImageNet Normalize",
+  "lesion_branch_at_eval": "in-model _rgb_to_gray3 AFTER ImageNet norm (CSGLite.forward x_lesion=None)",
+  "soft_crop_script": {
+    "file": "scripts/build_lesion_only_metadata.py",
+    "bbox": "border-median difference, expand margin=0.30, min_crop_ratio=0.70",
+    "resize": "PIL Image.Resampling.BILINEAR to 224\u00d7224",
+    "save": "JPEG quality=95 (extension .jpg, no explicit format=)",
+    "autocontrast": false
+  },
+  "byte_identical_eval_path": true,
+  "note_eval_on_already_224": "Both domains' lesion_only files are already 224\u00d7224 JPEG. Eval Resize(256)+CenterCrop(224) therefore upsamples then recrops identically.",
+  "domains": {
+    "processed_lesion_only": {
+      "isic": {
+        "n_listed": 25331,
+        "n_exists": 25331,
+        "n_readable": 25331,
+        "suffix_counts": {
+          ".jpg": 25331
+        },
+        "format_counts": {
+          "JPEG": 25331
+        },
+        "mode_counts": {
+          "RGB": 25331
+        },
+        "width": {
+          "n": 25331,
+          "min": 224.0,
+          "p25": 224.0,
+          "median": 224.0,
+          "p75": 224.0,
+          "max": 224.0,
+          "mean": 224.0,
+          "std": 0.0
+        },
+        "height": {
+          "n": 25331,
+          "min": 224.0,
+          "p25": 224.0,
+          "median": 224.0,
+          "p75": 224.0,
+          "max": 224.0,
+          "mean": 224.0,
+          "std": 0.0
+        },
+        "aspect": {
+          "n": 25331,
+          "min": 1.0,
+          "p25": 1.0,
+          "median": 1.0,
+          "p75": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "unique_sizes": [
+          [
+            "224x224",
+            25331
+          ]
+        ]
+      },
+      "pad_ufes": {
+        "n_listed": 2298,
+        "n_exists": 2298,
+        "n_readable": 2298,
+        "suffix_counts": {
+          ".jpg": 2298
+        },
+        "format_counts": {
+          "JPEG": 2298
+        },
+        "mode_counts": {
+          "RGB": 2298
+        },
+        "width": {
+          "n": 2298,
+          "min": 224.0,
+          "p25": 224.0,
+          "median": 224.0,
+          "p75": 224.0,
+          "max": 224.0,
+          "mean": 224.0,
+          "std": 0.0
+        },
+        "height": {
+          "n": 2298,
+          "min": 224.0,
+          "p25": 224.0,
+          "median": 224.0,
+          "p75": 224.0,
+          "max": 224.0,
+          "mean": 224.0,
+          "std": 0.0
+        },
+        "aspect": {
+          "n": 2298,
+          "min": 1.0,
+          "p25": 1.0,
+          "median": 1.0,
+          "p75": 1.0,
+          "max": 1.0,
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "unique_sizes": [
+          [
+            "224x224",
+            2298
+          ]
+        ]
+      }
+    },
+    "raw_source": {
+      "isic": {
+        "n_listed": 25331,
+        "n_exists": 25331,
+        "n_readable": 25331,
+        "suffix_counts": {
+          ".jpg": 25331
+        },
+        "format_counts": {
+          "JPEG": 25331
+        },
+        "mode_counts": {
+          "RGB": 25331
+        },
+        "width": {
+          "n": 25331,
+          "min": 576.0,
+          "p25": 600.0,
+          "median": 1024.0,
+          "p75": 1024.0,
+          "max": 1024.0,
+          "mean": 854.8966483755082,
+          "std": 206.94227167683394
+        },
+        "height": {
+          "n": 25331,
+          "min": 450.0,
+          "p25": 450.0,
+          "median": 768.0,
+          "p75": 1024.0,
+          "max": 1024.0,
+          "mean": 760.8160751648178,
+          "std": 269.72290178313807
+        },
+        "aspect": {
+          "n": 25331,
+          "min": 0.75,
+          "p25": 1.0,
+          "median": 1.3333333333333333,
+          "p75": 1.3333333333333333,
+          "max": 1.546474358974359,
+          "mean": 1.1814939415792178,
+          "std": 0.1835415714989031
+        },
+        "unique_sizes": [
+          [
+            "1024x1024",
+            12414
+          ],
+          [
+            "600x450",
+            10015
+          ],
+          [
+            "1024x680",
+            1121
+          ],
+          [
+            "1024x768",
+            774
+          ],
+          [
+            "1024x682",
+            173
+          ],
+          [
+            "1024x685",
+            156
+          ],
+          [
+            "1024x764",
+            81
+          ],
+          [
+            "1024x681",
+            78
+          ],
+          [
+            "767x576",
+            68
+          ],
+          [
+            "1024x679",
+            68
+          ],
+          [
+            "919x802",
+            54
+          ],
+          [
+            "1024x683",
+            40
+          ]
+        ]
+      },
+      "pad_ufes": {
+        "n_listed": 2298,
+        "n_exists": 0,
+        "n_readable": 0,
+        "suffix_counts": {
+          ".png": 2298
+        },
+        "format_counts": {},
+        "mode_counts": {},
+        "width": {},
+        "height": {},
+        "aspect": {},
+        "unique_sizes": []
+      }
+    }
+  },
+  "asymmetries": [
+    {
+      "name": "source_encoding",
+      "finding": "ISIC source files are JPEG; PAD-UFES source files are PNG (from metadata suffixes). Soft-crop re-encodes BOTH to JPEG quality=95."
+    },
+    {
+      "name": "pad_raw_unreadable",
+      "finding": "PAD original PNGs live at Ban_sao_datn/.../pad_ufes20/images but are mode 600 / owner anhnv; this user cannot read them. Raw-source trivial detectors cannot include PAD."
+    },
+    {
+      "name": "processed_resolution",
+      "finding": "After soft-crop, ISIC and PAD are both 224\u00d7224 JPEG (byte-identical encoder settings). Eval transform is therefore shared.",
+      "both_224": true
+    }
+  ]
+}

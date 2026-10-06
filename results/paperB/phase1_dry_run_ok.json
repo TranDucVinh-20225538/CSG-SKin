@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "summaries": [
+    {
+      "method": "baseline_soft",
+      "seed": 42,
+      "kind": "baseline",
+      "id_acc": 0.75,
+      "id_balanced_acc": 0.75,
+      "n_train": 4,
+      "n_id": 4,
+      "n_ood": 4,
+      "dry_run": true,
+      "feature_spaces": [
+        "backbone_raw",
+        "logits"
+      ],
+      "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s42/best-20.ckpt"
+    },
+    {
+      "method": "effb3_control",
+      "seed": 42,
+      "kind": "effb3",
+      "id_acc": 1.0,
+      "id_balanced_acc": 1.0,
+      "n_train": 4,
+      "n_id": 4,
+      "n_ood": 4,
+      "dry_run": true,
+      "feature_spaces": [
+        "backbone_raw",
+        "logits"
+      ],
+      "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s42/best-39.ckpt"
+    },
+    {
+      "method": "runB_orth1",
+      "seed": 42,
+      "kind": "csg",
+      "id_acc": 1.0,
+      "id_balanced_acc": 1.0,
+      "n_train": 4,
+      "n_id": 4,
+      "n_ood": 4,
+      "dry_run": true,
+      "feature_spaces": [
+        "z_lesion",
+        "z_context",
+        "concat_z",
+        "backbone_raw_lesion",
+        "backbone_raw_context",
+        "logits"
+      ],
+      "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s42/best-36.ckpt"
+    }
+  ]
+}

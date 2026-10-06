@@ -1,0 +1,83 @@
+{
+  "phase": "16B",
+  "title": "BCN versus HAM same-modality site shift (ISIC dermoscopy)",
+  "written_utc": "2026-10-02T07:50:00Z",
+  "locked_before_any_training": true,
+  "reference_lines": {
+    "isic_pad_binary_leakage_at_lambda0": 0.97,
+    "label_only_site_probe_plain_accuracy_reference": 0.67,
+    "label_only_majority_baseline": 0.553
+  },
+  "B0_domain_signal_threshold": {
+    "metric": "balanced_accuracy",
+    "threshold": 0.7,
+    "interpretation": "Probe at or above 0.70 counts as a domain signal worth adversarial removal, compared against the label-only reference (~0.67 plain accuracy), not against 0.5.",
+    "stop_rule": "If balanced accuracy is near 0.5 (pre-specified band: 0.45-0.55), report ISIC site homogeneity and do not run B1."
+  },
+  "B0b_trivial_shift_controls": {
+    "preprocessing": "Identical centre crop, resize to 448, same interpolation and normalization as Phase 15 single-encoder eval; document exact torchvision ops in run config.",
+    "border_masked_probe": "Report site probe balanced accuracy on unmasked features and with a fixed circular border mask (dermoscope vignette region zeroed before embedding).",
+    "handcrafted_detectors": [
+      "rgb_moments",
+      "color_hist",
+      "gray_downsample",
+      "hsv_moments",
+      "laplacian_stats"
+    ],
+    "label_only_probe": "Logistic site classifier from ground-truth class index only (no image), as reference line."
+  },
+  "data_definition": {
+    "id_site": "BCN",
+    "ood_site": "HAM",
+    "excluded_sites": ["MSK4", "empty"],
+    "excluded_counts_verified_on_disk": {
+      "BCN": 12413,
+      "HAM": 10015,
+      "MSK4": 819,
+      "empty_unattributed": 2084,
+      "source": "/data2/hpcshared/Vinh/CSG-Skin/data/ISIC_2019_Training_Metadata.csv joined to master_metadata_lesion_only_soft.csv"
+    },
+    "split_unit": "lesion_id",
+    "ham_holdout_for_ood": "Disjoint HAM lesion partition never in L_adv (mirror pad_heldout); all OOD AUROC/ECE/confidence on that holdout only.",
+    "class_table_verified": true
+  },
+  "architecture": {
+    "model": "single_encoder_dann_effb3",
+    "implementation": "scripts/train_phase15_1_single_dann.py / phase15_common.py (Phase 15.1 validated recipe)"
+  },
+  "B2_sweep_protocol": {
+    "coarse_grid_lambda_adv": [0, 0.1, 0.25, 0.5, 1, 2, 4, 8],
+    "coarse_seeds": 1,
+    "dense_seeds": [42, 52, 62],
+    "dense_lambda_rule": "Three seeds densely in the interval where coarse scan shows the steepest drop in binary site leakage on held-out HAM, plus lambda=0 anchor with identical recipe.",
+    "gate_instrumentation_from_epoch_1": [
+      "acc_adv",
+      "loss_adv",
+      "best_epoch_ce_vs_ln2",
+      "g_enc_grl_mean",
+      "g_enc_cls_mean"
+    ],
+    "gate_criteria": {
+      "success": "Adversary at chance at convergence after best-epoch CE meaningfully below ln(2).",
+      "null_experiment": "At chance from epoch 1 and never below ln(2) (Camelyon17-class null).",
+      "lambda_zero": "Control only; not interpreted as null."
+    },
+    "reported_metrics_per_lambda": [
+      "binary_site_leakage_bal_acc_floor_0.5",
+      "id_balanced_accuracy",
+      "ood_detectors_maha_cosine_knn50_MSP_energy",
+      "ood_auroc_unrestricted",
+      "ood_auroc_shared_classes",
+      "ood_auroc_reweighted_to_ood_class_mix",
+      "ood_ece_and_mean_confidence",
+      "cross_domain_accuracy_on_heldout_HAM"
+    ]
+  },
+  "B3_outcome_mapping": {
+    "1_leakage_falls_task_intact_detectors_invert": "Modality confound closed; claim covers same-modality site shift.",
+    "2_detectors_chance_no_invert": "Partial: collapse generalises; inversion may need larger gap. Report both.",
+    "3_leakage_falls_detectors_flat": "Effect needs large domain gap; narrows claim; explains Camelyon17/iWildCam negatives.",
+    "4_gate_never_opens": "Inconclusive."
+  },
+  "priority_note": "Part B outranks new WILDS work; do not queue further iWildCam beyond finishing in-flight eval jobs."
+}

@@ -1,0 +1,143 @@
+{
+  "run_name": "bcn_ham_ladv0_s42",
+  "seed": 42,
+  "lambda_adv": 0.0,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase16/b1/bcn_ham_ladv0_s42/best-28.ckpt",
+  "leakage_ham_heldout": {
+    "acc_mean": 0.9749742002063982,
+    "bal_acc_mean": 0.968969298245614,
+    "auroc_mean": 0.9958217913204063,
+    "acc_std": 0.0008937310668569521,
+    "bal_acc_std": 0.0035343775134399485,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "id_bcn_test_balanced_acc": 0.46650976353438245,
+  "id_bcn_test_plain_acc": 0.6245059288537549,
+  "ood_ham_heldout_balanced_acc": 0.5733599737409707,
+  "ood_ham_heldout_plain_acc": 0.8131578947368421,
+  "id_ece": 0.273785731349538,
+  "id_mean_confidence": 0.8982915878295898,
+  "ood_ece_ham_heldout": 0.13057437032265098,
+  "ood_mean_confidence_ham_heldout": 0.9417521953582764,
+  "ood_detectors_ham_heldout": {
+    "mahalanobis_classcond": 0.3794143956729769,
+    "cosine_max": 0.6059449760765551,
+    "knn_k50": 0.7043816309548575,
+    "MSP": 0.37621164447680466,
+    "Energy_T1": 0.47316647597254,
+    "fit": "ISIC train split only"
+  },
+  "ood_auroc_maha": {
+    "unrestricted": 0.3794143956729769,
+    "shared_classes": 0.3794143956729769,
+    "reweighted_to_ood_class_mix": 0.48727012689827337,
+    "n_shared_classes": 8,
+    "shared_class_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "gate": {
+    "leakage_bal_acc": 0.968969298245614,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.7197389602661133,
+      "acc_adv": 0.515625,
+      "g_enc_grl": 0.012104582972824574,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.524193525314331,
+      "loss_adv": 0.736976683139801,
+      "acc_cls": 0.6376007795333862,
+      "grl_alpha": 0.9183908326892596,
+      "g_enc_grl_mean": 0.0464980996424152,
+      "lnK": 0.6931471805599453
+    },
+    "best_epoch": {
+      "epoch": 35,
+      "acc_adv": 0.5333669185638428,
+      "loss_adv": 0.7313203811645508,
+      "acc_cls": 0.9865927696228027,
+      "grl_alpha": 0.9999999849972452,
+      "g_enc_grl_mean": 0.059404177459016924,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.5280241966247559,
+      "loss_adv": 0.7349900007247925,
+      "acc_cls": 0.9877015948295593,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.059229574028042055,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 0.0,
+    "status": "valid_control",
+    "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
+  },
+  "hygiene": {
+    "bcn_train": 9929,
+    "bcn_val": 1219,
+    "bcn_test": 1265,
+    "ham_adv": 6975,
+    "ham_heldout": 3040
+  },
+  "config": {
+    "phase": "16B1_coarse",
+    "run_name": "bcn_ham_ladv0_s42",
+    "lambda_adv": 0.0,
+    "seed": 42,
+    "architecture": "single_encoder_dann_effb3",
+    "preprocessing": "unmasked 448 (same as B0)",
+    "image_size": 448,
+    "id_site": "BCN",
+    "ood_site": "HAM_heldout",
+    "split_meta": {
+      "seed": 42,
+      "ham_heldout_frac": 0.3,
+      "n_bcn_train": 9929,
+      "n_bcn_val": 1219,
+      "n_bcn_test": 1265,
+      "n_ham_adv": 6975,
+      "n_ham_heldout": 3040,
+      "lesion_disjoint": true
+    },
+    "hygiene": {
+      "bcn_train": 9929,
+      "bcn_val": 1219,
+      "bcn_test": 1265,
+      "ham_adv": 6975,
+      "ham_heldout": 3040
+    },
+    "split_json": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/b1/b1_split_seed42.json",
+    "preregister": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/PREREGISTER_B.json",
+    "coarse_grid": [
+      0,
+      0.1,
+      0.25,
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "fit_ood_on": "BCN train only",
+    "leakage_protocol": "BCN test + HAM heldout embeddings, binary site probe"
+  }
+}

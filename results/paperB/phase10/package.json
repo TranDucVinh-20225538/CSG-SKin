@@ -1,0 +1,380 @@
+{
+  "headline": "cliff not trade-off",
+  "sps_withdrawn": true,
+  "preview_is_appendix_only": true,
+  "cliff": [
+    {
+      "name": "OOD AUROC PAD (z_lesion Maha)",
+      "mean_l0": 0.8628285585856228,
+      "std_l0": 0.025209575470414514,
+      "mean_l025": 0.5083769997267255,
+      "std_l025": 0.021964424530370754,
+      "delta": 0.35445155885889734,
+      "ci95": [
+        0.32699074353188584,
+        0.3831272781112552
+      ],
+      "cohens_d": 14.661113108184423,
+      "welch_t": 20.88928609472641,
+      "p": 5.754128661258664e-06,
+      "n_l0": 5,
+      "n_l025": 3,
+      "ci_excludes_0": true,
+      "holm_threshold": 0.016666666666666666,
+      "holm_reject": true
+    },
+    {
+      "name": "leakage balanced acc",
+      "mean_l0": 0.9148172514619883,
+      "std_l0": 0.020674211634090178,
+      "mean_l025": 0.5526093312992626,
+      "std_l025": 0.008032395596702544,
+      "delta": 0.36220792016272574,
+      "ci95": [
+        0.3449308257055682,
+        0.3788256420035595
+      ],
+      "cohens_d": 20.690666689562775,
+      "welch_t": 35.01742339203376,
+      "p": 9.739907366697875e-08,
+      "n_l0": 5,
+      "n_l025": 3,
+      "ci_excludes_0": true,
+      "holm_threshold": 0.0125,
+      "holm_reject": true
+    },
+    {
+      "name": "ID balanced acc",
+      "mean_l0": 0.6918177699299206,
+      "std_l0": 0.015424756997317317,
+      "mean_l025": 0.6957457522257431,
+      "std_l025": 0.008901895712477906,
+      "delta": -0.003927982295822474,
+      "ci95": [
+        -0.018280577341119764,
+        0.010173344744358317
+      ],
+      "cohens_d": -0.288767588208395,
+      "welch_t": -0.45662111012238743,
+      "p": 0.6640461398510765,
+      "n_l0": 5,
+      "n_l025": 3,
+      "ci_excludes_0": false,
+      "holm_threshold": 0.025,
+      "holm_reject": false
+    },
+    {
+      "name": "PAD transfer balanced acc (6-cls, heldout)",
+      "mean_l0": 0.2911555771519181,
+      "std_l0": 0.015987151572190047,
+      "mean_l025": 0.2908927124596518,
+      "std_l025": 0.020276804972113815,
+      "delta": 0.0002628646922662736,
+      "ci95": [
+        -0.022014897474046974,
+        0.022345123606563606
+      ],
+      "cohens_d": 0.014991685310467927,
+      "welch_t": 0.01916284791071548,
+      "p": 0.9857457245641432,
+      "n_l0": 5,
+      "n_l025": 3,
+      "ci_excludes_0": false,
+      "holm_threshold": 0.05,
+      "holm_reject": false
+    }
+  ],
+  "mechanism": {
+    "verdict": "NOT SUPPORTED \u2014 inversion left unexplained",
+    "reading": "The centroid-compression predictions do not hold. Three mechanisms are already refuted (image memorisation, class composition, domain specificity). The inversion is left explicitly unexplained.",
+    "predictions": {
+      "maha_ratio": {
+        "gt1_at_0": true,
+        "lt1_by_0.25": false,
+        "falls_further": true,
+        "values": {
+          "0": 2.948370859640419,
+          "0.25": 1.1173382390579218,
+          "2": 0.7265098181012463,
+          "8": 0.9983548831517675
+        }
+      },
+      "euc_ratio": {
+        "gt1_at_0": true,
+        "lt1_by_0.25": false,
+        "values": {
+          "0": 2.227343929308445,
+          "0.25": 1.1476252374194162
+        }
+      },
+      "iqr": {
+        "tightens": false,
+        "values": {
+          "0": 0.7404731597013459,
+          "2": 0.9380471793231877
+        }
+      },
+      "norm_control": {
+        "norm_ratio_stable": false,
+        "values": {
+          "0": 0.37653109423511155,
+          "0.25": 0.9718642269242653
+        },
+        "note": "If OOD/ID feature-norm ratio is ~1 across \u03bb, inversion is not trivial scaling."
+      }
+    },
+    "per_lambda": [
+      {
+        "lambda_adv": 0.0,
+        "n": 5,
+        "pad_maha_median_ratio": [
+          2.948370859640419,
+          0.3062590511988295
+        ],
+        "pad_maha_iqr_ratio": [
+          0.7404731597013459,
+          0.0563445842942307
+        ],
+        "pad_euc_median_ratio": [
+          2.227343929308445,
+          0.10808015868095884
+        ],
+        "pad_knn_median_ratio": [
+          3.282506779576655,
+          0.2227016964488936
+        ],
+        "pad_norm_median_ratio": [
+          0.37653109423511155,
+          0.03091444728400194
+        ],
+        "fitz_maha_median_ratio": [
+          2.3119463781677068,
+          0.3201875200661236
+        ],
+        "fitz_maha_iqr_ratio": [
+          0.909754025334762,
+          0.13340580772765384
+        ],
+        "fitz_euc_median_ratio": [
+          1.8526992339588095,
+          0.16728335328010457
+        ]
+      },
+      {
+        "lambda_adv": 0.25,
+        "n": 3,
+        "pad_maha_median_ratio": [
+          1.1173382390579218,
+          0.06776350230464438
+        ],
+        "pad_maha_iqr_ratio": [
+          1.1294926529547724,
+          0.10194918224634408
+        ],
+        "pad_euc_median_ratio": [
+          1.1476252374194162,
+          0.06204982993370994
+        ],
+        "pad_knn_median_ratio": [
+          1.1211577047175298,
+          0.03233182926118146
+        ],
+        "pad_norm_median_ratio": [
+          0.9718642269242653,
+          0.006128613485687675
+        ],
+        "fitz_maha_median_ratio": [
+          0.8040921644892928,
+          0.21892845558950047
+        ],
+        "fitz_maha_iqr_ratio": [
+          0.7052189908100246,
+          0.1079577103067207
+        ],
+        "fitz_euc_median_ratio": [
+          0.8307675710478107,
+          0.1674203271024406
+        ]
+      },
+      {
+        "lambda_adv": 2.0,
+        "n": 5,
+        "pad_maha_median_ratio": [
+          0.7265098181012463,
+          0.10072268107932615
+        ],
+        "pad_maha_iqr_ratio": [
+          0.9380471793231877,
+          0.07750828423188644
+        ],
+        "pad_euc_median_ratio": [
+          0.8413918169913334,
+          0.06386684340939733
+        ],
+        "pad_knn_median_ratio": [
+          0.8505163268303744,
+          0.02121241228133149
+        ],
+        "pad_norm_median_ratio": [
+          0.9925488928390662,
+          0.03256021596645771
+        ],
+        "fitz_maha_median_ratio": [
+          0.6528128249696938,
+          0.1637685964148503
+        ],
+        "fitz_maha_iqr_ratio": [
+          0.704314873624565,
+          0.20085121164838743
+        ],
+        "fitz_euc_median_ratio": [
+          0.7351834780794911,
+          0.1358831364308422
+        ]
+      },
+      {
+        "lambda_adv": 8.0,
+        "n": 5,
+        "pad_maha_median_ratio": [
+          0.9983548831517675,
+          0.15284788139574457
+        ],
+        "pad_maha_iqr_ratio": [
+          1.1318700374391466,
+          0.08165194364329109
+        ],
+        "pad_euc_median_ratio": [
+          1.0165811593046705,
+          0.09551532912844352
+        ],
+        "pad_knn_median_ratio": [
+          1.0117777057996982,
+          0.1004401336719055
+        ],
+        "pad_norm_median_ratio": [
+          0.9912856247166519,
+          0.012417927762247975
+        ],
+        "fitz_maha_median_ratio": [
+          0.9050411548970964,
+          0.23873933725210522
+        ],
+        "fitz_maha_iqr_ratio": [
+          0.8001654638042497,
+          0.11234294459730915
+        ],
+        "fitz_euc_median_ratio": [
+          0.9308187914207711,
+          0.16257887995973877
+        ]
+      }
+    ]
+  },
+  "cross_domain_cost": {
+    "kind": "FLAT_OR_FALLS",
+    "reading": "Cross-domain 6-class balanced accuracy on pad_heldout is flat or falls across \u03bb (\u03bb=0: 0.291; mean \u03bb>0: 0.269; \u03bb=2: 0.249). You pay a safety cost and get nothing for it. This is the strongest version of the paper. It is not a trade-off.",
+    "per_lambda": {
+      "0.0": [
+        0.2911555771519181,
+        0.015987151572190047
+      ],
+      "0.25": [
+        0.2908927124596518,
+        0.020276804972113815
+      ],
+      "0.5": [
+        0.26950090540455013,
+        0.03395635658508015
+      ],
+      "1.0": [
+        0.2609257387091366,
+        0.01574738139652721
+      ],
+      "2.0": [
+        0.2487286112669238,
+        0.030111470327797943
+      ],
+      "4.0": [
+        0.2760775087170553,
+        0.02549876290928552
+      ],
+      "8.0": [
+        0.2687364294400455,
+        0.02341311187454719
+      ]
+    }
+  },
+  "table3": [
+    [
+      "Image memorisation of PAD in L_adv",
+      "Phase 2: retrain with pad_heldout never in L_ctx/L_adv (716 / 412 patients)",
+      "pad_heldout z_lesion Maha 0.427 \u00b1 0.025 vs pad_adv 0.407 \u00b1 0.021 (\u0394 \u2248 0.02)",
+      "Inversion is not memorisation of adversarial images"
+    ],
+    [
+      "PAD-specific mapping (would be ~0.50 on a third domain)",
+      "Phase 2.5a: Fitzpatrick17k, never in any train branch, n=3887",
+      "z_lesion Maha 0.399 \u00b1 0.039, same inversion as PAD 0.409",
+      "Not PAD-specific; structural of the invariant branch"
+    ],
+    [
+      "Class-mix / missing DF,VASC drives AUROC",
+      "Phase 2.5b: 6-class-restricted ID and ID reweighted to PAD mix",
+      "6-class 0.414 vs 0.409; reweight 0.240 (inversion strengthens)",
+      "Class composition is not the driver"
+    ],
+    [
+      "Clean 2\u00d72: z_context detects domain not class; z_lesion the reverse",
+      "Phase 4: 4a hold {DF,VASC}, 4b hold {SCC}",
+      "4a z_lesion 0.648 vs z_context 0.641 vs baseline 0.687; 4b z_lesion 0.806 vs z_context 0.607",
+      "No double dissociation. Semantic OOD is graded, 4a=4b equal prominence, null 2\u00d72"
+    ],
+    [
+      "z_context 4a is a VASC-colour detector (high VASC, ~0.50 DF)",
+      "Phase 4.5b: class-conditional Maha on 4a",
+      "z_context DF 0.61, VASC 0.67 \u2014 both above 0.50",
+      "VASC/DF hypothesis not confirmed"
+    ],
+    [
+      "4b win is near-OOD, 4a loss is far-OOD",
+      "Phase 4.5c: cosine-to-nearest-keep on DF/VASC/SCC",
+      "cosines 0.570 / 0.566 / 0.565; Pearson(advantage, cosine)=\u22120.12",
+      "No near/far axis. 4a and 4b simply differ"
+    ],
+    [
+      "Leakage\u2194AUROC is a continuous trade-off (SPS)",
+      "Phase 3 \u03bb sweep: leakage and AUROC between \u03bb=0.25 and \u03bb=2",
+      "leakage 0.553 \u2192 0.584 while AUROC 0.508 \u2192 0.413. Linearity is an artefact of anchoring at \u03bb=0",
+      "SPS withdrawn. Not a tunable trade-off. There is no safe operating point"
+    ],
+    [
+      "OOD collapse is because z_lesion is only 16-d (original manuscript)",
+      "Phase 1 EffB3 16-d control + Phase 3 \u03bb=0 (same 16-d CSG)",
+      "EffB3 16-d Maha 0.726; CSG \u03bb=0 Maha 0.863; CSG \u03bb=0.25 Maha 0.508",
+      "Dimensionality is not the cause. \u03bb_adv is the cause"
+    ]
+  ],
+  "n_csg_runs": 27,
+  "pad_heldout": {
+    "n_images": 716,
+    "n_patients": 412,
+    "n_melanoma": 9,
+    "classes": [
+      "MEL",
+      "NV",
+      "BCC",
+      "AK",
+      "BKL",
+      "SCC"
+    ]
+  },
+  "phase9_skipped": "PAD metadata.csv dangling symlink; Fitzpatrick strata not available",
+  "limitations": [
+    "phase7",
+    "phase8",
+    "phase5_partial",
+    "non_medical",
+    "raw_source",
+    "phase9"
+  ]
+}

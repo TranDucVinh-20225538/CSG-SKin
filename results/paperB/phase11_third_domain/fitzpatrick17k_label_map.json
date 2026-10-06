@@ -1,0 +1,170 @@
+{
+  "source_url": "https://raw.githubusercontent.com/mattgroh/fitzpatrick17k/master/fitzpatrick17k.csv",
+  "n_rows": 16577,
+  "columns": [
+    "md5hash",
+    "fitzpatrick_scale",
+    "fitzpatrick_centaur",
+    "label",
+    "nine_partition_label",
+    "three_partition_label",
+    "qc",
+    "url",
+    "url_alphanum"
+  ],
+  "n_mapped_to_isic8": 2688,
+  "n_unmapped": 13889,
+  "mapped_counts": {
+    "UNMAPPED": 13889,
+    "DF": 79,
+    "MEL": 490,
+    "AK": 175,
+    "BCC": 596,
+    "NV": 485,
+    "SCC": 581,
+    "VASC": 213,
+    "BKL": 69
+  },
+  "top_raw_labels": [
+    [
+      "psoriasis",
+      653
+    ],
+    [
+      "squamous cell carcinoma",
+      581
+    ],
+    [
+      "lichen planus",
+      491
+    ],
+    [
+      "basal cell carcinoma",
+      468
+    ],
+    [
+      "allergic contact dermatitis",
+      430
+    ],
+    [
+      "lupus erythematosus",
+      410
+    ],
+    [
+      "neutrophilic dermatoses",
+      361
+    ],
+    [
+      "sarcoidosis",
+      349
+    ],
+    [
+      "photodermatoses",
+      348
+    ],
+    [
+      "folliculitis",
+      342
+    ],
+    [
+      "scabies",
+      339
+    ],
+    [
+      "acne vulgaris",
+      335
+    ],
+    [
+      "scleroderma",
+      309
+    ],
+    [
+      "pityriasis rubra pilaris",
+      278
+    ],
+    [
+      "melanoma",
+      261
+    ],
+    [
+      "nematode infection",
+      260
+    ],
+    [
+      "erythema multiforme",
+      236
+    ],
+    [
+      "granuloma annulare",
+      211
+    ],
+    [
+      "eczema",
+      204
+    ],
+    [
+      "drug eruption",
+      200
+    ],
+    [
+      "pityriasis rosea",
+      193
+    ],
+    [
+      "neurofibromatosis",
+      189
+    ],
+    [
+      "acne",
+      183
+    ],
+    [
+      "porokeratosis actinic",
+      183
+    ],
+    [
+      "mycosis fungoides",
+      182
+    ],
+    [
+      "actinic keratosis",
+      175
+    ],
+    [
+      "hailey hailey disease",
+      174
+    ],
+    [
+      "prurigo nodularis",
+      170
+    ],
+    [
+      "vitiligo",
+      166
+    ],
+    [
+      "kaposi sarcoma",
+      156
+    ]
+  ],
+  "mapping_rule": {
+    "melanoma": "MEL",
+    "melanoma metastasis": "MEL",
+    "nevus": "NV",
+    "atypical nevus": "NV",
+    "dysplastic nevus": "NV",
+    "melanocytic nevus": "NV",
+    "basal cell carcinoma": "BCC",
+    "actinic keratosis": "AK",
+    "seborrheic keratosis": "BKL",
+    "lichenoid keratosis": "BKL",
+    "solar lentigo": "BKL",
+    "dermatofibroma": "DF",
+    "pyogenic granuloma": "VASC",
+    "angioma": "VASC",
+    "hemangioma": "VASC",
+    "squamous cell carcinoma": "SCC"
+  },
+  "note": "Images are NOT downloaded. Annotation licence is CC BY-NC-SA 3.0. Underlying photos are web-scraped; do not redistribute. Phase 11 OOD detection on z_context does not require the 8-class mapping; the mapping is only for optional diagnostic transfer.",
+  "images_acquired": false
+}

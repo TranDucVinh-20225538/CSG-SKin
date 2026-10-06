@@ -1,0 +1,10 @@
+{
+  "verified_utc": "2026-10-02",
+  "join": "ISIC_2019_Training_Metadata.csv.image = basename(master path without extension)",
+  "match_rate": 0.9177292645375232,
+  "site_totals": {"BCN": 12413, "HAM": 10015, "MSK4": 819, "empty_unattributed": 2084},
+  "crosstab_BCN_HAM": {
+    "BCN": {"MEL": 2857, "NV": 4206, "BCC": 2809, "AK": 737, "BKL": 1138, "DF": 124, "VASC": 111, "SCC": 431},
+    "HAM": {"MEL": 1113, "NV": 6705, "BCC": 514, "AK": 130, "BKL": 1099, "DF": 115, "VASC": 142, "SCC": 197}
+  }
+}

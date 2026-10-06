@@ -1,0 +1,93 @@
+{
+  "config": "4b",
+  "method": "baseline",
+  "seed": 62,
+  "n_classes": 7,
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "DF",
+    "VASC"
+  ],
+  "hold_out": [
+    "SCC"
+  ],
+  "ckpt": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase4/4b_baseline_s62/best-10.ckpt",
+  "spaces": {
+    "backbone_raw": {
+      "mahalanobis_classcond": {
+        "pooled_holdout": {
+          "AUROC": 0.6259689173005799,
+          "FPR95": 0.8751264926128314,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.6255994721793597,
+            "lo": 0.6031695100916935,
+            "hi": 0.6456101262412389,
+            "n_boot": 1000
+          }
+        }
+      },
+      "cosine_max": {
+        "pooled_holdout": {
+          "AUROC": 0.5102090012465564,
+          "FPR95": 0.9621534102408419,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.5098637856644713,
+            "lo": 0.48391321736619497,
+            "hi": 0.5347944841486225,
+            "n_boot": 1000
+          }
+        }
+      },
+      "knn_k50": {
+        "pooled_holdout": {
+          "AUROC": 0.5775079053854593,
+          "FPR95": 0.9216757741347905,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.5779718180904094,
+            "lo": 0.5536043707467866,
+            "hi": 0.6043419677029715,
+            "n_boot": 1000
+          }
+        }
+      },
+      "MSP": {
+        "pooled_holdout": {
+          "AUROC": 0.7040830204051114,
+          "FPR95": 0.9293665249949403,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.704395770409301,
+            "lo": 0.683535431467108,
+            "hi": 0.7263121715220495,
+            "n_boot": 1000
+          }
+        }
+      },
+      "Energy_T1": {
+        "pooled_holdout": {
+          "AUROC": 0.663817440704775,
+          "FPR95": 0.9526411657559198,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.6640466711011593,
+            "lo": 0.6385814634985827,
+            "hi": 0.688314201527064,
+            "n_boot": 1000
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "run_name": "single_dann_ladv8_s52",
+  "seed": 52,
+  "lambda_adv": 8.0,
+  "architecture": "single_encoder_dann_effb3",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/single_dann/single_dann_ladv8_s52/best-35.ckpt",
+  "id_acc": 0.8275113479376357,
+  "id_balanced_acc": 0.7403206051366827,
+  "id_ece": 0.1015483515635971,
+  "id_mean_confidence": 0.9283220171928406,
+  "ood_ece_pad_heldout": 0.6602703129050618,
+  "ood_mean_confidence_pad_heldout": 0.8990970253944397,
+  "leakage": {
+    "pad_full": {
+      "acc_mean": 0.8161387631975868,
+      "bal_acc_mean": 0.7904970760233919,
+      "auroc_mean": 0.8682595982710399,
+      "acc_std": 0.00765673613664978,
+      "bal_acc_std": 0.009022412456574687,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "pad_heldout": {
+      "acc_mean": 0.8895292987512008,
+      "bal_acc_mean": 0.7332950836393309,
+      "auroc_mean": 0.8494379844961241,
+      "acc_std": 0.01166108811181053,
+      "bal_acc_std": 0.006776931924968642,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "primary": "pad_full matches Phase 3 locked protocol; floor 0.5"
+  },
+  "ood": {
+    "pad_full": {
+      "mahalanobis_classcond": 0.5071718691037057,
+      "cosine_max": 0.4708649956552604,
+      "knn_k50": 0.51986187524079,
+      "MSP": 0.5332802843979448,
+      "Energy_T1": 0.5132087297403651,
+      "fit": "ISIC train split only",
+      "n_ood": 2298
+    },
+    "pad_heldout": {
+      "mahalanobis_classcond": 0.5137123439761938,
+      "cosine_max": 0.5031976542266589,
+      "knn_k50": 0.5466657405294197,
+      "MSP": 0.5819344801999574,
+      "Energy_T1": 0.5687676200367588,
+      "fit": "ISIC train split only",
+      "n_ood": 716
+    },
+    "pad_adv": {
+      "mahalanobis_classcond": 0.5042109562457258,
+      "cosine_max": 0.4562317536664823,
+      "knn_k50": 0.5077317922144153,
+      "MSP": 0.511260549845721,
+      "Energy_T1": 0.4880603703046683,
+      "fit": "ISIC train split only",
+      "n_ood": 1582
+    }
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2388268156424581,
+    "balanced_accuracy": 0.34771067324123717,
+    "per_class_recall": {
+      "MEL": 0.6666666666666666,
+      "NV": 0.8977272727272727,
+      "BCC": 0.21014492753623187,
+      "AK": 0.039603960396039604,
+      "BKL": 0.22666666666666666,
+      "SCC": 0.045454545454545456
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "gate": {
+    "status": "inconclusive",
+    "reason": "adversary pinned at chance (CE\u2248ln 2) from epoch 1 \u2014 null experiment, not a scientific negative",
+    "leakage_bal_acc": 0.7904970760233919,
+    "chance_floor": 0.5,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.76068115234375,
+      "acc_adv": 0.46875,
+      "g_enc_grl": 0.01160416379570961,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.6224987506866455,
+      "loss_adv": 0.6637752056121826,
+      "acc_cls": 0.4991971254348755,
+      "grl_alpha": 0.9185416974472287,
+      "g_enc_grl_mean": 0.020834826047094208,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.5120121240615845,
+      "loss_adv": 0.6927763819694519,
+      "acc_cls": 0.9614624381065369,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.0016229424963607692,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

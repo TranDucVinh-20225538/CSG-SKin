@@ -1,0 +1,30 @@
+{
+  "maha_h2": [
+    [
+      0.0,
+      0.6897197378890163
+    ],
+    [
+      0.1,
+      0.7073722364643447
+    ],
+    [
+      1.0,
+      0.6706021538080288
+    ],
+    [
+      10.0,
+      0.48221207249307485
+    ]
+  ],
+  "proposed_dense_grid": [
+    0.0,
+    0.1,
+    1.0,
+    2.0,
+    4.0,
+    10.0
+  ],
+  "collapsed_at_smallest_nonzero": false,
+  "interval_text": "Transition sits between \u03bb=1 (Maha h2 0.671) and \u03bb=10 (Maha h2 0.482). Dense grid: points inside [1, 10] plus \u03bb=0 and 0.1 as a below-transition control."
+}

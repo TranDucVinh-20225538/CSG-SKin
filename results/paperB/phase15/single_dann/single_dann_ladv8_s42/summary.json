@@ -1,0 +1,132 @@
+{
+  "run_name": "single_dann_ladv8_s42",
+  "seed": 42,
+  "lambda_adv": 8.0,
+  "architecture": "single_encoder_dann_effb3",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/single_dann/single_dann_ladv8_s42/best-35.ckpt",
+  "id_acc": 0.8340240773633314,
+  "id_balanced_acc": 0.7334627595275554,
+  "id_ece": 0.08899697313794305,
+  "id_mean_confidence": 0.922989547252655,
+  "ood_ece_pad_heldout": 0.6978179958529311,
+  "ood_mean_confidence_pad_heldout": 0.9129018187522888,
+  "leakage": {
+    "pad_full": {
+      "acc_mean": 0.8193061840120665,
+      "bal_acc_mean": 0.7918764302059497,
+      "auroc_mean": 0.8691960653445207,
+      "acc_std": 0.007603066763878441,
+      "bal_acc_std": 0.006949095510867282,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "pad_heldout": {
+      "acc_mean": 0.8983669548511047,
+      "bal_acc_mean": 0.7536464708282334,
+      "auroc_mean": 0.8628355773153814,
+      "acc_std": 0.0011998074924877056,
+      "bal_acc_std": 0.011645795918305364,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "primary": "pad_full matches Phase 3 locked protocol; floor 0.5"
+  },
+  "ood": {
+    "pad_full": {
+      "mahalanobis_classcond": 0.5558856836236038,
+      "cosine_max": 0.4992662293929748,
+      "knn_k50": 0.5409276358244262,
+      "MSP": 0.48899575969218734,
+      "Energy_T1": 0.4725415292349703,
+      "fit": "ISIC train split only",
+      "n_ood": 2298
+    },
+    "pad_heldout": {
+      "mahalanobis_classcond": 0.5652918489999371,
+      "cosine_max": 0.5394046591318786,
+      "knn_k50": 0.5679624870313222,
+      "MSP": 0.5387777248556493,
+      "Energy_T1": 0.5278779714948186,
+      "fit": "ISIC train split only",
+      "n_ood": 716
+    },
+    "pad_adv": {
+      "mahalanobis_classcond": 0.5516287811592673,
+      "cosine_max": 0.48110053475588926,
+      "knn_k50": 0.5286931352493527,
+      "MSP": 0.4664655437616345,
+      "Energy_T1": 0.44749696668934635,
+      "fit": "ISIC train split only",
+      "n_ood": 1582
+    }
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2164804469273743,
+    "balanced_accuracy": 0.29677992074569776,
+    "per_class_recall": {
+      "MEL": 0.4444444444444444,
+      "NV": 0.9659090909090909,
+      "BCC": 0.18840579710144928,
+      "AK": 0.0049504950495049506,
+      "BKL": 0.14666666666666667,
+      "SCC": 0.030303030303030304
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "gate": {
+    "status": "inconclusive",
+    "reason": "adversary pinned at chance (CE\u2248ln 2) from epoch 1 \u2014 null experiment, not a scientific negative",
+    "leakage_bal_acc": 0.7918764302059497,
+    "chance_floor": 0.5,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.6967353820800781,
+      "acc_adv": 0.53125,
+      "g_enc_grl": 0.01170154195278883,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.6271924376487732,
+      "loss_adv": 0.6598409414291382,
+      "acc_cls": 0.5203186869621277,
+      "grl_alpha": 0.9185416974472287,
+      "g_enc_grl_mean": 0.022612553224217867,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.5114253759384155,
+      "loss_adv": 0.6929517984390259,
+      "acc_cls": 0.9604125618934631,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.0017365910647309977,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

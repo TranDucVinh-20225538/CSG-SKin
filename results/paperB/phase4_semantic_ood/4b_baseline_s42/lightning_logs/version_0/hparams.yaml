@@ -1,0 +1,7 @@
+label_smoothing: 0.03
+learning_rate: 0.0002
+max_epochs: 40
+num_classes: 7
+pretrained: true
+warmup_epochs: 5
+weight_decay: 0.0001

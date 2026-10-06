@@ -1,0 +1,15 @@
+{
+  "seed": 82,
+  "batch_size": 32,
+  "num_workers": 4,
+  "max_epochs": 40,
+  "lr": 0.0001,
+  "lambda_adv": 2.0,
+  "lambda_orth": 1.0,
+  "output_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase2_pad_holdout",
+  "ckpt_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase2",
+  "dry_run": false,
+  "resume": true,
+  "skip_done": true,
+  "split_seed": 42
+}

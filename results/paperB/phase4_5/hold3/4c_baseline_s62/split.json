@@ -1,0 +1,31 @@
+{
+  "config": "4c",
+  "hold_out": [
+    "DF",
+    "VASC",
+    "SCC"
+  ],
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL"
+  ],
+  "label_mapping": {
+    "MEL": 0,
+    "NV": 1,
+    "BCC": 2,
+    "AK": 3,
+    "BKL": 4
+  },
+  "n_train": 15494,
+  "n_id": 4842,
+  "n_ood": 1120,
+  "pad_involved": false,
+  "ood_scored_separately": [
+    "DF",
+    "VASC",
+    "SCC"
+  ]
+}

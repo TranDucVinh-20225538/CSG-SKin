@@ -1,0 +1,26 @@
+{
+  "probe_protocol": "Same set as scripts/check_leakage.py test_dataloader: ISIC test + all PAD. SplitConfig(val_fraction=0.2, isic_test_fraction=0.2, random_state=42) on master_metadata_lesion_only_soft.csv.",
+  "probe_n": 7365,
+  "probe_isic": 5067,
+  "probe_pad": 2298,
+  "majority_baseline": 0.6879837067209776,
+  "isic_train": 16211,
+  "isic_val": 4053,
+  "isic_test": 5067,
+  "pad_all": 2298,
+  "label_x_domain_probe": {
+    "isic": {"AK": 173, "BCC": 665, "BKL": 525, "DF": 48, "MEL": 904, "NV": 2575, "SCC": 126, "VASC": 51},
+    "pad_ufes": {"AK": 730, "BCC": 845, "BKL": 235, "DF": 0, "MEL": 52, "NV": 244, "SCC": 192, "VASC": 0}
+  },
+  "logistic_seeds": [42, 52, 62, 72, 82],
+  "logistic_acc_per_seed": [0.7981900452488688, 0.8036199095022625, 0.8013574660633485, 0.7927601809954751, 0.788235294117647],
+  "logistic_acc_mean": 0.7968325791855204,
+  "logistic_acc_std": 0.005637072037066975,
+  "logistic_bal_acc_mean": 0.788438215102975,
+  "logistic_bal_acc_std": 0.007112303223349128,
+  "logistic_auroc_mean": 0.8423612700228833,
+  "logistic_auroc_std": 0.007645037396236295,
+  "in_sample_label_majority_acc": 0.7970128988458928,
+  "df_vasc_in_probe": 99,
+  "note": "PAD-UFES has no DF and no VASC. Label-only logistic accuracy 0.797 vs majority 0.688 is the upper bound on how much a domain probe can get from class identity alone."
+}

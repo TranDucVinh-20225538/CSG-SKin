@@ -1,0 +1,145 @@
+{
+  "data_root": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds",
+  "download": false,
+  "camelyon17": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/camelyon17_v1.0",
+    "release_marker": true,
+    "disk_bytes": null,
+    "n_total": 455954,
+    "split_scheme": "official",
+    "split_names": {
+      "train": "Train",
+      "id_val": "Validation (ID)",
+      "test": "Test",
+      "val": "Validation (OOD)"
+    },
+    "split_sizes": {
+      "train": 302436,
+      "id_val": 33560,
+      "test": 85054,
+      "val": 34904
+    },
+    "hospitals_by_split": {
+      "train": {
+        "0": 53425,
+        "3": 116959,
+        "4": 132052
+      },
+      "id_val": {
+        "0": 6011,
+        "3": 12879,
+        "4": 14670
+      },
+      "test": {
+        "2": 85054
+      },
+      "val": {
+        "1": 34904
+      }
+    },
+    "label_by_split": {
+      "train": {
+        "0": 151046,
+        "1": 151390
+      },
+      "id_val": {
+        "0": 16952,
+        "1": 16608
+      },
+      "test": {
+        "0": 42527,
+        "1": 42527
+      },
+      "val": {
+        "0": 17452,
+        "1": 17452
+      }
+    },
+    "n_hospitals_total": 5,
+    "n_classes": 2,
+    "original_resolution": [
+      96,
+      96
+    ],
+    "file_spotcheck": {
+      "n": 200,
+      "missing": 0
+    },
+    "n_patch_patient_dirs": 50,
+    "has_id_test": false,
+    "ood_test_hospital_0indexed": 2,
+    "ood_val_hospital_0indexed": 1,
+    "note": "No id_test split. ID eval = id_val (training hospitals). OOD = test (hospital 2). val is OOD val (hospital 1).",
+    "disk": {
+      "bytes": 10654814495,
+      "n_files": 455956,
+      "gib": 9.92
+    }
+  },
+  "iwildcam": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/iwildcam_v2.0",
+    "release_marker": true,
+    "n_total": 203029,
+    "n_classes": 182,
+    "n_groups_locations": 323,
+    "split_scheme": "official",
+    "split_names": {
+      "train": "Train",
+      "val": "Validation (OOD/Trans)",
+      "test": "Test (OOD/Trans)",
+      "id_val": "Validation (ID/Cis)",
+      "id_test": "Test (ID/Cis)"
+    },
+    "split_sizes": {
+      "train": 129809,
+      "val": 14961,
+      "test": 42791,
+      "id_val": 7314,
+      "id_test": 8154
+    },
+    "locations_by_split": {
+      "train": {
+        "n_images": 129809,
+        "n_locations": 243,
+        "n_classes_present": 182
+      },
+      "val": {
+        "n_images": 14961,
+        "n_locations": 32,
+        "n_classes_present": 75
+      },
+      "test": {
+        "n_images": 42791,
+        "n_locations": 48,
+        "n_classes_present": 102
+      },
+      "id_val": {
+        "n_images": 7314,
+        "n_locations": 146,
+        "n_classes_present": 71
+      },
+      "id_test": {
+        "n_images": 8154,
+        "n_locations": 164,
+        "n_classes_present": 87
+      }
+    },
+    "train_test_location_overlap": 0,
+    "train_id_test_location_overlap": 164,
+    "file_spotcheck": {
+      "n": 200,
+      "missing": 0
+    },
+    "note": "WILDS v2.0 is the resized JPEG redistribution (~12 GB), not the original ~90 GB iWildCam 2020 dump. All images live under train/ regardless of split.",
+    "disk": {
+      "bytes": 12154762647,
+      "n_files": 217644,
+      "gib": 11.32
+    }
+  },
+  "alternate_camelyon_copy": {
+    "path": "/data2/hpcshared/Toan/Causal_XAI_CAMELYON17/data/data/camelyon17_v1.0",
+    "exists": true,
+    "release": true
+  }
+}

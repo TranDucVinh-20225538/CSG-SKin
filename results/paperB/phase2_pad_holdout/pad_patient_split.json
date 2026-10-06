@@ -1,0 +1,29 @@
+{
+  "heldout_frac": 0.3,
+  "split_seed": 42,
+  "n_pad": 2298,
+  "n_adv": 1582,
+  "n_heldout": 716,
+  "n_adv_patients": 961,
+  "n_heldout_patients": 412,
+  "n_adv_lesions": 1303,
+  "n_heldout_lesions": 588,
+  "patient_overlap": [],
+  "lesion_pair_overlap": [],
+  "class_counts_adv": {
+    "BCC": 569,
+    "AK": 528,
+    "BKL": 160,
+    "NV": 156,
+    "SCC": 126,
+    "MEL": 43
+  },
+  "class_counts_heldout": {
+    "BCC": 276,
+    "AK": 202,
+    "NV": 88,
+    "BKL": 75,
+    "SCC": 66,
+    "MEL": 9
+  }
+}

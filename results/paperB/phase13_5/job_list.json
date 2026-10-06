@@ -1,0 +1,19 @@
+{
+  "n": 630,
+  "cells": [
+    "full",
+    "linear_encoder",
+    "ce_both_domains",
+    "m2",
+    "m4",
+    "m8",
+    "m64",
+    "linear_adversary",
+    "adv_lr_1",
+    "bn_off",
+    "balanced_n",
+    "Kprime_eq_K",
+    "early_stop_5ep",
+    "tau1_half"
+  ]
+}

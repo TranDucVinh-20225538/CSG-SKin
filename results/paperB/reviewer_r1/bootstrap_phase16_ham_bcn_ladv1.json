@@ -1,0 +1,44 @@
+{
+  "protocol": {
+    "name": "HAM to BCN same-modality reverse (Phase 16B rev)",
+    "metric": "Mahalanobis unrestricted",
+    "note": "Bootstrap with lesion-level resample on BCN held-out; reported separately for Section 4.8 scope claim (~0.683 at lambda=1)"
+  },
+  "lambda_adv": 1.0,
+  "seeds": [
+    42,
+    52,
+    62
+  ],
+  "n_resamples": 2000,
+  "bootstrap": "image both sides; shared indices across seeds per draw",
+  "mahalanobis_fit": "HAM train only (fixed)",
+  "point_mean_over_seeds": 0.6827800318628294,
+  "mean_across_seeds_bootstrap_ci": {
+    "lo": 0.6659479912556304,
+    "hi": 0.6989633992044322,
+    "mean": 0.6827178737363752
+  },
+  "n_seeds_above_chance_ci": 3,
+  "n_seeds": 3,
+  "per_seed": {
+    "42": {
+      "point": 0.6664882083175738,
+      "ci_lo": 0.648553574038098,
+      "ci_hi": 0.6842859297635216,
+      "above_chance_entire_ci": true
+    },
+    "52": {
+      "point": 0.6853456056802945,
+      "ci_lo": 0.6670700358134476,
+      "ci_hi": 0.702765240325104,
+      "above_chance_entire_ci": true
+    },
+    "62": {
+      "point": 0.69650628159062,
+      "ci_lo": 0.6787415207659973,
+      "ci_hi": 0.7132835736297838,
+      "above_chance_entire_ci": true
+    }
+  }
+}
