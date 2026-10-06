@@ -460,6 +460,13 @@ $9.4 \times 10^{-4}$. Effective
 dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
 while leakage falls $0.914 \to 0.553$).
 
+It is not an artefact of an unusually aggressive adversary. The adversary runs at
+$30\times$ the base learning rate, and retraining at $10\times$ and $100\times$ leaves
+the inversion in place: $0.418 \pm 0.011$ at $10\times$ with all three seeds below
+$0.5$, against $0.432 \pm 0.024$ at $30\times$ and $0.482 \pm 0.020$ at $100\times$
+(one seed at $0.503$). Weakening the adversary tenfold deepens the inversion rather
+than removing it.
+
 It is not confined to the domain the adversary was trained against. On Fitzpatrick17k,
 absent from every training branch, AUROC falls $0.764 \to 0.391$ across the same sweep
 ($95\%$ CI $[0.386, 0.396]$, five of five seeds below $0.5$; the bootstrap here is over
@@ -678,6 +685,22 @@ clearly at $0.454 \pm 0.014$. In-distribution accuracy is flat throughout
 ($0.845 \to 0.832$) and cross-domain accuracy falls from $0.390$ to a plateau near
 $0.32$. The invisibility, the collapse and the inversion are all properties of
 domain-adversarial training rather than of the factorized architecture.
+
+\paragraph{A second backbone leaves the question open.} Repeating the single-encoder
+sweep with a ResNet-50 backbone did not settle whether the inversion is specific to
+EfficientNet-B3, because comparable invariance was never reached. At
+$\lam = 2$ the adversary never left chance --- best-epoch cross-entropy $0.686$ to
+$0.688$ against a threshold of $0.673$ --- so those three runs are null experiments and
+we draw no conclusion from them. At $\lam = 0.5$, where the adversary did learn
+(best-epoch cross-entropy $0.41$ to $0.55$), leakage fell only from $0.965$ to $0.939$
+against the $0.742$ that EfficientNet-B3 reaches on the same partition, and Mahalanobis
+declined to $0.814$ without approaching chance. The backbone question is therefore
+untested rather than answered in the negative.
+
+That run is nonetheless the sharpest evidence for Section~\ref{sec:nonmediation}. With
+the gate valid and leakage moving by $0.026$, $k$-NN fell from $0.962$ to $0.563$ and
+cosine from $0.922$ to $0.543$. The outcome moves by $0.40$ while the supposed mediator
+moves by $0.026$.
 
 One difference is informative. The single-encoder model plateaus at leakage
 $0.76$--$0.81$ and never reaches the $0.553$ the dual-encoder attains; more adversarial
@@ -962,6 +985,11 @@ settings in which the failure reported here can be observed at all. We offer
 this as an observation rather than a claim; it rests on two negative results.
 
 Generality beyond dermatology remains untested.
+
+\textbf{Backbone coverage.} Comparable invariance was not reached with a ResNet-50
+backbone, so whether the inversion extends beyond EfficientNet-B3 is untested. Three of
+the nine runs failed their adversary gate outright and are reported as null experiments
+rather than negative results.
 
 \textbf{The objective comparison is bounded.} MMD never reached the invariance
 level gradient reversal attains; it could only approach it by destroying the
