@@ -6,6 +6,7 @@ __pycache__/
 # Large runtime artifacts (reproduce via scripts + SLURM)
 checkpoints/
 logs/
+**/lightning_logs/
 data/
 
 # Cached embeddings / heavy feature stores

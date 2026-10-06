@@ -21,7 +21,7 @@
 
 **λ=2 (headline claim):** Earlier table cells at ×10/×100 were **invalid** — `train_phase3_sweep.py` reused Phase-2 ckpts whenever λ=2, so AUROC matched ×30 by construction (`reused_phase2_ckpt: true`). **No manuscript sensitivity claim at λ=2 until retrain completes.**
 
-**In flight:** 6 fresh GPU trains — adv_lr ∈ {10, 100}, λ=2, seeds {42,52,62}; `slurm/reviewer_r1_item3_lam2_advlr_retrain.sbatch`; reuse disabled unless ×30. Report: `scripts/report_item3_lam2_advlr.py` → `ITEM3_LAM2_ADVLR_REPORT.md`.
+**λ=2 retrain (63408, done):** All 6 runs `reused_phase2_ckpt: false`. Mahalanobis pad_heldout: ×30 **0.432±0.024**; ×10 **0.418±0.011** (3/3 seeds &lt;0.5); ×100 **0.482±0.020** (seed 52 **0.503**). **Verdict:** objection answered at **×10**; ×100 mean sub-chance but one seed at chance — see `ITEM3_LAM2_ADVLR_REPORT.md`. ResNet-50 Item 5: **9/9** summaries under `reviewer_r1/resnet50_single_dann/`.
 
 ---
 

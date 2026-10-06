@@ -1,0 +1,50 @@
+{
+  "run_name": "resnet50_single_dann_ladv0_s52",
+  "seed": 52,
+  "lambda_adv": 0.0,
+  "architecture": "single_encoder_dann_resnet50",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv0_s52/best-39.ckpt",
+  "id_balanced_acc": 0.7238578314517332,
+  "ood_ece_pad_heldout": 0.5431702959939171,
+  "leakage_pad_heldout": {
+    "acc_mean": 0.9878962536023055,
+    "bal_acc_mean": 0.9644736842105264,
+    "auroc_mean": 0.9978386372909016,
+    "acc_std": 0.0015249287095473413,
+    "bal_acc_std": 0.0050256488229427606,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "ood_pad_heldout": {
+    "mahalanobis_classcond": 0.9366116938057958,
+    "cosine_max": 0.9161920213276178,
+    "knn_k50": 0.9504384267574283,
+    "MSP": 0.7323488163635221,
+    "Energy_T1": 0.6205227052468982,
+    "fit": "ISIC train split only"
+  },
+  "gate": {
+    "leakage_bal_acc": 0.9644736842105264,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": null,
+    "best_epoch": null,
+    "last_epoch": null,
+    "n_epochs_logged": 0,
+    "lambda_adv": 0.0,
+    "status": "valid_control",
+    "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

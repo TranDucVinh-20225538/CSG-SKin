@@ -1,0 +1,50 @@
+{
+  "run_name": "resnet50_single_dann_ladv0p5_s52",
+  "seed": 52,
+  "lambda_adv": 0.5,
+  "architecture": "single_encoder_dann_resnet50",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv0p5_s52/best-31.ckpt",
+  "id_balanced_acc": 0.7058110082520082,
+  "ood_ece_pad_heldout": 0.6367793908998287,
+  "leakage_pad_heldout": {
+    "acc_mean": 0.9830931796349663,
+    "bal_acc_mean": 0.9464249286005711,
+    "auroc_mean": 0.9957609139126887,
+    "acc_std": 0.001663833628788512,
+    "bal_acc_std": 0.011499072713713282,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "ood_pad_heldout": {
+    "mahalanobis_classcond": 0.7826683888409282,
+    "cosine_max": 0.5209491693982202,
+    "knn_k50": 0.5894394995330725,
+    "MSP": 0.5053593302263634,
+    "Energy_T1": 0.4698709085957664,
+    "fit": "ISIC train split only"
+  },
+  "gate": {
+    "leakage_bal_acc": 0.9464249286005711,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": null,
+    "best_epoch": null,
+    "last_epoch": null,
+    "n_epochs_logged": 0,
+    "lambda_adv": 0.5,
+    "status": "inconclusive",
+    "reason": "no adversary epoch log"
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

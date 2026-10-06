@@ -83,11 +83,21 @@ def main():
             lines.append(f"| {mult} | {a['mean']:.4f} ± {a['std']:.4f} | {a['vals']} |\n")
 
         if not missing:
-            if sub10 and sub100:
+            vals10 = agg(10, "mahalanobis")["vals"]
+            vals100 = agg(100, "mahalanobis")["vals"]
+            all10 = all(v < 0.5 for v in vals10)
+            all100 = all(v < 0.5 for v in vals100)
+            if all10 and all100:
                 verdict = "robust"
                 lines.append(
-                    "\n**Verdict:** Sub-chance Mahalanobis **holds at ×10 and ×100** (fresh trains). "
+                    "\n**Verdict:** Sub-chance Mahalanobis **holds at ×10 and ×100** (all seeds, fresh trains). "
                     "One sentence in main text; full detector grid in appendix.\n"
+                )
+            elif all10 and x100["mean"] < 0.5 and not all100:
+                verdict = "mostly_robust"
+                lines.append(
+                    "\n**Verdict:** **×10:** all seeds below 0.5 (objection answered at weaker adversary). "
+                    "**×100:** mean below 0.5 but not every seed (report per-seed; avoid “all multipliers” wording).\n"
                 )
             elif sub30 and not (sub10 and sub100):
                 verdict = "boundary_x30"
