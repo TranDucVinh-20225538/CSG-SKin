@@ -397,7 +397,7 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 
 \begin{figure}[t]
 \centering
-\figorbox{\textwidth}{results/paperB/figures/fig1_dial_four_panel.pdf}
+\includegraphics[width=\textwidth]{results/paperB/figures/fig1_intervention.pdf}
 \caption{\textbf{The intervention, four views, one axis.} Leakage falls to its chance
 floor and in-distribution balanced accuracy does not degrade --- both favourable. Over
 the same range OOD AUROC collapses through chance and inverts, and out-of-domain
@@ -469,6 +469,18 @@ For context, a ResNet-50 baseline reaches $0.994$ on these images and the
 EfficientNet-B3 single-encoder control $0.649$; the controlled comparison is the
 $\lam = 0$ row, since it differs from $\lam = 2$ only in the adversarial weight.
 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/paperB/figures/fig4_generalises.pdf}
+\caption{\textbf{The collapse is not confined to the adversarial domain.} AUROC against $\lam$
+for the held-out PAD partition and for Fitzpatrick17k, which is absent from every
+training branch. Horizontal references give the ResNet-50 baseline and the
+EfficientNet-B3 control on Fitzpatrick; the controlled comparison is the $\lam = 0$
+point of the sweep itself.}
+\label{fig:gen}
+\end{figure}
+
 \subsection{The model becomes confidently wrong on unseen domains}
 \label{sec:confidently}
 
@@ -501,6 +513,17 @@ and calibration here are three views of a single phenomenon rather than three
 independent results: in this setting out-of-domain ECE is arithmetically close to mean
 confidence minus accuracy.
 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/paperB/figures/fig2_confidence.pdf}
+\caption{\textbf{Confidence on unseen domains overtakes confidence on familiar data.} Mean
+maximum-softmax probability against $\lam$ for the ISIC test split, the held-out PAD
+partition and Fitzpatrick17k. The crossing occurs by $\lam \approx 0.5$. $\lambda$
+spacing is categorical.}
+\label{fig:conf}
+\end{figure}
+
 \subsection{Leakage does not mediate the collapse}
 \label{sec:nonmediation}
 
@@ -523,6 +546,26 @@ determine the outcome.
 
 We accordingly report leakage as a measured quantity and never as the explanatory
 variable, and plot all results against $\lam$ rather than against leakage.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\textwidth]{results/paperB/figures/fig3_detectors.pdf}
+\caption{\textbf{Every scoring rule moves together.} The five detectors against $\lam$ on the
+held-out PAD partition, mean $\pm$ 1 s.d. All five are functions of the same
+16-dimensional latent and are therefore not independent evidence;
+Figure~\ref{fig:depth} carries the replication on a different representation.}
+\label{fig:det}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/paperB/figures/fig5_leakage_no_mediation.pdf}
+\caption{\textbf{Leakage does not mediate the collapse.} At the pre-projection backbone the
+domain probe stays flat across the sweep while Mahalanobis AUROC falls. Domain
+information remains linearly decodable and detection degrades regardless.}
+\label{fig:depth}
+\end{figure}
 
 \subsection{The failure is specific to adversarial optimisation}
 \label{sec:adversarial}
@@ -691,6 +734,18 @@ $\lam = 1$. The class-reweighted variant falls from $0.74$ to $0.54$. Detection 
 substantially --- and stops above chance: at $\lam = 1$ the patient-clustered bootstrap
 gives a $95\%$ interval of $[0.666,\, 0.699]$, and all three seeds have individual
 intervals lying entirely above $0.5$.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/paperB/figures/fig6_site_shift.pdf}
+\caption{\textbf{A same-modality site shift separates the two claims.} (a) Barcelona to
+HAM10000: leakage falls and the detectors with headroom cross chance. (b) With the roles
+reversed to restore headroom, Mahalanobis falls from a baseline matching the
+cross-modality sweep but stops above chance, while the cross-modality sweep
+continues below it.}
+\label{fig:site}
+\end{figure}
 
 \paragraph{Reading.}
 The comparison is tighter than it first appears. Baseline detectability is the same
