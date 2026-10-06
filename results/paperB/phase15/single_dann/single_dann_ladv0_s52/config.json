@@ -1,0 +1,26 @@
+{
+  "run_name": "single_dann_ladv0_s52",
+  "lambda_adv": 0.0,
+  "seed": 52,
+  "architecture": "single_encoder_dann_effb3",
+  "no_context_branch": true,
+  "no_orthogonality": true,
+  "adv_lr_multiplier": 30.0,
+  "cls_lr_multiplier": 0.2,
+  "lr": 0.0001,
+  "max_epochs": 40,
+  "batch_size": 32,
+  "n_pad_adv": 1582,
+  "n_pad_heldout": 716,
+  "phase2_split": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase2_pad_holdout/pad_patient_split_paths.json",
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  },
+  "leakage_floor": 0.5,
+  "fit_ood_on": "ISIC train only"
+}

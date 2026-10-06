@@ -1,0 +1,38 @@
+{
+  "F1_cliff": {
+    "pass": false,
+    "auc0": 0.327186125,
+    "auc025": 0.38146815,
+    "auc2": 0.399201225
+  },
+  "F2_subchance": {
+    "pass": true,
+    "auc2": 0.399201225
+  },
+  "F3_together": {
+    "pass": false,
+    "detectors_at_2": {
+      "maha": 0.399201225,
+      "MSP": 0.5460597875000002,
+      "Energy": 0.586731475,
+      "cosine": 0.51910895,
+      "knn50": 0.52869445
+    }
+  },
+  "F4_shared_classes": {
+    "pass": true,
+    "auc_all": 0.399201225,
+    "auc_shared": 0.40440943534830176
+  },
+  "F5_reweight": {
+    "pass": false,
+    "auc_all": 0.399201225,
+    "auc_reweight": 0.399734575
+  },
+  "F7_heldout_domain2": {
+    "pass": false,
+    "auc_domain2": 0.5472147749999999
+  },
+  "n_pass": 2,
+  "n_tested": 6
+}

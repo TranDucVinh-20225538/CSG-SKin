@@ -1,0 +1,362 @@
+[
+  {
+    "method": "baseline_soft",
+    "seed": 42,
+    "kind": "baseline",
+    "id_acc": 0.7677126504835208,
+    "id_balanced_acc": 0.6569736162264217,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s42/best-20.ckpt"
+  },
+  {
+    "method": "baseline_soft",
+    "seed": 52,
+    "kind": "baseline",
+    "id_acc": 0.7927767910005921,
+    "id_balanced_acc": 0.6762118571285081,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s52/best-24.ckpt"
+  },
+  {
+    "method": "baseline_soft",
+    "seed": 62,
+    "kind": "baseline",
+    "id_acc": 0.7925794355634498,
+    "id_balanced_acc": 0.6555024970060038,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s62/best-29.ckpt"
+  },
+  {
+    "method": "baseline_soft",
+    "seed": 72,
+    "kind": "baseline",
+    "id_acc": 0.7779751332149201,
+    "id_balanced_acc": 0.651662077468593,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s72/best-26.ckpt"
+  },
+  {
+    "method": "baseline_soft",
+    "seed": 82,
+    "kind": "baseline",
+    "id_acc": 0.7823169528320505,
+    "id_balanced_acc": 0.6359151430723604,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/baseline/baseline_soft_s82/best-17.ckpt"
+  },
+  {
+    "method": "effb3_control",
+    "seed": 42,
+    "kind": "effb3",
+    "id_acc": 0.8158673771462404,
+    "id_balanced_acc": 0.6939179375923912,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s42/best-39.ckpt"
+  },
+  {
+    "method": "effb3_control",
+    "seed": 52,
+    "kind": "effb3",
+    "id_acc": 0.7935662127491613,
+    "id_balanced_acc": 0.6891533582038607,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s52/best-30.ckpt"
+  },
+  {
+    "method": "effb3_control",
+    "seed": 62,
+    "kind": "effb3",
+    "id_acc": 0.8012630747977106,
+    "id_balanced_acc": 0.685662134191819,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s62/best-29.ckpt"
+  },
+  {
+    "method": "effb3_control",
+    "seed": 72,
+    "kind": "effb3",
+    "id_acc": 0.8131044010262483,
+    "id_balanced_acc": 0.6886624175883507,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s72/best-39.ckpt"
+  },
+  {
+    "method": "effb3_control",
+    "seed": 82,
+    "kind": "effb3",
+    "id_acc": 0.7947503453720149,
+    "id_balanced_acc": 0.6584077523682617,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "backbone_raw",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s82/best-25.ckpt"
+  },
+  {
+    "method": "runA_grl",
+    "seed": 42,
+    "kind": "csg",
+    "id_acc": 0.8097493585948293,
+    "id_balanced_acc": 0.7040695661501064,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s42/best-38.ckpt"
+  },
+  {
+    "method": "runA_grl",
+    "seed": 52,
+    "kind": "csg",
+    "id_acc": 0.8190250641405171,
+    "id_balanced_acc": 0.6853910674438244,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s52/best-37.ckpt"
+  },
+  {
+    "method": "runA_grl",
+    "seed": 62,
+    "kind": "csg",
+    "id_acc": 0.8008683639234261,
+    "id_balanced_acc": 0.709475093611616,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s62/best-34.ckpt"
+  },
+  {
+    "method": "runA_grl",
+    "seed": 72,
+    "kind": "csg",
+    "id_acc": 0.8099467140319716,
+    "id_balanced_acc": 0.698923495598631,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s72/best-35.ckpt"
+  },
+  {
+    "method": "runA_grl",
+    "seed": 82,
+    "kind": "csg",
+    "id_acc": 0.7963291888691534,
+    "id_balanced_acc": 0.6800204824443237,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runA_grl_s82/best-23.ckpt"
+  },
+  {
+    "method": "runB_orth1",
+    "seed": 42,
+    "kind": "csg",
+    "id_acc": 0.8206039076376554,
+    "id_balanced_acc": 0.7041615512157615,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s42/best-36.ckpt"
+  },
+  {
+    "method": "runB_orth1",
+    "seed": 52,
+    "kind": "csg",
+    "id_acc": 0.8020524965462799,
+    "id_balanced_acc": 0.6994664360193508,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s52/best-32.ckpt"
+  },
+  {
+    "method": "runB_orth1",
+    "seed": 62,
+    "kind": "csg",
+    "id_acc": 0.8046181172291297,
+    "id_balanced_acc": 0.6982791212966782,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s62/best-34.ckpt"
+  },
+  {
+    "method": "runB_orth1",
+    "seed": 72,
+    "kind": "csg",
+    "id_acc": 0.812907045589106,
+    "id_balanced_acc": 0.7049866530870804,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s72/best-35.ckpt"
+  },
+  {
+    "method": "runB_orth1",
+    "seed": 82,
+    "kind": "csg",
+    "id_acc": 0.8002762976119993,
+    "id_balanced_acc": 0.7015542435663226,
+    "n_train": 16211,
+    "n_id": 5067,
+    "n_ood": 2298,
+    "dry_run": false,
+    "feature_spaces": [
+      "z_lesion",
+      "z_context",
+      "concat_z",
+      "backbone_raw_lesion",
+      "backbone_raw_context",
+      "logits"
+    ],
+    "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s82/best-37.ckpt"
+  }
+]

@@ -1,0 +1,165 @@
+{
+  "config": "4b",
+  "method": "runB_orth1",
+  "seed": 52,
+  "n_classes": 7,
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "DF",
+    "VASC"
+  ],
+  "hold_out": [
+    "SCC"
+  ],
+  "ckpt": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase4/4b_runB_orth1_s52/best-37.ckpt",
+  "spaces": {
+    "z_lesion": {
+      "mahalanobis_classcond": {
+        "pooled_holdout": {
+          "AUROC": 0.8092779833887,
+          "FPR95": 0.5666869054847197,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.809571936912897,
+            "lo": 0.7940244204865824,
+            "hi": 0.8254183441037363,
+            "n_boot": 1000
+          }
+        }
+      },
+      "cosine_max": {
+        "pooled_holdout": {
+          "AUROC": 0.6893038491138106,
+          "FPR95": 0.7579437360858126,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.6893418932576376,
+            "lo": 0.6698989154829535,
+            "hi": 0.7082005483172776,
+            "n_boot": 1000
+          }
+        }
+      },
+      "knn_k50": {
+        "pooled_holdout": {
+          "AUROC": 0.7807256196365521,
+          "FPR95": 0.659785468528638,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.780868420933899,
+            "lo": 0.7632347770571727,
+            "hi": 0.7977645774276592,
+            "n_boot": 1000
+          }
+        }
+      },
+      "MSP": {
+        "pooled_holdout": {
+          "AUROC": 0.7625848064485773,
+          "FPR95": 0.6575591985428051,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.7627570618328119,
+            "lo": 0.7450080052904529,
+            "hi": 0.7795588823918416,
+            "n_boot": 1000
+          }
+        }
+      },
+      "Energy_T1": {
+        "pooled_holdout": {
+          "AUROC": 0.6835183831633659,
+          "FPR95": 0.9097348714835054,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.6837071065966945,
+            "lo": 0.6611541105426195,
+            "hi": 0.7068123120335886,
+            "n_boot": 1000
+          }
+        }
+      }
+    },
+    "z_context": {
+      "mahalanobis_classcond": {
+        "pooled_holdout": {
+          "AUROC": 0.5723934142628236,
+          "FPR95": 0.9026512851649464,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.5726577818899962,
+            "lo": 0.5491618615587499,
+            "hi": 0.5950227332201506,
+            "n_boot": 1000
+          }
+        }
+      },
+      "cosine_max": {
+        "pooled_holdout": {
+          "AUROC": 0.4599287516258732,
+          "FPR95": 0.9587128111718276,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.46033670593255194,
+            "lo": 0.43781915617019684,
+            "hi": 0.48414727704105903,
+            "n_boot": 1000
+          }
+        }
+      },
+      "knn_k50": {
+        "pooled_holdout": {
+          "AUROC": 0.6283060496018625,
+          "FPR95": 0.8957700870269176,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.628467289493733,
+            "lo": 0.6068004523440289,
+            "hi": 0.6501485522799608,
+            "n_boot": 1000
+          }
+        }
+      },
+      "MSP": {
+        "pooled_holdout": {
+          "AUROC": 0.7625848064485773,
+          "FPR95": 0.6575591985428051,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.7625201334343985,
+            "lo": 0.746026883144674,
+            "hi": 0.7797015451112942,
+            "n_boot": 1000
+          }
+        }
+      },
+      "Energy_T1": {
+        "pooled_holdout": {
+          "AUROC": 0.6835183831633659,
+          "FPR95": 0.9097348714835054,
+          "n_id": 4941,
+          "n_ood": 628,
+          "bootstrap_auroc": {
+            "mean": 0.6830846378991848,
+            "lo": 0.6623295894742677,
+            "hi": 0.70626588811672,
+            "n_boot": 1000
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "run_name": "resnet50_single_dann_ladv0_s52",
+  "lambda_adv": 0.0,
+  "seed": 52,
+  "architecture": "single_encoder_dann_resnet50",
+  "adv_lr_multiplier": 30.0,
+  "reviewer_item": 5
+}

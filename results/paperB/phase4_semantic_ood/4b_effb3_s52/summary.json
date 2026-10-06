@@ -1,0 +1,37 @@
+{
+  "run_name": "4b_effb3_s52",
+  "config": "4b",
+  "method": "effb3",
+  "seed": 52,
+  "n_classes": 7,
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "DF",
+    "VASC"
+  ],
+  "hold_out": [
+    "SCC"
+  ],
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase4/4b_effb3_s52/best-33.ckpt",
+  "id_acc": 0.812588544828982,
+  "id_balanced_acc": 0.6958385164836992,
+  "id_ece": 0.10332272828312881,
+  "ood": {
+    "backbone_raw": {
+      "AUROC": 0.8119929821576128,
+      "n_id": 4941,
+      "n_ood": 628,
+      "feat_dim": 16,
+      "supervision": "unsupervised"
+    }
+  },
+  "n_train": 15809,
+  "n_id": 4941,
+  "n_ood": 628,
+  "pad_involved": false,
+  "prediction_P4": "z_lesion >= baseline on semantic OOD; z_context \u2248 0.50"
+}

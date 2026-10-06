@@ -1,0 +1,132 @@
+{
+  "run_name": "single_dann_ladv8_s62",
+  "seed": 62,
+  "lambda_adv": 8.0,
+  "architecture": "single_encoder_dann_effb3",
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/single_dann/single_dann_ladv8_s62/best-35.ckpt",
+  "id_acc": 0.8342214328004737,
+  "id_balanced_acc": 0.7200463370993413,
+  "id_ece": 0.0873497227474809,
+  "id_mean_confidence": 0.9215431213378906,
+  "ood_ece_pad_heldout": 0.6508670396291177,
+  "ood_mean_confidence_pad_heldout": 0.8882972002029419,
+  "leakage": {
+    "pad_full": {
+      "acc_mean": 0.8075414781297136,
+      "bal_acc_mean": 0.7794987922705315,
+      "auroc_mean": 0.8582872489193999,
+      "acc_std": 0.001138738225531029,
+      "bal_acc_std": 0.005377754693101313,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "pad_heldout": {
+      "acc_mean": 0.8912584053794429,
+      "bal_acc_mean": 0.7282920236638106,
+      "auroc_mean": 0.8539249286005711,
+      "acc_std": 0.004658734160607903,
+      "bal_acc_std": 0.0353391581464881,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "primary": "pad_full matches Phase 3 locked protocol; floor 0.5"
+  },
+  "ood": {
+    "pad_full": {
+      "mahalanobis_classcond": 0.497873404989331,
+      "cosine_max": 0.5002183963780038,
+      "knn_k50": 0.5365681246406937,
+      "MSP": 0.5348902598994192,
+      "Energy_T1": 0.5151184312973776,
+      "fit": "ISIC train split only",
+      "n_ood": 2298
+    },
+    "pad_heldout": {
+      "mahalanobis_classcond": 0.4960826599543767,
+      "cosine_max": 0.5340890172250503,
+      "knn_k50": 0.5598717410167444,
+      "MSP": 0.576495077690787,
+      "Energy_T1": 0.5572832425388068,
+      "fit": "ISIC train split only",
+      "n_ood": 716
+    },
+    "pad_adv": {
+      "mahalanobis_classcond": 0.49868550300811104,
+      "cosine_max": 0.4848894597475996,
+      "knn_k50": 0.5260222250665357,
+      "MSP": 0.5160582081274013,
+      "Energy_T1": 0.49603218265881943,
+      "fit": "ISIC train split only",
+      "n_ood": 1582
+    }
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2388268156424581,
+    "balanced_accuracy": 0.31963635131629103,
+    "per_class_recall": {
+      "MEL": 0.5555555555555556,
+      "NV": 0.875,
+      "BCC": 0.2536231884057971,
+      "AK": 0.01485148514851485,
+      "BKL": 0.17333333333333334,
+      "SCC": 0.045454545454545456
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "gate": {
+    "status": "inconclusive",
+    "reason": "adversary pinned at chance (CE\u2248ln 2) from epoch 1 \u2014 null experiment, not a scientific negative",
+    "leakage_bal_acc": 0.7794987922705315,
+    "chance_floor": 0.5,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.7287969589233398,
+      "acc_adv": 0.5625,
+      "g_enc_grl": 0.012083989568054676,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.6277791261672974,
+      "loss_adv": 0.657541036605835,
+      "acc_cls": 0.495368093252182,
+      "grl_alpha": 0.9185416974472287,
+      "g_enc_grl_mean": 0.02334749420254451,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.5145133137702942,
+      "loss_adv": 0.6928471326828003,
+      "acc_cls": 0.9601655006408691,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.0016770444441358504,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40
+  },
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

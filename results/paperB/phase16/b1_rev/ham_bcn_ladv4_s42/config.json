@@ -1,0 +1,48 @@
+{
+  "phase": "16B1_rev_coarse",
+  "run_name": "ham_bcn_ladv4_s42",
+  "lambda_adv": 4.0,
+  "seed": 42,
+  "split_seed": 42,
+  "architecture": "single_encoder_dann_effb3",
+  "preprocessing": "unmasked 448 (same as B1)",
+  "image_size": 448,
+  "id_site": "HAM",
+  "ood_site": "BCN_heldout",
+  "split_meta": {
+    "seed": 42,
+    "bcn_heldout_frac": 0.3,
+    "n_ham_train": 7991,
+    "n_ham_val": 1008,
+    "n_ham_test": 1016,
+    "n_bcn_adv": 8749,
+    "n_bcn_heldout": 3664,
+    "lesion_disjoint": true,
+    "orientation": "ID=HAM OOD=BCN_heldout"
+  },
+  "hygiene": {
+    "ham_train": 7991,
+    "ham_val": 1008,
+    "ham_test": 1016,
+    "bcn_adv": 8749,
+    "bcn_heldout": 3664
+  },
+  "split_json": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/b1_rev/b1_rev_split_seed42.json",
+  "coarse_grid": [
+    0,
+    0.1,
+    0.25,
+    0.5,
+    1,
+    2,
+    4,
+    8
+  ],
+  "fit_ood_on": "HAM train only",
+  "leakage_protocol": "HAM test + BCN heldout embeddings, binary site probe (site_id)",
+  "maha_gate_at_lambda0": {
+    "threshold_ge": 0.65,
+    "pass": "run remaining coarse + dense 3-seed",
+    "fail": "stop rev; narrative same-modality collapse only"
+  }
+}

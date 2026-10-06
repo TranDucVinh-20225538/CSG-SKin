@@ -1,0 +1,173 @@
+{
+  "method": "runB_orth1",
+  "seed": 42,
+  "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s42/best-36.ckpt",
+  "spaces": {
+    "z_context": {
+      "dim": 64,
+      "maha_auroc": 0.9999998282372174,
+      "id_scores": {
+        "name": "id",
+        "n": 5067,
+        "min": 16.57732582092285,
+        "max": 1015.9302978515625,
+        "mean": 47.41796924914038,
+        "std": 26.712485983681873,
+        "p01": 22.576283912658692,
+        "p99": 109.68281250000001
+      },
+      "ood_scores": {
+        "name": "ood",
+        "n": 2298,
+        "min": 876.9122924804688,
+        "max": 9398.0966796875,
+        "mean": 3405.462268507304,
+        "std": 670.3765915403193,
+        "p01": 2026.802967529297,
+        "p99": 5237.587661132819
+      },
+      "separation": {
+        "max_id": 1015.9302978515625,
+        "min_ood": 876.9122924804688,
+        "gap_minOOD_minus_maxID": -139.01800537109375,
+        "overlap_range": 139.01800537109375,
+        "perfect_sep_no_overlap": false
+      },
+      "pca": [
+        {
+          "k": 1,
+          "requested_k": 1,
+          "auroc_maha": 1.0,
+          "auroc_pc1_if_k1": 1.0,
+          "var_explained": 0.8447406888008118
+        },
+        {
+          "k": 2,
+          "requested_k": 2,
+          "auroc_maha": 1.0,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.8891952633857727
+        },
+        {
+          "k": 4,
+          "requested_k": 4,
+          "auroc_maha": 1.0,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.9245580434799194
+        },
+        {
+          "k": 8,
+          "requested_k": 8,
+          "auroc_maha": 0.9999999141186088,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.9579891562461853
+        },
+        {
+          "k": 16,
+          "requested_k": 16,
+          "auroc_maha": 1.0,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.978295087814331
+        },
+        {
+          "k": 32,
+          "requested_k": 32,
+          "auroc_maha": 0.9999997423558262,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.9916452169418335
+        },
+        {
+          "k": 64,
+          "requested_k": 64,
+          "auroc_maha": 0.9999998282372174,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 1.0000001192092896
+        }
+      ],
+      "supervision": "domain-supervised"
+    },
+    "z_lesion": {
+      "dim": 16,
+      "maha_auroc": 0.38128434933595645,
+      "id_scores": {
+        "name": "id",
+        "n": 5067,
+        "min": 0.8888143301010132,
+        "max": 413.7877197265625,
+        "mean": 19.709957800157117,
+        "std": 20.47754092464408,
+        "p01": 2.043565330505371,
+        "p99": 89.19975112915041
+      },
+      "ood_scores": {
+        "name": "ood",
+        "n": 2298,
+        "min": 0.524421215057373,
+        "max": 427.73419189453125,
+        "mean": 16.71971978284775,
+        "std": 23.994219362999605,
+        "p01": 1.0952862179279328,
+        "p99": 109.47921485900959
+      },
+      "separation": {
+        "max_id": 413.7877197265625,
+        "min_ood": 0.524421215057373,
+        "gap_minOOD_minus_maxID": -413.2632985115051,
+        "overlap_range": 412.8989053964615,
+        "perfect_sep_no_overlap": false
+      },
+      "pca": [
+        {
+          "k": 1,
+          "requested_k": 1,
+          "auroc_maha": 0.5200831486454014,
+          "auroc_pc1_if_k1": 0.5507588651495547,
+          "var_explained": 0.3322921097278595
+        },
+        {
+          "k": 2,
+          "requested_k": 2,
+          "auroc_maha": 0.4845099169818943,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.5537827610969543
+        },
+        {
+          "k": 4,
+          "requested_k": 4,
+          "auroc_maha": 0.43307821407242164,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.8207307457923889
+        },
+        {
+          "k": 8,
+          "requested_k": 8,
+          "auroc_maha": 0.40326483261802726,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 0.9946581721305847
+        },
+        {
+          "k": 16,
+          "requested_k": 16,
+          "auroc_maha": 0.3659743595953475,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 1.0
+        },
+        {
+          "k": 16,
+          "requested_k": 32,
+          "auroc_maha": 0.3659743595953475,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 1.0
+        },
+        {
+          "k": 16,
+          "requested_k": 64,
+          "auroc_maha": 0.3659743595953475,
+          "auroc_pc1_if_k1": null,
+          "var_explained": 1.0
+        }
+      ],
+      "supervision": "unsupervised"
+    }
+  }
+}

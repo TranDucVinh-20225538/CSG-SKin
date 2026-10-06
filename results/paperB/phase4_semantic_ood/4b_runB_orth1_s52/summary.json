@@ -1,0 +1,44 @@
+{
+  "run_name": "4b_runB_orth1_s52",
+  "config": "4b",
+  "method": "runB_orth1",
+  "seed": 52,
+  "n_classes": 7,
+  "keep": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "DF",
+    "VASC"
+  ],
+  "hold_out": [
+    "SCC"
+  ],
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase4/4b_runB_orth1_s52/best-37.ckpt",
+  "id_acc": 0.8206840720501922,
+  "id_balanced_acc": 0.7218627612053963,
+  "id_ece": 0.08966906745106651,
+  "ood": {
+    "z_lesion": {
+      "AUROC": 0.8093355093285484,
+      "n_id": 4941,
+      "n_ood": 628,
+      "feat_dim": 16,
+      "supervision": "unsupervised"
+    },
+    "z_context": {
+      "AUROC": 0.5723334712666792,
+      "n_id": 4941,
+      "n_ood": 628,
+      "feat_dim": 64,
+      "supervision": "unsupervised_here_no_PAD_domain_labels"
+    }
+  },
+  "n_train": 15809,
+  "n_id": 4941,
+  "n_ood": 628,
+  "pad_involved": false,
+  "prediction_P4": "z_lesion >= baseline on semantic OOD; z_context \u2248 0.50"
+}

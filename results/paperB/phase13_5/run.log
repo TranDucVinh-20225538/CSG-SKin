@@ -1,0 +1,82 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+[transformers] Disabling PyTorch because PyTorch >= 2.5 is required but found 2.1.1
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/data2/cmdir/home/toandq/.conda/envs/torch-env/lib/python3.11/site-packages/torch/autograd/__init__.py:251: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 10010). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /opt/conda/conda-bld/pytorch_1699449201450/work/c10/cuda/CUDAFunctions.cpp:108.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+done 20 / 630 full 1.0 1 maha 0.44367825
+done 40 / 630 full 4.0 4 maha 0.38198137499999996
+done 60 / 630 linear_encoder 0.25 0 maha 0.486026125
+done 80 / 630 linear_encoder 2.0 4 maha 0.5353617500000001
+done 100 / 630 ce_both_domains 0.1 0 maha 0.46739762500000004
+done 120 / 630 ce_both_domains 1.0 4 maha 0.47951025
+done 140 / 630 m2 0.0 4 maha 0.501581375
+done 160 / 630 m2 0.5 3 maha 0.45937900000000004
+done 180 / 630 m2 8.0 4 maha 0.4231225
+done 200 / 630 m4 0.25 4 maha 0.425103
+done 220 / 630 m4 4.0 4 maha 0.41659987499999995
+done 240 / 630 m8 0.1 1 maha 0.33620874999999995
+done 260 / 630 m8 2.0 4 maha 0.4058455
+done 280 / 630 m64 0.05 4 maha 0.38872562499999996
+done 300 / 630 m64 1.0 4 maha 0.4734455
+done 320 / 630 linear_adversary 0.0 4 maha 0.322466
+done 340 / 630 linear_adversary 0.5 4 maha 0.373794875
+done 360 / 630 linear_adversary 8.0 4 maha 0.5225158750000001
+done 380 / 630 adv_lr_1 0.25 4 maha 0.38696637500000003
+done 400 / 630 adv_lr_1 4.0 3 maha 0.512800875
+done 420 / 630 bn_off 0.1 4 maha 0.53140475
+done 440 / 630 bn_off 2.0 3 maha 0.5373031250000001
+done 460 / 630 balanced_n 0.05 3 maha 0.3568463125
+done 480 / 630 balanced_n 1.0 3 maha 0.456102275
+done 500 / 630 Kprime_eq_K 0.0 3 maha 0.3569745
+done 520 / 630 Kprime_eq_K 1.0 0 maha 0.44153787499999997
+done 540 / 630 early_stop_5ep 0.05 3 maha 0.375042
+done 560 / 630 Kprime_eq_K 8.0 0 maha 0.429790875
+done 580 / 630 early_stop_5ep 4.0 3 maha 0.563304625
+done 600 / 630 tau1_half 0.05 3 maha 0.032116124999999995
+done 620 / 630 tau1_half 4.0 0 maha 0.197308875
+done 630 / 630 tau1_half 8.0 1 maha 0.083047375
+n_pass 2
+wrote /data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase13_5/PHASE13_5_REPORT.md

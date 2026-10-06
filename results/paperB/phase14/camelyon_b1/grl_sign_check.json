@@ -1,0 +1,56 @@
+{
+  "per_seed": [
+    {
+      "ce_with_grl": 1.104640007019043,
+      "ce_no_grl": 1.104640007019043,
+      "head_cosine_grl_vs_nogrl": 1.0000215768814087,
+      "encoder_cosine_grl_vs_nogrl": -1.0006550550460815,
+      "z_cosine_grl_vs_nogrl": -0.9999998807907104,
+      "head_grad_norm_grl": 1.0966731309890747,
+      "head_grad_norm_nogrl": 1.0966731309890747,
+      "encoder_grad_norm_grl": 0.7023794651031494,
+      "encoder_grad_norm_nogrl": 0.7023794651031494,
+      "adv_acc_grl": 0.3333333432674408
+    },
+    {
+      "ce_with_grl": 1.1175142526626587,
+      "ce_no_grl": 1.1175142526626587,
+      "head_cosine_grl_vs_nogrl": 1.000020146369934,
+      "encoder_cosine_grl_vs_nogrl": -1.0006332397460938,
+      "z_cosine_grl_vs_nogrl": -1.0000001192092896,
+      "head_grad_norm_grl": 1.6580160856246948,
+      "head_grad_norm_nogrl": 1.6580160856246948,
+      "encoder_grad_norm_grl": 0.9419183135032654,
+      "encoder_grad_norm_nogrl": 0.9419183135032654,
+      "adv_acc_grl": 0.3333333432674408
+    },
+    {
+      "ce_with_grl": 1.110164999961853,
+      "ce_no_grl": 1.110164999961853,
+      "head_cosine_grl_vs_nogrl": 1.0000208616256714,
+      "encoder_cosine_grl_vs_nogrl": -1.000645399093628,
+      "z_cosine_grl_vs_nogrl": -1.0,
+      "head_grad_norm_grl": 1.1247845888137817,
+      "head_grad_norm_nogrl": 1.1247845888137817,
+      "encoder_grad_norm_grl": 0.6438121795654297,
+      "encoder_grad_norm_nogrl": 0.6438121795654297,
+      "adv_acc_grl": 0.3333333432674408
+    }
+  ],
+  "mean": {
+    "ce_with_grl": 1.1107730865478516,
+    "ce_no_grl": 1.1107730865478516,
+    "head_cosine_grl_vs_nogrl": 1.0000208616256714,
+    "encoder_cosine_grl_vs_nogrl": -1.000644564628601,
+    "z_cosine_grl_vs_nogrl": -1.0,
+    "head_grad_norm_grl": 1.293157935142517,
+    "head_grad_norm_nogrl": 1.293157935142517,
+    "encoder_grad_norm_grl": 0.7627033193906149,
+    "encoder_grad_norm_nogrl": 0.7627033193906149,
+    "adv_acc_grl": 0.3333333432674408
+  },
+  "verdict": "grl_graph_correct",
+  "reopen_wilds": false,
+  "drop_from_results": true,
+  "reading": "GRL graph is the standard one: head cosine vs no-GRL = 1.000 (not flipped), encoder cosine = -1.000 (flipped). The head's failure to leave ln(3) is not this sign error. Phase 12 stays inconclusive \u2014 implementation never produced a working adversary \u2014 and is not reported as a Camelyon result."
+}

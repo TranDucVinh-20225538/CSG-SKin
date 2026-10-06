@@ -1,0 +1,154 @@
+{
+  "run_name": "ham_bcn_ladv0_s42",
+  "seed": 42,
+  "lambda_adv": 0.0,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase16/b1_rev/ham_bcn_ladv0_s42/best-39.ckpt",
+  "leakage_bcn_heldout_protocol": {
+    "acc_mean": 0.9722222222222223,
+    "bal_acc_mean": 0.9542261469691772,
+    "auroc_mean": 0.9912737361834155,
+    "acc_std": 0.0035612535612535856,
+    "bal_acc_std": 0.006429241005150349,
+    "n_probe_seeds": 3,
+    "n_domains": 2,
+    "chance_floor_balanced": 0.5,
+    "metric": "balanced_accuracy"
+  },
+  "id_ham_test_balanced_acc": 0.6287363246756821,
+  "id_ham_test_plain_acc": 0.8149606299212598,
+  "ood_bcn_heldout_balanced_acc": 0.4831799694950103,
+  "ood_bcn_heldout_plain_acc": 0.6299126637554585,
+  "id_ece": 0.13076399081921952,
+  "id_mean_confidence": 0.9447795152664185,
+  "ood_ece_bcn_heldout": 0.26327459048073104,
+  "ood_mean_confidence_bcn_heldout": 0.8931872844696045,
+  "ood_detectors_bcn_heldout": {
+    "mahalanobis_classcond": 0.848516261647698,
+    "cosine_max": 0.7541519100505449,
+    "knn_k50": 0.7961016207922154,
+    "MSP": 0.6523303186139668,
+    "Energy_T1": 0.6021446162706736,
+    "fit": "HAM train split only"
+  },
+  "ood_auroc_maha": {
+    "unrestricted": 0.848516261647698,
+    "shared_classes": 0.848516261647698,
+    "reweighted_to_ood_class_mix": 0.7402547235498402,
+    "n_shared_classes": 8,
+    "shared_class_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "gate": {
+    "leakage_bal_acc": 0.9542261469691772,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": {
+      "event": "first_batch_epoch1",
+      "loss_adv": 0.8643550872802734,
+      "acc_adv": 0.375,
+      "g_enc_grl": 0.013595415279269218,
+      "lnK": 0.6931471805599453,
+      "grl_alpha": 0.2
+    },
+    "epoch1": {
+      "epoch": 1,
+      "acc_adv": 0.5141369104385376,
+      "loss_adv": 0.7466856837272644,
+      "acc_cls": 0.6238552927970886,
+      "grl_alpha": 0.9183379591911622,
+      "g_enc_grl_mean": 0.046735567228370536,
+      "lnK": 0.6931471805599453
+    },
+    "best_epoch": {
+      "epoch": 27,
+      "acc_adv": 0.5527129173278809,
+      "loss_adv": 0.7108074426651001,
+      "acc_cls": 0.9783653616905212,
+      "grl_alpha": 0.9999998537820223,
+      "g_enc_grl_mean": 0.0588680638662188,
+      "lnK": 0.6931471805599453
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "acc_adv": 0.543498158454895,
+      "loss_adv": 0.7225983738899231,
+      "acc_cls": 0.9855769276618958,
+      "grl_alpha": 0.9999999958776926,
+      "g_enc_grl_mean": 0.05879152708110355,
+      "lnK": 0.6931471805599453
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 0.0,
+    "status": "valid_control",
+    "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
+  },
+  "rev_maha_gate": {
+    "maha_unrestricted_at_eval": 0.848516261647698,
+    "threshold_ge": 0.65,
+    "pass_continue_coarse": true
+  },
+  "hygiene": {
+    "ham_train": 7991,
+    "ham_val": 1008,
+    "ham_test": 1016,
+    "bcn_adv": 8749,
+    "bcn_heldout": 3664
+  },
+  "config": {
+    "phase": "16B1_rev_coarse",
+    "run_name": "ham_bcn_ladv0_s42",
+    "lambda_adv": 0.0,
+    "seed": 42,
+    "split_seed": 42,
+    "architecture": "single_encoder_dann_effb3",
+    "preprocessing": "unmasked 448 (same as B1)",
+    "image_size": 448,
+    "id_site": "HAM",
+    "ood_site": "BCN_heldout",
+    "split_meta": {
+      "seed": 42,
+      "bcn_heldout_frac": 0.3,
+      "n_ham_train": 7991,
+      "n_ham_val": 1008,
+      "n_ham_test": 1016,
+      "n_bcn_adv": 8749,
+      "n_bcn_heldout": 3664,
+      "lesion_disjoint": true,
+      "orientation": "ID=HAM OOD=BCN_heldout"
+    },
+    "hygiene": {
+      "ham_train": 7991,
+      "ham_val": 1008,
+      "ham_test": 1016,
+      "bcn_adv": 8749,
+      "bcn_heldout": 3664
+    },
+    "split_json": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase16/b1_rev/b1_rev_split_seed42.json",
+    "coarse_grid": [
+      0,
+      0.1,
+      0.25,
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "fit_ood_on": "HAM train only",
+    "leakage_protocol": "HAM test + BCN heldout embeddings, binary site probe (site_id)",
+    "maha_gate_at_lambda0": {
+      "threshold_ge": 0.65,
+      "pass": "run remaining coarse + dense 3-seed",
+      "fail": "stop rev; narrative same-modality collapse only"
+    }
+  }
+}

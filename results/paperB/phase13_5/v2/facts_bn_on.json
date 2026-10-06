@@ -1,0 +1,36 @@
+{
+  "C1_lambda0_at_or_above_chance": {
+    "pass": true,
+    "auc0": 0.5994577750000001
+  },
+  "C2_subchance_at_lambda_ge_0.25": {
+    "pass": false,
+    "auc0": 0.5994577750000001,
+    "auc025": 0.6913857250000001,
+    "auc2": 0.6749006000000001
+  },
+  "C3_detectors_together": {
+    "pass": false,
+    "detectors_at_2": {
+      "maha": 0.6749006000000001,
+      "MSP": 0.7726976750000001,
+      "Energy": 0.8086950250000001,
+      "cosine": 0.7670068,
+      "knn50": 0.8007476624999998
+    }
+  },
+  "C5_reweight_strengthens": {
+    "pass": false,
+    "auc_all": 0.6749006000000001,
+    "auc_reweight": 0.6741108499999999
+  },
+  "C7_third_domain_inverts": {
+    "pass": false,
+    "auc_domain2": 0.636206725
+  },
+  "minimum_pass": false,
+  "confirmed": false,
+  "rejected_as_artifact": false,
+  "n_pass": 1,
+  "n_tested": 5
+}

@@ -1,0 +1,83 @@
+{
+  "kind": "effb3_control",
+  "run_name": "effb3_control_s42",
+  "seed": 42,
+  "lambda_adv": null,
+  "checkpoint": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/effb3_single/effb3_single_s42/best-39.ckpt",
+  "pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "classes_evaluated": [
+      "MEL",
+      "NV",
+      "BCC",
+      "AK",
+      "BKL",
+      "SCC"
+    ],
+    "classes_missing_from_PAD": [
+      "DF",
+      "VASC"
+    ],
+    "restriction": "6-class: softmax and argmax over MEL,NV,BCC,AK,BKL,SCC (indices 0,1,2,3,4,7). DF and VASC are absent from PAD.",
+    "zero_shot": "PAD labels never entered L_cls (ignore_index=-1)",
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "accuracy": {
+      "point": 0.25837988826815644,
+      "boot_mean": 0.25807192737430174,
+      "ci95": [
+        0.22486033519553073,
+        0.2905027932960894
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "balanced_accuracy": {
+      "point": 0.315141909118448,
+      "boot_mean": 0.3151982257698936,
+      "ci95": [
+        0.2518963856716278,
+        0.38173086746724305
+      ],
+      "n_boot": 2000,
+      "n": 716
+    },
+    "macro_auc_ovr": {
+      "point": 0.6389606327462173,
+      "n": 716
+    },
+    "per_class_recall": {
+      "MEL": 0.4444444444444444,
+      "NV": 0.6704545454545454,
+      "BCC": 0.2318840579710145,
+      "AK": 0.13861386138613863,
+      "BKL": 0.36,
+      "SCC": 0.045454545454545456
+    },
+    "melanoma_sens_at_spec_0.85": {
+      "spec_target": 0.85,
+      "n_pos_mel": 9,
+      "n_neg": 707,
+      "note": "pad_heldout melanoma n=9; do not overclaim",
+      "sens": 0.2222222222222222,
+      "achieved_spec": 0.8585572842998586,
+      "threshold": 0.7441814541816711
+    },
+    "pred_class_counts": {
+      "MEL": 161,
+      "NV": 145,
+      "BCC": 115,
+      "AK": 71,
+      "BKL": 202,
+      "SCC": 22
+    }
+  }
+}

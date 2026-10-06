@@ -1,0 +1,6 @@
+lambda_adv: 10.0
+learning_rate: 0.0001
+ln_k: 5.493061443340548
+n_classes: 182
+n_domains: 243
+weight_decay: 0.0001

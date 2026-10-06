@@ -1,0 +1,45 @@
+{
+  "checkpoint": "runB_orth1_ladv2_s42",
+  "partition": "pad_heldout",
+  "baseline_auroc": 0.4314531644676419,
+  "max_abs_deviation": 0.0009404703233653056,
+  "rows": [
+    {
+      "config": "float64_ridge_eps1e-3",
+      "threads": "default",
+      "auroc": 0.4314531644676419,
+      "ledoit": false
+    },
+    {
+      "config": "float32_ridge_eps1e-3",
+      "threads": "default",
+      "auroc": 0.4314534401037273,
+      "ledoit": false
+    },
+    {
+      "config": "float64_ledoit_wolf",
+      "threads": "default",
+      "auroc": 0.43239363479100723,
+      "ledoit": true
+    },
+    {
+      "config": "float64_ridge_eps1e-3",
+      "threads": 1,
+      "auroc": 0.4314531644676419,
+      "ledoit": false
+    },
+    {
+      "config": "float64_ridge_eps1e-3",
+      "threads": 4,
+      "auroc": 0.4314531644676419,
+      "ledoit": false
+    },
+    {
+      "config": "float64_ridge_eps1e-3",
+      "threads": 8,
+      "auroc": 0.4314531644676419,
+      "ledoit": false
+    }
+  ],
+  "threshold_note": ">|1e-3| investigate; >|1e-2| fix precision policy in Methods"
+}

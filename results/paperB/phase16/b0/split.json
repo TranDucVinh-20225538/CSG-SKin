@@ -1,0 +1,16 @@
+{
+  "seed": 42,
+  "n_train": 15593,
+  "n_val": 3499,
+  "n_probe": 3336,
+  "n_lesions_train": 7732,
+  "n_lesions_probe": 1657,
+  "site_counts_train": {
+    "BCN": 8558,
+    "HAM": 7035
+  },
+  "site_counts_probe": {
+    "BCN": 1822,
+    "HAM": 1514
+  }
+}

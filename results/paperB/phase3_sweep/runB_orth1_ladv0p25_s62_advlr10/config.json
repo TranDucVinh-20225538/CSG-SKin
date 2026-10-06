@@ -1,0 +1,19 @@
+{
+  "lambda_adv": 0.25,
+  "seed": 62,
+  "lambda_orth": 1.0,
+  "batch_size": 32,
+  "num_workers": 4,
+  "max_epochs": 40,
+  "lr": 0.0001,
+  "output_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase3_sweep",
+  "ckpt_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase3",
+  "dry_run": false,
+  "resume": true,
+  "skip_done": true,
+  "adv_lr_multiplier": 10.0,
+  "run_name": "runB_orth1_ladv0p25_s62_advlr10",
+  "n_pad_adv": 1582,
+  "n_pad_heldout": 716,
+  "phase2_split": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase2_pad_holdout/pad_patient_split_paths.json"
+}

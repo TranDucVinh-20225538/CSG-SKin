@@ -1,0 +1,17 @@
+{
+  "run_name": "coral_w100_s62",
+  "objective": "coral",
+  "weight": 100.0,
+  "seed": 62,
+  "uses_pad_adv_labels": false,
+  "pad_heldout_in_objective": false,
+  "note": "IRM/GroupDRO need labeled training environments; pad_adv labels enter L_cls. CORAL/MMD/ERM never use PAD labels. pad_heldout is unseen in every objective.",
+  "hygiene": {
+    "n_train": 16211,
+    "n_val": 4053,
+    "n_test": 5067,
+    "n_pad_adv": 1582,
+    "n_pad_heldout": 716,
+    "pad_patient_disjoint": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "caption": "Fitzpatrick17k does not fall on the ISIC side. Overlap with PAD is 0.47; no tighter claim is supported.",
+  "supported_claim": "not on the ISIC side (Fitz overlaps PAD substantially; cannot claim a tight between-mode)",
+  "pairwise": {
+    "ISIC_Fitz": {
+      "overlap_coef": 0.027703839302002507,
+      "cohens_d": -4.558100978573238
+    },
+    "Fitz_PAD": {
+      "overlap_coef": 0.4716615806453996,
+      "cohens_d": -1.178960245435234
+    },
+    "ISIC_PAD": {
+      "overlap_coef": 0.0,
+      "cohens_d": -16.446413347003052
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "run_name": "dann_densenet121_ladv10_s42",
+  "lambda_adv": 10.0,
+  "seed": 42,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase12/camelyon17/dann_densenet121_ladv10_s42/best.pt",
+  "best_epoch": 1,
+  "id_val_select_acc": 0.9815852205005959,
+  "id_val_score": {
+    "acc": 0.9806912991656734,
+    "balanced_acc": 0.9806697205120021,
+    "ece": 0.005021967691801159,
+    "n": 16780,
+    "leaderboard_comparable": false,
+    "checkpoint_split": "id_val_select",
+    "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+  },
+  "id_val_select_eval": {
+    "acc": 0.9815256257449344,
+    "balanced_acc": 0.9815151314694739,
+    "ece": 0.0067612395702869015,
+    "n": 16780,
+    "leaderboard_comparable": false,
+    "checkpoint_split": "id_val_select",
+    "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+  },
+  "leakage_train_hospitals_3class": {
+    "protocol": "logistic 3-class hospital probe, fit on train features, eval on id_val_score; hospitals {0,3,4}",
+    "balanced_acc": 0.9627423793021376,
+    "acc": 0.9733611442193087,
+    "auroc_ovr_macro": 0.9974153530258851,
+    "majority_baseline_acc": 0.43712753277711563,
+    "n": 16780
+  },
+  "ood": {
+    "val": {
+      "hospital": 1,
+      "never_in_adversary": true,
+      "accuracy": {
+        "acc": 0.8539135915654367,
+        "balanced_acc": 0.8539135915654366,
+        "ece": 0.07433260342098966,
+        "n": 34904,
+        "leaderboard_comparable": false,
+        "checkpoint_split": "id_val_select",
+        "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+      },
+      "detectors": {
+        "mahalanobis_classcond_sharedcov": 0.5521876196026998,
+        "mahalanobis_agnostic": 0.4324802106619293,
+        "knn_k50": 0.7519136636856085,
+        "cosine_max": 0.5902040215464477,
+        "MSP": 0.5989990176016928,
+        "Energy_T1": 0.5972462208278686,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      },
+      "leakage_binary_id_vs_this": {
+        "protocol": "logistic binary ID(id_val_score) vs OOD-hospital, 70/30, 3 seeds \u2014 analogue of derm leakage",
+        "balanced_acc_mean": 0.9862273944865265,
+        "balanced_acc_std": 0.001589246504744459,
+        "auroc_mean": 0.9987610920049748,
+        "auroc_std": 0.00045219497328562554,
+        "n_id": 16780,
+        "n_ood": 34904
+      },
+      "n": 34904
+    },
+    "test": {
+      "hospital": 2,
+      "never_in_adversary": true,
+      "accuracy": {
+        "acc": 0.8643214898770193,
+        "balanced_acc": 0.8643214898770193,
+        "ece": 0.07420407892363923,
+        "n": 85054,
+        "leaderboard_comparable": false,
+        "checkpoint_split": "id_val_select",
+        "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+      },
+      "detectors": {
+        "mahalanobis_classcond_sharedcov": 0.48221207249307485,
+        "mahalanobis_agnostic": 0.3432647128783332,
+        "knn_k50": 0.816463117464771,
+        "cosine_max": 0.5702737264747715,
+        "MSP": 0.7021163985759814,
+        "Energy_T1": 0.7065352914826346,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      },
+      "leakage_binary_id_vs_this": {
+        "protocol": "logistic binary ID(id_val_score) vs OOD-hospital, 70/30, 3 seeds \u2014 analogue of derm leakage",
+        "balanced_acc_mean": 0.9936900695497655,
+        "balanced_acc_std": 0.00048709470076854734,
+        "auroc_mean": 0.9996629599238821,
+        "auroc_std": 0.00011022519396659198,
+        "n_id": 16780,
+        "n_ood": 85054
+      },
+      "n": 85054
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 10.547949567107453,
+      "id_val_select_acc": 0.9815852205005959
+    },
+    {
+      "epoch": 2,
+      "train_loss": 10.420431153330812,
+      "id_val_select_acc": 0.9795589988081049
+    },
+    {
+      "epoch": 3,
+      "train_loss": 10.432336920770119,
+      "id_val_select_acc": 0.9764004767580453
+    },
+    {
+      "epoch": 4,
+      "train_loss": 10.436812170916381,
+      "id_val_select_acc": 0.9775923718712753
+    },
+    {
+      "epoch": 5,
+      "train_loss": 10.438963508411714,
+      "id_val_select_acc": 0.9794994040524434
+    },
+    {
+      "epoch": 6,
+      "train_loss": 10.439296876621558,
+      "id_val_select_acc": 0.9671632896305126
+    },
+    {
+      "epoch": 7,
+      "train_loss": 10.438949271837302,
+      "id_val_select_acc": 0.9806317044100119
+    },
+    {
+      "epoch": 8,
+      "train_loss": 10.439156702263594,
+      "id_val_select_acc": 0.9758045292014302
+    },
+    {
+      "epoch": 9,
+      "train_loss": 10.43900642616508,
+      "id_val_select_acc": 0.9601311084624553
+    },
+    {
+      "epoch": 10,
+      "train_loss": 10.438892343463072,
+      "id_val_select_acc": 0.9787246722288439
+    }
+  ],
+  "config_path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase12/camelyon17/coarse/dann_densenet121_ladv10_s42/config.json",
+  "primary_detectors": [
+    "mahalanobis_classcond_sharedcov",
+    "knn_k50"
+  ],
+  "binary_msp_note": "Camelyon17 is binary. MSP is confined to [0.5, 1]. Lead with Mahalanobis class-conditional (shared covariance) and kNN k=50.",
+  "leaderboard_comparable": false
+}

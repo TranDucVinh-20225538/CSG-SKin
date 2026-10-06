@@ -1,0 +1,6 @@
+{
+  "finding": "not_saturated",
+  "do_b2": false,
+  "close_phase12_as_c": true,
+  "reading": "The online adversary is not a saturated discriminator. train_adv_acc sits at 3-class chance (~0.33) for every matched \u03bb including 10, 100 and 300, from epoch 1 through 10, and checkpoint CE equals ln(3). That is the opposite of the discriminator-too-strong failure mode that B2 was reserved for. The GRL path into the encoder is numerically silent because the domain head is a constant uniform predictor (\u2202L_adv/\u2202z = 0), not because acc\u21921. Leakage stays ~0.94: a post-hoc linear probe still reads hospital, so the representation was never pressured. Outcome (c) is confirmed. Phase 12 closes. B2 is not run. iWildCam stays gated."
+}

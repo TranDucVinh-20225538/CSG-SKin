@@ -1,0 +1,37 @@
+{
+  "run_name": "matched_densenet121_ladv300_s42",
+  "phase": "12.1b",
+  "lambda_adv": 300.0,
+  "seed": 42,
+  "recipe": "derm-matched adversary on DenseNet-121",
+  "adv_lr_multiplier": 30.0,
+  "cls_lr_multiplier": 0.2,
+  "grl_schedule": {
+    "form": "2/(1+exp(-gamma * p^k))-1",
+    "gamma": 20.0,
+    "progress_power": 0.5,
+    "alpha_min": 0.2
+  },
+  "optimizer": "AdamW, 3 param groups (encoder, adv*30, cls*0.2)",
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "batch": "hospital-balanced, 10 per hospital, batch 30",
+  "domain_head": "Linear-BN-ReLU-Drop0.5 x2 + Linear on BN-normalised 1024-d features",
+  "grl_on": "feat_bn(z_backbone)",
+  "data_root": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds",
+  "read_only_data_root": true,
+  "release": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/camelyon17_v1.0/RELEASE_v1.0.txt",
+    "sha256": "c47aef3703e4b548239c348f454478d0bbc2813f2653229f8d633e977a7c182f",
+    "text": "# Release notes for Camelyon17\n\n## v1.0\nDec 9, 2020: First release.\n"
+  },
+  "n_train": 302436,
+  "n_id_val_select": 16780,
+  "n_id_val_score": 16780,
+  "n_val": 34904,
+  "n_test": 85054,
+  "n_batches_per_epoch": 10081,
+  "leaderboard_comparable": false,
+  "coarse_checkpoints_reused": false,
+  "audit": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase12/PHASE12_1B_AUDIT.md"
+}

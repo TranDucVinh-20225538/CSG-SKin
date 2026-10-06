@@ -1,0 +1,19 @@
+{
+  "script": "eval_ood_dual_branch.py",
+  "metadata": "/data2/hpcshared/Vinh/CSG-Skin/data/master_metadata_lesion_only_soft.csv",
+  "methods": [
+    "baseline_soft",
+    "effb3_control",
+    "runB_orth1"
+  ],
+  "seeds": [
+    42
+  ],
+  "batch_size": 4,
+  "reg_eps": 0.001,
+  "dry_run": true,
+  "device": "cpu",
+  "checkpoint_policy": "newest best-*.ckpt else newest last*.ckpt",
+  "fit_split": "isic_train_only",
+  "honesty": "z_context / backbone_raw_context / context_predictor_softmax are domain-supervised"
+}

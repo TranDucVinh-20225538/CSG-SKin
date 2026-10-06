@@ -1,0 +1,21 @@
+mode,feature_set,detector,metric,value,feat_dim,error
+processed_evalgeom,rgb_moments,mahalanobis_classcond,AUROC,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,rgb_moments,mahalanobis_classcond,AUPR_IN,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,rgb_moments,mahalanobis_classcond,AUPR_OUT,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,rgb_moments,mahalanobis_classcond,FPR95,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,color_hist,mahalanobis_classcond,AUROC,nan,48,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,color_hist,mahalanobis_classcond,AUPR_IN,nan,48,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,color_hist,mahalanobis_classcond,AUPR_OUT,nan,48,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,color_hist,mahalanobis_classcond,FPR95,nan,48,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,gray_downsample,mahalanobis_classcond,AUROC,nan,256,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,gray_downsample,mahalanobis_classcond,AUPR_IN,nan,256,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,gray_downsample,mahalanobis_classcond,AUPR_OUT,nan,256,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,gray_downsample,mahalanobis_classcond,FPR95,nan,256,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,hsv_moments,mahalanobis_classcond,AUROC,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,hsv_moments,mahalanobis_classcond,AUPR_IN,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,hsv_moments,mahalanobis_classcond,AUPR_OUT,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,hsv_moments,mahalanobis_classcond,FPR95,nan,6,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,laplacian_stats,mahalanobis_classcond,AUROC,nan,4,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,laplacian_stats,mahalanobis_classcond,AUPR_IN,nan,4,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,laplacian_stats,mahalanobis_classcond,AUPR_OUT,nan,4,No samples for class 5; cannot fit Mahalanobis.
+processed_evalgeom,laplacian_stats,mahalanobis_classcond,FPR95,nan,4,No samples for class 5; cannot fit Mahalanobis.

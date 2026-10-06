@@ -1,0 +1,61 @@
+{
+  "study": "Paper B reviewer response — sub-chance AUROC uncertainty",
+  "registered_at": "2026-10-05",
+  "n_resamples": 2000,
+  "rng_seed": 20261005,
+  "ci_method": "percentile",
+  "ci_level": 0.95,
+  "primary_lambda_adv": 2.0,
+  "primary_claim": "Mahalanobis OOD detection on pad_heldout inverts below chance (AUROC < 0.5)",
+  "detectors": ["mahalanobis_classcond", "knn_k50", "cosine_max"],
+  "lambda_grid": [0.0, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0],
+  "seeds_endpoint": [42, 52, 62, 72, 82],
+  "seeds_mid": [42, 52, 62],
+  "ood_partitions": {
+    "pad_heldout": {
+      "resample_unit": "patient",
+      "n_images": 716,
+      "n_patients": 412,
+      "id_partition": "isic_test",
+      "id_resample_unit": "image"
+    },
+    "fitzpatrick17k": {
+      "resample_unit": "image",
+      "n_images": 3887,
+      "caveat": "No patient IDs; intervals likely anti-conservative (narrow) vs true sampling uncertainty."
+    }
+  },
+  "bootstrap_protocol": {
+    "both_sides": true,
+    "shared_resample_across_seeds_within_draw": true,
+    "mahalanobis_fit": "ISIC train only, fixed full train set (not bootstrapped)",
+    "scoring_space": "z_lesion_norm (16-d, post-BN; Phase 3 z_lesion)"
+  },
+  "outputs": {
+    "mean_auroc_across_seeds": "95% percentile CI on mean AUROC over seeds at each lambda",
+    "per_seed_ci": "95% percentile CI per seed; count k/5 with entire CI below 0.5",
+    "chance_threshold": 0.5
+  },
+  "decision_rules": [
+    {
+      "id": "A",
+      "condition": "At lambda=2, pooled (mean-across-seeds) 95% CI entirely below 0.5 AND k>=3 of 5 per-seed CIs entirely below 0.5 for primary detector (Mahalanobis) on pad_heldout",
+      "manuscript": "Keep 'inverts below chance'; report interval wherever the claim appears"
+    },
+    {
+      "id": "B",
+      "condition": "Pooled CI below 0.5 but fewer than 3 per-seed CIs entirely below 0.5",
+      "manuscript": "Report both; soften to 'inverts on average, with seed-level variation'"
+    },
+    {
+      "id": "C",
+      "condition": "Pooled 95% CI straddles 0.5 for Mahalanobis pad_heldout at lambda=2",
+      "manuscript": "Remove 'inverts' from title, abstract, conclusions; claim 'falls toward chance'"
+    }
+  ],
+  "secondary_scope": {
+    "name": "HAM to BCN same-modality reverse (Phase 16B rev)",
+    "metric": "Mahalanobis unrestricted",
+    "note": "Bootstrap with lesion-level resample on BCN held-out; reported separately for Section 4.8 scope claim (~0.683 at lambda=1)"
+  }
+}

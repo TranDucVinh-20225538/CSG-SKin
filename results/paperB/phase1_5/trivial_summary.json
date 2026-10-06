@@ -1,0 +1,295 @@
+[
+  {
+    "mode": "processed_evalgeom",
+    "blocked": false,
+    "maha_rows": [
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": 0.5059127620262718,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": 0.6859343088993657,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": 0.32851344184944326,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": 0.9548056048944148,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": 0.4568994790950094,
+        "feat_dim": 48,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": 0.6537798720165917,
+        "feat_dim": 48,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": 0.299691217772406,
+        "feat_dim": 48,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": 0.9664495756858101,
+        "feat_dim": 48,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": 0.4972263745874902,
+        "feat_dim": 256,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": 0.7060436212031053,
+        "feat_dim": 256,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": 0.2954398657318831,
+        "feat_dim": 256,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": 0.9238208012630748,
+        "feat_dim": 256,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": 0.5634331979327318,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": 0.7388416594669971,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": 0.3794796284695413,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": 0.9019143477402802,
+        "feat_dim": 6,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUROC",
+        "value": 0.6473711792013134,
+        "feat_dim": 4,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_IN",
+        "value": 0.81428474298985,
+        "feat_dim": 4,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "AUPR_OUT",
+        "value": 0.37929698534454304,
+        "feat_dim": 4,
+        "error": ""
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "detector": "mahalanobis_classcond",
+        "metric": "FPR95",
+        "value": 0.7953424116834419,
+        "feat_dim": 4,
+        "error": ""
+      }
+    ],
+    "probes": [
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "rgb_moments",
+        "feat_dim": 6,
+        "acc_mean": 0.801447963800905,
+        "acc_std": 0.005372243286753264,
+        "bal_acc_mean": 0.7526992753623187,
+        "bal_acc_std": 0.00729012535048838,
+        "auroc_mean": 0.8650246948893974,
+        "auroc_std": 0.00833027250357753,
+        "acc_per_seed": [
+          0.8031674208144797,
+          0.8072398190045249,
+          0.8013574660633485,
+          0.8040723981900453,
+          0.7914027149321267
+        ],
+        "majority": 0.6879837067209776
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "color_hist",
+        "feat_dim": 48,
+        "acc_mean": 0.7914932126696833,
+        "acc_std": 0.007230763567579442,
+        "bal_acc_mean": 0.7498150266971777,
+        "bal_acc_std": 0.010342319031476655,
+        "auroc_mean": 0.851506483600305,
+        "auroc_std": 0.007350125706525327,
+        "acc_per_seed": [
+          0.7936651583710407,
+          0.7909502262443439,
+          0.7873303167420814,
+          0.8036199095022625,
+          0.7819004524886878
+        ],
+        "majority": 0.6879837067209776
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "gray_downsample",
+        "feat_dim": 256,
+        "acc_mean": 0.761628959276018,
+        "acc_std": 0.00826160582155818,
+        "bal_acc_mean": 0.6904347826086956,
+        "bal_acc_std": 0.010338264743069063,
+        "auroc_mean": 0.8096132723112127,
+        "auroc_std": 0.0071781421600866264,
+        "acc_per_seed": [
+          0.7552036199095022,
+          0.7538461538461538,
+          0.7714932126696833,
+          0.7719457013574661,
+          0.755656108597285
+        ],
+        "majority": 0.6879837067209776
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "hsv_moments",
+        "feat_dim": 6,
+        "acc_mean": 0.8102262443438913,
+        "acc_std": 0.006396596216134743,
+        "bal_acc_mean": 0.7696853546910755,
+        "bal_acc_std": 0.00830776553440159,
+        "auroc_mean": 0.8701773455377573,
+        "auroc_std": 0.00559004091489543,
+        "acc_per_seed": [
+          0.8135746606334842,
+          0.816289592760181,
+          0.8095022624434389,
+          0.8135746606334842,
+          0.7981900452488688
+        ],
+        "majority": 0.6879837067209776
+      },
+      {
+        "mode": "processed_evalgeom",
+        "feature_set": "laplacian_stats",
+        "feat_dim": 4,
+        "acc_mean": 0.8110407239819004,
+        "acc_std": 0.005411734438995837,
+        "bal_acc_mean": 0.7459029366895499,
+        "bal_acc_std": 0.006650357943747363,
+        "auroc_mean": 0.8761033562166285,
+        "auroc_std": 0.0045192389967329905,
+        "acc_per_seed": [
+          0.8180995475113122,
+          0.8149321266968326,
+          0.8122171945701357,
+          0.8067873303167421,
+          0.8031674208144797
+        ],
+        "majority": 0.6879837067209776
+      }
+    ],
+    "counts": {
+      "isic_train": 16211,
+      "isic_test": 5067,
+      "pad": 2298
+    }
+  },
+  {
+    "mode": "raw_resize224",
+    "blocked": true,
+    "reason": "PAD images unreadable"
+  }
+]

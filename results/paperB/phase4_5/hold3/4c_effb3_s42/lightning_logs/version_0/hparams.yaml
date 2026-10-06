@@ -1,0 +1,5 @@
+latent_dim: 16
+learning_rate: 0.0001
+num_classes: 5
+pretrained: true
+weight_decay: 0.0001

@@ -1,0 +1,95 @@
+{
+  "run_name": "runB_orth1_ladv0p5_s52",
+  "seed": 52,
+  "lambda_adv": 0.5,
+  "lambda_orth": 1.0,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase3/runB_orth1_ladv0p5_s52/best-36.ckpt",
+  "reused_phase2_ckpt": false,
+  "id_acc": 0.8136964673376752,
+  "id_balanced_acc": 0.6855091522117482,
+  "id_ece": 0.10165441613802431,
+  "pad_acc": 0.18102697998259357,
+  "pad_balanced_acc": 0.27275902665145624,
+  "leakage": {
+    "z_lesion": {
+      "acc_mean": 0.693363499245852,
+      "bal_acc_mean": 0.5568157259089753,
+      "auroc_mean": 0.7047956394609712,
+      "acc_std": 0.0013823757752506256,
+      "bal_acc_std": 0.00384251129645808,
+      "auroc_std": 0.007621864036853714,
+      "n_probe_seeds": 3
+    },
+    "z_context": {
+      "acc_mean": 0.9986425339366516,
+      "bal_acc_mean": 0.998353674040173,
+      "auroc_mean": 0.9999955504703788,
+      "acc_std": 0.0004524886877828038,
+      "bal_acc_std": 0.000400495500252852,
+      "auroc_std": 3.609781557204502e-06,
+      "n_probe_seeds": 3
+    },
+    "protocol": "logistic domain probe, 70/30 on ISIC-test+PAD-full, 3 seeds; not used as an OOD detector"
+  },
+  "ood": {
+    "pad_adv": {
+      "z_lesion": {
+        "mahalanobis_classcond": {
+          "unrestricted": 0.4329733779740853,
+          "id_6class_restricted": 0.4389529143280586
+        },
+        "cosine_max": 0.46666127744107594,
+        "knn_k50": 0.45973649680875506,
+        "MSP": 0.48167083208894623,
+        "Energy_T1": 0.48370476574708016
+      },
+      "z_context_maha_unrestricted": 1.0,
+      "n_ood": 1582
+    },
+    "pad_heldout": {
+      "z_lesion": {
+        "mahalanobis_classcond": {
+          "unrestricted": 0.4623696103498043,
+          "id_6class_restricted": 0.46866088215978907
+        },
+        "cosine_max": 0.492697021917479,
+        "knn_k50": 0.4853772300337489,
+        "MSP": 0.5043050221997303,
+        "Energy_T1": 0.5108756352033588
+      },
+      "z_context_maha_unrestricted": 0.9999410138777256,
+      "n_ood": 716
+    },
+    "pad_full": {
+      "z_lesion": {
+        "mahalanobis_classcond": {
+          "unrestricted": 0.4421338056122802,
+          "id_6class_restricted": 0.44821049670020413
+        },
+        "cosine_max": 0.47477543304403325,
+        "knn_k50": 0.46772585904149844,
+        "MSP": 0.48872304333420413,
+        "Energy_T1": 0.49217311352506526
+      },
+      "z_context_maha_unrestricted": 0.9999816213822679,
+      "n_ood": 2298
+    },
+    "fitzpatrick17k": {
+      "z_lesion": {
+        "mahalanobis_classcond": {
+          "unrestricted": 0.474609793978085,
+          "id_6class_restricted": 0.48179511725571056
+        },
+        "cosine_max": 0.5496508859999953,
+        "knn_k50": 0.5228327344380261,
+        "MSP": 0.5598471097024594,
+        "Energy_T1": 0.5913970698480343
+      },
+      "z_context_maha_unrestricted": 0.9988649142905188,
+      "n_ood": 3887
+    }
+  },
+  "n_pad_adv": 1582,
+  "n_pad_heldout": 716,
+  "n_fitz": 3887
+}

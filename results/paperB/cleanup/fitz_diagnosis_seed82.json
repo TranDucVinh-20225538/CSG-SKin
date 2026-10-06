@@ -1,0 +1,28 @@
+{
+  "seed": 82,
+  "lambda_adv": 2.0,
+  "n_fitz_images": 3887,
+  "checkpoints": {
+    "phase3_table1": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase2/runB_orth1_padhold_s82/best-37.ckpt",
+    "phase25_legacy_policy": "/data2/hpcshared/Vinh/CSG-Skin/checkpoints/csg_lite/runB_orth1_s82/best-37.ckpt"
+  },
+  "stored_summaries": {
+    "phase3_fitz_maha": 0.2717696578226349,
+    "phase25_fitz_maha": 0.43395124828202525
+  },
+  "live_rerun_same_padhold_ckpt": {
+    "phase3_collect_z_lesion_norm": 0.27190017033901626,
+    "phase25_collect_slim_z": 0.27190017033901626,
+    "phase25_detectors_from_packs": 0.27190017033901626,
+    "max_abs_z_diff_first100_fitz": 0.0
+  },
+  "live_legacy_ckpt_fitz_maha": 0.43395586864342994,
+  "latent_note": "CSG return_latents z_lesion is z_lesion_norm (post-BN); phase25 collect_slim matches.",
+  "transform_note": "build_val_transform_robust; lesion branch = _rgb_to_gray3(context) when x_lesion None.",
+  "diagnosis": "Phase 3 and Phase 2.5 evaluators agree on the same pad-holdout checkpoint. Stored Phase 2.5a aggregate used legacy checkpoints/csg_lite/runB_orth1_s* (pre pad-holdout split), not the Phase 2/3 checkpoints \u2014 that explains seed-level gaps (e.g. 0.272 vs 0.434 at seed 82), not a Mahalanobis or BN-space bug.",
+  "manuscript_decision": {
+    "action": "keep_table1_fitz_from_phase3_sweep",
+    "column_value_lambda2": "recompute mean from phase3_sweep summaries (\u22480.391\u00b10.068)",
+    "drop_or_relabel": "Do not cite Phase 2.5a Fitz for Table 1; abstract 0.391 vs 0.764 \u03bb=0 remains if Phase 3 \u03bb=0 Fitz used"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "dataset": "camelyon17",
+  "split_scheme": "official",
+  "parent_split": "id_val",
+  "n_id_val": 33560,
+  "fraction_score": 0.5,
+  "seed": 42,
+  "stratify": "hospital x label (6 strata)",
+  "data_root": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds",
+  "read_only_data_root": true,
+  "release": {
+    "path": "/data2/cmdir/home/toandq/DST-Skin/data/raw/wilds/camelyon17_v1.0/RELEASE_v1.0.txt",
+    "sha256": "c47aef3703e4b548239c348f454478d0bbc2813f2653229f8d633e977a7c182f",
+    "text": "# Release notes for Camelyon17\n\n## v1.0\nDec 9, 2020: First release.\n"
+  },
+  "id_val_select": {
+    "role": "checkpoint selection only \u2014 never used as ID reference for OOD detectors",
+    "n": 16780,
+    "by_hospital": {
+      "0": 3005,
+      "3": 6440,
+      "4": 7335
+    },
+    "by_label": {
+      "0": 8476,
+      "1": 8304
+    },
+    "by_hospital_label": {
+      "h0_y0": 1516,
+      "h0_y1": 1489,
+      "h3_y0": 3242,
+      "h3_y1": 3198,
+      "h4_y0": 3718,
+      "h4_y1": 3617
+    }
+  },
+  "id_val_score": {
+    "role": "ID accuracy + ID reference distribution for all OOD detectors",
+    "n": 16780,
+    "by_hospital": {
+      "0": 3006,
+      "3": 6439,
+      "4": 7335
+    },
+    "by_label": {
+      "0": 8476,
+      "1": 8304
+    },
+    "by_hospital_label": {
+      "h0_y0": 1516,
+      "h0_y1": 1490,
+      "h3_y0": 3241,
+      "h3_y1": 3198,
+      "h4_y0": 3719,
+      "h4_y1": 3616
+    }
+  },
+  "disjoint": true,
+  "note": "Do not construct an id_test. These are halves of official id_val only."
+}

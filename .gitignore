@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Large runtime artifacts (reproduce via scripts + SLURM)
+checkpoints/
+logs/
+data/
+
+# Cached embeddings / heavy feature stores
+results/paperB/phase13/features/
+results/paperB/phase1_6/
+results/paperB/phase2_5/
+results/paperB/phase35_mech/
+
+*.npz
+*.ckpt
+*.pth

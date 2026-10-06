@@ -1,0 +1,30 @@
+{
+  "method": "erm_w0 Phase15.2",
+  "partition": "pad_heldout",
+  "per_seed": [
+    {
+      "seed": 42,
+      "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s42/best-38.ckpt",
+      "maha_pad_heldout": 0.8446402011922914,
+      "maha_pad_full_stored": 0.8500715306107904,
+      "knn_pad_heldout": 0.9351737003482937
+    },
+    {
+      "seed": 52,
+      "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s52/best-32.ckpt",
+      "maha_pad_heldout": 0.8524562758477741,
+      "maha_pad_full_stored": 0.8547458829749244,
+      "knn_pad_heldout": 0.9374658900344324
+    },
+    {
+      "seed": 62,
+      "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s62/best-31.ckpt",
+      "maha_pad_heldout": 0.8056407271059425,
+      "maha_pad_full_stored": 0.8106003573009402,
+      "knn_pad_heldout": 0.9477088026037687
+    }
+  ],
+  "mean": 0.8342457347153359,
+  "std": 0.025079027114406075,
+  "n_seeds": 3
+}
