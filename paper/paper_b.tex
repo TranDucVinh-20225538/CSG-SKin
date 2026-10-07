@@ -92,7 +92,7 @@ images rose from $0.489$ to $0.930$, overtaking in-distribution confidence,
 while cross-domain accuracy did not improve at any $\lam$ and predictions
 collapsed toward the benign majority class (actinic keratosis recall
 $0.244 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
-adversarial training but not in moment-matching objectives, which reduced
+gradient-reversal training but not in moment-matching objectives, which reduced
 leakage comparably without collapsing any detector. In a same-modality shift between
 two hospitals the collapse reproduced ($k$-NN $0.658 \to 0.486$) but the inversion did
 not: with matched baseline detectability, Mahalanobis fell only to $0.683$. Six
@@ -574,7 +574,7 @@ information remains linearly decodable and detection degrades regardless.}
 \label{fig:depth}
 \end{figure}
 
-\subsection{The failure is specific to adversarial optimisation}
+\subsection{The failure is specific to gradient reversal}
 \label{sec:adversarial}
 
 Adversarial training is one route to invariance among several. Table~\ref{tab:obj}
@@ -865,7 +865,7 @@ them, but actively ranking them as safer. And the developer's evaluation shows
 in-distribution accuracy holding, in-distribution calibration unchanged, and the
 leakage metric improved exactly as intended.
 
-\subsection{The failure belongs to adversarial optimisation, not to invariance}
+\subsection{The failure belongs to gradient reversal, not to invariance}
 
 Reducing domain leakage is not sufficient to produce the failure. MMD reduces
 leakage along the same axis and collapses nothing: at the leakage levels it
@@ -876,8 +876,11 @@ The two objectives also fail in opposite manners. As MMD is pushed harder it
 becomes less accurate \emph{and less confident}, and its out-of-domain
 calibration error falls. Under gradient reversal accuracy falls while confidence
 rises, and calibration error triples. One degrades honestly; the other is
-confidently wrong. Whatever drives the inversion is a property of how invariance
-is obtained, not of invariance itself.
+confidently wrong. Whatever drives the inversion is a property of how invariance is obtained, not of
+invariance itself. We tested one adversarial formulation. Whether other adversarial
+objectives --- CDAN, adversarial discriminative adaptation --- behave like gradient
+reversal or like the moment-matching objectives is not established here, so the claim
+is stated for gradient reversal rather than for adversarial training in general.
 
 We cannot rule out that MMD would behave the same way at the invariance level
 gradient reversal reaches, because it never got there without destroying the
