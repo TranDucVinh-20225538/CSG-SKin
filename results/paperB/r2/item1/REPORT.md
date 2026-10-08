@@ -2,7 +2,63 @@
 
 Commit: `4c62482`. Pre-commit: `results/paperB/r2/PRECOMMIT_ITEM1_ITEM2.json` (`e131a42`).
 
-**Verdict:** Frozen ImageNet degrades -> there is no cheap fix.
+**Verdict (pre-registered decision table):** Frozen ImageNet degrades -> there is no cheap fix (Mahalanobis 0.833 on pad_heldout < 0.90). Reading: partial mitigation, see Headline.
+
+<!-- HEADLINE BEGIN -->
+## Headline (matched sets)
+
+All entries on the same ID set within a row group (full ISIC test, n = 5067, unless marked lesion-disjoint, n = 2026) and the same OOD set. The model columns are z_lesion^norm, mean ± s.d. over 5 seeds; frozen ImageNet is one deterministic encoder.
+
+### Pre-registered rule vs post-hoc detector
+
+**Pre-registered:** Mahalanobis on frozen ImageNet ResNet-50 ≥ 0.90 in all four cells (2 OOD sets × full / lesion-disjoint ID). **Not met:** pad_heldout gives 0.833 (full) and 0.848 (disjoint). kNN k=50 on the same features gives 0.913 / 0.915 on pad_heldout; kNN was not the pre-registered score and is reported for information only. The bar is not cleared.
+
+| OOD | ID set | Detector | Frozen ImageNet | Model λ=0 | Model λ=2 | Pre-registered |
+|---|---|---|---|---|---|---|
+| pad_heldout | full | Mahalanobis | 0.833 | 0.843 ± 0.023 | 0.427 ± 0.025 | yes (≥ 0.90) |
+| pad_heldout | full | kNN k=50 | 0.913 | 0.918 ± 0.009 | 0.440 ± 0.012 | no |
+| pad_heldout | lesion-disjoint | Mahalanobis | 0.847 | 0.890 ± 0.015 | 0.515 ± 0.026 | yes (≥ 0.90) |
+| pad_heldout | lesion-disjoint | kNN k=50 | 0.915 | 0.935 ± 0.008 | 0.521 ± 0.012 | no |
+| fitzpatrick17k | full | Mahalanobis | 0.988 | 0.764 ± 0.038 | 0.391 ± 0.068 | yes (≥ 0.90) |
+| fitzpatrick17k | full | kNN k=50 | 0.982 | 0.837 ± 0.030 | 0.423 ± 0.059 | no |
+| fitzpatrick17k | lesion-disjoint | Mahalanobis | 0.990 | 0.830 ± 0.027 | 0.490 ± 0.072 | yes (≥ 0.90) |
+| fitzpatrick17k | lesion-disjoint | kNN k=50 | 0.983 | 0.872 ± 0.024 | 0.509 ± 0.058 | no |
+
+**Reading — partial mitigation, below the pre-registered bar.** The frozen encoder never inverts (≥ 0.83 everywhere) and beats the model at λ=2 on both sets (pad_heldout 0.833 vs 0.427; Fitzpatrick 0.988 vs 0.391). Against the model before adversarial training (λ=0) it is higher on Fitzpatrick (0.988 vs 0.764) but not on pad_heldout (0.833 vs 0.843; within one s.d.). It is a partial mitigation, not a fix.
+
+### Per-class AUROC (ID class c vs OOD), Mahalanobis
+
+Within one ID class the score does not depend on the class mix of the ID set, unlike the pooled AUROC.
+
+**pad_heldout**
+
+| ID class | Model λ=2, full | Model λ=2, lesion-disjoint | Model λ=0, full | Frozen ImageNet, full |
+|---|---|---|---|---|
+| MEL | 0.388 ± 0.025 | 0.376 ± 0.024 | 0.885 ± 0.013 | 0.782 |
+| NV | 0.559 ± 0.029 | 0.610 ± 0.028 | 0.932 ± 0.010 | 0.839 |
+| BCC | 0.257 ± 0.031 | 0.216 ± 0.028 | 0.733 ± 0.063 | 0.872 |
+| AK | 0.158 ± 0.018 | 0.150 ± 0.022 | 0.499 ± 0.047 | 0.895 |
+| BKL | 0.270 ± 0.024 | 0.288 ± 0.029 | 0.764 ± 0.039 | 0.823 |
+| SCC | 0.142 ± 0.015 | 0.153 ± 0.015 | 0.444 ± 0.064 | 0.868 |
+| pooled (all 8) | 0.427 ± 0.025 | 0.515 ± 0.026 | 0.843 ± 0.023 | 0.833 |
+
+Non-NV classes (MEL, BCC, AK, BKL, SCC) at λ=2, both ID sets: 0.14–0.39.
+
+**fitzpatrick17k**
+
+| ID class | Model λ=2, full | Model λ=2, lesion-disjoint | Model λ=0, full | Frozen ImageNet, full |
+|---|---|---|---|---|
+| MEL | 0.343 ± 0.077 | 0.329 ± 0.078 | 0.799 ± 0.032 | 0.979 |
+| NV | 0.536 ± 0.075 | 0.594 ± 0.078 | 0.886 ± 0.022 | 0.989 |
+| BCC | 0.202 ± 0.059 | 0.162 ± 0.047 | 0.609 ± 0.087 | 0.993 |
+| AK | 0.109 ± 0.039 | 0.101 ± 0.035 | 0.360 ± 0.060 | 0.994 |
+| BKL | 0.218 ± 0.066 | 0.237 ± 0.071 | 0.627 ± 0.063 | 0.986 |
+| SCC | 0.095 ± 0.032 | 0.105 ± 0.039 | 0.318 ± 0.070 | 0.995 |
+| pooled (all 8) | 0.391 ± 0.068 | 0.490 ± 0.072 | 0.764 ± 0.038 | 0.988 |
+
+Non-NV classes (MEL, BCC, AK, BKL, SCC) at λ=2, both ID sets: 0.10–0.34.
+
+<!-- HEADLINE END -->
 
 Statistics fit on ISIC train only; no domain labels in the scoring path. Mahalanobis: class-conditional, pooled covariance + 1e-3 I. kNN: k=50, L2-normalised, mean distance. ID full = ISIC test (n=5067); ID lesion-disjoint = ISIC test rows whose `lesion_id` is absent from ISIC train and val (n=2026, of which 436 have null `lesion_id`, kept as their own group).
 
