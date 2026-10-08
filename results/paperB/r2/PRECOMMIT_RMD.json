@@ -1,0 +1,43 @@
+{
+  "item": "R2 RMD (Relative Mahalanobis Distance), one round, CPU on cached Phase 13 features",
+  "written_before_any_rmd_score_was_computed": true,
+  "score": {
+    "MD_k": "class-conditional Mahalanobis, paper standard: class means on ISIC train, shared pooled within-class covariance /(N-K) + 1e-3 I",
+    "MD_0": "single Gaussian on ISIC train ignoring labels: global mean, full covariance /(N-1) + 1e-3 I",
+    "RMD_k": "MD_k(z) - MD_0(z)",
+    "detector_score": "min_k RMD_k(z); higher = more OOD; AUROC with OOD as positives",
+    "fit_data": "ISIC train only; no OOD or domain data in any statistic"
+  },
+  "representations": {
+    "primary": "z_lesion_norm (16-d; the paper's z_lesion, the representation in Table 1)",
+    "secondary": "backbone_raw_lesion (1536-d, pre-projection)"
+  },
+  "evaluation_sets": {
+    "ood": ["pad_heldout", "fitzpatrick17k"],
+    "id_primary": "full ISIC test (n=5067), as in the paper",
+    "id_secondary": "lesion-disjoint ISIC test subset (n=2026)",
+    "runs": "all 27 Phase 13 runs: lambda in {0,0.25,0.5,1,2,4,8}, 5 seeds at {0,2,8}, 3 elsewhere",
+    "report": "mean +/- s.d. across seeds per lambda, MD and RMD side by side"
+  },
+  "baseline_already_known_from_item1": {
+    "MD_z_lesion_norm_id_full": {"pad_heldout": {"lambda0": 0.843, "lambda2": 0.427}, "fitzpatrick17k": {"lambda0": 0.764, "lambda2": 0.391}}
+  },
+  "prediction": {
+    "quantity": "f = (AUROC_RMD - AUROC_MD) / (0.5 - AUROC_MD) at lambda=2, mean over 5 seeds, z_lesion_norm, ID full: the fraction of the below-chance gap (the inversion) that RMD removes",
+    "f_pad_heldout": 0.5,
+    "f_fitzpatrick17k": 0.5,
+    "implied_AUROC_RMD_lambda2": {"pad_heldout": 0.464, "fitzpatrick17k": 0.446},
+    "band_for_correct": "0.25 <= f <= 0.75 on both OOD sets",
+    "collapse_not_repaired": "AUROC_RMD(lambda=2) <= 0.60 on both OOD sets (vs MD at lambda=0: 0.843 / 0.764)",
+    "rationale": "Item 2: at lambda=2 OOD collapses toward the NV centroid; NV is the majority class, so the label-free Gaussian MD_0 is also centred near NV and subtracting it partly cancels the NV pull on OOD. It removes no information the encoder discarded, so it cannot restore lambda=0 separability."
+  },
+  "outcomes": {
+    "f >= 1 (inversion fully removed) and AUROC_RMD > 0.60": "RMD repairs more than the inversion: report as contradicting the prediction",
+    "0.75 < f": "more removed than predicted",
+    "0.25 <= f <= 0.75": "as predicted: partial removal of the inversion, collapse remains",
+    "f < 0.25": "RMD does not remove the inversion",
+    "if AUROC_MD >= 0.5 for a cell": "f undefined; report AUROC only"
+  },
+  "required_caveat": "RMD applies only to Mahalanobis. kNN, MSP, Energy and cosine also collapsed with lambda and have no RMD analogue; whatever RMD recovers is a partial fix of the monitoring failure, not a fix.",
+  "standing_rules": "one round; no retuning of eps, representation or score after seeing results; failures reported as findings"
+}
