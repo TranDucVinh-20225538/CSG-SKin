@@ -1,0 +1,17 @@
+{
+  "written_before_any_item4_run": true,
+  "date": "2026-10-09",
+  "design": "lambda_adv in {0, 2}, seeds {42, 52, 62}; ISIC split grouped by lesion_id (StratifiedGroupKFold 5-fold, random_state 42, first fold = test; same again on train+val for val). Everything else identical to Phase 3. Phase 2 checkpoint reuse disabled.",
+  "null_lesion_id_policy": "each image with null lesion_id is its own group (kept). 2084 of 25331 ISIC images (8.23%).",
+  "comparison": "image-level Phase 3 runs at the same lambda and seeds {42, 52, 62}; not the five-seed mean",
+  "pattern_checks": {
+    "leakage_falls": "mean leakage bal acc lower at lambda=2 than lambda=0",
+    "id_bal_not_lower_by_0.02": "mean ID bal acc at lambda=2 minus lambda=0 > -0.02",
+    "id_ece_within_0.03": "|mean ID ECE lambda=2 - lambda=0| <= 0.03",
+    "ood_ece_rises": "mean OOD ECE (pad_heldout, 6-class restricted) higher at lambda=2",
+    "maha_above_0.5_at_0_below_at_2": "pad_heldout Maha AUROC > 0.5 at lambda=0 and < 0.5 at lambda=2",
+    "all_five_detectors_fall": "Maha, cosine, kNN, MSP, Energy on pad_heldout all lower at lambda=2",
+    "fitz_above_0.5_at_0_below_at_2": "Fitzpatrick17k Maha AUROC > 0.5 at lambda=0 and < 0.5 at lambda=2"
+  },
+  "decision": "pattern unchanged iff every check has the same truth value for the lesion-level and image-level runs; otherwise pattern changes"
+}

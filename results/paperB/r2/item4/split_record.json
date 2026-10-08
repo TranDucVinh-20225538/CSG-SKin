@@ -1,0 +1,50 @@
+{
+  "policy_null_lesion_id": "each image with null lesion_id is its own group (kept, not dropped)",
+  "train": {
+    "n": 16211,
+    "null_lesion_frac": 0.082043057183394,
+    "label_counts": {
+      "NV": 8240,
+      "MEL": 2895,
+      "BCC": 2128,
+      "BKL": 1679,
+      "AK": 554,
+      "SCC": 401,
+      "VASC": 162,
+      "DF": 152
+    }
+  },
+  "val": {
+    "n": 4053,
+    "null_lesion_frac": 0.07772020725388601,
+    "label_counts": {
+      "NV": 2060,
+      "MEL": 723,
+      "BCC": 531,
+      "BKL": 420,
+      "AK": 139,
+      "SCC": 101,
+      "VASC": 40,
+      "DF": 39
+    }
+  },
+  "test": {
+    "n": 5067,
+    "null_lesion_frac": 0.08663903690546675,
+    "label_counts": {
+      "NV": 2575,
+      "MEL": 904,
+      "BCC": 664,
+      "BKL": 525,
+      "AK": 174,
+      "SCC": 126,
+      "VASC": 51,
+      "DF": 48
+    }
+  },
+  "null_lesion_frac_all_isic": 0.0822707354624768,
+  "n_null_lesion_all_isic": 2084,
+  "lesion_overlap_train_test": 0,
+  "lesion_overlap_val_test": 0,
+  "lesion_overlap_train_val": 0
+}
