@@ -271,8 +271,15 @@ margin with a 0.70 minimum crop ratio, and resized to $224\times224$.
 
 \subsection{Splits and the PAD held-out set}
 
-ISIC was split $60/20/20$ into train/validation/test, stratified by label
-(\texttt{random\_state}~$=42$).
+ISIC was split at image level into train/validation/test ($16{,}211/4{,}053/5{,}067$
+images, $64/16/20$), stratified by label (\texttt{random\_state}~$=42$).
+\textbf{The image-level split leaks lesions.} By the ISIC \texttt{lesion\_id}
+field, $3{,}041$ of the $5{,}067$ test images ($60.0\%$) share a lesion with a
+training or validation image; the lesion-disjoint test subset is $2{,}026$ images.
+This is a lower bound: the $8.2\%$ of images with no \texttt{lesion\_id} were
+counted as singleton lesions. It agrees with the $60.8\%$ reported for the same
+dataset by~\cite{leakagepaper_TODO}.
+% TODO(R2 item 4): one sentence on whether the inversion survives a lesion-level split, with numbers.
 
 \textbf{PAD appears in training and would otherwise also be the OOD set.}
 The classification loss never sees PAD labels (\texttt{ignore\_index}$=-1$),
@@ -1012,11 +1019,8 @@ phenomenon viewed three ways, not three independent findings.
 sizes are large relative to seed variance, but formal testing across seven
 points at $n = 3$ is not claimed.
 
-\textbf{Splits.} ISIC splits are image-level, not patient-level; some patients
-may contribute images to both partitions. Because in-distribution accuracy is
-compared \emph{across $\lam$ under an identical split}, any inflation applies
-equally to every row and does not threaten the reported pattern, though absolute
-values may be optimistic. PAD splits are patient-level, disjoint by patient and
+\textbf{Splits.} ISIC splits are image-level; the lesion overlap this creates
+is quantified in the Methods. PAD splits are patient-level, disjoint by patient and
 by lesion.
 
 \textbf{Third-domain coverage.} 3{,}887 of 16{,}577 Fitzpatrick17k images were
