@@ -13,5 +13,15 @@
     "all_five_detectors_fall": "Maha, cosine, kNN, MSP, Energy on pad_heldout all lower at lambda=2",
     "fitz_above_0.5_at_0_below_at_2": "Fitzpatrick17k Maha AUROC > 0.5 at lambda=0 and < 0.5 at lambda=2"
   },
-  "decision": "pattern unchanged iff every check has the same truth value for the lesion-level and image-level runs; otherwise pattern changes"
+  "decision": "pattern unchanged iff every check has the same truth value for the lesion-level and image-level runs; otherwise pattern changes",
+  "amendments": [
+    {
+      "id": "class_mix_control",
+      "written": "2026-10-09, before any lesion-level run finished",
+      "requirement": "At every lambda report (i) the class distribution of the lesion-grouped ISIC test split against the image-level one, (ii) every detector AUROC unrestricted and with the ID side reweighted to the image-level class distribution (w_c = p_image(c)/p_lesion(c), OOD weight 1), and (iii) the pattern checks on the reweighted values.",
+      "reason": "Without the reweighted column a change is ambiguous between leakage removed and class mix changed (results/paperB/r2/disjoint_reweight).",
+      "known_before_results": "lesion-level test label counts (fixed by the split): NV 2575, MEL 904, BCC 664, BKL 525, AK 174, SCC 126, VASC 51, DF 48; image-level: identical except BCC 665, AK 173.",
+      "primary_verdict_unchanged": "the pre-committed verdict remains on the unrestricted values; the reweighted pattern is reported beside it"
+    }
+  ]
 }

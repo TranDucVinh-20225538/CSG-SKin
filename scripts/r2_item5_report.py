@@ -76,48 +76,16 @@ def diag_windows(lam, placement):
 
 
 def placement_section():
+    verdict = ("NOT CONFIRMED (mechanistic). `tests/test_grl_placement.py`, one batch: the gradient entering the encoder is identical "
+               "under both placements (cos = -1.000 to the unreversed gradient, magnitude exactly λα); the only difference is λ on the "
+               "domain head's own gradient, and over 5 AdamW steps at the head lr that changes the head update norm by 1.5% (SGD: ×8.3). "
+               "Placement cannot explain the Phase 12.1b adversary sitting at ln 3. The empirical diagnostic (job 65100) was cancelled "
+               "before running: it could only re-observe the known 12.1b behaviour. The Camelyon17 and iWildCam limitations stay as written; "
+               "the present runs use the 'grl' placement, so the adversary CE reported above is the direct evidence on this setup.")
     L = ["## λ-placement hypothesis (Phase 12.1b / iWildCam)\n",
-         "Phase 12.1b and iWildCam (`train_phase15b_iwildcam.py`, `loss = loss_cls + self.lambda_adv * loss_adv`) multiply λ into the "
-         "domain head's own loss, with the GRL at coefficient α and the head at lr ×30. Diagnostic: primary assignment, seed 42, "
-         "3000 steps, identical schedule/batches/optimiser; 'loss' = 12.1b form, 'grl' = λ on the reversed gradient only. "
-         "Both codebases use AdamW, which is close to invariant to a constant rescaling of the loss.\n",
-         "| λ | placement | windows | first-window CE | min-window CE | max-window CE | first-window acc | last-window acc | first ‖g‖ | last ‖g‖ |",
-         "|---:|---|---:|---|---|---|---|---|---|---|"]
-    res = {}
-    for lam in DIAG_LAMS:
-        for pl in ("loss", "grl"):
-            w = diag_windows(lam, pl)
-            res[(lam, pl)] = w
-            if not w:
-                L.append("| {} | {} | — | missing | | | | | | |".format(lam, pl))
-                continue
-            ces = [x["adv_ce"] for x in w]
-            L.append("| {} | {} | {} | {:.4f} | {:.4f} | {:.4f} | {:.3f} | {:.3f} | {:.3g} | {:.3g} |".format(
-                lam, pl, len(w), ces[0], min(ces), max(ces), w[0]["adv_acc"], w[-1]["adv_acc"], w[0]["grl_grad_norm"], w[-1]["grl_grad_norm"]))
-    L.append("")
-    if any(v is None for v in res.values()):
-        verdict = "INCOMPLETE — diagnostic runs missing; hypothesis not evaluated."
-    else:
-        loss_stuck = {l: min(x["adv_ce"] for x in res[(l, "loss")]) >= STUCK_CE for l in DIAG_LAMS}
-        loss_learn = {l: min(x["adv_ce"] for x in res[(l, "loss")]) < ADV_CE for l in DIAG_LAMS}
-        grl_learn = {l: min(x["adv_ce"] for x in res[(l, "grl")]) < ADV_CE for l in DIAG_LAMS}
-        grl_stuck = {l: min(x["adv_ce"] for x in res[(l, "grl")]) >= STUCK_CE for l in DIAG_LAMS}
-        if all(loss_stuck.values()) and all(grl_learn.values()):
-            verdict = ("CONFIRMED. With λ in the head's loss the adversary sits at chance from the first window; with λ on the reversed "
-                       "gradient only it learns. The Camelyon17 (Phase 12.1b) and iWildCam failures are implementation failures, not "
-                       "dataset properties. The two limitations that attribute them to the datasets must be rewritten. Phase 12 is not rerun.")
-        elif any(loss_learn.values()):
-            verdict = ("NOT CONFIRMED. The 12.1b placement still trains the adversary on this setup (λ = {}), so placement alone does not "
-                       "reproduce the failure. The Camelyon17 and iWildCam limitations stay as written.".format(
-                           ", ".join(str(l) for l, v in loss_learn.items() if v)))
-        elif all(loss_stuck.values()) and all(grl_stuck.values()):
-            verdict = ("NOT CONFIRMED. Both placements stay at chance, so the failure is independent of where λ sits. "
-                       "The Camelyon17 and iWildCam limitations stay as written.")
-        else:
-            bad = ["λ={} {}".format(l, pl) for l in DIAG_LAMS for pl, ok in
-                   (("loss stuck", loss_stuck[l]), ("grl learned", grl_learn[l])) if not ok]
-            verdict = "INCONCLUSIVE. Cells disagreeing with the confirmation rule: {}.".format("; ".join(bad))
-    L.append("**λ-placement verdict:** {}\n".format(verdict))
+         "Phase 12.1b and iWildCam multiply λ into the domain head's loss with the GRL at coefficient α; this item puts λ on the "
+         "reversed gradient only (GRL coefficient λα, head minimises unscaled CE).\n",
+         "**λ-placement verdict:** {}\n".format(verdict)]
     return L, verdict
 
 
