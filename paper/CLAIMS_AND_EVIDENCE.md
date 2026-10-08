@@ -113,7 +113,7 @@ it is 0.952 → 0.742 → 0.760. Compare like with like or state the partition.
 | H1 | Confidence on unseen domains overtakes in-distribution confidence | ID MSP 0.915 flat; PAD $0.489 \to 0.930$; crossing by $\lambda \approx 0.5$ | `phase13/` |
 | H2 | Out-of-domain calibration triples while ID calibration is flat | OOD ECE $0.247 \to 0.746$; ID ECE $\approx 0.10$ | same |
 | H3 | Cross-domain accuracy does not improve at any $\lambda$ | bal acc 0.249–0.291 (floor 0.167), none above $\lambda=0$'s 0.291, all below the control's 0.298; plain 0.245→0.184, under the 0.385 majority | `phase6_xfer/` |
-| H4 | Predictions collapse toward the benign majority class | nevus predictions 113 → 374 of 716; **AK recall 49/202 → 3/202** | same |
+| H4 | Predictions collapse toward the benign majority class | nevus predictions 113 → 426 of 716; **AK recall 49/202 → 3/202** | same |
 | H5 | Discrimination survives; the decision rule does not | macro AUC $0.605 \to 0.581$ | same |
 
 **H2 is not a new phenomenon** — Wang et al. (NeurIPS 2020) established that adaptation
