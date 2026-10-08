@@ -87,11 +87,13 @@ def main():
          "Seeds {42, 52, 62} at λ ∈ {0, 2} for both splits (matched; not the five-seed mean). Everything except the ISIC split is fixed. "
          "Detectors on z_lesion^norm, fit on ISIC train.\n",
          "Null `lesion_id` policy: each such image is its own group (kept). Affected: {} of {} ISIC images ({:.2%}); "
-         "train {:.2%}, val {:.2%}, test {:.2%}. Lesion overlap train/test, val/test, train/val: 0 / 0 / 0. "
-         "Image-level split for reference: 3041 of 5067 test images share a lesion with train or val.\n".format(
+         "train {:.2%}, val {:.2%}, test {:.2%}. Lesion overlap train/test, val/test, train/val: 0 / 0 / 0.\n".format(
              split["n_null_lesion_all_isic"], split["train"]["n"] + split["val"]["n"] + split["test"]["n"],
              split["null_lesion_frac_all_isic"], split["train"]["null_lesion_frac"], split["val"]["null_lesion_frac"],
              split["test"]["null_lesion_frac"]),
+         "**Image-level split (the paper's main table): 3041 of 5067 ISIC test images (60.0%) share a `lesion_id` with ISIC train "
+         "or val; the lesion-disjoint test set is 2026 images (436 of them with null `lesion_id`, each its own group).** "
+         "This belongs in the manuscript's Methods, not only in Limitations.\n",
          "## Table 1 columns, mean ± s.d. over 3 seeds\n",
          "| Split | λ | " + " | ".join(lab for _, lab in COLS) + " |",
          "|---|---:|" + "---|" * len(COLS)]

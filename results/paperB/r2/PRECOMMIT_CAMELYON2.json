@@ -12,8 +12,11 @@
     "A_labelled_ID": 3,
     "B_adversary_and_heldout_OOD": 0,
     "C_never_adversarially_seen": 2,
-    "unused": [1, 4],
-    "A_split": "patch-level, stratified by slide x label, random_state 42: 64% train / 16% checkpoint-select / 20% ID test (WILDS id_val convention; ID test shares slides with train)",
+    "unused": [
+      1,
+      4
+    ],
+    "A_split": "Slides 32 (smallest tumour-bearing slide, tumour frac > 0.2) and 30 (rng(42) choice among tumour-free slides 30,31,33-37) are withheld from A entirely and form the slide-disjoint ID set (19454 patches, tumour frac 0.113). The remaining 8 A slides are split patch-level, stratified by slide x label, random_state 42: 64% train / 16% checkpoint-select / 20% ID test (primary; shares slides with train).",
     "B_split": "by slide, GroupShuffleSplit test_size 0.3 random_state 42: B_adv slides [0,2,3,4,6,7,9] (38124 patches), B_heldout slides [1,5,8] (21312 patches). B labels never enter the classification loss.",
     "C": "hospital 2, all 85054 patches, never in any loss",
     "split_file": "results/paperB/r2/item5/split_camelyon2.npz"
@@ -39,16 +42,51 @@
     "detector_headroom": "at lambda=0, Mahalanobis AUROC on B_heldout outside [0.45, 0.55]"
   },
   "coarse_scan": {
-    "lambdas": [0, 0.1, 0.3, 1, 3, 10],
+    "lambdas": [
+      0,
+      0.1,
+      0.3,
+      1,
+      3,
+      10
+    ],
     "seed": 42
   },
   "dense_rule": {
     "lambda_star": "smallest coarse lambda > 0 at which adversary_learned AND leakage_moved both hold",
     "dense_set": "{0, lambda*/sqrt(3) (3 significant digits), lambda*, next coarse lambda above lambda* if any}",
-    "seeds": [42, 52, 62],
+    "seeds": [
+      42,
+      52,
+      62
+    ],
     "reuse": "seed-42 coarse runs are reused where the lambda coincides"
   },
   "stopping_rule": "If ANY gate fails (adversary, leakage movement, ID competence, detector headroom), report the negative and stop. No third design, no escalation to a fourth dataset.",
   "detectors": "Mahalanobis class-conditional shared cov + 1e-3 I, cosine, kNN k=50 (30k stratified bank), MSP, Energy; statistics fit on A train only. ID reference = A ID test.",
-  "report_columns": "leakage, ID balanced acc, ID ECE, OOD ECE (B_heldout), five detectors on B_heldout, hospital C Mahalanobis AUROC; per-epoch adversary logs; gate-by-gate pass/fail table"
+  "report_columns": "leakage, ID balanced acc, ID ECE, OOD ECE (B_heldout), five detectors on B_heldout, hospital C Mahalanobis AUROC; per-epoch adversary logs; gate-by-gate pass/fail table",
+  "amendment_1_2026-10-09": {
+    "written_before_any_item5_number": true,
+    "fallback_hospital_assignment": {
+      "A": 3,
+      "B": 2,
+      "C": 1,
+      "B_split": "by slide, GroupShuffleSplit test_size 0.3 random_state 42: B_adv slides [20,22,23,24,26,27,29], B_heldout slides [21,25,28]",
+      "split_file": "results/paperB/r2/item5/split_camelyon2_fallback.json"
+    },
+    "rule": "If Mahalanobis AUROC at lambda=0 on B_heldout (coarse scan, seed 42) lies inside [0.45, 0.55], the detector-headroom gate fails. That is NOT reported as a negative: switch to A=3, B=2, C=1 and rerun the coarse scan once. If the fallback also fails the headroom gate, or any gate fails under either assignment otherwise, report the negative and stop.",
+    "reason": "Hospitals 0 and 3 are both WILDS training hospitals; the A-B shift may be too small for the sweep to move (forward BCN->HAM failure mode). Hospital 2 carries the largest shift."
+  },
+  "amendment_2_2026-10-09": {
+    "slide_disjoint_id": "Every ID-side number (ID accuracy, balanced accuracy, ECE, all detector AUROCs with the ID reference, site-probe leakage) is also reported with the slide-disjoint ID set (A slides 30, 32) as the ID reference, beside the patch-level ID test. Gates use the patch-level ID test (primary). Under a patch-level split no test patch is slide-disjoint, so the clean set is withheld slides rather than a subset; it is tumour-poor (11.3%), so balanced accuracy is the comparable ID metric there."
+  },
+  "amendment_3_2026-10-09": {
+    "lambda_placement_hypothesis": "Phase 12.1b (and iWildCam, same codebase: train_phase15b_iwildcam.py line 142, loss = loss_cls + lambda_adv * loss_adv, GRL coefficient alpha, domain head lr x30) multiplies lambda into the domain head's own loss. Hypothesis: this, not the dataset, caused the constant-uniform adversary (CE = ln K from epoch 1).",
+    "a_priori_caveat": "Both codebases use AdamW, which is close to invariant to a constant rescaling of the loss; multiplying the head loss by lambda barely changes the head's step size. The hypothesis is therefore tested empirically, not inferred from the code.",
+    "diagnostic": "Primary assignment, seed 42, lambda in {10, 100}, placement in {loss (12.1b form), grl (Item 5 form)}, 3000 steps each, identical schedule, batches and optimiser; adversary CE, accuracy and reversed-gradient norm logged every 200 steps. No evaluation. Phase 12 is not rerun.",
+    "confirmed_iff": "for both lambda: every 200-step window of the 'loss' run has adversary CE >= 0.65 (stuck at chance, ln 2 = 0.693) AND the 'grl' run reaches a window with adversary CE < 0.60",
+    "rejected_if": "the 'loss' run reaches a window with CE < 0.60 at either lambda (placement does not reproduce the failure on this setup), or both placements stay >= 0.65 (failure independent of placement)",
+    "otherwise": "inconclusive; state which cell disagrees",
+    "if_confirmed": "Report states plainly that the Camelyon17 and iWildCam failures are implementation failures, and the two limitations that attribute them to the datasets need rewriting."
+  }
 }
