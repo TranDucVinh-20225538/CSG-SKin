@@ -1,0 +1,54 @@
+{
+  "written_before_any_item1_or_item2_number": true,
+  "date": "2026-10-09",
+  "scoring": {
+    "mahalanobis": "class-conditional, 8 ISIC classes, shared pooled within-class covariance /(N-K) + 1e-3 I, score = min squared distance (paper standard)",
+    "knn": "k=50, L2-normalised features, score = mean Euclidean distance to the 50 neighbours (paper standard)",
+    "fit_split": "ISIC train only (16211 images). No domain labels anywhere in the scoring path.",
+    "id_sets": {
+      "full": "ISIC test, image-level split (5067)",
+      "lesion_disjoint": "ISIC test rows whose lesion_id does not occur in ISIC train or val (2026). Rows with null lesion_id are their own group and are kept (436 of the 2026)."
+    },
+    "ood_sets": ["pad_heldout (716 images / 412 patients)", "fitzpatrick17k (3887 images, never seen by any branch)"]
+  },
+  "item1": {
+    "representations": {
+      "imagenet_resnet50": "frozen torchvision IMAGENET1K_V1, fc=Identity, 2048-d, lambda-independent baseline",
+      "z_context": "context branch projector output, 64-d",
+      "backbone_raw_lesion": "lesion EfficientNet-B3 encoder output before the projector, 1536-d",
+      "z_lesion_norm": "lesion_bn(projector), 16-d (the paper's z_lesion)"
+    },
+    "intervals": {
+      "seeded_representations": "mean ± s.d. across seeds",
+      "imagenet": "cluster bootstrap 2000: ID resampled by lesion group, pad_heldout by patient, Fitzpatrick by image (anti-conservative)"
+    },
+    "decision_rule": {
+      "primary_test": "frozen ImageNet ResNet-50, Mahalanobis",
+      "stays_high": "Mahalanobis AUROC >= 0.90 on BOTH pad_heldout and fitzpatrick17k, against BOTH the full and the lesion-disjoint ID set",
+      "degrades": "any of those four cells < 0.90",
+      "knn": "reported alongside; does not change the verdict",
+      "z_context": "secondary only; cannot change the verdict"
+    }
+  },
+  "item2": {
+    "representations": ["z_lesion_norm (primary)", "backbone_raw_lesion (repeat)"],
+    "ood_primary": "pad_heldout; fitzpatrick17k reported as secondary",
+    "nearest_centroid": "argmin over the 8 class-conditional Mahalanobis distances of the standard score (score not redefined)",
+    "criteria_on_primary": {
+      "C1_nv_fraction_rises": "mean NV-nearest fraction of pad_heldout at lambda=0.25 and at lambda=2 each exceeds lambda=0 by more than 2*sqrt(sd_l^2/n_l + sd_0^2/n_0)",
+      "C2_inversion_concentrated": "at every lambda>0, mean AUROC(NV-nearest OOD vs full ID) < 0.5 AND < mean AUROC(non-NV-nearest OOD vs full ID)",
+      "C3_class_matched_distance_shrinks": "ratio r = median Mahalanobis distance(OOD -> NV centroid) / median distance(ID test images labelled NV -> NV centroid); mean r at lambda=0.25 and at lambda=2 each below lambda=0 by more than 2*sqrt(sd_l^2/n_l + sd_0^2/n_0)"
+    },
+    "verdict": {
+      "all_three": "mechanism identified",
+      "some": "partial support; name the failing criterion",
+      "none": "seventh refuted account"
+    },
+    "part_c": {
+      "object": "Table 4 reweighting, Phase 2.5 runB_orth1 features (5 seeds, OOD = pad_full), weights p_PAD(c)/p_ISIC(c)",
+      "decomposition": "weighted AUROC = sum_c w_c * AUROC(OOD vs ID class c), w_c = class weight share; exact",
+      "nv_only_counterfactual": "change only the NV share from ISIC to PAD level, renormalise the remaining classes in their ISIC proportions",
+      "consistent_in_magnitude_if": "the NV-only counterfactual reproduces at least half of the observed drop 0.409 -> 0.240"
+    }
+  }
+}
