@@ -91,7 +91,7 @@ accuracy did not degrade ($0.692 \to 0.707$). Confidence on never-seen-domain
 images rose from $0.489$ to $0.930$, overtaking in-distribution confidence,
 while cross-domain accuracy did not improve at any $\lam$ and predictions
 collapsed toward the benign majority class (actinic keratosis recall
-$0.244 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
+$0.245 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
 gradient-reversal training but not in moment-matching objectives, which reduced
 leakage comparably without collapsing any detector. In a same-modality shift between
 two hospitals the collapse reproduced ($k$-NN $0.658 \to 0.486$) but the inversion did
@@ -513,7 +513,7 @@ accuracy falls $0.245 \to 0.184$, beneath the $0.385$ majority-class rate throug
 Macro AUC is roughly preserved ($0.605 \to 0.581$), so discrimination survives while
 the decision rule does not. Predictions collapse toward the benign majority class:
 nevus predictions rise from $113$ to $426$ of $716$ images, and \textbf{actinic
-keratosis recall falls from $0.244$ to $0.016$} ($49/\nAK \to 3/\nAK$ images, mean over
+keratosis recall falls from $0.245$ to $0.016$} ($49/\nAK \to 3/\nAK$ images, mean over
 five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$,
 $6/\nSCC \to 1/\nSCC$) but the count is too small to carry a claim on its own, and
 melanoma ($n = \nMEL$) supports none.
@@ -864,7 +864,7 @@ that argument, and we cannot currently explain it.
 The results compose into a concrete failure sequence. A model is trained with
 invariance to acquisition domain, as recommended, and deployed at a new site. On
 images from that site the model increasingly predicts the benign majority class,
-with actinic keratosis recall falling from $0.244$ to $0.016$ ($49$ of $\nAK$
+with actinic keratosis recall falling from $0.245$ to $0.016$ ($49$ of $\nAK$
 images correctly recalled, then $3$). It does so with higher confidence than on
 its own test data. The monitor that should flag those images for human review
 scores them as more routine than familiar ones --- not merely failing to flag
