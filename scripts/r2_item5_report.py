@@ -174,14 +174,15 @@ def coarse(assign):
     learned = {lam: c[lam]["adv_min_ce"] < ADV_CE for lam in COARSE if lam > 0}
     moved = {lam: c[lam]["leakage"] <= base["leakage"] - LEAK_DROP for lam in COARSE if lam > 0}
     star = next((lam for lam in COARSE if lam > 0 and learned[lam] and moved[lam]), None)
-    id_ok = base["id_acc"] > ID_MIN and star is not None and c[star]["id_acc"] > ID_MIN
+    id_ok = base["id_acc"] > ID_MIN and (star is None or c[star]["id_acc"] > ID_MIN)
     gates = [
         ("Adversary learned", "some λ>0 with min window CE < 0.60",
          "; ".join("λ={:g}: {:.3f}".format(l, c[l]["adv_min_ce"]) for l in learned), "yes" if any(learned.values()) else "no"),
         ("Leakage moved", "site probe ≤ λ=0 − 0.10 where the adversary learned (λ=0: {:.3f})".format(base["leakage"]),
          "; ".join("λ={:g}: {:.3f}".format(l, c[l]["leakage"]) for l in moved), "yes" if star is not None else "no"),
         ("ID competence", "A test acc > 0.85 at λ=0 and λ*",
-         "λ=0: {:.3f}; λ*: {}".format(base["id_acc"], "{:.3f}".format(c[star]["id_acc"]) if star is not None else "—"),
+         "; ".join("λ={:g}: {:.3f}".format(l, c[l]["id_acc"]) for l in COARSE) +
+         ("" if star is not None else " (no λ*: evaluated at λ=0; λ* part not evaluable)"),
          "yes" if id_ok else "no"),
         ("Detector headroom", "λ=0 Maha on B_heldout outside [0.45, 0.55]", "{:.3f}".format(base["Maha"]), "yes" if head_ok else "no"),
     ]
