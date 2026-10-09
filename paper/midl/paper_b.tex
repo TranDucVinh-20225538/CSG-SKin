@@ -735,8 +735,8 @@ falls from $49.8$ to $17.5$, while the reference distance is unchanged
 
 The account is consistent with a result we had already reported and could not
 previously explain: reweighting the in-distribution set to PAD's class mix,
-which is $10.6\%$ nevus against ISIC's $50.8\%$, \emph{strengthens} the
-inversion to $0.240$ (Table~\ref{tab:refuted}). Thinning nevus from the
+which is $12.3\%$ nevus against ISIC's $50.8\%$, \emph{strengthens} the
+inversion to $0.259 \pm 0.022$ (Table~\ref{tab:refuted}). Thinning nevus from the
 reference makes images sitting in the nevus region look comparatively more
 typical. The whole pattern replicates on the pre-projection backbone, a
 different representation of $1536$ dimensions (nevus-nearest fraction
@@ -758,18 +758,29 @@ result, and we use it only to locate where the effect sits. \textbf{The content 
 in the two per-class values: $0.559$ against nevus, and $0.296$ weighted over the
 other five classes.} Out-of-domain images are close to indistinguishable from
 nevi, which occupy the centroid they are drawn toward, and inverted against
-everything else; the identity then fixes the pooled figure, reproducing the
-measured value to within the weight of the two classes our per-class table omits
-($\sum_c w_c \mathrm{AUROC}_c = 0.424$ against a measured $0.427$ at $\lam = 2$;
-$0.835$ against $0.843$ at $\lam = 0$).
+everything else; the identity then fixes the pooled figure. With all eight
+in-distribution classes present it holds to machine precision at every weight,
+both out-of-domain sets and both in-distribution sets (largest residual
+$2.2 \times 10^{-16}$); restricted to the six classes PAD shares, the discrepancy
+reaches $0.010$, which is simply the weight of the two omitted classes.
 
 One consequence is worth stating, with its scope. \textbf{For the pooled score,
 holding the model and the out-of-domain set fixed, the inversion is deeper the
-\emph{less} the in-distribution set is dominated by its majority class}: writing
-$p$ for the nevus share, the pooled value is $0.559p + 0.296(1-p)$, which returns
-above chance only at $p = 0.776$. This is a statement about one metric under a
-fixed model, not a general rule about deployments. Against the reweighting result
-of $0.240$ the identity gives \pending{A4}.
+\emph{less} the in-distribution set is dominated by its majority class.} Reducing
+the identity to two groups --- nevus against the rest, with the non-nevus classes
+held at their ISIC proportions --- gives $0.559p + 0.296(1-p)$ for a nevus share
+$p$, which returns above chance only at $p = 0.776$. This is a statement about one
+metric under one fixed model, not a rule about deployments, and the two-group
+reduction is a convenience: the full eight-class form is what we verify.
+
+The identity also accounts for the reweighting result exactly. Reweighting the
+in-distribution set to PAD's class mix changes only the weights $w_c$ --- the
+model, every image's score and the out-of-domain set are untouched, so no
+per-class AUROC moves --- and evaluating $\sum_c w_c \mathrm{AUROC}_c$ under PAD's
+mix reproduces the measured reweighted AUROC to $8 \times 10^{-7}$. A two-group
+reduction does not: it gives $0.306$ against the same measurement, which is why
+the magnitude appeared not to follow from the mechanism until the full form was
+used.
 
 \subsection{What the phenomenon is not}
 
@@ -1169,7 +1180,7 @@ before its test.}
 Explanation & Test & Result \\
 \midrule
 Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
-Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.432$ vs $0.427$ on \texttt{pad\_heldout}; reweighting \emph{strengthens} the inversion to $0.240$ \\
+Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.432$ vs $0.427$ on \texttt{pad\_heldout}; reweighting \emph{strengthens} the inversion to $0.259$ \\
 Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.391$ at $\lam = 2$ against $0.764$ at $\lam = 0$, same model and data \\
 Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
 Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam = 0$; the adversary \emph{decompresses} it \\

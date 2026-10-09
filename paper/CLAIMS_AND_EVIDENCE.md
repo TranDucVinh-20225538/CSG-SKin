@@ -175,9 +175,17 @@ chance. This is also why pooled and per-class AUROC disagree at $\lambda = 0$ (N
    lumped at *ISIC* proportions gives 0.3285 against a measured 0.240, while the full
    six-class identity with PAD held-out weights (NV 88, BCC 276, AK 202, BKL 75, SCC 66,
    MEL 9 of 716) gives **0.2585**, so the lumping accounts for 0.070 of the 0.0885.
-   A residual of 0.0185 is open and is R3 A4's job; the manuscript carries
-   `\pending{A4}` there. Note the 0.240 comes from **Phase 2.5b**, not Item 2, and
-   `manuscript_number_check.md` mis-sources it to `recall_BKL`.
+   **R3 A1 and A4 closed both.** With all eight ID classes the identity holds to
+   $2.2\times10^{-16}$ at every $\lambda$, both OOD sets and both ID sets; the
+   six-class restriction is what leaves a $0.010$ discrepancy. And my $0.2585$ was
+   itself a dataset mismatch — **the published $0.240$ is a `pad_full`
+   measurement**, while $0.2585$ combined `pad_heldout` weights with `pad_heldout`
+   per-class values. Under the exact protocol the identity reproduces the measured
+   reweighted AUROC to $8\times10^{-7}$. The manuscript now reports the
+   `pad_heldout` figure, $0.259 \pm 0.022$, so the table stays on one partition.
+   Provenance for the record: the number is Phase 2.5b
+   (`phase2_5/per_seed/runB_orth1_s*.json`, `pad_full`, n=5, exact `sample_weight`),
+   not Item 2, and `manuscript_number_check.md` mis-sources it to `recall_BKL`.
 
 ## N. Is there a usable monitor? — partial, below the pre-registered bar
 
