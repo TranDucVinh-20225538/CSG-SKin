@@ -1,6 +1,6 @@
 # R2 Item 5 — exploratory seeds (Camelyon17, two hospitals)
 
-Commit: `79d03f5`. **Exploratory.** Not pre-registered; the Item 5 verdict (negative, leakage gate failed) is unchanged. Same code, recipe and primary assignment (A = hospital 3, B = hospital 0, held-out slides of B for detection).
+Commit: `7a7333f`. **Exploratory.** Not pre-registered; the Item 5 verdict (negative, leakage gate failed) is unchanged. Same code, recipe and primary assignment (A = hospital 3, B = hospital 0, held-out slides of B for detection).
 
 **Question:** does Mahalanobis drop below 0.5 at λ = 1 on every seed while the probe stays ≈ 0.95?
 

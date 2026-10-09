@@ -65,8 +65,10 @@ def main():
           "- Detectors: ID = A patch-level test, OOD = held-out slides of hospital B. Probe: logistic ID-vs-B_heldout on encoder features, 70/30, 3 probe seeds.",
           "- Adversary CE at chance is ln 2 = 0.693."]
     (OUT / "EXPLORATORY_REPORT.md").write_text("\n".join(L) + "\n")
-    (OUT / "exploratory_results.json").write_text(json.dumps({"table": {str(k): v for k, v in tab.items()}, "answer": answer,
-                                                              "missing": missing, "commit": C.git_head()}, indent=1) + "\n")
+    agg = {str(lam): {c: dict(zip(("mean", "sd", "n"), C.mean_sd([r[c] for r in rs]))) for c in COLS} for lam, rs in tab.items()}
+    (OUT / "exploratory_results.json").write_text(json.dumps({"table": {str(k): v for k, v in tab.items()}, "aggregate": agg,
+                                                              "answer": answer, "missing": missing, "commit": C.git_head()},
+                                                             indent=1) + "\n")
     print(answer)
 
 

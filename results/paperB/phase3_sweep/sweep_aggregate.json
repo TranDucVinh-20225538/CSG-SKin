@@ -1,0 +1,2014 @@
+{
+ "source": "phase3_sweep/*_s*/summary.json",
+ "by_group": {
+  "runB_orth1_ladv0": {
+   "seed": {
+    "mean": 62.0,
+    "sd": 15.811388300841896,
+    "n": 5
+   },
+   "lambda_adv": {
+    "mean": 0.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "id_acc": {
+    "mean": 0.8084862837971187,
+    "sd": 0.00477869203154709,
+    "n": 5
+   },
+   "id_balanced_acc": {
+    "mean": 0.6918177699299206,
+    "sd": 0.015424756997317317,
+    "n": 5
+   },
+   "id_ece": {
+    "mean": 0.10667346582943009,
+    "sd": 0.004875846687066684,
+    "n": 5
+   },
+   "pad_acc": {
+    "mean": 0.18268059181897303,
+    "sd": 0.01695844284800728,
+    "n": 5
+   },
+   "pad_balanced_acc": {
+    "mean": 0.21661133362219717,
+    "sd": 0.019345940273389012,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.9295625942684765,
+    "sd": 0.016374561925154803,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.9148172514619883,
+    "sd": 0.020674211634090178,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.9643258962623952,
+    "sd": 0.011086339370758857,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.004389556811854123,
+    "sd": 0.0027597547640181154,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.00501713204621256,
+    "sd": 0.0021383368585150726,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.004316523939253193,
+    "sd": 0.002467536714726164,
+    "n": 5
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9984313725490196,
+    "sd": 0.0007358256963891659,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9980418891431478,
+    "sd": 0.001006632638556903,
+    "n": 5
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999595728451564,
+    "sd": 5.028818206418993e-05,
+    "n": 5
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0006514784840230549,
+    "sd": 0.0002893229489393971,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0009381202694296803,
+    "sd": 0.00039529005017549035,
+    "n": 5
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 6.102734117002083e-05,
+    "sd": 9.091509844355696e-05,
+    "n": 5
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.8717775113105125,
+    "sd": 0.026416324693137178,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.880490092343209,
+    "sd": 0.02607356855704886,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.9111043995292413,
+    "sd": 0.012115139932338287,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.9511319744001805,
+    "sd": 0.010652434589492067,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.9788963913895146,
+    "sd": 0.006696193940245386,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.9889083749314184,
+    "sd": 0.0071730313966028485,
+    "n": 5
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999987524940762,
+    "sd": 2.4557178666684495e-06,
+    "n": 5
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.8430554866465341,
+    "sd": 0.022710190918478645,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.8518234859525544,
+    "sd": 0.0224417058700329,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.8781495557297575,
+    "sd": 0.010280253873122733,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.9183102846438727,
+    "sd": 0.009263300824861423,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.950886803977539,
+    "sd": 0.00958795724306658,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.9692625521916929,
+    "sd": 0.010223577749773621,
+    "n": 5
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9995823562034106,
+    "sd": 0.00041769497131841283,
+    "n": 5
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.8628285585856228,
+    "sd": 0.025209575470414514,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.8715584089784718,
+    "sd": 0.024888602021661946,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.9008365019272642,
+    "sd": 0.011032504337773695,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.9409053925440867,
+    "sd": 0.009872240022973077,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.9701694165029338,
+    "sd": 0.007434687542624181,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.9827871362729848,
+    "sd": 0.008037985216280304,
+    "n": 5
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9998690137020324,
+    "sd": 0.00012973957411233387,
+    "n": 5
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.763858801958566,
+    "sd": 0.03821985596893755,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.7729287765858945,
+    "sd": 0.03809389863906051,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.8004302419612184,
+    "sd": 0.027311859029686778,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.8374971319487379,
+    "sd": 0.029931948377416702,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.8720681382466967,
+    "sd": 0.0221349670867778,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.92620707576362,
+    "sd": 0.024146178866777893,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9985542736845183,
+    "sd": 0.000981901604491392,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   }
+  },
+  "runB_orth1_ladv0p25": {
+   "seed": {
+    "mean": 62.0,
+    "sd": 15.811388300841896,
+    "n": 5
+   },
+   "lambda_adv": {
+    "mean": 0.25,
+    "sd": 0.0,
+    "n": 5
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "id_acc": {
+    "mean": 0.81049930925597,
+    "sd": 0.004353913221785298,
+    "n": 5
+   },
+   "id_balanced_acc": {
+    "mean": 0.6919782045079922,
+    "sd": 0.010672175245266619,
+    "n": 5
+   },
+   "id_ece": {
+    "mean": 0.09992559324043472,
+    "sd": 0.0047205627234836465,
+    "n": 5
+   },
+   "pad_acc": {
+    "mean": 0.18912097476066145,
+    "sd": 0.020527887531218224,
+    "n": 5
+   },
+   "pad_balanced_acc": {
+    "mean": 0.272103749420561,
+    "sd": 0.01783075669824041,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.7092307692307692,
+    "sd": 0.0108195376615572,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.5709623696923468,
+    "sd": 0.026643988651624192,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.6976819539791508,
+    "sd": 0.02769683349297202,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.005087756433530435,
+    "sd": 0.0016030207118050907,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.00364311134029401,
+    "sd": 0.0017735386990803427,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.009460948209606131,
+    "sd": 0.005486435013547726,
+    "n": 5
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9986123680241328,
+    "sd": 0.00043191013765539373,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9982526061530639,
+    "sd": 0.0006059964531668445,
+    "n": 5
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999915458937197,
+    "sd": 5.797993516903754e-06,
+    "n": 5
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0005097195233025791,
+    "sd": 0.00018313391672542773,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0005268150375898494,
+    "sd": 0.0002655940444340542,
+    "n": 5
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 7.383391602713552e-06,
+    "sd": 5.522222241109284e-06,
+    "n": 5
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4999993637719788,
+    "sd": 0.026210797457368953,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.5064493542489887,
+    "sd": 0.026356932404881038,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.5384773491596925,
+    "sd": 0.025433622072677457,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.5299251970497982,
+    "sd": 0.022502439075149414,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.5409068669462578,
+    "sd": 0.0359094274818837,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.5383139508337956,
+    "sd": 0.02559778542886937,
+    "n": 5
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999989770451425,
+    "sd": 1.466549202498474e-06,
+    "n": 5
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.509227634612395,
+    "sd": 0.022683225207023823,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.5159154904236274,
+    "sd": 0.022787329363127745,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.5482164691458479,
+    "sd": 0.022520546666474857,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.5387684359195717,
+    "sd": 0.02018279234801883,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.5469079970848727,
+    "sd": 0.028341125217465436,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.5431066998312004,
+    "sd": 0.017568512513727926,
+    "n": 5
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9998576615255024,
+    "sd": 9.876729813543154e-05,
+    "n": 5
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.5028723460717766,
+    "sd": 0.02501130529268403,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.5093964032996556,
+    "sd": 0.025144942121423357,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.5415172802806192,
+    "sd": 0.024488553939563517,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.5326839841339283,
+    "sd": 0.021718670158050762,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.5427821929401031,
+    "sd": 0.033434760109453475,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.5398120794925029,
+    "sd": 0.023066339795150378,
+    "n": 5
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9999549466221389,
+    "sd": 3.0918827600444336e-05,
+    "n": 5
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4599169127009115,
+    "sd": 0.05651291805254898,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4666035977309061,
+    "sd": 0.05688997725022943,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.522506435376452,
+    "sd": 0.05256669594397643,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.49569606226906765,
+    "sd": 0.04707389149732208,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.5270598624685962,
+    "sd": 0.031106312079551734,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.5841807913907334,
+    "sd": 0.05430182227022804,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9991016849645671,
+    "sd": 0.0005568122989373707,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   }
+  },
+  "runB_orth1_ladv0p5": {
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "lambda_adv": {
+    "mean": 0.5,
+    "sd": 0.0,
+    "n": 3
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.8132359713176763,
+    "sd": 0.0004966669584416097,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.7011817588886102,
+    "sd": 0.016265772862888852,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.095672476792381,
+    "sd": 0.005184131525862691,
+    "n": 3
+   },
+   "pad_acc": {
+    "mean": 0.18073687264287788,
+    "sd": 0.0026230260110277222,
+    "n": 3
+   },
+   "pad_balanced_acc": {
+    "mean": 0.26877134030361555,
+    "sd": 0.006484666552756513,
+    "n": 3
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.6992458521870285,
+    "sd": 0.011115432686511524,
+    "n": 3
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.5545411687431138,
+    "sd": 0.028682962350709235,
+    "n": 3
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.7116965420798372,
+    "sd": 0.020721469997095857,
+    "n": 3
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.003316080151298253,
+    "sd": 0.00285362731005193,
+    "n": 3
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.004343249674064697,
+    "sd": 0.000947691012733049,
+    "n": 3
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.0079961096969264,
+    "sd": 0.0007123902207877228,
+    "n": 3
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9988436400201106,
+    "sd": 0.0004848492086974822,
+    "n": 3
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9984559072802779,
+    "sd": 0.0007955281612009906,
+    "n": 3
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999720315280954,
+    "sd": 3.357967812793395e-05,
+    "n": 3
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0006733184939875926,
+    "sd": 0.0005563892845031001,
+    "n": 3
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0009169402907384061,
+    "sd": 0.0009273184855738756,
+    "n": 3
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 4.3578192569269967e-05,
+    "sd": 6.204234023753064e-05,
+    "n": 3
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.44119257075292223,
+    "sd": 0.007256798126212606,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.44706144609953763,
+    "sd": 0.007188329065795904,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.47607998874915985,
+    "sd": 0.009843859969570308,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.47501752953740567,
+    "sd": 0.013505609168326426,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.49123728968193675,
+    "sd": 0.01666984134971526,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.4975586101153935,
+    "sd": 0.02296844695767068,
+    "n": 3
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999961327316363,
+    "sd": 6.698305292418941e-06,
+    "n": 3
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4653409673503544,
+    "sd": 0.014609718627971054,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.47143946584022284,
+    "sd": 0.014861056769053872,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.5024379092966171,
+    "sd": 0.0181283844656977,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.4978828392280867,
+    "sd": 0.01822523654314356,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.5166716189283342,
+    "sd": 0.013514701668991633,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.5246215149032757,
+    "sd": 0.01906034544967877,
+    "n": 3
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9999280589817121,
+    "sd": 1.1321230030374979e-05,
+    "n": 3
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4487164138633406,
+    "sd": 0.00788927799875534,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4546568009148892,
+    "sd": 0.007926898612415408,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.4842936390115418,
+    "sd": 0.012052872932161366,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.48214122232923046,
+    "sd": 0.014039235033332447,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.4991619264432754,
+    "sd": 0.01544813627713807,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.5059916011434592,
+    "sd": 0.021716849224948147,
+    "n": 3
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9999749512608792,
+    "sd": 7.327818491709041e-06,
+    "n": 3
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4487160870338663,
+    "sd": 0.02547387959278316,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4551836582185329,
+    "sd": 0.025982844049725572,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.4993310884469691,
+    "sd": 0.045802722050893155,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.48616490320334393,
+    "sd": 0.034538575380138735,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.5141021807648871,
+    "sd": 0.041407087428111,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.5813314094351537,
+    "sd": 0.009982493866923138,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.999044837594889,
+    "sd": 0.00033023146143120645,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  },
+  "runB_orth1_ladv1": {
+   "seed": {
+    "mean": 62.0,
+    "sd": 15.811388300841896,
+    "n": 5
+   },
+   "lambda_adv": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "id_acc": {
+    "mean": 0.8122755081902506,
+    "sd": 0.002299000255523714,
+    "n": 5
+   },
+   "id_balanced_acc": {
+    "mean": 0.6954790616633597,
+    "sd": 0.011611072015865921,
+    "n": 5
+   },
+   "id_ece": {
+    "mean": 0.0971318100968926,
+    "sd": 0.005004333764513718,
+    "n": 5
+   },
+   "pad_acc": {
+    "mean": 0.18311575282854659,
+    "sd": 0.008861698975577193,
+    "n": 5
+   },
+   "pad_balanced_acc": {
+    "mean": 0.2666170984734139,
+    "sd": 0.012426517348026165,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.7230467571644043,
+    "sd": 0.014404578580977542,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.5908984871599288,
+    "sd": 0.03458189091089799,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.7216550661072972,
+    "sd": 0.03645177651917055,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.004427598992875086,
+    "sd": 0.0024184820263080343,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.0056088878851824715,
+    "sd": 0.0013678052939651425,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.009073145833248067,
+    "sd": 0.0014434612128869657,
+    "n": 5
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9986123680241328,
+    "sd": 0.000652239768037393,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9981470887363336,
+    "sd": 0.0008211795618710971,
+    "n": 5
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999742562929061,
+    "sd": 4.041548463758083e-05,
+    "n": 5
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0007121056353247852,
+    "sd": 0.0001776414817277127,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0010990387347134456,
+    "sd": 0.00025798311286131707,
+    "n": 5
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 3.143192755817627e-05,
+    "sd": 4.826799694772392e-05,
+    "n": 5
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4394944157892334,
+    "sd": 0.03135800556149533,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4449387584968578,
+    "sd": 0.03177950637844599,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.45568893888892636,
+    "sd": 0.03348667306937733,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.4504087952161641,
+    "sd": 0.029225002212742195,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.45572315797641566,
+    "sd": 0.015027613447706182,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.45347098563197524,
+    "sd": 0.016208962588390424,
+    "n": 5
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999995508978674,
+    "sd": 3.8043817601926776e-07,
+    "n": 5
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4567199526346951,
+    "sd": 0.025673371474631616,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.462361009904731,
+    "sd": 0.02604247988048176,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.48065652105363543,
+    "sd": 0.02106951596268909,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.4731470915431541,
+    "sd": 0.019878717848155727,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.4820230145105861,
+    "sd": 0.010930136047436895,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.4791229370017188,
+    "sd": 0.01882212777116446,
+    "n": 5
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9998447617567059,
+    "sd": 0.00010005312741230149,
+    "n": 5
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.44486193106369437,
+    "sd": 0.02916388972477545,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4503676444825649,
+    "sd": 0.029567252903845907,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.4634674302552927,
+    "sd": 0.029223641685034593,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.45749281645102713,
+    "sd": 0.02556141219399306,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.4639157654702874,
+    "sd": 0.01169964065995967,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.46146193659445595,
+    "sd": 0.015718368211533808,
+    "n": 5
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9999513224274272,
+    "sd": 3.1202223506175844e-05,
+    "n": 5
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4140094942841813,
+    "sd": 0.08577664128735012,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4196515636787558,
+    "sd": 0.08664805031145142,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.4725324541039447,
+    "sd": 0.06741491053922363,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.45840525738230936,
+    "sd": 0.07169438869464027,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.48617910277557297,
+    "sd": 0.04401910242628239,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.5509184897673465,
+    "sd": 0.04373570253001148,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9993818464172577,
+    "sd": 0.00020342157038774346,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   }
+  },
+  "runB_orth1_ladv2": {
+   "seed": {
+    "mean": 62.0,
+    "sd": 15.811388300841896,
+    "n": 5
+   },
+   "lambda_adv": {
+    "mean": 2.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "id_acc": {
+    "mean": 0.8114071442668245,
+    "sd": 0.005311391794528063,
+    "n": 5
+   },
+   "id_balanced_acc": {
+    "mean": 0.7073289930706467,
+    "sd": 0.008704407249992064,
+    "n": 5
+   },
+   "id_ece": {
+    "mean": 0.09890524889205557,
+    "sd": 0.00242031070753792,
+    "n": 5
+   },
+   "pad_acc": {
+    "mean": 0.17754569190600522,
+    "sd": 0.0040237689314418885,
+    "n": 5
+   },
+   "pad_balanced_acc": {
+    "mean": 0.25811041077872254,
+    "sd": 0.01623932747466314,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.716500754147813,
+    "sd": 0.01371703450610708,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.5838974701245868,
+    "sd": 0.027141045847961186,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.7285299071955251,
+    "sd": 0.021808990451836388,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.004169270084771272,
+    "sd": 0.004144059131920766,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.006167036970263308,
+    "sd": 0.004635173952556595,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.005464113400605617,
+    "sd": 0.0037664571273594966,
+    "n": 5
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9987330316742081,
+    "sd": 0.00048406656216836065,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9983403254513095,
+    "sd": 0.0008406737649339029,
+    "n": 5
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999496567505721,
+    "sd": 7.21265505283185e-05,
+    "n": 5
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0005693590046288919,
+    "sd": 0.0003517315794079198,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0008468453120293259,
+    "sd": 0.0003725023232129759,
+    "n": 5
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 4.415227980698154e-05,
+    "sd": 6.0892276738029505e-05,
+    "n": 5
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.40656458824694736,
+    "sd": 0.020589583921289123,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4120523435957256,
+    "sd": 0.020732311888725014,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.426963717787214,
+    "sd": 0.018586543346944553,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.4167724177438257,
+    "sd": 0.006097636053854441,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.42972930119458674,
+    "sd": 0.02722693806717344,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.43307897935053347,
+    "sd": 0.040524518248981234,
+    "n": 5
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999643712308167,
+    "sd": 7.86944693640529e-05,
+    "n": 5
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4265173215228784,
+    "sd": 0.02465136103899507,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4322898112163657,
+    "sd": 0.025055487679098713,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.4528394926972975,
+    "sd": 0.017278312983080996,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.44019352960827707,
+    "sd": 0.012093703567214911,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.45423724328633186,
+    "sd": 0.026842678329194587,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.45762955171649616,
+    "sd": 0.03650068362994207,
+    "n": 5
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9996710558956904,
+    "sd": 0.00010933646561860185,
+    "n": 5
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4127799926588587,
+    "sd": 0.021362425601557183,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4183564368091556,
+    "sd": 0.02158608807046152,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.4350166257785363,
+    "sd": 0.01748202663805408,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.42405804001832365,
+    "sd": 0.007714688720173767,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.43734483594335477,
+    "sd": 0.026972907686922277,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.4407058127789106,
+    "sd": 0.03916672631985599,
+    "n": 5
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9998729814223092,
+    "sd": 5.376545495787431e-05,
+    "n": 5
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.39075298639090317,
+    "sd": 0.06771283903440758,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.3965685558658512,
+    "sd": 0.06846940408823679,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.4447273425727361,
+    "sd": 0.05282369408473924,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.4229626072120592,
+    "sd": 0.05934483592069985,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.44351373102865643,
+    "sd": 0.034829989219063016,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.4981197515423503,
+    "sd": 0.050493342295595586,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9990136493091875,
+    "sd": 0.0002121066934788754,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   }
+  },
+  "runB_orth1_ladv4": {
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "lambda_adv": {
+    "mean": 4.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.8076442339319782,
+    "sd": 0.006768840764419712,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.6864702236125647,
+    "sd": 0.014580694629068006,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.10032408088631917,
+    "sd": 0.0069513535766539914,
+    "n": 3
+   },
+   "pad_acc": {
+    "mean": 0.1836379460400348,
+    "sd": 0.013405502002392832,
+    "n": 3
+   },
+   "pad_balanced_acc": {
+    "mean": 0.2721053490375272,
+    "sd": 0.010859952016192227,
+    "n": 3
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.6992961287078933,
+    "sd": 0.016937517420069097,
+    "n": 3
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.548202707856598,
+    "sd": 0.03522558136988328,
+    "n": 3
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.7084656538689719,
+    "sd": 0.02257002642177233,
+    "n": 3
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.0026791850824716417,
+    "sd": 0.0016468343678330893,
+    "n": 3
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.005169718652079956,
+    "sd": 0.00512842506153676,
+    "n": 3
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.00479156086000062,
+    "sd": 0.001076252537933734,
+    "n": 3
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9986425339366516,
+    "sd": 0.0006574508210468564,
+    "n": 3
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9983097084498688,
+    "sd": 0.0007813230365390078,
+    "n": 3
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999349521145859,
+    "sd": 5.2502807800382974e-05,
+    "n": 3
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0008001157737134737,
+    "sd": 0.00048381180533569994,
+    "n": 3
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.001146269168995683,
+    "sd": 0.0006023090796473067,
+    "n": 3
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 0.00010445461342062992,
+    "sd": 8.776440076321634e-05,
+    "n": 3
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.43726899828850496,
+    "sd": 0.03958530257477548,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4430235089062202,
+    "sd": 0.04004469929362184,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.46424639705734966,
+    "sd": 0.014146006264446384,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.45731600264837197,
+    "sd": 0.03477234149575856,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.469136162859736,
+    "sd": 0.034869137162984586,
+    "n": 3
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.4708682208760802,
+    "sd": 0.04727914411807993,
+    "n": 3
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999827844182518,
+    "sd": 2.9710290564582657e-05,
+    "n": 3
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4554310231721745,
+    "sd": 0.0391860256304475,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4615306115564192,
+    "sd": 0.03960329472302746,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.4968934894389115,
+    "sd": 0.0192210603322446,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.48345457645942874,
+    "sd": 0.032975718220898495,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.498568897444633,
+    "sd": 0.028101243584101706,
+    "n": 3
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.5057071829661309,
+    "sd": 0.03566694536489561,
+    "n": 3
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9998030120776383,
+    "sd": 0.0001016859338267374,
+    "n": 3
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4429284374985866,
+    "sd": 0.03845267834871207,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.44879050699644535,
+    "sd": 0.03889814890481521,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.47441850998190827,
+    "sd": 0.014432107974266396,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.4654596781428825,
+    "sd": 0.033192996669762116,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.47830595978495066,
+    "sd": 0.03211600794767916,
+    "n": 3
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.4817213482073032,
+    "sd": 0.04326882225661479,
+    "n": 3
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.9999267718003756,
+    "sd": 3.945484335921753e-05,
+    "n": 3
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4311033539812715,
+    "sd": 0.036052497995260224,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.43740721856482123,
+    "sd": 0.03666984862448784,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.48536316049102896,
+    "sd": 0.02973938978395,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.46668662730491084,
+    "sd": 0.033012969188238005,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.48785661552908205,
+    "sd": 0.03125736633324441,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.5639570057939163,
+    "sd": 0.05033412458289005,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9984099356251646,
+    "sd": 0.001729770545586347,
+    "n": 3
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  },
+  "runB_orth1_ladv8": {
+   "seed": {
+    "mean": 62.0,
+    "sd": 15.811388300841896,
+    "n": 5
+   },
+   "lambda_adv": {
+    "mean": 8.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "lambda_orth": {
+    "mean": 1.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "id_acc": {
+    "mean": 0.8003552397868561,
+    "sd": 0.0034820792891208747,
+    "n": 5
+   },
+   "id_balanced_acc": {
+    "mean": 0.6792906212739119,
+    "sd": 0.012564614792258148,
+    "n": 5
+   },
+   "id_ece": {
+    "mean": 0.09958206118388316,
+    "sd": 0.008326570607666927,
+    "n": 5
+   },
+   "pad_acc": {
+    "mean": 0.1794604003481288,
+    "sd": 0.009141488965528391,
+    "n": 5
+   },
+   "pad_balanced_acc": {
+    "mean": 0.2624559284627957,
+    "sd": 0.008220607615240199,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_mean": {
+    "mean": 0.7390950226244344,
+    "sd": 0.02155264203162866,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_mean": {
+    "mean": 0.6246974319857614,
+    "sd": 0.044977287853882365,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_mean": {
+    "mean": 0.7590510106788712,
+    "sd": 0.04138349988770628,
+    "n": 5
+   },
+   "leakage.z_lesion.acc_std": {
+    "mean": 0.00435468974050797,
+    "sd": 0.0017116922567711615,
+    "n": 5
+   },
+   "leakage.z_lesion.bal_acc_std": {
+    "mean": 0.006872901948741008,
+    "sd": 0.0038389359744431385,
+    "n": 5
+   },
+   "leakage.z_lesion.auroc_std": {
+    "mean": 0.010056612837985274,
+    "sd": 0.004442407840676335,
+    "n": 5
+   },
+   "leakage.z_lesion.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "leakage.z_context.acc_mean": {
+    "mean": 0.9986726998491704,
+    "sd": 0.0004933763871431694,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_mean": {
+    "mean": 0.9982964658021866,
+    "sd": 0.0006302920486822652,
+    "n": 5
+   },
+   "leakage.z_context.auroc_mean": {
+    "mean": 0.9999558225273327,
+    "sd": 7.129314147825249e-05,
+    "n": 5
+   },
+   "leakage.z_context.acc_std": {
+    "mean": 0.0007897160615481173,
+    "sd": 0.0005111045961811191,
+    "n": 5
+   },
+   "leakage.z_context.bal_acc_std": {
+    "mean": 0.0010796524217733328,
+    "sd": 0.0008519506079187421,
+    "n": 5
+   },
+   "leakage.z_context.auroc_std": {
+    "mean": 6.91071198464486e-05,
+    "sd": 0.00012419838842345923,
+    "n": 5
+   },
+   "leakage.z_context.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.47449287012939384,
+    "sd": 0.027152000136965008,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.4804635635195466,
+    "sd": 0.027280248468916517,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.cosine_max": {
+    "mean": 0.4881567027121029,
+    "sd": 0.02849688932979652,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.knn_k50": {
+    "mean": 0.47978631221530355,
+    "sd": 0.037481727517031056,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.MSP": {
+    "mean": 0.45256456030281456,
+    "sd": 0.05619362616475753,
+    "n": 5
+   },
+   "ood.pad_adv.z_lesion.Energy_T1": {
+    "mean": 0.44707320140209683,
+    "sd": 0.05319458713234942,
+    "n": 5
+   },
+   "ood.pad_adv.z_context_maha_unrestricted": {
+    "mean": 0.9999926896152866,
+    "sd": 1.293970971704879e-05,
+    "n": 5
+   },
+   "ood.pad_adv.n_ood": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4942916042350934,
+    "sd": 0.026645239765674063,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.5004918348941606,
+    "sd": 0.026643773745730147,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.cosine_max": {
+    "mean": 0.5161016678188256,
+    "sd": 0.023933394793370456,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.knn_k50": {
+    "mean": 0.5065746924176923,
+    "sd": 0.038393910104553196,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.MSP": {
+    "mean": 0.48588947213484557,
+    "sd": 0.055097863615282246,
+    "n": 5
+   },
+   "ood.pad_heldout.z_lesion.Energy_T1": {
+    "mean": 0.48450597193142614,
+    "sd": 0.04269251457276347,
+    "n": 5
+   },
+   "ood.pad_heldout.z_context_maha_unrestricted": {
+    "mean": 0.9998154340772201,
+    "sd": 6.0502780006754774e-05,
+    "n": 5
+   },
+   "ood.pad_heldout.n_ood": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4806600002095506,
+    "sd": 0.026406068830457784,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.486702178537943,
+    "sd": 0.026487507197338545,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.cosine_max": {
+    "mean": 0.49686271842428953,
+    "sd": 0.02602655446204144,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.knn_k50": {
+    "mean": 0.4881317241908813,
+    "sd": 0.03741866617035461,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.MSP": {
+    "mean": 0.4629452284556653,
+    "sd": 0.05511702064918923,
+    "n": 5
+   },
+   "ood.pad_full.z_lesion.Energy_T1": {
+    "mean": 0.45873536559622385,
+    "sd": 0.04914371846083351,
+    "n": 5
+   },
+   "ood.pad_full.z_context_maha_unrestricted": {
+    "mean": 0.999937461170876,
+    "sd": 1.4356250458839176e-05,
+    "n": 5
+   },
+   "ood.pad_full.n_ood": {
+    "mean": 2298.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted": {
+    "mean": 0.4737251775526189,
+    "sd": 0.06048456969901416,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.id_6class_restricted": {
+    "mean": 0.480334040094837,
+    "sd": 0.06096821221575501,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.cosine_max": {
+    "mean": 0.5222502033339816,
+    "sd": 0.047430628088793766,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.knn_k50": {
+    "mean": 0.5043952279485764,
+    "sd": 0.07332692642017062,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.MSP": {
+    "mean": 0.4992649766603205,
+    "sd": 0.08063377571928157,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_lesion.Energy_T1": {
+    "mean": 0.5456239871698149,
+    "sd": 0.03890084268289625,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.z_context_maha_unrestricted": {
+    "mean": 0.9994146560605509,
+    "sd": 0.00022391259255251597,
+    "n": 5
+   },
+   "ood.fitzpatrick17k.n_ood": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_adv": {
+    "mean": 1582.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_pad_heldout": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 5
+   },
+   "n_fitz": {
+    "mean": 3887.0,
+    "sd": 0.0,
+    "n": 5
+   }
+  }
+ }
+}

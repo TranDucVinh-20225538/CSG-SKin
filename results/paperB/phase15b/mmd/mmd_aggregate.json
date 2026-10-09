@@ -1,0 +1,753 @@
+{
+ "source": "phase15b/mmd/*_s*/summary.json",
+ "by_group": {
+  "mmd_w10000": {
+   "weight": {
+    "mean": 10000.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.33664908119169623,
+    "sd": 0.055891855671068115,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.6557463324781265,
+    "sd": 0.026437772467402112,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.033751777706118945,
+    "sd": 0.010960371240114978,
+    "n": 3
+   },
+   "id_mean_confidence": {
+    "mean": 0.6276673475901285,
+    "sd": 0.03692045098488434,
+    "n": 3
+   },
+   "ood_ece_pad_heldout": {
+    "mean": 0.26739770083842557,
+    "sd": 0.09421641479487355,
+    "n": 3
+   },
+   "ood_mean_confidence_pad_heldout": {
+    "mean": 0.5007173220316569,
+    "sd": 0.07288903420673899,
+    "n": 3
+   },
+   "leakage.acc_mean": {
+    "mean": 0.8618903971845149,
+    "sd": 0.0242555947263947,
+    "n": 3
+   },
+   "leakage.bal_acc_mean": {
+    "mean": 0.83571595050428,
+    "sd": 0.027504521205702657,
+    "n": 3
+   },
+   "leakage.auroc_mean": {
+    "mean": 0.9222648105771677,
+    "sd": 0.02042052074331902,
+    "n": 3
+   },
+   "leakage.acc_std": {
+    "mean": 0.005539108696907082,
+    "sd": 0.004325653311786003,
+    "n": 3
+   },
+   "leakage.bal_acc_std": {
+    "mean": 0.0070040503389106135,
+    "sd": 0.0033122849113949447,
+    "n": 3
+   },
+   "leakage.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.n_domains": {
+    "mean": 2.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.chance_floor_balanced": {
+    "mean": 0.5,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood_pad_full.mahalanobis_classcond": {
+    "mean": 0.6654965613377206,
+    "sd": 0.02359366542213259,
+    "n": 3
+   },
+   "ood_pad_full.cosine_max": {
+    "mean": 0.6299326764322969,
+    "sd": 0.040523350367909175,
+    "n": 3
+   },
+   "ood_pad_full.knn_k50": {
+    "mean": 0.7375327272511788,
+    "sd": 0.029360128975485345,
+    "n": 3
+   },
+   "ood_pad_full.MSP": {
+    "mean": 0.6711514931138297,
+    "sd": 0.05715671006484369,
+    "n": 3
+   },
+   "ood_pad_full.Energy_T1": {
+    "mean": 0.6944166475008028,
+    "sd": 0.04543085937179401,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_images": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_patients": {
+    "mean": 412.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.accuracy": {
+    "mean": 0.2378957169459963,
+    "sd": 0.027451625675615585,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.balanced_accuracy": {
+    "mean": 0.290207033988423,
+    "sd": 0.035862080042942335,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.MEL": {
+    "mean": 0.4074074074074074,
+    "sd": 0.12830005981991688,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.NV": {
+    "mean": 0.8825757575757575,
+    "sd": 0.026243194054073875,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BCC": {
+    "mean": 0.26570048309178745,
+    "sd": 0.07194865221549024,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.AK": {
+    "mean": 0.01485148514851485,
+    "sd": 0.008574508948360779,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BKL": {
+    "mean": 0.15555555555555556,
+    "sd": 0.07343427396381469,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.SCC": {
+    "mean": 0.015151515151515152,
+    "sd": 0.015151515151515152,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.MEL": {
+    "mean": 9.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.NV": {
+    "mean": 88.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BCC": {
+    "mean": 276.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.AK": {
+    "mean": 202.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BKL": {
+    "mean": 75.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.SCC": {
+    "mean": 66.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  },
+  "mmd_w1000": {
+   "weight": {
+    "mean": 1000.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.45045453683092745,
+    "sd": 0.030330409808464697,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.7209394118807974,
+    "sd": 0.008472503624892724,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.02599960750446893,
+    "sd": 0.0033831683981947686,
+    "n": 3
+   },
+   "id_mean_confidence": {
+    "mean": 0.7025880416234335,
+    "sd": 0.004282539678727859,
+    "n": 3
+   },
+   "ood_ece_pad_heldout": {
+    "mean": 0.195087826306094,
+    "sd": 0.036631556272005227,
+    "n": 3
+   },
+   "ood_mean_confidence_pad_heldout": {
+    "mean": 0.49266812205314636,
+    "sd": 0.03534693788778312,
+    "n": 3
+   },
+   "leakage.acc_mean": {
+    "mean": 0.9327802916038209,
+    "sd": 0.003222015076925502,
+    "n": 3
+   },
+   "leakage.bal_acc_mean": {
+    "mean": 0.918950228832952,
+    "sd": 0.005546923021337923,
+    "n": 3
+   },
+   "leakage.auroc_mean": {
+    "mean": 0.9773767904059666,
+    "sd": 0.0012043306267822476,
+    "n": 3
+   },
+   "leakage.acc_std": {
+    "mean": 0.003436047703537767,
+    "sd": 0.0010616013494190737,
+    "n": 3
+   },
+   "leakage.bal_acc_std": {
+    "mean": 0.003846335309924901,
+    "sd": 0.001005988531226807,
+    "n": 3
+   },
+   "leakage.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.n_domains": {
+    "mean": 2.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.chance_floor_balanced": {
+    "mean": 0.5,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood_pad_full.mahalanobis_classcond": {
+    "mean": 0.7805924831224459,
+    "sd": 0.013702350995087027,
+    "n": 3
+   },
+   "ood_pad_full.cosine_max": {
+    "mean": 0.7798872251373229,
+    "sd": 0.026475290060016685,
+    "n": 3
+   },
+   "ood_pad_full.knn_k50": {
+    "mean": 0.827705325373388,
+    "sd": 0.04137055397120097,
+    "n": 3
+   },
+   "ood_pad_full.MSP": {
+    "mean": 0.7536440905673091,
+    "sd": 0.025241650745686742,
+    "n": 3
+   },
+   "ood_pad_full.Energy_T1": {
+    "mean": 0.6328517419809253,
+    "sd": 0.01434096295068045,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_images": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_patients": {
+    "mean": 412.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.accuracy": {
+    "mean": 0.3626629422718808,
+    "sd": 0.008183610722182015,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.balanced_accuracy": {
+    "mean": 0.39397525622127433,
+    "sd": 0.02000624742140496,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.MEL": {
+    "mean": 0.4444444444444444,
+    "sd": 0.11111111111111113,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.NV": {
+    "mean": 0.7613636363636364,
+    "sd": 0.04097217358481802,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BCC": {
+    "mean": 0.45169082125603865,
+    "sd": 0.019954965751036596,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.AK": {
+    "mean": 0.1122112211221122,
+    "sd": 0.03715620544289671,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BKL": {
+    "mean": 0.23555555555555555,
+    "sd": 0.040734006177385255,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.SCC": {
+    "mean": 0.3585858585858586,
+    "sd": 0.07626095389162373,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.MEL": {
+    "mean": 9.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.NV": {
+    "mean": 88.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BCC": {
+    "mean": 276.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.AK": {
+    "mean": 202.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BKL": {
+    "mean": 75.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.SCC": {
+    "mean": 66.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  },
+  "mmd_w3000": {
+   "weight": {
+    "mean": 3000.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.3824826943103659,
+    "sd": 0.01714425282238488,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.672258404052365,
+    "sd": 0.007993098242257243,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.032229101694725766,
+    "sd": 0.01627149144946079,
+    "n": 3
+   },
+   "id_mean_confidence": {
+    "mean": 0.6469266215960184,
+    "sd": 0.029712622514351226,
+    "n": 3
+   },
+   "ood_ece_pad_heldout": {
+    "mean": 0.14203259111616198,
+    "sd": 0.0707411258003215,
+    "n": 3
+   },
+   "ood_mean_confidence_pad_heldout": {
+    "mean": 0.4239990214506785,
+    "sd": 0.06397528372188549,
+    "n": 3
+   },
+   "leakage.acc_mean": {
+    "mean": 0.9105580693815987,
+    "sd": 0.025428540210901778,
+    "n": 3
+   },
+   "leakage.bal_acc_mean": {
+    "mean": 0.8927271378930417,
+    "sd": 0.02835812371642997,
+    "n": 3
+   },
+   "leakage.auroc_mean": {
+    "mean": 0.9623048563437578,
+    "sd": 0.01928726482968647,
+    "n": 3
+   },
+   "leakage.acc_std": {
+    "mean": 0.0028004935926123956,
+    "sd": 0.0010491558097706101,
+    "n": 3
+   },
+   "leakage.bal_acc_std": {
+    "mean": 0.00289041683908911,
+    "sd": 0.001113953486088385,
+    "n": 3
+   },
+   "leakage.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.n_domains": {
+    "mean": 2.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.chance_floor_balanced": {
+    "mean": 0.5,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood_pad_full.mahalanobis_classcond": {
+    "mean": 0.7475644753113615,
+    "sd": 0.04465319994229011,
+    "n": 3
+   },
+   "ood_pad_full.cosine_max": {
+    "mean": 0.701853560891538,
+    "sd": 0.02025722185594524,
+    "n": 3
+   },
+   "ood_pad_full.knn_k50": {
+    "mean": 0.8118273733651691,
+    "sd": 0.02920737135151847,
+    "n": 3
+   },
+   "ood_pad_full.MSP": {
+    "mean": 0.7788810530707492,
+    "sd": 0.04655338108721699,
+    "n": 3
+   },
+   "ood_pad_full.Energy_T1": {
+    "mean": 0.7057803586853483,
+    "sd": 0.06333652707764098,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_images": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_patients": {
+    "mean": 412.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.accuracy": {
+    "mean": 0.30819366852886404,
+    "sd": 0.028118564004732775,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.balanced_accuracy": {
+    "mean": 0.34696491267484236,
+    "sd": 0.02558441643447544,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.MEL": {
+    "mean": 0.4074074074074074,
+    "sd": 0.06415002990995841,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.NV": {
+    "mean": 0.7689393939393939,
+    "sd": 0.06461637162587872,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BCC": {
+    "mean": 0.35144927536231885,
+    "sd": 0.07668844379897363,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.AK": {
+    "mean": 0.10066006600660066,
+    "sd": 0.0767459798959306,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BKL": {
+    "mean": 0.23111111111111113,
+    "sd": 0.046825127790456625,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.SCC": {
+    "mean": 0.2222222222222222,
+    "sd": 0.06308078786261008,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.MEL": {
+    "mean": 9.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.NV": {
+    "mean": 88.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BCC": {
+    "mean": 276.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.AK": {
+    "mean": 202.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BKL": {
+    "mean": 75.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.SCC": {
+    "mean": 66.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  },
+  "mmd_w300": {
+   "weight": {
+    "mean": 300.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "seed": {
+    "mean": 52.0,
+    "sd": 10.0,
+    "n": 3
+   },
+   "id_balanced_acc": {
+    "mean": 0.6089922530348651,
+    "sd": 0.03366843147032913,
+    "n": 3
+   },
+   "id_acc": {
+    "mean": 0.7734359581606474,
+    "sd": 0.020680928897490507,
+    "n": 3
+   },
+   "id_ece": {
+    "mean": 0.01975690574385164,
+    "sd": 0.002882981613829637,
+    "n": 3
+   },
+   "id_mean_confidence": {
+    "mean": 0.7834982872009277,
+    "sd": 0.02688593949404167,
+    "n": 3
+   },
+   "ood_ece_pad_heldout": {
+    "mean": 0.34380544026276477,
+    "sd": 0.026155469027238323,
+    "n": 3
+   },
+   "ood_mean_confidence_pad_heldout": {
+    "mean": 0.6063669522603353,
+    "sd": 0.043962981070174094,
+    "n": 3
+   },
+   "leakage.acc_mean": {
+    "mean": 0.9429864253393664,
+    "sd": 0.006422222882667781,
+    "n": 3
+   },
+   "leakage.bal_acc_mean": {
+    "mean": 0.930898275277566,
+    "sd": 0.007016281616248122,
+    "n": 3
+   },
+   "leakage.auroc_mean": {
+    "mean": 0.9818492562929063,
+    "sd": 0.00267105108315219,
+    "n": 3
+   },
+   "leakage.acc_std": {
+    "mean": 0.004176597176747571,
+    "sd": 0.0030366082846163423,
+    "n": 3
+   },
+   "leakage.bal_acc_std": {
+    "mean": 0.005079096381280971,
+    "sd": 0.0027116254906343917,
+    "n": 3
+   },
+   "leakage.n_probe_seeds": {
+    "mean": 3.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.n_domains": {
+    "mean": 2.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "leakage.chance_floor_balanced": {
+    "mean": 0.5,
+    "sd": 0.0,
+    "n": 3
+   },
+   "ood_pad_full.mahalanobis_classcond": {
+    "mean": 0.7961933101945964,
+    "sd": 0.028050263060923966,
+    "n": 3
+   },
+   "ood_pad_full.cosine_max": {
+    "mean": 0.835730454726508,
+    "sd": 0.013394508206266061,
+    "n": 3
+   },
+   "ood_pad_full.knn_k50": {
+    "mean": 0.9141800139230911,
+    "sd": 0.009175342458714951,
+    "n": 3
+   },
+   "ood_pad_full.MSP": {
+    "mean": 0.738680818316829,
+    "sd": 0.012592990064143763,
+    "n": 3
+   },
+   "ood_pad_full.Energy_T1": {
+    "mean": 0.6036655952676834,
+    "sd": 0.0438635277771342,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_images": {
+    "mean": 716.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.n_patients": {
+    "mean": 412.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.accuracy": {
+    "mean": 0.34404096834264436,
+    "sd": 0.029340691353051625,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.balanced_accuracy": {
+    "mean": 0.3893628891874695,
+    "sd": 0.013604277698013024,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.MEL": {
+    "mean": 0.4444444444444444,
+    "sd": 0.11111111111111113,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.NV": {
+    "mean": 0.7537878787878788,
+    "sd": 0.03471648253754421,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BCC": {
+    "mean": 0.3357487922705314,
+    "sd": 0.06934723294664537,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.AK": {
+    "mean": 0.20462046204620463,
+    "sd": 0.036490667306098984,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.BKL": {
+    "mean": 0.28444444444444444,
+    "sd": 0.020367003088692607,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.per_class_recall.SCC": {
+    "mean": 0.31313131313131315,
+    "sd": 0.08747731351357967,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.MEL": {
+    "mean": 9.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.NV": {
+    "mean": 88.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BCC": {
+    "mean": 276.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.AK": {
+    "mean": 202.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.BKL": {
+    "mean": 75.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   "xfer_pad_heldout_6class.class_counts.SCC": {
+    "mean": 66.0,
+    "sd": 0.0,
+    "n": 3
+   }
+  }
+ }
+}

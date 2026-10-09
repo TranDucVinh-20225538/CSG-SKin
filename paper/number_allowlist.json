@@ -1,0 +1,27 @@
+[
+  {
+    "written": "0.167",
+    "context": "floor of",
+    "reason": "chance floor of the six-class task, 1/6"
+  },
+  {
+    "written": "0.25",
+    "context": "chance floor by",
+    "reason": "a lambda value, not a measurement"
+  },
+  {
+    "written": "1.4",
+    "context": "seed standard deviations",
+    "reason": "derived 0.040/0.028 from r2/item4/item4_aggregate.json; pending B1 (changes at n=5)"
+  },
+  {
+    "written": "0.040",
+    "context": "seed standard deviations",
+    "reason": "derived 0.504-0.464, lesion-level id_bal lambda 0 vs 2 (item4_aggregate.json); pending B1 (changes at n=5)"
+  },
+  {
+    "written": "0.10",
+    "context": "pre-committed as the threshold",
+    "reason": "pre-committed threshold, PRECOMMIT_CAMELYON2.json leakage_moved"
+  }
+]
