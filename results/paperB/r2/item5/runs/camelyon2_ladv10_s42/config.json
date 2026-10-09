@@ -1,0 +1,29 @@
+{
+  "lambda_adv": 10.0,
+  "seed": 42,
+  "assign": "primary",
+  "adv_placement": "grl",
+  "max_steps": 0,
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "adv_lr_multiplier": 30.0,
+  "cls_lr_multiplier": 0.2,
+  "num_workers": 6,
+  "split_only": false,
+  "skip_done": true,
+  "tag": "camelyon2_ladv10_s42",
+  "n_batches_per_epoch": 4415,
+  "hospitals": [
+    3,
+    0,
+    2
+  ],
+  "a_withheld_slides": [
+    32,
+    30
+  ],
+  "adversary": "lambda on reversed gradient only; head minimises unscaled CE",
+  "grl_schedule": "alpha = max(0.2, 2/(1+exp(-20 p^0.5))-1)"
+}
