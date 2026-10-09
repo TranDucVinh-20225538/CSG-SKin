@@ -1,0 +1,286 @@
+[
+  {
+    "id": "frozen_in_fitz",
+    "written": "0.988",
+    "label": "fitzpatrick",
+    "file": "r2/item1/headline.json",
+    "key": [
+      "imagenet",
+      "Mahalanobis|fitzpatrick17k|full|pooled"
+    ],
+    "note": "the 0.833/0.988 swap lives here; the label field is the check"
+  },
+  {
+    "id": "frozen_in_pad",
+    "written": "0.833",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "key": [
+      "imagenet",
+      "Mahalanobis|pad_heldout|full|pooled"
+    ]
+  },
+  {
+    "id": "frozen_in_pad_knn",
+    "written": "0.913",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "key": [
+      "imagenet",
+      "kNN k=50|pad_heldout|full|pooled"
+    ]
+  },
+  {
+    "id": "maha_pad_l0",
+    "written": "0.843",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "0.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|pooled"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "maha_pad_l2",
+    "written": "0.427",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|pooled"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "maha_pad_l2_sd",
+    "written": "0.025",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|pooled"
+    ],
+    "stat": "sd"
+  },
+  {
+    "id": "maha_fitz_l0",
+    "written": "0.764",
+    "label": "fitzpatrick",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "0.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|fitzpatrick17k|full|pooled"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "maha_fitz_l2",
+    "written": "0.391",
+    "label": "fitzpatrick",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|fitzpatrick17k|full|pooled"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "maha_pad_l2_disjointID",
+    "written": "0.515",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|disjoint|pooled"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "perclass_pad_ak_l0",
+    "written": "0.499",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "0.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|AK"
+    ],
+    "stat": "mean",
+    "note": "AK already at chance before adversarial training"
+  },
+  {
+    "id": "perclass_pad_scc_l0",
+    "written": "0.444",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "0.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|SCC"
+    ],
+    "stat": "mean"
+  },
+  {
+    "id": "perclass_pad_heldout_min",
+    "written": "0.14",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|pooled"
+    ],
+    "leaves": [
+      [
+        "Mahalanobis|pad_heldout|full|MEL"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|BCC"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|AK"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|BKL"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|SCC"
+      ]
+    ],
+    "stat": "min",
+    "note": "non-NV per-class range reported in the text"
+  },
+  {
+    "id": "perclass_pad_heldout_max",
+    "written": "0.39",
+    "label": "pad_heldout",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|pad_heldout|full|pooled"
+    ],
+    "leaves": [
+      [
+        "Mahalanobis|pad_heldout|full|MEL"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|BCC"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|AK"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|BKL"
+      ],
+      [
+        "Mahalanobis|pad_heldout|full|SCC"
+      ]
+    ],
+    "stat": "max",
+    "note": "non-NV per-class range reported in the text"
+  },
+  {
+    "id": "perclass_fitzpatrick_min",
+    "written": "0.10",
+    "label": "fitzpatrick",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|fitzpatrick17k|full|pooled"
+    ],
+    "leaves": [
+      [
+        "Mahalanobis|fitzpatrick17k|full|MEL"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|BCC"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|AK"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|BKL"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|SCC"
+      ]
+    ],
+    "stat": "min",
+    "note": "non-NV per-class range reported in the text"
+  },
+  {
+    "id": "perclass_fitzpatrick_max",
+    "written": "0.34",
+    "label": "fitzpatrick",
+    "file": "r2/item1/headline.json",
+    "list": [
+      "model",
+      "2.0"
+    ],
+    "n": 5,
+    "leaf": [
+      "Mahalanobis|fitzpatrick17k|full|pooled"
+    ],
+    "leaves": [
+      [
+        "Mahalanobis|fitzpatrick17k|full|MEL"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|BCC"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|AK"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|BKL"
+      ],
+      [
+        "Mahalanobis|fitzpatrick17k|full|SCC"
+      ]
+    ],
+    "stat": "max",
+    "note": "non-NV per-class range reported in the text"
+  }
+]
