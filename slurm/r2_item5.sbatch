@@ -4,6 +4,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=08:00:00
+#SBATCH --exclude=node002
 #SBATCH --output=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r2_item5_%A_%a.out
 #SBATCH --error=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r2_item5_%A_%a.err
 
