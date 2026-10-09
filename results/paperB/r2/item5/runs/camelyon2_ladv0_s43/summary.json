@@ -1,0 +1,259 @@
+{
+  "tag": "camelyon2_ladv0_s43",
+  "assign": "primary",
+  "hospitals": [
+    3,
+    0,
+    2
+  ],
+  "lambda_adv": 0.0,
+  "seed": 43,
+  "adv_placement": "grl",
+  "best_epoch": 6,
+  "id_test": {
+    "acc": 0.9950627349730489,
+    "balanced_acc": 0.9949375324785452,
+    "ece": 0.0015715781116515835,
+    "n": 22077,
+    "leaderboard_comparable": false,
+    "checkpoint_split": "id_val_select",
+    "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+  },
+  "id_test_slide_disjoint": {
+    "acc": 0.9846818135087899,
+    "balanced_acc": 0.9780327370033841,
+    "ece": 0.005530649305333628,
+    "n": 19454,
+    "leaderboard_comparable": false,
+    "checkpoint_split": "id_val_select",
+    "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+  },
+  "leakage_site_probe_a_vs_bhold": {
+    "protocol": "logistic binary ID(id_val_score) vs OOD-hospital, 70/30, 3 seeds \u2014 analogue of derm leakage",
+    "balanced_acc_mean": 0.9655555555555555,
+    "balanced_acc_std": 0.0005853140973806959,
+    "auroc_mean": 0.9949305185185184,
+    "auroc_std": 0.0003555999335730676,
+    "n_id": 10000,
+    "n_ood": 10000
+  },
+  "leakage_site_probe_aclean_vs_bhold": {
+    "protocol": "logistic binary ID(id_val_score) vs OOD-hospital, 70/30, 3 seeds \u2014 analogue of derm leakage",
+    "balanced_acc_mean": 0.9862222222222222,
+    "balanced_acc_std": 0.0009622504486493984,
+    "auroc_mean": 0.9992758148148148,
+    "auroc_std": 7.197619062208722e-05,
+    "n_id": 10000,
+    "n_ood": 10000
+  },
+  "ood": {
+    "b_hold": {
+      "accuracy": {
+        "acc": 0.7792792792792793,
+        "balanced_acc": 0.7693770952939811,
+        "ece": 0.17522731556503982,
+        "n": 21312,
+        "leaderboard_comparable": false,
+        "checkpoint_split": "id_val_select",
+        "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+      },
+      "n": 21312,
+      "detectors": {
+        "mahalanobis_classcond_sharedcov": 0.6618249351573342,
+        "mahalanobis_agnostic": 0.40448441630242826,
+        "knn_k50": 0.8787729671511434,
+        "cosine_max": 0.8412451553333468,
+        "MSP": 0.8420204605509166,
+        "Energy_T1": 0.8340179413259571,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      },
+      "detectors_slide_disjoint_id": {
+        "mahalanobis_classcond_sharedcov": 0.6123902122539935,
+        "mahalanobis_agnostic": 0.29775157453510875,
+        "knn_k50": 0.7661969968966602,
+        "cosine_max": 0.741823978114153,
+        "MSP": 0.7455099852377565,
+        "Energy_T1": 0.7480515161796165,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      }
+    },
+    "b_adv": {
+      "accuracy": {
+        "acc": 0.7978176476760046,
+        "balanced_acc": 0.801897584044005,
+        "ece": 0.15950093971739884,
+        "n": 38124,
+        "leaderboard_comparable": false,
+        "checkpoint_split": "id_val_select",
+        "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+      },
+      "n": 38124,
+      "detectors": {
+        "mahalanobis_classcond_sharedcov": 0.7740944722486662,
+        "mahalanobis_agnostic": 0.5155477316691396,
+        "knn_k50": 0.9172812055774096,
+        "cosine_max": 0.9161549520973196,
+        "MSP": 0.8364495333947858,
+        "Energy_T1": 0.8407927980029378,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      },
+      "detectors_slide_disjoint_id": {
+        "mahalanobis_classcond_sharedcov": 0.73734956630567,
+        "mahalanobis_agnostic": 0.4144180388049852,
+        "knn_k50": 0.835361395096738,
+        "cosine_max": 0.858013094242304,
+        "MSP": 0.7444440907803925,
+        "Energy_T1": 0.7580568136180039,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      }
+    },
+    "c": {
+      "accuracy": {
+        "acc": 0.48763138711877163,
+        "balanced_acc": 0.4876313871187716,
+        "ece": 0.5041511403289198,
+        "n": 85054,
+        "leaderboard_comparable": false,
+        "checkpoint_split": "id_val_select",
+        "note": "Not comparable to WILDS leaderboard (those select on OOD val / hospital 1)."
+      },
+      "n": 85054,
+      "detectors": {
+        "mahalanobis_classcond_sharedcov": 0.9610398001188194,
+        "mahalanobis_agnostic": 0.9077214277505393,
+        "knn_k50": 0.9722024100776729,
+        "cosine_max": 0.926181478909627,
+        "MSP": 0.4089922600338722,
+        "Energy_T1": 0.26018894573102974,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      },
+      "detectors_slide_disjoint_id": {
+        "mahalanobis_classcond_sharedcov": 0.9536405604369957,
+        "mahalanobis_agnostic": 0.8829920891408899,
+        "knn_k50": 0.9317290469394017,
+        "cosine_max": 0.8691212046327046,
+        "MSP": 0.28284060554214063,
+        "Energy_T1": 0.2034888250615036,
+        "knn_bank_n": 30000,
+        "knn_bank_note": "stratified subsample of train (full 302k 1024-d kNN is too heavy); recorded",
+        "binary_logit_note": "MSP/Energy are weak on binary Camelyon17 (MSP in [0.5,1]). Lead with Maha class-cond and kNN. Do not read a flat MSP curve as a failed replicate.",
+        "fit": "train split only",
+        "id_reference": "id_val_score"
+      }
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "adv_ce": 0.13427921721336272,
+      "adv_acc": 0.9431979048697622,
+      "id_select_acc": 0.9878269731627223,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 2,
+      "adv_ce": 0.12038706433416121,
+      "adv_acc": 0.9497027180067951,
+      "id_select_acc": 0.9915638093081192,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 3,
+      "adv_ce": 0.11820573023207157,
+      "adv_acc": 0.9511678935447339,
+      "id_select_acc": 0.9871475484090138,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 4,
+      "adv_ce": 0.1136802554492325,
+      "adv_acc": 0.9531214609286524,
+      "id_select_acc": 0.9936020835692447,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 5,
+      "adv_ce": 0.11094229068240047,
+      "adv_acc": 0.9542610419026047,
+      "id_select_acc": 0.9929792775450119,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 6,
+      "adv_ce": 0.11602212037866891,
+      "adv_acc": 0.9522579275198187,
+      "id_select_acc": 0.9948476956177104,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 7,
+      "adv_ce": 0.10799379929866418,
+      "adv_acc": 0.9555917327293318,
+      "id_select_acc": 0.989638772505945,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 8,
+      "adv_ce": 0.1093627737937358,
+      "adv_acc": 0.9550891845979615,
+      "id_select_acc": 0.9930358962744876,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 9,
+      "adv_ce": 0.11445835826534563,
+      "adv_acc": 0.952937429218573,
+      "id_select_acc": 0.9943947457819047,
+      "coef_end": 0.0
+    },
+    {
+      "epoch": 10,
+      "adv_ce": 0.10868866651976589,
+      "adv_acc": 0.9554855605889014,
+      "id_select_acc": 0.9945079832408561,
+      "coef_end": 0.0
+    }
+  ],
+  "adversary": {
+    "min_window_adv_ce": 0.09682199890259653,
+    "first_window": {
+      "step": 200,
+      "epoch": 1,
+      "adv_ce": 0.19509055093862115,
+      "adv_acc": 0.91625,
+      "grl_grad_norm": 0.0,
+      "coef": 0.0,
+      "w_adv": 1.0
+    },
+    "last_window": {
+      "step": 44000,
+      "epoch": 10,
+      "adv_ce": 0.11108931835275143,
+      "adv_acc": 0.955,
+      "grl_grad_norm": 0.0,
+      "coef": 0.0,
+      "w_adv": 1.0
+    }
+  },
+  "n_windows": 220
+}
