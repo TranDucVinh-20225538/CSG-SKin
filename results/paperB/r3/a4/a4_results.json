@@ -1,5 +1,5 @@
 {
- "commit": "fca1ce6",
+ "commit": "1168c5c",
  "verdict": "The identity reproduces 0.240 -> the manuscript states that the per-class decomposition reproduces all three manipulations; the wrong explanation is deleted outright.",
  "pad_full_mix": {
   "0": 0.022628372497824196,
@@ -43,6 +43,7 @@
    "measured_reweighted_pad_heldout": 0.2726019407673942,
    "identity_pad_heldout": 0.2726019407674229,
    "two_group_pad_heldout": 0.338713123809004,
+   "two_group_pad_heldout_auroc_pad_full_share": 0.33455337143285063,
    "per_class_pad_heldout": {
     "MEL": 0.38847981658179664,
     "NV": 0.5568498128762814,
@@ -77,6 +78,7 @@
    "measured_reweighted_pad_heldout": 0.23731114483473048,
    "identity_pad_heldout": 0.23731114483475918,
    "two_group_pad_heldout": 0.3128957559284913,
+   "two_group_pad_heldout_auroc_pad_full_share": 0.3086035351704119,
    "per_class_pad_heldout": {
     "MEL": 0.37933362584664065,
     "NV": 0.5379790638390194,
@@ -111,6 +113,7 @@
    "measured_reweighted_pad_heldout": 0.28621816716959503,
    "identity_pad_heldout": 0.28621816716962684,
    "two_group_pad_heldout": 0.3525826746703228,
+   "two_group_pad_heldout_auroc_pad_full_share": 0.3479086483112471,
    "per_class_pad_heldout": {
     "MEL": 0.4107134028773422,
     "NV": 0.5976878017030971,
@@ -145,6 +148,7 @@
    "measured_reweighted_pad_heldout": 0.2614029934952767,
    "identity_pad_heldout": 0.2614029934953074,
    "two_group_pad_heldout": 0.3406732949364388,
+   "two_group_pad_heldout_auroc_pad_full_share": 0.3361822957951845,
    "per_class_pad_heldout": {
     "MEL": 0.4120080832550551,
     "NV": 0.5761805065900092,
@@ -179,6 +183,7 @@
    "measured_reweighted_pad_heldout": 0.23512598499207832,
    "identity_pad_heldout": 0.2351259849921087,
    "two_group_pad_heldout": 0.29796552756066785,
+   "two_group_pad_heldout_auroc_pad_full_share": 0.2936161422077256,
    "per_class_pad_heldout": {
     "MEL": 0.3518147154793098,
     "NV": 0.5260465368552367,

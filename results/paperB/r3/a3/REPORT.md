@@ -1,6 +1,6 @@
 # R3 A3 — JSON for markdown-only manuscript numbers
 
-Commit: `fca1ce6`.
+Commit: `1168c5c`.
 
 **Verdict:** All values written to JSON match their published reports; no recomputation needed.
 

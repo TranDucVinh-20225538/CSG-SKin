@@ -1,6 +1,6 @@
 # R3 A4 — PAD-reweight discrepancy
 
-Commit: `fca1ce6`.
+Commit: `1168c5c`.
 
 **Verdict:** The identity reproduces 0.240 -> the manuscript states that the per-class decomposition reproduces all three manipulations; the wrong explanation is deleted outright.
 
@@ -40,6 +40,7 @@ The 0.2585 prediction combines pad_heldout weights with per-class AUROCs on pad_
 | pad_heldout | pad_full | 0.2458 ± 0.0144 | — |
 | pad_full | pad_heldout | 0.2522 ± 0.0219 | — |
 | two-group, pad_heldout weights | pad_heldout | 0.3286 ± 0.0224 | — |
+| two-group, pad_full nevus share (manuscript: 0.559p + 0.296(1 − p) at p = 0.106 → 0.324) | pad_heldout | 0.3242 ± 0.0223 | — |
 
 ## Per-class Mahalanobis AUROC (ID class c vs OOD), mean ± s.d.
 

@@ -1,6 +1,6 @@
 # R3 A1 — per-class Mahalanobis AUROC, all eight classes, and the pooled identity
 
-Commit: `fca1ce6`. Detector: class-conditional Mahalanobis, pooled covariance + 1e-3 I, fit on ISIC train only; representation z_lesion^norm; OOD = positives. Image-level runs: Phase 13 features. Lesion-level runs: R2 Item 4 features. Seeds per λ: image λ=0: 42/52/62/72/82; image λ=0.25: 42/52/62; image λ=0.5: 42/52/62; image λ=1: 42/52/62; image λ=2: 42/52/62/72/82; image λ=4: 42/52/62; image λ=8: 42/52/62/72/82; lesion λ=0: 42/52/62; lesion λ=0.25: 42/43/44; lesion λ=0.5: 42/43/44; lesion λ=1: 42/43/44; lesion λ=2: 42/52/62; lesion λ=4: 42.
+Commit: `1168c5c`. Detector: class-conditional Mahalanobis, pooled covariance + 1e-3 I, fit on ISIC train only; representation z_lesion^norm; OOD = positives. Image-level runs: Phase 13 features. Lesion-level runs: R2 Item 4 features. Seeds per λ: image λ=0: 42/52/62/72/82; image λ=0.25: 42/52/62; image λ=0.5: 42/52/62; image λ=1: 42/52/62; image λ=2: 42/52/62/72/82; image λ=4: 42/52/62; image λ=8: 42/52/62/72/82; lesion λ=0: 42/52/62; lesion λ=0.25: 42/43/44; lesion λ=0.5: 42/43/44; lesion λ=1: 42/43/44; lesion λ=2: 42/52/62; lesion λ=4: 42.
 
 **Verdict:** Residual falls to the third decimal -> the manuscript states the decomposition as exact and uses it only to present the per-class structure.
 
