@@ -1,0 +1,10 @@
+{
+ "source": "results/paperB/r2/isic_image_split_with_lesion.csv (image-level split, ISIC lesion_id)",
+ "n_test": 5067,
+ "n_test_sharing_lesion_with_train_or_val": 3041,
+ "frac_sharing": 0.6001578843497138,
+ "pct_sharing": 60.015788434971384,
+ "n_lesion_disjoint": 2026,
+ "n_lesion_disjoint_null_lesion_id": 436,
+ "null_lesion_policy": "null lesion_id never matches; such images count as disjoint"
+}

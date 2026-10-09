@@ -1,0 +1,85 @@
+{
+ "sources": [
+  "results/paperB/phase1_6/supervised_head.json",
+  "results/paperB/ood_dual_branch_per_seed.csv"
+ ],
+ "report": "results/paperB/phase1_6/PHASE1_6_REPORT.md",
+ "z_context_pc1_var_explained": 0.8447564840316772,
+ "z_context_pc1_auroc": 1.0,
+ "pca_k1_by_representation": {
+  "imagenet_resnet50_raw": {
+   "pca_k1_auroc": 0.6466478002426321,
+   "pca_k1_var_explained": 0.14556583762168884,
+   "linear_domain_head_auroc_mean": 0.9977369374523264
+  },
+  "imagenet_effb3_raw": {
+   "pca_k1_auroc": 0.5452543832573885,
+   "pca_k1_var_explained": 0.10720674693584442,
+   "linear_domain_head_auroc_mean": 0.993584763539283
+  },
+  "baseline_backbone_raw": {
+   "pca_k1_auroc": 0.6476663535431142,
+   "pca_k1_var_explained": 0.32514652609825134,
+   "linear_domain_head_auroc_mean": 0.9973169336384441
+  },
+  "effb3_control_backbone_raw": {
+   "pca_k1_auroc": 0.6979498222512845,
+   "pca_k1_var_explained": 0.1087922602891922,
+   "linear_domain_head_auroc_mean": 0.9912193935926773
+  },
+  "z_context": {
+   "pca_k1_auroc": 1.0,
+   "pca_k1_var_explained": 0.8447564840316772,
+   "linear_domain_head_auroc_mean": 0.9999996186117468
+  }
+ },
+ "pca_k1_auroc_other_representations_range": [
+  0.5452543832573885,
+  0.6979498222512845
+ ],
+ "z_context_maha_classcond_pad_full_by_seed": [
+  {
+   "seed": 42,
+   "auroc": 0.9999998282372174,
+   "n_pairs": 11643966,
+   "discordant_pairs": 2.0000000001078444
+  },
+  {
+   "seed": 52,
+   "auroc": 0.9999989694233048,
+   "n_pairs": 11643966,
+   "discordant_pairs": 11.999999999354328
+  },
+  {
+   "seed": 62,
+   "auroc": 0.9999988835419136,
+   "n_pairs": 11643966,
+   "discordant_pairs": 12.99999999876188
+  },
+  {
+   "seed": 72,
+   "auroc": 0.9999970800326968,
+   "n_pairs": 11643966,
+   "discordant_pairs": 33.999999999247876
+  },
+  {
+   "seed": 82,
+   "auroc": 0.9999983682535658,
+   "n_pairs": 11643966,
+   "discordant_pairs": 19.000000000378154
+  }
+ ],
+ "z_context_maha_classcond_pad_full_mean": {
+  "mean": 0.9999986258977398,
+  "sd": 1.0107039384843637e-06,
+  "n": 5,
+  "values": [
+   0.9999998282372174,
+   0.9999989694233048,
+   0.9999988835419136,
+   0.9999970800326968,
+   0.9999983682535658
+  ]
+ },
+ "note": "pairs = n_id * n_ood = 5067 * 2298 (pad_full); discordant = (1 - AUROC) * pairs (ties count half)"
+}

@@ -1,0 +1,196 @@
+{
+ "commit": "fca1ce6",
+ "verdict": "The identity reproduces 0.240 -> the manuscript states that the per-class decomposition reproduces all three manipulations; the wrong explanation is deleted outright.",
+ "pad_full_mix": {
+  "0": 0.022628372497824196,
+  "1": 0.1061792863359443,
+  "2": 0.3677110530896432,
+  "3": 0.31766753698868583,
+  "4": 0.10226283724978243,
+  "5": 0.0,
+  "6": 0.0,
+  "7": 0.0835509138381201
+ },
+ "pad_heldout_mix": {
+  "0": 0.012569832402234637,
+  "1": 0.12290502793296089,
+  "2": 0.3854748603351955,
+  "3": 0.28212290502793297,
+  "4": 0.10474860335195531,
+  "5": 0.0,
+  "6": 0.0,
+  "7": 0.09217877094972067
+ },
+ "per_seed": [
+  {
+   "seed": 42,
+   "stored_unrestricted": 0.38112813108523336,
+   "stored_reweighted": 0.23206532158496576,
+   "recomputed_unrestricted": 0.38112950518749367,
+   "recomputed_reweighted_pad_full": 0.23206613175311727,
+   "identity_pad_full_w_pad_full_auroc": 0.2320661317530841,
+   "two_group_pad_full": 0.29474262550591007,
+   "per_class_pad_full": {
+    "MEL": 0.3465123578024754,
+    "NV": 0.4935952749119116,
+    "BCC": 0.22944109621311765,
+    "AK": 0.15219819194373596,
+    "BKL": 0.2634207799743048,
+    "DF": 0.10667790832608065,
+    "VASC": 0.12281779552552091,
+    "SCC": 0.14555099672593147
+   },
+   "measured_reweighted_pad_heldout": 0.2726019407673942,
+   "identity_pad_heldout": 0.2726019407674229,
+   "two_group_pad_heldout": 0.338713123809004,
+   "per_class_pad_heldout": {
+    "MEL": 0.38847981658179664,
+    "NV": 0.5568498128762814,
+    "BCC": 0.2729218297139497,
+    "AK": 0.17071398585591113,
+    "BKL": 0.2944426709231178,
+    "DF": 0.1227304469273743,
+    "VASC": 0.17647058823529413,
+    "SCC": 0.16348541278708878
+   },
+   "identity_pad_heldout_w_on_pad_full_auroc": 0.23741298466747202,
+   "identity_pad_full_w_on_pad_heldout_auroc": 0.26627314513020994
+  },
+  {
+   "seed": 52,
+   "stored_unrestricted": 0.4035457077081812,
+   "stored_reweighted": 0.22296620310689863,
+   "recomputed_unrestricted": 0.4035454071233118,
+   "recomputed_reweighted_pad_full": 0.22296592115128794,
+   "identity_pad_full_w_pad_full_auroc": 0.22296592115124816,
+   "two_group_pad_full": 0.2936363267222132,
+   "per_class_pad_full": {
+    "MEL": 0.3533603672296803,
+    "NV": 0.5428343768747834,
+    "BCC": 0.20938900776746042,
+    "AK": 0.1363538035084542,
+    "BKL": 0.2527887604127813,
+    "DF": 0.12461016826225704,
+    "VASC": 0.17946551988941792,
+    "SCC": 0.13370840067968007
+   },
+   "measured_reweighted_pad_heldout": 0.23731114483473048,
+   "identity_pad_heldout": 0.23731114483475918,
+   "two_group_pad_heldout": 0.3128957559284913,
+   "per_class_pad_heldout": {
+    "MEL": 0.37933362584664065,
+    "NV": 0.5379790638390194,
+    "BCC": 0.21665056495988572,
+    "AK": 0.15024865179061586,
+    "BKL": 0.27476988560787446,
+    "DF": 0.13498021415270017,
+    "VASC": 0.1617099353707964,
+    "SCC": 0.127349915757737
+   },
+   "identity_pad_heldout_w_on_pad_full_auroc": 0.22914583016535245,
+   "identity_pad_full_w_on_pad_heldout_auroc": 0.23183881212460186
+  },
+  {
+   "seed": 62,
+   "stored_unrestricted": 0.44152928649911893,
+   "stored_reweighted": 0.2618798685511714,
+   "recomputed_unrestricted": 0.44152963002468404,
+   "recomputed_reweighted_pad_full": 0.2618800212478456,
+   "identity_pad_full_w_pad_full_auroc": 0.2618800212478056,
+   "two_group_pad_full": 0.33382339569937414,
+   "per_class_pad_full": {
+    "MEL": 0.40235882298574366,
+    "NV": 0.5787019527322197,
+    "BCC": 0.2552176786614055,
+    "AK": 0.17756581495847107,
+    "BKL": 0.2780927514608977,
+    "DF": 0.16217906875543953,
+    "VASC": 0.19727299100667248,
+    "SCC": 0.1512529874148673
+   },
+   "measured_reweighted_pad_heldout": 0.28621816716959503,
+   "identity_pad_heldout": 0.28621816716962684,
+   "two_group_pad_heldout": 0.3525826746703228,
+   "per_class_pad_heldout": {
+    "MEL": 0.4107134028773422,
+    "NV": 0.5976878017030971,
+    "BCC": 0.29546141891040445,
+    "AK": 0.18233926437820908,
+    "BKL": 0.2735887204043629,
+    "DF": 0.0972998137802607,
+    "VASC": 0.09708073173403439,
+    "SCC": 0.14757914338919925
+   },
+   "identity_pad_heldout_w_on_pad_full_auroc": 0.2677304870229255,
+   "identity_pad_full_w_on_pad_heldout_auroc": 0.27963186569465337
+  },
+  {
+   "seed": 72,
+   "stored_unrestricted": 0.41491387041150757,
+   "stored_reweighted": 0.24118239519151966,
+   "recomputed_unrestricted": 0.4149142998184639,
+   "recomputed_reweighted_pad_full": 0.24118284122764408,
+   "identity_pad_full_w_pad_full_auroc": 0.2411828412276049,
+   "two_group_pad_full": 0.3040106815526713,
+   "per_class_pad_full": {
+    "MEL": 0.35650276885633525,
+    "NV": 0.5562424058066533,
+    "BCC": 0.23255658729068102,
+    "AK": 0.15672587874854738,
+    "BKL": 0.25165734178789007,
+    "DF": 0.12120140702059765,
+    "VASC": 0.16536118363794605,
+    "SCC": 0.15581872435658337
+   },
+   "measured_reweighted_pad_heldout": 0.2614029934952767,
+   "identity_pad_heldout": 0.2614029934953074,
+   "two_group_pad_heldout": 0.3406732949364388,
+   "per_class_pad_heldout": {
+    "MEL": 0.4120080832550551,
+    "NV": 0.5761805065900092,
+    "BCC": 0.2606019238039232,
+    "AK": 0.15007104336874738,
+    "BKL": 0.2783825485501463,
+    "DF": 0.13422369646182497,
+    "VASC": 0.2323365100230036,
+    "SCC": 0.14596080517868226
+   },
+   "identity_pad_heldout_w_on_pad_full_auroc": 0.24743078026781185,
+   "identity_pad_full_w_on_pad_heldout_auroc": 0.25466376184260975
+  },
+  {
+   "seed": 82,
+   "stored_unrestricted": 0.4031166872180836,
+   "stored_reweighted": 0.24126609679953437,
+   "recomputed_unrestricted": 0.4031169448622574,
+   "recomputed_reweighted_pad_full": 0.2412662701680331,
+   "identity_pad_full_w_pad_full_auroc": 0.24126627016799615,
+   "two_group_pad_full": 0.3037390185708819,
+   "per_class_pad_full": {
+    "MEL": 0.35912047413295134,
+    "NV": 0.5306361800468116,
+    "BCC": 0.2571480921625212,
+    "AK": 0.1505833169833532,
+    "BKL": 0.2393916034647105,
+    "DF": 0.1346642007542791,
+    "VASC": 0.14498540930732606,
+    "SCC": 0.1187885946371586
+   },
+   "measured_reweighted_pad_heldout": 0.23512598499207832,
+   "identity_pad_heldout": 0.2351259849921087,
+   "two_group_pad_heldout": 0.29796552756066785,
+   "per_class_pad_heldout": {
+    "MEL": 0.3518147154793098,
+    "NV": 0.5260465368552367,
+    "BCC": 0.23788171546183895,
+    "AK": 0.13662124196725547,
+    "BKL": 0.2297845171588188,
+    "DF": 0.08635940409683429,
+    "VASC": 0.11961879723956623,
+    "SCC": 0.127349915757737
+   },
+   "identity_pad_heldout_w_on_pad_full_auroc": 0.24736478922446223,
+   "identity_pad_full_w_on_pad_heldout_auroc": 0.22882672835368156
+  }
+ ]
+}
