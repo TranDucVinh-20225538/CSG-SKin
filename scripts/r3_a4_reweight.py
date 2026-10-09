@@ -85,6 +85,7 @@ def main():
             "measured_reweighted_pad_heldout": weighted(sid13, y13, sho, pad_hold_p),
             "identity_pad_heldout": ident(pc_hold, pad_hold_p),
             "two_group_pad_heldout": two_group(pc_hold, y13, pad_hold_p),
+            "two_group_pad_heldout_auroc_pad_full_share": two_group(pc_hold, y13, pad_full_p),
             "per_class_pad_heldout": {C.LABELS[c]: v for c, v in pc_hold.items()},
             "identity_pad_heldout_w_on_pad_full_auroc": ident(pc_full, pad_hold_p),
             "identity_pad_full_w_on_pad_heldout_auroc": ident(pc_hold, pad_full_p),
@@ -131,7 +132,9 @@ def main():
          "| pad_heldout | pad_heldout | {} | {} |".format(C.fmt(*a("identity_pad_heldout")[:2], nd=4), C.fmt(*a("measured_reweighted_pad_heldout")[:2], nd=4)),
          "| pad_heldout | pad_full | {} | — |".format(C.fmt(*a("identity_pad_heldout_w_on_pad_full_auroc")[:2], nd=4)),
          "| pad_full | pad_heldout | {} | — |".format(C.fmt(*a("identity_pad_full_w_on_pad_heldout_auroc")[:2], nd=4)),
-         "| two-group, pad_heldout weights | pad_heldout | {} | — |".format(C.fmt(*a("two_group_pad_heldout")[:2], nd=4)), "",
+         "| two-group, pad_heldout weights | pad_heldout | {} | — |".format(C.fmt(*a("two_group_pad_heldout")[:2], nd=4)),
+         "| two-group, pad_full nevus share (manuscript: 0.559p + 0.296(1 − p) at p = 0.106 → 0.324) | pad_heldout | {} | — |".format(
+             C.fmt(*a("two_group_pad_heldout_auroc_pad_full_share")[:2], nd=4)), "",
          "## Per-class Mahalanobis AUROC (ID class c vs OOD), mean ± s.d.", "",
          "| Class | vs pad_full (Phase 1 ckpt) | vs pad_heldout (Phase 13 λ=2) |", "|---|---|---|"]
     pf, ph = pc("per_class_pad_full"), pc("per_class_pad_heldout")
