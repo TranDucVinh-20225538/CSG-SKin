@@ -66,7 +66,7 @@ def intervention_band_x(lams=pfs.LAMS):
     return i0 - 0.5, i1 + 0.5
 
 
-def fig1_intervention():
+def fig1_intervention(shared_ylim=(0.4, 1.0)):
     rows = load_phase3_summaries()
     by = by_lambda_summaries(rows)
     dual = json.loads((PAPERB / "phase16" / "table1_ood_pad_dual_column.json").read_text())["by_lambda"]
@@ -85,7 +85,6 @@ def fig1_intervention():
     fig = plt.figure(figsize=(9.6, 2.85), constrained_layout=True)
     gs = GridSpec(1, 4, figure=fig, wspace=0.32)
     x0, x1 = intervention_band_x(lams)
-    shared_ylim = (0.4, 1.0)
 
     for i, (tag, title, fn, show_floor, show_chance, shared_scale) in enumerate(panels):
         ax = fig.add_subplot(gs[0, i])
