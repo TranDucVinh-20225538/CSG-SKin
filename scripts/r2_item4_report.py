@@ -105,7 +105,7 @@ def mix_control(feat_dir, tag, n_ref):
 def pattern(t):
     """Directional pattern of the main table, fixed in PRECOMMIT_ITEM4.json."""
     m = {k: {l: np.mean([r[k] for r in t[l]]) for l in LAMS} for k, _ in COLS}
-    return {
+    return {k: bool(v) for k, v in {
         "leakage_falls": m["leakage"][2.0] < m["leakage"][0.0],
         "id_bal_not_lower_by_0.02": m["id_bal"][2.0] - m["id_bal"][0.0] > -0.02,
         "id_ece_within_0.03": abs(m["id_ece"][2.0] - m["id_ece"][0.0]) <= 0.03,
@@ -113,7 +113,7 @@ def pattern(t):
         "maha_above_0.5_at_0_below_at_2": m["maha"][0.0] > 0.5 > m["maha"][2.0],
         "all_five_detectors_fall": all(m[k][2.0] < m[k][0.0] for k in ("maha", "cosine", "knn", "msp", "energy")),
         "fitz_above_0.5_at_0_below_at_2": m["fitz"][0.0] > 0.5 > m["fitz"][2.0],
-    }
+    }.items()}
 
 
 def main():
