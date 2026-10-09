@@ -1,0 +1,591 @@
+{
+  "commit": "79381fa",
+  "tables": {
+    "image": {
+      "0.0": [
+        {
+          "leakage": 0.9167651919654207,
+          "id_bal": 0.7065735915578486,
+          "id_ece": 0.11394420966655987,
+          "ood_ece": 0.22401631529853994,
+          "maha": 0.8521343329000334,
+          "cosine": 0.8798215642237591,
+          "knn": 0.9206068845073776,
+          "msp": 0.9548422644937722,
+          "energy": 0.9795891478765548,
+          "fitz": 0.7868254354855636
+        },
+        {
+          "leakage": 0.9422482837528604,
+          "id_bal": 0.670408758336832,
+          "id_ece": 0.1004146747519002,
+          "ood_ece": 0.19970834513283306,
+          "maha": 0.873765012519391,
+          "cosine": 0.8921245808953322,
+          "knn": 0.9326491494421677,
+          "msp": 0.962598663936767,
+          "energy": 0.980255635931038,
+          "fitz": 0.8008263237119638
+        },
+        {
+          "leakage": 0.8879179379608441,
+          "id_bal": 0.7028028986982415,
+          "id_ece": 0.10499022174674377,
+          "ood_ece": 0.2281940887010963,
+          "maha": 0.8482256753911,
+          "cosine": 0.8788190757811802,
+          "knn": 0.9148764102920312,
+          "msp": 0.9459830450731153,
+          "energy": 0.9570605837090254,
+          "fitz": 0.7841154412021185
+        }
+      ],
+      "2.0": [
+        {
+          "leakage": 0.5930333079074498,
+          "id_bal": 0.6950766242228026,
+          "id_ece": 0.10296548877403255,
+          "ood_ece": 0.746367749680021,
+          "maha": 0.43136248019554724,
+          "cosine": 0.45355035816152933,
+          "knn": 0.43905631024715736,
+          "msp": 0.446183845961325,
+          "energy": 0.4594021122544496,
+          "fitz": 0.4346816969561821
+        },
+        {
+          "leakage": 0.5362859140605136,
+          "id_bal": 0.7062407221733932,
+          "id_ece": 0.09852163914465353,
+          "ood_ece": 0.7435931764001953,
+          "maha": 0.4088504541931415,
+          "cosine": 0.4358914567146604,
+          "knn": 0.4362114702098032,
+          "msp": 0.44445271352700627,
+          "energy": 0.44185677287476305,
+          "fitz": 0.41939403807858155
+        },
+        {
+          "leakage": 0.5922689422832444,
+          "id_bal": 0.7090096493518151,
+          "id_ece": 0.09739940870095222,
+          "ood_ece": 0.7431810640173252,
+          "maha": 0.4558985019730031,
+          "cosine": 0.48153789500029215,
+          "knn": 0.46078249777010405,
+          "msp": 0.4913297291158807,
+          "energy": 0.4697953843083684,
+          "fitz": 0.4273001364935996
+        }
+      ]
+    },
+    "lesion": {
+      "0.0": [
+        {
+          "leakage": 0.9129624332570557,
+          "id_bal": 0.4949784901802623,
+          "id_ece": 0.20174856891828763,
+          "ood_ece": 0.24984505710155602,
+          "maha": 0.7951183195460164,
+          "cosine": 0.8415850508217815,
+          "knn": 0.8891987038488721,
+          "msp": 0.9352514297243749,
+          "energy": 0.9684834943599344,
+          "fitz": 0.6852564622989425
+        },
+        {
+          "leakage": 0.9516701627256547,
+          "id_bal": 0.5212077133224648,
+          "id_ece": 0.18438957992133148,
+          "ood_ece": 0.1809302533888284,
+          "maha": 0.8490765639867124,
+          "cosine": 0.890975178419238,
+          "knn": 0.9346400688869706,
+          "msp": 0.9548643153806039,
+          "energy": 0.9733051964017363,
+          "fitz": 0.7719935422579522
+        },
+        {
+          "leakage": 0.9101369819476227,
+          "id_bal": 0.49697288762604885,
+          "id_ece": 0.16087647718168796,
+          "ood_ece": 0.1643263607925876,
+          "maha": 0.8019201912252906,
+          "cosine": 0.8739913097454997,
+          "knn": 0.9210525880574603,
+          "msp": 0.9523438990157586,
+          "energy": 0.9556235549778223,
+          "fitz": 0.7237418133923358
+        }
+      ],
+      "2.0": [
+        {
+          "leakage": 0.5147629036359014,
+          "id_bal": 0.4358023408266605,
+          "id_ece": 0.21150123861142112,
+          "ood_ece": 0.7436688485758265,
+          "maha": 0.3709959724055202,
+          "cosine": 0.3921896310114853,
+          "knn": 0.39346610172294605,
+          "msp": 0.4224067881450022,
+          "energy": 0.4471516042571442,
+          "fitz": 0.38813711546978746
+        },
+        {
+          "leakage": 0.5540204678362572,
+          "id_bal": 0.46498059716402496,
+          "id_ece": 0.15708412623056087,
+          "ood_ece": 0.705176203985121,
+          "maha": 0.39148317572461966,
+          "cosine": 0.4088733319882293,
+          "knn": 0.4180555969009684,
+          "msp": 0.46512307702485023,
+          "energy": 0.46782885865712304,
+          "fitz": 0.4170575314708809
+        },
+        {
+          "leakage": 0.6253543732519705,
+          "id_bal": 0.4913614382866095,
+          "id_ece": 0.15651298142735814,
+          "ood_ece": 0.6927731923301127,
+          "maha": 0.43641929981819044,
+          "cosine": 0.44784083228867255,
+          "knn": 0.4485461850311965,
+          "msp": 0.4617676211393032,
+          "energy": 0.45141721049666317,
+          "fitz": 0.4160164015721617
+        }
+      ]
+    }
+  },
+  "pattern": {
+    "image": {
+      "leakage_falls": true,
+      "id_bal_not_lower_by_0.02": true,
+      "id_ece_within_0.03": true,
+      "ood_ece_rises": true,
+      "maha_above_0.5_at_0_below_at_2": true,
+      "all_five_detectors_fall": true,
+      "fitz_above_0.5_at_0_below_at_2": true
+    },
+    "lesion": {
+      "leakage_falls": true,
+      "id_bal_not_lower_by_0.02": false,
+      "id_ece_within_0.03": true,
+      "ood_ece_rises": true,
+      "maha_above_0.5_at_0_below_at_2": true,
+      "all_five_detectors_fall": true,
+      "fitz_above_0.5_at_0_below_at_2": true
+    },
+    "lesion_reweighted": {
+      "leakage_falls": true,
+      "id_bal_not_lower_by_0.02": false,
+      "id_ece_within_0.03": true,
+      "ood_ece_rises": true,
+      "maha_above_0.5_at_0_below_at_2": true,
+      "all_five_detectors_fall": true,
+      "fitz_above_0.5_at_0_below_at_2": true
+    }
+  },
+  "unchanged": false,
+  "unchanged_reweighted": false,
+  "verdict": "Pattern changes -> a finding about the main table; takes priority over everything else in R2. Class-mix control (lesion-level test reweighted to the image-level class distribution): pattern changes.",
+  "class_counts_test": {
+    "image": [
+      904,
+      2575,
+      665,
+      173,
+      525,
+      48,
+      51,
+      126
+    ],
+    "lesion": [
+      904,
+      2575,
+      664,
+      174,
+      525,
+      48,
+      51,
+      126
+    ]
+  },
+  "mix_control": {
+    "image": {
+      "0.0": [
+        {
+          "maha": {
+            "unrestricted": 0.8521722328617752,
+            "reweighted": 0.8521722328617752
+          },
+          "cosine": {
+            "unrestricted": 0.8798146733216244,
+            "reweighted": 0.8798146733216244
+          },
+          "knn": {
+            "unrestricted": 0.9206198394033912,
+            "reweighted": 0.9206198394033912
+          },
+          "msp": {
+            "unrestricted": 0.9548472259433093,
+            "reweighted": 0.9548472259433093
+          },
+          "energy": {
+            "unrestricted": 0.9795960387786896,
+            "reweighted": 0.9795960387786896
+          },
+          "fitz": {
+            "unrestricted": 0.7867842838051409,
+            "reweighted": 0.7867842838051409
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.8737459936294989,
+            "reweighted": 0.8737459936294989
+          },
+          "cosine": {
+            "unrestricted": 0.8920802034855836,
+            "reweighted": 0.8920802034855836
+          },
+          "knn": {
+            "unrestricted": 0.9326105603902124,
+            "reweighted": 0.9326105603902124
+          },
+          "msp": {
+            "unrestricted": 0.9625690330575871,
+            "reweighted": 0.9625690330575871
+          },
+          "energy": {
+            "unrestricted": 0.9802266941420716,
+            "reweighted": 0.9802266941420716
+          },
+          "fitz": {
+            "unrestricted": 0.8008513549006727,
+            "reweighted": 0.8008513549006727
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.8482565466326641,
+            "reweighted": 0.8482565466326641
+          },
+          "cosine": {
+            "unrestricted": 0.8788153546940273,
+            "reweighted": 0.8788153546940273
+          },
+          "knn": {
+            "unrestricted": 0.9148926728210692,
+            "reweighted": 0.9148926728210692
+          },
+          "msp": {
+            "unrestricted": 0.9460238392137534,
+            "reweighted": 0.9460238392137534
+          },
+          "energy": {
+            "unrestricted": 0.9571242556447516,
+            "reweighted": 0.9571242556447516
+          },
+          "fitz": {
+            "unrestricted": 0.7841527087325694,
+            "reweighted": 0.7841527087325694
+          }
+        }
+      ],
+      "2.0": [
+        {
+          "maha": {
+            "unrestricted": 0.4314531644676419,
+            "reweighted": 0.4314531644676419
+          },
+          "cosine": {
+            "unrestricted": 0.45362009409113413,
+            "reweighted": 0.45362009409113413
+          },
+          "knn": {
+            "unrestricted": 0.4391354178036655,
+            "reweighted": 0.4391354178036655
+          },
+          "msp": {
+            "unrestricted": 0.44623346045669593,
+            "reweighted": 0.44623346045669593
+          },
+          "energy": {
+            "unrestricted": 0.4593817151841304,
+            "reweighted": 0.4593817151841304
+          },
+          "fitz": {
+            "unrestricted": 0.43477214941598885,
+            "reweighted": 0.43477214941598885
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.40917818549867535,
+            "reweighted": 0.40917818549867535
+          },
+          "cosine": {
+            "unrestricted": 0.43610424777258483,
+            "reweighted": 0.43610424777258483
+          },
+          "knn": {
+            "unrestricted": 0.43645623505363323,
+            "reweighted": 0.43645623505363323
+          },
+          "msp": {
+            "unrestricted": 0.44467087948859585,
+            "reweighted": 0.44467087948859585
+          },
+          "energy": {
+            "unrestricted": 0.4418775833992104,
+            "reweighted": 0.4418775833992104
+          },
+          "fitz": {
+            "unrestricted": 0.4195324712145138,
+            "reweighted": 0.4195324712145138
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.4559321295754212,
+            "reweighted": 0.4559321295754212
+          },
+          "cosine": {
+            "unrestricted": 0.48142116311812766,
+            "reweighted": 0.48142116311812766
+          },
+          "knn": {
+            "unrestricted": 0.46064137209438216,
+            "reweighted": 0.46064137209438216
+          },
+          "msp": {
+            "unrestricted": 0.4910168821589582,
+            "reweighted": 0.4910168821589582
+          },
+          "energy": {
+            "unrestricted": 0.46948763661902576,
+            "reweighted": 0.46948763661902576
+          },
+          "fitz": {
+            "unrestricted": 0.42738601936520393,
+            "reweighted": 0.42738601936520393
+          }
+        }
+      ]
+    },
+    "lesion": {
+      "0.0": [
+        {
+          "maha": {
+            "unrestricted": 0.7951191464542726,
+            "reweighted": 0.795148825443801
+          },
+          "cosine": {
+            "unrestricted": 0.8415850508217815,
+            "reweighted": 0.8415847976734547
+          },
+          "knn": {
+            "unrestricted": 0.8891987038488721,
+            "reweighted": 0.8892043017263269
+          },
+          "msp": {
+            "unrestricted": 0.9352514297243749,
+            "reweighted": 0.9352557527133636
+          },
+          "energy": {
+            "unrestricted": 0.9684834943599344,
+            "reweighted": 0.9684839345817964
+          },
+          "fitz": {
+            "unrestricted": 0.6852564115257403,
+            "reweighted": 0.685283596697768
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.8490760127145414,
+            "reweighted": 0.8490973873892542
+          },
+          "cosine": {
+            "unrestricted": 0.8909751784192382,
+            "reweighted": 0.890975717381114
+          },
+          "knn": {
+            "unrestricted": 0.9346400688869706,
+            "reweighted": 0.9346409796626871
+          },
+          "msp": {
+            "unrestricted": 0.9548643153806039,
+            "reweighted": 0.9548673025881107
+          },
+          "energy": {
+            "unrestricted": 0.9733051964017363,
+            "reweighted": 0.9733075321179141
+          },
+          "fitz": {
+            "unrestricted": 0.7719933391651435,
+            "reweighted": 0.7720211973633538
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.8019199155892052,
+            "reweighted": 0.8019432012033596
+          },
+          "cosine": {
+            "unrestricted": 0.8739914475635424,
+            "reweighted": 0.874002348505982
+          },
+          "knn": {
+            "unrestricted": 0.9210525880574603,
+            "reweighted": 0.9210625918991071
+          },
+          "msp": {
+            "unrestricted": 0.9523438990157586,
+            "reweighted": 0.9523485058286101
+          },
+          "energy": {
+            "unrestricted": 0.9556235549778223,
+            "reweighted": 0.9556278544579657
+          },
+          "fitz": {
+            "unrestricted": 0.7237411787273078,
+            "reweighted": 0.7237688427167892
+          }
+        }
+      ],
+      "2.0": [
+        {
+          "maha": {
+            "unrestricted": 0.3709962480416056,
+            "reweighted": 0.3710036229816625
+          },
+          "cosine": {
+            "unrestricted": 0.3921899066475706,
+            "reweighted": 0.3921945405716991
+          },
+          "knn": {
+            "unrestricted": 0.39346610172294605,
+            "reweighted": 0.39347311560874126
+          },
+          "msp": {
+            "unrestricted": 0.4224067881450022,
+            "reweighted": 0.4224209032099425
+          },
+          "energy": {
+            "unrestricted": 0.4471516042571442,
+            "reweighted": 0.44716428350991844
+          },
+          "fitz": {
+            "unrestricted": 0.3881361507789447,
+            "reweighted": 0.3881450057878404
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.39148290008853437,
+            "reweighted": 0.3914950068625047
+          },
+          "cosine": {
+            "unrestricted": 0.4088734698062719,
+            "reweighted": 0.4088847539424178
+          },
+          "knn": {
+            "unrestricted": 0.4180555969009684,
+            "reweighted": 0.4180665495561885
+          },
+          "msp": {
+            "unrestricted": 0.46512307702485023,
+            "reweighted": 0.4651437867098529
+          },
+          "energy": {
+            "unrestricted": 0.46782885865712304,
+            "reweighted": 0.4678648885133413
+          },
+          "fitz": {
+            "unrestricted": 0.41705742992447636,
+            "reweighted": 0.41707202367369783
+          }
+        },
+        {
+          "maha": {
+            "unrestricted": 0.43641985109036124,
+            "reweighted": 0.4364324401559097
+          },
+          "cosine": {
+            "unrestricted": 0.4478402810165018,
+            "reweighted": 0.4478593112003738
+          },
+          "knn": {
+            "unrestricted": 0.4485461850311965,
+            "reweighted": 0.4485670714834411
+          },
+          "msp": {
+            "unrestricted": 0.4617676211393032,
+            "reweighted": 0.46180395089910997
+          },
+          "energy": {
+            "unrestricted": 0.45141721049666317,
+            "reweighted": 0.4514406740327518
+          },
+          "fitz": {
+            "unrestricted": 0.4160157669071336,
+            "reweighted": 0.416027856923474
+          }
+        }
+      ]
+    }
+  },
+  "split_record": {
+    "policy_null_lesion_id": "each image with null lesion_id is its own group (kept, not dropped)",
+    "train": {
+      "n": 16211,
+      "null_lesion_frac": 0.082043057183394,
+      "label_counts": {
+        "NV": 8240,
+        "MEL": 2895,
+        "BCC": 2128,
+        "BKL": 1679,
+        "AK": 554,
+        "SCC": 401,
+        "VASC": 162,
+        "DF": 152
+      }
+    },
+    "val": {
+      "n": 4053,
+      "null_lesion_frac": 0.07772020725388601,
+      "label_counts": {
+        "NV": 2060,
+        "MEL": 723,
+        "BCC": 531,
+        "BKL": 420,
+        "AK": 139,
+        "SCC": 101,
+        "VASC": 40,
+        "DF": 39
+      }
+    },
+    "test": {
+      "n": 5067,
+      "null_lesion_frac": 0.08663903690546675,
+      "label_counts": {
+        "NV": 2575,
+        "MEL": 904,
+        "BCC": 664,
+        "BKL": 525,
+        "AK": 174,
+        "SCC": 126,
+        "VASC": 51,
+        "DF": 48
+      }
+    },
+    "null_lesion_frac_all_isic": 0.0822707354624768,
+    "n_null_lesion_all_isic": 2084,
+    "lesion_overlap_train_test": 0,
+    "lesion_overlap_val_test": 0,
+    "lesion_overlap_train_val": 0
+  }
+}
