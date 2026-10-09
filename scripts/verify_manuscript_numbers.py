@@ -1,258 +1,421 @@
 #!/usr/bin/env python3
-"""Cross-check every decimal in the manuscript against the result JSON files.
+"""Cross-check every number in the manuscript against results/paperB/**/*.json (+ CSV and a few feature-derived counts).
 
-Each number in the .tex is matched at the precision it is written: 0.53 matches
-any source value that rounds to 0.53, while 0.534 must round to 0.534. For every
-number the report names the JSON file and key it came from, or says no source
-exists. Numbers that are not results -- years, design constants, citation and
-page numbers -- are allowlisted by value with a stated reason.
+Two modes, and the second is the one that catches a value attached to the wrong dataset.
 
-The check that matters most is the label check. A number can match a real source
-and still be wrong because it is attached to the wrong dataset or the wrong
-lambda in the prose; that is how 0.833 (pad_heldout) once appeared as a
-Fitzpatrick value. For every number we read the dataset, lambda and
-representation from the surrounding text and compare them against the tags in
-the matching file path and key.
+The free scan below indexes every value it can find and asks whether any source matches
+the printed number. That is the right tool for a wrong number or a missing source, but it
+cannot establish that a number belongs to the dataset the sentence names: with ~140k
+indexed values a three-decimal number collides with about 140 of them, so a source
+carrying any given label almost always exists. 0.833 matches 43 values, one of them a
+Fitzpatrick AUROC, which is why an earlier check "verified" 84.5% against a cosine AUROC
+of 84.4486 and why swapping 0.833 and 0.988 between pad_heldout and Fitzpatrick passes
+every heuristic.
 
-Usage:
-    verify_manuscript_numbers.py --tex paper/midl/paper_b.tex --results results/paperB
-    verify_manuscript_numbers.py ... --out /tmp/report.md --fail-on problem
+Manifest mode removes the ambiguity. paper/number_manifest.json names, for each
+load-bearing number, the one file and key it comes from and the dataset it belongs to;
+each entry is checked against that key alone, and against the dataset mention nearest to
+the number in the .tex. Attribution prefers a label that FOLLOWS the number, because
+"0.988 on Fitzpatrick17k and 0.833 on pad_heldout" puts the referent after the value and
+plain proximity assigns 0.833 to Fitzpatrick -- the exact error being guarded against.
+
+Report only; never edits the manuscript. Categories per number:
+  match      some source rounds (nearest, half up) to the printed value at the printed precision
+  last-digit nearest source differs by at most one unit in the last printed digit (rounding / truncation)
+  mismatch   no source within one last-digit unit (wrong number, wrong source, or source not in results/)
+Flags on matches: lambda-source (every matching source carries a λ not mentioned in the sentence),
+pad_full-only (every matching source is pad_full), pair (mean ± s.d. both found in one source group).
+
+Usage: python scripts/verify_manuscript_numbers.py [--paper-root DIR] [--out results/paperB/manuscript_number_check.md]
 """
+
 from __future__ import annotations
 
 import argparse
+import csv
 import json
-import math
-import os
 import re
 import sys
 from collections import defaultdict
+from decimal import ROUND_HALF_UP, Decimal
+from pathlib import Path
 
-# --------------------------------------------------------------------------
-# Allowlist: value -> reason. These are not results and are never looked up.
-# --------------------------------------------------------------------------
-ALLOWLIST = {
-    "0.5": "chance floor / balanced-accuracy floor for a two-domain problem",
-    "0.05": "significance level",
-    "0.9": "pre-registered monitor bar",
-    "0.90": "pre-registered monitor bar",
-    "0.95": "confidence level",
-    "0.99": "confidence level",
-    "0.45": "pre-registered detector-headroom bound",
-    "0.55": "pre-registered detector-headroom bound",
-    "0.60": "pre-registered adversary-CE gate",
-    "0.10": "pre-registered leakage-movement gate",
-    "0.02": "pre-registered ID-accuracy tolerance",
-    "0.03": "pre-registered ID-ECE tolerance",
-    "0.25": "swept lambda value (design constant)",
-    "0.2": "classifier learning-rate multiplier",
-    "1": "design constant",
-    "2": "design constant / swept lambda",
-    "3": "design constant",
-    "4": "design constant / swept lambda",
-    "5": "design constant",
-    "6": "design constant",
-    "8": "design constant / swept lambda",
-    "10": "design constant",
-    "15": "ECE bins",
-    "16": "latent dimension",
-    "27": "number of training runs",
-    "30": "adversary learning-rate multiplier",
-    "40": "training epochs",
-    "50": "kNN k",
-    "64": "context latent dimension",
-    "100": "adversary LR multiplier in the sensitivity grid",
-    "200": "kNN k",
-    "1536": "pre-projection backbone dimension",
-    "2000": "bootstrap resamples",
-    "2048": "ResNet-50 feature dimension",
-    "90": "percentile",
-    "95": "percentile",
-    "99": "percentile",
-    # published dataset sizes, which are facts about the data rather than
-    # results of this study; each is cited in the Data section
-    "25331": "ISIC 2019 total images (cited)",
-    "2298": "PAD-UFES-20 total images (cited)",
-    "12413": "BCN20000 contribution to ISIC 2019 (cited)",
-    "10015": "HAM10000 contribution to ISIC 2019 (cited)",
-    "819": "MSK4 contribution to ISIC 2019 (cited)",
-    "3887": "Fitzpatrick17k images obtained",
-    "16577": "Fitzpatrick17k images listed (cited)",
-}
-ALLOWLIST_YEAR_RANGE = (1900, 2100)
+import numpy as np
 
-# --------------------------------------------------------------------------
-# Numbers whose provenance is a markdown report or a hand derivation, because
-# the phase that produced them emitted no JSON. Each was checked by hand once
-# and is reprinted on every run so it stays visible rather than silently
-# passing. Fix the upstream phase to emit JSON and the entry can be deleted.
-# --------------------------------------------------------------------------
-DOC_SOURCED = {
-    "4.879": ("results/paperB/phase13/PHASE13_REPORT.md",
-              "PR(z_lesion_norm) table, lambda=0: 4.879 +/- 0.148; phase 13 "
-              "wrote no JSON"),
-    "84.5": ("results/paperB/PHASE1_6_REPORT.md",
-             "k=1 variance share of z_context; phase 1.6 wrote no JSON"),
-    "11.6": ("results/paperB/PHASE1_6_REPORT.md",
-             "discordant-pair count in millions, same table"),
-    "3041": ("results/paperB/r2/item4/REPORT.md",
-             "image-level lesion overlap; recomputable from "
-             "r2/item4/isic_image_split_with_lesion.csv"),
-    "60.0": ("results/paperB/r2/item4/REPORT.md",
-             "same overlap as a percentage (3041/5067)"),
-    "50.8": ("results/paperB/r2/item4/split_record.json",
-             "derived: test NV 2575 / 5067 = 0.5082"),
-    "16211": ("results/paperB/r2/item4/split_record.json", "train.n"),
-    "4053": ("results/paperB/r2/item4/split_record.json", "val.n"),
-    "5067": ("results/paperB/r2/item4/split_record.json", "test.n"),
-    "2084": ("results/paperB/r2/item4/split_record.json",
-             "n_null_lesion_all_isic"),
-    "2026": ("results/paperB/r2/item1/REPORT.md",
-             "lesion-disjoint ISIC test subset size"),
+# Resolved from this file's location so the script runs on the cluster and locally
+# alike; override with --root / --results.
+ROOT = Path(__file__).resolve().parent.parent
+RESULTS = ROOT / "results" / "paperB"
+TEX = ("paper/paper_b.tex", "paper/midl/paper_b.tex")
+MAX_LIST = 64
+SEED_RE = re.compile(r"_s\d{2,3}(?=\b|_|\.)")
+LAM_SRC = re.compile(r"ladv(\d+(?:p\d+)?)")
+LAM_TEX = re.compile(r"(?:\\lam|λ|\\lambda(?:_\{\\mathrm\{adv\}\})?)\s*\$?\s*(?:=|\\to|\\geq|>|<)\s*\$?\s*(\d+(?:\.\d+)?)")
+CONCEPTS = {
+    "mahalanobis": ("maha",), "knn": ("knn",), "cosine": ("cos",), "msp": ("msp",), "energy": ("energy",),
+    "ece": ("ece",), "leakage": ("leak", "probe"), "fitzpatrick": ("fitz",), "pad\\_heldout": ("pad_heldout", "heldout"),
+    "pad\\_full": ("pad_full",), "balanced": ("bal",), "confidence": ("conf", "msp"), "camelyon": ("camelyon",),
+    "iwildcam": ("iwild",), "context": ("context", "z_c"), "imagenet": ("imagenet", "r50", "resnet"),
+    "effnet": ("effb", "efficientnet"), "erm": ("erm",), "recall": ("recall",), "accuracy": ("acc",),
+    "nevus": ("nv",), "actinic": ("ak",), "squamous": ("scc",), "melanoma": ("mel",), "auroc": ("auroc", "auc"),
+    "isic": ("isic",), "ham": ("ham",), "bcn": ("bcn",),
 }
 
-# --------------------------------------------------------------------------
-# Tag vocabularies. Context patterns -> canonical tag; source patterns likewise.
-# --------------------------------------------------------------------------
-DATASET_PATTERNS = {
-    "pad_heldout": [r"pad\\?_heldout", r"pad-ufes", r"held-out pad"],
-    "pad_adv": [r"pad\\?_adv"],
-    "pad_full": [r"pad\\?_full"],
-    "fitzpatrick": [r"fitzpatrick", r"fitz17k", r"\bfitz\b"],
-    "isic": [r"\bisic\b", r"ham10000", r"\bbcn\b", r"\bham\b"],
-    "camelyon": [r"camelyon", r"hospital"],
-    "iwildcam": [r"iwildcam"],
-}
-SOURCE_DATASET_PATTERNS = {
-    "pad_heldout": [r"pad_heldout"],
-    "pad_adv": [r"pad_adv"],
-    "pad_full": [r"pad_full"],
-    "fitzpatrick": [r"fitzpatrick", r"fitz"],
-    "isic": [r"isic", r"\bid\b", r"ham", r"bcn"],
-    "camelyon": [r"camelyon", r"hospital", r"site_probe"],
-    "iwildcam": [r"iwildcam"],
-}
-# pad_full/pad_adv must not silently satisfy a pad_heldout claim
-DATASET_EXCLUSIVE = {"pad_heldout", "pad_adv", "pad_full", "fitzpatrick", "isic",
-                     "camelyon", "iwildcam"}
 
-REPR_PATTERNS = {
-    "imagenet": [r"frozen imagenet", r"imagenet resnet"],
-    "context": [r"context branch", r"z_\{?c\}?", r"\bz_c\b"],
-    "backbone": [r"pre-projection", r"backbone"],
-    "zlesion": [r"z_\{?\\ell\}?", r"lesion latent", r"16-dimensional"],
-}
-SOURCE_REPR_PATTERNS = {
-    "imagenet": [r"imagenet"],
-    "context": [r"z_context", r"z_c\b", r"context"],
-    "backbone": [r"backbone"],
-    "zlesion": [r"z_lesion"],
-}
-
-LAMBDA_CONTEXT = re.compile(
-    r"(?:\\lam|\\lambda_\{?\\?mathrm\{adv\}\}?|\\lambda)\s*(?:\{?=\}?|=)\s*"
-    r"(\d+(?:\.\d+)?)")
-LAMBDA_SOURCE = re.compile(r"(?:ladv|lambda[_=]?)(\d+(?:p\d+)?)")
-
-# --------------------------------------------------------------------------
-# TeX handling
-# --------------------------------------------------------------------------
-BLANK_COMMANDS = [
-    r"\\cite[tp]?\*?\{[^{}]*\}",
-    r"\\label\{[^{}]*\}",
-    r"\\(?:eq)?ref\{[^{}]*\}",
-    r"\\url\{[^{}]*\}",
-    r"\\includegraphics(?:\[[^\]]*\])?\{[^{}]*\}",
-    r"\\jmlr(?:volume|year|workshop)\{[^{}]*\}",
-    r"\\bibliography\{[^{}]*\}",
-    r"\\documentclass(?:\[[^\]]*\])?\{[^{}]*\}",
-    r"\\usepackage(?:\[[^\]]*\])?\{[^{}]*\}",
-    r"\\newcommand\{[^{}]*\}",
-    r"10\^\{-?\d+\}",
-    r"\\\\",
-    r"p\{[\d.]+cm\}",
-    r"\d+(?:\.\d+)?\s*(?:pt|cm|em|ex|in|dpi)\b",
-]
+def rnd(v, d):
+    return float(Decimal(repr(float(v))).quantize(Decimal(1).scaleb(-d), rounding=ROUND_HALF_UP))
 
 
-def strip_tex(text: str) -> str:
-    """Blank out non-content regions, preserving every byte offset."""
-    out = list(text)
-
-    def blank(a: int, b: int) -> None:
-        for i in range(a, b):
-            if out[i] != "\n":
-                out[i] = " "
-
-    # line comments
-    pos = 0
-    for line in text.splitlines(keepends=True):
-        m = re.search(r"(?<!\\)%", line)
-        if m:
-            blank(pos + m.start(), pos + len(line.rstrip("\n")))
-        pos += len(line)
-
-    joined = "".join(out)
-    for pat in BLANK_COMMANDS:
-        for m in re.finditer(pat, joined):
-            blank(m.start(), m.end())
-        joined = "".join(out)
-    return joined
+def rnd_vec(v, d):
+    f = 10.0 ** d
+    return np.round(np.floor(np.asarray(v) * f + 0.5 + 1e-9) / f, d)
 
 
-NUM_RE = re.compile(r"(?<![\w.])(\d{1,3}(?:\{,\}\d{3})+|\d+)(?:\.(\d+))?(?![\w])")
+# ---------------------------------------------------------------- index
+class Index:
+    def __init__(self):
+        self.vals, self.src = [], []
 
-
-def extract_numbers(stripped: str):
-    """Yield (raw, value, decimals, start, end)."""
-    for m in NUM_RE.finditer(stripped):
-        int_part = m.group(1).replace("{,}", "")
-        dec_part = m.group(2)
-        raw = int_part + ("." + dec_part if dec_part else "")
+    def add(self, v, s):
         try:
-            value = float(raw)
-        except ValueError:
+            v = float(v)
+        except (TypeError, ValueError):
+            return
+        if np.isfinite(v) and not isinstance(v, bool):
+            self.vals.append(v)
+            self.src.append(s)
+
+    def walk(self, obj, s, leaves):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                self.walk(v, "{}.{}".format(s, k), leaves)
+        elif isinstance(obj, list):
+            if len(obj) > MAX_LIST and all(isinstance(x, (int, float)) for x in obj[:5]):
+                return
+            for i, v in enumerate(obj):
+                self.walk(v, "{}[{}]".format(s, i), leaves)
+        elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+            leaves[s] = float(obj)
+
+    def finish(self):
+        o = np.argsort(self.vals)
+        self.v = np.asarray(self.vals)[o]
+        self.s = [self.src[i] for i in o]
+        keys = list(CONCEPTS)
+        cache = {}
+        mask = np.zeros(len(self.s), np.int64)
+        lam = np.full(len(self.s), np.nan)
+        for i, src in enumerate(self.s):
+            head = src.rsplit("::", 1)
+            k = src
+            if k not in cache:
+                toks = set(re.split(r"[^a-z0-9]+", src.lower()))
+                mm = 0
+                for j, c in enumerate(keys):
+                    if any(_hit(pt, toks) for pt in CONCEPTS[c]):
+                        mm |= 1 << j
+                lt = lam_of_src(src)
+                cache[k] = (mm, np.nan if lt is None else lt)
+            mask[i], lam[i] = cache[k]
+        self.mask, self.lam, self.keys = mask, lam, keys
+        self.mean = np.array(["[mean" in x for x in self.s])
+
+    def rng(self, lo, hi):
+        return np.searchsorted(self.v, lo), np.searchsorted(self.v, hi, side="right")
+
+    def near(self, x, tol):
+        a, b = np.searchsorted(self.v, x - tol), np.searchsorted(self.v, x + tol, side="right")
+        return [(self.v[i], self.s[i]) for i in range(a, b)]
+
+
+def build_index():
+    idx = Index()
+    groups = defaultdict(dict)  # seed-stripped file -> seed -> leaves
+    for p in sorted(RESULTS.rglob("*.json")):
+        try:
+            obj = json.loads(p.read_text())
+        except Exception:
             continue
-        yield raw, value, len(dec_part) if dec_part else 0, m.start(), m.end()
+        rel = str(p.relative_to(RESULTS))
+        leaves = {}
+        idx.walk(obj, "", leaves)
+        for k, v in leaves.items():
+            idx.add(v, rel + "::" + k)
+        m = SEED_RE.search(rel)
+        if m:
+            groups[SEED_RE.sub("_s*", rel)][m.group(0)] = leaves
+        # per-run lists inside one file (e.g. per_run arrays) are covered by their own leaves
+    for p in sorted(RESULTS.rglob("*.csv")):
+        if p.stat().st_size > 5e6:
+            continue
+        rel = str(p.relative_to(RESULTS))
+        with open(p, newline="") as f:
+            for i, row in enumerate(csv.DictReader(f)):
+                key = "|".join("{}={}".format(k, v) for k, v in row.items() if v and not _isnum(v))[:160]
+                for k, v in row.items():
+                    if v and _isnum(v):
+                        idx.add(v, "{}::row{}[{}]::{}".format(rel, i, k, key))
+    for g, seeds in derived_groups().items():
+        groups[g].update(seeds)
+        for sd, leaves in seeds.items():
+            for k, v in leaves.items():
+                idx.add(v, g.replace("_s*", sd) + "::" + k)
+    for g, seeds in groups.items():
+        if len(seeds) < 2:
+            continue
+        keys = set.intersection(*[set(l) for l in seeds.values()])
+        for k in keys:
+            a = np.array([seeds[s][k] for s in seeds])
+            idx.add(a.mean(), "{} [mean n={}]::{}".format(g, len(a), k))
+            idx.add(a.std(ddof=1), "{} [sd n={}]::{}".format(g, len(a), k))
+    idx.finish()
+    return idx
 
 
-def context_of(text: str, start: int, end: int, width: int = 260) -> str:
-    return text[max(0, start - width):min(len(text), end + width)]
+def _isnum(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 
-def label_positions(text: str):
-    """Every dataset / representation mention with its offset.
+def derived_groups():
+    """Counts not stored in any JSON: 6-class (PAD-restricted) predictions on pad_heldout from Phase 13 features."""
+    feat = RESULTS / "phase13" / "features"
+    pad = np.array([0, 1, 2, 3, 4, 7])
+    names = ("MEL", "NV", "BCC", "AK", "BKL", "DF", "VASC", "SCC")
+    out = defaultdict(dict)
+    for d in sorted(feat.glob("runB_orth1_ladv*_s*")):
+        f = d / "pad_heldout.npz"
+        if not f.exists():
+            continue
+        z = np.load(f)
+        lg, y = z["logits"], z["labels"].astype(int)
+        pr = pad[lg[:, pad].argmax(1)]
+        lv = {"accuracy": float((pr == y).mean())}
+        for c in pad:
+            n = names[c]
+            lv["pred_count_" + n] = float((pr == c).sum())
+            lv["correct_" + n] = float(((pr == c) & (y == c)).sum())
+            lv["recall_" + n] = float(((pr == c) & (y == c)).sum() / max((y == c).sum(), 1))
+        m = SEED_RE.search(d.name)
+        out["derived/phase13_pad_heldout_6class/" + SEED_RE.sub("_s*", d.name)][m.group(0)] = lv
+    return out
 
-    Attribution has to be by proximity, not by presence in a window. In
-    "AUROC 0.988 on Fitzpatrick17k and 0.833 on pad_heldout" both labels sit
-    inside any sensible window, so a set-based check calls either number
-    consistent and the one failure mode this script exists to catch -- a value
-    attached to the wrong dataset -- passes silently.
-    """
-    ds, rp = [], []
+
+# ---------------------------------------------------------------- tex
+NUM = re.compile(r"(?<![\w.\\{])(\d{1,3}(?:\{,\}\d{3})+(?:\.\d+)?|\d+\.\d+|\d+)(?![\w.]*\d)")
+
+
+def strip_tex(s):
+    s = re.sub(r"(?<!\\)%.*", "", s)
+    end = re.search(r"\\begin\{thebibliography\}|\\bibliography\{", s)
+    return s[: end.start()] if end else s
+
+
+def macros(s):
+    out = {}
+    for m in re.finditer(r"\\newcommand\{(\\[A-Za-z]+)\}\{([^{}]*)\}", s):
+        if re.search(r"\d", m.group(2)):
+            out[m.group(1)] = m.group(2)
+    return out
+
+
+def body(s):
+    b = s.find("\\begin{document}")
+    return b if b >= 0 else 0
+
+
+SKIP_CMD = re.compile(r"\\(?:cite|ref|label|url|includegraphics|eqref|href|bibitem|input|usepackage|documentclass|"
+                      r"setlength|vspace|hspace|resizebox|scalebox|textwidth|linewidth|columnwidth)\*?(?:\[[^\]]*\])?\{[^{}]*\}")
+
+
+_PROC = {}  # path -> macro-expanded, comment-stripped body, for the manifest label check
+
+
+def tex_numbers(path):
+    raw = strip_tex(Path(path).read_text())
+    mac = macros(raw)
+    s = raw[body(raw):]
+    for k in sorted(mac, key=len, reverse=True):
+        s = re.sub(re.escape(k) + r"(?![A-Za-z])", lambda _m, v=mac[k]: v, s)
+    s = SKIP_CMD.sub(lambda m: " " * len(m.group(0)), s)
+    s = re.sub(r"\\begin\{(?:tabular|figure|table)\}\{?[^}\n]*\}?", lambda m: " " * len(m.group(0)), s)
+    in_math = _math_mask(s)
+    _PROC[str(path)] = s
+    for m in NUM.finditer(s):
+        t = m.group(1)
+        is_dec = "." in t
+        is_grp = "{,}" in t
+        if not (is_dec or is_grp or in_math[m.start()]):
+            continue
+        if not is_dec and re.fullmatch(r"(19|20)\d\d", t):
+            continue
+        val = float(t.replace("{,}", ""))
+        d = len(t.split(".")[1]) if is_dec else 0
+        a, b = max(0, m.start() - 80), m.end() + 80
+        ctx = re.sub(r"\s+", " ", s[a:b])
+        pa = s.rfind("\n\n", 0, m.start())
+        pb = s.find("\n\n", m.end())
+        pa, pb = max(pa, m.start() - 700), (pb if pb >= 0 else len(s))
+        sent = s[max(pa, 0): min(pb, m.end() + 700)]
+        para = s.count("\n\n", 0, m.start())
+        pct = s[m.end(): m.end() + 3].startswith("\\%")
+        pm = re.match(r"\s*(?:\\,)?\s*\$?\s*\\pm\s*\$?\s*(?:\\,)?\s*(\d+\.\d+)", s[m.end(): m.end() + 30])
+        line = s.count("\n", 0, m.start()) + 1 + raw[: body(raw)].count("\n")
+        yield {"file": path, "line": line, "text": t, "val": val, "d": d, "ctx": ctx, "sent": sent, "pct": pct, "para": para,
+               "pos": m.start(), "end": m.end(), "sd": float(pm.group(1)) if pm else None}
+
+
+def _math_mask(s):
+    mask = np.zeros(len(s) + 1, bool)
+    on, i = False, 0
+    while i < len(s):
+        if s[i] == "\\" and i + 1 < len(s):
+            i += 2
+            continue
+        if s[i] == "$":
+            on = not on
+        mask[i] = on
+        i += 1
+    return mask
+
+
+# ---------------------------------------------------------------- check
+def lam_of_src(src):
+    m = LAM_SRC.search(src)
+    return float(m.group(1).replace("p", ".")) if m else None
+
+
+_TOK = {}
+
+
+def _tokens(src):
+    t = _TOK.get(src)
+    if t is None:
+        t = _TOK[src] = set(re.split(r"[^a-z0-9]+", src.lower()))
+    return t
+
+
+def _hit(pat, toks):
+    return any(t.startswith(pat) for t in toks)
+
+
+def relevance(sent, src, lams):
+    sl, toks = sent.lower(), _tokens(src)
+    r = sum(1 for k, pats in CONCEPTS.items() if k in sl and any(_hit(p, toks) for p in pats))
+    lt = lam_of_src(src)
+    if lams and lt is not None:
+        r += 2 if lt in lams else -2
+    return r
+
+
+def check(n, idx):
+    x, d = n["val"], n["d"]
+    unit = 10.0 ** (-d)
+    win = max(unit * 30, abs(x) * 0.08)
+    parts = []
+    lo, hi = idx.rng(x - win, x + win)
+    parts.append((np.arange(lo, hi), 1.0))
+    if n["pct"]:
+        lo, hi = idx.rng((x - win) / 100, (x + win) / 100)
+        parts.append((np.arange(lo, hi), 100.0))
+    ii = np.concatenate([p for p, _ in parts])
+    if ii.size == 0:
+        n["lamset"] = set()
+        return "mismatch", None, 0, ["no source within window"]
+    vals = np.concatenate([idx.v[p] * f for p, f in parts])
+    sl = n["sent"].lower()
+    smask = sum(1 << j for j, c in enumerate(idx.keys) if c in sl)
+    lams = {float(v) for v in LAM_TEX.findall(n["sent"])}
+    m = idx.mask[ii] & smask
+    rel = sum((m >> j) & 1 for j in range(len(idx.keys))).astype(int)
+    rel = rel + idx.mean[ii].astype(int)
+    lt = idx.lam[ii]
+    if lams:
+        has = ~np.isnan(lt)
+        inl = np.isin(lt, list(lams))
+        rel = rel + np.where(has & inl, 2, 0) - np.where(has & ~inl, 2, 0)
+    top = rel.max()
+    sel = rel >= (top - 1 if top >= 2 else top)
+    rounded = rnd_vec(vals[sel], d)
+    pv, pi = vals[sel], ii[sel]
+    ex = rounded == x
+    cl = (~ex) & (np.abs(pv - x) <= unit * 1.0001)
+    status = "match" if ex.any() else ("last-digit" if cl.any() else "mismatch")
+    flags = ["context score {}".format(int(top))]
+    if top <= 0:
+        flags.append("weak (no context overlap)")
+    if ex.any():
+        allx = np.abs(vals - x) <= unit
+        allx &= rnd_vec(vals, d) == x
+        tags = idx.lam[ii[allx]]
+        if lams and tags.size and not np.isnan(tags).any() and not np.isin(tags, list(lams)).any():
+            flags.append("lambda-source (sentence λ {}; sources λ {})".format(sorted(lams), sorted(set(tags.tolist()))))
+        if all("pad_full" in idx.s[j] for j in pi[ex]):
+            flags.append("pad_full-only")
+    use = ex if ex.any() else (cl if cl.any() else np.ones(len(pv), bool))
+    cand = [(pv[k], idx.s[pi[k]], idx.mean[pi[k]]) for k in np.flatnonzero(use)]
+    cand.sort(key=lambda t: (not t[2], abs(t[0] - x), len(t[1])))
+    if n["sd"] is not None and cand:
+        key = lambda src: (src.split("::")[0].split(" [")[0], src.split("::")[-1])
+        sdu = 10.0 ** (-len(str(n["sd"]).split(".")[1])) * 0.51
+        lo, hi = idx.rng(n["sd"] - sdu, n["sd"] + sdu)
+        sds = {key(idx.s[j]) for j in range(lo, hi) if "[sd" in idx.s[j]}
+        if any(key(c[1]) in sds for c in cand if c[2]):
+            flags.append("pair")
+    n["lamset"] = set(idx.lam[pi[ex]][~np.isnan(idx.lam[pi[ex]])].tolist()) if ex.any() else set()
+    best = (cand[0][0], cand[0][1]) if cand else None
+    return status, best, int(ex.sum()), flags
+
+
+def paragraph_lambda_outliers(rows):
+    """Flag a number whose matched sources carry a single λ that no other number in its paragraph matches,
+    when the rest of the paragraph matches at least two other λ values."""
+    by_para = defaultdict(list)
+    for r in rows:
+        by_para[(r[0], r[1]["para"])].append(r)
+    for rs in by_para.values():
+        single = [(r, next(iter(r[1]["lamset"]))) for r in rs if len(r[1]["lamset"]) == 1]
+        counts = defaultdict(int)
+        for _, l in single:
+            counts[l] += 1
+        for r, l in single:
+            others = {k for k, c in counts.items() if k != l}
+            if counts[l] == 1 and len(others) >= 2:
+                r[5].append("lambda-outlier in paragraph (this λ {}; others {})".format(l, sorted(others)))
+
+
+# ------------------------------------------------------------- manifest mode
+# Canonical dataset names as the manifest declares them, with the patterns that
+# name them in the .tex. Kept separate from CONCEPTS: these must be exclusive,
+# because pad_full satisfying a pad_heldout claim is the circularity this paper
+# already corrected once.
+MANIFEST_DS = {
+    "pad_heldout": (r"pad\\?_heldout", r"held-out pad"),
+    "pad_adv": (r"pad\\?_adv",),
+    "pad_full": (r"pad\\?_full",),
+    "fitzpatrick": (r"fitzpatrick", r"fitz17k"),
+    "isic": (r"\bisic\b", r"ham10000", r"\bbcn\b"),
+    "camelyon": (r"camelyon", r"hospital"),
+    "iwildcam": (r"iwildcam",),
+}
+
+
+def ds_positions(text):
+    out = []
     low = text.lower()
-    for name, pats in DATASET_PATTERNS.items():
+    for name, pats in MANIFEST_DS.items():
         for pat in pats:
             for m in re.finditer(pat, low):
-                ds.append((m.start(), m.end(), name))
-    for name, pats in REPR_PATTERNS.items():
-        for pat in pats:
-            for m in re.finditer(pat, low):
-                rp.append((m.start(), m.end(), name))
-    lam = [(m.start(), m.end(), float(m.group(1)))
-           for m in LAMBDA_CONTEXT.finditer(text)]
-    return sorted(ds), sorted(rp), sorted(lam)
+                out.append((m.start(), m.end(), name))
+    return sorted(out)
 
 
-def nearest(mentions, start, end, limit):
-    """The label this number is attached to, and the others within limit.
-
-    A label that *follows* the number wins over a nearer one that precedes it.
-    English puts the referent after the value -- "0.988 on Fitzpatrick17k and
-    0.833 on pad_heldout" -- so plain proximity attributes 0.833 to
-    Fitzpatrick, which is the error this check exists to detect.
-    """
-    after, before, others = (None, None), (None, None), set()
+def nearest_label(mentions, start, end, limit=200):
+    """The label this number is attached to, preferring one that follows it."""
+    after = before = (None, None)
     for a, b, tag in mentions:
         if a <= start and end <= b:
             d, side = 0, "after"
@@ -262,224 +425,17 @@ def nearest(mentions, start, end, limit):
             d, side = start - b, "before"
         if d > limit:
             continue
-        others.add(tag)
-        slot = after if side == "after" else before
-        if slot[1] is None or d < slot[1]:
-            if side == "after":
+        if side == "after":
+            if after[1] is None or d < after[1]:
                 after = (tag, d)
-            else:
-                before = (tag, d)
-    best = after[0] if after[0] is not None else before[0]
-    if best is not None:
-        others.discard(best)
-    return best, others
+        elif before[1] is None or d < before[1]:
+            before = (tag, d)
+    return after[0] if after[0] is not None else before[0]
 
 
-def tags_from_context(ctx: str):
-    low = ctx.lower()
-    datasets = {name for name, pats in DATASET_PATTERNS.items()
-                if any(re.search(p, low) for p in pats)}
-    # pad_heldout also matches a bare "pad"; keep the specific one if present
-    if "pad_heldout" in datasets:
-        datasets.discard("pad_full")
-    reprs = {name for name, pats in REPR_PATTERNS.items()
-             if any(re.search(p, low) for p in pats)}
-    lambdas = {float(x) for x in LAMBDA_CONTEXT.findall(ctx)}
-    return datasets, reprs, lambdas
-
-
-def tags_from_source(path: str, keypath: str):
-    low = (path + "|" + keypath).lower()
-    datasets = {name for name, pats in SOURCE_DATASET_PATTERNS.items()
-                if any(re.search(p, low) for p in pats)}
-    reprs = {name for name, pats in SOURCE_REPR_PATTERNS.items()
-             if any(re.search(p, low) for p in pats)}
-    lambdas = set()
-    for tok in LAMBDA_SOURCE.findall(low):
-        lambdas.add(float(tok.replace("p", ".")))
-    m = re.search(r'"?lambda"?[=:\s]+(\d+(?:\.\d+)?)', low)
-    if m:
-        lambdas.add(float(m.group(1)))
-    return datasets, reprs, lambdas
-
-
-# --------------------------------------------------------------------------
-# Source index
-# --------------------------------------------------------------------------
-class Source:
-    __slots__ = ("path", "keypath", "value", "datasets", "reprs", "lambdas")
-
-    def __init__(self, path, keypath, value):
-        self.path = path
-        self.keypath = keypath
-        self.value = value
-        self.datasets, self.reprs, self.lambdas = tags_from_source(path, keypath)
-
-
-def walk_json(node, path, keypath, out, lam_hint=None):
-    if isinstance(node, dict):
-        hint = lam_hint
-        for k in ("lambda", "lambda_adv", "ladv"):
-            if isinstance(node.get(k), (int, float)):
-                hint = float(node[k])
-        for k, v in node.items():
-            walk_json(v, path, f"{keypath}|{k}" if keypath else str(k), out, hint)
-    elif isinstance(node, list):
-        for i, v in enumerate(node):
-            walk_json(v, path, f"{keypath}[{i}]", out, lam_hint)
-    elif isinstance(node, bool) or node is None:
-        return
-    elif isinstance(node, (int, float)):
-        if isinstance(node, float) and (math.isnan(node) or math.isinf(node)):
-            return
-        kp = keypath
-        if lam_hint is not None and "lambda" not in kp.lower():
-            kp = f"{kp} (lambda={lam_hint:g})"
-        out.append(Source(path, kp, float(node)))
-
-
-def derive_aggregates(node, path, keypath, out):
-    """Means and s.d. over lists of records, grouped by lambda.
-
-    Most manuscript numbers are seed means, which appear in no file as a leaf.
-    """
-    if isinstance(node, dict):
-        for k, v in node.items():
-            derive_aggregates(v, path, f"{keypath}|{k}" if keypath else str(k), out)
-        return
-    if not (isinstance(node, list) and node and
-            all(isinstance(r, dict) for r in node)):
-        return
-
-    groups = defaultdict(list)
-    for rec in node:
-        lam = None
-        for k in ("lambda", "lambda_adv", "ladv"):
-            if isinstance(rec.get(k), (int, float)):
-                lam = float(rec[k])
-        groups[lam].append(rec)
-
-    for lam, recs in groups.items():
-        flat = defaultdict(list)
-        for rec in recs:
-            leaves = []
-            walk_json(rec, path, "", leaves)
-            for s in leaves:
-                base = re.sub(r"\s*\(lambda=[^)]*\)$", "", s.keypath)
-                if re.search(r"(^|\|)(seed|lambda|n|run)(\||$)", base):
-                    continue
-                flat[base].append(s.value)
-        tag = f"lambda={lam:g}" if lam is not None else "all"
-        for base, vals in flat.items():
-            if len(vals) < 2:
-                continue
-            mean = sum(vals) / len(vals)
-            var = sum((v - mean) ** 2 for v in vals) / (len(vals) - 1)
-            kp = f"{keypath}[{tag}]|{base}"
-            out.append(Source(path, kp + "|mean", mean))
-            out.append(Source(path, kp + "|sd", math.sqrt(var)))
-
-
-def build_index(results_root: str):
-    sources = []
-    n_files = 0
-    for dirpath, _dirs, files in os.walk(results_root):
-        for fn in sorted(files):
-            if not fn.endswith(".json"):
-                continue
-            full = os.path.join(dirpath, fn)
-            rel = os.path.relpath(full, results_root)
-            try:
-                with open(full, encoding="utf-8") as fh:
-                    data = json.load(fh)
-            except (ValueError, OSError):
-                continue
-            n_files += 1
-            walk_json(data, rel, "", sources)
-            derive_aggregates(data, rel, "", sources)
-    return sources, n_files
-
-
-# --------------------------------------------------------------------------
-# Matching
-# --------------------------------------------------------------------------
-def allowlisted(raw: str, value: float):
-    if raw in ALLOWLIST:
-        return ALLOWLIST[raw]
-    if "." not in raw and ALLOWLIST_YEAR_RANGE[0] <= value <= ALLOWLIST_YEAR_RANGE[1]:
-        return "year or four-digit non-result integer"
-    return None
-
-
-def match(num_value, decimals, sources):
-    """Sources whose value rounds to the written number at written precision."""
-    hits = []
-    for s in sources:
-        if round(s.value, decimals) == round(num_value, decimals):
-            hits.append(s)
-    return hits
-
-
-def classify(near_ds, near_rp, near_lam, hits):
-    """Return (status, note, chosen_hits).
-
-    The nearest dataset mention is binding: a value that exists only under a
-    different dataset is a mismatch even if the other dataset is also named
-    nearby. Lambda and representation are checked the same way.
-    """
-    if not hits:
-        return "NO-SOURCE", "no file contains this value at this precision", []
-
-    def ok(s):
-        if near_ds and s.datasets and near_ds not in s.datasets:
-            if (s.datasets | {near_ds}) & DATASET_EXCLUSIVE:
-                return False
-        if near_lam is not None and s.lambdas and near_lam not in s.lambdas:
-            return False
-        if near_rp and s.reprs and near_rp not in s.reprs:
-            return False
-        return True
-
-    consistent = [s for s in hits if ok(s)]
-    if consistent:
-        return "OK", "", consistent
-
-    wrong_ds = sorted({d for s in hits for d in s.datasets})
-    wrong_lam = sorted({l for s in hits for l in s.lambdas})
-    bits = []
-    if near_ds:
-        bits.append("nearest label is %s but the value exists only under %s"
-                    % (near_ds, ", ".join(wrong_ds) or "another dataset"))
-    if near_lam is not None and wrong_lam:
-        bits.append("nearest lambda is %g but the value occurs at %s"
-                    % (near_lam, ", ".join("%g" % x for x in wrong_lam)))
-    if near_rp:
-        bits.append("nearest representation is %s" % near_rp)
-    return "LABEL-MISMATCH", "; ".join(bits) or "label inconsistent", hits
-
-
-
-# --------------------------------------------------------------------------
-# Manifest mode
-# --------------------------------------------------------------------------
-# The free scan above cannot catch a value attached to the wrong dataset. With
-# ~140k indexed values a three-decimal number collides with roughly 140 of them,
-# so a source carrying any given label almost always exists: the 0.833 /0.988
-# swap passes a set-based *and* a nearest-label check for that reason.
-#
-# A manifest removes the ambiguity by naming the one source each number is
-# supposed to come from. For every entry we check three things: the key still
-# exists and still holds that value at the written precision; the number appears
-# in the .tex; and the dataset mention nearest to it there is the declared one.
-# The third check is what catches a swap.
-
-
-def resolve_key(data, keypath):
-    """keypath is a list of components.
-
-    It cannot be a '|'-joined string: the result files use '|' inside single
-    keys, e.g. "Mahalanobis|pad_heldout|full|pooled".
-    """
+def resolve_path(data, keypath):
+    """keypath is a LIST of components: result keys contain '|' themselves,
+    e.g. "Mahalanobis|pad_heldout|full|pooled"."""
     if isinstance(keypath, str):
         keypath = [keypath]
     cur = data
@@ -487,270 +443,193 @@ def resolve_key(data, keypath):
         try:
             cur = cur[int(part)] if isinstance(cur, list) else cur[part]
         except (KeyError, IndexError, TypeError, ValueError):
-            return None, "key not found at %r" % part
-    if isinstance(cur, bool) or not isinstance(cur, (int, float)):
-        return None, "key is not numeric (%r)" % type(cur).__name__
-    return float(cur), None
-
-
-def resolve_list(data, keypath):
-    if isinstance(keypath, str):
-        keypath = [keypath]
-    cur = data
-    for part in keypath:
-        try:
-            cur = cur[int(part)] if isinstance(cur, list) else cur[part]
-        except (KeyError, IndexError, TypeError, ValueError):
-            return None, "list key not found at %r" % part
+            return None, "key not found at {!r}".format(part)
     return cur, None
 
 
-def check_manifest(manifest_path, results_root, stripped, ds_pos, line_of):
-    with open(manifest_path, encoding="utf-8") as fh:
-        entries = json.load(fh)
-    results = []
+def _leaf_value(rec, leaf):
+    v, err = resolve_path(rec, leaf)
+    if err or isinstance(v, bool) or not isinstance(v, (int, float)):
+        return None
+    return float(v)
+
+
+def check_manifest(path, results, numbers):
+    """numbers: list of dicts from tex_numbers, so the label check sees real offsets."""
+    entries = json.loads(Path(path).read_text())
+    by_text = defaultdict(list)
+    for n in numbers:
+        by_text[n["text"]].append(n)
+
+    out = []
     for e in entries:
         eid = e.get("id", "?")
         written = str(e["written"])
-        dec = len(written.split(".")[1]) if "." in written else 0
+        d = len(written.split(".")[1]) if "." in written else 0
         want = float(written)
-        full = os.path.join(results_root, e["file"])
-        problems, warnings = [], []
+        probs, warns, got = [], [], None
 
-        if not os.path.exists(full):
-            problems.append("missing file %s" % e["file"])
-            got = None
+        f = Path(results) / e["file"]
+        if not f.exists():
+            probs.append("missing file {}".format(e["file"]))
         else:
-            with open(full, encoding="utf-8") as fh:
-                data = json.load(fh)
+            data = json.loads(f.read_text())
             if "list" in e:
-                # most headline numbers are seed means and exist in no file as
-                # a leaf, so the manifest may name a list plus a leaf and a stat
-                cur, err = resolve_list(data, e["list"])
+                node, err = resolve_path(data, e["list"])
                 if err:
-                    problems.append(err); got = None
-                elif not isinstance(cur, list):
-                    problems.append("%r is not a list" % e["list"]); got = None
+                    probs.append(err)
+                elif not isinstance(node, list):
+                    probs.append("{!r} is not a list".format(e["list"]))
                 else:
-                    recs = cur
+                    recs = node
                     for wk, wv in (e.get("where") or {}).items():
                         recs = [r for r in recs if r.get(wk) == wv]
-                    leaves = e.get("leaves") or [e["leaf"]]
-                    per_leaf = []
-                    for leaf in leaves:
-                        lv = [resolve_key(r, leaf)[0] for r in recs]
-                        lv = [x for x in lv if x is not None]
-                        if lv:
-                            per_leaf.append(sum(lv) / len(lv))
-                    vals = [resolve_key(r, e["leaf"])[0] for r in recs] \
-                        if "leaves" not in e else per_leaf
-                    vals = [x for x in vals if x is not None]
-                    if not vals:
-                        problems.append("no values at leaf %r" % e["leaf"])
-                        got = None
+                    if "leaves" in e:
+                        vals = []
+                        for leaf in e["leaves"]:
+                            lv = [_leaf_value(r, leaf) for r in recs]
+                            lv = [x for x in lv if x is not None]
+                            if lv:
+                                vals.append(sum(lv) / len(lv))
                     else:
-                        n = e.get("n")
-                        if n is not None and len(vals) != n:
-                            problems.append("expected n=%d seeds, found %d"
-                                            % (n, len(vals)))
-                        mean = sum(vals) / len(vals)
+                        vals = [_leaf_value(r, e["leaf"]) for r in recs]
+                        vals = [x for x in vals if x is not None]
+                    if not vals:
+                        probs.append("no values at leaf {!r}".format(e.get("leaf")))
+                    else:
+                        if e.get("n") is not None and len(vals) != e["n"]:
+                            probs.append("expected n={} seeds, found {}".format(e["n"], len(vals)))
                         stat = e.get("stat", "mean")
+                        mean = sum(vals) / len(vals)
                         if stat == "min":
                             got = min(vals)
                         elif stat == "max":
                             got = max(vals)
                         elif stat == "sd":
                             if len(vals) < 2:
-                                problems.append("sd needs >= 2 values")
-                                got = None
+                                probs.append("sd needs >= 2 values")
                             else:
-                                got = math.sqrt(sum((v - mean) ** 2 for v in vals)
-                                                / (len(vals) - 1))
+                                got = (sum((v - mean) ** 2 for v in vals) / (len(vals) - 1)) ** 0.5
                         else:
                             got = mean
-                if got is not None and round(got, dec) != round(want, dec):
-                    problems.append("source gives %.6g, which is %.*f at the "
-                                    "written precision, not %s"
-                                    % (got, dec, round(got, dec), written))
             else:
-                got, err = resolve_key(data, e["key"])
+                v, err = resolve_path(data, e["key"])
                 if err:
-                    problems.append(err)
-                elif round(got, dec) != round(want, dec):
-                    problems.append("source holds %.6g, which is %.*f at the "
-                                    "written precision, not %s"
-                                    % (got, dec, round(got, dec), written))
+                    probs.append(err)
+                elif isinstance(v, bool) or not isinstance(v, (int, float)):
+                    probs.append("key is not numeric")
+                else:
+                    got = float(v)
+            if got is not None and rnd(got, d) != rnd(want, d):
+                probs.append("source gives {:.6g}, which is {:.{p}f} at the written "
+                             "precision, not {}".format(got, rnd(got, d), written, p=d))
 
-        # the number must appear in the tex, with the declared label nearest it
-        occurrences = []
-        for raw, value, d, a, b in extract_numbers(stripped):
-            if raw == written:
-                occurrences.append((a, b))
-        if not occurrences:
-            problems.append("not present in the manuscript")
+        occ = by_text.get(written, [])
+        if not occ:
+            probs.append("not present in the manuscript")
         elif e.get("label"):
-            oks = []
-            for a, b in occurrences:
-                near, _ = nearest(ds_pos, a, b, 200)
-                oks.append((near, line_of[a]))
-            good = [x for x in oks if x[0] == e["label"]]
-            labelled = [x for x in oks if x[0] is not None]
-            if good:
+            seen = [(nearest_label(ds_positions(_PROC[str(n["file"])]), n["pos"], n["end"]), n["line"])
+                    for n in occ]
+            labelled = [x for x in seen if x[0] is not None]
+            if any(t == e["label"] for t, _ in seen):
                 pass
             elif not labelled:
-                warnings.append("appears only in contexts with no nearby "
-                                "dataset label (line(s) %s); a table cell takes "
-                                "its label from the column header, which this "
-                                "check cannot read"
-                                % ", ".join(str(l) for _, l in oks))
+                warns.append("appears only where no dataset label is nearby (line(s) {}); "
+                             "a table cell takes its label from the column header, which "
+                             "this check cannot read"
+                             .format(", ".join(str(l) for _, l in seen)))
             else:
-                problems.append("appears at line(s) %s but the nearest label is "
-                                "%s, not %s"
-                                % (", ".join(str(l) for _, l in labelled),
-                                   ", ".join(sorted({str(n) for n, _ in labelled})),
-                                   e["label"]))
-        results.append((eid, written, e.get("label", ""), problems, got,
-                        warnings))
-    return results
+                probs.append("appears at line(s) {} but the nearest label is {}, not {}"
+                             .format(", ".join(str(l) for _, l in labelled),
+                                     ", ".join(sorted({t for t, _ in labelled})), e["label"]))
+        out.append((eid, written, e.get("label", ""), got, probs, warns))
+    return out
 
 
-def main() -> int:
+def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tex", default="paper/midl/paper_b.tex")
-    ap.add_argument("--results", default="results/paperB")
+    ap.add_argument("--root", default=None, help="repo root (default: this script's repo)")
+    ap.add_argument("--results", default=None, help="results dir (default: <root>/results/paperB)")
+    ap.add_argument("--paper-root", default=None, help="where paper/ lives (default: <root>)")
     ap.add_argument("--out", default=None)
-    ap.add_argument("--min-decimals", type=int, default=2,
-                    help="numbers with fewer decimals are reported as weak")
+    ap.add_argument("--ints", action="store_true", help="also report bare integers inside math (counts)")
     ap.add_argument("--manifest", default=None,
-                    help="JSON list of {id, written, label, file, key} entries; "
-                         "the only mode that reliably catches a value attached "
-                         "to the wrong dataset")
-    ap.add_argument("--fail-on", choices=["never", "problem"], default="never")
-    args = ap.parse_args()
-
-    with open(args.tex, encoding="utf-8") as fh:
-        raw_tex = fh.read()
-    stripped = strip_tex(raw_tex)
-    line_of = [0] * (len(raw_tex) + 1)
-    ln = 1
-    for i, ch in enumerate(raw_tex):
-        line_of[i] = ln
-        if ch == "\n":
-            ln += 1
-    line_of[len(raw_tex)] = ln
-
-    sources, n_files = build_index(args.results)
-    ds_pos, rp_pos, lam_pos = label_positions(stripped)
-
+                    help="JSON list of {id, written, label, file, key} entries. The only "
+                         "mode that reliably catches a value attached to the wrong dataset")
+    ap.add_argument("--fail-on", choices=["never", "manifest", "problem"], default="never",
+                    help="manifest: exit 1 if any manifest entry fails. "
+                         "problem: also exit 1 on any free-scan mismatch")
+    a = ap.parse_args()
+    global ROOT, RESULTS
+    if a.root:
+        ROOT = Path(a.root).resolve()
+        RESULTS = ROOT / "results" / "paperB"
+    if a.results:
+        RESULTS = Path(a.results).resolve()
+    if a.paper_root is None:
+        a.paper_root = str(ROOT)
+    if a.out is None:
+        a.out = str(RESULTS / "manuscript_number_check.md")
+    idx = build_index()
+    print("index: {} values".format(len(idx.v)), file=sys.stderr)
     rows = []
-    for raw, value, dec, start, end in extract_numbers(stripped):
-        reason = allowlisted(raw, value)
-        if reason:
-            rows.append(dict(line=line_of[start], raw=raw, status="ALLOWLISTED",
-                             note=reason, hits=[], weak=False))
+    for t in TEX:
+        p = Path(a.paper_root) / t
+        if not p.exists():
             continue
-        hits = match(value, dec, sources)
-        near_ds, other_ds = nearest(ds_pos, start, end, 200)
-        near_rp, _ = nearest(rp_pos, start, end, 200)
-        near_lam, _ = nearest(lam_pos, start, end, 120)
-        status, note, chosen = classify(near_ds, near_rp, near_lam, hits)
-        if status != "OK" and raw in DOC_SOURCED:
-            src, why = DOC_SOURCED[raw]
-            status, note, chosen = "OK-DOC", "%s -- %s" % (src, why), []
-        rows.append(dict(line=line_of[start], raw=raw, status=status, note=note,
-                         hits=chosen, weak=dec < args.min_decimals,
-                         ctx_ds=([near_ds] if near_ds else []) + sorted(other_ds),
-                         ctx_lam=([near_lam] if near_lam is not None else [])))
-
-    counts = defaultdict(int)
+        for n in tex_numbers(p):
+            if n["d"] == 0 and not a.ints and "{,}" not in n["text"] and n["val"] < 1000:
+                continue
+            st, best, nex, flags = check(n, idx)
+            rows.append((t, n, st, best, nex, flags))
+    paragraph_lambda_outliers(rows)
+    order = {"mismatch": 0, "last-digit": 1, "match": 2}
+    rows.sort(key=lambda r: (order[r[2]], not any(f.startswith(("lambda", "pad_full")) for f in r[5]), r[0], r[1]["line"]))
+    cnt = defaultdict(int)
     for r in rows:
-        counts[r["status"]] += 1
-
-    L = []
-    L.append("# Manuscript number verification\n")
-    L.append("tex: `%s`  \nresults: `%s` (%d JSON files, %d indexed values "
-             "including derived seed means)\n" % (args.tex, args.results, n_files,
-                                                  len(sources)))
-    L.append("| status | count |")
-    L.append("|---|---:|")
-    for k in ("OK", "OK-DOC", "ALLOWLISTED", "LABEL-MISMATCH", "NO-SOURCE"):
-        L.append("| %s | %d |" % (k, counts[k]))
-    L.append("")
-
-    doc = [r for r in rows if r["status"] == "OK-DOC"]
-    L.append("## Verified against a markdown report, not against JSON (%d)\n"
-             % len(doc))
-    L.append("These pass, but by a hand check recorded in the script rather than "
-             "by matching a result file. Making the upstream phase emit JSON "
-             "would retire each entry.\n")
-    if doc:
-        L.append("| line | number | provenance |")
-        L.append("|---:|---|---|")
-        for r in doc:
-            L.append("| %d | `%s` | %s |" % (r["line"], r["raw"], r["note"]))
-    else:
-        L.append("None.")
-    L.append("")
-
-    for status, title in (("LABEL-MISMATCH", "Label mismatches"),
-                          ("NO-SOURCE", "No source found")):
-        bad = [r for r in rows if r["status"] == status]
-        L.append("## %s (%d)\n" % (title, len(bad)))
-        if not bad:
-            L.append("None.\n")
-            continue
-        L.append("| line | number | context labels | note |")
-        L.append("|---:|---|---|---|")
-        for r in bad:
-            L.append("| %d | `%s`%s | %s | %s |" % (
-                r["line"], r["raw"], " (weak)" if r.get("weak") else "",
-                ", ".join(r.get("ctx_ds") or []) +
-                (" lam=" + ",".join("%g" % x for x in r.get("ctx_lam") or [])
-                 if r.get("ctx_lam") else ""),
-                r["note"]))
-        L.append("")
-
-    L.append("## Matched numbers and their sources\n")
-    L.append("| line | number | source file | key |")
-    L.append("|---:|---|---|---|")
-    for r in rows:
-        if r["status"] != "OK":
-            continue
-        h = r["hits"][0]
-        extra = "" if len(r["hits"]) == 1 else " (+%d more)" % (len(r["hits"]) - 1)
-        L.append("| %d | `%s`%s | `%s` | `%s`%s |" % (
-            r["line"], r["raw"], " (weak)" if r["weak"] else "",
-            h.path, h.keypath, extra))
+        cnt[(r[0], r[2])] += 1
+    L = ["# Manuscript number check", "",
+         "Generated by `scripts/verify_manuscript_numbers.py`. Report only; nothing in the manuscript was changed.", "",
+         "Rounding convention: nearest, half up, at the printed precision.", "",
+         "| File | match | last-digit | mismatch |", "|---|---:|---:|---:|"]
+    for t in TEX:
+        L.append("| {} | {} | {} | {} |".format(t, cnt[(t, "match")], cnt[(t, "last-digit")], cnt[(t, "mismatch")]))
+    L += ["", "Flags: `lambda-source` = every exactly matching source carries a λ not in the sentence; `pad_full-only`; "
+          "`pair` = mean and s.d. found in one source group; `weak` = matched only by value, no context overlap.", "",
+          "| File | Line | Printed | Status | Nearest source value | Source | #exact | Flags | Context |",
+          "|---|---:|---|---|---|---|---:|---|---|"]
+    for t, n, st, best, nex, flags in rows:
+        bv, bs = (("{:.6g}".format(best[0]), best[1][:150]) if best else ("—", "—"))
+        L.append("| {} | {} | {} | {} | {} | `{}` | {} | {} | {} |".format(
+            t.split("/")[-2] if "midl" in t else "main", n["line"], n["text"] + ("%" if n["pct"] else ""), st, bv,
+            bs.replace("|", "/"), nex, "; ".join(flags), n["ctx"].replace("|", "/")))
     man_bad = 0
-    if args.manifest:
-        res = check_manifest(args.manifest, args.results, stripped, ds_pos, line_of)
-        man_bad = sum(1 for r in res if r[3])
-        L.append("## Manifest check (%d entries, %d failing)\n"
-                 % (len(res), man_bad))
-        L.append("| id | written | label | verdict |")
-        L.append("|---|---|---|---|")
-        for eid, written, label, probs, got, warns in res:
+    if a.manifest:
+        res = check_manifest(a.manifest, RESULTS, [r[1] for r in rows])
+        man_bad = sum(1 for r in res if r[4])
+        M = ["", "## Manifest check ({} entries, {} failing)".format(len(res), man_bad), "",
+             "Each entry is checked against one declared source key and against the dataset "
+             "mention nearest to the number in the .tex. This is the only check here that "
+             "can catch a correct value attached to the wrong dataset.", "",
+             "| id | written | label | source value | verdict |", "|---|---|---|---|---|"]
+        for eid, written, label, got, probs, warns in res:
             verdict = ("**" + "; ".join(probs) + "**") if probs else (
                 "ok (" + "; ".join(warns) + ")" if warns else "ok")
-            L.append("| `%s` | `%s` | %s | %s |" % (
-                eid, written, label or "--", verdict))
-        L.append("")
-
-    report = "\n".join(L) + "\n"
-
-    if args.out:
-        with open(args.out, "w", encoding="utf-8") as fh:
-            fh.write(report)
-        print("wrote %s" % args.out)
-    print("OK %d | allowlisted %d | LABEL-MISMATCH %d | NO-SOURCE %d"
-          % (counts["OK"], counts["ALLOWLISTED"], counts["LABEL-MISMATCH"],
-             counts["NO-SOURCE"]))
-    if counts["OK-DOC"]:
-        print("verified against markdown only: %d" % counts["OK-DOC"])
-    if args.manifest:
-        print("manifest: %d failing" % man_bad)
-    if args.fail_on == "problem" and (counts["LABEL-MISMATCH"] or
-                                      counts["NO-SOURCE"] or man_bad):
+            M.append("| `{}` | `{}` | {} | {} | {} |".format(
+                eid, written, label or "--",
+                "{:.6g}".format(got) if got is not None else "--",
+                verdict.replace("|", "/")))
+        L += M
+    Path(a.out).write_text("\n".join(L) + "\n")
+    for t in TEX:
+        print(t, {k: cnt[(t, k)] for k in order}, file=sys.stderr)
+    if a.manifest:
+        print("manifest: {} failing".format(man_bad), file=sys.stderr)
+    print("wrote", a.out, file=sys.stderr)
+    bad_scan = sum(cnt[(t, "mismatch")] for t in TEX)
+    if a.fail_on in ("manifest", "problem") and man_bad:
+        return 1
+    if a.fail_on == "problem" and bad_scan:
         return 1
     return 0
 

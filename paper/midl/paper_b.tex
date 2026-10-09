@@ -752,22 +752,24 @@ that majority class is half the data, the pooled score crosses chance. This also
 explains why per-class AUROC and pooled AUROC disagree at $\lam = 0$
 (Section~\ref{sec:perclass}).
 
-The decomposition is quantitative, not merely directional. Pooled AUROC is the
-class-share-weighted mean of the per-class values, and it reproduces the measured
-pooled figure to within the weight of the two classes our per-class table omits:
-$\sum_c w_c \mathrm{AUROC}_c = 0.424$ against a measured $0.427$ at $\lam = 2$,
-and $0.835$ against $0.843$ at $\lam = 0$. Writing $p$ for the nevus share of the
-in-distribution set, and using the measured $0.559$ against nevus and $0.296$
-against the other classes, pooled AUROC is
-$0.559p + 0.296(1 - p)$. This has a consequence worth stating plainly:
-\textbf{the inversion gets worse as the in-distribution set becomes
-\emph{less} dominated by its majority class, and the pooled score would only
-return above chance if that set were $77.6\%$ nevus.} At PAD's own mix
-($10.6\%$ nevus) the expression gives $0.324$; the measured reweighting result is
-$0.240$, so the direction is predicted but the magnitude is not, because
-reweighting shifts the per-class values as well as the weights. A deployment with
-a more balanced case mix than ISIC's should therefore expect a \emph{deeper}
-inversion, not a milder one.
+Pooled AUROC equals the class-share-weighted mean of the per-class AUROCs, since
+AUROC averages over the in-distribution samples. That is an identity rather than a
+result, and we use it only to locate where the effect sits. \textbf{The content is
+in the two per-class values: $0.559$ against nevus, and $0.296$ weighted over the
+other five classes.} Out-of-domain images are close to indistinguishable from
+nevi, which occupy the centroid they are drawn toward, and inverted against
+everything else; the identity then fixes the pooled figure, reproducing the
+measured value to within the weight of the two classes our per-class table omits
+($\sum_c w_c \mathrm{AUROC}_c = 0.424$ against a measured $0.427$ at $\lam = 2$;
+$0.835$ against $0.843$ at $\lam = 0$).
+
+One consequence is worth stating, with its scope. \textbf{For the pooled score,
+holding the model and the out-of-domain set fixed, the inversion is deeper the
+\emph{less} the in-distribution set is dominated by its majority class}: writing
+$p$ for the nevus share, the pooled value is $0.559p + 0.296(1-p)$, which returns
+above chance only at $p = 0.776$. This is a statement about one metric under a
+fixed model, not a general rule about deployments. Against the reweighting result
+of $0.240$ the identity gives \pending{A4}.
 
 \subsection{What the phenomenon is not}
 
