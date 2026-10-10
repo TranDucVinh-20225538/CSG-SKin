@@ -282,5 +282,877 @@
     ],
     "stat": "max",
     "note": "non-NV per-class range reported in the text"
+  },
+  {
+    "id": "img_overlap_pct",
+    "written": "60.0",
+    "label": "isic",
+    "file": "r2/item4/image_level_overlap.json",
+    "key": [
+      "pct_sharing"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "pr_l0",
+    "written": "4.879",
+    "label": null,
+    "file": "phase13/participation_ratio.json",
+    "key": [
+      "by_lambda",
+      "0",
+      "pr_z_lesion_norm",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "pr_l025",
+    "written": "4.500",
+    "label": null,
+    "file": "phase13/participation_ratio.json",
+    "key": [
+      "by_lambda",
+      "0.25",
+      "pr_z_lesion_norm",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "item5_cos_l1",
+    "written": "0.589",
+    "label": "camelyon",
+    "file": "r2/item5/exploratory_results.json",
+    "key": [
+      "aggregate",
+      "1.0",
+      "Cosine",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "item5_knn_l1",
+    "written": "0.648",
+    "label": "camelyon",
+    "file": "r2/item5/exploratory_results.json",
+    "key": [
+      "aggregate",
+      "1.0",
+      "kNN",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "item5_msp_l1",
+    "written": "0.589",
+    "label": "camelyon",
+    "file": "r2/item5/exploratory_results.json",
+    "key": [
+      "aggregate",
+      "1.0",
+      "MSP",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "nv_nearest_id_l0",
+    "written": "0.528",
+    "label": "pad_heldout",
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "frac_nv_nearest_id",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "nv_nearest_id_l2",
+    "written": "0.531",
+    "label": "pad_heldout",
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "frac_nv_nearest_id",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "ratio_nv_l0",
+    "written": "6.63",
+    "label": "pad_heldout",
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "ratio_NV",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "ratio_nv_l2",
+    "written": "2.37",
+    "label": "pad_heldout",
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "ratio_NV",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "img_idbal_l2",
+    "written": "0.707",
+    "label": "isic",
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv2",
+      "id_balanced_acc",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "img_fitz_maha_sd_l2",
+    "written": "0.068",
+    "label": "fitzpatrick",
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv2",
+      "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted",
+      "sd"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "fitz_ci_lo_l2",
+    "written": "0.386",
+    "label": "fitzpatrick",
+    "file": "reviewer_r1/bootstrap_results.json",
+    "key": [
+      "results",
+      "fitzpatrick17k",
+      "2.0",
+      "mahalanobis_classcond",
+      "mean_across_seeds_bootstrap_ci",
+      "lo"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "resnet50_fitz",
+    "written": "0.994",
+    "label": "fitzpatrick",
+    "file": "phase2_5/phase25_aggregate.json",
+    "key": [
+      "methods",
+      "baseline_soft",
+      "fitz_maha",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "xfer_effb3_bal",
+    "written": "0.298",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "controls",
+      "effb3_control",
+      "bal",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "xfer_acc_l2",
+    "written": "0.184",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "csg",
+      4,
+      "acc",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "xfer_majority",
+    "written": "0.385",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "floors",
+      "plain_majority_always_BCC"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "xfer_auc_l0",
+    "written": "0.605",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "csg",
+      0,
+      "auc",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "xfer_auc_l2",
+    "written": "0.581",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "csg",
+      4,
+      "auc",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "mmd_maha",
+    "written": "0.665",
+    "label": "pad_full",
+    "file": "phase15b/mmd/mmd_aggregate.json",
+    "key": [
+      "by_group",
+      "mmd_w10000",
+      "ood_pad_full.mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "mmd_knn",
+    "written": "0.738",
+    "label": "pad_full",
+    "file": "phase15b/mmd/mmd_aggregate.json",
+    "key": [
+      "by_group",
+      "mmd_w10000",
+      "ood_pad_full.knn_k50",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "mmd_energy",
+    "written": "0.694",
+    "label": "pad_full",
+    "file": "phase15b/mmd/mmd_aggregate.json",
+    "key": [
+      "by_group",
+      "mmd_w10000",
+      "ood_pad_full.Energy_T1",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "hambcn_laplacian",
+    "written": "0.532",
+    "label": "isic",
+    "file": "phase16/b0/summary.json",
+    "key": [
+      "handcrafted_site_unmasked",
+      "laplacian_stats",
+      "bal_acc_mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "hambcn_leak_l0",
+    "written": "0.963",
+    "label": "isic",
+    "file": "phase16/b1/dense3seed_aggregate.json",
+    "key": [
+      "rows",
+      0,
+      "leakage_mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "hambcn_cos_l0",
+    "written": "0.576",
+    "label": "isic",
+    "file": "phase16/b1/dense3seed_aggregate.json",
+    "key": [
+      "rows",
+      0,
+      "cosine_mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "single_leak_l0",
+    "written": "0.970",
+    "label": null,
+    "file": "phase15/single_dann/single_dann_aggregate.json",
+    "key": [
+      "by_group",
+      "single_dann_ladv0",
+      "leakage.pad_full.bal_acc_mean",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md); no label: 0.970 also prints MSP (l.410) and the Phase 16 leakage (l.622), so the nearest-label check would read the wrong quantity"
+  },
+  {
+    "id": "single_leak_l025",
+    "written": "0.763",
+    "label": "pad_full",
+    "file": "phase15/single_dann/single_dann_aggregate.json",
+    "key": [
+      "by_group",
+      "single_dann_ladv0p25",
+      "leakage.pad_full.bal_acc_mean",
+      "mean"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "hambcn_ci_lo",
+    "written": "0.666",
+    "label": "isic",
+    "file": "reviewer_r1/bootstrap_phase16_ham_bcn_ladv1.json",
+    "key": [
+      "mean_across_seeds_bootstrap_ci",
+      "lo"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "hambcn_ci_hi",
+    "written": "0.699",
+    "label": "isic",
+    "file": "reviewer_r1/bootstrap_phase16_ham_bcn_ladv1.json",
+    "key": [
+      "mean_across_seeds_bootstrap_ci",
+      "hi"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "camelyon_adv_ce_l0",
+    "written": "0.11",
+    "label": "camelyon",
+    "file": "r2/item5/coarse_decision_primary.json",
+    "key": [
+      "coarse",
+      "0",
+      "adv_min_ce"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "fitz_n_rows",
+    "written": "16{,}577",
+    "label": "fitzpatrick",
+    "file": "phase11_third_domain/fitzpatrick17k_label_map.json",
+    "key": [
+      "n_rows"
+    ],
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+  },
+  {
+    "id": "les_leak_l0",
+    "written": "0.925",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_leak_l2",
+    "written": "0.565",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_idece_l0",
+    "written": "0.182",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_idece_l2",
+    "written": "0.175",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_oodece_l0",
+    "written": "0.198",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_oodece_l2",
+    "written": "0.714",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_maha_l0",
+    "written": "0.815",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "maha",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_maha_l2",
+    "written": "0.400",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "maha",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_fitz_l0",
+    "written": "0.727",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "fitz",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_fitz_l2",
+    "written": "0.407",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "fitz",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_idbal_l0",
+    "written": "0.504",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_idbal_l2",
+    "written": "0.464",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "les_idbal_sd_l2",
+    "written": "0.028",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_bal",
+      "sd"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "img_idbal_l0_vs_lesion",
+    "written": "0.693",
+    "label": null,
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv0",
+      "id_balanced_acc",
+      "mean"
+    ],
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+  },
+  {
+    "id": "abs_maha_l025",
+    "written": "0.513",
+    "label": "pad_heldout",
+    "file": "reviewer_r1/bootstrap_results.json",
+    "key": [
+      "results",
+      "pad_heldout",
+      "0.25",
+      "mahalanobis_classcond",
+      "point_mean_over_seeds"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_ci_lo_l2",
+    "written": "0.414",
+    "label": "pad_heldout",
+    "file": "reviewer_r1/bootstrap_results.json",
+    "key": [
+      "results",
+      "pad_heldout",
+      "2.0",
+      "mahalanobis_classcond",
+      "mean_across_seeds_bootstrap_ci",
+      "lo"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_ci_hi_l2",
+    "written": "0.439",
+    "label": "pad_heldout",
+    "file": "reviewer_r1/bootstrap_results.json",
+    "key": [
+      "results",
+      "pad_heldout",
+      "2.0",
+      "mahalanobis_classcond",
+      "mean_across_seeds_bootstrap_ci",
+      "hi"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_leak_l0",
+    "written": "0.915",
+    "label": null,
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv0",
+      "leakage.z_lesion.bal_acc_mean",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_leak_l025",
+    "written": "0.553",
+    "label": null,
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv0p25",
+      "leakage.z_lesion.bal_acc_mean",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_idbal_l0",
+    "written": "0.692",
+    "label": "isic",
+    "file": "phase3_sweep/sweep_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv0",
+      "id_balanced_acc",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_conf_pad_l0",
+    "written": "0.489",
+    "label": null,
+    "file": "phase13/per_run_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv0",
+      "confidence.pad_heldout.msp_mean",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_conf_pad_l2",
+    "written": "0.930",
+    "label": null,
+    "file": "phase13/per_run_aggregate.json",
+    "key": [
+      "by_group",
+      "runB_orth1_ladv2",
+      "confidence.pad_heldout.msp_mean",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_ak_recall_l0",
+    "written": "0.244",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "csg",
+      0,
+      "recall",
+      "AK",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_ak_recall_l2",
+    "written": "0.016",
+    "label": null,
+    "file": "phase6_xfer/diagnosis_aggregate.json",
+    "key": [
+      "csg",
+      4,
+      "recall",
+      "AK",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_hosp_knn_l0",
+    "written": "0.658",
+    "label": null,
+    "file": "phase16/b1/dense3seed_aggregate.json",
+    "key": [
+      "rows",
+      0,
+      "knn50_mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_hosp_knn_l025",
+    "written": "0.486",
+    "label": null,
+    "file": "phase16/b1/dense3seed_aggregate.json",
+    "key": [
+      "rows",
+      1,
+      "knn50_mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_hosp_maha_l1",
+    "written": "0.683",
+    "label": null,
+    "file": "reviewer_r1/bootstrap_phase16_ham_bcn_ladv1.json",
+    "key": [
+      "point_mean_over_seeds"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_nv_frac_ood_l0",
+    "written": "0.332",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "frac_nv_nearest_ood",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_nv_frac_ood_l2",
+    "written": "0.601",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "frac_nv_nearest_ood",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_auroc_nv_l0",
+    "written": "0.807",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "auroc_nv_nearest",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_auroc_nv_l2",
+    "written": "0.282",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "auroc_nv_nearest",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_auroc_nonnv_l0",
+    "written": "0.861",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "auroc_non_nv_nearest",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_auroc_nonnv_l2",
+    "written": "0.644",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "auroc_non_nv_nearest",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_med_nv_l0",
+    "written": "49.8",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "0",
+      "med_ood_to_NV",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_med_nv_l2",
+    "written": "17.5",
+    "label": null,
+    "file": "r2/item2/item2_aggregate.json",
+    "key": [
+      "by_block",
+      "z_lesion_norm|pad_heldout",
+      "2",
+      "med_ood_to_NV",
+      "mean"
+    ],
+    "note": "R3 D: abstract"
+  },
+  {
+    "id": "abs_n_isic",
+    "written": "25{,}331",
+    "label": "isic",
+    "file": "phase1_5/preprocess_audit.json",
+    "key": [
+      "domains",
+      "raw_source",
+      "isic",
+      "width",
+      "n"
+    ],
+    "note": "R3 D: abstract"
   }
 ]
