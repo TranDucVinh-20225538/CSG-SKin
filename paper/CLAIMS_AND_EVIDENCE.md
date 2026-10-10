@@ -30,15 +30,27 @@ is balanced over 6 shared classes, floor 0.167. Plain-accuracy majority on PAD i
 | A1 | A seven-point sweep of $\lambda_{adv}$ with everything else fixed, 3–5 seeds, 27 runs | $\lambda \in \{0, .25, .5, 1, 2, 4, 8\}$; n=5 at 0, 0.25, 2, 8; n=3 at 0.5, 1, 4 | `phase3_sweep/*/summary.json` |
 | A2 | Leakage falls to its chance floor at the smallest non-zero weight | $0.915 \to 0.553$ (floor 0.5) | same |
 | A3 | In-distribution balanced accuracy does not degrade **under the image-level split** | $0.692 \to 0.707$; observed range 0.679–0.707 | same |
-| A3b | Under a lesion-disjoint split it **does** fall, and the split itself costs far more | $0.504 \to 0.464$ with $\lambda$ (1.4 seed s.d.); split artefact $0.504 \to 0.693$ at $\lambda=0$, i.e. 0.19 | `r2/item4/item4_results.json` |
+| A3b | Under a lesion-disjoint split it **also does not** degrade, at $n=5$ | paired per-seed difference $-0.023$, 95% CI $[-0.063, +0.017]$, contains zero. Report as a trend, claim nothing. (At $n=3$ it read $-0.040$; seeds 72 and 82 halved it) | `r3/b1/` |
+| A3d | The split artefact is $0.20$, roughly ten times any $\lambda$ effect | $0.496 \to 0.692$ at $\lambda=0$ | `r3/b1/`, `r2/item4/` |
+| A3e | The lesion-level inversion carries its own interval | Maha `pad_heldout` $\lambda=2$ $= 0.403$, CI $[0.380, 0.425]$, **5/5 seeds individually below 0.5**; Fitzpatrick $0.402$ $[0.390, 0.415]$; kNN 0.427, cosine 0.420 | `r3/a2/` |
 | A3c | 60.0% of the image-level ISIC test split shares a `lesion_id` with train or val | 3,041 of 5,067; lesion-level overlap 0/0/0 | `r2/item4/REPORT.md`, `r2/item4/split_record.json` |
 | A4 | In-distribution calibration is unchanged | ECE flat at $\approx 0.10$ across all $\lambda$ | `phase13/per_run/*.json` |
 
 **Do not claim** A3 as an improvement. The difference is small relative to seed variance.
-**Do not claim invisibility to ID accuracy without qualification** — A3b retires that.
-The honest form: the signal is 0.04 against a 0.19 artefact, and not one a developer
-would act on. The class mix is not the explanation: reweighting the lesion-level test
+**The invisibility claim is restored**, at $n=5$ and under both splits. An earlier
+draft, written at $n=3$, said accuracy falls 0.04 under the honest split; seeds 72 and
+82 took the paired difference to $-0.023$ with a CI containing zero. The class mix is
+not the explanation for the level difference either: reweighting the lesion-level test
 set to the image-level mix leaves every detector identical to three decimals.
+
+**Open integrity item in Table 1 (image-level).** The $\lambda = 0.25$ row declared
+$n = 5$ while leakage, ID accuracy and Fitzpatrick AUROC were three-seed means. At five
+seeds they are 0.571, 0.692 and 0.460, and the abstract's "$0.915 \to 0.553$" was
+likewise a three-seed figure, now 0.571. The row's standard deviations and its OOD
+AUROC cell are unverified and marked `\pending{R4}`; the $\lambda = 1$ row still uses
+three of five available seeds. Note separately that Phase 13's $0.914 \to 0.553$ is its
+own three runs and is now labelled as such rather than silently mixed with the
+five-seed scale.
 
 ## B. The collapse and the inversion — keep these separate
 

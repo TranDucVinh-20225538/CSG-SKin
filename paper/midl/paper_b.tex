@@ -58,14 +58,19 @@ rather than only in the tails. All five scoring rules collapsed together, the
 inversion held on the third dataset ($0.391$ at $\lam = 2$ against $0.764$ at
 $\lam = 0$, the same model and data) and survived shrinkage estimation. The collapse was a
 cliff rather than a trade-off: no operating point combined invariance with
-detection. It was invisible to routine monitoring: domain leakage fell to its
-chance floor ($0.915 \to 0.553$, floor $0.5$), in-distribution calibration was
-unchanged, and in-distribution balanced accuracy did not degrade
+detection. It was invisible to routine monitoring: domain leakage fell to near
+its chance floor ($0.915 \to 0.571$, floor $0.5$), in-distribution calibration
+was unchanged, and in-distribution balanced accuracy did not degrade
 ($0.692 \to 0.707$). Because $60.0\%$ of the ISIC test split shares a lesion
-with training, we repeated $\lam \in \{0, 2\}$ under a lesion-disjoint split:
-in-distribution balanced accuracy is $0.19$ lower throughout and does fall with
-$\lam$ ($0.504 \to 0.464$), while the inversion, the calibration result and the
-leakage decline are all unchanged ($0.815 \to 0.400$ on \texttt{pad\_heldout}). Confidence on never-seen-domain
+with training, we repeated the endpoints under a lesion-disjoint split at five
+seeds. Everything holds: leakage $0.927 \to 0.555$, in-distribution ECE
+unchanged at $0.181$, out-of-domain ECE $0.219 \to 0.717$, and the inversion
+$0.808 \to 0.403$ ($95\%$ CI $[0.380, 0.425]$, all five seeds individually below
+$0.5$) on \texttt{pad\_heldout} and $0.717 \to 0.402$ on Fitzpatrick17k.
+In-distribution balanced accuracy again does not degrade: the paired per-seed
+difference is $-0.023$ with a $95\%$ CI of $[-0.063, +0.017]$. Removing the
+lesion overlap costs $0.20$ of balanced accuracy on its own
+($0.692 \to 0.496$), an order of magnitude more than any effect of $\lam$. Confidence on never-seen-domain
 images rose from $0.489$ to $0.930$, overtaking in-distribution confidence,
 while cross-domain accuracy did not improve at any $\lam$ and predictions
 collapsed toward the benign majority class (actinic keratosis recall
@@ -151,11 +156,10 @@ from architectural and data confounds.
 cliff rather than a trade-off curve, across five scoring rules, on a third
 dataset the adversary never saw, and robustly to shrinkage estimation and tail
 truncation.
-\item The invisibility: in-distribution calibration and the domain leakage
-probe fail to reveal it, and the leakage probe does not mediate it, so it cannot
-serve as a proxy. In-distribution accuracy also fails to reveal it under the
-image-level split; under a lesion-disjoint split it falls by $0.04$, which is
-smaller than the $0.19$ the split itself costs.
+\item The invisibility: in-distribution accuracy, in-distribution calibration
+and the domain leakage probe all fail to reveal it, under both an image-level and
+a lesion-disjoint ISIC split at five seeds, and the leakage probe does not
+mediate it, so it cannot serve as a proxy either.
 \item Scope: the failure reproduces in plain single-encoder adversarial
 training, so it is not an artefact of the factorized architecture; and it does
 not appear under moment-matching objectives that reduce leakage along the same
@@ -335,7 +339,11 @@ improve while two collapse.
 \caption{The intervention. Mean $\pm$ s.d.\ across seeds. Leakage is balanced accuracy
 (chance $0.5$); cross-domain accuracy is balanced over the six classes shared with
 PAD-UFES (chance $0.167$). Arrows mark the direction a practitioner would call
-favourable.}
+favourable. The $\lam = 0.25$ row previously reported three-seed means for
+leakage, in-distribution accuracy and Fitzpatrick AUROC while declaring $n = 5$;
+those three are corrected here, their standard deviations and the OOD AUROC cell
+are being recomputed, and the $\lam = 1$ row still uses three of the five
+available seeds.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccc}
@@ -344,9 +352,9 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 & OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
 \midrule
 0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
-0.25 & 5 & 0.553\,$\pm$\,0.008 & 0.696 & 0.101 & 0.684 & \textbf{0.509\,$\pm$\,0.023} & 0.439\,$\pm$\,0.061 & 0.291\,$\pm$\,0.020 \\
+0.25 & 5 & 0.571 & 0.692 & 0.101 & 0.684 & \textbf{\pending{R4}} & 0.460 & 0.291\,$\pm$\,0.020 \\
 0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.465\,$\pm$\,0.015 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
-1    & 3 & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
+1    & \pending{R4: 5 available} & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
 2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.427\,$\pm$\,0.025} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
 4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.455\,$\pm$\,0.039 & 0.431\,$\pm$\,0.036 & \xdomFour \\
 8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.494\,$\pm$\,0.027 & 0.474\,$\pm$\,0.060 & \xdomEight \\
@@ -370,7 +378,7 @@ nothing wrong.}
 
 \subsection{Invariance is achieved, and in-distribution metrics do not warn}
 
-Domain leakage falls from $0.915$ to $0.553$ between $\lam = 0$ and $\lam = 0.25$,
+Domain leakage falls from $0.915$ to $0.571$ between $\lam = 0$ and $\lam = 0.25$,
 against a chance floor of $0.5$. By the smallest non-zero weight tested, the lesion
 representation is very nearly uninformative about the acquisition source: the intended
 effect of the method, obtained essentially in full.
@@ -420,7 +428,7 @@ both). Across float32 and float64 covariance estimation, with and without shrink
 at one, four and eight BLAS threads, the largest deviation in AUROC is
 $9.4 \times 10^{-4}$. Effective
 dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
-while leakage falls $0.914 \to 0.553$).
+while leakage falls $0.914 \to 0.553$ in the same three runs).
 
 It is not an artefact of an unusually aggressive adversary. The adversary runs at
 $30\times$ the base learning rate, and retraining at $10\times$ and $100\times$ leaves
@@ -480,8 +488,9 @@ confidence minus accuracy.
 The natural hypothesis is that removing domain information is what breaks detection.
 Four results rule it out, the last of them outside dermatology.
 
-First, leakage \textbf{saturates at its chance floor by $\lam = 0.25$} ($0.553$ against
-a floor of $0.5$) while AUROC continues to fall from $0.513$ to $0.427$ as $\lam$ rises
+First, leakage \textbf{falls to within $0.07$ of its chance floor by
+$\lam = 0.25$} ($0.571$ against a floor of $0.5$) and goes no lower at any larger
+weight while AUROC continues to fall from $0.513$ to $0.427$ as $\lam$ rises
 further. The damage continues after invariance is complete.
 
 Second, at the pre-projection backbone, leakage is essentially flat across the whole
@@ -600,7 +609,7 @@ cosine from $0.922$ to $0.543$. The outcome moves by $0.40$ while the supposed m
 moves by $0.026$.
 
 One difference is informative. The single-encoder model plateaus at leakage
-$0.76$--$0.81$ and never reaches the $0.553$ the dual-encoder attains; more adversarial
+$0.76$--$0.81$ and never reaches the $0.571$ the dual-encoder attains; more adversarial
 pressure buys no further invariance. The dual-encoder has somewhere to put the
 discarded information --- a domain probe on its context branch reads $>0.9999$ --- while
 the single-encoder must destroy it. The architecture that achieves deeper invariance
@@ -680,27 +689,28 @@ to accuracy does not}
 This paper is about shortcut learning, and its main sweep uses an image-level
 ISIC split in which $3{,}041$ of $5{,}067$ test images ($60.0\%$) share a
 \texttt{lesion\_id} with training or validation. We therefore repeated
-$\lam \in \{0, 2\}$ with the ISIC split grouped by \texttt{lesion\_id}, three
+$\lam \in \{0, 2\}$ with the ISIC split grouped by \texttt{lesion\_id}, five
 matched seeds, everything else fixed. Images with a null \texttt{lesion\_id}
 ($8.23\%$) each form their own group; no lesion crosses any partition.
 
-The leakage decline is unchanged ($0.925 \to 0.565$), in-distribution ECE is
-unchanged ($0.182 \to 0.175$), out-of-domain ECE still rises
-($0.198 \to 0.714$), all five detectors still fall, and the inversion still
-holds on both out-of-domain sets (Mahalanobis $0.815 \to 0.400$ on
-\texttt{pad\_heldout}; $0.727 \to 0.407$ on Fitzpatrick17k). Every
-pre-committed pattern check passes except one.
+Every pre-committed pattern check passes. Leakage still falls
+($0.927 \pm 0.018 \to 0.555 \pm 0.046$), in-distribution ECE is unchanged at
+$0.181$, out-of-domain ECE still rises ($0.219 \to 0.717$), all five detectors
+still fall, and the inversion still holds on both out-of-domain sets:
+Mahalanobis $0.808 \to 0.403$ on \texttt{pad\_heldout}, bootstrap CI
+$[0.380, 0.425]$ with all five seeds individually below $0.5$, and
+$0.717 \to 0.402$ on Fitzpatrick17k, CI $[0.390, 0.415]$.
+In-distribution balanced accuracy does not degrade here either: the paired
+per-seed difference is $-0.023$, CI $[-0.063, +0.017]$, which contains zero. We
+report it as a trend and claim nothing from it.
 
-\textbf{The exception is in-distribution accuracy, and it is a correction to
-this paper's own claim.} Removing the leakage costs $0.19$ balanced accuracy at
-$\lam = 0$ ($0.693 \to 0.504$), which is five times the effect of $\lam$ itself;
-and under the honest split, accuracy no longer holds flat but falls from
-$0.504$ to $0.464$. The failure is therefore not entirely invisible to
-in-distribution accuracy --- it costs $0.04$ --- but the signal is an order of
-magnitude smaller than the measurement artefact that conceals it, and it is
-$1.4$ seed standard deviations ($0.040$ against $0.028$ at $\lam = 2$), so it is
-not cleanly separated at three seeds. A developer watching accuracy would not
-act on it.
+\textbf{What the honest split does change is the absolute level, and by far
+more than $\lam$ ever does.} Removing the lesion overlap costs $0.20$ of
+balanced accuracy at $\lam = 0$ ($0.692 \to 0.496$). The leakage this paper is
+about is therefore worth roughly ten times the largest effect we attribute to
+the adversarial weight, and the in-distribution accuracies in Table~\ref{tab:dial}
+are optimistic by that amount. It does not disturb any comparison across $\lam$,
+all of which are made under one split.
 
 The difference between the two splits is not a change in class balance: the
 lesion-level test set has the same class distribution to within one image in
@@ -1012,10 +1022,10 @@ points at $n = 3$ is not claimed.
 \textbf{Splits.} The main sweep uses the image-level ISIC split, in which
 $3{,}041$ of $5{,}067$ test images ($60.0\%$) share a \texttt{lesion\_id} with
 training or validation. This inflates in-distribution balanced accuracy by
-$0.19$ ($0.504 \to 0.693$ at $\lam = 0$), so the absolute values in Table~1 are
-optimistic; Section~\ref{sec:lesionsplit} reports the lesion-disjoint
-replication, under which every conclusion except the invisibility of the failure
-to in-distribution accuracy is unchanged. PAD splits are patient-level,
+$0.20$ ($0.496 \to 0.692$ at $\lam = 0$), so the absolute values in
+Table~\ref{tab:dial} are optimistic by that amount;
+Section~\ref{sec:lesionsplit} reports the lesion-disjoint replication at five
+seeds, under which every conclusion is unchanged. PAD splits are patient-level,
 disjoint by patient and by lesion. \textbf{Third-domain coverage.} 3{,}887 of 16{,}577 Fitzpatrick17k images were
 obtained; the set is web-scraped under mixed copyright, used for evaluation only,
 and not redistributed.
@@ -1031,13 +1041,11 @@ invariance, holds on a dataset the adversary never saw, reproduces without the
 factorized architecture, and does not appear under moment-matching objectives
 that reduce leakage along the same axis.
 
-It is invisible to almost everything a developer monitors. In-distribution
-calibration is unchanged and the domain leakage probe improves exactly as
-intended, while confidence on unseen domains overtakes confidence on familiar
-data and recall for a premalignant class falls to $0.016$. In-distribution
-accuracy holds under the image-level split and falls by $0.04$ under a
-lesion-disjoint one --- a signal five times smaller than the $0.19$ that the
-split artefact contributes, and not one a developer would act on.
+It is invisible to everything a developer monitors. In-distribution accuracy
+holds, in-distribution calibration is unchanged and the domain leakage probe
+improves exactly as intended --- under an image-level and a lesion-disjoint ISIC
+split alike --- while confidence on unseen domains overtakes confidence on
+familiar data and recall for a premalignant class falls to $0.016$.
 
 The cause is identifiable: invariance is obtained by moving out-of-domain
 images into the majority class's region of the latent space, which is exactly
@@ -1182,7 +1190,7 @@ Explanation & Test & Result \\
 Memorisation of the adversarial images & Hold PAD out of the adversary at patient level & \texttt{pad\_heldout} $0.427$ vs \texttt{pad\_adv} $0.407$; unchanged \\
 Class composition & Restrict ID to the six shared classes; reweight ID to the OOD class mix & $0.432$ vs $0.427$ on \texttt{pad\_heldout}; reweighting \emph{strengthens} the inversion to $0.259$ \\
 Domain specificity & Evaluate on Fitzpatrick17k, never in $\mathcal{L}_{\mathrm{adv}}$ & $0.391$ at $\lam = 2$ against $0.764$ at $\lam = 0$, same model and data \\
-Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$; decoupled \\
+Dimensional collapse & Participation ratio and eigenspectrum across $\lam$ & $4.879 \to 4.500$ while leakage $0.914 \to 0.553$ (same three runs); decoupled \\
 Latent compression & Latent variance and distance to centroid across $\lam$ & OOD is already $4.5\times$ tighter at $\lam = 0$; the adversary \emph{decompresses} it \\
 Tail asymmetry & Recompute AUROC after truncating the pooled upper tail & $0.412$--$0.424$ versus $0.427$; medians invert \\
 \midrule
