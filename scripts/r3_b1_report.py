@@ -69,6 +69,8 @@ def main():
     (OUT / "b1_results.json").write_text(json.dumps({
         "commit": head, "seeds": list(SEEDS), "missing": missing, "verdict": verdict,
         "id_bal_paired_diff": {"seeds": paired, "diffs": d.tolist(), "mean": mean, "sd": sd, "n": n, "t_ci95": [lo, hi]},
+        "summary": {"{:g}".format(l): {k: dict(zip(("mean", "sd", "n"), C.mean_sd([r[k] for r in tab[l].values()])[:2]
+                                                    + (len(tab[l]),))) for k, _ in COLS_X} for l in LAMS},
         "table": {"{:g}".format(l): {str(s): r for s, r in tab[l].items()} for l in LAMS}}, indent=1) + "\n")
     print(verdict, mean, (lo, hi), "missing", missing)
 

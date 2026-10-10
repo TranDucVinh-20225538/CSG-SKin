@@ -132,7 +132,7 @@ def main():
     L += ["## Caveats", "",
           "- Fitzpatrick17k has no patient identifiers; its bootstrap is over images and the interval is anti-conservative.",
           "- The decision applies to Mahalanobis, the abstract's number; kNN and cosine are reported alongside.",
-          "- Seeds per λ are listed in the table; λ ∈ {0, 2} reach n = 5 only once B1 (seeds 72, 82) lands."]
+          "- Seeds per λ are listed in the table: λ ∈ {0, 2} have n = 5 (seeds 72, 82 from B1), the other λ n = 3."]
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print(verdict)
 

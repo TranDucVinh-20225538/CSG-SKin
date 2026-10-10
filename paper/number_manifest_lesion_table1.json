@@ -1,0 +1,574 @@
+[
+  {
+    "id": "t1les_leakage_mean_l0",
+    "written": "0.927",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_leakage_sd_l0",
+    "written": "0.018",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "leakage",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_bal_mean_l0",
+    "written": "0.496",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_bal_sd_l0",
+    "written": "0.016",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_bal",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_ece_mean_l0",
+    "written": "0.181",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_ece",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_ece_sd_l0",
+    "written": "0.026",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "id_ece",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_ood_ece_mean_l0",
+    "written": "0.219",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l0",
+    "written": "0.046",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_maha_mean_l0",
+    "written": "0.808",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "maha",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_maha_sd_l0",
+    "written": "0.027",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "maha",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_fitz_mean_l0",
+    "written": "0.717",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "fitz",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_fitz_sd_l0",
+    "written": "0.034",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "fitz",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_xdom_mean_l0",
+    "written": "0.275",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "xdom",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_xdom_sd_l0",
+    "written": "0.023",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "xdom",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_cosine_mean_l0",
+    "written": "0.866",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "cosine",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_cosine_sd_l0",
+    "written": "0.026",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "cosine",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_knn_mean_l0",
+    "written": "0.912",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "knn",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_knn_sd_l0",
+    "written": "0.022",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "knn",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_msp_mean_l0",
+    "written": "0.947",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "msp",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_msp_sd_l0",
+    "written": "0.010",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "msp",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_energy_mean_l0",
+    "written": "0.965",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "energy",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_energy_sd_l0",
+    "written": "0.008",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "0",
+      "energy",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_leakage_mean_l2",
+    "written": "0.555",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_leakage_sd_l2",
+    "written": "0.046",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "leakage",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_bal_mean_l2",
+    "written": "0.473",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_bal_sd_l2",
+    "written": "0.023",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_bal",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_ece_mean_l2",
+    "written": "0.181",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_ece",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_id_ece_sd_l2",
+    "written": "0.027",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "id_ece",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_ood_ece_mean_l2",
+    "written": "0.717",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l2",
+    "written": "0.022",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_maha_mean_l2",
+    "written": "0.403",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "maha",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_maha_sd_l2",
+    "written": "0.028",
+    "label": "pad_heldout",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "maha",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_fitz_mean_l2",
+    "written": "0.402",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "fitz",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_fitz_sd_l2",
+    "written": "0.018",
+    "label": "fitzpatrick",
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "fitz",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_xdom_mean_l2",
+    "written": "0.254",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "xdom",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_xdom_sd_l2",
+    "written": "0.015",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "xdom",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_cosine_mean_l2",
+    "written": "0.420",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "cosine",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_cosine_sd_l2",
+    "written": "0.021",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "cosine",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_knn_mean_l2",
+    "written": "0.427",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "knn",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_knn_sd_l2",
+    "written": "0.022",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "knn",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_msp_mean_l2",
+    "written": "0.455",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "msp",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_msp_sd_l2",
+    "written": "0.027",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "msp",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_energy_mean_l2",
+    "written": "0.468",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "energy",
+      "mean"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  },
+  {
+    "id": "t1les_energy_sd_l2",
+    "written": "0.041",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "summary",
+      "2",
+      "energy",
+      "sd"
+    ],
+    "note": "lesion-level Table 1, n = 5"
+  }
+]

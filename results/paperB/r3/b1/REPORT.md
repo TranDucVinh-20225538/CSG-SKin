@@ -1,6 +1,6 @@
 # R3 B1 — lesion-level λ ∈ {0, 2} at n = 5
 
-Commit: `1cedb63`. Seeds 42, 52, 62 (R2 Item 4) + 72, 82 (this item) = the image-level endpoint seed set. Same code and recipe as Item 4 (`scripts/train_r2_item4_lesion_split.py`, 40 epochs).
+Commit: `d0d105b`. Seeds 42, 52, 62 (R2 Item 4) + 72, 82 (this item) = the image-level endpoint seed set. Same code and recipe as Item 4 (`scripts/train_r2_item4_lesion_split.py`, 40 epochs).
 
 **Verdict:** Paired 95% interval includes 0 -> report the drop as a trend with the interval; do not call it a degradation.
 

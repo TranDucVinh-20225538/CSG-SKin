@@ -57,18 +57,18 @@ def flatten(obj, pre=""):
         yield pre, float(obj)
 
 
-def run_groups(rel_dir, out_name):
-    """Seed aggregates of every numeric summary.json leaf, grouped by run name without its _s<seed> suffix."""
+def run_groups(rel_dir, out_name, pattern="*_s*/summary.json"):
+    """Seed aggregates of every numeric leaf, grouped by run name without its _s<seed> suffix."""
     base = C.PAPERB / "results" / "paperB" / rel_dir
     vals = defaultdict(lambda: defaultdict(list))
-    for p in sorted(base.glob("*_s*/summary.json")):
-        m = re.fullmatch(r"(.+)_s(\d+)", p.parent.name)
+    for p in sorted(base.glob(pattern)):
+        m = re.fullmatch(r"(.+)_s(\d+)", p.parent.name if p.name == "summary.json" else p.stem)
         if not m:
             continue
         for k, v in flatten(json.loads(p.read_text())):
             vals[m.group(1)][k].append(v)
     out = {g: {k: ms(xs) for k, xs in d.items()} for g, d in vals.items()}
-    (base / out_name).write_text(json.dumps({"source": "{}/*_s*/summary.json".format(rel_dir), "by_group": out}, indent=1) + "\n")
+    (base / out_name).write_text(json.dumps({"source": "{}/{}".format(rel_dir, pattern), "by_group": out}, indent=1) + "\n")
 
 
 if __name__ == "__main__":
@@ -77,3 +77,4 @@ if __name__ == "__main__":
     run_groups("phase15/single_dann", "single_dann_aggregate.json")
     run_groups("phase15b/mmd", "mmd_aggregate.json")
     run_groups("phase3_sweep", "sweep_aggregate.json")
+    run_groups("phase13/per_run", "../per_run_aggregate.json", pattern="*_s*.json")
