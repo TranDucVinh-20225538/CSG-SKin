@@ -1,0 +1,39 @@
+{
+ "run": "erm_w0_s52",
+ "source": "phase15/objectives/erm_w0_s52",
+ "objective": "erm",
+ "weight": 0.0,
+ "seed": 52,
+ "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/erm_w0_s52/best-32.ckpt",
+ "id_balanced_acc": 0.7648093608939193,
+ "id_acc": 0.8381685415433195,
+ "leakage_bal_acc": 0.976447686244597,
+ "ood": {
+  "pad_full": {
+   "mahalanobis_classcond": 0.8547185726925002,
+   "cosine_max": 0.8875834917415595,
+   "knn_k50": 0.9457297453462161,
+   "MSP": 0.8283702477317436,
+   "Energy_T1": 0.8145472513403079,
+   "fit": "ISIC train split only",
+   "n_ood": 2298
+  },
+  "pad_heldout": {
+   "mahalanobis_classcond": 0.8524305038737895,
+   "cosine_max": 0.8794070075513262,
+   "knn_k50": 0.9374722296643965,
+   "MSP": 0.8223218095398752,
+   "Energy_T1": 0.810994544610598,
+   "fit": "ISIC train split only",
+   "n_ood": 716
+  }
+ },
+ "pad_full_minus_stored": {
+  "mahalanobis_classcond": -2.731028242419775e-05,
+  "cosine_max": -1.5458650428956666e-05,
+  "knn_k50": -2.748204520730546e-06,
+  "MSP": -3.8474863289672534e-05,
+  "Energy_T1": -2.116976294852524e-05
+ },
+ "max_abs_pad_full_diff": 3.8474863289672534e-05
+}

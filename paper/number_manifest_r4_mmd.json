@@ -1,0 +1,1637 @@
+[
+  {
+    "id": "mmd_arm_erm_w0_mahalanobis_classcond",
+    "written": "0.834",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_cosine_max",
+    "written": "0.888",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_knn_k50",
+    "written": "0.940",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_MSP",
+    "written": "0.826",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_Energy_T1",
+    "written": "0.823",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_leakage",
+    "written": "0.973",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_id_acc",
+    "written": "0.843",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_id_bal",
+    "written": "0.761",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_mahalanobis_classcond",
+    "written": "0.811",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_cosine_max",
+    "written": "0.853",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_knn_k50",
+    "written": "0.930",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_MSP",
+    "written": "0.815",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_Energy_T1",
+    "written": "0.804",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_leakage",
+    "written": "0.967",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_id_acc",
+    "written": "0.850",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_id_bal",
+    "written": "0.779",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_mahalanobis_classcond",
+    "written": "0.772",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_cosine_max",
+    "written": "0.794",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_knn_k50",
+    "written": "0.915",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_MSP",
+    "written": "0.796",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_Energy_T1",
+    "written": "0.787",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_leakage",
+    "written": "0.947",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_id_acc",
+    "written": "0.850",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_id_bal",
+    "written": "0.777",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_mahalanobis_classcond",
+    "written": "0.724",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_cosine_max",
+    "written": "0.668",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_knn_k50",
+    "written": "0.791",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_MSP",
+    "written": "0.729",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_Energy_T1",
+    "written": "0.663",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_leakage",
+    "written": "0.900",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_id_acc",
+    "written": "0.821",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_id_bal",
+    "written": "0.730",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_mahalanobis_classcond",
+    "written": "0.808",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_cosine_max",
+    "written": "0.837",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_knn_k50",
+    "written": "0.916",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_MSP",
+    "written": "0.743",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_Energy_T1",
+    "written": "0.615",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_leakage",
+    "written": "0.931",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_id_acc",
+    "written": "0.773",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_id_bal",
+    "written": "0.609",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_mahalanobis_classcond",
+    "written": "0.784",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_cosine_max",
+    "written": "0.783",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_knn_k50",
+    "written": "0.833",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_MSP",
+    "written": "0.759",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_Energy_T1",
+    "written": "0.648",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_leakage",
+    "written": "0.919",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_id_acc",
+    "written": "0.721",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_id_bal",
+    "written": "0.450",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_mahalanobis_classcond",
+    "written": "0.747",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_cosine_max",
+    "written": "0.701",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_knn_k50",
+    "written": "0.813",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_MSP",
+    "written": "0.777",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_Energy_T1",
+    "written": "0.707",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_leakage",
+    "written": "0.893",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_id_acc",
+    "written": "0.672",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_id_bal",
+    "written": "0.382",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_mahalanobis_classcond",
+    "written": "0.664",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_cosine_max",
+    "written": "0.633",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_knn_k50",
+    "written": "0.740",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_MSP",
+    "written": "0.670",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_Energy_T1",
+    "written": "0.696",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_leakage",
+    "written": "0.836",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_id_acc",
+    "written": "0.656",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_id_bal",
+    "written": "0.337",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_mahalanobis_classcond",
+    "written": "0.700",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_cosine_max",
+    "written": "0.875",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_knn_k50",
+    "written": "0.935",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_MSP",
+    "written": "0.857",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_Energy_T1",
+    "written": "0.901",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_leakage",
+    "written": "0.970",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_id_acc",
+    "written": "0.845",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_id_bal",
+    "written": "0.768",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_mahalanobis_classcond",
+    "written": "0.539",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_cosine_max",
+    "written": "0.530",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_knn_k50",
+    "written": "0.548",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_MSP",
+    "written": "0.548",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_Energy_T1",
+    "written": "0.536",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_leakage",
+    "written": "0.763",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_id_acc",
+    "written": "0.845",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_id_bal",
+    "written": "0.778",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_mahalanobis_classcond",
+    "written": "0.524",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_cosine_max",
+    "written": "0.519",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_knn_k50",
+    "written": "0.539",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_MSP",
+    "written": "0.543",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_Energy_T1",
+    "written": "0.543",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_leakage",
+    "written": "0.795",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_id_acc",
+    "written": "0.844",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_id_bal",
+    "written": "0.766",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_mahalanobis_classcond",
+    "written": "0.555",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_cosine_max",
+    "written": "0.517",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_knn_k50",
+    "written": "0.541",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_MSP",
+    "written": "0.517",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_Energy_T1",
+    "written": "0.498",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_leakage",
+    "written": "0.795",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_id_acc",
+    "written": "0.840",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_id_bal",
+    "written": "0.763",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_mahalanobis_classcond",
+    "written": "0.521",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_cosine_max",
+    "written": "0.514",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_knn_k50",
+    "written": "0.542",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_MSP",
+    "written": "0.540",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_Energy_T1",
+    "written": "0.529",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_leakage",
+    "written": "0.807",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_id_acc",
+    "written": "0.839",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_id_bal",
+    "written": "0.758",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_mahalanobis_classcond",
+    "written": "0.513",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_cosine_max",
+    "written": "0.490",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_knn_k50",
+    "written": "0.515",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_MSP",
+    "written": "0.519",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_Energy_T1",
+    "written": "0.501",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_leakage",
+    "written": "0.798",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_id_acc",
+    "written": "0.835",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_id_bal",
+    "written": "0.750",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_mahalanobis_classcond",
+    "written": "0.525",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_cosine_max",
+    "written": "0.526",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_knn_k50",
+    "written": "0.558",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_MSP",
+    "written": "0.566",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_Energy_T1",
+    "written": "0.551",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_leakage",
+    "written": "0.787",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_id_acc",
+    "written": "0.832",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "id_acc",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_id_bal",
+    "written": "0.731",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: MMD vs GRL"
+  }
+]

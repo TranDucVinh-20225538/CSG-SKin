@@ -1,6 +1,6 @@
 # R2 Item 4 sweep — lesion-level ISIC split, all λ
 
-Commit: `1cedb63`. Same code and recipe as Item 4 (`scripts/train_r2_item4_lesion_split.py`); only λ and seed vary.
+Commit: `6c1f516`. Same code and recipe as Item 4 (`scripts/train_r2_item4_lesion_split.py`); only λ and seed vary.
 
 Seeds: λ ∈ {0, 2} use 42, 52, 62 (Item 4 runs); λ ∈ {0.25, 0.5, 1, 4, 8} use 42, 43, 44 (sweep). Mean ± s.d. over seeds. Detectors on z_lesion^norm, fit on the run's ISIC train. Cross-domain: 6-class balanced accuracy on pad_heldout.
 

@@ -1154,5 +1154,291 @@
       "n"
     ],
     "note": "R3 D: abstract"
+  },
+  {
+    "id": "t1img_leakage_l0.25",
+    "written": "0.571",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_leakage_sd_l0.25",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "leakage",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_id_bal_l0.25",
+    "written": "0.692",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_id_ece_l0.25",
+    "written": "0.100",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_ood_ece_l0.25",
+    "written": "0.694",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_maha_l0.25",
+    "written": "0.509",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_maha_sd_l0.25",
+    "written": "0.023",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_fitz_l0.25",
+    "written": "0.460",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_fitz_sd_l0.25",
+    "written": "0.057",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_xdom_l0.25",
+    "written": "0.295",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_xdom_sd_l0.25",
+    "written": "0.028",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_leakage_l1",
+    "written": "0.591",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_leakage_sd_l1",
+    "written": "0.035",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "leakage",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_id_bal_l1",
+    "written": "0.695",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_id_ece_l1",
+    "written": "0.097",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_ood_ece_l1",
+    "written": "0.735",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_maha_l1",
+    "written": "0.457",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_maha_sd_l1",
+    "written": "0.026",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_fitz_l1",
+    "written": "0.414",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_fitz_sd_l1",
+    "written": "0.086",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_xdom_l1",
+    "written": "0.258",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
+  },
+  {
+    "id": "t1img_xdom_sd_l1",
+    "written": "0.012",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: image-level Table 1 at n = 5"
   }
 ]

@@ -1,574 +1,1276 @@
 [
   {
-    "id": "t1les_leakage_mean_l0",
+    "id": "t1les_leakage_l0",
     "written": "0.927",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "leakage",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_leakage_sd_l0",
     "written": "0.018",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "leakage",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_id_bal_mean_l0",
+    "id": "t1les_id_bal_l0",
     "written": "0.496",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "id_bal",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_id_bal_sd_l0",
     "written": "0.016",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "id_bal",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_id_ece_mean_l0",
+    "id": "t1les_id_ece_l0",
     "written": "0.181",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "id_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_id_ece_sd_l0",
     "written": "0.026",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "id_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_ood_ece_mean_l0",
+    "id": "t1les_ood_ece_l0",
     "written": "0.219",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "ood_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_ood_ece_sd_l0",
     "written": "0.046",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "ood_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_maha_mean_l0",
+    "id": "t1les_maha_l0",
     "written": "0.808",
     "label": "pad_heldout",
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "maha",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_maha_sd_l0",
     "written": "0.027",
-    "label": "pad_heldout",
-    "file": "r3/b1/b1_results.json",
+    "label": null,
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "maha",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_fitz_mean_l0",
+    "id": "t1les_fitz_l0",
     "written": "0.717",
     "label": "fitzpatrick",
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "fitz",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_fitz_sd_l0",
     "written": "0.034",
-    "label": "fitzpatrick",
-    "file": "r3/b1/b1_results.json",
+    "label": null,
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "fitz",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_xdom_mean_l0",
+    "id": "t1les_xdom_l0",
     "written": "0.275",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "xdom",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_xdom_sd_l0",
     "written": "0.023",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "0",
       "xdom",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_cosine_mean_l0",
-    "written": "0.866",
+    "id": "t1les_leakage_l0.25",
+    "written": "0.614",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "cosine",
+      "lesion_table1",
+      "0.25",
+      "leakage",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_cosine_sd_l0",
-    "written": "0.026",
+    "id": "t1les_leakage_sd_l0.25",
+    "written": "0.092",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "cosine",
+      "lesion_table1",
+      "0.25",
+      "leakage",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_knn_mean_l0",
-    "written": "0.912",
+    "id": "t1les_id_bal_l0.25",
+    "written": "0.487",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "knn",
+      "lesion_table1",
+      "0.25",
+      "id_bal",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_knn_sd_l0",
-    "written": "0.022",
+    "id": "t1les_id_bal_sd_l0.25",
+    "written": "0.005",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "knn",
+      "lesion_table1",
+      "0.25",
+      "id_bal",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_msp_mean_l0",
-    "written": "0.947",
+    "id": "t1les_id_ece_l0.25",
+    "written": "0.141",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "msp",
+      "lesion_table1",
+      "0.25",
+      "id_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_msp_sd_l0",
-    "written": "0.010",
+    "id": "t1les_id_ece_sd_l0.25",
+    "written": "0.076",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "msp",
+      "lesion_table1",
+      "0.25",
+      "id_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_energy_mean_l0",
-    "written": "0.965",
+    "id": "t1les_ood_ece_l0.25",
+    "written": "0.561",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "energy",
+      "lesion_table1",
+      "0.25",
+      "ood_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_energy_sd_l0",
+    "id": "t1les_ood_ece_sd_l0.25",
+    "written": "0.221",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_l0.25",
+    "written": "0.525",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_sd_l0.25",
+    "written": "0.121",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_l0.25",
+    "written": "0.496",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_sd_l0.25",
+    "written": "0.167",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_l0.25",
+    "written": "0.289",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_sd_l0.25",
+    "written": "0.049",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_l0.5",
+    "written": "0.581",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_sd_l0.5",
+    "written": "0.031",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "leakage",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_l0.5",
+    "written": "0.501",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_sd_l0.5",
+    "written": "0.012",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_bal",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_l0.5",
+    "written": "0.191",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_sd_l0.5",
     "written": "0.008",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "0",
-      "energy",
+      "lesion_table1",
+      "0.5",
+      "id_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_leakage_mean_l2",
+    "id": "t1les_ood_ece_l0.5",
+    "written": "0.710",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l0.5",
+    "written": "0.017",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_l0.5",
+    "written": "0.426",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_sd_l0.5",
+    "written": "0.008",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_l0.5",
+    "written": "0.411",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_sd_l0.5",
+    "written": "0.047",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_l0.5",
+    "written": "0.259",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_sd_l0.5",
+    "written": "0.025",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_l1",
+    "written": "0.563",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_sd_l1",
+    "written": "0.045",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "leakage",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_l1",
+    "written": "0.495",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_sd_l1",
+    "written": "0.011",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_bal",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_l1",
+    "written": "0.176",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_sd_l1",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_l1",
+    "written": "0.730",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l1",
+    "written": "0.015",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_l1",
+    "written": "0.387",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_sd_l1",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_l1",
+    "written": "0.375",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_sd_l1",
+    "written": "0.042",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_l1",
+    "written": "0.229",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_sd_l1",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_l2",
     "written": "0.555",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "leakage",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_leakage_sd_l2",
     "written": "0.046",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "leakage",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_id_bal_mean_l2",
+    "id": "t1les_id_bal_l2",
     "written": "0.473",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "id_bal",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_id_bal_sd_l2",
     "written": "0.023",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "id_bal",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_id_ece_mean_l2",
+    "id": "t1les_id_ece_l2",
     "written": "0.181",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "id_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_id_ece_sd_l2",
     "written": "0.027",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "id_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_ood_ece_mean_l2",
+    "id": "t1les_ood_ece_l2",
     "written": "0.717",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "ood_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_ood_ece_sd_l2",
     "written": "0.022",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "ood_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_maha_mean_l2",
+    "id": "t1les_maha_l2",
     "written": "0.403",
     "label": "pad_heldout",
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "maha",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_maha_sd_l2",
     "written": "0.028",
-    "label": "pad_heldout",
-    "file": "r3/b1/b1_results.json",
+    "label": null,
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "maha",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_fitz_mean_l2",
+    "id": "t1les_fitz_l2",
     "written": "0.402",
     "label": "fitzpatrick",
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "fitz",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_fitz_sd_l2",
     "written": "0.018",
-    "label": "fitzpatrick",
-    "file": "r3/b1/b1_results.json",
+    "label": null,
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "fitz",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_xdom_mean_l2",
+    "id": "t1les_xdom_l2",
     "written": "0.254",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "xdom",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
     "id": "t1les_xdom_sd_l2",
     "written": "0.015",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
+      "lesion_table1",
       "2",
       "xdom",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_cosine_mean_l2",
-    "written": "0.420",
+    "id": "t1les_leakage_l4",
+    "written": "0.636",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "cosine",
+      "lesion_table1",
+      "4",
+      "leakage",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_cosine_sd_l2",
-    "written": "0.021",
+    "id": "t1les_leakage_sd_l4",
+    "written": "0.076",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "cosine",
+      "lesion_table1",
+      "4",
+      "leakage",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_knn_mean_l2",
-    "written": "0.427",
+    "id": "t1les_id_bal_l4",
+    "written": "0.498",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "knn",
+      "lesion_table1",
+      "4",
+      "id_bal",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_knn_sd_l2",
-    "written": "0.022",
+    "id": "t1les_id_bal_sd_l4",
+    "written": "0.012",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "knn",
+      "lesion_table1",
+      "4",
+      "id_bal",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_msp_mean_l2",
-    "written": "0.455",
+    "id": "t1les_id_ece_l4",
+    "written": "0.161",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "msp",
+      "lesion_table1",
+      "4",
+      "id_ece",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_msp_sd_l2",
+    "id": "t1les_id_ece_sd_l4",
+    "written": "0.050",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "id_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_l4",
+    "written": "0.696",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l4",
+    "written": "0.032",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "ood_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_l4",
+    "written": "0.433",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "maha",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_maha_sd_l4",
+    "written": "0.020",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "maha",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_l4",
+    "written": "0.376",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_sd_l4",
+    "written": "0.037",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_l4",
+    "written": "0.258",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_sd_l4",
+    "written": "0.010",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_l8",
+    "written": "0.663",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "leakage",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_leakage_sd_l8",
+    "written": "0.068",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "leakage",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_l8",
+    "written": "0.489",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_bal",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_bal_sd_l8",
+    "written": "0.019",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_bal",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_l8",
+    "written": "0.161",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_id_ece_sd_l8",
+    "written": "0.029",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_ece",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_l8",
+    "written": "0.710",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "ood_ece",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l8",
     "written": "0.027",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "msp",
+      "lesion_table1",
+      "8",
+      "ood_ece",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_energy_mean_l2",
-    "written": "0.468",
-    "label": null,
-    "file": "r3/b1/b1_results.json",
+    "id": "t1les_maha_l8",
+    "written": "0.454",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "energy",
+      "lesion_table1",
+      "8",
+      "maha",
       "mean"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   },
   {
-    "id": "t1les_energy_sd_l2",
-    "written": "0.041",
+    "id": "t1les_maha_sd_l8",
+    "written": "0.044",
     "label": null,
-    "file": "r3/b1/b1_results.json",
+    "file": "r4/r4_results.json",
     "key": [
-      "summary",
-      "2",
-      "energy",
+      "lesion_table1",
+      "8",
+      "maha",
       "sd"
     ],
-    "note": "lesion-level Table 1, n = 5"
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_l8",
+    "written": "0.412",
+    "label": "fitzpatrick",
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "fitz",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_fitz_sd_l8",
+    "written": "0.051",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "fitz",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_l8",
+    "written": "0.254",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "xdom",
+      "mean"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
+  },
+  {
+    "id": "t1les_xdom_sd_l8",
+    "written": "0.022",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "xdom",
+      "sd"
+    ],
+    "note": "R4: lesion-level Table 1, n = 5 at every \u03bb"
   }
 ]
