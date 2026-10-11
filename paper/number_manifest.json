@@ -466,7 +466,7 @@
       "fitz_maha",
       "mean"
     ],
-    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+    "note": "R3-D triage (results/paperB/r3/d/triage.md) | UNRESOLVED: phase2_5/phase25_aggregate.json does not exist in results/paperB, and no JSON under any fitz-related key rounds to 0.994 except an unrelated ratio_BCC and an ImageNet AK per-class value. The Table 1 ResNet-50 Fitzpatrick figure has no machine-checkable source."
   },
   {
     "id": "xfer_effb3_bal",
@@ -678,7 +678,7 @@
   },
   {
     "id": "les_leak_l0",
-    "written": "0.925",
+    "written": "0.927",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -687,11 +687,11 @@
       "leakage",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.925 to the n=5 value"
   },
   {
     "id": "les_leak_l2",
-    "written": "0.565",
+    "written": "0.555",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -700,11 +700,11 @@
       "leakage",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.565 to the n=5 value"
   },
   {
     "id": "les_idece_l0",
-    "written": "0.182",
+    "written": "0.181",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -713,11 +713,11 @@
       "id_ece",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.182 to the n=5 value"
   },
   {
     "id": "les_idece_l2",
-    "written": "0.175",
+    "written": "0.181",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -726,11 +726,11 @@
       "id_ece",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.175 to the n=5 value"
   },
   {
     "id": "les_oodece_l0",
-    "written": "0.198",
+    "written": "0.219",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -739,11 +739,11 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.198 to the n=5 value"
   },
   {
     "id": "les_oodece_l2",
-    "written": "0.714",
+    "written": "0.717",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -752,11 +752,11 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.714 to the n=5 value"
   },
   {
     "id": "les_maha_l0",
-    "written": "0.815",
+    "written": "0.808",
     "label": "pad_heldout",
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -765,11 +765,11 @@
       "maha",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.815 to the n=5 value"
   },
   {
     "id": "les_maha_l2",
-    "written": "0.400",
+    "written": "0.403",
     "label": "pad_heldout",
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -778,11 +778,11 @@
       "maha",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.400 to the n=5 value"
   },
   {
     "id": "les_fitz_l0",
-    "written": "0.727",
+    "written": "0.717",
     "label": "fitzpatrick",
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -791,11 +791,11 @@
       "fitz",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.727 to the n=5 value"
   },
   {
     "id": "les_fitz_l2",
-    "written": "0.407",
+    "written": "0.402",
     "label": "fitzpatrick",
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -804,11 +804,11 @@
       "fitz",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.407 to the n=5 value"
   },
   {
     "id": "les_idbal_l0",
-    "written": "0.504",
+    "written": "0.496",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -817,11 +817,11 @@
       "id_bal",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.504 to the n=5 value"
   },
   {
     "id": "les_idbal_l2",
-    "written": "0.464",
+    "written": "0.473",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -830,11 +830,11 @@
       "id_bal",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.464 to the n=5 value"
   },
   {
     "id": "les_idbal_sd_l2",
-    "written": "0.028",
+    "written": "0.023",
     "label": null,
     "file": "r3/b1/b1_results.json",
     "key": [
@@ -843,11 +843,11 @@
       "id_bal",
       "sd"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.028 to the n=5 value"
   },
   {
     "id": "img_idbal_l0_vs_lesion",
-    "written": "0.693",
+    "written": "0.692",
     "label": null,
     "file": "phase3_sweep/sweep_aggregate.json",
     "key": [
@@ -856,7 +856,7 @@
       "id_balanced_acc",
       "mean"
     ],
-    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value"
+    "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.693 to the n=5 value"
   },
   {
     "id": "abs_maha_l025",
@@ -917,7 +917,7 @@
   },
   {
     "id": "abs_leak_l025",
-    "written": "0.553",
+    "written": "0.571",
     "label": null,
     "file": "phase3_sweep/sweep_aggregate.json",
     "key": [
@@ -926,7 +926,7 @@
       "leakage.z_lesion.bal_acc_mean",
       "mean"
     ],
-    "note": "R3 D: abstract"
+    "note": "R3 D: abstract | written updated from 0.553 to the n=5 value"
   },
   {
     "id": "abs_idbal_l0",
@@ -969,7 +969,7 @@
   },
   {
     "id": "abs_ak_recall_l0",
-    "written": "0.244",
+    "written": "0.245",
     "label": null,
     "file": "phase6_xfer/diagnosis_aggregate.json",
     "key": [
@@ -979,7 +979,7 @@
       "AK",
       "mean"
     ],
-    "note": "R3 D: abstract"
+    "note": "R3 D: abstract | written updated from 0.244 to the n=5 value"
   },
   {
     "id": "abs_ak_recall_l2",
