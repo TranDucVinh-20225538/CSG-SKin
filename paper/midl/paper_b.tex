@@ -169,47 +169,39 @@ pre-registered synthetic reproduction were tested and refuted.
 \section{Related work}
 
 \paragraph{Shortcut learning in dermatology.}
-Winkler et al.~\cite{winkler2019} showed that ink markings shift melanoma
-predictions; Bissoto et al.~\cite{bissoto2020} showed that classifiers retain
-competitive accuracy on ISIC data when the lesion itself is masked;
-Daneshjou et al.~\cite{daneshjou2022} documented degraded performance on
-darker skin tones. These motivate invariance-based remedies.
+Ink markings shift melanoma predictions \cite{winkler2019}, classifiers keep
+competitive ISIC accuracy with the lesion masked out \cite{bissoto2020}, and
+performance degrades on darker skin tones \cite{daneshjou2022}. These motivate
+invariance-based remedies.
 
 \paragraph{Invariant representation learning.}
 Domain-adversarial training \cite{ganin2016} and domain separation networks
-\cite{bousmalis2016} remove domain information by adversarial or
-orthogonality constraints. \textbf{The architecture used here is
-equivalent to a domain separation network and is not a contribution of this
-paper.} It is a vehicle for the intervention.
+\cite{bousmalis2016} remove domain information by adversarial or orthogonality
+constraints. \textbf{The architecture used here is equivalent to a domain separation
+network and is not a contribution of this paper}; it is a vehicle for the intervention.
 
 \paragraph{Covariate shift versus semantic novelty.}
-Full-spectrum OOD detection \cite{yang2023} argues that the literature conflates two
-distinct shifts, and proposes a four-way taxonomy --- training ID, \emph{covariate-shifted
-ID}, near-OOD and far-OOD --- in which covariate-shifted in-distribution samples should be
-tolerated rather than flagged, since rejecting them contradicts the goal of
-generalization. OpenOOD v1.5 \cite{zhang2023} adopts the same setting at ImageNet scale.
-Our contrast falls squarely in the covariate-shifted-ID cell, so a reader of
-\cite{yang2023} might regard a model that accepts these images as behaving correctly.
-Section~\ref{sec:tolerance} argues that tolerance is safe only when accompanied by
-generalization, and shows that here it is not.
+Full-spectrum OOD detection \cite{yang2023} argues the literature conflates two
+shifts, and proposes a taxonomy --- training ID, \emph{covariate-shifted ID}, near-OOD
+and far-OOD --- in which covariate-shifted in-distribution samples should be tolerated
+rather than flagged, since rejecting them contradicts generalization; OpenOOD v1.5
+\cite{zhang2023} adopts the same setting at ImageNet scale. Our contrast falls in the
+covariate-shifted-ID cell, so a reader of \cite{yang2023} might regard a model that
+accepts these images as behaving correctly. Section~\ref{sec:tolerance} argues
+tolerance is safe only with generalization, and here it is not.
 
-\paragraph{Calibration under adaptation.}
-Ovadia et al.~\cite{ovadia2019} showed that calibration degrades under shift for
-ordinary training, and Wang et al.~\cite{wang2020} established the sharper result that
-domain adaptation methods specifically \emph{trade} calibration for accuracy: adapted
-models are miscalibrated on the target domain, and they propose a post-hoc correction.
-\textbf{The calibration degradation we report in Section~\ref{sec:confidently} is
-therefore not a new phenomenon.} What is new here is its dose-dependence on the
-adversarial weight, its invisibility to in-distribution calibration, and --- separately
-from calibration altogether --- the collapse and inversion of out-of-distribution
-detection, which a post-hoc confidence correction does not address. \paragraph{Calibration as a route to invariance --- and the reverse.}
-Wald et al.~\cite{wald2021} established the forward direction: enforcing \emph{multi-domain calibration}
-yields invariance, with models so calibrated provably free of certain spurious
-correlations, and they propose a calibration loss (CLOvE) validated on WILDS.
+\paragraph{Calibration under adaptation, and the reverse direction.}
+Calibration degrades under shift for ordinary training \cite{ovadia2019}, and domain
+adaptation methods specifically \emph{trade} calibration for accuracy on the target
+domain, for which a post-hoc correction exists \cite{wang2020}. \textbf{The calibration
+degradation in Section~\ref{sec:confidently} is therefore not a new phenomenon.} New
+here are its dose-dependence on the adversarial weight, its invisibility to
+in-distribution calibration, and --- separately from calibration --- the collapse and
+inversion of OOD detection, which a confidence correction does not address. In the
+forward direction, enforcing multi-domain calibration yields invariance and provable
+freedom from certain spurious correlations \cite{wald2021}; we find the reverse
+implication does not hold (Section~\ref{sec:confidently}).
 
-We find the reverse implication does not hold (Section~\ref{sec:confidently}).
-
-% ------------------------------------------------------------
 \section{Materials and methods}
 
 \subsection{Data}
@@ -281,38 +273,36 @@ $0.5$ for this two-domain problem}. Earlier work on this dataset pair reports
 plain accuracy against a majority floor of $0.688$; the two scales must not be
 compared to each other. Both are stated where relevant.
 
-\paragraph{OOD detection.} Maximum softmax probability \cite{hendrycks2017},
-free energy \cite{liu2020}, maximum cosine to a class centroid,
-class-conditional Mahalanobis with shared covariance \cite{lee2018}, and $k$-NN
-distance \cite{sun2022} ($k \in \{10,50,200\}$). All statistics are fit on the ISIC training
-split alone. \textbf{These five rules are not independent evidence}: the
-classifier is a linear map from $z_{\ell}^{\mathrm{norm}}$, so all five are
-functions of the same 16-dimensional vector. Independent evidence comes from
-repeating the analysis on the pre-projection backbone representation
+\paragraph{OOD detection.} Maximum softmax probability \cite{hendrycks2017}, free
+energy \cite{liu2020}, maximum cosine to a class centroid, class-conditional
+Mahalanobis with shared covariance \cite{lee2018}, and $k$-NN distance
+\cite{sun2022} ($k \in \{10,50,200\}$), all fit on the ISIC training split alone.
+\textbf{These five rules are not independent evidence}: the classifier is a linear map
+from $z_{\ell}^{\mathrm{norm}}$, so all five are functions of the same
+$16$-dimensional vector. Independent evidence comes from the pre-projection backbone
 (Section~\ref{sec:nonmediation}).
 
-\paragraph{Calibration.} Expected calibration error, 15 bins, computed
-separately on ISIC test and on \texttt{pad\_heldout} restricted to the six
-shared classes. \textbf{Note that out-of-domain ECE here is arithmetically
-close to mean confidence minus accuracy}, so the confidence, accuracy and ECE
-results in Section~\ref{sec:confidently} are three views of one phenomenon,
-not three independent findings.
+\paragraph{Calibration.} Expected calibration error, 15 bins, on ISIC test and on
+\texttt{pad\_heldout} restricted to the six shared classes. \textbf{Out-of-domain ECE
+here is arithmetically close to mean confidence minus accuracy}, so the confidence,
+accuracy and ECE results in Section~\ref{sec:confidently} are three views of one
+phenomenon rather than three findings.
 
-\paragraph{Uncertainty.} Intervals on AUROC come from a stratified bootstrap with
+\paragraph{Uncertainty.} Intervals on AUROC come from a stratified bootstrap,
 2{,}000 resamples, percentile method, fixed in a pre-registration before the values
 were computed. Each draw resamples \textbf{patients} from \texttt{pad\_heldout} and,
 independently, images from the ISIC test split, because AUROC depends on both score
-distributions and resampling only one side understates the interval. Within a draw the
-same resampled sets are used for every seed. We report both the interval on the
-five-seed mean and the number of seeds whose individual interval clears $0.5$.
-Fitzpatrick17k carries no patient identifiers, so its bootstrap is over images and its
-interval is likely anti-conservative.
+distributions and resampling one side understates the interval; within a draw the same
+resampled sets serve every seed. We report the interval on the five-seed mean and the
+number of seeds whose own interval clears $0.5$. Fitzpatrick17k carries no patient
+identifiers, so its bootstrap is over images and its interval is likely
+anti-conservative.
 
-\paragraph{Cross-domain diagnosis.} Zero-shot evaluation on
-\texttt{pad\_heldout} over the six shared classes. PAD labels were never used
-for $\mathcal{L}_{\mathrm{cls}}$.
+\paragraph{Cross-domain diagnosis.} Zero-shot on \texttt{pad\_heldout} over the six
+shared classes; PAD labels were never used for $\mathcal{L}_{\mathrm{cls}}$.
 
 % ------------------------------------------------------------
+
 \section{Results}
 
 \subsection{The intervention}
@@ -383,62 +373,52 @@ method had worked exactly as advertised.
 
 \subsection{Out-of-distribution detection collapses, and inverts}
 
-Over the same interval, Mahalanobis AUROC against the held-out PAD partition falls from
-$0.843$ to $0.513$, and reaches $0.427$ at $\lam = 2$.
+Over the same interval, Mahalanobis AUROC against the held-out PAD partition falls
+from $0.843$ to $0.513$ and reaches $0.427$ at $\lam = 2$. Two features matter more
+than the size of that drop.
 
-Two features of this collapse matter more than its size.
-
-\paragraph{The fall to chance is a cliff; the inversion develops after it.} Almost the
-whole descent happens in one step: $0.843$ to $0.513$ between $\lam = 0$ and
+\paragraph{The fall to chance is a cliff; the inversion develops after it.} Almost
+the whole descent happens in one step, $0.843$ to $0.513$ between $\lam = 0$ and
 $\lam = 0.25$ (three seeds; the five-seed value is being recomputed). The sub-chance
-region is reached only at $\lam \geq 0.5$, after which the
-value moves between $0.427$ and $0.494$ with no ordering that would let a practitioner
-tune for a safe compromise. We therefore distinguish the two: detection collapses to
-chance at the smallest non-zero weight tested, and inverts under further pressure. There is no operating point on this curve at which
-invariance has been obtained and detection survives.
+region is reached only at $\lam \geq 0.5$, after which the value moves between
+$0.427$ and $0.494$ with no ordering a practitioner could tune against. So detection
+collapses to chance at the smallest non-zero weight tested and inverts under further
+pressure; there is no operating point at which invariance has been obtained and
+detection survives.
 
-\paragraph{It goes below chance.} At $\lam = 2$ the detector ranks images from a clinic
-the model has never seen as \emph{more} in-distribution than images from its own test
-split. A patient-clustered bootstrap puts the $95\%$ interval at $[0.414, 0.439]$, and
-all five seeds have individual intervals entirely below $0.5$. The same holds for
-$k$-NN ($0.440$, $[0.429, 0.452]$, $5/5$ seeds) and, with one seed short of unanimity,
-for cosine ($0.453$, $[0.441, 0.464]$, $4/5$). This is not a tail artefact. Removing the pooled $90$th, $95$th or $99$th
-percentile of scores leaves AUROC at $0.412$, $0.416$ and $0.424$ respectively against
-$0.427$ for the full set, and the medians themselves invert (ISIC $13.8$ versus
-\texttt{pad\_heldout} $10.0$). The shift is distributional throughout.
+\paragraph{It goes below chance.} At $\lam = 2$ the detector ranks images from a
+clinic the model has never seen as \emph{more} in-distribution than its own test
+split. A patient-clustered bootstrap puts the $95\%$ interval at $[0.414, 0.439]$ with
+all five seeds' individual intervals below $0.5$; the same holds for $k$-NN ($0.440$,
+$[0.429, 0.452]$, $5/5$) and, one seed short, cosine ($0.453$, $[0.441, 0.464]$,
+$4/5$). It is not a tail artefact: removing the pooled $90$th, $95$th or $99$th
+percentile leaves AUROC at $0.412$, $0.416$ and $0.424$ against $0.427$ for the full
+set, and the medians themselves invert (ISIC $13.8$ versus \texttt{pad\_heldout}
+$10.0$).
 
-All five scoring rules move together --- MSP $0.970 \to 0.437$, energy
-$0.983 \to 0.441$, cosine $0.901 \to 0.435$, $k$-NN $0.941 \to 0.424$ (stable across
-$k \in \{10, 50, 200\}$). As noted in the methods these are five views of one
-$16$-dimensional representation and are not independent evidence; the independent
-replication is at the backbone (Section~\ref{sec:nonmediation}) and in the
-single-encoder model (Section~\ref{sec:arch}).
+All five rules move together --- MSP $0.970 \to 0.437$, energy $0.983 \to 0.441$,
+cosine $0.901 \to 0.435$, $k$-NN $0.941 \to 0.424$, stable across
+$k \in \{10, 50, 200\}$ --- but as noted in the methods they are five views of one
+$16$-dimensional representation; the independent replications are the backbone
+(Section~\ref{sec:nonmediation}) and the single-encoder model
+(Section~\ref{sec:arch}).
 
-The collapse is not a numerical artefact of the covariance estimate. Ledoit--Wolf
-shrinkage leaves the $\lam = 2$ value unchanged on the held-out partition ($0.427$ under
-both). Across float32 and float64 covariance estimation, with and without shrinkage, and
-at one, four and eight BLAS threads, the largest deviation in AUROC is
-$9.4 \times 10^{-4}$. Effective
-dimensionality barely moves across the sweep (participation ratio $4.879 \to 4.500$
-while leakage falls $0.914 \to 0.553$ in the same three runs).
-
-It is not an artefact of an unusually aggressive adversary. The adversary runs at
-$30\times$ the base learning rate, and retraining at $10\times$ and $100\times$ leaves
-the inversion in place: $0.418 \pm 0.011$ at $10\times$ with all three seeds below
-$0.5$, against $0.432 \pm 0.024$ at $30\times$ and $0.482 \pm 0.020$ at $100\times$
-(one seed at $0.503$). Weakening the adversary tenfold deepens the inversion rather
-than removing it.
-
-It is not confined to the domain the adversary was trained against. On Fitzpatrick17k,
-absent from every training branch, AUROC falls $0.764 \to 0.391$ across the same sweep
-($95\%$ CI $[0.386, 0.396]$, five of five seeds below $0.5$; the bootstrap here is over
-images, since Fitzpatrick17k carries no patient identifiers, so the interval is likely
-narrower than the true sampling uncertainty).
-For context, a ResNet-50 baseline reaches $0.994$ on these images and the
-EfficientNet-B3 single-encoder control $0.649$; the controlled comparison is the
-$\lam = 0$ row, since it differs from $\lam = 2$ only in the adversarial weight.
-
-
+Three artefact explanations fail. \emph{Covariance estimation:} Ledoit--Wolf
+shrinkage leaves $\lam = 2$ at $0.427$, and across float32 and float64, with and
+without shrinkage, at one, four and eight BLAS threads, the largest AUROC deviation is
+$9.4 \times 10^{-4}$; effective dimensionality barely moves (participation ratio
+$4.879 \to 4.500$ while leakage falls $0.914 \to 0.553$ in the same three runs).
+\emph{An over-strong adversary:} the adversary runs at $30\times$ the base learning
+rate, and retraining at $10\times$ and $100\times$ keeps the inversion ---
+$0.418 \pm 0.011$ at $10\times$ with all three seeds below $0.5$, against
+$0.432 \pm 0.024$ at $30\times$ and $0.482 \pm 0.020$ at $100\times$ (one seed at
+$0.503$) --- so weakening it tenfold deepens the inversion rather than removing it.
+\emph{The adversary's own domain:} on Fitzpatrick17k, absent from every training
+branch, AUROC falls $0.764 \to 0.391$ ($95\%$ CI $[0.386, 0.396]$, five of five seeds
+below $0.5$; bootstrapped over images, so likely anti-conservative). For context a
+ResNet-50 baseline reaches $0.994$ on those images and the EfficientNet-B3
+single-encoder control $0.649$; the controlled comparison is the $\lam = 0$ row, which
+differs from $\lam = 2$ only in the adversarial weight.
 
 \subsection{The model becomes confidently wrong on unseen domains}
 \label{sec:confidently}
@@ -698,77 +678,64 @@ value identical to three decimal places.
 \subsection{The inversion runs through the majority-class centroid}
 \label{sec:mechanism}
 
-Nevus is $50.8\%$ of the in-distribution set. We pre-registered three criteria for
-the hypothesis that gradient reversal moves out-of-domain images into the nevus
-region of the latent space, and all three hold.
+Nevus is $50.8\%$ of the in-distribution set. We pre-registered three criteria for the
+hypothesis that gradient reversal moves out-of-domain images into the nevus region of
+the latent space, and all three hold.
 
 \textbf{(i) Out-of-domain images migrate to the nevus cell.} The fraction of
-\texttt{pad\_heldout} images whose nearest class centroid is nevus rises from
-$0.332$ at $\lam = 0$ to $0.601$ at $\lam = 2$ ($\Delta = 0.268$ against
-$2\,\mathrm{SE} = 0.055$), while the same fraction for in-distribution images is
-flat ($0.528 \to 0.531$). It tracks the diagnostic shift exactly: across all 27
-runs, the correlation between this fraction and the number of
-\texttt{pad\_heldout} images predicted nevus ($105 \to 424$ of $716$) is
-$\rho = 0.982$.
+\texttt{pad\_heldout} images whose nearest class centroid is nevus rises from $0.332$
+at $\lam = 0$ to $0.601$ at $\lam = 2$ ($\Delta = 0.268$ against
+$2\,\mathrm{SE} = 0.055$), while the same fraction for in-distribution images is flat
+($0.528 \to 0.531$). It tracks the diagnostic shift: across all 27 runs the
+correlation between this fraction and the number of \texttt{pad\_heldout} images
+predicted nevus ($105 \to 424$ of $716$) is $\rho = 0.982$.
 
-\textbf{(ii) The inversion is confined to those images.} Split by nearest
-centroid, AUROC on the nevus-nearest subset falls $0.807 \to 0.282$ while the
-remainder stays above chance throughout ($0.861 \to 0.644$).
+\textbf{(ii) The inversion is confined to those images.} Split by nearest centroid,
+AUROC on the nevus-nearest subset falls $0.807 \to 0.282$ while the remainder stays
+above chance throughout ($0.861 \to 0.644$).
 
 \textbf{(iii) They move, and the reference does not.} Against a class-matched
-reference --- in-distribution images that are themselves nevus --- the median
-squared Mahalanobis distance from out-of-domain images to the nevus centroid
-falls from $49.8$ to $17.5$, while the reference distance is unchanged
-($7.5 \to 7.4$).
+reference --- in-distribution images that are themselves nevus --- the median squared
+Mahalanobis distance from out-of-domain images to the nevus centroid falls from $49.8$
+to $17.5$, while the reference distance is unchanged ($7.5 \to 7.4$).
 
-The account is consistent with a result we had already reported and could not
-previously explain: reweighting the in-distribution set to PAD's class mix,
-which is $12.3\%$ nevus against ISIC's $50.8\%$, \emph{strengthens} the
-inversion to $0.259 \pm 0.022$ (Table~\ref{tab:refuted}). Thinning nevus from the
-reference makes images sitting in the nevus region look comparatively more
-typical. The whole pattern replicates on the pre-projection backbone, a
-different representation of $1536$ dimensions (nevus-nearest fraction
-$0.484 \to 0.603$; nevus-nearest AUROC $0.726 \to 0.330$), so it is not a
-property of the $16$-dimensional projection.
+The pattern replicates on the pre-projection backbone, a different representation of
+$1536$ dimensions (nevus-nearest fraction $0.484 \to 0.603$, nevus-nearest AUROC
+$0.726 \to 0.330$), so it is not a property of the $16$-dimensional projection.
 
 \textbf{What the mechanism does not say.} Out-of-domain images never become more
-typical than real nevi: the distance ratio remains above $1$ at every weight
+typical than real nevi: the distance ratio stays above $1$ at every weight
 ($6.63 \to 2.37$). The inversion is a property of the \emph{pooled} AUROC, which
-mixes classes. Out-of-domain images come to look more typical than
-in-distribution images of every class other than the majority one, and because
-that majority class is half the data, the pooled score crosses chance. This also
-explains why per-class AUROC and pooled AUROC disagree at $\lam = 0$
+mixes classes. Pooled AUROC equals the class-share-weighted mean of the per-class
+AUROCs, since AUROC averages over the in-distribution samples --- an identity, not a
+result, which we use only to locate the effect. \textbf{The content is the two
+per-class values: $0.559$ against nevus and $0.296$ weighted over the other five.}
+Out-of-domain images are close to indistinguishable from nevi, whose centroid they are
+drawn toward, and inverted against everything else; because the majority class is half
+the data, the pooled score crosses chance. With all eight classes present the identity
+holds to machine precision at every weight, both out-of-domain sets and both
+in-distribution sets (largest residual $2.2 \times 10^{-16}$); restricted to the six
+PAD-shared classes the discrepancy reaches $0.010$, the weight of the two omitted
+classes. It also explains why per-class and pooled AUROC disagree at $\lam = 0$
 (Section~\ref{sec:perclass}).
 
-Pooled AUROC equals the class-share-weighted mean of the per-class AUROCs, since
-AUROC averages over the in-distribution samples. That is an identity rather than a
-result, and we use it only to locate where the effect sits. \textbf{The content is
-in the two per-class values: $0.559$ against nevus, and $0.296$ weighted over the
-other five classes.} Out-of-domain images are close to indistinguishable from
-nevi, which occupy the centroid they are drawn toward, and inverted against
-everything else; the identity then fixes the pooled figure. With all eight
-in-distribution classes present it holds to machine precision at every weight,
-both out-of-domain sets and both in-distribution sets (largest residual
-$2.2 \times 10^{-16}$); restricted to the six classes PAD shares, the discrepancy
-reaches $0.010$, which is simply the weight of the two omitted classes.
+This accounts exactly for a result we had reported and could not previously explain.
+Reweighting the in-distribution set to PAD's class mix --- $12.3\%$ nevus against
+ISIC's $50.8\%$ --- \emph{strengthens} the inversion to $0.259 \pm 0.022$
+(Table~\ref{tab:refuted}), because thinning nevus from the reference makes images
+sitting in the nevus region look comparatively more typical. Reweighting changes only
+the weights $w_c$; the model, every image's score and the out-of-domain set are
+untouched, so no per-class AUROC moves, and evaluating $\sum_c w_c \mathrm{AUROC}_c$
+under PAD's mix reproduces the measurement to $8 \times 10^{-7}$. A two-group
+reduction does not, giving $0.306$, which is why the magnitude appeared not to follow
+from the mechanism until the full form was used.
 
-One consequence is worth stating, with its scope. \textbf{For the pooled score,
-holding the model and the out-of-domain set fixed, the inversion is deeper the
-\emph{less} the in-distribution set is dominated by its majority class.} Reducing
-the identity to two groups --- nevus against the rest, with the non-nevus classes
-held at their ISIC proportions --- gives $0.559p + 0.296(1-p)$ for a nevus share
-$p$, which returns above chance only at $p = 0.776$. This is a statement about one
-metric under one fixed model, not a rule about deployments, and the two-group
-reduction is a convenience: the full eight-class form is what we verify.
-
-The identity also accounts for the reweighting result exactly. Reweighting the
-in-distribution set to PAD's class mix changes only the weights $w_c$ --- the
-model, every image's score and the out-of-domain set are untouched, so no
-per-class AUROC moves --- and evaluating $\sum_c w_c \mathrm{AUROC}_c$ under PAD's
-mix reproduces the measured reweighted AUROC to $8 \times 10^{-7}$. A two-group
-reduction does not: it gives $0.306$ against the same measurement, which is why
-the magnitude appeared not to follow from the mechanism until the full form was
-used.
+One consequence is worth stating with its scope. \textbf{For the pooled score, with
+the model and out-of-domain set fixed, the inversion is deeper the \emph{less} the
+in-distribution set is dominated by its majority class}: the two-group reduction
+$0.559p + 0.296(1-p)$ for a nevus share $p$, with the non-nevus classes at ISIC
+proportions, returns above chance only at $p = 0.776$. That is a statement about one
+metric under one model, not a rule about deployments.
 
 \subsection{What the phenomenon is not}
 
