@@ -116,7 +116,7 @@ def main():
     L += ["", "## Caveats", "",
           "- Fig 1c is Mahalanobis on pad_heldout from the lesion-level summaries; the image-level Fig 1c used the Phase 16 "
           "dual-column file.",
-          "- λ ∈ {0, 2} use seeds 42/52/62/72/82; other λ use 42/43/44."]
+          "- λ ∈ {0, 2} use seeds 42/52/62/72/82; other λ use 42/43/44/45/46 (45/46 added in R4)."]
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print("\n".join(L[:12]))
 
