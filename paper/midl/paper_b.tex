@@ -341,9 +341,9 @@ improve while two collapse.
 PAD-UFES (chance $0.167$). Arrows mark the direction a practitioner would call
 favourable. The $\lam = 0.25$ row previously reported three-seed means for
 leakage, in-distribution accuracy and Fitzpatrick AUROC while declaring $n = 5$;
-those three are corrected here, their standard deviations and the OOD AUROC cell
-are being recomputed, and the $\lam = 1$ row still uses three of the five
-available seeds.}
+those three are corrected here. $^{\dagger}$ marks cells still at three seeds:
+the $\lam = 0.25$ OOD AUROC, and its standard deviations, are being recomputed,
+and the $\lam = 1$ row likewise uses three of the five available seeds.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccc}
@@ -352,9 +352,9 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 & OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
 \midrule
 0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
-0.25 & 5 & 0.571 & 0.692 & 0.101 & 0.684 & \textbf{\pending{R4}} & 0.460 & 0.291\,$\pm$\,0.020 \\
+0.25 & 5$^{\dagger}$ & 0.571 & 0.692 & 0.101 & 0.684 & \textbf{0.513\,$\pm$\,0.018}$^{\dagger}$ & 0.460 & 0.291\,$\pm$\,0.020 \\
 0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.465\,$\pm$\,0.015 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
-1    & \pending{R4: 5 available} & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
+1    & 3$^{\dagger}$ & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
 2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.427\,$\pm$\,0.025} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
 4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.455\,$\pm$\,0.039 & 0.431\,$\pm$\,0.036 & \xdomFour \\
 8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.494\,$\pm$\,0.027 & 0.474\,$\pm$\,0.060 & \xdomEight \\
@@ -398,8 +398,9 @@ $0.843$ to $0.513$, and reaches $0.427$ at $\lam = 2$.
 Two features of this collapse matter more than its size.
 
 \paragraph{The fall to chance is a cliff; the inversion develops after it.} Almost the
-whole descent happens in one step: $0.843$ to $0.509$ between $\lam = 0$ and
-$\lam = 0.25$. The sub-chance region is reached only at $\lam \geq 0.5$, after which the
+whole descent happens in one step: $0.843$ to $0.513$ between $\lam = 0$ and
+$\lam = 0.25$ (three seeds; the five-seed value is being recomputed). The sub-chance
+region is reached only at $\lam \geq 0.5$, after which the
 value moves between $0.427$ and $0.494$ with no ordering that would let a practitioner
 tune for a safe compromise. We therefore distinguish the two: detection collapses to
 chance at the smallest non-zero weight tested, and inverts under further pressure. There is no operating point on this curve at which
@@ -561,6 +562,8 @@ Gradient reversal reduces leakage $0.970 \to 0.763$ \textbf{at no cost in accura
 ($0.845 \to 0.845$) and collapses all five detectors to chance. MMD reduces leakage
 $0.967 \to 0.900$ at a similarly negligible cost ($0.779 \to 0.730$) and collapses
 nothing (Mahalanobis $0.813 \to 0.716$). To go further, MMD must destroy the task.
+\emph{Out-of-domain set for the MMD figures: \pending{R4}; the comparison is only
+valid if both arms are scored on \texttt{pad\_heldout}.}
 \end{quote}
 
 The calibration signatures differ in the same direction. As MMD degrades, its
@@ -599,14 +602,21 @@ $\lam = 2$ the adversary never left chance --- best-epoch cross-entropy $0.686$ 
 $0.688$ against a threshold of $0.673$ --- so those three runs are null experiments and
 we draw no conclusion from them. At $\lam = 0.5$, where the adversary did learn
 (best-epoch cross-entropy $0.41$ to $0.55$), leakage fell only from $0.965$ to $0.939$
-against the $0.742$ that EfficientNet-B3 reaches on the same partition, and Mahalanobis
-declined to $0.814$ without approaching chance. The backbone question is therefore
-untested rather than answered in the negative.
+against the $0.742$ that EfficientNet-B3 reaches on the same partition, so invariance
+was not obtained and the backbone question is untested rather than answered in the
+negative.
 
-That run is nonetheless the sharpest evidence for Section~\ref{sec:nonmediation}. With
-the gate valid and leakage moving by $0.026$, $k$-NN fell from $0.962$ to $0.563$ and
-cosine from $0.922$ to $0.543$. The outcome moves by $0.40$ while the supposed mediator
-moves by $0.026$.
+\textbf{On that run the detectors disagree, and we report all of them rather than
+the one that suits each point.} Over the same $\lam = 0 \to 0.5$ step, $k$-NN falls
+$0.962 \to 0.563$ and cosine $0.922 \to 0.543$, while Mahalanobis moves only to
+$0.814$ and never approaches chance. Three detectors that move together on
+EfficientNet-B3 separate here. We draw two things from this, and no more. Taking
+the detectors that do move, the step is the sharpest non-mediation evidence in the
+paper: the outcome shifts by $0.40$ while leakage, the supposed mediator, shifts by
+$0.026$ (Section~\ref{sec:nonmediation}). Taking Mahalanobis, the headline detector
+everywhere else in this paper, nothing happens. \textbf{The claim that all five
+scoring rules collapse together therefore holds on EfficientNet-B3 and does not
+hold here}, which is an additional reason the backbone question is open.
 
 One difference is informative. The single-encoder model plateaus at leakage
 $0.76$--$0.81$ and never reaches the $0.571$ the dual-encoder attains; more adversarial
@@ -707,7 +717,9 @@ contains zero. We report it as a trend and claim nothing from it.
 
 \textbf{What the honest split does change is the absolute level, and by far
 more than $\lam$ ever does.} Removing the lesion overlap costs $0.20$ of
-balanced accuracy at $\lam = 0$ ($0.692 \to 0.496$). The leakage this paper is
+balanced accuracy at $\lam = 0$ ($0.692 \to 0.496$), consistent with the
+companion analysis of lesion-level leakage in this dataset \cite{leakagepaper}.
+The leakage this paper is
 about is therefore worth roughly ten times the largest effect we attribute to
 the adversarial weight, and the in-distribution accuracies in Table~\ref{tab:dial}
 are optimistic by that amount. It does not disturb any comparison across $\lam$,
