@@ -1,6 +1,6 @@
 # R3 A2 — pre-registered bootstrap on the lesion-level split
 
-Commit: `1cedb63`. Protocol: `PREREGISTER_BOOTSTRAP.json` unmodified (2000 resamples, percentile 95%, both sides resampled, draws shared across seeds). ID side resampled by lesion group (2787 groups in the lesion-level ISIC test, null `lesion_id` = own group); pad_heldout by patient (412 patients, 716 images); Fitzpatrick17k by image.
+Commit: `b618cf3`. Protocol: `PREREGISTER_BOOTSTRAP.json` unmodified (2000 resamples, percentile 95%, both sides resampled, draws shared across seeds). ID side resampled by lesion group (2787 groups in the lesion-level ISIC test, null `lesion_id` = own group); pad_heldout by patient (412 patients, 716 images); Fitzpatrick17k by image.
 
 **Verdict (Mahalanobis, pad_heldout, λ = 2):** Interval entirely below 0.5 -> the word 'inverts' survives the move to the lesion-level split (pre-registered rule A: 5/5 seeds' own CI below 0.5).
 
@@ -32,4 +32,4 @@ Commit: `1cedb63`. Protocol: `PREREGISTER_BOOTSTRAP.json` unmodified (2000 resam
 
 - Fitzpatrick17k has no patient identifiers; its bootstrap is over images and the interval is anti-conservative.
 - The decision applies to Mahalanobis, the abstract's number; kNN and cosine are reported alongside.
-- Seeds per λ are listed in the table; λ ∈ {0, 2} reach n = 5 only once B1 (seeds 72, 82) lands.
+- Seeds per λ are listed in the table: λ ∈ {0, 2} have n = 5 (seeds 72, 82 from B1), the other λ n = 3.

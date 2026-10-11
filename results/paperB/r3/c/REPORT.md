@@ -23,4 +23,4 @@ Fig 1 shared y-range (a)(b)(c): 0.35–1.00, the smallest 0.05 step that contain
 ## Caveats
 
 - Fig 1c is Mahalanobis on pad_heldout from the lesion-level summaries; the image-level Fig 1c used the Phase 16 dual-column file.
-- λ ∈ {0, 2} use seeds 42/52/62 (+72/82 once B1 lands); other λ use 42/43/44.
+- λ ∈ {0, 2} use seeds 42/52/62/72/82; other λ use 42/43/44.
