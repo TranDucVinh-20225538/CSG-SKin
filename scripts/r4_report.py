@@ -16,12 +16,14 @@ import numpy as np
 sys.path.insert(0, "/data2/cmdir/home/toandq/CSG-Skin-paperB/scripts")
 import r2_common as C  # noqa: E402
 from r2_item4_report import LES_FEAT, LES_RUNS, row  # noqa: E402
+from r2_item4_sweep_report import xdom  # noqa: E402
 
 RES = C.PAPERB / "results" / "paperB"
 OUT = RES / "r4"
 LAMS = (0.0, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0)
 ENDPOINT_SEEDS = (42, 52, 62, 72, 82)
 LES_MID_SEEDS = (42, 43, 44, 45, 46)
+LES_COLS = ("leakage", "id_bal", "id_ece", "ood_ece", "maha", "fitz", "xdom")
 DET = (("mahalanobis_classcond", "Mahalanobis"), ("cosine_max", "Cosine"), ("knn_k50", "kNN k=50"),
        ("MSP", "MSP"), ("Energy_T1", "Energy"))
 
@@ -56,8 +58,9 @@ def lesion_table():
                 missing.append(t)
                 continue
             rows[s] = row(LES_RUNS, LES_FEAT, t)
+            rows[s]["xdom"] = xdom(t)
         out["{:g}".format(lam)] = {"seeds": sorted(rows), **{k: ms([r[k] for r in rows.values()])
-                                                            for k in ("leakage", "id_bal", "maha", "fitz")}}
+                                                            for k in LES_COLS}}
     return out, missing
 
 
@@ -133,14 +136,14 @@ def main():
     L += ["## (1) Lesion-level Table 1", "",
           "Seeds: λ ∈ {0, 2} 42/52/62/72/82; other λ 42/43/44/45/46. Leakage = z_lesion probe balanced accuracy; "
           "Mahalanobis class-conditional, fit on ISIC train only.", "",
-          "| λ | n | Leakage | ID bal acc | Maha pad_heldout | Maha Fitzpatrick |", "|---:|---:|---|---|---|---|"]
+          "| λ | n | Leakage | ID bal acc | ID ECE | OOD ECE (pad_heldout) | OOD AUROC (Maha pad_heldout) | Fitz AUROC (Maha) "
+          "| X-dom bal acc (pad_heldout, 6-cls) |", "|---:|---:|---|---|---|---|---|---|---|"]
     for l, r in les.items():
-        L.append("| {} | {} | {} | {} | {} | {} |".format(l, len(r["seeds"]), pm(r["leakage"]), pm(r["id_bal"], False),
-                                                       pm(r["maha"]), pm(r["fitz"])))
-    L += ["", "LaTeX rows, image-level format:", "", "```"]
+        L.append("| {} | {} | ".format(l, len(r["seeds"])) + " | ".join(pm(r[k]) for k in LES_COLS) + " |")
+    L += ["", "LaTeX rows, image-level column order (λ, n, leakage, ID bal acc, ID ECE, OOD ECE, OOD AUROC, Fitz, X-dom), "
+          "± over seeds in every cell:", "", "```"]
     for l, r in les.items():
-        L.append("{:<4} & {} & {} & {} & {} & {} \\\\".format(l, len(r["seeds"]), tex_pm(r["leakage"]), tex_pm(r["id_bal"], False),
-                                                             tex_pm(r["maha"]), tex_pm(r["fitz"])))
+        L.append("{:<4} & {} & ".format(l, len(r["seeds"])) + " & ".join(tex_pm(r[k]) for k in LES_COLS) + " \\\\")
     L += ["```", ""]
 
     L += ["## (2) Image-level Table 1 rows at n = 5", "",

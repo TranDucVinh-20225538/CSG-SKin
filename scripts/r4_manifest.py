@@ -20,7 +20,7 @@ def entry(eid, v, key, label=None, note=""):
     return {"id": eid, "written": "{:.3f}".format(v), "label": label, "file": SRC, "key": key, "note": note}
 
 
-def cells(block, root_key, prefix, cols, note):
+def cells(block, root_key, prefix, cols, note, sd_cols=SD_COLS):
     out = []
     for lam, r in R[block].items():
         if not r:
@@ -30,7 +30,7 @@ def cells(block, root_key, prefix, cols, note):
                 continue
             out.append(entry("{}_{}_l{}".format(prefix, col, lam), r[col]["mean"], [root_key, lam, col, "mean"],
                              LABEL.get(col), note))
-            if col in SD_COLS and r[col]["sd"] is not None:
+            if col in sd_cols and r[col]["sd"] is not None:
                 out.append(entry("{}_{}_sd_l{}".format(prefix, col, lam), r[col]["sd"], [root_key, lam, col, "sd"],
                                  None, note))
     return out
@@ -47,8 +47,8 @@ def main():
     entries = [e for e in entries if e["id"] not in ids] + img
     man.write_text(json.dumps(entries, indent=2) + "\n")
 
-    les = cells("lesion_table1", "lesion_table1", "t1les", ("leakage", "id_bal", "maha", "fitz"),
-                "R4: lesion-level Table 1, n = 5 at every λ")
+    lcols = ("leakage", "id_bal", "id_ece", "ood_ece", "maha", "fitz", "xdom")
+    les = cells("lesion_table1", "lesion_table1", "t1les", lcols, "R4: lesion-level Table 1, n = 5 at every λ", set(lcols))
     (ROOT / "paper" / "number_manifest_lesion_table1.json").write_text(json.dumps(les, indent=2) + "\n")
 
     mmd = []
