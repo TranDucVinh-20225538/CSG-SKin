@@ -34,67 +34,40 @@ Inverts Under Domain-Adversarial Training}
 
 \begin{abstract}
 \noindent\textbf{Background.} Domain-adversarial invariance training is widely
-recommended for removing acquisition shortcuts from medical imaging models.
-Its effect on the out-of-distribution (OOD) monitoring that such models rely
-on at deployment has not been measured.
+recommended for removing acquisition shortcuts from medical imaging models. Its effect
+on the out-of-distribution (OOD) monitoring such models rely on at deployment has not
+been measured.
 
-\noindent\textbf{Methods.} We swept the adversarial weight $\lam$ across seven
-values with three to five seeds each (27 runs) on ISIC~2019 (dermoscopy,
-25{,}331 images) and PAD-UFES-20 (clinical photographs, 2{,}298 images),
-holding everything else fixed. At every $\lam$ we measured domain leakage by
-linear probe, in-distribution balanced accuracy, calibration on in-distribution
-and out-of-domain data, OOD detection with five scoring rules, and zero-shot
-cross-domain diagnostic accuracy on a patient-level held-out PAD partition. We
-repeated the sweep with plain single-encoder adversarial training and with four
-non-adversarial invariance objectives, and validated on Fitzpatrick17k, a third
-dataset never seen by the adversary.
+\noindent\textbf{Methods.} We swept the adversarial weight $\lam$ over seven values,
+three to five seeds each (27 runs), on ISIC~2019 and PAD-UFES-20 with everything else
+fixed, measuring domain leakage, in-distribution accuracy and calibration,
+out-of-domain calibration, OOD detection with five scoring rules and zero-shot
+cross-domain accuracy on a patient-level held-out partition. We repeated the sweep with
+single-encoder adversarial training and four non-adversarial invariance objectives,
+under a lesion-disjoint ISIC split, and on Fitzpatrick17k, never seen by the adversary.
 
-\noindent\textbf{Results.} At the smallest non-zero weight tested, OOD detection
-fell from AUROC $0.843$ to $0.513$; by $\lam = 2$ it had \textbf{inverted below
-chance to $0.427$} ($95\%$ CI $[0.414, 0.439]$; all five seeds individually below
-$0.5$), ranking images from a clinic the model had never seen as
-more in-distribution than its own test data, throughout the score distribution
-rather than only in the tails. All five scoring rules collapsed together, the
-inversion held on the third dataset ($0.391$ at $\lam = 2$ against $0.764$ at
-$\lam = 0$, the same model and data) and survived shrinkage estimation. The collapse was a
-cliff rather than a trade-off: no operating point combined invariance with
-detection. It was invisible to routine monitoring: domain leakage fell to near
-its chance floor ($0.915 \to 0.571$, floor $0.5$), in-distribution calibration
-was unchanged, and in-distribution balanced accuracy did not degrade
-($0.692 \to 0.707$). Because $60.0\%$ of the ISIC test split shares a lesion
-with training, we repeated the endpoints under a lesion-disjoint split at five
-seeds. Everything holds: leakage $0.927 \to 0.555$, in-distribution ECE
-unchanged at $0.181$, out-of-domain ECE $0.219 \to 0.717$, and the inversion
-$0.808 \to 0.403$ ($95\%$ CI $[0.380, 0.425]$, all five seeds individually below
-$0.5$) on \texttt{pad\_heldout} and $0.717 \to 0.402$ on Fitzpatrick17k.
-In-distribution balanced accuracy again does not degrade: the paired per-seed
-difference is $-0.023$ with a $95\%$ CI of $[-0.063, +0.017]$. Removing the
-lesion overlap costs $0.20$ of balanced accuracy on its own
-($0.692 \to 0.496$), an order of magnitude more than any effect of $\lam$. Confidence on never-seen-domain
-images rose from $0.489$ to $0.930$, overtaking in-distribution confidence,
-while cross-domain accuracy did not improve at any $\lam$ and predictions
-collapsed toward the benign majority class (actinic keratosis recall
-$0.245 \to 0.016$, $n = \nAK$). The failure reproduced in plain single-encoder
-gradient-reversal training but not in moment-matching objectives, which reduced
-leakage comparably without collapsing any detector. In a same-modality shift between
-two hospitals the collapse reproduced ($k$-NN $0.658 \to 0.486$) but the inversion did
-not: with matched baseline detectability, Mahalanobis fell only to $0.683$. After six candidate explanations were tested and
-refuted, the cause was identified and satisfied three pre-registered criteria:
-invariance is obtained by displacing out-of-domain images into the
-majority class's region of the latent space, so the fraction of them whose
-nearest centroid is nevus rises $0.332 \to 0.601$ while the in-distribution
-fraction is flat, the inversion is confined to that subset
-($0.807 \to 0.282$ against $0.861 \to 0.644$), and their distance to the nevus
-centroid falls $49.8 \to 17.5$ against an unchanged class-matched reference.
+\noindent\textbf{Results.} At the smallest non-zero weight OOD detection fell from
+AUROC $0.843$ to $0.509$; by $\lam = 2$ it had \textbf{inverted below chance to
+$0.427$} ($95\%$ CI $[0.414, 0.439]$) on the held-out PAD partition, with all five
+seeds below $0.5$, ranking images from an unseen clinic as more in-distribution than
+its own test data. All five rules
+collapsed together and the inversion held on Fitzpatrick17k ($0.764 \to 0.391$). It was
+invisible to routine monitoring: leakage fell to near its floor
+($0.915 \to 0.571$, floor $0.5$), in-distribution accuracy ($0.692 \to 0.707$) and
+calibration did not degrade, and the lesion-disjoint replication reproduced every
+result ($0.808 \to 0.403$). Meanwhile out-of-domain calibration error tripled
+($0.247 \to 0.746$) and actinic keratosis recall fell $0.245 \to 0.016$. After six
+explanations were refuted, a mechanism satisfied three pre-registered criteria:
+invariance is obtained by displacing out-of-domain images into the majority class's
+region, their nearest-centroid share rising $0.332 \to 0.601$ while the
+in-distribution share stays flat.
 
-\noindent\textbf{Conclusions.} Across imaging modality, domain-adversarial training
-does not merely weaken out-of-distribution monitoring; it reverses it, while every
-routinely monitored metric improves. The cause is that invariance is obtained by
-the one move that defeats a density-based novelty score. Between two hospitals
-sharing a modality the collapse persists and the reversal does not, so the two
-should be claimed separately. OOD detection and out-of-domain calibration should
-be reported as a function of achieved invariance rather than at a single
-operating point.
+\noindent\textbf{Conclusions.} Across imaging modality, adversarial training does not
+merely weaken OOD monitoring but reverses it, by the one move that defeats a
+density-based novelty score, while every routinely monitored metric improves. Between
+two hospitals sharing a modality the collapse persists and the reversal does not. OOD
+detection and out-of-domain calibration should be reported as a function of achieved
+invariance.
 \end{abstract}
 
 \begin{keywords}
@@ -322,9 +295,9 @@ improve while two collapse.
 PAD-UFES (chance $0.167$). Arrows mark the direction a practitioner would call
 favourable. The $\lam = 0.25$ row previously reported three-seed means for
 leakage, in-distribution accuracy and Fitzpatrick AUROC while declaring $n = 5$;
-those three are corrected here. $^{\dagger}$ marks cells still at three seeds:
-the $\lam = 0.25$ OOD AUROC, and its standard deviations, are being recomputed,
-and the $\lam = 1$ row likewise uses three of the five available seeds.}
+those three are corrected here, and the $\lam = 0.25$ and $\lam = 1$ rows are now
+final at five seeds. $^{\dagger}$ marks the one cell still at three seeds, the
+$\lam = 1$ out-of-domain ECE.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccc}
@@ -333,9 +306,9 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 & OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
 \midrule
 0    & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$\pm$\,0.016 \\
-0.25 & 5$^{\dagger}$ & 0.571 & 0.692 & 0.101 & 0.684 & \textbf{0.513\,$\pm$\,0.018}$^{\dagger}$ & 0.460 & 0.291\,$\pm$\,0.020 \\
+0.25 & 5 & 0.571 & 0.692 & 0.101 & 0.684 & \textbf{0.509} & 0.460 & 0.291\,$\pm$\,0.020 \\
 0.5  & 3 & 0.555\,$\pm$\,0.029 & 0.701 & 0.096 & 0.724 & 0.465\,$\pm$\,0.015 & 0.449\,$\pm$\,0.025 & \xdomHalf \\
-1    & 3$^{\dagger}$ & 0.569\,$\pm$\,0.010 & 0.701 & 0.097 & 0.733 & 0.455\,$\pm$\,0.036 & 0.457\,$\pm$\,0.088 & \xdomOne \\
+1    & 5 & 0.591 & 0.695 & 0.097 & 0.733$^{\dagger}$ & 0.457 & 0.414 & \xdomOne \\
 2    & 5 & 0.584\,$\pm$\,0.027 & 0.707 & 0.099 & 0.746 & \textbf{0.427\,$\pm$\,0.025} & 0.391\,$\pm$\,0.068 & 0.249\,$\pm$\,0.030 \\
 4    & 3 & 0.548\,$\pm$\,0.035 & 0.686 & 0.100 & 0.726 & 0.455\,$\pm$\,0.039 & 0.431\,$\pm$\,0.036 & \xdomFour \\
 8    & 5 & 0.625\,$\pm$\,0.045 & 0.679 & 0.099 & 0.713 & 0.494\,$\pm$\,0.027 & 0.474\,$\pm$\,0.060 & \xdomEight \\
@@ -374,12 +347,12 @@ method had worked exactly as advertised.
 \subsection{Out-of-distribution detection collapses, and inverts}
 
 Over the same interval, Mahalanobis AUROC against the held-out PAD partition falls
-from $0.843$ to $0.513$ and reaches $0.427$ at $\lam = 2$. Two features matter more
+from $0.843$ to $0.509$ and reaches $0.427$ at $\lam = 2$. Two features matter more
 than the size of that drop.
 
 \paragraph{The fall to chance is a cliff; the inversion develops after it.} Almost
-the whole descent happens in one step, $0.843$ to $0.513$ between $\lam = 0$ and
-$\lam = 0.25$ (three seeds; the five-seed value is being recomputed). The sub-chance
+the whole descent happens in one step, $0.843$ to $0.509$ between $\lam = 0$ and
+$\lam = 0.25$. The sub-chance
 region is reached only at $\lam \geq 0.5$, after which the value moves between
 $0.427$ and $0.494$ with no ordering a practitioner could tune against. So detection
 collapses to chance at the smallest non-zero weight tested and inverts under further
@@ -423,36 +396,18 @@ differs from $\lam = 2$ only in the adversarial weight.
 \subsection{The model becomes confidently wrong on unseen domains}
 \label{sec:confidently}
 
-At $\lam = 0$ the model is appropriately hesitant on unfamiliar data: mean
-maximum-softmax confidence is $0.915$ on the ISIC test split and $0.489$ on
-\texttt{pad\_heldout}. By $\lam = 0.25$ that gap has closed ($0.913$ versus $0.898$),
-and by $\lam = 2$ it has inverted --- the model is \emph{more} confident on images from
-a clinic it has never seen ($0.930$) than on its own held-out test set ($0.910$).
-
-Confidence rises while accuracy falls. Cross-domain diagnostic accuracy does not
-improve at any $\lam$: balanced accuracy spans $0.249$--$0.291$ against a six-class
-floor of $0.167$, no setting exceeds the $0.291$ obtained at $\lam = 0$, and every
-setting is below the $0.298$ of the non-adversarial EfficientNet-B3 control. Plain
-accuracy falls $0.245 \to 0.184$, beneath the $0.385$ majority-class rate throughout.
-
-Macro AUC is roughly preserved ($0.605 \to 0.581$), so discrimination survives while
-the decision rule does not. Predictions collapse toward the benign majority class:
-nevus predictions rise from $113$ to $374$ of $716$ images, and \textbf{actinic
-keratosis recall falls from $0.245$ to $0.016$} ($49/\nAK \to 3/\nAK$ images, mean over
-five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$,
-$6/\nSCC \to 1/\nSCC$) but the count is too small to carry a claim on its own, and
-melanoma ($n = \nMEL$) supports none.
-
-The resulting out-of-domain calibration error triples, from $0.247$ to $0.746$, while
-in-distribution ECE stays flat at $\approx 0.10$. That adapted models are miscalibrated
-on the target domain is known \cite{wang2020}; what the sweep adds is that the
-degradation is dose-dependent on the adversarial weight and leaves in-distribution
-calibration untouched, so no in-distribution measurement reveals it. We stress that confidence, accuracy
-and calibration here are three views of a single phenomenon rather than three
-independent results: in this setting out-of-domain ECE is arithmetically close to mean
-confidence minus accuracy.
-
-
+Confidence rises as competence falls. At $\lam = 0$ mean maximum-softmax confidence is
+$0.915$ on ISIC test and $0.489$ on \texttt{pad\_heldout}; by $\lam = 2$ the ordering
+has inverted, $0.930$ on a clinic the model has never seen against $0.910$ on its own
+test set, while cross-domain balanced accuracy never improves at any $\lam$
+($0.249$--$0.291$ against a floor of $0.167$) and predictions collapse toward the
+benign majority class, with \textbf{actinic keratosis recall falling
+$0.245 \to 0.016$}. Out-of-domain calibration error triples, $0.247 \to 0.746$, while
+in-distribution ECE stays flat at $\approx 0.10$, so no in-distribution measurement
+reveals it. That adapted models are miscalibrated on the target domain is known
+\cite{wang2020}; what the sweep adds is the dose-dependence and the invisibility, and
+we stress that confidence, accuracy and calibration here are three views of one
+phenomenon rather than three results (Appendix~\ref{app:confident}).
 
 \subsection{Leakage does not mediate the collapse}
 \label{sec:nonmediation}
@@ -552,19 +507,14 @@ collapsed.
 \subsection{It is not specific to the factorized architecture}
 \label{sec:arch}
 
-All results above use a dual-encoder model. Table~\ref{tab:single} repeats the sweep
-with plain single-encoder domain-adversarial training: one backbone, one linear
-classifier, a gradient reversal layer and a domain head, with no context branch and no
-orthogonality term.
-
-
-The cliff reproduces. Every detector collapses at $\lam = 0.25$ --- $k$-NN
-$0.944 \to 0.528$, energy $0.911 \to 0.507$, cosine $0.884 \to 0.509$, MSP
-$0.868 \to 0.515$ --- and by $\lam = 4$ four of the five sit below chance, cosine most
-clearly at $0.454 \pm 0.014$. In-distribution accuracy is flat throughout
-($0.845 \to 0.832$) and cross-domain accuracy falls from $0.390$ to a plateau near
-$0.32$. The invisibility, the collapse and the inversion are all properties of
-domain-adversarial training rather than of the factorized architecture.
+All results above use a dual-encoder model. Repeating the sweep with plain
+single-encoder domain-adversarial training --- one backbone, one linear classifier, a
+gradient reversal layer and a domain head, with no context branch and no orthogonality
+term --- reproduces the cliff: every detector collapses at $\lam = 0.25$ and by
+$\lam = 4$ four of the five sit below chance, while in-distribution accuracy stays flat
+(Appendix~\ref{app:single}, Table~\ref{tab:single}). \textbf{The invisibility, the
+collapse and the inversion are therefore properties of domain-adversarial training
+rather than of the factorized architecture.}
 
 \paragraph{A second backbone leaves the question open.} Repeating the single-encoder
 sweep with a ResNet-50 backbone did not settle whether the inversion is specific to
@@ -1088,6 +1038,41 @@ Synthetic reproduction & Pre-registered toy model with heavy-tailed ID structure
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{Confidence, accuracy and calibration on unseen domains}
+\label{app:confident}
+
+At $\lam = 0$ the model is appropriately hesitant on unfamiliar data: mean
+maximum-softmax confidence is $0.915$ on the ISIC test split and $0.489$ on
+\texttt{pad\_heldout}. By $\lam = 0.25$ that gap has closed ($0.913$ versus $0.898$),
+and by $\lam = 2$ it has inverted ($0.930$ versus $0.910$).
+
+Cross-domain diagnostic accuracy does not improve at any $\lam$: balanced accuracy
+spans $0.249$--$0.291$ against a six-class floor of $0.167$, no setting exceeds the
+$0.291$ obtained at $\lam = 0$, and every setting is below the $0.298$ of the
+non-adversarial EfficientNet-B3 control. Plain accuracy falls $0.245 \to 0.184$,
+beneath the $0.385$ majority-class rate throughout. Macro AUC is roughly preserved
+($0.605 \to 0.581$), so discrimination survives while the decision rule does not.
+
+Predictions collapse toward the benign majority class: nevus predictions rise from
+$113$ to $374$ of $716$ images, and actinic keratosis recall falls from $0.245$ to
+$0.016$ ($49/\nAK \to 3/\nAK$ images, mean over five seeds). Squamous cell carcinoma
+moves the same way ($0.088 \to 0.021$, $6/\nSCC \to 1/\nSCC$) but the count is too
+small to carry a claim on its own, and melanoma ($n = \nMEL$) supports none.
+
+In this setting out-of-domain ECE is arithmetically close to mean confidence minus
+accuracy, which is why the confidence, accuracy and calibration results are not
+independent corroboration of each other.
+
+\subsection{Single-encoder replication}
+\label{app:single}
+
+Plain single-encoder domain-adversarial training on the same data and splits. Every
+detector collapses at $\lam = 0.25$ --- $k$-NN $0.944 \to 0.528$, energy
+$0.911 \to 0.507$, cosine $0.884 \to 0.509$, MSP $0.868 \to 0.515$ --- and by
+$\lam = 4$ four of the five sit below chance, cosine most clearly at
+$0.454 \pm 0.014$. In-distribution accuracy is flat throughout ($0.845 \to 0.832$) and
+cross-domain accuracy falls from $0.390$ to a plateau near $0.32$.
 
 \subsection{External replication attempts}
 \label{app:external}
