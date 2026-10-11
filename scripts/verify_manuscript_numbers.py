@@ -209,9 +209,17 @@ NUM = re.compile(r"(?<![\w.\\{])(\d{1,3}(?:\{,\}\d{3})+(?:\.\d+)?|\d+\.\d+|\d+)(
 
 
 def strip_tex(s):
+    """Drop comments, the bibliography and anything after \\end{document}; keep the appendix. Removed spans are
+    blanked with their newlines kept, so reported line numbers stay those of the .tex."""
     s = re.sub(r"(?<!\\)%.*", "", s)
-    end = re.search(r"\\begin\{thebibliography\}|\\bibliography\{", s)
-    return s[: end.start()] if end else s
+
+    def blank(m):
+        return re.sub(r"[^\n]", " ", m.group(0))
+
+    s = re.sub(r"\\begin\{thebibliography\}.*?\\end\{thebibliography\}", blank, s, flags=re.S)
+    s = re.sub(r"\\(?:bibliography|bibliographystyle|addbibresource)\{[^{}]*\}|\\printbibliography(?:\[[^\]]*\])?", blank, s)
+    s = re.sub(r"\\end\{document\}.*", blank, s, flags=re.S)
+    return s
 
 
 def macros(s):
