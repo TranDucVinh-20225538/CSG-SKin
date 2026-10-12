@@ -462,12 +462,73 @@ def _leaf_value(rec, leaf):
     return float(v)
 
 
+def table_index(paths):
+    """{label: {"rows": {row_key: [cell, ...]}, "line": n}} for every tabular inside a table that carries \\label{...}.
+    Row key = the first cell with TeX stripped (e.g. "0.25"); cells are macro-expanded."""
+    out = {}
+    for p in paths:
+        s = strip_tex(Path(p).read_text())
+        mac = macros(s)
+        for k in sorted(mac, key=len, reverse=True):
+            s = re.sub(re.escape(k) + r"(?![A-Za-z])", lambda _m, v=mac[k]: v, s)
+        for m in re.finditer(r"\\begin\{table\*?\}(.*?)\\end\{table\*?\}", s, flags=re.S):
+            lab = re.search(r"\\label\{([^{}]+)\}", m.group(1))
+            tab = re.search(r"\\begin\{tabular\}\{[^\n]*?\}(.*?)\\end\{tabular\}", m.group(1), flags=re.S)
+            if not lab or not tab:
+                continue
+            rows = {}
+            for r in re.split(r"\\\\", tab.group(1)):
+                r = re.sub(r"\\(?:toprule|midrule|bottomrule|hline|cmidrule(?:\([^)]*\))?\{[^}]*\})", " ", r).strip()
+                if not r:
+                    continue
+                cells = [c.strip() for c in re.split(r"(?<!\\)&", r)]
+                key = re.sub(r"[\\$\{\}]|textbf|mathbf|\s", "", cells[0])
+                rows.setdefault(key, cells)
+            out[lab.group(1)] = {"rows": rows, "line": s.count("\n", 0, m.start()) + 1, "file": p}
+    return out
+
+
+def cell_values(cell):
+    """(mean, sd) as printed in one cell; superscripts (daggers, footnote marks) are ignored."""
+    c = re.sub(r"\^\{[^{}]*\}|\^\\?\w+", " ", cell)
+    parts = re.split(r"\\pm", c, maxsplit=1)
+    nums = [re.findall(r"\d+(?:\{,\}\d{3})*(?:\.\d+)?", x) for x in parts]
+    mean = nums[0][-1] if nums[0] else None
+    sd = nums[1][0] if len(nums) > 1 and nums[1] else None
+    return mean, sd
+
+
+def check_cell(cell, written, tables):
+    """cell: {"table": label, "row": λ as printed in the first column, "col": 0-based column index, "stat": mean|sd}."""
+    t = tables.get(cell["table"])
+    if t is None:
+        return ["table \\label{{{}}} not found".format(cell["table"])]
+    row = t["rows"].get(str(cell["row"]))
+    if row is None and not re.fullmatch(r"[\d.]+", str(cell["row"])):
+        hits = [r for k, r in t["rows"].items() if str(cell["row"]) in k]
+        row = hits[0] if len(hits) == 1 else None
+    if row is None:
+        return ["{}: no row {!r} (rows: {})".format(cell["table"], cell["row"], ", ".join(t["rows"]))]
+    if cell["col"] >= len(row):
+        return ["{} row {}: no column {}".format(cell["table"], cell["row"], cell["col"])]
+    mean, sd = cell_values(row[cell["col"]])
+    got = sd if cell.get("stat", "mean") == "sd" else mean
+    where = "{} row {} col {}{}".format(cell["table"], cell["row"], cell["col"],
+                                        " ({})".format(cell["col_name"]) if cell.get("col_name") else "")
+    if got is None:
+        return ["{}: cell {!r} prints no {}".format(where, row[cell["col"]], cell.get("stat", "mean"))]
+    if got != written:
+        return ["{}: cell prints {}, manifest/source {}".format(where, got, written)]
+    return []
+
+
 def check_manifest(path, results, numbers):
     """numbers: list of dicts from tex_numbers, so the label check sees real offsets."""
     entries = json.loads(Path(path).read_text())
     by_text = defaultdict(list)
     for n in numbers:
         by_text[n["text"]].append(n)
+    tables = table_index(sorted({str(n["file"]) for n in numbers}))
 
     out = []
     for e in entries:
@@ -533,8 +594,10 @@ def check_manifest(path, results, numbers):
                              "precision, not {}".format(got, rnd(got, d), written, p=d))
 
         occ = by_text.get(written, [])
-        if not occ:
-            probs.append("not present in the manuscript")
+        if e.get("cell"):
+            probs += check_cell(e["cell"], written, tables)
+        elif not occ:
+            (warns if e.get("optional") else probs).append("not present in the manuscript")
         elif e.get("label"):
             seen = [(nearest_label(ds_positions(_PROC[str(n["file"])]), n["pos"], n["end"]), n["line"])
                     for n in occ]
@@ -547,7 +610,7 @@ def check_manifest(path, results, numbers):
                              "this check cannot read"
                              .format(", ".join(str(l) for _, l in seen)))
             else:
-                probs.append("appears at line(s) {} but the nearest label is {}, not {}"
+                (warns if e.get("optional") else probs).append("appears at line(s) {} but the nearest label is {}, not {}"
                              .format(", ".join(str(l) for _, l in labelled),
                                      ", ".join(sorted({t for t, _ in labelled})), e["label"]))
         out.append((eid, written, e.get("label", ""), got, probs, warns))

@@ -73,7 +73,14 @@
     "leaf": [
       "Mahalanobis|pad_heldout|full|pooled"
     ],
-    "stat": "sd"
+    "stat": "sd",
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    }
   },
   {
     "id": "maha_fitz_l0",
@@ -438,7 +445,14 @@
       "ood.fitzpatrick17k.z_lesion.mahalanobis_classcond.unrestricted",
       "sd"
     ],
-    "note": "R3-D triage (results/paperB/r3/d/triage.md)"
+    "note": "R3-D triage (results/paperB/r3/d/triage.md)",
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    }
   },
   {
     "id": "fitz_ci_lo_l2",
@@ -466,7 +480,14 @@
       "fitz_maha",
       "mean"
     ],
-    "note": "R3-D triage (results/paperB/r3/d/triage.md) | UNRESOLVED: phase2_5/phase25_aggregate.json does not exist in results/paperB, and no JSON under any fitz-related key rounds to 0.994 except an unrelated ratio_BCC and an ImageNet AK per-class value. The Table 1 ResNet-50 Fitzpatrick figure has no machine-checkable source."
+    "note": "R3-D triage (results/paperB/r3/d/triage.md) | UNRESOLVED: phase2_5/phase25_aggregate.json does not exist in results/paperB, and no JSON under any fitz-related key rounds to 0.994 except an unrelated ratio_BCC and an ImageNet AK per-class value. The Table 1 ResNet-50 Fitzpatrick figure has no machine-checkable source.",
+    "cell": {
+      "table": "tab:dial",
+      "row": "ResNet-50",
+      "col": 6,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    }
   },
   {
     "id": "xfer_effb3_bal",
@@ -1156,6 +1177,266 @@
     "note": "R3 D: abstract"
   },
   {
+    "id": "t1img_n_l0",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_l0",
+    "written": "0.915",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_sd_l0",
+    "written": "0.021",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_id_bal_l0",
+    "written": "0.692",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_id_ece_l0",
+    "written": "0.107",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_ood_ece_l0",
+    "written": "0.247",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_l0",
+    "written": "0.843",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_sd_l0",
+    "written": "0.023",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_l0",
+    "written": "0.764",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_sd_l0",
+    "written": "0.038",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_xdom_l0",
+    "written": "0.291",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_xdom_sd_l0",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_n_l0.25",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
     "id": "t1img_leakage_l0.25",
     "written": "0.571",
     "label": null,
@@ -1166,7 +1447,14 @@
       "leakage",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_id_bal_l0.25",
@@ -1179,7 +1467,14 @@
       "id_bal",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_id_ece_l0.25",
@@ -1192,7 +1487,14 @@
       "id_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_ood_ece_l0.25",
@@ -1205,7 +1507,14 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_maha_l0.25",
@@ -1218,7 +1527,14 @@
       "maha",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_fitz_l0.25",
@@ -1231,7 +1547,14 @@
       "fitz",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_xdom_l0.25",
@@ -1244,7 +1567,14 @@
       "xdom",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_xdom_sd_l0.25",
@@ -1257,7 +1587,34 @@
       "xdom",
       "sd"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "0.25",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_n_l1",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_leakage_l1",
@@ -1270,7 +1627,14 @@
       "leakage",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_id_bal_l1",
@@ -1283,7 +1647,14 @@
       "id_bal",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_id_ece_l1",
@@ -1296,7 +1667,14 @@
       "id_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_ood_ece_l1",
@@ -1309,7 +1687,14 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_maha_l1",
@@ -1322,7 +1707,14 @@
       "maha",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_fitz_l1",
@@ -1335,7 +1727,14 @@
       "fitz",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_xdom_l1",
@@ -1348,7 +1747,14 @@
       "xdom",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
   {
     "id": "t1img_xdom_sd_l1",
@@ -1361,6 +1767,4108 @@
       "xdom",
       "sd"
     ],
-    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
+    "cell": {
+      "table": "tab:dial",
+      "row": "1",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_n_l2",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_l2",
+    "written": "0.584",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_sd_l2",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_id_bal_l2",
+    "written": "0.707",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_id_ece_l2",
+    "written": "0.099",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_ood_ece_l2",
+    "written": "0.746",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_l2",
+    "written": "0.427",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_sd_l2",
+    "written": "0.025",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_l2",
+    "written": "0.391",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_sd_l2",
+    "written": "0.068",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_xdom_l2",
+    "written": "0.249",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_xdom_sd_l2",
+    "written": "0.030",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "2",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial",
+      "row": "2",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l0",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l0",
+    "written": "0.927",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l0",
+    "written": "0.018",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l0",
+    "written": "0.496",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l0",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l0",
+    "written": "0.181",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l0",
+    "written": "0.026",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l0",
+    "written": "0.219",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l0",
+    "written": "0.046",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l0",
+    "written": "0.808",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l0",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l0",
+    "written": "0.717",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l0",
+    "written": "0.034",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l0",
+    "written": "0.275",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l0",
+    "written": "0.023",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l0.25",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l0.25",
+    "written": "0.614",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l0.25",
+    "written": "0.092",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l0.25",
+    "written": "0.487",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l0.25",
+    "written": "0.005",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l0.25",
+    "written": "0.141",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l0.25",
+    "written": "0.076",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l0.25",
+    "written": "0.561",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l0.25",
+    "written": "0.221",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l0.25",
+    "written": "0.525",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l0.25",
+    "written": "0.121",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l0.25",
+    "written": "0.496",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l0.25",
+    "written": "0.167",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l0.25",
+    "written": "0.289",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l0.25",
+    "written": "0.049",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.25",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.25",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l0.5",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l0.5",
+    "written": "0.581",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l0.5",
+    "written": "0.031",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l0.5",
+    "written": "0.501",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l0.5",
+    "written": "0.012",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l0.5",
+    "written": "0.191",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l0.5",
+    "written": "0.008",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l0.5",
+    "written": "0.710",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l0.5",
+    "written": "0.017",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l0.5",
+    "written": "0.426",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l0.5",
+    "written": "0.008",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l0.5",
+    "written": "0.411",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l0.5",
+    "written": "0.047",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l0.5",
+    "written": "0.259",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l0.5",
+    "written": "0.025",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "0.5",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "0.5",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l1",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l1",
+    "written": "0.563",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l1",
+    "written": "0.045",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l1",
+    "written": "0.495",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l1",
+    "written": "0.011",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l1",
+    "written": "0.176",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l1",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l1",
+    "written": "0.730",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l1",
+    "written": "0.015",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l1",
+    "written": "0.387",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l1",
+    "written": "0.016",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l1",
+    "written": "0.375",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l1",
+    "written": "0.042",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l1",
+    "written": "0.229",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l1",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "1",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "1",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l2",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l2",
+    "written": "0.555",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l2",
+    "written": "0.046",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l2",
+    "written": "0.473",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l2",
+    "written": "0.023",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l2",
+    "written": "0.181",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l2",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l2",
+    "written": "0.717",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l2",
+    "written": "0.022",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l2",
+    "written": "0.403",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l2",
+    "written": "0.028",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l2",
+    "written": "0.402",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l2",
+    "written": "0.018",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l2",
+    "written": "0.254",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l2",
+    "written": "0.015",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "2",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "2",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l4",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l4",
+    "written": "0.636",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l4",
+    "written": "0.076",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l4",
+    "written": "0.498",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l4",
+    "written": "0.012",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l4",
+    "written": "0.161",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l4",
+    "written": "0.050",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l4",
+    "written": "0.696",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l4",
+    "written": "0.032",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l4",
+    "written": "0.433",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l4",
+    "written": "0.020",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l4",
+    "written": "0.376",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l4",
+    "written": "0.037",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l4",
+    "written": "0.258",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l4",
+    "written": "0.010",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "4",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "4",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_n_l8",
+    "written": "5",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "leakage",
+      "n"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 1,
+      "col_name": "n",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_l8",
+    "written": "0.663",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "leakage",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_leakage_sd_l8",
+    "written": "0.068",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_l8",
+    "written": "0.489",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_bal",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_bal_sd_l8",
+    "written": "0.019",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_bal",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 3,
+      "col_name": "ID bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_l8",
+    "written": "0.161",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_id_ece_sd_l8",
+    "written": "0.029",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "id_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 4,
+      "col_name": "ID ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_l8",
+    "written": "0.710",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "ood_ece",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_ood_ece_sd_l8",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "ood_ece",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 5,
+      "col_name": "OOD ECE",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_l8",
+    "written": "0.454",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "maha",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_maha_sd_l8",
+    "written": "0.044",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_l8",
+    "written": "0.412",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "fitz",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_fitz_sd_l8",
+    "written": "0.051",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_l8",
+    "written": "0.254",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "xdom",
+      "mean"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "mean"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "t1les_xdom_sd_l8",
+    "written": "0.022",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "lesion_table1",
+      "8",
+      "xdom",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:dial_lesion",
+      "row": "8",
+      "col": 8,
+      "col_name": "X-dom bal acc",
+      "stat": "sd"
+    },
+    "note": "R4: lesion-level Table 1, n = 5, cell-anchored"
+  },
+  {
+    "id": "mmd_arm_erm_w0_mahalanobis_classcond",
+    "written": "0.834",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_cosine_max",
+    "written": "0.888",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_knn_k50",
+    "written": "0.940",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_MSP",
+    "written": "0.826",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_Energy_T1",
+    "written": "0.823",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_leakage",
+    "written": "0.973",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_id_acc",
+    "written": "0.843",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_erm_w0_id_bal",
+    "written": "0.761",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "erm_w0",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_mahalanobis_classcond",
+    "written": "0.811",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_cosine_max",
+    "written": "0.853",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_knn_k50",
+    "written": "0.930",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_MSP",
+    "written": "0.815",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_Energy_T1",
+    "written": "0.804",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_leakage",
+    "written": "0.967",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_id_acc",
+    "written": "0.850",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1_id_bal",
+    "written": "0.779",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_mahalanobis_classcond",
+    "written": "0.772",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_cosine_max",
+    "written": "0.794",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_knn_k50",
+    "written": "0.915",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_MSP",
+    "written": "0.796",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_Energy_T1",
+    "written": "0.787",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_leakage",
+    "written": "0.947",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_id_acc",
+    "written": "0.850",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10_id_bal",
+    "written": "0.777",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_mahalanobis_classcond",
+    "written": "0.724",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_cosine_max",
+    "written": "0.668",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_knn_k50",
+    "written": "0.791",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_MSP",
+    "written": "0.729",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_Energy_T1",
+    "written": "0.663",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_leakage",
+    "written": "0.900",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_id_acc",
+    "written": "0.821",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w100_id_bal",
+    "written": "0.730",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w100",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_mahalanobis_classcond",
+    "written": "0.808",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_cosine_max",
+    "written": "0.837",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_knn_k50",
+    "written": "0.916",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_MSP",
+    "written": "0.743",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_Energy_T1",
+    "written": "0.615",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_leakage",
+    "written": "0.931",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_id_acc",
+    "written": "0.773",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w300_id_bal",
+    "written": "0.609",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w300",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_mahalanobis_classcond",
+    "written": "0.784",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_cosine_max",
+    "written": "0.783",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_knn_k50",
+    "written": "0.833",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_MSP",
+    "written": "0.759",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_Energy_T1",
+    "written": "0.648",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_leakage",
+    "written": "0.919",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_id_acc",
+    "written": "0.721",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w1000_id_bal",
+    "written": "0.450",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w1000",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_mahalanobis_classcond",
+    "written": "0.747",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_cosine_max",
+    "written": "0.701",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_knn_k50",
+    "written": "0.813",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_MSP",
+    "written": "0.777",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_Energy_T1",
+    "written": "0.707",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_leakage",
+    "written": "0.893",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_id_acc",
+    "written": "0.672",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w3000_id_bal",
+    "written": "0.382",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w3000",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_mahalanobis_classcond",
+    "written": "0.664",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_cosine_max",
+    "written": "0.633",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_knn_k50",
+    "written": "0.740",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_MSP",
+    "written": "0.670",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_Energy_T1",
+    "written": "0.696",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_leakage",
+    "written": "0.836",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_id_acc",
+    "written": "0.656",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "mmd_arm_mmd_w10000_id_bal",
+    "written": "0.337",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "mmd_arm",
+      "mmd_w10000",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_mahalanobis_classcond",
+    "written": "0.700",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_cosine_max",
+    "written": "0.875",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_knn_k50",
+    "written": "0.935",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_MSP",
+    "written": "0.857",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_Energy_T1",
+    "written": "0.901",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_leakage",
+    "written": "0.970",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_id_acc",
+    "written": "0.845",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0_id_bal",
+    "written": "0.768",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_mahalanobis_classcond",
+    "written": "0.539",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_cosine_max",
+    "written": "0.530",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_knn_k50",
+    "written": "0.548",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_MSP",
+    "written": "0.548",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_Energy_T1",
+    "written": "0.536",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_leakage",
+    "written": "0.763",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_id_acc",
+    "written": "0.845",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.25_id_bal",
+    "written": "0.778",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.25",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_mahalanobis_classcond",
+    "written": "0.524",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_cosine_max",
+    "written": "0.519",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_knn_k50",
+    "written": "0.539",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_MSP",
+    "written": "0.543",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_Energy_T1",
+    "written": "0.543",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_leakage",
+    "written": "0.795",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_id_acc",
+    "written": "0.844",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_0.5_id_bal",
+    "written": "0.766",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "0.5",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_mahalanobis_classcond",
+    "written": "0.555",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_cosine_max",
+    "written": "0.517",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_knn_k50",
+    "written": "0.541",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_MSP",
+    "written": "0.517",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_Energy_T1",
+    "written": "0.498",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_leakage",
+    "written": "0.795",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_id_acc",
+    "written": "0.840",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_1_id_bal",
+    "written": "0.763",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "1",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_mahalanobis_classcond",
+    "written": "0.521",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_cosine_max",
+    "written": "0.514",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_knn_k50",
+    "written": "0.542",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_MSP",
+    "written": "0.540",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_Energy_T1",
+    "written": "0.529",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_leakage",
+    "written": "0.807",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_id_acc",
+    "written": "0.839",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_2_id_bal",
+    "written": "0.758",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "2",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_mahalanobis_classcond",
+    "written": "0.513",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_cosine_max",
+    "written": "0.490",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_knn_k50",
+    "written": "0.515",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_MSP",
+    "written": "0.519",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_Energy_T1",
+    "written": "0.501",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_leakage",
+    "written": "0.798",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_id_acc",
+    "written": "0.835",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_4_id_bal",
+    "written": "0.750",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "4",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_mahalanobis_classcond",
+    "written": "0.525",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_cosine_max",
+    "written": "0.526",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "cosine_max",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_knn_k50",
+    "written": "0.558",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "knn_k50",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_MSP",
+    "written": "0.566",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "MSP",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_Energy_T1",
+    "written": "0.551",
+    "label": "pad_heldout",
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "pad_heldout",
+      "Energy_T1",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: pad_heldout, like-for-like MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_leakage",
+    "written": "0.787",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "leakage",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_id_acc",
+    "written": "0.832",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "id_acc",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "grl_arm_8_id_bal",
+    "written": "0.731",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "grl_arm",
+      "8",
+      "id_bal",
+      "mean"
+    ],
+    "optional": true,
+    "note": "R4: MMD vs GRL"
   }
 ]

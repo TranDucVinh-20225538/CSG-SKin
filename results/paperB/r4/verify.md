@@ -206,8 +206,8 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 237 | 0.5 | match | 0.5 | `phase6_xfer/runB_orth1_ladv0p5_s*.json [mean n=3]::.lambda_adv` | 1437 | context score 1 |  on validation accuracy. \subsection{The intervention} $\lam \in \{0,\,0.25,\,0.5,\,1,\,2,\,4,\,8\}$; five seeds at $\lam \in \{0, 2, 8\}$ and three at the inter |
 | midl | 245 | 0.5 | match | 0.5 | `phase15b/mmd/mmd_w300_s*/summary.json [mean n=3]::.leakage.chance_floor_balanced` | 642 | context score 4 | e source dataset, reported as \textbf{balanced accuracy, whose chance floor is $0.5$ for this two-domain problem}. Earlier work on this dataset pair reports plain  |
 | midl | 246 | 0.688 | match | 0.687647 | `phase15b/iwildcam/iwildcam_dann_ladv1_s42/summary.json::.leakage_kway.bal_acc_mean` | 1 | context score 4 | r work on this dataset pair reports plain accuracy against a majority floor of $0.688$; the two scales must not be compared to each other. Both are stated where rele |
-| midl | 265 | 2{,}000 | match | 2000 | `phase35_mech/runB_orth1_ladv2_s*.json [mean n=5]::.ood_auroc_fitz.maha.n_boot` | 269 | context score 3 |  \paragraph{Uncertainty.} Intervals on AUROC come from a stratified bootstrap, 2{,}000 resamples, percentile method, fixed in a pre-registration before the values wer |
-| midl | 270 | 0.5 | match | 0.5 | `phase16/b1/bcn_ham_ladv0_s*/summary.json [mean n=3]::.leakage_ham_heldout.chance_floor_balanced` | 1677 | context score 3 | terval on the five-seed mean and the number of seeds whose own interval clears $0.5$. Fitzpatrick17k carries no patient identifiers, so its bootstrap is over image |
+| midl | 265 | 2{,}000 | match | 2000 | `phase35_mech/runB_orth1_ladv8_s*.json [mean n=5]::.ood_auroc_fitz.maha.n_boot` | 269 | context score 3 |  \paragraph{Uncertainty.} Intervals on AUROC come from a stratified bootstrap, 2{,}000 resamples, percentile method, fixed in a pre-registration before the values wer |
+| midl | 270 | 0.5 | match | 0.5 | `phase16/b1/bcn_ham_ladv1_s*/summary.json [mean n=3]::.leakage_ham_heldout.chance_floor_balanced` | 1677 | context score 3 | terval on the five-seed mean and the number of seeds whose own interval clears $0.5$. Fitzpatrick17k carries no patient identifiers, so its bootstrap is over image |
 | midl | 294 | 0.5 | match | 0.5 | `phase16/b1/bcn_ham_ladv1_s*/summary.json [mean n=3]::.leakage_ham_heldout.chance_floor_balanced` | 50 | context score 6 | ervention. Mean $\pm$ s.d.\ across seeds. Leakage is balanced accuracy (chance $0.5$); cross-domain accuracy is balanced over the six classes shared with PAD-UFES  |
 | midl | 295 | 0.167 | match | 0.167029 | `phase15/objectives/irm_w100_s*/summary.json [mean n=3]::.id_balanced_acc` | 6 | context score 4 | -domain accuracy is balanced over the six classes shared with PAD-UFES (chance $0.167$). Arrows mark the direction a practitioner would call favourable. The $\lam =  |
 | midl | 308 | 0.692 | match | 0.691978 | `phase3_sweep/runB_orth1_ladv0p25_s*/summary.json [mean n=5]::.id_balanced_acc` | 3 | context score 5 | C & Fitz.\ AUROC & X-dom bal.\ acc \\ \midrule 0 & 5 & 0.915\,$\pm$\,0.021 & 0.692 & 0.107 & 0.247 & \textbf{0.843\,$\pm$\,0.023} & 0.764\,$\pm$\,0.038 & 0.291\,$ |
@@ -357,7 +357,7 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 441 | 0.693 | match | 0.692957 | `r2/item5/runs/camelyon2_ladv0_s42/summary.json::.ood.b_hold.detectors_slide_disjoint_id.cosine_max` | 1 | context score 5 | The adversary reached chance here (final cross-entropy $0.692$ against $\ln 2 = 0.693$), so the optimisation pressure was applied; the encoder simply did not become  |
 | midl | 447 | 0.53 | match | 0.53 | `r2/item5/runs/camelyon2_ladv1_s*/adversary_windows.json [mean n=3]::[31].adv_acc` | 256 | context score 2 | ed mediator.} Two qualifications. The detectors fall but remain above chance ($0.53$--$0.65$), so this is degradation, not the collapse to chance seen in dermatolo |
 | midl | 447 | 0.65 | match | 0.65 | `phase16/b1_rev/ham_bcn_ladv1_s*/summary.json [mean n=3]::.rev_maha_gate.threshold_ge` | 72 | context score 2 | tor.} Two qualifications. The detectors fall but remain above chance ($0.53$--$0.65$), so this is degradation, not the collapse to chance seen in dermatology, and  |
-| midl | 451 | 0.10 | match | 0.1 | `r3/c/per_run/runB_orth1_ladv0_s*.json [mean n=5]::.maha_robustness_z_lesion_norm_pad_full.ridge.0.1.eps` | 89 | context score 2 |  its own pre-registered gate --- we had required the probe to fall by at least $0.10$ before treating the setting as a test of invariance, and it fell by $0.007$. T |
+| midl | 451 | 0.10 | match | 0.1 | `r3/c/per_run/runB_orth1_ladv2_s*.json [mean n=5]::.maha_robustness_z_lesion_norm_pad_full.ridge.0.1.eps` | 89 | context score 2 |  its own pre-registered gate --- we had required the probe to fall by at least $0.10$ before treating the setting as a test of invariance, and it fell by $0.007$. T |
 | midl | 452 | 0.007 | match | 0.00700405 | `phase15b/mmd/mmd_w10000_s*/summary.json [mean n=3]::.leakage.bal_acc_std` | 77 | context score 2 | ast $0.10$ before treating the setting as a test of invariance, and it fell by $0.007$. That gate failure is precisely what makes the runs informative here: they are |
 | midl | 474 | 10{,}000 | match | 10000 | `r4/mmd/mmd_w10000_s*.json [mean n=3]::.weight` | 66 | context score 2 | at a price gradient reversal never pays. Escalating the MMD weight from $1$ to $10{,}000$ buys $0.13$ of leakage ($0.967 \to 0.836$, floor $0.5$) at a cost of $0.44$ of |
 | midl | 474 | 0.13 | match | 0.126491 | `phase1_5/trivial_summary_dryrun.json::[0].probes[4].bal_acc_std` | 1 | context score 4 | ent reversal never pays. Escalating the MMD weight from $1$ to $10{,}000$ buys $0.13$ of leakage ($0.967 \to 0.836$, floor $0.5$) at a cost of $0.44$ of in-distribu |
@@ -507,7 +507,7 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 835 | 0.92 | match | 0.920009 | `ood_dual_branch_aggregate.csv::row72[mean]::method=effb3_control/feature_space=backbone_raw/detector=mahalanobis_agnostic/metric=AUPR_IN/supervision=u` | 157 | context score 2 | ary reached chance ($\ln 2$) while a post-hoc probe still read the hospital at $0.92$--$0.95$, a fall of at most $0.037$ against the $0.10$ we had pre-committed. Th |
 | midl | 835 | 0.95 | match | 0.949948 | `r2/item5/runs/camelyon2_ladv0_s*/adversary_windows.json [mean n=3]::[138].adv_acc` | 804 | context score 2 | hed chance ($\ln 2$) while a post-hoc probe still read the hospital at $0.92$--$0.95$, a fall of at most $0.037$ against the $0.10$ we had pre-committed. The pre-re |
 | midl | 836 | 0.037 | match | 0.0369523 | `phase13/per_run/runB_orth1_ladv4_s*.json [mean n=3]::.spectrum.z_lesion_norm.evals[13]` | 18 | context score 2 |  a post-hoc probe still read the hospital at $0.92$--$0.95$, a fall of at most $0.037$ against the $0.10$ we had pre-committed. The pre-registered stopping rule retu |
-| midl | 836 | 0.10 | match | 0.1 | `r3/c/per_run/runB_orth1_ladv0_s*.json [mean n=5]::.maha_robustness_z_lesion_norm_pad_full.ridge.0.1.eps` | 456 | context score 2 | ill read the hospital at $0.92$--$0.95$, a fall of at most $0.037$ against the $0.10$ we had pre-committed. The pre-registered stopping rule returns a negative and  |
+| midl | 836 | 0.10 | match | 0.1 | `r3/c/per_run/runB_orth1_ladv2_s*.json [mean n=5]::.maha_robustness_z_lesion_norm_pad_full.ridge.0.1.eps` | 456 | context score 2 | ill read the hospital at $0.92$--$0.95$, a fall of at most $0.037$ against the $0.10$ we had pre-committed. The pre-registered stopping rule returns a negative and  |
 | midl | 842 | 0.534 | match | 0.53397 | `phase4_5/per_run/4a_runB_orth1_s*.json [mean n=3]::.spaces.z_context.cosine_max.VASC.AUROC` | 21 | context score 2; pair | utside dermatology}; a single-seed sub-chance reading there did not replicate ($0.534 \pm 0.050$ over three seeds). What those runs do support is the dissociation in |
 | midl | 842 | 0.050 | match | 0.049911 | `r3/c/per_run/runB_orth1_ladv2_s*.json [mean n=5]::.spectrum.z_lesion_norm.evals[10]` | 8 | context score 1 | matology}; a single-seed sub-chance reading there did not replicate ($0.534 \pm 0.050$ over three seeds). What those runs do support is the dissociation in Section~  |
 | midl | 863 | 5{,}067 | match | 5067 | `phase35_mech/runB_orth1_ladv0_s*.json [mean n=5]::.id_balanced_acc.n` | 16 | context score 5 | Splits.} The main sweep uses the image-level ISIC split, in which $3{,}041$ of $5{,}067$ test images ($60.0\%$) share a \texttt{lesion\_id} with training or validation |
@@ -577,7 +577,7 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 1058 | 0.245 | match | 0.244554 | `derived/phase13_pad_heldout_6class/runB_orth1_ladv0_s* [mean n=5]::recall_AK` | 3 | context score 3 | e from $113$ to $374$ of $716$ images, and actinic keratosis recall falls from $0.245$ to $0.016$ ($49/202 \to 3/202$ images, mean over five seeds). Squamous cell ca |
 | midl | 1059 | 0.016 | match | 0.0158416 | `phase6_xfer/runB_orth1_ladv2_s*.json [mean n=5]::.pad_heldout_6class.per_class_recall.AK` | 2 | context score 3 | $ to $374$ of $716$ images, and actinic keratosis recall falls from $0.245$ to $0.016$ ($49/202 \to 3/202$ images, mean over five seeds). Squamous cell carcinoma mov |
 | midl | 1060 | 0.088 | match | 0.0878788 | `derived/phase13_pad_heldout_6class/runB_orth1_ladv0_s* [mean n=5]::recall_SCC` | 3 | context score 3 | 02$ images, mean over five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$, $6/66 \to 1/66$) but the count is too small to carry a claim on its |
-| midl | 1060 | 0.021 | match | 0.0212121 | `derived/phase13_pad_heldout_6class/runB_orth1_ladv2_s* [mean n=5]::recall_SCC` | 8 | context score 3 | , mean over five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$, $6/66 \to 1/66$) but the count is too small to carry a claim on its own, and  |
+| midl | 1060 | 0.021 | match | 0.0212121 | `derived/phase13_pad_heldout_6class/runB_orth1_ladv8_s* [mean n=5]::recall_SCC` | 8 | context score 3 | , mean over five seeds). Squamous cell carcinoma moves the same way ($0.088 \to 0.021$, $6/66 \to 1/66$) but the count is too small to carry a claim on its own, and  |
 | midl | 1071 | 0.25 | match | 0.25 | `phase6_xfer/runB_orth1_ladv0p25_s*.json [mean n=5]::.lambda_adv` | 43 | context score 4 | arial training on the same data and splits. Every detector collapses at $\lam = 0.25$ --- $k$-NN $0.944 \to 0.528$, energy $0.911 \to 0.507$, cosine $0.884 \to 0.50 |
 | midl | 1071 | 0.944 | match | 0.943856 | `phase14/tails/per_run/runB_orth1_ladv4_s*.json [mean n=3]::.spaces.z_lesion_norm.a3.by_class[1].mean_conf_all` | 11 | context score 4 | the same data and splits. Every detector collapses at $\lam = 0.25$ --- $k$-NN $0.944 \to 0.528$, energy $0.911 \to 0.507$, cosine $0.884 \to 0.509$, MSP $0.868 \to  |
 | midl | 1071 | 0.528 | match | 0.528025 | `phase15/single_dann/single_dann_ladv0p25_s*/summary.json [mean n=3]::.ood.pad_full.knn_k50` | 8 | context score 4 | ata and splits. Every detector collapses at $\lam = 0.25$ --- $k$-NN $0.944 \to 0.528$, energy $0.911 \to 0.507$, cosine $0.884 \to 0.509$, MSP $0.868 \to 0.515$ --- |
@@ -614,7 +614,7 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 1099 | 0.007 | match | 0.00703292 | `r3/c/per_run/runB_orth1_ladv1_s*.json [mean n=5]::.depths_pad_full.z_lesion_norm.leakage_bal_acc_std` | 23 | context score 5 | claim only, where the five detectors move $0.12$--$0.22$ while the probe moves $0.007$. \subsection{Same-modality site shift: probe validation and the \texttt{HAM}  |
 | midl | 1106 | 0.962 | match | 0.961659 | `phase16/b1/bcn_ham_ladv0_s62/summary.json::.gate.leakage_bal_acc` | 2 | context score 5 | ERM features distinguishes \texttt{BCN} from \texttt{HAM} at balanced accuracy $0.962 \pm 0.007$ against a floor of $0.5$. Masking the dermatoscope vignette reduces  |
 | midl | 1106 | 0.007 | match | 0.00683329 | `phase16/b1_rev/ham_bcn_ladv0_s*/summary.json [mean n=3]::.leakage_bcn_heldout_protocol.bal_acc_std` | 5 | context score 5 | es distinguishes \texttt{BCN} from \texttt{HAM} at balanced accuracy $0.962 \pm 0.007$ against a floor of $0.5$. Masking the dermatoscope vignette reduces this only  |
-| midl | 1106 | 0.5 | match | 0.5 | `phase16/b1/bcn_ham_ladv0_s*/summary.json [mean n=3]::.leakage_ham_heldout.chance_floor_balanced` | 42 | context score 5 | N} from \texttt{HAM} at balanced accuracy $0.962 \pm 0.007$ against a floor of $0.5$. Masking the dermatoscope vignette reduces this only to $0.943 \pm 0.005$, so  |
+| midl | 1106 | 0.5 | match | 0.5 | `phase16/b1/bcn_ham_ladv1_s*/summary.json [mean n=3]::.leakage_ham_heldout.chance_floor_balanced` | 42 | context score 5 | N} from \texttt{HAM} at balanced accuracy $0.962 \pm 0.007$ against a floor of $0.5$. Masking the dermatoscope vignette reduces this only to $0.943 \pm 0.005$, so  |
 | midl | 1107 | 0.005 | match | 0.00463708 | `phase16/b1_rev/ham_bcn_ladv0p1_s42/summary.json::.leakage_bcn_heldout_protocol.bal_acc_std` | 1 | context score 5 | oor of $0.5$. Masking the dermatoscope vignette reduces this only to $0.943 \pm 0.005$, so the border is not the signal. Hand-crafted colour and intensity statistics |
 | midl | 1110 | 0.532 | match | 0.53188 | `phase16/b1_rev/ham_bcn_ladv0_s42/lightning_logs/version_0/metrics.csv::row124[train/acc_adv]::` | 4 | context score 4 | level than the original contrast --- while sharpness statistics sit at chance ($0.532$). A probe given only the ground-truth class label reaches $0.668$, reflecting  |
 | midl | 1115 | 0.379 | match | 0.379414 | `phase16/b1/bcn_ham_ladv0_s42/summary.json::.ood_auroc_maha.unrestricted` | 3 | context score 6 | obis is uninformative in the \texttt{BCN}-in-distribution direction.} It reads $0.379$ at $\lam = 0$, already below chance before any adversarial training. Reweighti |
@@ -640,7 +640,7 @@ Flags: `lambda-source` = every exactly matching source carries a λ not in the s
 | midl | 1139 | 0.684 | match | 0.683993 | `r2/item5/runs/camelyon2_ladv0p3_s*/adversary_windows.json [mean n=3]::[24].adv_ce` | 23 | context score 2 | text $0.641$, baseline $0.687$; SCC: lesion $0.806$, context $0.607$, baseline $0.684$). No near/far structure organises the difference (Pearson $-0.12$ against a ce |
 | midl | 1140 | 0.12 | match | 0.120007 | `r2/item5/runs/camelyon2_ladv0_s*/adversary_windows.json [mean n=3]::[158].adv_ce` | 167 | context score 2 | $, baseline $0.684$). No near/far structure organises the difference (Pearson $-0.12$ against a centroid-similarity index). We report this as a null result.  |
 
-## Manifest check (98 entries, 5 failing)
+## Manifest check (349 entries, 112 failing)
 
 Each entry is checked against one declared source key and against the dataset mention nearest to the number in the .tex. This is the only check here that can catch a correct value attached to the wrong dataset.
 
@@ -651,7 +651,7 @@ Each entry is checked against one declared source key and against the dataset me
 | `frozen_in_pad_knn` | `0.913` | pad_heldout | 0.913336 | ok |
 | `maha_pad_l0` | `0.843` | pad_heldout | 0.843051 | ok |
 | `maha_pad_l2` | `0.427` | pad_heldout | 0.426654 | ok |
-| `maha_pad_l2_sd` | `0.025` | pad_heldout | 0.0245763 | ok (appears only where no dataset label is nearby (line(s) 310, 312, 313); a table cell takes its label from the column header, which this check cannot read) |
+| `maha_pad_l2_sd` | `0.025` | pad_heldout | 0.0245763 | ok |
 | `maha_fitz_l0` | `0.764` | fitzpatrick | 0.763854 | ok |
 | `maha_fitz_l2` | `0.391` | fitzpatrick | 0.390856 | ok |
 | `maha_pad_l2_disjointID` | `0.515` | pad_heldout | 0.514994 | ok (appears only where no dataset label is nearby (line(s) 1010, 1072); a table cell takes its label from the column header, which this check cannot read) |
@@ -672,9 +672,9 @@ Each entry is checked against one declared source key and against the dataset me
 | `ratio_nv_l0` | `6.63` | pad_heldout | 6.63366 | ok (appears only where no dataset label is nearby (line(s) 658); a table cell takes its label from the column header, which this check cannot read) |
 | `ratio_nv_l2` | `2.37` | pad_heldout | 2.3719 | ok (appears only where no dataset label is nearby (line(s) 658); a table cell takes its label from the column header, which this check cannot read) |
 | `img_idbal_l2` | `0.707` | isic | 0.707329 | ok |
-| `img_fitz_maha_sd_l2` | `0.068` | fitzpatrick | 0.0677128 | ok (appears only where no dataset label is nearby (line(s) 312); a table cell takes its label from the column header, which this check cannot read) |
+| `img_fitz_maha_sd_l2` | `0.068` | fitzpatrick | 0.0677128 | ok |
 | `fitz_ci_lo_l2` | `0.386` | fitzpatrick | 0.385665 | ok |
-| `resnet50_fitz` | `0.994` | fitzpatrick | 0.994168 | ok (appears only where no dataset label is nearby (line(s) 392, 317); a table cell takes its label from the column header, which this check cannot read) |
+| `resnet50_fitz` | `0.994` | fitzpatrick | 0.994168 | ok |
 | `xfer_effb3_bal` | `0.298` | -- | 0.298284 | ok |
 | `xfer_acc_l2` | `0.184` | -- | 0.184078 | ok |
 | `xfer_majority` | `0.385` | -- | 0.385475 | ok |
@@ -728,19 +728,270 @@ Each entry is checked against one declared source key and against the dataset me
 | `abs_med_nv_l0` | `49.8` | -- | 49.7596 | ok |
 | `abs_med_nv_l2` | `17.5` | -- | 17.5223 | ok |
 | `abs_n_isic` | `25{,}331` | isic | 25331 | ok |
+| `t1img_n_l0` | `5` | -- | 5 | ok |
+| `t1img_leakage_l0` | `0.915` | -- | 0.914817 | ok |
+| `t1img_leakage_sd_l0` | `0.021` | -- | 0.0206742 | ok |
+| `t1img_id_bal_l0` | `0.692` | -- | 0.691818 | ok |
+| `t1img_id_ece_l0` | `0.107` | -- | 0.106673 | ok |
+| `t1img_ood_ece_l0` | `0.247` | -- | 0.246924 | ok |
+| `t1img_maha_l0` | `0.843` | -- | 0.843055 | ok |
+| `t1img_maha_sd_l0` | `0.023` | -- | 0.0227102 | ok |
+| `t1img_fitz_l0` | `0.764` | -- | 0.763859 | ok |
+| `t1img_fitz_sd_l0` | `0.038` | -- | 0.0382199 | ok |
+| `t1img_xdom_l0` | `0.291` | -- | 0.291156 | ok |
+| `t1img_xdom_sd_l0` | `0.016` | -- | 0.0159872 | ok |
+| `t1img_n_l0.25` | `5` | -- | 5 | ok |
 | `t1img_leakage_l0.25` | `0.571` | -- | 0.570962 | ok |
 | `t1img_id_bal_l0.25` | `0.692` | -- | 0.691978 | ok |
-| `t1img_id_ece_l0.25` | `0.100` | -- | 0.0999256 | ok |
-| `t1img_ood_ece_l0.25` | `0.694` | -- | 0.694374 | ok |
+| `t1img_id_ece_l0.25` | `0.100` | -- | 0.0999256 | **tab:dial row 0.25 col 4 (ID ECE): cell prints 0.101, manifest/source 0.100** |
+| `t1img_ood_ece_l0.25` | `0.694` | -- | 0.694374 | **tab:dial row 0.25 col 5 (OOD ECE): cell prints 0.684, manifest/source 0.694** |
 | `t1img_maha_l0.25` | `0.509` | -- | 0.509228 | ok |
 | `t1img_fitz_l0.25` | `0.460` | -- | 0.459917 | ok |
-| `t1img_xdom_l0.25` | `0.295` | -- | 0.294858 | **not present in the manuscript** |
-| `t1img_xdom_sd_l0.25` | `0.028` | -- | 0.0275388 | **not present in the manuscript** |
+| `t1img_xdom_l0.25` | `0.295` | -- | 0.294858 | **tab:dial row 0.25 col 8 (X-dom bal acc): cell prints 0.291, manifest/source 0.295** |
+| `t1img_xdom_sd_l0.25` | `0.028` | -- | 0.0275388 | **tab:dial row 0.25 col 8 (X-dom bal acc): cell prints 0.020, manifest/source 0.028** |
+| `t1img_n_l1` | `5` | -- | 5 | ok |
 | `t1img_leakage_l1` | `0.591` | -- | 0.590898 | ok |
 | `t1img_id_bal_l1` | `0.695` | -- | 0.695479 | ok |
 | `t1img_id_ece_l1` | `0.097` | -- | 0.0971318 | ok |
-| `t1img_ood_ece_l1` | `0.735` | -- | 0.734835 | **not present in the manuscript** |
+| `t1img_ood_ece_l1` | `0.735` | -- | 0.734835 | **tab:dial row 1 col 5 (OOD ECE): cell prints 0.733, manifest/source 0.735** |
 | `t1img_maha_l1` | `0.457` | -- | 0.45672 | ok |
 | `t1img_fitz_l1` | `0.414` | -- | 0.414009 | ok |
-| `t1img_xdom_l1` | `0.258` | -- | 0.258237 | **not present in the manuscript** |
-| `t1img_xdom_sd_l1` | `0.012` | -- | 0.0120105 | **not present in the manuscript** |
+| `t1img_xdom_l1` | `0.258` | -- | 0.258237 | **tab:dial row 1 col 8 (X-dom bal acc): cell prints 0.261, manifest/source 0.258** |
+| `t1img_xdom_sd_l1` | `0.012` | -- | 0.0120105 | **tab:dial row 1 col 8 (X-dom bal acc): cell prints 0.016, manifest/source 0.012** |
+| `t1img_n_l2` | `5` | -- | 5 | ok |
+| `t1img_leakage_l2` | `0.584` | -- | 0.583897 | ok |
+| `t1img_leakage_sd_l2` | `0.027` | -- | 0.027141 | ok |
+| `t1img_id_bal_l2` | `0.707` | -- | 0.707329 | ok |
+| `t1img_id_ece_l2` | `0.099` | -- | 0.0989052 | ok |
+| `t1img_ood_ece_l2` | `0.746` | -- | 0.745562 | ok |
+| `t1img_maha_l2` | `0.427` | -- | 0.426517 | ok |
+| `t1img_maha_sd_l2` | `0.025` | -- | 0.0246514 | ok |
+| `t1img_fitz_l2` | `0.391` | -- | 0.390753 | ok |
+| `t1img_fitz_sd_l2` | `0.068` | -- | 0.0677128 | ok |
+| `t1img_xdom_l2` | `0.249` | -- | 0.248729 | ok |
+| `t1img_xdom_sd_l2` | `0.030` | -- | 0.0301115 | ok |
+| `t1les_n_l0` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l0` | `0.927` | -- | 0.927039 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l0` | `0.018` | -- | 0.0183961 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l0` | `0.496` | -- | 0.495744 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l0` | `0.016` | -- | 0.0157217 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l0` | `0.181` | -- | 0.181477 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l0` | `0.026` | -- | 0.0259369 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l0` | `0.219` | -- | 0.218765 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l0` | `0.046` | -- | 0.0456794 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l0` | `0.808` | -- | 0.807628 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l0` | `0.027` | -- | 0.0270482 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l0` | `0.717` | -- | 0.716906 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l0` | `0.034` | -- | 0.0338108 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l0` | `0.275` | -- | 0.27456 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l0` | `0.023` | -- | 0.0226287 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l0.25` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l0.25` | `0.614` | -- | 0.614 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l0.25` | `0.092` | -- | 0.0922655 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l0.25` | `0.487` | -- | 0.487093 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l0.25` | `0.005` | -- | 0.0048558 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l0.25` | `0.141` | -- | 0.141219 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l0.25` | `0.076` | -- | 0.0762879 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l0.25` | `0.561` | -- | 0.56114 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l0.25` | `0.221` | -- | 0.221498 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l0.25` | `0.525` | -- | 0.525487 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l0.25` | `0.121` | -- | 0.121084 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l0.25` | `0.496` | -- | 0.496309 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l0.25` | `0.167` | -- | 0.167003 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l0.25` | `0.289` | -- | 0.289459 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l0.25` | `0.049` | -- | 0.0493873 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l0.5` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l0.5` | `0.581` | -- | 0.580732 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l0.5` | `0.031` | -- | 0.0307653 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l0.5` | `0.501` | -- | 0.500612 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l0.5` | `0.012` | -- | 0.0117612 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l0.5` | `0.191` | -- | 0.190949 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l0.5` | `0.008` | -- | 0.00789772 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l0.5` | `0.710` | -- | 0.710096 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l0.5` | `0.017` | -- | 0.0168417 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l0.5` | `0.426` | -- | 0.426276 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l0.5` | `0.008` | -- | 0.00750602 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l0.5` | `0.411` | -- | 0.410994 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l0.5` | `0.047` | -- | 0.0471273 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l0.5` | `0.259` | -- | 0.258997 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l0.5` | `0.025` | -- | 0.0253731 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l1` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l1` | `0.563` | -- | 0.562711 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l1` | `0.045` | -- | 0.0449737 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l1` | `0.495` | -- | 0.494659 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l1` | `0.011` | -- | 0.0109272 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l1` | `0.176` | -- | 0.175745 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l1` | `0.016` | -- | 0.015687 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l1` | `0.730` | -- | 0.730264 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l1` | `0.015` | -- | 0.0150367 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l1` | `0.387` | -- | 0.387135 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l1` | `0.016` | -- | 0.0162756 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l1` | `0.375` | -- | 0.375131 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l1` | `0.042` | -- | 0.0421582 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l1` | `0.229` | -- | 0.229264 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l1` | `0.027` | -- | 0.0274966 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l2` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l2` | `0.555` | -- | 0.555277 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l2` | `0.046` | -- | 0.0456784 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l2` | `0.473` | -- | 0.473013 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l2` | `0.023` | -- | 0.0232172 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l2` | `0.181` | -- | 0.1807 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l2` | `0.027` | -- | 0.0268299 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l2` | `0.717` | -- | 0.717345 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l2` | `0.022` | -- | 0.0221732 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l2` | `0.403` | -- | 0.402639 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l2` | `0.028` | -- | 0.0284279 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l2` | `0.402` | -- | 0.401505 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l2` | `0.018` | -- | 0.0178688 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l2` | `0.254` | -- | 0.254275 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l2` | `0.015` | -- | 0.0149124 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l4` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l4` | `0.636` | -- | 0.636371 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l4` | `0.076` | -- | 0.0760804 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l4` | `0.498` | -- | 0.497678 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l4` | `0.012` | -- | 0.0116665 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l4` | `0.161` | -- | 0.161036 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l4` | `0.050` | -- | 0.0502132 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l4` | `0.696` | -- | 0.696389 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l4` | `0.032` | -- | 0.0318019 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l4` | `0.433` | -- | 0.4328 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l4` | `0.020` | -- | 0.0198166 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l4` | `0.376` | -- | 0.376485 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l4` | `0.037` | -- | 0.0372802 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l4` | `0.258` | -- | 0.257872 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l4` | `0.010` | -- | 0.0103398 | **table \label{tab:dial_lesion} not found** |
+| `t1les_n_l8` | `5` | -- | 5 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_l8` | `0.663` | -- | 0.662928 | **table \label{tab:dial_lesion} not found** |
+| `t1les_leakage_sd_l8` | `0.068` | -- | 0.0681719 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_l8` | `0.489` | -- | 0.488757 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_bal_sd_l8` | `0.019` | -- | 0.0190282 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_l8` | `0.161` | -- | 0.161406 | **table \label{tab:dial_lesion} not found** |
+| `t1les_id_ece_sd_l8` | `0.029` | -- | 0.0291541 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_l8` | `0.710` | -- | 0.710237 | **table \label{tab:dial_lesion} not found** |
+| `t1les_ood_ece_sd_l8` | `0.027` | -- | 0.0273482 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_l8` | `0.454` | -- | 0.453781 | **table \label{tab:dial_lesion} not found** |
+| `t1les_maha_sd_l8` | `0.044` | -- | 0.0442021 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_l8` | `0.412` | -- | 0.411715 | **table \label{tab:dial_lesion} not found** |
+| `t1les_fitz_sd_l8` | `0.051` | -- | 0.0514462 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_l8` | `0.254` | -- | 0.253589 | **table \label{tab:dial_lesion} not found** |
+| `t1les_xdom_sd_l8` | `0.022` | -- | 0.0217739 | **table \label{tab:dial_lesion} not found** |
+| `mmd_arm_erm_w0_mahalanobis_classcond` | `0.834` | pad_heldout | 0.834252 | ok (not present in the manuscript) |
+| `mmd_arm_erm_w0_cosine_max` | `0.888` | pad_heldout | 0.887908 | ok (not present in the manuscript) |
+| `mmd_arm_erm_w0_knn_k50` | `0.940` | pad_heldout | 0.940114 | ok (not present in the manuscript) |
+| `mmd_arm_erm_w0_MSP` | `0.826` | pad_heldout | 0.826107 | ok (not present in the manuscript) |
+| `mmd_arm_erm_w0_Energy_T1` | `0.823` | pad_heldout | 0.823381 | ok (not present in the manuscript) |
+| `mmd_arm_erm_w0_leakage` | `0.973` | -- | 0.972883 | ok |
+| `mmd_arm_erm_w0_id_acc` | `0.843` | -- | 0.8433 | ok |
+| `mmd_arm_erm_w0_id_bal` | `0.761` | -- | 0.760683 | ok |
+| `mmd_arm_mmd_w1_mahalanobis_classcond` | `0.811` | pad_heldout | 0.81057 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1_cosine_max` | `0.853` | pad_heldout | 0.852715 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1_knn_k50` | `0.930` | pad_heldout | 0.930125 | ok |
+| `mmd_arm_mmd_w1_MSP` | `0.815` | pad_heldout | 0.814935 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1_Energy_T1` | `0.804` | pad_heldout | 0.804449 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1_leakage` | `0.967` | -- | 0.966811 | ok |
+| `mmd_arm_mmd_w1_id_acc` | `0.850` | -- | 0.849615 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1_id_bal` | `0.779` | -- | 0.778936 | ok |
+| `mmd_arm_mmd_w10_mahalanobis_classcond` | `0.772` | pad_heldout | 0.771564 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10_cosine_max` | `0.794` | pad_heldout | 0.793759 | ok (appears at line(s) 437, 438 but the nearest label is camelyon, not pad_heldout) |
+| `mmd_arm_mmd_w10_knn_k50` | `0.915` | pad_heldout | 0.914997 | ok (appears at line(s) 56, 400, 1046 but the nearest label is fitzpatrick, isic, not pad_heldout) |
+| `mmd_arm_mmd_w10_MSP` | `0.796` | pad_heldout | 0.796432 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10_Energy_T1` | `0.787` | pad_heldout | 0.786746 | ok (appears only where no dataset label is nearby (line(s) 1015); a table cell takes its label from the column header, which this check cannot read) |
+| `mmd_arm_mmd_w10_leakage` | `0.947` | -- | 0.947459 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10_id_acc` | `0.850` | -- | 0.85001 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10_id_bal` | `0.777` | -- | 0.77705 | ok |
+| `mmd_arm_mmd_w100_mahalanobis_classcond` | `0.724` | pad_heldout | 0.724103 | ok (appears only where no dataset label is nearby (line(s) 310); a table cell takes its label from the column header, which this check cannot read) |
+| `mmd_arm_mmd_w100_cosine_max` | `0.668` | pad_heldout | 0.667698 | ok (appears at line(s) 563, 1111 but the nearest label is isic, not pad_heldout) |
+| `mmd_arm_mmd_w100_knn_k50` | `0.791` | pad_heldout | 0.790751 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w100_MSP` | `0.729` | pad_heldout | 0.729316 | ok (appears only where no dataset label is nearby (line(s) 988); a table cell takes its label from the column header, which this check cannot read) |
+| `mmd_arm_mmd_w100_Energy_T1` | `0.663` | pad_heldout | 0.663482 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w100_leakage` | `0.900` | -- | 0.900418 | ok |
+| `mmd_arm_mmd_w100_id_acc` | `0.821` | -- | 0.821262 | ok |
+| `mmd_arm_mmd_w100_id_bal` | `0.730` | -- | 0.729715 | ok |
+| `mmd_arm_mmd_w300_mahalanobis_classcond` | `0.808` | pad_heldout | 0.807664 | ok |
+| `mmd_arm_mmd_w300_cosine_max` | `0.837` | pad_heldout | 0.8374 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_knn_k50` | `0.916` | pad_heldout | 0.916219 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_MSP` | `0.743` | pad_heldout | 0.743034 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_Energy_T1` | `0.615` | pad_heldout | 0.614754 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_leakage` | `0.931` | -- | 0.930898 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_id_acc` | `0.773` | -- | 0.773436 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w300_id_bal` | `0.609` | -- | 0.608992 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1000_mahalanobis_classcond` | `0.784` | pad_heldout | 0.784489 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1000_cosine_max` | `0.783` | pad_heldout | 0.782966 | ok (appears at line(s) 989 but the nearest label is pad_full, not pad_heldout) |
+| `mmd_arm_mmd_w1000_knn_k50` | `0.833` | pad_heldout | 0.832827 | ok |
+| `mmd_arm_mmd_w1000_MSP` | `0.759` | pad_heldout | 0.759229 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1000_Energy_T1` | `0.648` | pad_heldout | 0.648282 | ok (appears at line(s) 437 but the nearest label is camelyon, not pad_heldout) |
+| `mmd_arm_mmd_w1000_leakage` | `0.919` | -- | 0.91895 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1000_id_acc` | `0.721` | -- | 0.720939 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w1000_id_bal` | `0.450` | -- | 0.450455 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w3000_mahalanobis_classcond` | `0.747` | pad_heldout | 0.746633 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w3000_cosine_max` | `0.701` | pad_heldout | 0.700676 | ok (appears only where no dataset label is nearby (line(s) 310); a table cell takes its label from the column header, which this check cannot read) |
+| `mmd_arm_mmd_w3000_knn_k50` | `0.813` | pad_heldout | 0.812654 | ok |
+| `mmd_arm_mmd_w3000_MSP` | `0.777` | pad_heldout | 0.777293 | ok (appears only where no dataset label is nearby (line(s) 980); a table cell takes its label from the column header, which this check cannot read) |
+| `mmd_arm_mmd_w3000_Energy_T1` | `0.707` | pad_heldout | 0.706854 | ok (appears at line(s) 56, 341 but the nearest label is fitzpatrick, isic, not pad_heldout) |
+| `mmd_arm_mmd_w3000_leakage` | `0.893` | -- | 0.892727 | ok |
+| `mmd_arm_mmd_w3000_id_acc` | `0.672` | -- | 0.672258 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w3000_id_bal` | `0.382` | -- | 0.382483 | ok |
+| `mmd_arm_mmd_w10000_mahalanobis_classcond` | `0.664` | pad_heldout | 0.664495 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_cosine_max` | `0.633` | pad_heldout | 0.633369 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_knn_k50` | `0.740` | pad_heldout | 0.740375 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_MSP` | `0.670` | pad_heldout | 0.670337 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_Energy_T1` | `0.696` | pad_heldout | 0.696031 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_leakage` | `0.836` | -- | 0.835716 | ok |
+| `mmd_arm_mmd_w10000_id_acc` | `0.656` | -- | 0.655746 | ok (not present in the manuscript) |
+| `mmd_arm_mmd_w10000_id_bal` | `0.337` | -- | 0.336649 | ok |
+| `grl_arm_0_mahalanobis_classcond` | `0.700` | pad_heldout | 0.700103 | ok (appears only where no dataset label is nearby (line(s) 1009); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0_cosine_max` | `0.875` | pad_heldout | 0.874712 | ok (not present in the manuscript) |
+| `grl_arm_0_knn_k50` | `0.935` | pad_heldout | 0.934941 | ok (not present in the manuscript) |
+| `grl_arm_0_MSP` | `0.857` | pad_heldout | 0.857071 | ok (not present in the manuscript) |
+| `grl_arm_0_Energy_T1` | `0.901` | pad_heldout | 0.901136 | ok |
+| `grl_arm_0_leakage` | `0.970` | -- | 0.97048 | ok |
+| `grl_arm_0_id_acc` | `0.845` | -- | 0.845273 | ok |
+| `grl_arm_0_id_bal` | `0.768` | -- | 0.767927 | ok (not present in the manuscript) |
+| `grl_arm_0.25_mahalanobis_classcond` | `0.539` | pad_heldout | 0.539101 | ok (not present in the manuscript) |
+| `grl_arm_0.25_cosine_max` | `0.530` | pad_heldout | 0.530012 | ok (not present in the manuscript) |
+| `grl_arm_0.25_knn_k50` | `0.548` | pad_heldout | 0.548434 | ok (appears only where no dataset label is nearby (line(s) 313, 1012); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0.25_MSP` | `0.548` | pad_heldout | 0.548138 | ok (appears only where no dataset label is nearby (line(s) 313, 1012); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0.25_Energy_T1` | `0.536` | pad_heldout | 0.535916 | ok (not present in the manuscript) |
+| `grl_arm_0.25_leakage` | `0.763` | -- | 0.762647 | ok |
+| `grl_arm_0.25_id_acc` | `0.845` | -- | 0.84501 | ok |
+| `grl_arm_0.25_id_bal` | `0.778` | -- | 0.778351 | ok (not present in the manuscript) |
+| `grl_arm_0.5_mahalanobis_classcond` | `0.524` | pad_heldout | 0.524492 | ok (not present in the manuscript) |
+| `grl_arm_0.5_cosine_max` | `0.519` | pad_heldout | 0.519342 | ok (appears only where no dataset label is nearby (line(s) 1015); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0.5_knn_k50` | `0.539` | pad_heldout | 0.538552 | ok (not present in the manuscript) |
+| `grl_arm_0.5_MSP` | `0.543` | pad_heldout | 0.542663 | ok (appears only where no dataset label is nearby (line(s) 532); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0.5_Energy_T1` | `0.543` | pad_heldout | 0.543159 | ok (appears only where no dataset label is nearby (line(s) 532); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_0.5_leakage` | `0.795` | -- | 0.795037 | ok |
+| `grl_arm_0.5_id_acc` | `0.844` | -- | 0.843563 | ok |
+| `grl_arm_0.5_id_bal` | `0.766` | -- | 0.766494 | ok (not present in the manuscript) |
+| `grl_arm_1_mahalanobis_classcond` | `0.555` | pad_heldout | 0.555256 | ok (appears only where no dataset label is nearby (line(s) 310, 602); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_1_cosine_max` | `0.517` | pad_heldout | 0.51696 | ok (appears only where no dataset label is nearby (line(s) 1011); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_1_knn_k50` | `0.541` | pad_heldout | 0.540822 | ok (not present in the manuscript) |
+| `grl_arm_1_MSP` | `0.517` | pad_heldout | 0.516635 | ok (appears only where no dataset label is nearby (line(s) 1011); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_1_Energy_T1` | `0.498` | pad_heldout | 0.498019 | ok (not present in the manuscript) |
+| `grl_arm_1_leakage` | `0.795` | -- | 0.794528 | ok |
+| `grl_arm_1_id_acc` | `0.840` | -- | 0.839682 | ok |
+| `grl_arm_1_id_bal` | `0.763` | -- | 0.762759 | ok |
+| `grl_arm_2_mahalanobis_classcond` | `0.521` | pad_heldout | 0.52065 | ok (appears only where no dataset label is nearby (line(s) 1012); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_2_cosine_max` | `0.514` | pad_heldout | 0.514101 | ok (not present in the manuscript) |
+| `grl_arm_2_knn_k50` | `0.542` | pad_heldout | 0.541554 | ok (not present in the manuscript) |
+| `grl_arm_2_MSP` | `0.540` | pad_heldout | 0.540382 | ok (not present in the manuscript) |
+| `grl_arm_2_Energy_T1` | `0.529` | pad_heldout | 0.52906 | ok (not present in the manuscript) |
+| `grl_arm_2_leakage` | `0.807` | -- | 0.806613 | ok |
+| `grl_arm_2_id_acc` | `0.839` | -- | 0.839471 | ok |
+| `grl_arm_2_id_bal` | `0.758` | -- | 0.75799 | ok (not present in the manuscript) |
+| `grl_arm_4_mahalanobis_classcond` | `0.513` | pad_heldout | 0.512553 | ok (appears only where no dataset label is nearby (line(s) 420); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_4_cosine_max` | `0.490` | pad_heldout | 0.489915 | ok (appears only where no dataset label is nearby (line(s) 1015); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_4_knn_k50` | `0.515` | pad_heldout | 0.514576 | ok (appears only where no dataset label is nearby (line(s) 1010, 1072); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_4_MSP` | `0.519` | pad_heldout | 0.51904 | ok (appears only where no dataset label is nearby (line(s) 1015); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_4_Energy_T1` | `0.501` | pad_heldout | 0.500731 | ok (appears only where no dataset label is nearby (line(s) 1011); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_4_leakage` | `0.798` | -- | 0.797986 | ok |
+| `grl_arm_4_id_acc` | `0.835` | -- | 0.834748 | ok |
+| `grl_arm_4_id_bal` | `0.750` | -- | 0.750359 | ok (not present in the manuscript) |
+| `grl_arm_8_mahalanobis_classcond` | `0.525` | pad_heldout | 0.525029 | ok (appears only where no dataset label is nearby (line(s) 1010, 710); a table cell takes its label from the column header, which this check cannot read) |
+| `grl_arm_8_cosine_max` | `0.526` | pad_heldout | 0.525564 | ok (not present in the manuscript) |
+| `grl_arm_8_knn_k50` | `0.558` | pad_heldout | 0.558167 | ok (not present in the manuscript) |
+| `grl_arm_8_MSP` | `0.566` | pad_heldout | 0.565736 | ok (not present in the manuscript) |
+| `grl_arm_8_Energy_T1` | `0.551` | pad_heldout | 0.55131 | ok (not present in the manuscript) |
+| `grl_arm_8_leakage` | `0.787` | -- | 0.787291 | ok |
+| `grl_arm_8_id_acc` | `0.832` | -- | 0.831919 | ok |
+| `grl_arm_8_id_bal` | `0.731` | -- | 0.731277 | ok (not present in the manuscript) |
