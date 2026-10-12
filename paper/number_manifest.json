@@ -1166,20 +1166,7 @@
       "leakage",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_leakage_sd_l0.25",
-    "written": "0.027",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "0.25",
-      "leakage",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_id_bal_l0.25",
@@ -1192,7 +1179,7 @@
       "id_bal",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_id_ece_l0.25",
@@ -1205,7 +1192,7 @@
       "id_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_ood_ece_l0.25",
@@ -1218,12 +1205,12 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_maha_l0.25",
     "written": "0.509",
-    "label": "pad_heldout",
+    "label": null,
     "file": "r4/r4_results.json",
     "key": [
       "image_table1",
@@ -1231,25 +1218,12 @@
       "maha",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_maha_sd_l0.25",
-    "written": "0.023",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "0.25",
-      "maha",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_fitz_l0.25",
     "written": "0.460",
-    "label": "fitzpatrick",
+    "label": null,
     "file": "r4/r4_results.json",
     "key": [
       "image_table1",
@@ -1257,20 +1231,7 @@
       "fitz",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_fitz_sd_l0.25",
-    "written": "0.057",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "0.25",
-      "fitz",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_xdom_l0.25",
@@ -1283,7 +1244,7 @@
       "xdom",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_xdom_sd_l0.25",
@@ -1296,7 +1257,7 @@
       "xdom",
       "sd"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_leakage_l1",
@@ -1309,20 +1270,7 @@
       "leakage",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_leakage_sd_l1",
-    "written": "0.035",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "1",
-      "leakage",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_id_bal_l1",
@@ -1335,7 +1283,7 @@
       "id_bal",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_id_ece_l1",
@@ -1348,7 +1296,7 @@
       "id_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_ood_ece_l1",
@@ -1361,12 +1309,12 @@
       "ood_ece",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_maha_l1",
     "written": "0.457",
-    "label": "pad_heldout",
+    "label": null,
     "file": "r4/r4_results.json",
     "key": [
       "image_table1",
@@ -1374,25 +1322,12 @@
       "maha",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_maha_sd_l1",
-    "written": "0.026",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "1",
-      "maha",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_fitz_l1",
     "written": "0.414",
-    "label": "fitzpatrick",
+    "label": null,
     "file": "r4/r4_results.json",
     "key": [
       "image_table1",
@@ -1400,20 +1335,7 @@
       "fitz",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
-  },
-  {
-    "id": "t1img_fitz_sd_l1",
-    "written": "0.086",
-    "label": null,
-    "file": "r4/r4_results.json",
-    "key": [
-      "image_table1",
-      "1",
-      "fitz",
-      "sd"
-    ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_xdom_l1",
@@ -1426,7 +1348,7 @@
       "xdom",
       "mean"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   },
   {
     "id": "t1img_xdom_sd_l1",
@@ -1439,6 +1361,6 @@
       "xdom",
       "sd"
     ],
-    "note": "R4: image-level Table 1 at n = 5"
+    "note": "R4: image-level Table 1 at n = 5 (table cell: no dataset label)"
   }
 ]

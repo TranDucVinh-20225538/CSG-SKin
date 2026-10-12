@@ -41,10 +41,11 @@ def main():
     entries = json.loads(man.read_text())
     img = [e for e in cells("image_table1", "image_table1", "t1img",
                             ("leakage", "id_bal", "id_ece", "ood_ece", "maha", "fitz", "xdom"),
-                            "R4: image-level Table 1 at n = 5")
+                            "R4: image-level Table 1 at n = 5 (table cell: no dataset label)", {"xdom"})
            if e["id"].endswith(("_l0.25", "_l1"))]
-    ids = {e["id"] for e in img}
-    entries = [e for e in entries if e["id"] not in ids] + img
+    for e in img:
+        e["label"] = None
+    entries = [e for e in entries if not e["id"].startswith("t1img_")] + img
     man.write_text(json.dumps(entries, indent=2) + "\n")
 
     lcols = ("leakage", "id_bal", "id_ece", "ood_ece", "maha", "fitz", "xdom")
