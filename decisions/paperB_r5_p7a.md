@@ -86,4 +86,7 @@ commit hash. Compute starts only after the R7 A5 jobs have finished (user instru
 
 ## Deviations
 
-(none yet)
+1. SD-198 mapped counts: the counts above were folder entry counts and include one `Thumbs.db` per folder. Image counts
+   are NV 426, MEL 113, BCC 60, AK 60, BKL 72, DF 60, VASC 126, SCC 119 (1,036 mapped of 6,584). The mirror's archive
+   also holds a Windows executable (`2015qiangpzb.exe`); it is ignored and never run. Found before any extraction.
+2. SD-198 resample group = class folder + file stem (one stem occurs in two class folders). Before any extraction.
