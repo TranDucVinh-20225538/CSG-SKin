@@ -75,7 +75,7 @@
     ],
     "stat": "sd",
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -447,7 +447,7 @@
     ],
     "note": "R3-D triage (results/paperB/r3/d/triage.md)",
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -482,7 +482,7 @@
     ],
     "note": "R3-D triage (results/paperB/r3/d/triage.md) | UNRESOLVED: phase2_5/phase25_aggregate.json does not exist in results/paperB, and no JSON under any fitz-related key rounds to 0.994 except an unrelated ratio_BCC and an ImageNet AK per-class value. The Table 1 ResNet-50 Fitzpatrick figure has no machine-checkable source.",
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "ResNet-50",
       "col": 6,
       "col_name": "Fitz AUROC",
@@ -880,20 +880,6 @@
     "note": "R3 D: lesion-level text vs n = 5 (B1); fails while the text prints the n = 3 value | written updated from 0.693 to the n=5 value"
   },
   {
-    "id": "abs_maha_l025",
-    "written": "0.513",
-    "label": "pad_heldout",
-    "file": "reviewer_r1/bootstrap_results.json",
-    "key": [
-      "results",
-      "pad_heldout",
-      "0.25",
-      "mahalanobis_classcond",
-      "point_mean_over_seeds"
-    ],
-    "note": "R3 D: abstract"
-  },
-  {
     "id": "abs_ci_lo_l2",
     "written": "0.414",
     "label": "pad_heldout",
@@ -1188,7 +1174,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 1,
       "col_name": "n",
@@ -1208,7 +1194,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 2,
       "col_name": "Leakage",
@@ -1228,7 +1214,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 2,
       "col_name": "Leakage",
@@ -1248,7 +1234,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 3,
       "col_name": "ID bal acc",
@@ -1268,7 +1254,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 4,
       "col_name": "ID ECE",
@@ -1288,7 +1274,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 5,
       "col_name": "OOD ECE",
@@ -1308,7 +1294,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -1328,7 +1314,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -1348,7 +1334,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -1368,7 +1354,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -1388,7 +1374,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1408,7 +1394,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1428,7 +1414,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 1,
       "col_name": "n",
@@ -1448,11 +1434,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 2,
       "col_name": "Leakage",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_sd_l0.25",
+    "written": "0.027",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "0.25",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1468,7 +1474,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 3,
       "col_name": "ID bal acc",
@@ -1488,7 +1494,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 4,
       "col_name": "ID ECE",
@@ -1508,7 +1514,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 5,
       "col_name": "OOD ECE",
@@ -1528,11 +1534,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 6,
       "col_name": "OOD AUROC",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_sd_l0.25",
+    "written": "0.023",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "0.25",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1548,11 +1574,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 7,
       "col_name": "Fitz AUROC",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_sd_l0.25",
+    "written": "0.057",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "0.25",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "0.25",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1568,7 +1614,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1588,7 +1634,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "0.25",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1608,7 +1654,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 1,
       "col_name": "n",
@@ -1628,11 +1674,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 2,
       "col_name": "Leakage",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_leakage_sd_l1",
+    "written": "0.035",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "leakage",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "1",
+      "col": 2,
+      "col_name": "Leakage",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1648,7 +1714,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 3,
       "col_name": "ID bal acc",
@@ -1668,7 +1734,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 4,
       "col_name": "ID ECE",
@@ -1688,7 +1754,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 5,
       "col_name": "OOD ECE",
@@ -1708,11 +1774,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 6,
       "col_name": "OOD AUROC",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_maha_sd_l1",
+    "written": "0.026",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "maha",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "1",
+      "col": 6,
+      "col_name": "OOD AUROC",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1728,11 +1814,31 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 7,
       "col_name": "Fitz AUROC",
       "stat": "mean"
+    },
+    "note": "R4: image-level Table 1 at n = 5, cell-anchored"
+  },
+  {
+    "id": "t1img_fitz_sd_l1",
+    "written": "0.086",
+    "label": null,
+    "file": "r4/r4_results.json",
+    "key": [
+      "image_table1",
+      "1",
+      "fitz",
+      "sd"
+    ],
+    "cell": {
+      "table": "tab:imagelevel",
+      "row": "1",
+      "col": 7,
+      "col_name": "Fitz AUROC",
+      "stat": "sd"
     },
     "note": "R4: image-level Table 1 at n = 5, cell-anchored"
   },
@@ -1748,7 +1854,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1768,7 +1874,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "1",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -1788,7 +1894,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 1,
       "col_name": "n",
@@ -1808,7 +1914,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 2,
       "col_name": "Leakage",
@@ -1828,7 +1934,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 2,
       "col_name": "Leakage",
@@ -1848,7 +1954,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 3,
       "col_name": "ID bal acc",
@@ -1868,7 +1974,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 4,
       "col_name": "ID ECE",
@@ -1888,7 +1994,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 5,
       "col_name": "OOD ECE",
@@ -1908,7 +2014,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -1928,7 +2034,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -1948,7 +2054,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -1968,7 +2074,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -1988,7 +2094,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2008,7 +2114,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial",
+      "table": "tab:imagelevel",
       "row": "2",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2028,7 +2134,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 1,
       "col_name": "n",
@@ -2048,7 +2154,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 2,
       "col_name": "Leakage",
@@ -2068,7 +2174,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 2,
       "col_name": "Leakage",
@@ -2088,7 +2194,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2108,7 +2214,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2128,7 +2234,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 4,
       "col_name": "ID ECE",
@@ -2148,7 +2254,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 4,
       "col_name": "ID ECE",
@@ -2168,7 +2274,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2188,7 +2294,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2208,7 +2314,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2228,7 +2334,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2248,7 +2354,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2268,7 +2374,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2288,7 +2394,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2308,7 +2414,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2328,7 +2434,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 1,
       "col_name": "n",
@@ -2348,7 +2454,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 2,
       "col_name": "Leakage",
@@ -2368,7 +2474,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 2,
       "col_name": "Leakage",
@@ -2388,7 +2494,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2408,7 +2514,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2428,7 +2534,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 4,
       "col_name": "ID ECE",
@@ -2448,7 +2554,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 4,
       "col_name": "ID ECE",
@@ -2468,7 +2574,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2488,7 +2594,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2508,7 +2614,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2528,7 +2634,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2548,7 +2654,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2568,7 +2674,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2588,7 +2694,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2608,7 +2714,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.25",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2628,7 +2734,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 1,
       "col_name": "n",
@@ -2648,7 +2754,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 2,
       "col_name": "Leakage",
@@ -2668,7 +2774,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 2,
       "col_name": "Leakage",
@@ -2688,7 +2794,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2708,7 +2814,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 3,
       "col_name": "ID bal acc",
@@ -2728,7 +2834,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 4,
       "col_name": "ID ECE",
@@ -2748,7 +2854,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 4,
       "col_name": "ID ECE",
@@ -2768,7 +2874,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2788,7 +2894,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 5,
       "col_name": "OOD ECE",
@@ -2808,7 +2914,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2828,7 +2934,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -2848,7 +2954,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2868,7 +2974,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -2888,7 +2994,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2908,7 +3014,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "0.5",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -2928,7 +3034,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 1,
       "col_name": "n",
@@ -2948,7 +3054,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 2,
       "col_name": "Leakage",
@@ -2968,7 +3074,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 2,
       "col_name": "Leakage",
@@ -2988,7 +3094,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3008,7 +3114,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3028,7 +3134,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 4,
       "col_name": "ID ECE",
@@ -3048,7 +3154,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 4,
       "col_name": "ID ECE",
@@ -3068,7 +3174,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3088,7 +3194,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3108,7 +3214,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3128,7 +3234,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3148,7 +3254,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3168,7 +3274,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3188,7 +3294,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3208,7 +3314,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "1",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3228,7 +3334,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 1,
       "col_name": "n",
@@ -3248,7 +3354,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 2,
       "col_name": "Leakage",
@@ -3268,7 +3374,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 2,
       "col_name": "Leakage",
@@ -3288,7 +3394,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3308,7 +3414,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3328,7 +3434,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 4,
       "col_name": "ID ECE",
@@ -3348,7 +3454,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 4,
       "col_name": "ID ECE",
@@ -3368,7 +3474,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3388,7 +3494,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3408,7 +3514,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3428,7 +3534,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3448,7 +3554,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3468,7 +3574,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3488,7 +3594,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3508,7 +3614,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "2",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3528,7 +3634,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 1,
       "col_name": "n",
@@ -3548,7 +3654,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 2,
       "col_name": "Leakage",
@@ -3568,7 +3674,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 2,
       "col_name": "Leakage",
@@ -3588,7 +3694,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3608,7 +3714,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3628,7 +3734,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 4,
       "col_name": "ID ECE",
@@ -3648,7 +3754,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 4,
       "col_name": "ID ECE",
@@ -3668,7 +3774,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3688,7 +3794,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3708,7 +3814,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3728,7 +3834,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -3748,7 +3854,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3768,7 +3874,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -3788,7 +3894,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3808,7 +3914,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "4",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -3828,7 +3934,7 @@
       "n"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 1,
       "col_name": "n",
@@ -3848,7 +3954,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 2,
       "col_name": "Leakage",
@@ -3868,7 +3974,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 2,
       "col_name": "Leakage",
@@ -3888,7 +3994,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3908,7 +4014,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 3,
       "col_name": "ID bal acc",
@@ -3928,7 +4034,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 4,
       "col_name": "ID ECE",
@@ -3948,7 +4054,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 4,
       "col_name": "ID ECE",
@@ -3968,7 +4074,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 5,
       "col_name": "OOD ECE",
@@ -3988,7 +4094,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 5,
       "col_name": "OOD ECE",
@@ -4008,7 +4114,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -4028,7 +4134,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 6,
       "col_name": "OOD AUROC",
@@ -4048,7 +4154,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -4068,7 +4174,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 7,
       "col_name": "Fitz AUROC",
@@ -4088,7 +4194,7 @@
       "mean"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 8,
       "col_name": "X-dom bal acc",
@@ -4108,7 +4214,7 @@
       "sd"
     ],
     "cell": {
-      "table": "tab:dial_lesion",
+      "table": "tab:dial",
       "row": "8",
       "col": 8,
       "col_name": "X-dom bal acc",

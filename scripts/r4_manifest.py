@@ -12,13 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = "r4/r4_results.json"
 R = json.loads((ROOT / "results" / "paperB" / SRC).read_text())
 
-IMAGE_TABLE = "tab:dial"           # image-level Table 1 as it stands in the draft
-LESION_TABLE = "tab:dial_lesion"   # lesion-level Table 1; set to the draft's label once the table is in the .tex
+IMAGE_TABLE = "tab:imagelevel"     # image-level table (appendix app:imagelevel)
+LESION_TABLE = "tab:dial"          # lesion-level Table 1
 COLS = (("leakage", 2, "Leakage"), ("id_bal", 3, "ID bal acc"), ("id_ece", 4, "ID ECE"), ("ood_ece", 5, "OOD ECE"),
         ("maha", 6, "OOD AUROC"), ("fitz", 7, "Fitz AUROC"), ("xdom", 8, "X-dom bal acc"))
-# image-level table prints ± only in these cells; the lesion-level table prints ± everywhere
-IMAGE_SD = {"0": {"leakage", "maha", "fitz", "xdom"}, "2": {"leakage", "maha", "fitz", "xdom"},
-            "0.25": {"xdom"}, "1": {"xdom"}}
+# image-level table prints ± only in these columns; the lesion-level table prints ± everywhere
+IMAGE_SD = {lam: {"leakage", "maha", "fitz", "xdom"} for lam in ("0", "0.25", "0.5", "1", "2", "4", "8")}
 
 
 def cell_entry(eid, value, key, table, row, col, col_name, stat, note):
