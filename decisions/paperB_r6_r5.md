@@ -56,3 +56,10 @@ outcomes in the predicted direction (larger majority-share drop ↔ inversion), 
 GPU 0. CPU < 5 min (metadata).
 
 ## Deviations
+
+## Addition (user request 2026-10-15, after the P7(a) results existed)
+
+Rows added for the three P7(a) unseen clinical sets (MED-NODE, SD-198, SCIN): mapped class mix, label shift vs the
+lesion-level ISIC train mix, and the P7(a) Mahalanobis AUROCs (whole set) as outcomes. Also reported: the share of
+each set that maps to the 8 ISIC classes; for SCIN, sensitivity counts with looser mapping (top label at any weight;
+any label in the differential). Added after the P7(a) scores were seen, so it is descriptive, with no prediction.

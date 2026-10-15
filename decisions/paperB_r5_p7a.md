@@ -90,3 +90,13 @@ commit hash. Compute starts only after the R7 A5 jobs have finished (user instru
    are NV 426, MEL 113, BCC 60, AK 60, BKL 72, DF 60, VASC 126, SCC 119 (1,036 mapped of 6,584). The mirror's archive
    also holds a Windows executable (`2015qiangpzb.exe`); it is ignored and never run. Found before any extraction.
 2. SD-198 resample group = class folder + file stem (one stem occurs in two class folders). Before any extraction.
+
+## SD-198 provenance check (user request 2026-10-15, after scoring)
+
+Official release: the Google Drive file linked as [Dataset] on the first author's homepage (xiaoxiaosun.com; Sun et al.,
+ECCV 2016). The Nankai project page returns HTTP 410. Downloaded 2026-10-15 to `data/unseen_clinical/sd198_official/`
+and compared file by file with the HF mirror used for scoring: 6,584 vs 6,584 images, same relative paths, all
+6,584 byte-identical (MD5); `classes.txt` and `image_class_labels.txt` identical; the two zip archives have the same MD5 (1facac88…). The P7(a) SD-198 numbers therefore
+stand for the official release without rescoring. Licence: none stated by the authors (images from DermQuest).
+Caveat kept: no patient IDs, image-level bootstrap, CIs anti-conservative. Record:
+`results/paperB/r5/p7a/PROVENANCE_SD198.json`.

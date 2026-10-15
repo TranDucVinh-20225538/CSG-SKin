@@ -1,0 +1,16 @@
+{
+ "official_source": "Google Drive file 1YgnKz3hnzD3umEYHAgd29n2AwedV1Jmg, linked as [Dataset] on the first author's homepage https://xiaoxiaosun.com/ (Sun et al., ECCV 2016); the project page http://cv.nankai.edu.cn/projects/sd-198/ returns HTTP 410",
+ "downloaded": "2026-10-15",
+ "official_zip_md5": "1facac8850572a39798db63ca0f57a4b",
+ "mirror_zip_md5": "1facac8850572a39798db63ca0f57a4b",
+ "mirror": "huggingface.co/datasets/resyhgerwshshgdfghsdfgh/SD-198",
+ "images_official": 6584,
+ "images_mirror": 6584,
+ "same_relative_paths": 6584,
+ "byte_identical_images": 6584,
+ "classes_txt_identical": true,
+ "image_class_labels_txt_identical": true,
+ "consequence": "P7(a) SD-198 scores computed on the mirror are scores on the official release; no rescoring needed",
+ "licence": "no licence stated by the authors; images originate from DermQuest (paper, Sec. 3)",
+ "bootstrap_caveat": "no patient IDs in either release; resampling unit is the image, so CIs are anti-conservative"
+}
