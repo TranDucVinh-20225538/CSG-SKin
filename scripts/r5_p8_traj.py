@@ -152,6 +152,35 @@ def report():
                      "Mahalanobis later), largest |r| at lag {} (r = {}).".format(
                          m, lab[m], best[0], "—" if best[1] is None else "{:.2f}".format(best[1])))
         L.append("")
+    l2 = [t for t in ("traj_ladv2_s42",) + MAIN_EXTRA if t in T]
+    if l2:
+        L += ["## λ = 2 across seeds ({}: {})".format(len(l2), ", ".join(l2)), "",
+              "Seed 42 is the trajectory replicate (`traj_ladv2_s42`); seeds 52–82 are the P8 main runs.", "",
+              "| run | " + " | ".join("{} t10/t50/t90".format(c) for c in CURVES) + " | label pad_heldout | label Fitzpatrick |",
+              "|---|" + "---|" * (len(CURVES) + 2)]
+        for t in l2:
+            tm = T[t]["timing"]
+            L.append("| {} | ".format(t) + " | ".join(
+                "{}/{}/{}".format(tm[c]["t10"], tm[c]["t50"], tm[c]["t90"]) if c in tm else "—" for c in CURVES)
+                + " | {} | {} |".format(T[t]["label_t50"]["maha_pad_heldout"], T[t]["label_t50"]["maha_fitz"]))
+        L += ["", "Spread across seeds (mean ± SD, min–max):", "", "| quantity | mean ± SD | min–max | n |", "|---|---|---|---:|"]
+        spread = {}
+        for c in CURVES:
+            for q in ("t10", "t50", "t90"):
+                v = [T[t]["timing"][c][q] for t in l2 if c in T[t]["timing"] and T[t]["timing"][c][q] is not None]
+                spread["{} {}".format(c, q)] = v
+        for m in ("maha_pad_heldout", "maha_fitz"):
+            spread["{} t50 − leakage t50".format(m)] = [
+                T[t]["timing"][m]["t50"] - T[t]["timing"]["heldout_leakage_V1"]["t50"] for t in l2
+                if T[t]["timing"][m]["t50"] is not None and T[t]["timing"]["heldout_leakage_V1"]["t50"] is not None]
+        for k, v in spread.items():
+            L.append("| {} | {} | {} | {} |".format(k, R.pm(R.ms(v), 1), "{}–{}".format(min(v), max(v)) if v else "—", len(v)))
+        for m in ("maha_pad_heldout", "maha_fitz"):
+            labs = [T[t]["label_t50"][m] for t in l2]
+            L.append("")
+            L.append("{} labels: {}".format(m, ", ".join("{} {}".format(labs.count(x), x) for x in sorted(set(labs)))))
+        L.append("")
+        T["_lambda2_spread"] = spread
     (OUT.parent / "TIMING.json").write_text(json.dumps(T, indent=1) + "\n")
 
     fig, ax = plt.subplots(len(D), 2, figsize=(12, 3.6 * len(D)), squeeze=False)
@@ -168,6 +197,24 @@ def report():
     fig.tight_layout()
     fig.savefig(OUT.parent / "trajectory.png", dpi=150)
     L += ["![trajectory](trajectory.png)", ""]
+    if len(l2) > 1:
+        A = pd.concat([D[t].assign(tag=t) for t in l2])
+        g = A.groupby("epoch")
+        fig, ax = plt.subplots(1, 2, figsize=(12, 4))
+        for c, lab, k in (("maha_pad_heldout", "Maha AUROC pad_heldout", 0), ("maha_fitz", "Maha AUROC Fitzpatrick", 0),
+                          ("heldout_leakage_V1", "held-out leakage (V1)", 0), ("adv_train_acc", "adversary train acc", 1),
+                          ("id_bal_acc", "ID bal acc", 1)):
+            mu, sd = g[c].mean(), g[c].std()
+            ax[k].plot(mu.index, mu, label=lab)
+            ax[k].fill_between(mu.index, mu - sd, mu + sd, alpha=0.2)
+        for a in ax:
+            a.axhline(0.5, ls="--", c="grey", lw=0.8)
+            a.set_xlabel("epoch (0-based)")
+            a.legend(fontsize=8)
+        fig.suptitle("λ = 2, mean ± SD over {} seeds".format(len(l2)))
+        fig.tight_layout()
+        fig.savefig(OUT.parent / "trajectory_lambda2_seeds.png", dpi=150)
+        L += ["![λ = 2 across seeds](trajectory_lambda2_seeds.png)", ""]
     (OUT.parent / "REPORT.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))
 

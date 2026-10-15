@@ -74,7 +74,7 @@ def jobs(stage):
                 out.append({"item": "p8", "out_root": str(MAIN), "ckpt_root": str(CK / "main"),
                             "tag": "main_ladv{}_s{}".format(R.lam_tag(lam), s), "recipe": r, "lam": lam, "seed": s,
                             "mode": R.default_mode(r), "align": "dann", "eval": "full", "reuse_ckpt": reuse,
-                            "save_every_epoch": stage == "main" and lam == 2.0})
+                            "save_every_epoch": stage == "main" and lam in (0.0, 2.0) and reuse is None})
         if stage == "traj":
             return [dict(j, tag=j["tag"].replace("main_", "traj_"), out_root=str(TRAJ), ckpt_root=str(CK / "traj"),
                          reuse_ckpt=None, save_every_epoch=True)

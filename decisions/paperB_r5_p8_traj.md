@@ -56,3 +56,14 @@ last.ckpt policy unchanged).
 2 × (≈ 70 min training + ≈ 40 × 1.5 min per-epoch evaluation + ≈ 5 min end-of-run evaluation) ≈ 4.5 GPU-h, more than
 the ~3 GPU-h in the request because the per-epoch evaluation forwards ISIC train (16,211 images) for the detector fit
 at every epoch. Starts after P8 main (dependency on job 67543).
+
+## Deviations
+
+- 2026-10-15 23:20 (UTC+7), user-approved, before any trajectory number. (a) The per-epoch weights of P8 main λ = 2
+  seeds 52/62/72/82 are evaluated with the same per-epoch protocol (`slurm/r5_p8_traj_eval.sbatch`, after P8 main
+  and the trajectory runs; ≈ 1–1.5 GPU-h each). The λ = 2 analysis then has 5 seeds (seed 42 = `traj_ladv2_s42`,
+  seeds 52–82 = P8 main): per seed t10/t50/t90 and the precedes/follows/tracks label; across seeds mean ± SD and
+  min–max of each t-value and of Mahalanobis t50 − leakage t50, label counts, and a mean ± SD curve plot. Same rules
+  as above, no pass/fail. (b) P8 main λ = 0 runs that train from scratch and have not started also save per-epoch
+  weights (no eval unless requested). In practice only seed 72 (task 4) qualifies: seeds 42/52 reuse grid checkpoints,
+  seeds 62 and 82 were already training.
