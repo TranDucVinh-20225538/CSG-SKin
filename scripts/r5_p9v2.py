@@ -257,13 +257,55 @@ def cmd_go5():
 
 
 def verdict(blk):
+    """Primary (amendment 16:18): the code's rule A on Mahalanobis pad_heldout (r5_common.bootstrap_cell 'rule')."""
     m = blk["mahalanobis_classcond"]
     if m["n_seeds"] < 5:
-        return "not assigned ({} seeds)".format(m["n_seeds"])
-    k_det = sum(blk[d]["pooled_ci"][1] < 0.5 for d in DETS)
-    if m["pooled_ci"][1] < 0.5 and m["k_below"] >= 4 and k_det >= 3:
-        return "inverts"
-    return "collapse" if 0.45 <= m["mean"] <= 0.55 else "no collapse"
+        return "not assigned ({} seeds; rule {})".format(m["n_seeds"], m["rule"])
+    if m["rule"] == "A":
+        return "inverts (rule A)"
+    return "rule {}; {}".format(m["rule"], "collapse" if 0.45 <= m["mean"] <= 0.55 else "no collapse")
+
+
+def strict(maha_hi, k_seeds, n_seeds, det_his):
+    """Secondary: Maha mean CI hi < 0.5, >= 4/5 seeds' CI hi < 0.5, >= 3 of 5 detectors' mean CI hi < 0.5."""
+    if n_seeds < 5:
+        return "not assigned ({} seeds)".format(n_seeds)
+    ok = maha_hi < 0.5 and k_seeds >= 4 and sum(h < 0.5 for h in det_his) >= 3
+    return "inverts (strict)" if ok else "not strict"
+
+
+def strict_p9(blk):
+    m = blk["mahalanobis_classcond"]
+    return strict(m["pooled_ci"][1], m["k_below"], m["n_seeds"], [blk[d]["pooled_ci"][1] for d in DETS])
+
+
+def dual_lambda2_strict():
+    """Dual encoder λ = 2, 5 seeds, five detectors (z_lesion_norm, fit on ISIC train), pad_heldout, PREREGISTER
+    patient-clustered bootstrap (r5cpu_common.pooled_bootstrap, the main-results path). Cached."""
+    out = V2 / "DUAL_L2_STRICT.json"
+    if out.exists():
+        return json.loads(out.read_text())
+    import r5cpu_common as RC
+
+    pre = RC.prereg()
+    n_boot, seed = int(pre["n_resamples"]), int(pre["rng_seed"])
+    rng = np.random.default_rng(seed)
+    di, do = RC.draws(RC.id_test_groups(), n_boot, rng), RC.draws(RC.pad_heldout_patients(), n_boot, rng)
+    per = {d: {} for d in DETS}
+    for sd in (42, 52, 62, 72, 82):
+        t = RC.run_tag(2.0, sd)
+        sc, _ = RC.detector_scores(RC.load(t, "isic_train"), RC.load(t, "isic_test"), {"pad_heldout": RC.load(t, "pad_heldout")})
+        for d in DETS:
+            sid, so = sc[d]
+            per[d][sd] = (sid, so["pad_heldout"])
+    B = {d: RC.pooled_bootstrap(per[d], di, do) for d in DETS}
+    m = B["mahalanobis_classcond"]
+    res = {"per_detector": {d: {k: v for k, v in b.items() if k != "per_seed"} for d, b in B.items()},
+           "maha_per_seed": m["per_seed"], "rule_A": m["rule_A"],
+           "strict": strict(m["pooled_ci_hi"], m["k_seeds_ci_below_0.5"], m["n_seeds"],
+                            [B[d]["pooled_ci_hi"] for d in DETS]), "commit": R.git_head()}
+    wjson(out, res)
+    return res
 
 
 def dual_reference():
@@ -327,20 +369,27 @@ def cmd_report():
         wjson(V2 / "BOOTSTRAP.json", BS)
         L += ["## Seed cells (pooled mean-over-seeds CI; pad_heldout by patient)", "",
               "| cell | config | λ | seeds | V1 mean (per seed) | ID bal acc | X-dom | degraded (any) | "
-              "Maha | kNN | cosine | MSP | Energy | Maha seeds with CI hi < 0.5 | verdict |",
-              "|---|---|---:|---:|---|---:|---:|---|---|---|---|---|---|---:|---|"]
+              "Maha | kNN | cosine | MSP | Energy | Maha seeds with CI hi < 0.5 | primary (rule A) | secondary (strict) |",
+              "|---|---|---:|---:|---|---:|---:|---|---|---|---|---|---|---:|---|---|"]
         verdicts = {}
         for k, c in cells.items():
             if not len(c) or k not in BS:
                 continue
             ph = BS[k]["pad_heldout"]
             verdicts[k] = verdict(ph)
-            L.append("| {} | {} | {:g} | {} | {:.3f} ({}) | {:.3f} | {:.3f} | {} | {} | {}/{} | {} |".format(
+            L.append("| {} | {} | {:g} | {} | {:.3f} ({}) | {:.3f} | {:.3f} | {} | {} | {}/{} | {} | {} |".format(
                 k, c.config.iloc[0], c.lam.iloc[0], len(c), c.v1.mean(),
                 ", ".join("{:.3f}".format(x) for x in c.sort_values("seed").v1), c.id_bal_acc.mean(), c.xdom_bal_acc.mean(),
                 "yes" if c.degraded.any() else "no",
                 " | ".join("{:.3f} {}".format(ph[d]["mean"], ci(ph[d])) for d in DETS),
-                ph["mahalanobis_classcond"]["k_below"], ph["mahalanobis_classcond"]["n_seeds"], verdicts[k]))
+                ph["mahalanobis_classcond"]["k_below"], ph["mahalanobis_classcond"]["n_seeds"], verdicts[k],
+                strict_p9(ph)))
+        dl = dual_lambda2_strict()
+        pdd = dl["per_detector"]
+        L.append("| dual encoder λ = 2 (Table 1 runs) | — | 2 | 5 | (P6 table below) | — | — | — | {} | {}/5 | {} | {} |".format(
+            " | ".join("{:.3f} [{:.3f}, {:.3f}]".format(pdd[d]["mean"], pdd[d]["pooled_ci_lo"], pdd[d]["pooled_ci_hi"])
+                       for d in DETS), pdd["mahalanobis_classcond"]["k_seeds_ci_below_0.5"],
+            "inverts (rule A)" if dl["rule_A"] else "not rule A", dl["strict"]))
         L.append("")
         bc = cells["best"]
         if t and len(bc) == 5:
@@ -350,10 +399,10 @@ def cmd_report():
                 outcome = "untested: 5-seed mean V1 {:.3f} > T {:.3f}".format(bc.v1.mean(), t["target"])
             elif degraded:
                 outcome = "target reached with a degraded classifier: neither supports nor refutes"
-            elif verdicts.get("best") == "inverts":
-                outcome = "target reached and the model inverts: consistent with the hypothesis"
+            elif verdicts.get("best") == "inverts (rule A)":
+                outcome = "target reached and the model inverts (rule A): consistent with the hypothesis"
             else:
-                outcome = "target reached and the model does not invert ({}): hypothesis refuted".format(verdicts.get("best"))
+                outcome = "target reached and the model does not meet rule A ({}): hypothesis refuted".format(verdicts.get("best"))
         elif rjson("NO_GO5.json"):
             outcome = "untested: " + rjson("NO_GO5.json")["reason"]
         else:

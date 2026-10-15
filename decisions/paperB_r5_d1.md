@@ -136,3 +136,11 @@ starts after S-extract (68070) so that the phase16 id/ood features exist.
 ## Deviations
 - 2026-10-15 (before any D1 number). R6-R5's summary.csv already contains ISIC→MED-NODE, ISIC→SD-198 and ISIC→SCIN
   (mapped) rows computed with the same `shift()`; D1 reads all class-mix rows from that file instead of recomputing.
+- 2026-10-15 16:19 (UTC+7), user-directed, before the official run (job 68092 pending; only the seed-42 smoke test
+  with 20 draws has been seen). Bootstrap units: pad_heldout by patient; Fitzpatrick by P13 cluster_union; SD-198 by
+  P13-method clusters (DCT pHash Hamming ≤ 8 ∪ cosine ≥ 0.95 on frozen ImageNet ResNet-50 features, computed in this
+  job on CPU, `sd198_clusters.csv`; the P7a `group` column was one group per image); SCIN by case; MED-NODE by image
+  (no grouping exists); BCN↔HAM by lesion. Resamples are shared across the 5 seed pairs and the statistic is the
+  seed mean. The unit is stated per set in the report. The criterion is unchanged. The partial ρ (controlling for P₀)
+  stays secondary with no pass/fail rule. Negative partial ρ_orth values are reported as is, and any reading of them
+  is labelled as formed after the smoke test.

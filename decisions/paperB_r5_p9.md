@@ -195,3 +195,22 @@ NO_GO5.json, summary.csv and REPORT.md).
 
 **Q3 consequence.** Q3's ResNet-50 cells used config `selected` from the ResNet-50 ladder, which no longer exists. Q3
 falls back to the `baseline` config (recorded in Q3's decisions when Q3 is launched).
+
+## Deviations (amendment)
+
+- 2026-10-15 16:18 (UTC+7), user-directed, before any P9 v2 summary exists (`results/paperB/r5/p9/v2/` does not exist
+  yet; the first P9 job is queued behind P8 → R1 → R2). The "inverts" definition above is stricter than rule A used for
+  the main dual-encoder results, which makes the comparison unfair. Replaced:
+  - **Primary verdict** = exactly the code's rule A as applied to the dual-encoder main results
+    (`r5_common.bootstrap_cell` / `r5cpu_common.pooled_bootstrap`): Mahalanobis on pad_heldout, patient-clustered
+    PREREGISTER bootstrap, 5-seed-mean CI upper bound < 0.5 and ≥ 3 of 5 seeds with their own CI upper bound < 0.5.
+    Rules B (pooled CI < 0.5, fewer seeds), C (CI straddles 0.5) and "above" are reported as in the main results.
+    "Inverts" = rule A. "Collapse" / "no collapse" (mean within [0.45, 0.55] or not) is kept as a description of the
+    non-A cells.
+  - **Secondary** = the stricter definition (Mahalanobis mean CI upper bound < 0.5, ≥ 4/5 seeds' own CI upper bound
+    < 0.5, ≥ 3 of the 5 detectors' mean CI upper bound < 0.5), applied to both the dual encoder at λ = 2 (5 seeds,
+    lesion-level cached features, five detectors fit on ISIC train in z_lesion_norm, same bootstrap protocol) and
+    the P9 best config, reported side by side.
+  - The outcome rule uses the primary verdict: target reached, not degraded, and rule A → consistent with the
+    hypothesis; target reached, not degraded, and not rule A → refuted. The secondary verdict is reported and does
+    not change the outcome. The other outcome rules (degraded, untested) are unchanged.
