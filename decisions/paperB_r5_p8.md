@@ -184,3 +184,35 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
   lesion-level ISIC val split (PREREGISTER 2000 draws, seed 20261005) at best-val and last.ckpt; range, SD and
   epoch-to-epoch change of the logged val bal acc over epochs 2–39. Prediction: SE ≈ 0.01–0.02; the epoch-to-epoch range
   after epoch 1 is of the same order as or larger than 2 SE, i.e. the epoch-1 selection is within validation noise.
+
+## Main-recipe rule (user decision 2026-10-15 23:48 UTC+7; committed before the 5-seed P8 main summary exists)
+
+Recorded verbatim:
+
+> Main-recipe rule. Compare A4 with the old Table 1 recipe at λ = 0, on the lesion-level validation split (not test),
+> at last.ckpt for both, over seeds 42–82 (5 seeds each, matched by seed). Let D = the mean over seeds of (A4 − old)
+> val bal acc, with a 95% paired t-interval across the 5 seeds.
+>
+> A4 becomes the main recipe only if D ≥ 0.03 and the CI excludes 0. Then P8 ext runs, and R1/R2/P9/P7(b) use A4.
+> Otherwise the old recipe stays main: Table 1 unchanged (last.ckpt shown alongside best-val), A4 at 3 λ is reported as
+> a robustness check, P8 ext is skipped, and R1/R2/P9/P7(b) use the old recipe with last.ckpt.
+> Apply the rule mechanically when the numbers arrive and report D, its CI and the outcome. Until then, hold P8 ext and
+> the recipe choice for R1/R2. If GPUs would idle, run P9 pilot round 1 or the Q1 headroom gate.
+
+Implementation (fixed now):
+- Old recipe values: `results/paperB/r5/ckpt_audit/compete/runB_orth1_ladv0_s<seed>.json["last_val_bal_acc"]`
+  (CPU re-forward of `checkpoints/r2_item4/runB_orth1_ladv0_s<seed>/last.ckpt` on the lesion-level ISIC val split).
+  A4 values: `results/paperB/r5/p8/main/runs/main_ladv0_s<seed>/summary.json["metrics"]["val"]["bal_acc"]` with
+  `checkpoint_policy == "last"` (seeds 42/52 = the grid run's last.ckpt). Seeds 42, 52, 62, 72, 82 for both.
+- d_s = A4_s − old_s; D = mean(d_s); 95 % CI = D ± t(0.975, df = 4) · SD(d_s) / √5. "CI excludes 0" = lower bound > 0
+  (D ≥ 0.03 already requires the positive side). All ten values must be present; otherwise no outcome is written.
+- Output: `results/paperB/r5/p8/MAIN_RECIPE_RULE.json` {"D", "ci", "per_seed", "outcome": "A4" | "old",
+  "main_recipe": "p8" | "current"} and `MAIN_RECIPE_RULE.md` (`scripts/r5_main_recipe_rule.py`).
+- `RECIPE=auto` (R1, R2, P7(b), P9; `r6_common.resolve_recipe` and `r5_recipe.concrete`) reads `main_recipe` from this
+  file and stops if it is missing. This replaces the competence flag (`RECIPE_DECISION.json["competent"]`) as the
+  switch. P8 ext runs only if outcome = A4 (replaces the `inversion_survives` gate). Under "old", R1/R2/P7(b)/P9 run
+  the current recipe with the last.ckpt policy, and λ = 0 reuse in R1 points at the Table 1 checkpoints (last.ckpt).
+- Holds: P8 ext, R1, R2, P7(b) and P9 GPU stages get a dependency on the rule job. GPU idle filler before the rule: the
+  Q1 headroom gate only (it runs with RECIPE=current, so it does not depend on the rule). P9 pilot round 1 runs with
+  RECIPE=auto and therefore waits for the rule; it is not used as filler. With P8 main occupying both GPUs until
+  ≈ 07:30 and the rule inputs complete at ≈ 02:00, no idle gap is expected.
