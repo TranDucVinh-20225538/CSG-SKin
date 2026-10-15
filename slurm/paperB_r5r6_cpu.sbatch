@@ -45,6 +45,7 @@ case "${STEP}" in
   ckaudit_erm)   ${PY} scripts/r5_ckpt_audit.py erm ${SLURM_ARRAY_TASK_ID} ;;
   ckaudit_report) ${PY} scripts/r5_ckpt_audit.py report ;;
   p8traj_report) ${PY} scripts/r5_p8_traj.py report ;;
+  p8rule)        ${PY} scripts/r5_main_recipe_rule.py ;;
   p8heldout)     ${PY} scripts/r5_p8_heldout.py ;;
   t1last)        ${PY} scripts/r5_t1_last.py run ${SLURM_ARRAY_TASK_ID} ;;
   t1last_report) ${PY} scripts/r5_t1_last.py report ;;
