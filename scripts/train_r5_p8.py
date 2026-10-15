@@ -24,6 +24,7 @@ import r6_common as R  # noqa: E402
 
 GRID = R.P8_DIR / "grid"
 MAIN = R.P8_DIR / "main"
+TRAJ = R.P8_DIR / "traj"
 ERM = R.P8_DIR / "erm_ref"
 CK = R.CKPT / "r5_p8"
 SEL_A = R.P8_DIR / "selection_stageA.json"
@@ -60,10 +61,10 @@ def jobs(stage):
     if stage == "B":
         cid = json.loads(SEL_A.read_text())["winner"]
         return [grid_spec(cid, 80, s) for s in GRID_SEEDS]
-    if stage in ("main", "ext"):
+    if stage in ("main", "ext", "traj"):
         sel = json.loads(SEL.read_text())
         r = R.resolve_recipe("p8")
-        lams = MAIN_LAMS if stage == "main" else EXT_LAMS
+        lams = EXT_LAMS if stage == "ext" else MAIN_LAMS
         out = []
         for lam in lams:
             for s in R.SEEDS:
@@ -72,7 +73,12 @@ def jobs(stage):
                     reuse = str(CK / "grid" / "{}_ladv0_s{}".format(sel["recipe"]["grid_name"], s))
                 out.append({"item": "p8", "out_root": str(MAIN), "ckpt_root": str(CK / "main"),
                             "tag": "main_ladv{}_s{}".format(R.lam_tag(lam), s), "recipe": r, "lam": lam, "seed": s,
-                            "mode": R.default_mode(r), "align": "dann", "eval": "full", "reuse_ckpt": reuse})
+                            "mode": R.default_mode(r), "align": "dann", "eval": "full", "reuse_ckpt": reuse,
+                            "save_every_epoch": stage == "main" and lam == 2.0})
+        if stage == "traj":
+            return [dict(j, tag=j["tag"].replace("main_", "traj_"), out_root=str(TRAJ), ckpt_root=str(CK / "traj"),
+                         reuse_ckpt=None, save_every_epoch=True)
+                    for j in out if j["seed"] == 42 and j["lam"] in (0.0, 2.0)]
         if stage == "main":
             first = ("main_ladv0_s42", "main_ladv2_s42")
             out = [j for t in first for j in out if j["tag"] == t] + [j for j in out if j["tag"] not in first]
@@ -145,7 +151,7 @@ def run_erm_ref(seed, a):
 
 def main():
     p = R.common_args(argparse.ArgumentParser())
-    p.add_argument("--stage", required=True, choices=("A", "selA", "B", "selB", "main", "ext"))
+    p.add_argument("--stage", required=True, choices=("A", "selA", "B", "selB", "main", "ext", "traj"))
     p.add_argument("--force_ext", action="store_true", help="run ext even if the gate file says no")
     a = p.parse_args()
     if a.stage == "selA":

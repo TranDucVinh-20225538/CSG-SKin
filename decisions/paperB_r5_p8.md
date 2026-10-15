@@ -171,3 +171,11 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
   are implemented in `scripts/r5_ckpt_audit.py` (outputs `results/paperB/r5/ckpt_audit/`). Re-evaluation of main
   tasks 0–2 under the new policy: separate array jobs after the running tasks end; held tasks 3–14 start after the
   λ = 2 seed 42 re-evaluation.
+- 2026-10-15 23:30 (UTC+7), user-directed (23:11 and 23:14), additions only; primary analyses, recipe, seeds and the
+  last.ckpt policy are unchanged. (a) Competence report adds the lesion-level single-encoder ERM λ = 0 reference
+  (`erm_ref`, seeds 42/52) at best-val and last.ckpt (`r5_ckpt_audit.py erm`); the 0.779 is labelled image-level
+  (phase 15 image-level 5-seed values listed next to it). (b) Held-out-probe leakage (P6 V1, one function for every
+  row) for P8 main next to the current-recipe dual encoder at the same λ (0, 0.5, 2), both checkpoints
+  (`r5_p8_heldout.py`). (c) Main λ = 2 tasks 11–14 (seeds 52–82, not yet started) save per-epoch weights
+  (weights only; no effect on training); P8 stage `traj` adds two per-epoch runs (λ = 0 and 2, seed 42), plan in
+  `decisions/paperB_r5_p8_traj.md`.

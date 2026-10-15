@@ -719,8 +719,12 @@ def run(spec, args):
                            iw_cls=spec.get("iw_cls", True))
         ckpt_cb = pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir), filename="best-{epoch:02d}", monitor="val/acc",
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
+        cbs = [ckpt_cb]
+        if spec.get("save_every_epoch"):
+            cbs.append(pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir / "epochs"), filename="ep-{epoch:02d}", save_top_k=-1,
+                                                    every_n_epochs=1, save_weights_only=True, auto_insert_metric_name=False))
         trainer = pl.Trainer(max_epochs=int(recipe["max_epochs"]), accelerator="gpu" if torch.cuda.is_available() else "cpu",
-                             devices=1, callbacks=[ckpt_cb], precision="16-mixed" if torch.cuda.is_available() else "32-true",
+                             devices=1, callbacks=cbs, precision="16-mixed" if torch.cuda.is_available() else "32-true",
                              default_root_dir=str(run_dir), log_every_n_steps=20,
                              deterministic=bool(getattr(args, "deterministic", False)))
         last = ckpt_dir / "last.ckpt"

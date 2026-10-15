@@ -108,6 +108,40 @@ def compete(task):
     wjson(out, rec)
 
 
+ERM_REF = R.P8_DIR / "erm_ref"
+ERM_CKPT = R.CKPT / "r5_p8" / "erm_ref"
+
+
+def erm(task):
+    """Lesion-level single-encoder ERM reference (P8 stage A, seeds 42/52): val/test bal acc at best-val and last.ckpt."""
+    import train_phase15_1_single_dann as sd
+
+    torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "8")))
+    seed = (42, 52)[task]
+    tag = "single_dann_ladv0_s{}".format(seed)
+    out = OUT / "compete" / "erm_{}.json".format(tag)
+    if out.exists():
+        print("done", out)
+        return
+    _rec, (_tr, val, test) = T.split_record()
+    (best,) = list((ERM_CKPT / tag).glob("best-*.ckpt"))
+    last = ERM_CKPT / tag / "last.ckpt"
+    rec = {"run": tag, "seed": seed, "best_checkpoint": str(best), "best_epoch": int(best.stem.split("-")[1]),
+           "last_checkpoint": str(last), "last_epoch": R.ckpt_epoch(last)}
+    tf = build_val_transform_robust()
+    for ck_name, ck in (("best", best), ("last", last)):
+        net = sd.SingleDannLightning.load_from_checkpoint(str(ck), strict=False, map_location="cpu").net.eval()
+        for split, frame in (("val", val), ("test", test)):
+            with torch.no_grad():
+                p = sd.collect_all(net, DataLoader(SkinDataset(frame, transform=tf), batch_size=64, num_workers=4), torch.device("cpu"))
+            rec["{}_{}_bal_acc".format(ck_name, split)] = float(balanced_accuracy_score(p["labels"], p["logits"].argmax(1)))
+            print(tag, ck_name, split, rec["{}_{}_bal_acc".format(ck_name, split)], flush=True)
+    stored = json.loads((ERM_REF / tag / "summary.json").read_text())["id_balanced_acc"]
+    rec["stored_test_bal_acc_best"] = stored
+    rec["check_best_test_vs_stored"] = abs(rec["best_test_bal_acc"] - stored) <= TOL
+    wjson(out, rec)
+
+
 def p8_a4_rows():
     rows = []
     for s in R.SEEDS:
@@ -129,7 +163,8 @@ def report():
     old = []
     for f in sorted((OUT / "compete").glob("*.json")):
         j = json.loads(f.read_text())
-        old.append({"recipe": "Table 1 (current)", "seed": j["seed"], "best_epoch": j["best_epoch"], "last_epoch": j["last_epoch"],
+        name = "single-encoder ERM (lesion-level)" if f.stem.startswith("erm_") else "Table 1 (current)"
+        old.append({"recipe": name, "seed": j["seed"], "best_epoch": j["best_epoch"], "last_epoch": j["last_epoch"],
                     **{k: j[k] for k in ("best_val_bal_acc", "best_test_bal_acc", "last_val_bal_acc", "last_test_bal_acc")},
                     "check_best_test_vs_stored": j["check_best_test_vs_stored"]})
     comp = pd.DataFrame(old + p8_a4_rows())
@@ -143,7 +178,12 @@ def report():
          "## Item 4: Table 1 selected epochs (35 runs)", "",
          ep.to_markdown(index=False, floatfmt=".3f"), "",
          "λ > 0 runs flagged: {}".format(int(ep.before_alpha_on.sum())), "",
-         "## Item 3: competence, λ = 0, lesion-level split (5 seeds)", "",
+         "## Item 3: competence, λ = 0, lesion-level split (5 seeds; single-encoder ERM: 2 seeds)", "",
+         "Image-level references (not like-for-like): paper single-encoder ERM {:.3f}; phase 15 image-level "
+         "single-encoder λ = 0 ID test bal acc {} (5 seeds, best-val).".format(
+             R.ERM_SINGLE_ENCODER_IMAGE_LEVEL,
+             R.pm(R.ms([json.loads(p.read_text())["id_balanced_acc"]
+                        for p in sorted((R.RES / "phase15" / "single_dann").glob("single_dann_ladv0_s*/summary.json"))]))), "",
          comp.to_markdown(index=False, floatfmt=".3f") if len(comp) else "(no rows yet)", ""]
     if len(comp):
         g = comp.groupby("recipe")[cols].agg(["mean", "std", "count"])
@@ -162,6 +202,8 @@ if __name__ == "__main__":
         epochs()
     elif cmd == "compete":
         compete(int(sys.argv[2]))
+    elif cmd == "erm":
+        erm(int(sys.argv[2]))
     elif cmd == "report":
         report()
     else:
