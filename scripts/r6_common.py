@@ -697,7 +697,8 @@ def run(spec, args):
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
         trainer = pl.Trainer(max_epochs=int(recipe["max_epochs"]), accelerator="gpu" if torch.cuda.is_available() else "cpu",
                              devices=1, callbacks=[ckpt_cb], precision="16-mixed" if torch.cuda.is_available() else "32-true",
-                             default_root_dir=str(run_dir), log_every_n_steps=20)
+                             default_root_dir=str(run_dir), log_every_n_steps=20,
+                             deterministic=bool(getattr(args, "deterministic", False)))
         last = ckpt_dir / "last.ckpt"
         tl = p2.make_loader(ds, args.batch_size, args.num_workers, True, drop_last=True, collate=collate)
         vl = p2.make_loader(SkinDataset(data["val"], transform=build_val_transform_robust()), args.batch_size,
