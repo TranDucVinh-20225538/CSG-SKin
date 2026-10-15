@@ -1,0 +1,107 @@
+line,printed,class,true_source,true_value,note
+57,0.063,a,r3/b1/b1_results.json id_bal_paired_diff.t_ci95[0],-0.06276,"lesion-level ID bal acc, paired lam2-lam0 over 5 seeds, t-interval [-0.0628,+0.0173]; |lo| printed"
+61,0.64,a,r4/r4_results.json lesion_table1['4'].leakage.mean,0.63637,"lower end of 0.64-0.66 (lam=4, lam=8 0.66293). Leakage probe is ISIC test + pad_full"
+65,0.332,a,r2/item2/item2_aggregate.json by_block['z_lesion_norm|pad_heldout']['0'].frac_nv_nearest_ood.mean (n=5),0.33212,image-level sweep (27-run design); abstract gives no split while its other numbers are lesion-level; no lesion-level counterpart found
+102,0.808,a,r4/r4_results.json lesion_table1['0'].maha.mean (= r3/b1 summary),0.80763,lesion-level Maha pad_heldout lam=0; also manifest les_maha_l0
+338,0.636,a,r4/r4_results.json lesion_table1['4'].leakage.mean,0.63637,pad_full leakage probe
+346,0.063,a,r3/b1/b1_results.json id_bal_paired_diff.t_ci95[0],-0.06276,same as l.57
+347,0.18,a,r4/r4_results.json lesion_table1[*].id_ece.mean,0.1815 (lam0) / 0.1807 (lam2); range over lam 0.141-0.191,approx. claim; note l.423 says ID ECE flat at ~0.10 (image-level values) - the two sections use different splits
+398,4.879,a,"phase13/participation_ratio.json by_lambda['0'].pr_z_lesion_norm.mean (n=5, image-level)",4.87869,"value correct but it is a 5-seed value; text says the PR/leakage pair is from ""the same three runs"" (3-run lam=0 PR = 4.819). Endpoint is lam=0.25, not lam=2"
+398,4.500,c,"phase13/participation_ratio.json by_lambda['0.25'].pr_z_lesion_norm.mean (n=3, seeds 42/52/62)",4.49990,STALE: lam=0.25 now has 5 seeds in phase13/per_run; 5-seed spectrum.z_lesion_norm.pr mean = 4.514. Image-level
+399,0.553,c,"phase13/per_run/runB_orth1_ladv0p25_s{42,52,62}.json depths_pad_full.z_lesion_norm.leakage_bal_acc_mean (= phase3_sweep 3-seed leakage; phase10/table1.md 0.553+-0.008)",0.55257,STALE 3-seed image-level lam=0.25 leakage; 5-seed value 0.571 (printed in tab:imagelevel). pad_full probe. Paired 0.914 = lam0 5-seed z_lesion_norm 0.91449 (not the same three runs; 3-seed lam0 = 0.915). Free-scan nearest (r3/c lam2 0.555) is not the source
+401,0.011,a,reviewer_r1/item3_lam2_advlr_sensitivity.json aggregates['10'].std,0.01086,"image-level lam=2, adv lr 10x, 3 seeds; mean 0.41808"
+402,0.024,a,reviewer_r1/item3_lam2_advlr_sensitivity.json aggregates['30'].std,0.02353,"30x = seeds 42/52/62 of image-level lam=2 (5-seed 0.427+-0.025); matched-seed comparison, OK"
+403,0.020,c,reviewer_r1/item3_lam2_advlr_sensitivity.json aggregates['100'].std,0.01948,"rounds to 0.019, not 0.020 (double rounding). Minor"
+403,0.503,a,reviewer_r1/item3_lam2_advlr_sensitivity.json aggregates['100'].vals[1] (seed 52),0.50312,the one 100x seed above 0.5
+407,0.386,a,reviewer_r1/bootstrap_results.json results.fitzpatrick17k['2.0'].mahalanobis_classcond.mean_across_seeds_bootstrap_ci.lo,0.38567,"image-level, Fitzpatrick; manifest fitz_ci_lo_l2"
+409,0.994,a,phase2_5/phase25_aggregate.json methods.baseline_soft.fitz_maha.mean,0.99417,ResNet-50 baseline on Fitzpatrick17k; manifest resnet50_fitz
+436,0.663,a,r4/r4_results.json lesion_table1['8'].leakage.mean,0.66293,pad_full leakage probe
+454,0.589,a,r2/item5/exploratory_results.json aggregate['1.0'].Cosine.mean,0.58908,"Camelyon17 two-hospital, 3 seeds"
+455,0.648,a,r2/item5/exploratory_results.json aggregate['1.0'].kNN.mean,0.64799,Camelyon17
+455,0.589,a,r2/item5/exploratory_results.json aggregate['1.0'].MSP.mean,0.58906,Camelyon17
+495,0.665,c,phase15b/mmd/mmd_aggregate.json by_group.mmd_w10000['ood_pad_full.mahalanobis_classcond'].mean,0.66550,"WRONG PARTITION (unlabelled pad_full OOD AUROC). pad_heldout: r4_results.json mmd_arm.mmd_w10000.pad_heldout.mahalanobis_classcond = 0.66449 -> 0.664. Same sentence: kNN 0.738 (heldout 0.740), energy 0.694 (heldout 0.696)"
+505,0.25,b,-,-,"lambda value (""At lambda = 0.25""), not a measurement"
+506,0.970,a,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of leakage.pad_full.bal_acc_mean (= r4 grl_arm['0'].leakage),0.97048,"pad_full leakage, labelled on l.504-505; pad_heldout probe 0.952"
+506,0.845,a,r4/r4_results.json grl_arm['0.25'].id_acc.mean,0.84501,single-encoder plain ID accuracy
+507,0.55,a,r4/r4_results.json grl_arm['0.25'].pad_heldout max over 5 detectors (knn_k50),0.54843,"upper end correct on pad_heldout, BUT lower end 0.51 of ""0.51-0.55"" is not pad_heldout (min = cosine 0.530); 0.51 matches pad_full Energy 0.507. pad_heldout range is 0.53-0.55; pad_full range 0.51-0.53"
+508,0.900,a,r4/r4_results.json mmd_arm.mmd_w100.leakage.mean,0.90042,pad_full probe (labelled l.504)
+508,0.811,a,r4/r4_results.json mmd_arm.mmd_w1.pad_heldout.mahalanobis_classcond.mean,0.81057,"correct pad_heldout, but tab:obj prints the pad_full value 0.813 for the same cell"
+508,0.724,a,r4/r4_results.json mmd_arm.mmd_w100.pad_heldout.mahalanobis_classcond.mean,0.72410,"correct pad_heldout, but tab:obj prints pad_full 0.716 for the same cell"
+509,"10{,}000",b,-,-,MMD weight setting
+509,0.836,a,r4/r4_results.json mmd_arm.mmd_w10000.leakage.mean,0.83572,pad_full probe
+511,0.337,a,r4/r4_results.json mmd_arm.mmd_w10000.id_bal.mean,0.33665,
+512,0.63,a,r4/r4_results.json mmd_arm.mmd_w10000.pad_heldout min over detectors (cosine_max),0.63339,pad_full gives the same rounding (0.630)
+512,0.74,a,r4/r4_results.json mmd_arm.mmd_w10000.pad_heldout max over detectors (knn_k50),0.74040,pad_full 0.738 rounds the same
+544,0.965,a,"reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv0_s{42,52,62}/summary.json leakage_pad_heldout.bal_acc_mean, mean",0.96541,"pad_heldout probe, 3 seeds (0.939 at lam0.5 also 3-seed)"
+551,0.563,c,reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv0p5_s42/summary.json ood_pad_heldout.knn_k50 (seed 42 only),0.56291 (seed 42); 3-seed mean 0.57391,"SINGLE SEED presented next to 3-seed leakage (0.965->0.939). 3-seed: kNN 0.957->0.574, cosine 0.919->0.525, Maha 0.944->0.794; the 0.962/0.922/0.814 in the same sentence are also seed-42-only. ""outcome shifts by 0.40"" -> 3-seed 0.38 (kNN) / 0.39 (cosine)"
+551,0.543,c,reviewer_r1/resnet50_single_dann/resnet50_single_dann_ladv0p5_s42/summary.json ood_pad_heldout.cosine_max (seed 42 only),0.54267 (seed 42); 3-seed mean 0.52470,SINGLE SEED; see l.551 0.563
+582,0.901,a,phase16/b0/summary.json handcrafted_site_unmasked.color_hist.bal_acc_mean,0.90083,"HAM vs BCN, balanced accuracy"
+582,0.876,c,phase1_5/trivial_summary.json [0].probes[4].auroc_mean,0.87610,"METRIC MISMATCH: 0.876 is an ISIC-vs-PAD hand-crafted probe AUROC (on ISIC test + all 2,298 PAD = pad_full) compared as a ""ceiling"" against a balanced accuracy (0.901). Like for like: ISIC-PAD best bal acc 0.770 (probes[3]) vs 0.901; or AUROC 0.876 vs HAM-BCN colour-hist AUROC 0.967"
+583,0.668,a,phase16/b0/summary.json label_only_site_reference.cohort_rule.bal_acc,0.66795,rule fit on the full BCN/HAM cohort; on the probe split it is 0.653
+587,0.963,a,phase16/b1/dense3seed_aggregate.json rows[0].leakage_mean,0.96287,BCN->HAM site probe (not PAD); sd 0.0056
+589,0.576,a,phase16/b1/dense3seed_aggregate.json rows[0].cosine_mean,0.57564,BCN->HAM
+636,0.531,a,r2/item2/item2_aggregate.json by_block['z_lesion_norm|pad_heldout']['2'].frac_nv_nearest_id.mean,0.53069,image-level (27-run design); section not labelled as image-level
+709,0.016,c,"phase6_xfer/diagnosis_aggregate.json csg[4].recall.AK.mean (image-level, lam=2)",0.01584,"SPLIT: image-level value in the Discussion, unlabelled, while the headline sweep (tab:dial) is lesion-level. Lesion-level (r5/p2 per_run xfer6.per_class_recall.AK): lam0 0.179 -> lam2 0.007. Same issue for 0.245->0.016 in abstract l.59-60 and l.421-422"
+850,"16{,}577",a,phase11_third_domain/fitzpatrick17k_label_map.json n_rows,16577,dataset size
+960,0.838,a,"phase15/objectives/erm_w0_s{42,52,62}/summary.json ood_pad_full.mahalanobis_classcond, mean",0.83847,"pad_full, and labelled pad_full by the S footnote (marked \pending). pad_heldout: r4 mmd_arm.erm_w0.pad_heldout.mahalanobis_classcond 0.83425 -> 0.834"
+960,0.761,a,r4/r4_results.json mmd_arm.erm_w0.id_bal.mean,0.76068,
+962,0.967,a,r4/r4_results.json mmd_arm.mmd_w1.leakage.mean,0.96681,pad_full probe
+962,0.813,c,"phase15/objectives/mmd_w1_s{42,52,62}/summary.json ood_pad_full.mahalanobis_classcond, mean",0.81340,"WRONG PARTITION, unlabelled (footnote marks only ERM as pad_full). pad_heldout 0.81057 -> 0.811, which prose l.508 cites for this cell"
+963,0.900,a,r4/r4_results.json mmd_arm.mmd_w100.leakage.mean,0.90042,pad_full probe
+963,0.730,a,r4/r4_results.json mmd_arm.mmd_w100.id_bal.mean,0.72972,
+964,0.893,a,r4/r4_results.json mmd_arm.mmd_w3000.leakage.mean,0.89273,pad_full probe
+964,0.748,c,phase15b/mmd/mmd_aggregate.json by_group.mmd_w3000['ood_pad_full.mahalanobis_classcond'].mean,0.74756,"WRONG PARTITION, unlabelled. pad_heldout r4 mmd_arm.mmd_w3000 0.74663 -> 0.747"
+964,0.382,a,r4/r4_results.json mmd_arm.mmd_w3000.id_bal.mean,0.38248,
+965,0.665,c,phase15b/mmd/mmd_aggregate.json by_group.mmd_w10000['ood_pad_full.mahalanobis_classcond'].mean,0.66550,"WRONG PARTITION, unlabelled. pad_heldout 0.66449 -> 0.664"
+966,0.25,b,-,-,lambda value in the GRL row label
+969,0.729,c,"phase15/objectives/irm_w100_s{42,52,62}/summary.json ood_pad_full.mahalanobis_classcond, mean",0.72866,"pad_full, unlabelled; no pad_heldout recomputation exists for IRM (r4 recomputed only ERM and MMD)"
+969,0.167,a,"phase15/objectives/irm_w100_s*/summary.json id_balanced_acc, mean",0.16700,
+970,0.868,c,"phase15/objectives/groupdro_w10_s{42,52,62}/summary.json ood_pad_full.mahalanobis_classcond, mean",0.86790,"pad_full, unlabelled; no pad_heldout value exists for GroupDRO"
+990,0.970,a,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of leakage.pad_full.bal_acc_mean,0.97048,pad_full leakage; tab:single caption does not say so; pad_heldout probe 0.952
+990,0.868,c,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of ood.pad_full.MSP,0.86812,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0'].pad_heldout.MSP = 0.85707 -> 0.857
+990,0.884,c,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of ood.pad_full.cosine_max,0.88447,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0'].pad_heldout.cosine_max = 0.87471 -> 0.875
+990,0.911,c,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of ood.pad_full.Energy_T1,0.91115,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0'].pad_heldout.Energy_T1 = 0.90114 -> 0.901
+990,0.845,a,phase15/single_dann/single_dann_ladv0_s*/summary.json mean of id_acc,0.84527,
+991,0.528,c,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of ood.pad_full.knn_k50,0.52803,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.25'].pad_heldout.knn_k50 = 0.54843 -> 0.548
+991,0.515,c,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of ood.pad_full.MSP,0.51506,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.25'].pad_heldout.MSP = 0.54814 -> 0.548
+991,0.509,c,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of ood.pad_full.cosine_max,0.50947,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.25'].pad_heldout.cosine_max = 0.53001 -> 0.530
+991,0.507,c,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of ood.pad_full.Energy_T1,0.50712,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.25'].pad_heldout.Energy_T1 = 0.53592 -> 0.536
+991,0.845,a,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of id_acc,0.84501,
+991,0.333,a,phase15/single_dann/single_dann_ladv0p25_s*/summary.json mean of xfer_pad_heldout_6class.balanced_accuracy,0.33346,pad_heldout cross-domain
+992,0.795,a,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of leakage.pad_full.bal_acc_mean,0.79504,pad_full leakage; pad_heldout probe 0.742
+992,0.510,c,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of ood.pad_full.mahalanobis_classcond,0.51029,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.5'].pad_heldout.mahalanobis_classcond = 0.52449 -> 0.524
+992,0.517,c,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of ood.pad_full.knn_k50,0.51737,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.5'].pad_heldout.knn_k50 = 0.53855 -> 0.539
+992,0.493,c,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of ood.pad_full.cosine_max,0.49276,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.5'].pad_heldout.cosine_max = 0.51934 -> 0.519 (below chance only on pad_full)
+992,0.507,c,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of ood.pad_full.Energy_T1,0.50737,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['0.5'].pad_heldout.Energy_T1 = 0.54316 -> 0.543
+992,0.844,a,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of id_acc,0.84356,
+992,0.328,a,phase15/single_dann/single_dann_ladv0p5_s*/summary.json mean of xfer_pad_heldout_6class.balanced_accuracy,0.32813,
+993,0.795,a,phase15/single_dann/single_dann_ladv1_s*/summary.json mean of leakage.pad_full.bal_acc_mean,0.79453,pad_full leakage; pad_heldout probe 0.744
+993,0.521,c,phase15/single_dann/single_dann_ladv1_s*/summary.json mean of ood.pad_full.knn_k50,0.52116,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['1'].pad_heldout.knn_k50 = 0.54082 -> 0.541
+993,0.462,c,phase15/single_dann/single_dann_ladv1_s*/summary.json mean of ood.pad_full.MSP,0.46159,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['1'].pad_heldout.MSP = 0.51663 -> 0.517 (above chance on pad_heldout)
+993,0.840,a,phase15/single_dann/single_dann_ladv1_s*/summary.json mean of id_acc,0.83968,
+994,0.509,c,phase15/single_dann/single_dann_ladv2_s*/summary.json mean of ood.pad_full.mahalanobis_classcond,0.50850,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['2'].pad_heldout.mahalanobis_classcond = 0.52065 -> 0.521. Same pad_full value cited at l.567 (0.427 versus 0.509)
+994,0.516,c,phase15/single_dann/single_dann_ladv2_s*/summary.json mean of ood.pad_full.knn_k50,0.51611,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['2'].pad_heldout.knn_k50 = 0.54155 -> 0.542
+994,0.468,c,phase15/single_dann/single_dann_ladv2_s*/summary.json mean of ood.pad_full.cosine_max,0.46841,pad_full OOD AUROC in tab:single; table/caption do not name the partition and Methods (l.210) says all OOD numbers use pad_heldout. pad_heldout value = r4_results.json grl_arm['2'].pad_heldout.cosine_max = 0.51410 -> 0.514 (above chance on pad_heldout)
+994,0.839,a,phase15/single_dann/single_dann_ladv2_s*/summary.json mean of id_acc,0.83947,
+996,0.787,a,phase15/single_dann/single_dann_ladv8_s*/summary.json mean of leakage.pad_full.bal_acc_mean,0.78729,pad_full leakage; pad_heldout probe 0.738
+1014,4.879,a,phase13/participation_ratio.json by_lambda['0'].pr_z_lesion_norm.mean (n=5),4.87869,"see l.398: ""same three runs"" is inaccurate (lam0 is 5 runs; 3-run value 4.819)"
+1014,4.500,c,phase13/participation_ratio.json by_lambda['0.25'].pr_z_lesion_norm.mean (n=3),4.49990,STALE 3-seed; 5-seed lam0.25 PR = 4.514
+1014,0.553,c,phase13/per_run lam0.25 seeds 42/52/62 depths_pad_full.z_lesion_norm.leakage_bal_acc_mean,0.55257,STALE 3-seed image-level; 5-seed 0.571. pad_full probe
+1018,0.693,a,phase13_5/v2/facts_primary.json C1_lambda0_at_or_above_chance.auc0,0.69313,synthetic toy model
+1018,0.786,a,phase13_5/v2/facts_primary.json C2_subchance_at_lambda_ge_0.25.auc2,0.78649,synthetic toy model
+1044,0.038,a,r4/r4_results.json image_table1['0'].fitz.sd (= phase3_sweep fitz Maha sd),0.03822,image-level
+1048,0.068,a,r4/r4_results.json image_table1['2'].fitz.sd,0.06771,image-level
+1049,0.100,a,"phase3_sweep/runB_orth1_ladv4_s{42,52,62}/summary.json id_ece, mean",0.10032,"image-level lam=4 (manifest maps 0.100 to the lam=0.25 cell, which is coincidental)"
+1067,0.249,c,phase6_xfer/diagnosis_aggregate.json csg[4].bal.mean (= image_table1['2'].xdom),0.24873,"SPLIT: Appendix C (and l.420) give image-level cross-domain numbers without saying so. Lesion-level range is 0.229-0.289 (lesion_table1 xdom), lam2 0.254, and at lesion level lam=0.25 (0.289) exceeds lam=0 (0.275), contradicting ""no setting exceeds lam=0"""
+1068,0.298,a,phase6_xfer/diagnosis_aggregate.json controls.effb3_control.bal.mean,0.29828,image-level control; no lesion-level control exists
+1069,0.184,c,phase6_xfer/diagnosis_aggregate.json csg[4].acc.mean,0.18408,"SPLIT: image-level, unlabelled. Lesion-level (r5/p2 per_run xfer6.accuracy): 0.220 -> 0.187"
+1070,0.385,a,phase6_xfer/diagnosis_aggregate.json floors.plain_majority_always_BCC,0.38547,pad_heldout class prior; split-independent
+1071,0.605,a,phase6_xfer/diagnosis_aggregate.json csg[0].auc.mean,0.60549,image-level; no lesion-level macro AUC found
+1071,0.581,a,phase6_xfer/diagnosis_aggregate.json csg[4].auc.mean,0.58113,image-level; no lesion-level macro AUC found
+1108,0.11,c,"r2/item5/coarse_decision_primary.json coarse['0'].adv_min_ce (seed 42, minimum)",0.10631,minor mislabel: sentence is about final CE (0.692 = 3-seed adv_last at lam=1). 3-seed final at lam0 = adv_last 0.1176 -> 0.12; 3-seed minimum 0.1006 -> 0.10
+1115,0.12,a,derived: r2/item5/exploratory_results.json aggregate Maha['0.0'] - Maha['1.0'],0.11710,smallest of the five detector drops lam0->1 (Camelyon17)
+1115,0.22,a,derived: aggregate Energy['0.0'] - Energy['1.0'],0.21880,"largest drop (MSP 0.209, cosine 0.196, kNN 0.146)"
+1123,0.943,a,phase16/b0/summary.json site_probe_frozen_z_vignette_masked_input.bal_acc_mean,0.94289,sd 0.0047
+1124,0.901,a,phase16/b0/summary.json handcrafted_site_unmasked.color_hist.bal_acc_mean,0.90083,as l.582
+1124,0.876,c,phase1_5/trivial_summary.json [0].probes[4].auroc_mean,0.87610,METRIC MISMATCH as l.582 (AUROC on ISIC test + pad_full vs balanced accuracy)
+1127,0.668,a,phase16/b0/summary.json label_only_site_reference.cohort_rule.bal_acc,0.66795,as l.583
