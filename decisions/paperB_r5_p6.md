@@ -68,3 +68,6 @@ GPU 0. CPU ≈ 3 h on 8 CPUs (35 runs × 4 reps × 4 variants × 3 probe fits; 1
   the 18 earlier runs written. The fixed tolerance is replaced by a direct row-mapping test: for every pad_heldout row,
   the nearest pad_full[heldout] row (squared Euclidean) must be the same row, per representation. The label assertion
   and the recorded per-run maximum deviation are unchanged. The 18 written runs are kept (they also pass the new test).
+- 2026-10-15 18:55. The nearest-row test (job 68078) failed on run ladv1_s45 because pad_heldout contains 10 exact
+  duplicate images (distance 0 to another row), so argmin picked the duplicate. The test is now: each row's distance
+  to its own pad_full row ≤ its distance to every other row (ties allowed). Nothing else changed.

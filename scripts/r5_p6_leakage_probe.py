@@ -69,7 +69,9 @@ def analyse_run(lam, seed, tag, hmask):
     for rep in REPS:
         a, b = full[rep][hmask].astype(np.float64), hold[rep].astype(np.float64)
         d2 = (b ** 2).sum(1)[:, None] + (a ** 2).sum(1)[None, :] - 2.0 * b @ a.T
-        assert np.array_equal(d2.argmin(1), np.arange(len(b))), ("pad_full / pad_heldout row mapping", rep, dev[rep])
+        own = np.diag(d2).copy()
+        np.fill_diagonal(d2, np.inf)
+        assert np.all(own <= d2.min(1) + 1e-9), ("pad_full / pad_heldout row mapping", rep, dev[rep])
     assert np.array_equal(full["labels"][hmask].astype(int), hold["labels"].astype(int))
     gi, gp = R.id_test_groups(), R.pad_heldout_patients()
     yi, yh, yadv = te["labels"].astype(int), hold["labels"].astype(int), full["labels"][~hmask].astype(int)

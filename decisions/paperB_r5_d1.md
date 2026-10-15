@@ -144,3 +144,6 @@ starts after S-extract (68070) so that the phase16 id/ood features exist.
   seed mean. The unit is stated per set in the report. The criterion is unchanged. The partial ρ (controlling for P₀)
   stays secondary with no pass/fail rule. Negative partial ρ_orth values are reported as is, and any reading of them
   is labelled as formed after the smoke test.
+- 2026-10-15 18:55. Job 68092 stopped while writing the per-image files: parquet needs pyarrow, which is not installed.
+  Per-image files are written as `per_image/<set>_s<seed>.csv.gz` instead. The adversary-pool features and SD-198
+  clusters from that job are kept (cached). No number was reported; nothing else changed.

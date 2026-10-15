@@ -280,8 +280,8 @@ def analyse():
         metas.append(meta)
         for s in LESION_SETS:
             per_set[s][sd] = rows[s]
-            pd.DataFrame(rows[s]).drop(columns=["auroc0", "auroc2"]).to_parquet(
-                OUT / "per_image" / "{}_s{}.parquet".format(s, sd))
+            pd.DataFrame(rows[s]).drop(columns=["auroc0", "auroc2"]).to_csv(
+                OUT / "per_image" / "{}_s{}.csv.gz".format(s, sd), index=False)
         print("seed", sd, meta, flush=True)
     res = {"meta_lesion": metas, "sets": {}}
     for s in LESION_SETS:
@@ -292,8 +292,8 @@ def analyse():
     for name in P16:
         row, meta, g = phase16_frames(name)
         res["meta_phase16"][name] = meta
-        pd.DataFrame(row).drop(columns=["auroc0", "auroc2"]).to_parquet(OUT / "per_image" / "{}_s42.parquet".format(
-            P16[name][1]))
+        pd.DataFrame(row).drop(columns=["auroc0", "auroc2"]).to_csv(OUT / "per_image" / "{}_s42.csv.gz".format(
+            P16[name][1]), index=False)
         res["sets"][name] = analyse_set({42: row}, g, ("latent",), np.random.default_rng(seed), n_boot)
         print(name, meta, res["sets"][name]["point"], flush=True)
     res.update({"commit": R.git_head(), "n_boot": n_boot, "rng_seed": seed})
