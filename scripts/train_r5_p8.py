@@ -73,6 +73,9 @@ def jobs(stage):
                 out.append({"item": "p8", "out_root": str(MAIN), "ckpt_root": str(CK / "main"),
                             "tag": "main_ladv{}_s{}".format(R.lam_tag(lam), s), "recipe": r, "lam": lam, "seed": s,
                             "mode": R.default_mode(r), "align": "dann", "eval": "full", "reuse_ckpt": reuse})
+        if stage == "main":
+            first = ("main_ladv0_s42", "main_ladv2_s42")
+            out = [j for t in first for j in out if j["tag"] == t] + [j for j in out if j["tag"] not in first]
         return out
     raise SystemExit(stage)
 

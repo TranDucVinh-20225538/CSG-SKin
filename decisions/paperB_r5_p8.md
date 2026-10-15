@@ -149,3 +149,6 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
 
 ## Deviations
 
+- 2026-10-15 21:30 (UTC+7), user-directed, before any main-stage job has started. Main-stage task order only: λ = 0
+  seed 42 and λ = 2 seed 42 are tasks 0 and 1, so a preliminary 1-seed look is available early. Same 15 runs, recipe,
+  seeds and evaluation; nothing else changed.
