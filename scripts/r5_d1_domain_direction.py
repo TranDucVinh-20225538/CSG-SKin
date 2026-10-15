@@ -190,9 +190,9 @@ def lesion_frames_per_seed(seed, hmask):
 def phase16_frames(name):
     sub, prefix, _split = P16[name]
     r0, r2 = "{}_ladv0_s42".format(prefix), "{}_ladv2_s42".format(prefix)
-    L0 = {k: dict(np.load(S16 / r0 / "{}.npz".format(k))) for k in ("id_train", "id_test", "ood")}
-    L2 = {k: dict(np.load(S16 / r2 / "{}.npz".format(k))) for k in ("id_train", "id_test", "ood")}
-    adv = dict(np.load(OUT / "features_adv" / r0 / "adv_pool.npz"))
+    L0 = {k: dict(np.load(S16 / r0 / "{}.npz".format(k), allow_pickle=True)) for k in ("id_train", "id_test", "ood")}
+    L2 = {k: dict(np.load(S16 / r2 / "{}.npz".format(k), allow_pickle=True)) for k in ("id_train", "id_test", "ood")}
+    adv = dict(np.load(OUT / "features_adv" / r0 / "adv_pool.npz", allow_pickle=True))
     assert np.array_equal(L0["ood"]["group"], L2["ood"]["group"]), "ood row order λ0 vs λ2"
     clf, sc, score = domain_fit(L0["id_train"]["z"], adv["z"])
     meta = {"seed": 42, "lambda0": r0, "lambda2": r2, "n_adv_pool": int(len(adv["z"])),
@@ -273,6 +273,10 @@ def analyse():
     pre = R.prereg()
     n_boot, seed = int(pre["n_resamples"]), int(pre["rng_seed"])
     hmask = pad_heldout_mask()
+    part = OUT / "partial_lesion.json"
+    if part.exists():
+        res = json.loads(part.read_text())
+        return _phase16_part(res, seed, n_boot)
     per_set = {s: {} for s in LESION_SETS}
     metas = []
     for sd in SEEDS:
@@ -288,6 +292,11 @@ def analyse():
         g = set_groups(s, len(per_set[s][SEEDS[0]]["pull"]))
         res["sets"][s] = analyse_set(per_set[s], g, ("latent", "backbone"), np.random.default_rng(seed), n_boot)
         print(s, res["sets"][s]["point"], flush=True)
+    R.write_json(part, res)
+    return _phase16_part(res, seed, n_boot)
+
+
+def _phase16_part(res, seed, n_boot):
     res["meta_phase16"] = {}
     for name in P16:
         row, meta, g = phase16_frames(name)
