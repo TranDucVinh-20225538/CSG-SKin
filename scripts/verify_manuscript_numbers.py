@@ -592,7 +592,7 @@ def check_manifest(path, results, numbers):
                 probs.append("source gives {:.6g}, which is {:.{p}f} at the written "
                              "precision, not {}".format(got, rnd(got, d), written, p=d))
 
-        occ = by_text.get(written, [])
+        occ = by_text.get(written.lstrip("+-"), [])
         if e.get("cell"):
             probs += check_cell(e["cell"], written, tables)
         elif not occ:
