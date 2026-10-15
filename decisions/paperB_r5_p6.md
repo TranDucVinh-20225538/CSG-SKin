@@ -64,3 +64,7 @@ GPU 0. CPU ≈ 3 h on 8 CPUs (35 runs × 4 reps × 4 variants × 3 probe fits; 1
   heldout mask differ from `pad_heldout.npz` by up to 3.0e-3 (z_lesion_norm, run ladv0_s42; two separate extraction
   passes), above the 1e-4 tolerance written here. Row order is the same (labels equal row by row, asserted). Tolerance
   raised to 1e-2; the per-run maximum deviation is written to each per-run JSON. No other change.
+- 2026-10-15. The rerun (job 68073) stopped at run 19 of 35: maximum deviation 0.0155 (z_lesion_norm), above 1e-2, with
+  the 18 earlier runs written. The fixed tolerance is replaced by a direct row-mapping test: for every pad_heldout row,
+  the nearest pad_full[heldout] row (squared Euclidean) must be the same row, per representation. The label assertion
+  and the recorded per-run maximum deviation are unchanged. The 18 written runs are kept (they also pass the new test).

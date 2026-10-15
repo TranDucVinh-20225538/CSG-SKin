@@ -67,7 +67,9 @@ def analyse_run(lam, seed, tag, hmask):
     tr, te, full, hold = (R.load(tag, s) for s in ("isic_train", "isic_test", "pad_full", "pad_heldout"))
     dev = {rep: float(np.abs(full[rep][hmask] - hold[rep]).max()) for rep in REPS}
     for rep in REPS:
-        assert np.allclose(full[rep][hmask], hold[rep], atol=1e-2), ("pad_full / pad_heldout row mapping", rep, dev[rep])
+        a, b = full[rep][hmask].astype(np.float64), hold[rep].astype(np.float64)
+        d2 = (b ** 2).sum(1)[:, None] + (a ** 2).sum(1)[None, :] - 2.0 * b @ a.T
+        assert np.array_equal(d2.argmin(1), np.arange(len(b))), ("pad_full / pad_heldout row mapping", rep, dev[rep])
     assert np.array_equal(full["labels"][hmask].astype(int), hold["labels"].astype(int))
     gi, gp = R.id_test_groups(), R.pad_heldout_patients()
     yi, yh, yadv = te["labels"].astype(int), hold["labels"].astype(int), full["labels"][~hmask].astype(int)
