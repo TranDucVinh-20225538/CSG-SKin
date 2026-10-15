@@ -100,3 +100,16 @@ and compared file by file with the HF mirror used for scoring: 6,584 vs 6,584 im
 stand for the official release without rescoring. Licence: none stated by the authors (images from DermQuest).
 Caveat kept: no patient IDs, image-level bootstrap, CIs anti-conservative. Record:
 `results/paperB/r5/p7a/PROVENANCE_SD198.json`.
+
+## Addition: Fitzpatrick17k by skin type (user request 2026-10-15; written before this cut is computed)
+
+DDI and Derm7pt are dropped (the user will not register). Added instead: the 3,887 Fitzpatrick17k OOD images split
+by their `fitzpatrick_scale` label into I–II, III–IV and V–VI (unlabelled −1 reported as a count and excluded).
+Mahalanobis (class-conditional, z_lesion_norm, fit on ISIC train) per stratum vs the lesion-level ISIC test at λ = 0
+and λ = 2, 5 seeds; n images and n clusters per stratum. CI: PREREGISTER draws, Fitzpatrick side resampled by the
+P13 `cluster_union` clusters within the stratum (P13 has run), image-level CI alongside. Script
+`scripts/r5_p7a_fitz_skintype.py`; output `results/paperB/r5/p7a/fitz_skintype/`.
+
+Prediction: at λ = 0 AUROC rises with skin type (I–II ≈ 0.68–0.72, V–VI ≈ 0.75–0.82; ISIC is mostly light skin).
+At λ = 2 every stratum is below 0.5 (0.35–0.45), with V–VI closest to 0.5; rule A met in I–II and III–IV, V–VI may
+miss it on n.
