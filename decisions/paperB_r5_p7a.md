@@ -113,3 +113,6 @@ P13 `cluster_union` clusters within the stratum (P13 has run), image-level CI al
 Prediction: at λ = 0 AUROC rises with skin type (I–II ≈ 0.68–0.72, V–VI ≈ 0.75–0.82; ISIC is mostly light skin).
 At λ = 2 every stratum is below 0.5 (0.35–0.45), with V–VI closest to 0.5; rule A met in I–II and III–IV, V–VI may
 miss it on n.
+
+- 2026-10-15 (skin-type addition). Job 67938 computed every cell and wrote `summary.csv`, then failed building the
+  report (`df.resample` is a pandas method, not the column). Fixed to `df["resample"]`; rerun from scratch.

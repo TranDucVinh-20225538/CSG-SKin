@@ -74,3 +74,6 @@ nearest-centroid search chunked). Basis: R2 item 2 on 31 image-level runs took <
 Wall-time cap 8 h (sbatch). If a run's feature file is missing it is listed in the report, never imputed.
 
 ## Deviations
+
+- 2026-10-15. The first run (job 67557) failed at import: `scripts/r2_item2_nv_centroid.py` line 230 had an unescaped
+  apostrophe ("PAD's") inside a single-quoted string (SyntaxError since commit 4f8e7ca). Escaped; no logic change.

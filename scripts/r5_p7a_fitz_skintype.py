@@ -66,8 +66,8 @@ def main():
     df.to_csv(OUT / "summary.csv", index=False)
     R.write_json(OUT / "results.json", {"commit": R.git_head(), "n_unlabelled_type": int((ftype == -1).sum()),
                                         "n_total": int(len(ftype)), "cells": cells})
-    c = df[df.resample == "cluster_union"].set_index(["stratum", "lambda"])
-    im = df[df.resample == "image"].set_index(["stratum", "lambda"])
+    c = df[df["resample"] == "cluster_union"].set_index(["stratum", "lambda"])
+    im = df[df["resample"] == "image"].set_index(["stratum", "lambda"])
     L = ["# Paper B R5 P7(a): Fitzpatrick17k by skin type", "",
          "Design: `decisions/paperB_r5_p7a.md` (addition of 2026-10-15). Commit `{}`. Mahalanobis (class-conditional) on "
          "z_lesion_norm, fit on ISIC train; ID = lesion-level ISIC test. Mean ± s.d. over 5 seeds; 95% CI of the seed mean, "

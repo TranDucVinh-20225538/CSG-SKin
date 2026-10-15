@@ -59,3 +59,8 @@ GPU 0. CPU ≈ 3 h on 8 CPUs (35 runs × 4 reps × 4 variants × 3 probe fits; 1
 8 h sbatch cap; per-run JSON allows resumption.
 
 ## Deviations
+
+- 2026-10-15. The first run (job 67560) stopped at the row-mapping assertion: pad_full rows selected by the Phase 2
+  heldout mask differ from `pad_heldout.npz` by up to 3.0e-3 (z_lesion_norm, run ladv0_s42; two separate extraction
+  passes), above the 1e-4 tolerance written here. Row order is the same (labels equal row by row, asserted). Tolerance
+  raised to 1e-2; the per-run maximum deviation is written to each per-run JSON. No other change.

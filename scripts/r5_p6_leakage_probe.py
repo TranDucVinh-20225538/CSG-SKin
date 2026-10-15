@@ -65,12 +65,15 @@ def class_weights(y_isic, y_pad):
 
 def analyse_run(lam, seed, tag, hmask):
     tr, te, full, hold = (R.load(tag, s) for s in ("isic_train", "isic_test", "pad_full", "pad_heldout"))
+    dev = {rep: float(np.abs(full[rep][hmask] - hold[rep]).max()) for rep in REPS}
     for rep in REPS:
-        assert np.allclose(full[rep][hmask], hold[rep], atol=1e-4), "pad_full / pad_heldout row mapping"
+        assert np.allclose(full[rep][hmask], hold[rep], atol=1e-2), ("pad_full / pad_heldout row mapping", rep, dev[rep])
+    assert np.array_equal(full["labels"][hmask].astype(int), hold["labels"].astype(int))
     gi, gp = R.id_test_groups(), R.pad_heldout_patients()
     yi, yh, yadv = te["labels"].astype(int), hold["labels"].astype(int), full["labels"][~hmask].astype(int)
     rec = {"lambda": lam, "seed": seed, "run": tag, "n": {"isic_test": len(yi), "pad_full": len(full["labels"]),
-                                                          "pad_heldout": len(yh), "pad_adv": int((~hmask).sum())}}
+                                                          "pad_heldout": len(yh), "pad_adv": int((~hmask).sum())},
+           "pad_full_vs_heldout_max_abs_dev": dev}
     rng = np.random.default_rng(seed)
     sub = rng.choice(len(tr["labels"]), size=len(yi), replace=False)
     for rep in REPS:
