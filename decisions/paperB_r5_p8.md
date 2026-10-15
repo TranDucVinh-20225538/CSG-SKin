@@ -179,3 +179,8 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
   (`r5_p8_heldout.py`). (c) Main λ = 2 tasks 11–14 (seeds 52–82, not yet started) save per-epoch weights
   (weights only; no effect on training); P8 stage `traj` adds two per-epoch runs (λ = 0 and 2, seed 42), plan in
   `decisions/paperB_r5_p8_traj.md`.
+- 2026-10-15 23:30 (UTC+7), user request 23:25, CPU, descriptive (`scripts/r5_val_se.py`, outputs
+  `results/paperB/r5/p8/val_se/`). A4 λ = 0 seed 42: lesion-clustered bootstrap SE of validation balanced accuracy on the
+  lesion-level ISIC val split (PREREGISTER 2000 draws, seed 20261005) at best-val and last.ckpt; range, SD and
+  epoch-to-epoch change of the logged val bal acc over epochs 2–39. Prediction: SE ≈ 0.01–0.02; the epoch-to-epoch range
+  after epoch 1 is of the same order as or larger than 2 SE, i.e. the epoch-1 selection is within validation noise.
