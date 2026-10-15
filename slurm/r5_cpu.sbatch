@@ -9,6 +9,7 @@
 #   q1_index        scripts/r5_q1_cxr_data.py --index
 #   q1_report       scripts/r5_q1_report.py
 #   p9_report       scripts/r5_p9_report.py
+#   p9v2_<sub>      scripts/r5_p9v2.py <sub>  (target | round2 | best | go5 | report)
 #   p10_report      scripts/r5_p10_report.py
 #   q3_report       scripts/r5_q3_report.py
 #   p11_report      scripts/r5_p11_report.py
@@ -28,6 +29,7 @@ case "${CMD}" in
   q1_index)    "${PY}" scripts/r5_q1_cxr_data.py --index ;;
   q1_report)   "${PY}" scripts/r5_q1_report.py --recipe "${RECIPE}" ;;
   p9_report)   "${PY}" scripts/r5_p9_report.py --recipe "${RECIPE}" ;;
+  p9v2_*)      "${PY}" scripts/r5_p9v2.py "${CMD#p9v2_}" ;;
   p10_report)  "${PY}" scripts/r5_p10_report.py ;;
   q3_report)   "${PY}" scripts/r5_q3_report.py --recipe "${RECIPE}" ;;
   p11_report)  "${PY}" scripts/r5_p11_report.py --recipe "${RECIPE}" ;;

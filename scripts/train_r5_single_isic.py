@@ -14,6 +14,9 @@ Domain-balanced batches are already the default (CombinedTrainDataset pairs one 
 P9 ladder (--ladder, λ = 2, seed 42): rungs baseline, T1 … T4 in order, one job at a time per backbone. Stop rule,
 checked before training: skip if an earlier rung of the same backbone reached the dual-encoder leakage level (Table 1
 probe ≤ 0.60) or if the P9 ladder GPU-hours already used (both backbones) + this run's estimate exceed 20.
+The ladder is superseded by the 2026-10-15 amendment (decisions/paperB_r5_p9.md; scripts/r5_p9v2.py): configs
+gw_lr<L>_d<D> = Ganin schedule + 2 warm-up epochs, one head of depth D, adversary LR ×L; --cap_gpu_h skips a run if
+the GPU-h of the summaries already in <item>/<stage>/ + this run's estimate exceed the cap.
 
 Outputs: results/paperB/r5/<item>/<stage>/<tag>/{config.json, adversary_log.jsonl, summary.json, scores.npz, features/}
 """
@@ -64,6 +67,7 @@ def parse():
     ap.add_argument("--penalty", default="none", choices=("none", "mkmmd", "coral", "mmd_legacy"))
     ap.add_argument("--penalty_weight", type=float, default=0.0)
     ap.add_argument("--max_epochs", type=int, default=0)
+    ap.add_argument("--cap_gpu_h", type=float, default=0.0, help="stage-wide GPU-h cap (0 = none)")
     ap.add_argument("--ladder", action="store_true", help="apply the P9 stop rule / budget cap before training")
     ap.add_argument("--num_workers", type=int, default=6)
     ap.add_argument("--dry_run", action="store_true")
@@ -73,7 +77,16 @@ def parse():
     return ap.parse_args()
 
 
+def gw_config(name):
+    """gw_lr<L>_d<D> -> Ganin schedule, 2 adversary warm-up epochs, one head of depth D, adversary LR ×L."""
+    lr, d = name[len("gw_lr"):].split("_d")
+    return {"grl_schedule": "ganin", "adv_warmup_epochs": 2, "head_specs": [[int(d), 1.0]],
+            "adv_lr_multiplier": float(lr)}
+
+
 def resolve_config(name, backbone, recipe):
+    if name.startswith("gw_lr"):
+        return name, gw_config(name), "P9 v2 grid"
     if name == "selected":
         p = Path(str(SELECTED).format(backbone, r5_recipe.tag(recipe)))
         if p.exists():
@@ -115,6 +128,15 @@ def main():
     if a.skip_done and (run_dir / "summary.json").exists() and not a.dry_run:
         print("skip_done", tag)
         return
+    if a.cap_gpu_h:
+        used = sum(float(json.loads(f.read_text()).get("gpu_hours", 0.0))
+                   for f in (R.R5 / a.item / a.stage).glob("*/summary.json"))
+        est = EST_GPU_H[a.backbone] * epochs / 40.0
+        if used + est > a.cap_gpu_h:
+            why = {"tag": tag, "skipped": True, "stage_gpu_h_used": used, "this_run_est": est, "cap": a.cap_gpu_h}
+            (run_dir / "skipped.json").write_text(json.dumps(why, indent=2) + "\n")
+            print("cap stop", why, flush=True)
+            return
     if a.ladder:
         used, reached = ladder_state(a.backbone, a.recipe)
         est = EST_GPU_H[a.backbone] * epochs / 40.0

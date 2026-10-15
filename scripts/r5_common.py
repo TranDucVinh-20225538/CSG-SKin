@@ -408,8 +408,8 @@ TABLE1_HEAD = ("Leakage", "ID bal acc", "ID ECE", "OOD ECE (pad_heldout)", "OOD 
                "Fitz AUROC (Maha)", "X-dom bal acc")
 
 
-def isic_bootstrap(groups_by_run, ood_sets=("pad_heldout", "fitzpatrick17k")):
-    """groups_by_run: {cell_key: {seed: run_dir}} -> {cell_key: {ood: {det: bootstrap_cell}}} for BOOT_DETS.
+def isic_bootstrap(groups_by_run, ood_sets=("pad_heldout", "fitzpatrick17k"), dets=BOOT_DETS):
+    """groups_by_run: {cell_key: {seed: run_dir}} -> {cell_key: {ood: {det: bootstrap_cell}}} for dets.
     ID by lesion group, pad_heldout by patient, Fitzpatrick17k and extra sets by image (MED-NODE/SD-198) or case
     (SCIN, group column)."""
     n_boot, seed = prereg()
@@ -433,6 +433,6 @@ def isic_bootstrap(groups_by_run, ood_sets=("pad_heldout", "fitzpatrick17k")):
             else:
                 go = [np.array([i]) for i in range(n_o)]
             blk[ood] = {d: bootstrap_cell({s: (v["id__" + d], v["{}__{}".format(ood, d)]) for s, v in S.items()},
-                                          gid, go, rng, n_boot) for d in BOOT_DETS}
+                                          gid, go, rng, n_boot) for d in dets}
         out[key] = blk
     return out

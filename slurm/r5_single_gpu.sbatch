@@ -13,6 +13,8 @@
 #   p9_stage2  15 tasks: config 'selected', λ ∈ {0, 0.5, 2} (T/5) × seeds 42..82 (T%5)
 #   q3_r50     10 tasks: resnet50, config 'selected', λ ∈ {0, 2} × seeds 42..82; written into p9/stage2 so the
 #              cells are shared with P9 stage 2 (--skip_done prevents a second run of the same tag)
+#   p9v2_r1|p9v2_r2|p9v2_s3|p9v2_s5  P9 v2 (amendment 2026-10-15): effb3; config / λ / seed from
+#              `r5_p9v2.py plan <phase> T` (10 / 6 / 4 / 2 tasks); 30 GPU-h stage cap; a missing plan file = skip
 # Submit through scripts/launch_r5_p9.sh or scripts/launch_r5_q3.sh.
 
 set -euo pipefail
@@ -29,6 +31,9 @@ case "${STAGE}" in
   p9_stage2) L=(0 0.5 2); ARGS=(--item p9 --stage stage2 --config selected --lambda_adv "${L[$((T / 5))]}" --seed "${SEEDS[$((T % 5))]}") ;;
   q3_r50)    L=(0 2); BACKBONE=resnet50
              ARGS=(--item p9 --stage stage2 --config selected --lambda_adv "${L[$((T / 5))]}" --seed "${SEEDS[$((T % 5))]}") ;;
+  p9v2_*)   PLAN=$("${ROOT}/.venv/bin/python" scripts/r5_p9v2.py plan "${STAGE#p9v2_}" "${T}") || { echo "${PLAN}"; exit 0; }
+             read -r CFG LAM SEED <<< "${PLAN}"; BACKBONE=effb3
+             ARGS=(--item p9 --stage v2 --cap_gpu_h 30 --config "${CFG}" --lambda_adv "${LAM}" --seed "${SEED}") ;;
   *) echo "unknown STAGE ${STAGE}"; exit 2 ;;
 esac
 echo "=== R5 single stage=${STAGE} backbone=${BACKBONE} task=${T} args=${ARGS[*]} recipe=${RECIPE} start $(date) host=$(hostname) ==="

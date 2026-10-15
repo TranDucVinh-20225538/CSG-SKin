@@ -18,6 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, "/data2/cmdir/home/toandq/CSG-Skin-paperB/scripts")
 import r5_common as R  # noqa: E402
+import r5_recipe  # noqa: E402
 
 import pandas as pd  # noqa: E402
 
@@ -54,7 +55,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--recipe", default="current")
     a = ap.parse_args()
-    suffix = "" if a.recipe == "current" else ("_recp8" if a.recipe == "p8" else "_rec" + Path(a.recipe).stem)
+    suffix = r5_recipe.tag(a.recipe)
     lad, st2 = load("ladder", suffix), load("stage2", suffix)
     skipped = [json.loads(f.read_text()) for f in sorted((P9 / "ladder").glob("*/skipped.json"))]
     if not lad and not st2:

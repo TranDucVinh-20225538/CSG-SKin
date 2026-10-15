@@ -62,8 +62,22 @@ def _translate(over: dict) -> tuple[dict, dict]:
     return out, prov
 
 
+P8_DECISION = PAPERB / "results" / "paperB" / "r5" / "p8" / "RECIPE_DECISION.json"  # written by the P8 report
+
+
+def concrete(name: str) -> str:
+    """'auto' -> 'p8' if the P8 report flagged the λ = 0 model competent, else 'current' (same rule as
+    r6_common.resolve_recipe); resolved when the job runs, so a job queued before P8 finishes follows its decision."""
+    if name != "auto":
+        return name
+    if not P8_DECISION.exists():
+        raise SystemExit("--recipe auto: P8 recipe decision missing ({}); run the P8 report first".format(P8_DECISION))
+    return "p8" if json.loads(P8_DECISION.read_text())["competent"] else "current"
+
+
 def resolve(name: str) -> tuple[dict, str]:
     """Return (full recipe dict, provenance string)."""
+    name = concrete(name)
     if name == "current":
         return dict(CURRENT), "current (Phase 3 / R2 item 4 values)"
     if name == "p8":
@@ -92,12 +106,13 @@ def resolve(name: str) -> tuple[dict, str]:
 
 
 def add_args(ap):
-    ap.add_argument("--recipe", default="current", help="current | p8 | path/to/recipe.json (see r5_recipe.py)")
+    ap.add_argument("--recipe", default="current", help="current | p8 | auto | path/to/recipe.json (see r5_recipe.py)")
     return ap
 
 
 def tag(name: str) -> str:
     """Directory suffix: '' for current (keeps run names comparable with R2/R4), else '_rec<name>'."""
+    name = concrete(name)
     if name == "current":
         return ""
     return "_rec" + ("p8" if name == "p8" else Path(name).stem)
