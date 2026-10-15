@@ -109,6 +109,10 @@ def ladder_state(backbone, recipe):
     return used, reached
 
 
+def ckpt_epoch(ckpt):
+    return int(torch.load(str(ckpt), map_location="cpu", weights_only=False)["epoch"])
+
+
 def main():
     a = parse()
     rec, src = r5_recipe.resolve(a.recipe)
@@ -184,10 +188,21 @@ def main():
     best = Path(ckpt_cb.best_model_path) if ckpt_cb.best_model_path else last
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    ev = M.SingleEncToolboxLit(pretrained=False, **kw)
-    ev.load_state_dict(torch.load(str(best), map_location="cpu")["state_dict"])
-    net = ev.net.to(device).eval()
-    summ = R.eval_isic(lambda x: net(x), D, device, run_dir, workers=a.num_workers)
+
+    def evaluate(ckpt, out_dir):
+        ev = M.SingleEncToolboxLit(pretrained=False, **kw)
+        ev.load_state_dict(torch.load(str(ckpt), map_location="cpu")["state_dict"])
+        net = ev.net.to(device).eval()
+        return R.eval_isic(lambda x: net(x), D, device, out_dir, workers=a.num_workers)
+
+    # Primary = last.ckpt (decisions/paperB_r5_p8.md, deviation 2026-10-15 21:57); best-val is secondary.
+    summ = evaluate(last, run_dir)
+    sec = evaluate(best, run_dir / "bestval")
+    summ["checkpoint_policy"] = "last"
+    summ["primary_checkpoint"], summ["primary_epoch"] = str(last), ckpt_epoch(last)
+    summ["best_epoch"] = ckpt_epoch(best)
+    summ["secondary_bestval"] = {"checkpoint": str(best), "epoch": summ["best_epoch"], "out_dir": str(run_dir / "bestval"),
+                                 **{k: sec[k] for k in ("id_balanced_acc", "leakage", "ood", "xfer_pad_heldout_6class") if k in sec}}
     rows = [json.loads(l) for l in adv_log.read_text().splitlines() if l.strip()] if adv_log.exists() else []
     summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone, "config": cname,
                  "penalty": a.penalty, "penalty_weight": a.penalty_weight, "max_epochs": epochs,

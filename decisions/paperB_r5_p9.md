@@ -214,3 +214,8 @@ falls back to the `baseline` config (recorded in Q3's decisions when Q3 is launc
   - The outcome rule uses the primary verdict: target reached, not degraded, and rule A → consistent with the
     hypothesis; target reached, not degraded, and not rule A → refuted. The secondary verdict is reported and does
     not change the outcome. The other outcome rules (degraded, untested) are unchanged.
+- 2026-10-15 22:05 (UTC+7), user-directed (P8 deviation 21:57), before any P9 v2 run. Primary checkpoint = last.ckpt
+  for every P9 v2 run; all P9 quantities (V1 probe, ID bal acc, degraded flag, cross-domain accuracy, bootstrap,
+  verdicts) use it. The best-val checkpoint is evaluated as secondary into `<run>/bestval/` and its epoch and
+  summary block are stored in `summary.json["secondary_bestval"]`. The dual-encoder target T (from P6 / Table 1
+  checkpoints) is unchanged.

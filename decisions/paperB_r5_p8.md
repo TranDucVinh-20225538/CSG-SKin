@@ -161,3 +161,13 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
   best-val) is not re-run. The competence comparison is added (old Table 1 recipe vs A4 at λ = 0, val and test
   balanced accuracy, at best-val and last checkpoints), and so is an audit of the selected epoch of the 35 Table 1
   runs.
+- 2026-10-15 22:05 (UTC+7), factual note on the 21:57 deviation (decision unchanged). The P8 recipe and the Table 1
+  trainer share the `csg_lightning` GRL schedule α = max(0.2, 2/(1+exp(−20 p^0.5)) − 1), p = step / total steps, with
+  no adversary warm-up epochs: the adversary and the reversed gradient act from step 0. Logged epoch-mean α (Table 1
+  λ = 2 s42): 0.74 (epoch 0), 0.96 (1), 0.99 (2), ≥ 0.994 from epoch 3. "Before the warm-up takes effect" therefore
+  applies to epoch 0 (and partly 1), not to epochs 2–3. Training-side adversary accuracy continues to fall towards
+  0.5 over later epochs. Item 4 flag criterion: λ > 0 and epoch-mean α < 0.99 at the selected epoch (fixed after the
+  35 selected epochs were listed; they range 6–39, so any α-based cut at epochs 0–3 gives the same result). Items 3/4
+  are implemented in `scripts/r5_ckpt_audit.py` (outputs `results/paperB/r5/ckpt_audit/`). Re-evaluation of main
+  tasks 0–2 under the new policy: separate array jobs after the running tasks end; held tasks 3–14 start after the
+  λ = 2 seed 42 re-evaluation.

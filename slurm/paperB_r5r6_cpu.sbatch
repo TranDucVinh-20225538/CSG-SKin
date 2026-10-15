@@ -41,6 +41,8 @@ case "${STEP}" in
   d1)            ${PY} scripts/r5_d1_domain_direction.py ${ARGS} ;;
   rescore)       ${PY} scripts/r5_rescore_heldout.py run ${SLURM_ARRAY_TASK_ID} ;;
   rescore_report) ${PY} scripts/r5_rescore_heldout.py report ;;
+  ckaudit)       ${PY} scripts/r5_ckpt_audit.py compete ${SLURM_ARRAY_TASK_ID} ;;
+  ckaudit_report) ${PY} scripts/r5_ckpt_audit.py report ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="
