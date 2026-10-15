@@ -152,3 +152,12 @@ therefore not tested. Revised estimate: stage A 30.4 + main 21.2 (two-stream) �
 - 2026-10-15 21:30 (UTC+7), user-directed, before any main-stage job has started. Main-stage task order only: λ = 0
   seed 42 and λ = 2 seed 42 are tasks 0 and 1, so a preliminary 1-seed look is available early. Same 15 runs, recipe,
   seeds and evaluation; nothing else changed.
+- 2026-10-15 21:57 (UTC+7), user-directed, before any λ > 0 number of P8 main exists (main tasks 3–14 held; only the
+  λ = 0 seed 42 summary exists; λ = 2 seed 42 is mid-training). **Primary checkpoint = last.ckpt (end of epoch 40)** for
+  every λ in P8 and in everything that inherits the P8 recipe (R1, R2, P9, P7(b)). Reason: with the selected recipe
+  (A4), the best-val checkpoints fall at epochs 0–3. That is before the GRL warm-up takes effect, so those checkpoints
+  do not test DANN. The best-val checkpoint is reported as secondary, with its epoch. λ = 0 seeds 42/52 reuse the
+  grid run's last.ckpt (same recipe, λ, seed). The stage-A/B recipe selection (mean validation balanced accuracy,
+  best-val) is not re-run. The competence comparison is added (old Table 1 recipe vs A4 at λ = 0, val and test
+  balanced accuracy, at best-val and last checkpoints), and so is an audit of the selected epoch of the 35 Table 1
+  runs.

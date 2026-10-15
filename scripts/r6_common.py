@@ -449,6 +449,23 @@ def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e
         pretrained=True)
 
 
+# Primary checkpoint policy (decisions/paperB_r5_p8.md, deviation 2026-10-15 21:57): last.ckpt (end of training) for
+# P8 and everything that inherits its recipe; the best-val checkpoint is evaluated as secondary.
+CKPT_POLICY = "last"
+
+
+def ckpt_epoch(ckpt):
+    m = re.search(r"best-(\d+)\.ckpt$", str(ckpt))
+    if m:
+        return int(m.group(1))
+    return int(torch.load(str(ckpt), map_location="cpu", weights_only=False).get("epoch", -1))
+
+
+def trained_to_end(ckpt_dir, recipe):
+    last = Path(ckpt_dir) / "last.ckpt"
+    return last.exists() and ckpt_epoch(last) >= int(recipe["max_epochs"]) - 1
+
+
 def find_best(ckpt_dir):
     best = sorted(Path(ckpt_dir).glob("best-*.ckpt"), key=lambda p: p.stat().st_mtime, reverse=True)
     if best:
@@ -657,8 +674,14 @@ def run(spec, args):
     run_dir, feat_dir = out_root / "runs" / tag, out_root / "features" / tag
     ckpt_dir = Path(spec["ckpt_root"]) / tag
     if args.skip_done and (run_dir / "summary.json").exists() and not args.dry_run:
-        print("skip_done", run_dir / "summary.json", flush=True)
-        return
+        if json.loads((run_dir / "summary.json").read_text()).get("checkpoint_policy") == CKPT_POLICY:
+            print("skip_done", run_dir / "summary.json", flush=True)
+            return
+        print("re-evaluating under checkpoint policy", CKPT_POLICY, run_dir, flush=True)
+        old = out_root / "features_bestval" / tag
+        if feat_dir.exists() and not old.exists():
+            old.parent.mkdir(parents=True, exist_ok=True)
+            feat_dir.rename(old)
     seed = int(spec["seed"])
     seed_everything(seed)
     pl.seed_everything(seed, workers=True)
@@ -684,9 +707,10 @@ def run(spec, args):
         return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    best = find_best(spec["reuse_ckpt"]) if spec.get("reuse_ckpt") else None
+    src_dir = Path(spec["reuse_ckpt"]) if spec.get("reuse_ckpt") else ckpt_dir
+    best = find_best(src_dir) if (spec.get("reuse_ckpt") or trained_to_end(ckpt_dir, recipe)) else None
     if best is not None:
-        print("reusing checkpoint (identical recipe, λ, seed)", best, flush=True)
+        print("checkpoint exists, evaluation only (reuse = {})".format(bool(spec.get("reuse_ckpt"))), best, flush=True)
     else:
         iw_log = str(run_dir / "iw_log.jsonl") if spec.get("align", "dann").startswith("iw") else None
         if iw_log and not args.resume and Path(iw_log).exists():
@@ -706,14 +730,26 @@ def run(spec, args):
         trainer.fit(model, train_dataloaders=tl, val_dataloaders=vl,
                     ckpt_path=str(last) if args.resume and last.exists() else None)
         best = Path(ckpt_cb.best_model_path) if ckpt_cb.best_model_path else last
-    print("best", best, flush=True)
-    net = load_net(best, device)
-    extract(net, data, feat_dir, spec.get("eval", "full"), args.num_workers, device)
+    last = src_dir / "last.ckpt"
+    primary = last if CKPT_POLICY == "last" else best
+    if not primary.exists():
+        raise FileNotFoundError(primary)
+    print("primary ({})".format(CKPT_POLICY), primary, "epoch", ckpt_epoch(primary), "| best-val", best,
+          "epoch", ckpt_epoch(best), flush=True)
     site = add_site(data["test"]).site.to_numpy() if spec["mode"] == "p7b" else None
+    net = load_net(primary, device)
+    extract(net, data, feat_dir, spec.get("eval", "full"), args.num_workers, device)
     m = run_metrics(load_feats(feat_dir), site_test=site)
+    fb = out_root / "features_bestval" / tag
+    net = load_net(best, device)
+    extract(net, data, fb, spec.get("eval", "full"), args.num_workers, device)
+    secondary = {"checkpoint": str(best), "epoch": ckpt_epoch(best), "metrics": run_metrics(load_feats(fb), site_test=site),
+                 "features": str(fb)}
     summary = {"tag": tag, "item": spec["item"], "recipe": recipe, "lambda_adv": float(spec["lam"]), "seed": seed,
                "mode": spec["mode"], "align": spec.get("align", "dann"), "adv_shift": spec.get("adv_shift"),
-               "adv_mix": spec.get("adv_mix"), "best_checkpoint": str(best),
+               "adv_mix": spec.get("adv_mix"), "checkpoint_policy": CKPT_POLICY, "primary_checkpoint": str(primary),
+               "primary_epoch": ckpt_epoch(primary), "best_checkpoint": str(best), "best_epoch": ckpt_epoch(best),
+               "secondary_bestval": secondary,
                "reused_checkpoint": bool(spec.get("reuse_ckpt") and str(best).startswith(str(spec["reuse_ckpt"]))),
                "eval": spec.get("eval", "full"), "metrics": m, **spec.get("extra", {})}
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=1, default=float) + "\n")
