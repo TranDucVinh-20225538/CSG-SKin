@@ -38,6 +38,7 @@ case "${STEP}" in
   r3_toy)        ${PY} scripts/r6_r3_toy_labelshift.py --workers "${SLURM_CPUS_PER_TASK:-8}" ${ARGS} ;;
   r4)            ${PY} scripts/r6_r4_warning_signals.py ${ARGS} ;;
   r5)            ${PY} scripts/r6_r5_label_shift.py ${ARGS} ;;
+  d1)            ${PY} scripts/r5_d1_domain_direction.py ${ARGS} ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="

@@ -134,3 +134,5 @@ CPU only: script `scripts/r5_d1_domain_direction.py`, one `pB-` job, 8 CPUs. The
 starts after S-extract (68070) so that the phase16 id/ood features exist.
 
 ## Deviations
+- 2026-10-15 (before any D1 number). R6-R5's summary.csv already contains ISIC→MED-NODE, ISIC→SD-198 and ISIC→SCIN
+  (mapped) rows computed with the same `shift()`; D1 reads all class-mix rows from that file instead of recomputing.
