@@ -4,9 +4,9 @@
 Adversarial (and context-domain) domains = ISIC sites BCN (0) vs HAM (1), both drawn from the lesion-level ISIC train
 split; site from the ISIC 2019 lesion_id prefix (the master CSV has no site column). Classifier on the full ISIC train
 split. No PAD image enters training, BatchNorm statistics or checkpoint selection. OOD = all of PAD (2,298 images),
-plus pad_heldout, Fitzpatrick17k and the P7a sets. λ ∈ {0, 0.5, 2} x 5 seeds = 15 jobs; by default the λ = 0 jobs reuse
-the same-recipe λ = 0 checkpoint (user decision 2026-10-15). That checkpoint was trained with PAD as the second domain,
-so PAD images reached its BatchNorm statistics and context branch; --train_l0 trains a PAD-free λ = 0 instead.
+plus pad_heldout, Fitzpatrick17k and the P7a sets. λ ∈ {0, 0.5, 2} x 5 seeds = 15 runs. λ = 0 is trained inside this design
+(user decision 2026-10-15): the same-recipe λ = 0 checkpoint saw PAD as the second domain (BatchNorm statistics, context
+branch), so --reuse_l0 (evaluate that checkpoint instead) is not PAD-free.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ import r6_common as R  # noqa: E402
 LAMS = (2.0, 0.0, 0.5)
 
 
-def jobs(recipe_name, reuse_l0=True):
+def jobs(recipe_name, reuse_l0=False):
     r = R.resolve_recipe(recipe_name)
     rt = R.recipe_tag(r)
     out = []
@@ -37,10 +37,10 @@ def jobs(recipe_name, reuse_l0=True):
 def main():
     p = R.common_args(argparse.ArgumentParser())
     p.add_argument("--recipe", default="current", help="current | p8 | auto")
-    p.add_argument("--train_l0", action="store_true",
-                   help="train λ = 0 inside the P7(b) design instead of reusing the same-recipe λ = 0 checkpoint")
+    p.add_argument("--reuse_l0", action="store_true",
+                   help="evaluate the same-recipe λ = 0 checkpoint instead of training λ = 0 (not PAD-free)")
     a = p.parse_args()
-    js = jobs(a.recipe, reuse_l0=not a.train_l0)
+    js = jobs(a.recipe, reuse_l0=a.reuse_l0)
     if a.list:
         return R.print_jobs(js)
     R.run(js[a.task_id], a)

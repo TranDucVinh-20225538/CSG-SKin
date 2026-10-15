@@ -76,13 +76,12 @@ CPU: report ≈ 1 CPU-h.
 
 Cap 40 GPU-h (75 with an 80-epoch recipe). Out-of-memory at 96 images per step stops the run and is reported.
 
-## Pre-run amendment (user decision 2026-10-15, before any P7(b) run)
+## Pre-run amendment (user decisions 2026-10-15, before any P7(b) run)
 
-λ = 0 is not retrained by default: each seed's λ = 0 row evaluates the existing λ = 0 checkpoint of the same recipe
-(`r6_common.lambda0_ckpt_dir`). Caveat recorded before any result: that checkpoint was trained with PAD as the second
-domain, so PAD images reached its BatchNorm statistics and its context-domain branch; the λ = 0 row is therefore not
-"PAD fully held out", and the λ > 0 vs λ = 0 contrast mixes the adversary effect with PAD exposure at λ = 0.
-`--train_l0` restores the PAD-free λ = 0 (+11 GPU-h). Revised estimate: 10 × 2.4 + 5 × 0.2 = **≈ 25 GPU-h** (cap 30).
+The user first chose to reuse the same-recipe λ = 0 checkpoints, then reversed this after the caveat was raised: those
+checkpoints were trained with PAD as the second domain, so PAD images reached their BatchNorm statistics and
+context-domain branch, and a reused λ = 0 row would not be "PAD fully held out". λ = 0 is therefore trained inside
+this design, as originally specified (15 runs, ≈ 36 GPU-h, cap 40). `--reuse_l0` exists but is not used.
 
 ## Deviations
 
