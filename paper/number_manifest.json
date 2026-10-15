@@ -5976,5 +5976,40 @@
     ],
     "optional": true,
     "note": "R4: MMD vs GRL"
+  },
+  {
+    "id": "id_bal_paired_diff_mean",
+    "written": "-0.023",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "id_bal_paired_diff",
+      "mean"
+    ],
+    "note": "A5 (audit 2026-10-15): paired lambda2-lambda0 ID balanced accuracy over 5 seeds; scripts/r3_b1_report.py"
+  },
+  {
+    "id": "id_bal_paired_diff_lo",
+    "written": "-0.063",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "id_bal_paired_diff",
+      "t_ci95",
+      0
+    ],
+    "note": "A5: t-interval (df = 4), not a bootstrap; scripts/r3_b1_report.py"
+  },
+  {
+    "id": "id_bal_paired_diff_hi",
+    "written": "+0.017",
+    "label": null,
+    "file": "r3/b1/b1_results.json",
+    "key": [
+      "id_bal_paired_diff",
+      "t_ci95",
+      1
+    ],
+    "note": "A5: t-interval (df = 4), not a bootstrap; scripts/r3_b1_report.py"
   }
 ]
