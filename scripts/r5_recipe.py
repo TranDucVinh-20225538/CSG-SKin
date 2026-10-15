@@ -62,17 +62,17 @@ def _translate(over: dict) -> tuple[dict, dict]:
     return out, prov
 
 
-P8_DECISION = PAPERB / "results" / "paperB" / "r5" / "p8" / "RECIPE_DECISION.json"  # written by the P8 report
+P8_DECISION = PAPERB / "results" / "paperB" / "r5" / "p8" / "MAIN_RECIPE_RULE.json"  # scripts/r5_main_recipe_rule.py
 
 
 def concrete(name: str) -> str:
-    """'auto' -> 'p8' if the P8 report flagged the λ = 0 model competent, else 'current' (same rule as
-    r6_common.resolve_recipe); resolved when the job runs, so a job queued before P8 finishes follows its decision."""
+    """'auto' -> the main-recipe rule outcome ('p8' or 'current'; decisions/paperB_r5_p8.md, same as
+    r6_common.resolve_recipe); resolved when the job runs, so a job queued before the rule follows its outcome."""
     if name != "auto":
         return name
     if not P8_DECISION.exists():
-        raise SystemExit("--recipe auto: P8 recipe decision missing ({}); run the P8 report first".format(P8_DECISION))
-    return "p8" if json.loads(P8_DECISION.read_text())["competent"] else "current"
+        raise SystemExit("--recipe auto: main-recipe rule outcome missing ({}); run r5_main_recipe_rule.py first".format(P8_DECISION))
+    return json.loads(P8_DECISION.read_text())["main_recipe"]
 
 
 def resolve(name: str) -> tuple[dict, str]:

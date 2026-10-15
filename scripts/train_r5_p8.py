@@ -9,7 +9,7 @@ Stages (each a SLURM array over --task_id; see slurm/r5_p8_*.sbatch and scripts/
   selB  keep 80 epochs only if mean val bal acc gains >= 0.02; writes results/paperB/r5/p8/selection_stageB.json
   main  selected recipe, λ ∈ {0, 0.5, 2} x seeds 42/52/62/72/82, full evaluation (λ = 0 seeds 42/52 reuse the
         stage A/B checkpoint of the selected recipe: identical recipe, λ and seed)
-  ext   λ ∈ {0.25, 1, 4, 8} x 5 seeds; runs only if RECIPE_DECISION.json says the inversion survives (rule A at λ=2)
+  ext   λ ∈ {0.25, 1, 4, 8} x 5 seeds; runs only if MAIN_RECIPE_RULE.json outcome is A4 (decisions, main-recipe rule)
 """
 
 from __future__ import annotations
@@ -159,9 +159,10 @@ def main():
     if a.stage == "selB":
         return select_b()
     if a.stage == "ext" and not a.force_ext:
-        d = json.loads(DECISION.read_text()) if DECISION.exists() else {}
-        if not d.get("inversion_survives"):
-            print("ext gate: inversion_survives =", d.get("inversion_survives"), "-> no extension run", flush=True)
+        rule = R.P8_DIR / "MAIN_RECIPE_RULE.json"
+        d = json.loads(rule.read_text()) if rule.exists() else {}
+        if d.get("outcome") != "A4":
+            print("ext gate (main-recipe rule): outcome =", d.get("outcome"), "-> no extension run", flush=True)
             return
     js = jobs(a.stage)
     if a.list:

@@ -105,7 +105,7 @@ def grid_recipe(cid, epochs=40):
 
 
 def resolve_recipe(name):
-    """current | p8 | auto | A<k>_e<epochs>. 'auto' = p8 if the P8 report flagged the λ=0 model competent."""
+    """current | p8 | auto | A<k>_e<epochs>. 'auto' = main-recipe rule outcome (MAIN_RECIPE_RULE.json)."""
     if name == "current":
         return dict(CURRENT)
     if name == "p8":
@@ -116,10 +116,10 @@ def resolve_recipe(name):
         r["name"] = "p8"
         return r
     if name == "auto":
-        p = P8_DIR / "RECIPE_DECISION.json"
+        p = P8_DIR / "MAIN_RECIPE_RULE.json"
         if not p.exists():
-            raise SystemExit("P8 recipe decision missing ({}); run the P8 report first".format(p))
-        return resolve_recipe("p8" if json.loads(p.read_text())["competent"] else "current")
+            raise SystemExit("main-recipe rule outcome missing ({}); run scripts/r5_main_recipe_rule.py first".format(p))
+        return resolve_recipe(json.loads(p.read_text())["main_recipe"])
     m = re.fullmatch(r"(A\d)_e(\d+)", name)
     if m and m.group(1) in P8_GRID:
         return grid_recipe(m.group(1), int(m.group(2)))
