@@ -98,10 +98,16 @@ item4 features; one `pB-d1fu` job, 8 CPUs, ≈ 1–2 h. No GPU. Cap 4 CPU-h.
   the old image-level ISIC split; mixing them with lesion-level λ = 0 / λ = 2 (item4) would mix splits. Job 68516
   (phase13 path) was cancelled; `d1_followup/` outputs from it were deleted. Job 68515 had failed earlier on missing
   item4 mid-λ s52.
-- Same timestamp. **Lesion-level mid-λ inventory:** `checkpoints/r2_item4` + complete `item4/features` exist for
-  λ ∈ {0.25, 0.5, 1, 4, 8} × seeds **42–46** only. Mid-λ seeds 52/62/72/82 exist only as **image-level** phase3
-  checkpoints / phase13 features (e.g. λ = 0 s52 id bal ≈ 0.67 vs item4 lesion-level ≈ 0.52) — not used for extract.
-  There is no lesion-level checkpoint to extract mid-λ s52+ from. Matched-seed dose at those λ for seeds 42–82 needs
-  new lesion-level training (behind R1/R2, `--nice=1000`), then `scripts/r5_d1_followup_extract.py` (same path as
-  `train_r2_item4_lesion_split.extract_features`). Until then: **placebo** and **λ0→λ2** (item4 only) run now; mid-λ
-  dose rows pending. Predictions unchanged.
+- 2026-10-16 10:28 (UTC+7), before dose numbers. **R4 Table 1 lesion mid-λ is not seeds 52–82.** Checked
+  `results/paperB/r4/r4_results.json` (`d55bf02` / commit `6c1f516` in that file) and `scripts/r4_report.py`:
+  `ENDPOINT_SEEDS = (42, 52, 62, 72, 82)` for λ ∈ {0, 2}; `LES_MID_SEEDS = (42, 43, 44, 45, 46)` for
+  λ ∈ {0.25, 0.5, 1, 4, 8}. Numbers are aggregated from `results/paperB/r2/item4/runs/runB_orth1_ladv*_s*/summary.json`
+  (+ features under `r2/item4/features/` for detectors / xdom) — same lesion-level item4 recipe, not a separate R4
+  sweep directory and not phase3. Mid-λ × {52, 62, 72, 82} lesion-level checkpoints/features **do not exist**; those
+  seeds at mid-λ exist only as image-level `phase3_sweep` / `phase13/features` (id_bal ≈ 0.70 vs item4 lesion ≈ 0.49)
+  and are not used. Item4 mid-λ features for seeds **42–46 are already complete** (no extract job needed).
+- Same timestamp. **Matched-seed dose still blocked for mid-λ:** λ = 0 features exist only for seeds 42–82, mid-λ
+  only for 42–46, so λ0 ∩ mid-λ = {42} (n = 1 < 3). Primary δ = ρ(λ2) − ρ(λ0.25) likewise has seed intersection {42}
+  only. Placebo + λ0→λ2 run now on item4 (job `pB-d1fu`). Mid-λ dose / δ test needs new lesion-level training of
+  either mid-λ at 52–82 or λ = 0 at 43–46 (behind R1/R2, `--nice=1000`), then extract if only ckpts exist.
+  Predictions unchanged.

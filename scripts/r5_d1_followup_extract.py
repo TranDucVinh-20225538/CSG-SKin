@@ -39,9 +39,9 @@ P7A = C.PAPERB / "results" / "paperB" / "r5" / "p7a" / "sets"
 CORE = ("isic_train", "isic_test", "pad_full", "pad_heldout", "fitzpatrick17k")
 P7A_NAMES = ("mednode", "sd198", "scin")
 ALL = CORE + P7A_NAMES
-# Dose lambdas that may still need extract when lesion-level ckpts appear.
+# R4/item4: λ∈{0,2} seeds 42–82; mid-λ seeds 42–46. Extract only when item4 ckpt exists.
 LAMS = (0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 0.0)
-SEEDS = (42, 52, 62, 72, 82)
+SEEDS = (42, 43, 44, 45, 46, 52, 62, 72, 82)
 
 
 def tag(lam, seed):
@@ -118,12 +118,12 @@ def main():
         print("missing_count", len(pairs))
         for i, (lam, seed, miss) in enumerate(pairs):
             print(i, "λ={:g}".format(lam), "seed", seed, "miss", miss)
-        # also report seeds with no lesion-level ckpt at mid-λ
+        # R4 mid-λ = 42–46 (item4); endpoint seeds 52–82 have no lesion mid-λ ckpt
         for lam in (0.25, 0.5, 1.0, 4.0, 8.0):
-            absent = [s for s in SEEDS if not (CKPT / tag(lam, s)).exists()
+            absent = [s for s in (52, 62, 72, 82) if not (CKPT / tag(lam, s)).exists()
                       and not (RUNS / tag(lam, s) / "summary.json").exists()]
             if absent:
-                print("no_lesion_ckpt λ={:g} seeds {}".format(lam, absent))
+                print("no_lesion_ckpt_mid_endpoint_seeds λ={:g} seeds {} (R4 mid-λ used 42–46)".format(lam, absent))
         return
     if a.lam is not None and a.seed is not None:
         extract_one(a.lam, a.seed)

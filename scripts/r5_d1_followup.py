@@ -4,7 +4,7 @@
 Decisions: decisions/paperB_r5_d1_followup.md. Never reads phase13/features.
 Usage: r5_d1_followup.py [--stage placebo|dose|all]
   placebo = λ0 pairs + λ0→λ2 DANN arm (available now on item4).
-  dose    = all λ levels (mid-λ pending until lesion-level features exist for matched seeds).
+  dose    = all λ levels (mid-λ: item4 seeds 42–46 exist; matched with λ0 only seed 42 → pending).
 """
 
 from __future__ import annotations
@@ -145,8 +145,12 @@ def analyse_dose(hmask, n_boot, seed, placebo=None):
     for lam in LAMS_DOSE:
         seeds = [s for s in SEEDS if feat_ok(lam, s) and feat_ok(0.0, s)]
         if len(seeds) < 3:
-            out["pending_lams"].append({"lambda": lam, "matched_seeds": seeds,
-                                        "reason": "need ≥3 matched lesion-level item4 seeds (have {})".format(seeds)})
+            mid = [s for s in (42, 43, 44, 45, 46) if feat_ok(lam, s)]
+            out["pending_lams"].append({
+                "lambda": lam, "matched_seeds": seeds, "mid_lam_item4_seeds": mid,
+                "reason": ("R4/item4 mid-λ features exist for seeds 42–46; λ0 only for 42–82; "
+                           "matched λ0∩mid-λ={} (need ≥3). No lesion mid-λ at 52–82.".format(seeds)),
+            })
     for sname in SETS:
         g = D1.set_groups(sname, len(cache0[SEEDS[0]][sname]["labels"]))
         blk = {"reps": {}}
@@ -245,10 +249,11 @@ def write_report(placebo, dose):
     L += ["", "Placebo verdict: **{}/5** latent → DANN-specific {} (backbone {}/5).".format(
         v["latent_n_met"], "supported" if v["dann_specific"] else "not supported", v["backbone_n_met"]), ""]
     if dose is None:
-        L += ["## (2) Dose — pending mid-λ lesion-level features", "",
-              "λ0→λ2 ρ_dom is in the placebo DANN column above. Mid-λ dose (0.25…8) waits for lesion-level "
-              "item4 features at matched seeds 42–82 (`r5_d1_followup_extract.py` after training). "
-              "phase3/phase13 image-level caches are not used.", ""]
+        L += ["## (2) Dose — pending matched mid-λ seeds", "",
+              "λ0→λ2 ρ_dom is in the placebo DANN column above. R4 Table 1 mid-λ used item4 seeds **42–46** "
+              "(features already under `r2/item4/features/`); λ0/λ2 used 42–82. Matched λ0∩mid-λ = {42} only, "
+              "so the preregistered ≥3-seed dose / δ(λ2−λ0.25) test is not run. No lesion mid-λ at 52–82 "
+              "(phase3/phase13 are image-level; not used).", ""]
     else:
         L += ["## (2) Dose", "",
               "Pending λ (insufficient matched lesion-level seeds): {}.".format(
