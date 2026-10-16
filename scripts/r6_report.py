@@ -23,6 +23,12 @@ import r6_common as R  # noqa: E402
 LES_RUNS = R.C.R2 / "item4" / "runs"
 P8_MAIN = R.P8_DIR / "main"
 SHIFT_LABEL = {100: "shift 100%", 50: "shift 50%", 0: "shift 0%"}
+# Every R1 shift cell is scored on these OOD sets (same five detectors; cluster/patient bootstrap).
+R1_OODS = ("pad_heldout", "fitzpatrick17k", "mednode", "sd198", "scin")
+R1_OOD_LAB = {
+    "pad_heldout": "pad_heldout", "fitzpatrick17k": "Fitzpatrick17k",
+    "mednode": "MED-NODE", "sd198": "SD-198", "scin": "SCIN",
+}
 PRED = {
     "p8": "selected recipe raises λ = 0 val bal acc to 0.60–0.70 (current 0.47 on val); ID test bal acc at λ = 0 "
           "0.60–0.72; Mahalanobis pad_heldout at λ = 0 0.75–0.85; at λ = 2 0.38–0.48 with rule A met (inversion "
@@ -63,6 +69,35 @@ def own_runs(root, fmt, lam, feat="features", **kw):
                          root / "runs" / fmt.format(lam=R.lam_tag(lam), s=s, **kw)) for s in R.SEEDS})
 
 
+def _ensure_nearest(m, feat_dir):
+    """Backfill nearest_class_share / degraded from features when the summary predates those fields."""
+    need = ("nearest_class_share" not in m.get("ood", {}).get("pad_heldout", {})
+            or "id_nearest_class_share" not in m or "degraded" not in m)
+    if not need:
+        return m
+    Fs = R.load_feats(feat_dir, ("isic_train", "isic_test", "pad_heldout"))
+    if "isic_train" not in Fs or "isic_test" not in Fs:
+        return m
+    sc = R.Scorer(Fs["isic_train"])
+    m = dict(m)
+    m["id_nearest_class_share"] = sc.nearest_class_share(Fs["isic_test"]["z_lesion_norm"])
+    m["id_nv_nearest_frac"] = m["id_nearest_class_share"]["NV"]
+    ood = dict(m.get("ood", {}))
+    for n, pack in Fs.items():
+        if n.startswith("isic_"):
+            continue
+        if n not in ood:
+            continue
+        blk = dict(ood[n])
+        shares = sc.nearest_class_share(pack["z_lesion_norm"])
+        blk["nearest_class_share"] = shares
+        blk["nv_nearest_frac"] = shares["NV"]
+        ood[n] = blk
+    m["ood"] = ood
+    m["degraded"] = bool(m["id"]["bal_acc"] < R.DEGRADED_ID_BAL)
+    return m
+
+
 def metrics(cells_src, site_test=None, from_features=False):
     cells = []
     for label, lam, pairs in cells_src:
@@ -70,12 +105,13 @@ def metrics(cells_src, site_test=None, from_features=False):
         for s, (f, r) in pairs.items():
             m, _ = R.metrics_for(f, None if from_features else r, site_test=site_test)
             if m is not None and "ood" in m:
-                ms[s] = m
+                ms[s] = _ensure_nearest(m, f)
         cells.append((label, lam, ms))
     return cells
 
 
-def boots_for(cells_src, ood_names, data, id_groups, dets=None):
+def boots_for(cells_src, ood_names, data, id_groups, dets=None, exclude_by_cell=None):
+    """exclude_by_cell: optional {(label, lam): set(seeds)} dropped from the pooled rule A verdict."""
     out = {}
     for name in ood_names:
         try:
@@ -84,7 +120,9 @@ def boots_for(cells_src, ood_names, data, id_groups, dets=None):
             continue
         for label, lam, pairs in cells_src:
             if pairs:
-                b = R.bootstrap_cell({s: f for s, (f, _r) in pairs.items()}, name, id_groups, og, dets=dets)
+                ex = None if exclude_by_cell is None else exclude_by_cell.get((label, lam))
+                b = R.bootstrap_cell({s: f for s, (f, _r) in pairs.items()}, name, id_groups, og, dets=dets,
+                                     exclude_seeds=ex)
                 if b is not None:
                     b["unit_ood"] = unit
                     out[(label, lam, name)] = b
@@ -94,15 +132,43 @@ def boots_for(cells_src, ood_names, data, id_groups, dets=None):
 def fmt_ci(b, det="mahalanobis_classcond"):
     if b is None:
         return "—"
+    if b.get("n_seeds", 1) == 0 or det not in b:
+        return "— (no seeds after exclusion)"
     x = b[det]
     sd = "" if x["sd"] is None else " ± {:.3f}".format(x["sd"])
-    return "{:.3f}{} [{:.3f}, {:.3f}], {}/{} seed CIs below 0.5, rule A {}".format(
-        x["mean"], sd, x["ci_lo"], x["ci_hi"], x["k_below"], x["n_seeds"], "met" if b["rule_A"] else "not met")
+    excl = b.get("excluded_seeds") or []
+    suffix = "" if not excl else "; excluded degraded {}".format(excl)
+    verdict = "—" if b.get("rule_A") is None else ("met" if b["rule_A"] else "not met")
+    return "{:.3f}{} [{:.3f}, {:.3f}], {}/{} seed CIs below 0.5, rule A {}{}".format(
+        x["mean"], sd, x["ci_lo"], x["ci_hi"], x["k_below"], x["n_seeds"], verdict, suffix)
 
 
-def mean_of(cell, key_fn):
-    vals = [key_fn(m) for m in cell[2].values()]
+def mean_of(cell, key_fn, skip_degraded=False):
+    vals = [key_fn(m) for s, m in cell[2].items() if not (skip_degraded and m.get("degraded"))]
     return R.ms(vals)
+
+
+def lambda0_id_bal(rt):
+    """Matched-seed λ = 0 ID bal acc for the same recipe (R1 reuse / two-stream reference)."""
+    out = {}
+    for s, (f, r) in ref_runs(rt, 0.0).items():
+        m, raw = R.metrics_for(f, r)
+        if m is not None and "id" in m:
+            out[s] = float(m["id"]["bal_acc"])
+        elif raw is not None and "id_balanced_acc" in raw:
+            out[s] = float(raw["id_balanced_acc"])
+    return out
+
+
+def run_flags(m, id_l0=None):
+    """Return flag labels for one run (degraded / ID-drop); never silent-drop."""
+    flags = []
+    idb = m["id"]["bal_acc"]
+    if idb < R.DEGRADED_ID_BAL or m.get("degraded"):
+        flags.append("degraded (ID bal {:.3f} < {:.2f})".format(idb, R.DEGRADED_ID_BAL))
+    if id_l0 is not None and idb < id_l0 - R.ID_DROP_FLAG:
+        flags.append("ID drop vs λ=0 ({:.3f} − {:.3f} = {:+.3f})".format(idb, id_l0, idb - id_l0))
+    return flags
 
 
 def flag_lines(cells, primary="pad_heldout", leak=lambda m: m["leakage"]["bal_acc_mean"], leak_name="Table 1 leakage"):
@@ -297,6 +363,165 @@ def report_p8(a, data, idg):
     write(root, L, tex + ["% current recipe reference"] + tex_c, tables, "p8")
 
 
+def degraded_by_cell(cells):
+    return {(lab, lam): {s for s, m in runs.items() if m.get("degraded") or m["id"]["bal_acc"] < R.DEGRADED_ID_BAL}
+            for lab, lam, runs in cells}
+
+
+def r1_run_flag_section(L, cells, id_l0):
+    L += ["## Run quality flags (R1 deviation 2026-10-16 10:05)", "",
+          "Degraded = ID bal acc < {:.2f} (2× chance {:.3f}): reported, flagged, **excluded from the main rule A "
+          "verdict**; verdict also shown with them included. ID drop > {:.2f} below matched λ = 0: flagged, **kept** "
+          "in the main verdict. No seed reruns unless > 1 of 5 degrade in a cell → replacement seeds {}.".format(
+              R.DEGRADED_ID_BAL, R.CHANCE_ID_BAL, R.ID_DROP_FLAG, list(R.REPLACEMENT_SEEDS)), "",
+          "| cell | λ | seed | ID bal | λ=0 ID bal | flags |",
+          "|---|---:|---:|---:|---:|---|"]
+    n_deg_cell = {}
+    for lab, lam, runs in cells:
+        deg = 0
+        for s, m in sorted(runs.items()):
+            fl = run_flags(m, id_l0.get(s))
+            if any(x.startswith("degraded") for x in fl):
+                deg += 1
+            L.append("| {} | {:g} | {} | {:.3f} | {} | {} |".format(
+                lab, lam, s, m["id"]["bal_acc"],
+                "—" if s not in id_l0 else "{:.3f}".format(id_l0[s]),
+                "; ".join(fl) if fl else "—"))
+        n_deg_cell[(lab, lam)] = deg
+        if deg > 1 and len(runs) >= 5:
+            L.append("| {} | {:g} | — | — | — | **replacement trigger**: {}/{} degraded → run seeds {} |".format(
+                lab, lam, deg, len(runs), list(R.REPLACEMENT_SEEDS)))
+    L.append("")
+    return n_deg_cell
+
+
+def nearest_shift_section(L, cells):
+    """Per shift × λ: pad_heldout nearest-centroid class share as Δ vs λ=0 pad_heldout and vs ID test (same shift)."""
+    base = next((c for c in cells if c[1] == 0.0 and c[2]), None)
+    L += ["## Where OOD images go (nearest ISIC class centroid, Mahalanobis)", "",
+          "Share of pad_heldout whose nearest ISIC-train class mean (Mahalanobis) is each class. Reported as "
+          "**Δ vs λ = 0** pad_heldout distribution (paper baseline NV share ≈ 0.332 at λ = 0) and **Δ vs ID test** "
+          "at the same cell (classifier / ID test unchanged by adversary-stream resampling). Raw shares in "
+          "`cells.json`. Means over non-degraded seeds when any remain; otherwise all seeds.", ""]
+    hdr = "| cell | λ | vs | " + " | ".join(R.LABELS) + " |"
+    L += [hdr, "|---|---:|---|" + "---|" * len(R.LABELS)]
+    if base is None:
+        L += ["*(λ = 0 cell not yet present; Δ vs λ = 0 omitted until baselines finish.)*", ""]
+    base_share = None
+    if base is not None:
+        skip = bool(degraded_by_cell([base])[(base[0], base[1])])
+        # mean share over seeds (prefer non-degraded)
+        def mean_share(cell, key):
+            deg = degraded_by_cell([cell])[(cell[0], cell[1])]
+            use = {s: m for s, m in cell[2].items() if s not in deg} or cell[2]
+            return {c: float(np.mean([key(m).get(c, 0.0) for m in use.values()])) for c in R.LABELS}
+
+        base_share = mean_share(base, lambda m: m["ood"]["pad_heldout"]["nearest_class_share"])
+        L.append("| {} | {:g} | raw (baseline) | {} |".format(
+            base[0], base[1], " | ".join("{:.3f}".format(base_share[c]) for c in R.LABELS)))
+    for lab, lam, runs in cells:
+        if not runs or lam == 0.0:
+            continue
+        deg = degraded_by_cell([(lab, lam, runs)])[(lab, lam)]
+        use = {s: m for s, m in runs.items() if s not in deg} or runs
+
+        def avg(fn):
+            return {c: float(np.mean([fn(m).get(c, 0.0) for m in use.values()])) for c in R.LABELS}
+
+        ood = avg(lambda m: m["ood"]["pad_heldout"]["nearest_class_share"])
+        id_ = avg(lambda m: m.get("id_nearest_class_share") or {})
+        if base_share is not None:
+            L.append("| {} | {:g} | Δ vs λ=0 pad_heldout | {} |".format(
+                lab, lam, " | ".join("{:+.3f}".format(ood[c] - base_share[c]) for c in R.LABELS)))
+        L.append("| {} | {:g} | Δ vs ID test (same cell) | {} |".format(
+            lab, lam, " | ".join("{:+.3f}".format(ood[c] - id_.get(c, 0.0)) for c in R.LABELS)))
+        L.append("| {} | {:g} | raw pad_heldout | {} |".format(
+            lab, lam, " | ".join("{:.3f}".format(ood[c]) for c in R.LABELS)))
+        L.append("| {} | {:g} | raw ID test | {} |".format(
+            lab, lam, " | ".join("{:.3f}".format(id_.get(c, 0.0)) for c in R.LABELS)))
+    L.append("")
+
+
+def r1_key_comparison(L, cells, boots, boots_all, oods):
+    """λ=2: R1 shift 0% vs R1's own shift 100% (last.ckpt), plus shift 50% when present — every OOD set."""
+    L += ["## Key comparison: λ = 2 shift 0% vs R1 shift 100% (last.ckpt), all unseen sets", "",
+          "Same three-stream recipe; primary = `last.ckpt`. Cells are R1's own shift runs (not two-stream item4). "
+          "Shift 50% (seeds 42/52/62) is included when present. For each set: five detectors (point mean ± s.d.) and "
+          "Mahalanobis / kNN / cosine rule-A bootstrap (cluster or patient units). Degraded seeds excluded from the "
+          "primary rule A column; all-seeds column secondary.", ""]
+    have = []
+    for sh in (100, 50, 0):
+        c = next((x for x in cells if x[0] == SHIFT_LABEL[sh] and x[1] == 2.0 and x[2]), None)
+        if c is not None:
+            have.append(sh)
+    if not have:
+        L += ["*(No λ = 2 shift cells with features yet.)*", ""]
+        return
+    for o in oods:
+        if not any(o in m.get("ood", {}) for c in cells if c[1] == 2.0 for m in c[2].values()):
+            continue
+        L += ["### {} (λ = 2)".format(R1_OOD_LAB.get(o, o)), "",
+              "| shift | n seeds | " + " | ".join(R.DET_LABEL[d] for d in R.DETS)
+              + " | Maha [rule A excl. degraded] | Maha [all seeds] |",
+              "|---|---:|" + "|".join(["---:"] * len(R.DETS)) + "|---|---|"]
+        for sh in (100, 50, 0):
+            c = next((x for x in cells if x[0] == SHIFT_LABEL[sh] and x[1] == 2.0), None)
+            if c is None or not c[2]:
+                continue
+            n = sum(1 for m in c[2].values() if o in m.get("ood", {}))
+            pts = []
+            for d in R.DETS:
+                pts.append(R.pm(mean_of(c, lambda m, _d=d, _o=o: m["ood"][_o][_d], skip_degraded=True)))
+            L.append("| {} | {} | {} | {} | {} |".format(
+                SHIFT_LABEL[sh], n, " | ".join(pts),
+                fmt_ci(boots.get((SHIFT_LABEL[sh], 2.0, o))),
+                fmt_ci(boots_all.get((SHIFT_LABEL[sh], 2.0, o)))))
+        L.append("")
+    # compact Δ(0% − 100%) for Mahalanobis point means (descriptive; CI contrast is in the rows above)
+    if 0 in have and 100 in have:
+        L += ["### λ = 2 Mahalanobis point Δ (shift 0% − shift 100%), excl. degraded", "",
+              "| set | mean Δ | shift 0% | shift 100% | shift 50% |",
+              "|---|---:|---:|---:|---:|"]
+        for o in oods:
+            c0 = next((x for x in cells if x[0] == SHIFT_LABEL[0] and x[1] == 2.0), None)
+            c100 = next((x for x in cells if x[0] == SHIFT_LABEL[100] and x[1] == 2.0), None)
+            c50 = next((x for x in cells if x[0] == SHIFT_LABEL[50] and x[1] == 2.0), None)
+            m0 = mean_of(c0, lambda m, _o=o: m["ood"][_o]["mahalanobis_classcond"], skip_degraded=True) if c0 else None
+            m100 = mean_of(c100, lambda m, _o=o: m["ood"][_o]["mahalanobis_classcond"], skip_degraded=True) if c100 else None
+            m50 = mean_of(c50, lambda m, _o=o: m["ood"][_o]["mahalanobis_classcond"], skip_degraded=True) if c50 else None
+            if m0 is None or m100 is None:
+                continue
+            L.append("| {} | {:+.3f} | {} | {} | {} |".format(
+                R1_OOD_LAB.get(o, o), m0["mean"] - m100["mean"], R.pm(m0), R.pm(m100),
+                "—" if m50 is None else R.pm(m50)))
+        L.append("")
+
+
+def r1_dose_by_set(L, cells, boots, boots_all, oods):
+    """Dose tables: Mahalanobis (+ rule A) by shift for every λ and every unseen set."""
+    L += ["## Dose tables (Mahalanobis by shift; every unseen set)", "",
+          "Primary rule A excludes degraded seeds; all-seeds column secondary. Point detectors for each set are in "
+          "the detector sections above.", ""]
+    for o in oods:
+        L += ["### Dose — {}".format(R1_OOD_LAB.get(o, o)), "",
+              "| λ | shift | AUROC [excl. degraded] | AUROC [all seeds] | leakage (pad probe) | NV-nearest (this set) |",
+              "|---:|---|---|---|---|---|"]
+        for lam in (0.5, 2.0):
+            for sh in (100, 50, 0):
+                c = next((x for x in cells if x[0] == SHIFT_LABEL[sh] and x[1] == lam), None)
+                if c is None or not c[2]:
+                    continue
+                if not any(o in m.get("ood", {}) for m in c[2].values()):
+                    continue
+                L.append("| {:g} | {} | {} | {} | {} | {} |".format(
+                    lam, SHIFT_LABEL[sh],
+                    fmt_ci(boots.get((SHIFT_LABEL[sh], lam, o))),
+                    fmt_ci(boots_all.get((SHIFT_LABEL[sh], lam, o))),
+                    R.pm(mean_of(c, lambda m: m["leakage"]["bal_acc_mean"], skip_degraded=True)),
+                    R.pm(mean_of(c, lambda m, _o=o: m["ood"][_o]["nv_nearest_frac"], skip_degraded=True))))
+        L.append("")
+
+
 def report_r1(a, data, idg, rt):
     root = item_dir("r1", rt)
     fmt = "r1_" + rt + "_shift{sh}_ladv{lam}_s{s}"
@@ -305,19 +530,39 @@ def report_r1(a, data, idg, rt):
         for sh in (100, 50, 0):
             src.append((SHIFT_LABEL[sh], lam, own_runs(root, fmt, lam, sh=sh)))
     src = [c for c in src if c[2]]
-    oods = ["pad_heldout", "fitzpatrick17k"] + list(R.P7A_NAMES)
-    boots = {} if a.no_boot else boots_for(src, oods, data, idg)
+    oods = list(R1_OODS)
     cells = metrics(src)
+    id_l0 = lambda0_id_bal(rt)
+    # fall back: if R1 λ=0 cells exist, prefer those ID bals for the matched-seed flag
+    c0 = next((x for x in cells if x[1] == 0.0), None)
+    if c0:
+        for s, m in c0[2].items():
+            id_l0[s] = float(m["id"]["bal_acc"])
+    excl = degraded_by_cell(cells)
+    boots = {} if a.no_boot else boots_for(src, oods, data, idg, exclude_by_cell=excl)
+    boots_all = {} if a.no_boot else boots_for(src, oods, data, idg)
     L = ["# Paper B R6 R1 — causal dose test (recipe: {})".format(rt), "",
          "Design: `decisions/paperB_r6_r1.md`. Commit `{}`. Three streams per step: ISIC classifier stream (full ISIC "
          "train, natural order), ISIC adversary stream resampled to the shift level, PAD adversary stream unchanged. PAD "
-         "labels set only the resampling proportions and enter no loss.".format(R.C.git_head()), ""]
+         "labels set only the resampling proportions and enter no loss. Primary checkpoint = `last.ckpt`. Every shift "
+         "cell is scored on pad_heldout, Fitzpatrick17k, MED-NODE, SD-198, SCIN (same detectors + cluster/patient "
+         "bootstrap).".format(R.C.git_head()), ""]
     tex = []
+    r1_run_flag_section(L, cells, id_l0)
+    r1_key_comparison(L, cells, boots, boots_all, oods)
     standard_sections(L, tex, cells, boots, oods)
+    L += ["### Rule A with degraded seeds included (secondary; all unseen sets)", "",
+          "| cell | λ | " + " | ".join(R1_OOD_LAB[o] for o in oods) + " |",
+          "|---|---:|" + "|".join(["---"] * len(oods)) + "|"]
+    for lab, lam, runs in cells:
+        if not runs:
+            continue
+        L.append("| {} | {:g} | {} |".format(
+            lab, lam, " | ".join(fmt_ci(boots_all.get((lab, lam, o))) for o in oods)))
+    L.append("")
     label_shift_extras(L, cells)
-    L += ["## Dose table (Mahalanobis, pad_heldout)", "",
-          "| λ | shift | AUROC mean [95% CI] / rule A | Fitzpatrick | leakage | leakage class-matched | NV-nearest |",
-          "|---:|---|---|---|---|---|---|"]
+    nearest_shift_section(L, cells)
+    r1_dose_by_set(L, cells, boots, boots_all, oods)
     paragraphs = []
     for lam in (0.5, 2.0):
         parts = []
@@ -326,27 +571,25 @@ def report_r1(a, data, idg, rt):
             if c is None:
                 continue
             b = boots.get((SHIFT_LABEL[sh], lam, "pad_heldout"))
-            L.append("| {:g} | {} | {} | {} | {} | {} | {} |".format(
-                lam, SHIFT_LABEL[sh], fmt_ci(b), fmt_ci(boots.get((SHIFT_LABEL[sh], lam, "fitzpatrick17k"))),
-                R.pm(mean_of(c, lambda m: m["leakage"]["bal_acc_mean"])),
-                R.pm(mean_of(c, lambda m: m["leakage_classmatched"]["bal_acc_mean"])),
-                R.pm(mean_of(c, lambda m: m["ood"]["pad_heldout"]["nv_nearest_frac"]))))
-            parts.append("{}: {}, leakage {}, NV-nearest {}".format(
-                SHIFT_LABEL[sh], fmt_ci(b), R.pm(mean_of(c, lambda m: m["leakage"]["bal_acc_mean"])),
-                R.pm(mean_of(c, lambda m: m["ood"]["pad_heldout"]["nv_nearest_frac"]))))
+            ba = boots_all.get((SHIFT_LABEL[sh], lam, "pad_heldout"))
+            parts.append("{}: {} (all: {})".format(SHIFT_LABEL[sh], fmt_ci(b), fmt_ci(ba)))
         if parts:
-            paragraphs.append("At λ = {:g}, Mahalanobis on pad_heldout by shift level — {}. Prediction: {}".format(
-                lam, "; ".join(parts), PRED["r1"]))
-    L.append("")
-    c0 = next((x for x in cells if x[1] == 0.0), None)
+            paragraphs.append("At λ = {:g}, Mahalanobis on pad_heldout by shift — {}. Same shift ordering is tabulated "
+                              "for Fitzpatrick / MED-NODE / SD-198 / SCIN above. Prediction: {}".format(
+                                  lam, "; ".join(parts), PRED["r1"]))
     if c0:
-        paragraphs.append("λ = 0 baseline (three-stream, shift 100%): Mahalanobis pad_heldout {}, ID bal acc {}.".format(
+        paragraphs.append("λ = 0 baseline (shift 100%): Mahalanobis pad_heldout {}, ID bal acc {}.".format(
             fmt_ci(boots.get((c0[0], 0.0, "pad_heldout"))), R.pm(mean_of(c0, lambda m: m["id"]["bal_acc"]))))
     ref = metrics([("two-stream DANN (same recipe)", lam, ref_runs(rt, lam)) for lam in (0.0, 0.5, 2.0)])
     md, tex_r, _ = R.cell_table([c for c in ref if c[2]])
     L += ["## Continuity reference: two-stream runs of the same recipe (separate table)", ""] + md + [""]
     L += ["## Results in plain words", ""] + [p + "\n" for p in paragraphs]
-    write(root, L, tex + ["% two-stream reference"] + tex_r, [(cells, "pad_heldout"), ([c for c in ref if c[2]], "pad_heldout")], "r6_r1")
+    extra = {"degraded_by_cell": {"{}|{:g}".format(k[0], k[1]): sorted(v) for k, v in excl.items() if v},
+             "id_bal_lambda0_matched": id_l0,
+             "key_comparison": "λ=2 shift 0% vs R1 shift 100% (last.ckpt) per set in R1_OODS; + shift 50% when present",
+             "ood_sets": list(oods)}
+    write(root, L, tex + ["% two-stream reference"] + tex_r,
+          [(cells, "pad_heldout"), ([c for c in ref if c[2]], "pad_heldout")], "r6_r1", extra_json=extra)
 
 
 def report_r2(a, data, idg, rt):

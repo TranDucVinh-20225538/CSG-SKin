@@ -116,3 +116,18 @@ Jobs: 5 reused λ = 0 + λ ∈ {0.5, 2} × (5 + 5 + 3) = 31 (26 trained). Revise
 
 ## Deviations
 
+- 2026-10-16 10:05 (UTC+7), user-directed, after seed 52 at shift 0% λ = 2 finished with ID bal acc 0.139
+  (chance = 1/8 = 0.125) and before further seeds are summarised. **Degraded-run rule for R1.** A run is degraded if
+  its primary-checkpoint ID test balanced accuracy is &lt; 0.25 (2× chance). Degraded runs are reported and flagged and
+  **excluded from the rule A verdict**; the verdict is also shown with them included. Separately, a run whose ID bal
+  acc is more than 0.10 below the matched λ = 0 run (same recipe and seed) is flagged but **kept in the main verdict**.
+  No reruns of failed seeds unless pre-specified: if more than 1 of 5 seeds degrade in a cell, run 2 replacement seeds
+  92 and 102 for that cell only. Implementation: `scripts/r6_common.py` (`DEGRADED_ID_BAL`, `ID_DROP_FLAG`),
+  `scripts/r6_report.py --item r1` (dual rule A; nearest-centroid class-share Δ table). Seed-52 diagnosis written under
+  `results/paperB/r6/r1/cur/diag_s52_shift0_ladv2.json`.
+- 2026-10-16 11:20 (UTC+7), before shift-100% λ = 2 cells are complete. **All unseen sets at every shift:** each
+  R1 cell is scored on pad_heldout, Fitzpatrick17k, MED-NODE, SD-198, SCIN with the same five detectors and the same
+  cluster/patient bootstraps (Fitzpatrick uses P13 `cluster_union` when present; else image). Report key comparison at
+  λ = 2: R1 shift 0% vs R1's own shift 100% (`last.ckpt`), per set, plus shift 50% when available
+  (`scripts/r6_report.py --item r1`). Predictions unchanged.
+
