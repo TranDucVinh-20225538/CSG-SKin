@@ -216,3 +216,7 @@ Implementation (fixed now):
   Q1 headroom gate only (it runs with RECIPE=current, so it does not depend on the rule). P9 pilot round 1 runs with
   RECIPE=auto and therefore waits for the rule; it is not used as filler. With P8 main occupying both GPUs until
   ≈ 07:30 and the rule inputs complete at ≈ 02:00, no idle gap is expected.
+- 2026-10-16 07:05 (UTC+7). P8 post-main CPU report (job 67544) failed: `selection_stageB.json["gain_e80_minus_e40"]`
+  is None (40-epoch lock, stage B not run) and the report formatted it with `{:+.3f}`. Fixed; report rerun. The
+  rerun also bootstraps A4 at λ ∈ {0.5, 2} for last.ckpt and best-val (all 5 detectors; pad_heldout by patient;
+  Fitzpatrick by P13 cluster_union; rule A on Mahalanobis). P8 ext cancelled (main-recipe rule = old).

@@ -58,34 +58,35 @@ def ref_runs(rt, lam):
                      for s in R.SEEDS})
 
 
-def own_runs(root, fmt, lam, **kw):
-    return existing({s: (root / "features" / fmt.format(lam=R.lam_tag(lam), s=s, **kw),
+def own_runs(root, fmt, lam, feat="features", **kw):
+    return existing({s: (root / feat / fmt.format(lam=R.lam_tag(lam), s=s, **kw),
                          root / "runs" / fmt.format(lam=R.lam_tag(lam), s=s, **kw)) for s in R.SEEDS})
 
 
-def metrics(cells_src, site_test=None):
+def metrics(cells_src, site_test=None, from_features=False):
     cells = []
     for label, lam, pairs in cells_src:
         ms = {}
         for s, (f, r) in pairs.items():
-            m, _ = R.metrics_for(f, r, site_test=site_test)
+            m, _ = R.metrics_for(f, None if from_features else r, site_test=site_test)
             if m is not None and "ood" in m:
                 ms[s] = m
         cells.append((label, lam, ms))
     return cells
 
 
-def boots_for(cells_src, ood_names, data, id_groups):
+def boots_for(cells_src, ood_names, data, id_groups, dets=None):
     out = {}
     for name in ood_names:
         try:
-            og, _unit = R.ood_groups(name, data)
+            og, unit = R.ood_groups(name, data)
         except FileNotFoundError:
             continue
         for label, lam, pairs in cells_src:
             if pairs:
-                b = R.bootstrap_cell({s: f for s, (f, _r) in pairs.items()}, name, id_groups, og)
+                b = R.bootstrap_cell({s: f for s, (f, _r) in pairs.items()}, name, id_groups, og, dets=dets)
                 if b is not None:
+                    b["unit_ood"] = unit
                     out[(label, lam, name)] = b
     return out
 
@@ -211,39 +212,71 @@ def report_p8(a, data, idg):
     if selA:
         L += ["Stage A winner: {} (within-tie set {}); rule: {}.".format(selA["winner"], selA["within_tie"], selA["rule"])]
     if sel:
-        L += ["Selected recipe: {} (80-epoch gain {:+.3f}; {}).".format(sel["recipe"], sel["gain_e80_minus_e40"], sel["rule"]), ""]
+        gain = sel.get("gain_e80_minus_e40")
+        if gain is None:
+            L += ["Selected recipe: {} ({}).".format(sel["recipe"], sel["rule"]), ""]
+        else:
+            L += ["Selected recipe: {} (80-epoch gain {:+.3f}; {}).".format(sel["recipe"], gain, sel["rule"]), ""]
+    rule = json.loads((root / "MAIN_RECIPE_RULE.json").read_text()) if (root / "MAIN_RECIPE_RULE.json").exists() else None
+    if rule:
+        L += ["Main-recipe rule (λ = 0, lesion-level val, last.ckpt, 5 seeds): D = {:+.4f}, 95% paired t CI "
+              "[{:+.4f}, {:+.4f}]; outcome **{}** (RECIPE=auto → {}); P8 ext: {}.".format(
+                  rule["D"], rule["ci"][0], rule["ci"][1], rule["outcome"], rule["main_recipe"], rule["p8_ext"]), ""]
     tex, tables = [], []
     paragraphs = []
     if sel:
-        src = [("P8 recipe", lam, own_runs(root / "main", "main_ladv{lam}_s{s}", lam))
-               for lam in (0.0, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0)]
-        src = [c for c in src if c[2]]
-        oods = ["pad_heldout", "fitzpatrick17k", "pad_full"] + list(R.P7A_NAMES)
-        boots = {} if a.no_boot else boots_for(src, oods, data, idg)
-        cells = metrics(src)
-        standard_sections(L, tex, cells, boots, oods, title=" — P8 recipe")
-        label_shift_extras(L, cells, " — P8 recipe")
-        tables.append((cells, "pad_heldout"))
-        c0 = next((c for c in cells if c[1] == 0.0), None)
-        c2 = next((c for c in cells if c[1] == 2.0), None)
+        oods_boot = ["pad_heldout", "fitzpatrick17k"]
+        oods_all = oods_boot + ["pad_full"] + list(R.P7A_NAMES)
+        boots_by_ck, cells_by_ck = {}, {}
+        for ck, feat, from_feat, title in (
+                ("last.ckpt", "features", False, " — A4 last.ckpt (primary)"),
+                ("best-val", "features_bestval", True, " — A4 best-val (secondary)")):
+            src = [("A4 ({})".format(ck), lam, own_runs(root / "main", "main_ladv{lam}_s{s}", lam, feat=feat))
+                   for lam in (0.0, 0.5, 2.0)]
+            src = [c for c in src if c[2]]
+            if not src:
+                continue
+            boots = {} if a.no_boot else boots_for(src, oods_boot, data, idg, dets=R.DETS)
+            cells = metrics(src, from_features=from_feat)
+            boots_by_ck[ck], cells_by_ck[ck] = boots, cells
+            standard_sections(L, tex, cells, boots, oods_all, title=title)
+            label_shift_extras(L, cells, title)
+            tables.append((cells, "pad_heldout"))
+            L += ["### Bootstrap units{}".format(title), "",
+                  "ID: lesion. pad_heldout: patient. Fitzpatrick17k: {}.".format(
+                      boots.get((src[0][0], src[0][1], "fitzpatrick17k"), {}).get("unit_ood", "—")), ""]
+            for lam in (0.5, 2.0):
+                for o in oods_boot:
+                    b = boots.get(("A4 ({})".format(ck), lam, o))
+                    if b is None:
+                        continue
+                    L.append("A4 λ = {:g}, {}, {}: Mahalanobis {}; rule A {}; units: ID lesion, OOD {}.".format(
+                        lam, ck, o, fmt_ci(b), "met" if b["rule_A"] else "not met", b.get("unit_ood", "—")))
+            L.append("")
+        boots_last, cells_last = boots_by_ck.get("last.ckpt", {}), cells_by_ck.get("last.ckpt", [])
+        c0 = next((c for c in cells_last if c[1] == 0.0), None)
         idb = mean_of(c0, lambda m: m["id"]["bal_acc"]) if c0 else None
-        b2 = boots.get(("P8 recipe", 2.0, "pad_heldout"))
+        b2 = boots_last.get(("A4 (last.ckpt)", 2.0, "pad_heldout"))
         competent = bool(idb and idb["n"] == 5 and idb["mean"] >= R.COMPETENCE_TARGET)
-        if c0 and c2 and len(c0[2]) == 5 and len(c2[2]) == 5 and b2 is not None:
-            dec = {"competent": competent, "id_bal_acc_lambda0": idb, "target": R.COMPETENCE_TARGET,
-                   "inversion_survives": bool(b2 and b2["rule_A"]), "rule_A_block": b2 and b2["mahalanobis_classcond"],
-                   "recipe": sel["recipe"], "note": "flags only; the user decides the main recipe"}
-            (root / "RECIPE_DECISION.json").write_text(json.dumps(dec, indent=1, default=float) + "\n")
+        dec = {"competent": competent, "id_bal_acc_lambda0": idb, "target": R.COMPETENCE_TARGET,
+               "inversion_survives": bool(b2 and b2["rule_A"]), "rule_A_block": b2 and b2["mahalanobis_classcond"],
+               "recipe": sel["recipe"], "main_recipe_rule": rule,
+               "note": "competence/inversion flags only; main recipe is MAIN_RECIPE_RULE.json"}
+        (root / "RECIPE_DECISION.json").write_text(json.dumps(dec, indent=1, default=float) + "\n")
         paragraphs.append(
-            "Competence. Under the selected recipe the λ = 0 model reaches ID test balanced accuracy {} (n = {}), against "
+            "Competence. Under A4 (last.ckpt) the λ = 0 model reaches ID test balanced accuracy {} (n = {}), against "
             "the target {:.2f}, the paper's image-level single-encoder ERM {:.3f} and the lesion-level single-encoder "
             "reference {}. Competence flag (≥ {:.2f}): {}.".format(
                 R.pm(idb), idb["n"] if idb else 0, R.COMPETENCE_TARGET, R.ERM_SINGLE_ENCODER_IMAGE_LEVEL, R.pm(erm_ms),
                 R.COMPETENCE_TARGET, "yes" if competent else "no"))
-        paragraphs.append("Inversion under the P8 recipe. Mahalanobis on pad_heldout at λ = 0: {}; at λ = 2: {}. "
+        paragraphs.append(
+            "Main-recipe rule. D = {:+.4f} [{:+.4f}, {:+.4f}]; outcome {}; A4 reported as a robustness check at 3 λ; "
+            "P8 ext {}.".format(rule["D"], rule["ci"][0], rule["ci"][1], rule["outcome"], rule["p8_ext"]) if rule else
+            "Main-recipe rule file missing.")
+        paragraphs.append("Inversion under A4 last.ckpt. Mahalanobis on pad_heldout at λ = 0: {}; at λ = 2: {}. "
                           "Fitzpatrick at λ = 2: {}. Prediction: {}".format(
-                              fmt_ci(boots.get(("P8 recipe", 0.0, "pad_heldout"))), fmt_ci(b2),
-                              fmt_ci(boots.get(("P8 recipe", 2.0, "fitzpatrick17k"))), PRED["p8"]))
+                              fmt_ci(boots_last.get(("A4 (last.ckpt)", 0.0, "pad_heldout"))), fmt_ci(b2),
+                              fmt_ci(boots_last.get(("A4 (last.ckpt)", 2.0, "fitzpatrick17k"))), PRED["p8"]))
     # current-recipe reference, separate table (recipes never mixed)
     src_c = [("current recipe (R4 Table 1)", lam, ref_runs("cur", lam)) for lam in (0.0, 0.5, 2.0)]
     cells_c = metrics([c for c in src_c if c[2]])

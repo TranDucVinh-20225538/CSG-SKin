@@ -790,13 +790,19 @@ def ood_groups(name, data):
     if name in ("pad_heldout", "pad_full", "pad_adv"):
         return idx_groups(pad_patients(data[name])), "patient"
     if name == "fitzpatrick17k":
+        p13 = RES / "r5" / "p13" / "fitz_clusters.csv"
+        if p13.exists():
+            paths = sorted(p3.FITZ_DIR.glob("*.jpg"))
+            cl = pd.read_csv(p13).set_index("md5hash")["cluster_union"]
+            return idx_groups([str(cl[p.stem]) for p in paths]), "P13 cluster_union"
         return [np.array([i]) for i in range(len(sorted(p3.FITZ_DIR.glob("*.jpg"))))], "image (anti-conservative)"
     meta = pd.read_csv(P7A_SETS / "{}.csv".format(name), keep_default_na=False)
     return idx_groups(meta.group.astype(str).to_numpy()), "P7a group column"
 
 
-def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None):
+def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None, dets=None):
     """feat_dirs: {seed: Path}. Draws shared across seeds within the cell. Returns per-detector block with rule A."""
+    dets = tuple(dets) if dets is not None else BOOT_DETS
     pre = json.loads(PREREG.read_text())
     n_boot = int(pre["n_resamples"])
     rng = np.random.default_rng(int(pre["rng_seed"]) if rng_seed is None else rng_seed)
@@ -807,14 +813,14 @@ def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None):
             continue
         S = Scorer(Fs["isic_train"])
         a, b = S.scores(Fs["isic_test"]), S.scores(Fs[ood_name])
-        sc[s] = {k: (a[k], b[k]) for k in BOOT_DETS}
+        sc[s] = {k: (a[k], b[k]) for k in dets}
     if not sc:
         return None
     id_draws = [np.concatenate([id_groups[j] for j in rng.integers(0, len(id_groups), len(id_groups))]) for _ in range(n_boot)]
     oo_draws = [np.concatenate([o_groups[j] for j in rng.integers(0, len(o_groups), len(o_groups))]) for _ in range(n_boot)]
     seeds = sorted(sc)
     out = {}
-    for det in BOOT_DETS:
+    for det in dets:
         per, draws = {}, {}
         for s in seeds:
             sid, so = sc[s][det]
