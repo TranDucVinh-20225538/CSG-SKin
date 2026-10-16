@@ -55,6 +55,7 @@ case "${STEP}" in
   t1last)        ${PY} scripts/r5_t1_last.py run ${SLURM_ARRAY_TASK_ID} ;;
   t1last_report) ${PY} scripts/r5_t1_last.py report ;;
   bcnham_maha0)  ${PY} scripts/r5_bcnham_maha0_explain.py ${ARGS} ;;
+  r1_detmech_shift) ${PY} scripts/r6_r1_detmech_shift.py ${ARGS} ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="
