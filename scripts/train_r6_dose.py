@@ -17,8 +17,8 @@ sys.path.insert(0, "/data2/cmdir/home/toandq/CSG-Skin-paperB/scripts")
 import r6_common as R  # noqa: E402
 
 SHIFTS = {100: 1.0, 50: 0.5, 0: 0.0}
-# Primary contrast first (λ = 2 at 0% and 100%), then baselines, then the rest.
-ORDER = ((2.0, 0), (2.0, 100), (0.0, 100), (2.0, 50), (0.5, 0), (0.5, 100), (0.5, 50))
+# Remaining-work order: λ=2 at 0% and 100% (5 seeds), then shift 50% and λ=0.5, then λ=0 eval.
+ORDER = ((2.0, 0), (2.0, 100), (2.0, 50), (0.5, 0), (0.5, 100), (0.5, 50), (0.0, 100))
 
 
 def jobs(recipe_name):
