@@ -134,3 +134,7 @@ P12 must not take a GPU while R1 holds both vip2 GPUs.
 GPU 0 for (1)–(3). CPU ≈ 2–4 h on 8 CPUs each (bootstrap-heavy). P12 extract ≈ 1.4 GPU-h after R1.
 
 ## Deviations
+
+- 2026-10-17: P12 GPU extract job `68633` submitted with `afterany:67547` and additionally
+  `scontrol hold` so it cannot take a vip2 GPU while R1 array 67547 is still running. Release the
+  hold after 67547 completes; CPU `STEP=p12` is `68634` (`afterok:68633`).
