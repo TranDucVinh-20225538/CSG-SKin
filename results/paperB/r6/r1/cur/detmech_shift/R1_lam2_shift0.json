@@ -50,16 +50,34 @@
    "maha_nv_nearest_ood": {
     "mean": 0.5597112468010762,
     "sd": 0.020693632174187005,
-    "ci_lo": 0.5214038939525724,
-    "ci_hi": 0.5984454783554233,
-    "n_seeds": 4
+    "ci_lo": 0.5211676046405489,
+    "ci_hi": 0.5991986093524851,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
    },
    "maha_non_nv_nearest_ood": {
     "mean": 0.44450688968690166,
     "sd": 0.003747339241710612,
-    "ci_lo": 0.42382449527950977,
-    "ci_hi": 0.46517987906532915,
-    "n_seeds": 4
+    "ci_lo": 0.42300036332625573,
+    "ci_hi": 0.46618604320088564,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
+   },
+   "maha_nv_true_class_ood": {
+    "mean": 0.537662369700558,
+    "sd": 0.02611226833714386,
+    "ci_lo": 0.4921665348499795,
+    "ci_hi": 0.5795209634576772,
+    "n_seeds": 4,
+    "split": "true_class"
+   },
+   "maha_non_nv_true_class_ood": {
+    "mean": 0.4472933707428735,
+    "sd": 0.006401168209420427,
+    "ci_lo": 0.42561883106315673,
+    "ci_hi": 0.46930448447502543,
+    "n_seeds": 4,
+    "split": "true_class"
    },
    "class_matched": [
     {
@@ -170,16 +188,34 @@
    "maha_nv_nearest_ood": {
     "mean": 0.6856243878033427,
     "sd": 0.020852415399540743,
-    "ci_lo": 0.6728361146674618,
-    "ci_hi": 0.698650961935659,
-    "n_seeds": 4
+    "ci_lo": 0.6725440501420582,
+    "ci_hi": 0.6991649927922082,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
    },
    "maha_non_nv_nearest_ood": {
     "mean": 0.6922916216682173,
     "sd": 0.041027246645474295,
-    "ci_lo": 0.6806715809295357,
-    "ci_hi": 0.7040175056789096,
-    "n_seeds": 4
+    "ci_lo": 0.6812751783983072,
+    "ci_hi": 0.7040592838173488,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
+   },
+   "maha_nv_true_class_ood": {
+    "mean": 0.7728685612788633,
+    "sd": 0.18053971359704182,
+    "ci_lo": 0.7352860506924411,
+    "ci_hi": 0.8093831904779584,
+    "n_seeds": 4,
+    "split": "true_class"
+   },
+   "maha_non_nv_true_class_ood": {
+    "mean": 0.6202111736971161,
+    "sd": 0.033873038360215914,
+    "ci_lo": 0.6025074684485524,
+    "ci_hi": 0.6391195167822934,
+    "n_seeds": 4,
+    "split": "true_class"
    },
    "class_matched": [
     {
@@ -290,16 +326,34 @@
    "maha_nv_nearest_ood": {
     "mean": 0.4604736037634105,
     "sd": 0.03220715855675792,
-    "ci_lo": 0.4226770726791583,
-    "ci_hi": 0.4999665109491402,
-    "n_seeds": 4
+    "ci_lo": 0.42323334897086057,
+    "ci_hi": 0.4999013840259177,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
    },
    "maha_non_nv_nearest_ood": {
     "mean": 0.6176441130010004,
     "sd": 0.026947669064540342,
-    "ci_lo": 0.5830347467007183,
-    "ci_hi": 0.6531818233010497,
-    "n_seeds": 4
+    "ci_lo": 0.5826019634363462,
+    "ci_hi": 0.6526301035824121,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
+   },
+   "maha_nv_true_class_ood": {
+    "mean": 0.5198125123347148,
+    "sd": 0.0207213702514532,
+    "ci_lo": 0.4815620420017907,
+    "ci_hi": 0.5595471898550586,
+    "n_seeds": 4,
+    "split": "true_class"
+   },
+   "maha_non_nv_true_class_ood": {
+    "mean": 0.5706948321069103,
+    "sd": 0.055984050131594604,
+    "ci_lo": 0.5298685010123685,
+    "ci_hi": 0.6109531570427267,
+    "n_seeds": 4,
+    "split": "true_class"
    },
    "class_matched": [
     {
@@ -394,16 +448,34 @@
    "maha_nv_nearest_ood": {
     "mean": 0.6678602176600472,
     "sd": 0.0215418917782187,
-    "ci_lo": 0.6558473733589898,
-    "ci_hi": 0.6788987175266431,
-    "n_seeds": 4
+    "ci_lo": 0.6565668371263197,
+    "ci_hi": 0.6795755522007131,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
    },
    "maha_non_nv_nearest_ood": {
     "mean": 0.7112397599598149,
     "sd": 0.03290209965347865,
-    "ci_lo": 0.7008914633028155,
-    "ci_hi": 0.7223338126481114,
-    "n_seeds": 4
+    "ci_lo": 0.7009161983822946,
+    "ci_hi": 0.7220239651892357,
+    "n_seeds": 4,
+    "split": "nearest_centroid"
+   },
+   "maha_nv_true_class_ood": {
+    "mean": 0.5229348676097106,
+    "sd": 0.0378726320749902,
+    "ci_lo": 0.5022242297724334,
+    "ci_hi": 0.5436730286134502,
+    "n_seeds": 4,
+    "split": "true_class"
+   },
+   "maha_non_nv_true_class_ood": {
+    "mean": 0.6253118862973855,
+    "sd": 0.03714213257810113,
+    "ci_lo": 0.6075274688335278,
+    "ci_hi": 0.6421018486361386,
+    "n_seeds": 4,
+    "split": "true_class"
    },
    "class_matched": [
     {
