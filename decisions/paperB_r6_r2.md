@@ -125,9 +125,33 @@ only.
 
 User order (2026-10-16): **R1 → R2 → P10 → P9 → P11 → P7(b) → Q1 → Q3**.
 
+## Throughput knobs (before R2; do not change mid-block)
+
+Order of action (user 2026-10-16):
+
+1. **Measure** `nvidia-smi` on a live R1/R2-style job (GPU util and VRAM). Only consider packing if util is
+   clearly below ~70% **and** free VRAM ≥ one job footprint.
+2. **Workers:** already `--num_workers 6` with `--cpus-per-task=8`; optional bump to 8 (match CPUs). Do not
+   oversubscribe workers beyond the allocation.
+3. **AMP:** already `precision="16-mixed"` in `r6_common` — no further gain from “turning AMP on”. Never change
+   precision mid-block; any future fp32 block must decide AMP in this file before the first seed.
+
+### Pilot: pack 2 seeds / 1 GPU (R2 only if pilot passes)
+
+- Run **before** committing the full R2 array to a packed layout. One allocation, two seed processes, same GPU.
+- **CPU:** request **16 CPUs** for the packed allocation (2 × 8). Packing two seeds onto 8 CPUs with ~6 workers
+  each moves the bottleneck to the dataloader and erases the gain.
+- **Metric:** wall time per epoch for each packed seed vs the same seed run solo (same recipe, same node class if
+  possible). Define throughput as completed seed-epochs per GPU-hour.
+- **Go / no-go:** adopt packing for the rest of R2 only if packed throughput is clearly higher, e.g. **≥ ~1.3×**
+  solo. Otherwise keep 1 seed / GPU (`%2` on two GPUs as now).
+- Log the pilot numbers and the go/no-go call as a dated deviation below before changing the array launcher.
+
 ## Deviations
 
 - 2026-10-16 14:30 (UTC+7), before any R2 run. **Oracle IWDAN branch** and **pre-committed fix reading** on
   Fitzpatrick / MED-NODE / SD-198 added (sections above). Estimated branch clarified: target weights from unlabeled
   pad_adv predictions only. Extra **+16 GPU-h** (10 oracle runs); R2 cap 55 → 70. GPU order places P10 immediately
   after R2.
+- 2026-10-16 22:30 (UTC+7), before R2. Throughput plan above: measure util/VRAM → workers → AMP (already on);
+  optional 2-seed/GPU pilot with **16 CPUs**, epoch-time vs solo, adopt only if throughput ≳ **1.3×**.
