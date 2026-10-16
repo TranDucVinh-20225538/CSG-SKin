@@ -1,0 +1,254 @@
+{
+  "commit": "b990fb5",
+  "n_boot": 2000,
+  "rng_seed": 20261005,
+  "stage": "placebo",
+  "feature_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features",
+  "placebo": {
+    "pairs": [
+      {
+        "source": 42,
+        "partner": 52
+      },
+      {
+        "source": 52,
+        "partner": 62
+      },
+      {
+        "source": 62,
+        "partner": 72
+      },
+      {
+        "source": 72,
+        "partner": 82
+      },
+      {
+        "source": 82,
+        "partner": 42
+      }
+    ],
+    "sets": {
+      "pad_heldout": {
+        "n": 716,
+        "n_groups": 412,
+        "reps": {
+          "latent": {
+            "rho_dom_dann": 0.344473323027143,
+            "rho_orth_dann": -0.06820540966839628,
+            "rho_dom_placebo": 0.28753191751942014,
+            "rho_orth_placebo": 0.18214237850578555,
+            "delta_rho_dom": 0.056941405507722885,
+            "delta_rho_dom_ci": [
+              0.006962773737064139,
+              0.1045271773963811
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": false
+          },
+          "backbone": {
+            "rho_dom_dann": 0.43939864156075437,
+            "rho_orth_dann": -0.1678763327320041,
+            "rho_dom_placebo": 0.10866901641266932,
+            "rho_orth_placebo": 0.09561727345765049,
+            "delta_rho_dom": 0.330729625148085,
+            "delta_rho_dom_ci": [
+              0.2828837757929082,
+              0.37404525304982744
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          }
+        }
+      },
+      "fitzpatrick17k": {
+        "n": 3887,
+        "n_groups": 3747,
+        "reps": {
+          "latent": {
+            "rho_dom_dann": 0.4191649756339226,
+            "rho_orth_dann": -0.06559785540057357,
+            "rho_dom_placebo": 0.20476532035085876,
+            "rho_orth_placebo": 0.1610355191928318,
+            "delta_rho_dom": 0.21439965528306387,
+            "delta_rho_dom_ci": [
+              0.19608752208586586,
+              0.2321026966916476
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          },
+          "backbone": {
+            "rho_dom_dann": 0.47521948127077895,
+            "rho_orth_dann": -0.1198828309790018,
+            "rho_dom_placebo": 0.09209267731502638,
+            "rho_orth_placebo": 0.19042345100039304,
+            "delta_rho_dom": 0.3831268039557526,
+            "delta_rho_dom_ci": [
+              0.36437379262634206,
+              0.4003029005159705
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          }
+        }
+      },
+      "mednode": {
+        "n": 170,
+        "n_groups": 170,
+        "reps": {
+          "latent": {
+            "rho_dom_dann": 0.43300541643004137,
+            "rho_orth_dann": -0.1437155366662392,
+            "rho_dom_placebo": 0.105950256776644,
+            "rho_orth_placebo": 0.048682897637410634,
+            "delta_rho_dom": 0.3270551596533974,
+            "delta_rho_dom_ci": [
+              0.24278843786429835,
+              0.4069548368660122
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          },
+          "backbone": {
+            "rho_dom_dann": 0.442545172538028,
+            "rho_orth_dann": 0.19142311050860703,
+            "rho_dom_placebo": 0.09337143764388348,
+            "rho_orth_placebo": 0.2015378508924591,
+            "delta_rho_dom": 0.3491737348941445,
+            "delta_rho_dom_ci": [
+              0.25617087442683345,
+              0.43202569433878113
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          }
+        }
+      },
+      "sd198": {
+        "n": 6584,
+        "n_groups": 6016,
+        "reps": {
+          "latent": {
+            "rho_dom_dann": 0.46724223844754353,
+            "rho_orth_dann": -0.0298537980946151,
+            "rho_dom_placebo": 0.20274838398504508,
+            "rho_orth_placebo": 0.16880151560322024,
+            "delta_rho_dom": 0.2644938544624984,
+            "delta_rho_dom_ci": [
+              0.25020418902473607,
+              0.2779785009801965
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          },
+          "backbone": {
+            "rho_dom_dann": 0.5402203244396764,
+            "rho_orth_dann": -0.1617824282188362,
+            "rho_dom_placebo": 0.0913679554551053,
+            "rho_orth_placebo": 0.18793145280115903,
+            "delta_rho_dom": 0.44885236898457104,
+            "delta_rho_dom_ci": [
+              0.4364380548194796,
+              0.46083457059001265
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          }
+        }
+      },
+      "scin": {
+        "n": 10406,
+        "n_groups": 5033,
+        "reps": {
+          "latent": {
+            "rho_dom_dann": 0.3327387394878094,
+            "rho_orth_dann": 0.020866246593961107,
+            "rho_dom_placebo": 0.14978301324639506,
+            "rho_orth_placebo": 0.14222435060774027,
+            "delta_rho_dom": 0.18295572624141435,
+            "delta_rho_dom_ci": [
+              0.17173276517912972,
+              0.19338215952173773
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          },
+          "backbone": {
+            "rho_dom_dann": 0.3169484565628607,
+            "rho_orth_dann": -0.05974947013022058,
+            "rho_dom_placebo": 0.07764683555508059,
+            "rho_orth_placebo": 0.20413623654790855,
+            "delta_rho_dom": 0.23930162100778007,
+            "delta_rho_dom_ci": [
+              0.22684009741701988,
+              0.25107659677475286
+            ],
+            "delta_excludes_0": true,
+            "dann_specific_set": true
+          }
+        }
+      }
+    },
+    "feature_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features",
+    "split": "lesion-level item4",
+    "verdict": {
+      "latent_n_met": 4,
+      "backbone_n_met": 5,
+      "dann_specific": true,
+      "rule": "\u0394\u03c1_dom \u2265 0.15 and CI entirely above 0 in \u2265 4/5 sets (latent); paired \u0394 only"
+    },
+    "lambda0_to_2": {
+      "pad_heldout": {
+        "latent": {
+          "rho_dom": 0.344473323027143,
+          "rho_orth": -0.06820540966839628
+        },
+        "backbone": {
+          "rho_dom": 0.43939864156075437,
+          "rho_orth": -0.1678763327320041
+        }
+      },
+      "fitzpatrick17k": {
+        "latent": {
+          "rho_dom": 0.4191649756339226,
+          "rho_orth": -0.06559785540057357
+        },
+        "backbone": {
+          "rho_dom": 0.47521948127077895,
+          "rho_orth": -0.1198828309790018
+        }
+      },
+      "mednode": {
+        "latent": {
+          "rho_dom": 0.43300541643004137,
+          "rho_orth": -0.1437155366662392
+        },
+        "backbone": {
+          "rho_dom": 0.442545172538028,
+          "rho_orth": 0.19142311050860703
+        }
+      },
+      "sd198": {
+        "latent": {
+          "rho_dom": 0.46724223844754353,
+          "rho_orth": -0.0298537980946151
+        },
+        "backbone": {
+          "rho_dom": 0.5402203244396764,
+          "rho_orth": -0.1617824282188362
+        }
+      },
+      "scin": {
+        "latent": {
+          "rho_dom": 0.3327387394878094,
+          "rho_orth": 0.020866246593961107
+        },
+        "backbone": {
+          "rho_dom": 0.3169484565628607,
+          "rho_orth": -0.05974947013022058
+        }
+      }
+    }
+  },
+  "dose": null
+}
