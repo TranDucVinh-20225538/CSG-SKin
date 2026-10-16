@@ -114,6 +114,47 @@ reported (no silent change of batch size).
 Jobs: 5 reused λ = 0 + λ ∈ {0.5, 2} × (5 + 5 + 3) = 31 (26 trained). Revised estimate: 26 × 2.4 + 5 × 0.2 =
 **≈ 63 GPU-h** (cap 70).
 
+## Leakage-matched test: label shift vs invariance depth
+
+Committed 2026-10-16 12:51 (UTC+7), **before** the remaining R1 λ = 2 shift-100% seeds (tasks after 67547_5)
+finish. Fixed now; not changed after those numbers are seen. Complements the within-R1 dose tables above; does not
+replace them.
+
+**Pool (lesion-level, seed-level points).** (i) R1 three-stream: shift ∈ {0%, 50%, 100%} × λ ∈ {0.5, 2}; (ii) Table 1
+old recipe (`r2/item4`, all λ); (iii) A4 P8 main (`r5/p8/main`, λ ∈ {0, 0.5, 2}). Same **pad_full** leakage probe
+(Table 1 definition: logistic domain probe on `z_lesion_norm`, ISIC test vs all of PAD) for every run. Held-out /
+class-matched leakage probes are secondary only. R1 degraded runs (ID bal acc &lt; 0.25) are flagged and **excluded**
+from (a) and (b); they may appear on the (c) plot marked as degraded.
+
+**Sets.** Primary (count toward support): Fitzpatrick17k, MED-NODE, SD-198. **pad_heldout** (adversary target domain)
+is reported separately and **does not count** toward the ≥ 2/3 rule. SCIN is not in this test’s primary set list
+(still scored in the main R1 report).
+
+**(a) Regression (attempted primary).** Per unseen set, seed-level OLS:
+Mahalanobis AUROC ~ leakage + shift_level + recipe, where `shift_level` ∈ {0, 0.5, 1} for R1 and = 1 (100%) for
+Table 1 and A4 (two-stream / no shift dose), and `recipe` is a categorical (R1 / Table1 / A4). CIs by wild cluster
+bootstrap (Webb weights), clustered by **setting** = (recipe, λ, shift) cell; 2,000 draws, rng seed 20261005,
+percentile 95%. **Identification:** the shift coefficient is identified from variation **within R1**; A4 and Table 1
+only extend the leakage range at shift = 100%. State this in the report. Report VIF of shift vs recipe and of shift
+vs leakage. If **either VIF &gt; 5**, report (a) as **not identifiable**, not as a null shift effect. **Supported** if
+the shift coefficient is in the predicted direction (higher shift → lower AUROC) with CI excluding 0 on **≥ 2 of 3**
+unseen primary sets.
+
+**(b) Matched comparison (primary if (a) is not identifiable).** Cross-recipe, per unseen primary set: R1 shift 0%
+λ = 2 (leakage ≈ 0.79) vs A4 λ = 2 (shift 100%, leakage ≈ 0.78). Cluster bootstrap of the mean AUROC difference
+(same PREREGISTER settings / units as the main R1 report). Label explicitly **cross-recipe**. Supported if the
+difference is in the predicted direction with CI excluding 0 on ≥ 2 of 3 unseen sets.
+
+**(c) Plot.** Per set (including pad_heldout, marked as adversary-target / not counted): Mahalanobis AUROC vs
+pad_full leakage, points coloured by shift level (recipe shape or marker secondary).
+
+**Prediction (written now).** Label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets. If
+the shift effect is null (or (a) not identifiable and (b) null) and points fall on one leakage curve, report
+**leakage / invariance depth** as the main variable, not adversary label shift.
+
+Outputs under `results/paperB/r6/r1/<recipe>/leakage_matched/`: regression JSON, matched JSON, plots, and a section
+in `REPORT.md`. CPU only after the pooled runs exist.
+
 ## Deviations
 
 - 2026-10-16 10:05 (UTC+7), user-directed, after seed 52 at shift 0% λ = 2 finished with ID bal acc 0.139
@@ -130,4 +171,7 @@ Jobs: 5 reused λ = 0 + λ ∈ {0.5, 2} × (5 + 5 + 3) = 31 (26 trained). Revise
   cluster/patient bootstraps (Fitzpatrick uses P13 `cluster_union` when present; else image). Report key comparison at
   λ = 2: R1 shift 0% vs R1's own shift 100% (`last.ckpt`), per set, plus shift 50% when available
   (`scripts/r6_report.py --item r1`). Predictions unchanged.
+- 2026-10-16 12:51 (UTC+7), before remaining λ = 2 shift-100% seeds finish. **Leakage-matched test** (section above)
+  pre-committed: pool R1 + Table 1 + A4; primary sets Fitz / MED-NODE / SD-198; (a) regression with VIF gate;
+  (b) cross-recipe matched R1 shift0 λ2 vs A4 λ2; (c) AUROC–leakage plot. No analysis numbers computed at this commit.
 
