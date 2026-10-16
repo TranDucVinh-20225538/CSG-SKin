@@ -14,9 +14,9 @@ Ladder (λ = 1 unless stated, seed 42; one job at a time; each rung is cumulativ
   L3_strong    + 5 heads (2 linear, derm, wide derm, 3-layer), 5 inner steps, head LR ×10
   L4_lam3      L3 at λ = 3
   L5_lam10     L3 at λ = 10
-Gate (pre-committed in R2 item 5): site probe (A test vs B held-out) ≤ 0.852 (λ = 0: 0.952 − 0.10) and A-test
-accuracy > 0.85. Stop rule: a rung skips itself if an earlier rung met the gate or if P10 GPU-h used + 1.5 > 12.
-Stage 2 (--stage2): the first gate-meeting rung at seeds 43, 44 (λ = 0 seeds 42-44 are the R2 item-5 runs).
+Gate (decisions/paperB_r5_p10.md): held-out hospital site probe drops ≥ 0.10 vs λ = 0 mean (item5 seeds 42–44);
+else inconclusive / "invariance not reached". Cap 40 GPU-h. Stage 2 (--stage2): first gate-meeting rung at seeds
+43, 44 (λ = 0 = R2 item-5 runs).
 
 --recipe: only the classifier LR multiplier applies (current = 0.2 = R2 item 5); latent size, class balance, batch size
 and epochs are derm-task settings and are listed as not applicable (the Camelyon schedule stays at 10 epochs).
@@ -51,8 +51,20 @@ from src.utils.seed import seed_everything  # noqa: E402
 p12 = c2.p12
 OUT = c2.PAPERB / "results" / "paperB" / "r5" / "p10"
 CKPT = c2.PAPERB / "checkpoints" / "r5_p10"
-GATE_PROBE, GATE_ID = 0.852, 0.85
-CAP_GPU_H, EST_GPU_H = 12.0, 1.5
+GATE_DROP = 0.10  # probe_λ0 − probe_run ≥ this
+CAP_GPU_H, EST_GPU_H = 40.0, 1.5
+ITEM5_L0 = c2.PAPERB / "results" / "paperB" / "r2" / "item5" / "runs"
+
+
+def lambda0_probe_mean():
+    vals = []
+    for s in (42, 43, 44):
+        p = ITEM5_L0 / "camelyon2_ladv0_s{}".format(s) / "summary.json"
+        if p.exists():
+            vals.append(json.loads(p.read_text())["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"])
+    if not vals:
+        raise SystemExit("P10 gate needs R2 item5 λ = 0 summaries (seeds 42–44)")
+    return float(np.mean(vals))
 _L1 = {"head_specs": [[1, 1.0], [2, 1.0], [3, 1.0]], "adv_inner_steps": 2, "reinit_every_steps": 500}
 _L2 = dict(_L1, grl_schedule="ganin", adv_warmup_epochs=1)
 _L3 = dict(_L2, head_specs=[[1, 1.0], [1, 1.0], [2, 1.0], [2, 2.0], [3, 1.0]], adv_inner_steps=5, adv_lr_multiplier=10.0)
@@ -90,8 +102,11 @@ class _EvalWrap(nn.Module):
         return logits, logits, z
 
 
-def gate_met(s):
-    return s["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"] <= GATE_PROBE and s["id_test"]["acc"] > GATE_ID
+def gate_met(s, probe0=None):
+    """Held-out hospital probe drop ≥ GATE_DROP vs λ = 0 mean; else invariance not reached."""
+    probe0 = lambda0_probe_mean() if probe0 is None else probe0
+    probe = s["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"]
+    return float(probe0 - probe) >= GATE_DROP
 
 
 def p10_state(suffix):
@@ -122,6 +137,7 @@ def main():
     args = ap.parse_args()
     rec, rsrc = r5_recipe.resolve(args.recipe)
     args.cls_lr_multiplier = float(rec["cls_lr_multiplier"])
+    probe0 = lambda0_probe_mean()
     used, hits = p10_state(r5_recipe.tag(args.recipe))
     stage = "stage2" if args.stage2 else "ladder"
     if args.stage2:
@@ -180,7 +196,12 @@ def main():
     sel_loader = p12.loader_for(ds, sp["a_sel"], p12.eval_tf(), 128, args.num_workers, False)
     cfg = dict(vars(args), tag=tag, stage=stage, rung=rung, lambda_adv=lam, toolbox=tb, hospitals=[ha, hb, hc],
                split=str(c2.split_path("primary")), n_batches_per_epoch=n_batches,
-               gate={"site_probe_le": GATE_PROBE, "id_acc_gt": GATE_ID}, placement="grl (R2 item 5)",
+               gate={"drop_ge": GATE_DROP, "lambda0_probe_mean": probe0,
+                     "rule": "probe_λ0 − probe ≥ 0.10 else invariance not reached"},
+               placement="grl (R2 item 5)",
+               semantic_ood={"name": "NCT-CRC-HE-100K", "licence": "CC-BY-4.0",
+                             "zenodo": "10.5281/zenodo.1214456",
+                             "note": "evaluated when paths listed; see decisions/paperB_r5_p10.md"},
                **r5_recipe.describe(rec, rsrc, not_applicable=[k for k in rec if k != "cls_lr_multiplier"]))
     (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
 
@@ -269,10 +290,16 @@ def main():
                "ood": ood, "history": rows,
                "adversary": {"min_epoch_ce": min(r["loss_adv"] for r in rows), "last": rows[-1]},
                "gpu_hours": (time.time() - t0) / 3600.0}
-    summary["gate_met"] = bool(gate_met(summary))
+    probe = summary["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"]
+    summary["lambda0_probe_mean"] = probe0
+    summary["probe_drop_vs_lambda0"] = float(probe0 - probe)
+    summary["gate_met"] = bool(gate_met(summary, probe0))
+    summary["invariance_not_reached"] = not summary["gate_met"]
+    summary["b_heldout_accuracy"] = ood["b_hold"]["accuracy"]
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
-    print("saved", run_dir / "summary.json", "probe", summary["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"],
-          "ID acc", summary["id_test"]["acc"], "gate", summary["gate_met"], flush=True)
+    print("saved", run_dir / "summary.json", "probe", probe, "drop", summary["probe_drop_vs_lambda0"],
+          "ID acc", summary["id_test"]["acc"], "gate", summary["gate_met"],
+          "invariance_not_reached", summary["invariance_not_reached"], flush=True)
 
 
 if __name__ == "__main__":

@@ -38,7 +38,10 @@ case "${STEP}" in
   r3_toy)        ${PY} scripts/r6_r3_toy_labelshift.py --workers "${SLURM_CPUS_PER_TASK:-8}" ${ARGS} ;;
   r4)            ${PY} scripts/r6_r4_warning_signals.py ${ARGS} ;;
   r5)            ${PY} scripts/r6_r5_label_shift.py ${ARGS} ;;
+  warning)       ${PY} scripts/r5_warning_signal.py ${ARGS} ;;
+  detmech)       ${PY} scripts/r5_detmech.py ${ARGS} ;;
   d1)            ${PY} scripts/r5_d1_domain_direction.py ${ARGS} ;;
+  p10_report)    ${PY} scripts/r5_p10_report.py ${ARGS} ;;
   rescore)       ${PY} scripts/r5_rescore_heldout.py run ${SLURM_ARRAY_TASK_ID} ;;
   rescore_report) ${PY} scripts/r5_rescore_heldout.py report ;;
   ckaudit)       ${PY} scripts/r5_ckpt_audit.py compete ${SLURM_ARRAY_TASK_ID} ;;
