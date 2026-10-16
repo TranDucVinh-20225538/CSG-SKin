@@ -3,8 +3,8 @@
 
 Decisions: decisions/paperB_r5_d1_followup.md. Never reads phase13/features.
 Usage: r5_d1_followup.py [--stage placebo|dose|all]
-  placebo = λ0 pairs + λ0→λ2 DANN arm (available now on item4).
-  dose    = all λ levels (mid-λ: item4 seeds 42–46 exist; matched with λ0 only seed 42 → pending).
+  placebo = matched λ0 pairs + λ0→λ2 DANN arm (main test; unchanged).
+  dose    = cross-seed: λ0 s42 → mid-λ s43–46 / λ2 s52–82 vs λ0 s42 → λ0 s52–82.
 """
 
 from __future__ import annotations
@@ -27,6 +27,11 @@ PARENT = R.R5 / "d1_domain"
 FEAT = R.FEAT_L  # item4 only
 SEEDS = D1.SEEDS
 PARTNER = {42: 52, 52: 62, 62: 72, 72: 82, 82: 42}
+# Cross-seed dose (matched mid-λ not possible: R4 mid-λ seeds 42–46 only).
+DOSE_SRC = 42
+MID_PARTNERS = (43, 44, 45, 46)
+END_PARTNERS = (52, 62, 72, 82)
+LAMS_MID = (0.25, 0.5, 1.0, 4.0, 8.0)
 LAMS_DOSE = (0.25, 0.5, 1.0, 2.0, 4.0, 8.0)
 SETS = D1.LESION_SETS
 REPS = ("latent", "backbone")
@@ -84,6 +89,16 @@ def paired_delta_ci(per_seed_fn, seeds, groups, n_boot, rng):
             "n_seeds": len(seeds), "seeds": list(seeds)}
 
 
+def image_boot_ci(stat_fn, groups, n_boot, rng):
+    """Paired bootstrap over images/groups; statistic is a scalar from index array."""
+    full = np.arange(len(groups))
+    point = float(stat_fn(full))
+    draws = R.draws(groups, n_boot, rng)
+    mat = np.array([float(stat_fn(ii)) for ii in draws])
+    lo, hi = np.nanpercentile(mat, [2.5, 97.5])
+    return {"mean": point, "ci": [float(lo), float(hi)], "excludes_0": bool(lo > 0 or hi < 0)}
+
+
 def analyse_placebo(hmask, n_boot, seed):
     cache0 = {s: load_pack(0.0, s) for s in SEEDS}
     cache2 = {s: load_pack(2.0, s) for s in SEEDS}
@@ -137,83 +152,108 @@ def analyse_placebo(hmask, n_boot, seed):
 
 
 def analyse_dose(hmask, n_boot, seed, placebo=None):
-    """Dose over LAMS_DOSE; skip λ with <3 matched lesion-level seeds. λ=2 always available."""
-    cache0 = {s: load_pack(0.0, s) for s in SEEDS}
-    dom_by = {s: domain_scores(cache0[s], hmask) for s in SEEDS}
-    out = {"lambdas": list(LAMS_DOSE), "sets": {}, "pending_lams": [],
-           "feature_root": str(FEAT), "split": "lesion-level item4"}
-    for lam in LAMS_DOSE:
-        seeds = [s for s in SEEDS if feat_ok(lam, s) and feat_ok(0.0, s)]
-        if len(seeds) < 3:
-            mid = [s for s in (42, 43, 44, 45, 46) if feat_ok(lam, s)]
-            out["pending_lams"].append({
-                "lambda": lam, "matched_seeds": seeds, "mid_lam_item4_seeds": mid,
-                "reason": ("R4/item4 mid-λ features exist for seeds 42–46; λ0 only for 42–82; "
-                           "matched λ0∩mid-λ={} (need ≥3). No lesion mid-λ at 52–82.".format(seeds)),
-            })
+    """Cross-seed dose: λ0 s42 → partners; Δρ_dom vs λ0 s42 → λ0 s52–82; test ρ(λ2)>ρ(λ0.25)."""
+    for s in (DOSE_SRC,) + MID_PARTNERS:
+        for lam in LAMS_MID:
+            if not feat_ok(lam, s) and s in MID_PARTNERS:
+                raise FileNotFoundError("missing item4 mid-λ features λ={} seed={}".format(lam, s))
+    for s in (DOSE_SRC,) + END_PARTNERS:
+        if not feat_ok(0.0, s):
+            raise FileNotFoundError("missing item4 λ0 features seed={}".format(s))
+        if not feat_ok(2.0, s) and s in END_PARTNERS:
+            raise FileNotFoundError("missing item4 λ2 features seed={}".format(s))
+
+    A0 = load_pack(0.0, DOSE_SRC)
+    dom_src = domain_scores(A0, hmask)
+    cache0_end = {s: load_pack(0.0, s) for s in END_PARTNERS}
+    cache2_end = {s: load_pack(2.0, s) for s in END_PARTNERS}
+    cache_mid = {lam: {s: load_pack(lam, s) for s in MID_PARTNERS} for lam in LAMS_MID}
+
+    out = {
+        "design": "cross-seed",
+        "source": {"lambda": 0.0, "seed": DOSE_SRC},
+        "mid_partners": list(MID_PARTNERS),
+        "end_partners": list(END_PARTNERS),
+        "lambdas": list(LAMS_DOSE),
+        "sets": {},
+        "feature_root": str(FEAT),
+        "split": "lesion-level item4",
+        "note": "matched mid-λ not possible (R4 mid-λ seeds 42–46); main §1 matched placebo unchanged",
+    }
+
     for sname in SETS:
-        g = D1.set_groups(sname, len(cache0[SEEDS[0]][sname]["labels"]))
-        blk = {"reps": {}}
+        g = D1.set_groups(sname, len(A0[sname]["labels"]))
+        pulls_plc = {s: pull_arr(A0, cache0_end[s], sname) for s in END_PARTNERS}
+        pulls_l2 = {s: pull_arr(A0, cache2_end[s], sname) for s in END_PARTNERS}
+        pulls_mid = {lam: {s: pull_arr(A0, cache_mid[lam][s], sname) for s in MID_PARTNERS}
+                     for lam in LAMS_MID}
+        arm_pulls = {0.0: pulls_plc, 2.0: pulls_l2, **pulls_mid}
+        blk = {"n": int(len(g)), "n_groups": int(len(np.unique(g))), "reps": {}}
+
         for rep in REPS:
-            by_lam, pull_cache = {}, {}
-            for lam in LAMS_DOSE:
-                seeds = [s for s in SEEDS if feat_ok(lam, s)]
-                if len(seeds) < 3:
-                    by_lam[str(lam)] = None
-                    continue
-                pulls, rhos = {}, []
-                cache_k = {s: load_pack(lam, s) for s in seeds}
-                for s in seeds:
-                    pulls[s] = pull_arr(cache0[s], cache_k[s], sname)
-                    dom = dom_by[s][rep][0][sname]
-                    orth = dom_by[s][rep][1][sname]
-                    rd, ro = _rho_dom_orth(dom, orth, pulls[s], np.arange(len(dom)))
-                    rhos.append((rd, ro))
-                pull_cache[lam] = pulls
+            dom = dom_src[rep][0][sname]
+            orth = dom_src[rep][1][sname]
 
-                def arm_fn(src, idx, _lam=lam, _rep=rep, _set=sname):
-                    dom = dom_by[src][_rep][0][_set]
-                    orth = dom_by[src][_rep][1][_set]
-                    rd, _ = _rho_dom_orth(dom, orth, pull_cache[_lam][src], idx)
-                    return rd
+            def mean_rho_dom(pulls, idx, _dom=dom, _orth=orth):
+                return float(np.mean([_rho_dom_orth(_dom, _orth, pulls[s], idx)[0] for s in pulls]))
 
-                ci = paired_delta_ci(arm_fn, seeds, g, n_boot, np.random.default_rng(seed))
+            def mean_rho_orth(pulls, idx, _dom=dom, _orth=orth):
+                return float(np.mean([_rho_dom_orth(_dom, _orth, pulls[s], idx)[1] for s in pulls]))
+
+            by_lam = {}
+            rng_base = int(seed)
+            for lam in (0.0,) + LAMS_DOSE:
+                pulls = arm_pulls[lam]
+                partners = list(pulls.keys())
+                full = np.arange(len(dom))
+                rd0, ro0 = mean_rho_dom(pulls, full), mean_rho_orth(pulls, full)
+
+                def rho_fn(idx, _p=pulls):
+                    return mean_rho_dom(_p, idx)
+
+                rho_ci = image_boot_ci(rho_fn, g, n_boot, np.random.default_rng(rng_base + int(lam * 100)))
+
+                if lam == 0.0:
+                    dlt = {"mean": 0.0, "ci": [0.0, 0.0], "excludes_0": False}
+                else:
+                    def dlt_fn(idx, _p=pulls):
+                        return mean_rho_dom(_p, idx) - mean_rho_dom(pulls_plc, idx)
+
+                    dlt = image_boot_ci(dlt_fn, g, n_boot, np.random.default_rng(rng_base + 1000 + int(lam * 100)))
+
                 by_lam[str(lam)] = {
-                    "rho_dom": float(np.mean([r[0] for r in rhos])),
-                    "rho_orth": float(np.mean([r[1] for r in rhos])),
-                    "rho_dom_ci": ci["ci"], "n_seeds": len(seeds), "seeds": seeds,
+                    "rho_dom": rd0, "rho_orth": ro0, "rho_dom_ci": rho_ci["ci"],
+                    "delta_rho_dom_vs_xseed_placebo": dlt["mean"],
+                    "delta_ci": dlt["ci"], "delta_excludes_0": dlt["excludes_0"],
+                    "n_partners": len(partners), "partners": partners,
+                    "target_lambda": lam,
                 }
 
-            seeds_test = []
-            if by_lam.get("2.0") and by_lam.get("0.25"):
-                seeds_test = sorted(set(by_lam["2.0"]["seeds"]) & set(by_lam["0.25"]["seeds"]))
-            if len(seeds_test) >= 3 and 2.0 in pull_cache and 0.25 in pull_cache:
-                def delta_fn(src, idx, _rep=rep, _set=sname):
-                    dom = dom_by[src][_rep][0][_set]
-                    orth = dom_by[src][_rep][1][_set]
-                    r2, _ = _rho_dom_orth(dom, orth, pull_cache[2.0][src], idx)
-                    r025, _ = _rho_dom_orth(dom, orth, pull_cache[0.25][src], idx)
-                    return r2 - r025
+            def delta_l2_l025(idx):
+                return mean_rho_dom(pulls_l2, idx) - mean_rho_dom(pulls_mid[0.25], idx)
 
-                dlt = paired_delta_ci(delta_fn, seeds_test, g, n_boot, np.random.default_rng(seed))
-                met = bool(dlt["mean"] > 0 and dlt["ci"][0] > 0)
-            else:
-                dlt = {"mean": None, "ci": [None, None], "n_seeds": len(seeds_test), "seeds": seeds_test}
-                met = False
+            dlt25 = image_boot_ci(delta_l2_l025, g, n_boot, np.random.default_rng(rng_base + 2000))
+            met = bool(dlt25["mean"] > 0 and dlt25["ci"][0] > 0)
             blk["reps"][rep] = {
                 "by_lambda": by_lam,
-                "delta_rho_dom_l2_minus_l025": dlt["mean"], "delta_ci": dlt["ci"],
-                "l2_exceeds_l025": met, "seeds_test": dlt.get("seeds"),
+                "delta_rho_dom_l2_minus_l025": dlt25["mean"], "delta_ci": dlt25["ci"],
+                "l2_exceeds_l025": met,
+                "partners_l2": list(END_PARTNERS), "partners_l025": list(MID_PARTNERS),
             }
-            print("dose", sname, rep, "δ=", dlt["mean"], flush=True)
+            print("dose", sname, rep,
+                  "ρ2={:+.3f}".format(by_lam["2.0"]["rho_dom"]),
+                  "ρ0.25={:+.3f}".format(by_lam["0.25"]["rho_dom"]),
+                  "δ={:+.3f}".format(dlt25["mean"]), dlt25["ci"],
+                  "met" if met else "no", flush=True)
         out["sets"][sname] = blk
-    tested = [s for s in SETS if out["sets"][s]["reps"]["latent"]["delta_rho_dom_l2_minus_l025"] is not None]
-    k = sum(1 for s in tested if out["sets"][s]["reps"]["latent"]["l2_exceeds_l025"])
+
+    k = sum(1 for s in SETS if out["sets"][s]["reps"]["latent"]["l2_exceeds_l025"])
+    kb = sum(1 for s in SETS if out["sets"][s]["reps"]["backbone"]["l2_exceeds_l025"])
     out["verdict"] = {
-        "sets_tested": tested, "latent_n_met": k, "n_sets_tested": len(tested),
-        "l2_exceeds_l025": bool(len(tested) >= 4 and k >= 4),
-        "pending_lams": out["pending_lams"],
-        "rule": "ρ_dom(λ2)−ρ_dom(λ0.25)>0 CI excludes 0 in ≥4/5 sets when mid-λ lesion features exist",
+        "latent_n_met": k, "backbone_n_met": kb, "n_sets": len(SETS),
+        "l2_exceeds_l025": k >= 4,
+        "rule": ("cross-seed: ρ_dom(λ2 s52–82)−ρ_dom(λ0.25 s43–46)>0 CI excludes 0 in ≥4/5 sets "
+                 "(source λ0 s42; paired image bootstrap)"),
     }
     return out
 
@@ -249,31 +289,53 @@ def write_report(placebo, dose):
     L += ["", "Placebo verdict: **{}/5** latent → DANN-specific {} (backbone {}/5).".format(
         v["latent_n_met"], "supported" if v["dann_specific"] else "not supported", v["backbone_n_met"]), ""]
     if dose is None:
-        L += ["## (2) Dose — pending matched mid-λ seeds", "",
-              "λ0→λ2 ρ_dom is in the placebo DANN column above. R4 Table 1 mid-λ used item4 seeds **42–46** "
-              "(features already under `r2/item4/features/`); λ0/λ2 used 42–82. Matched λ0∩mid-λ = {42} only, "
-              "so the preregistered ≥3-seed dose / δ(λ2−λ0.25) test is not run. No lesion mid-λ at 52–82 "
-              "(phase3/phase13 are image-level; not used).", ""]
+        L += ["## (2) Dose — not run in this stage", "",
+              "Cross-seed dose (λ0 s42 → mid-λ s43–46 / λ2 s52–82 vs λ0→λ0 s52–82) runs with `--stage dose`.", ""]
     else:
-        L += ["## (2) Dose", "",
-              "Pending λ (insufficient matched lesion-level seeds): {}.".format(
-                  ", ".join("{:g}".format(p["lambda"]) for p in dose.get("pending_lams", [])) or "none"), "",
-              "| set | rep | " + " | ".join("λ={:g}".format(x) for x in LAMS_DOSE) + " | δ(2−0.25) | 2>0.25 |",
-              "|---|---|" + "|".join(["---:"] * len(LAMS_DOSE)) + "|---|---|"]
+        L += ["## (2) Dose (cross-seed; deviation — matched mid-λ not possible)", "",
+              "Source: λ = 0 seed {}. Mid-λ partners s{}; λ = 2 / placebo partners s{}. "
+              "Δρ_dom = ρ_dom(level) − ρ_dom(λ0→λ0 cross-seed placebo); paired image bootstrap. "
+              "Test: ρ_dom(λ2) > ρ_dom(λ0.25) (no monotonicity claim).".format(
+                  DOSE_SRC, list(MID_PARTNERS), list(END_PARTNERS)), "",
+              "### ρ_dom by λ (partner mean)", "",
+              "| set | rep | xseed plc (λ0) | " + " | ".join("λ={:g}".format(x) for x in LAMS_DOSE)
+              + " | δ(2−0.25) | 2>0.25 |",
+              "|---|---|---:|" + "|".join(["---:"] * len(LAMS_DOSE)) + "|---|---|"]
         for s in SETS:
             for rep in REPS:
                 r = dose["sets"][s]["reps"][rep]
+                plc = r["by_lambda"].get("0.0", {})
                 cells = []
                 for lam in LAMS_DOSE:
                     b = r["by_lambda"].get(str(lam))
                     cells.append("—" if not b else "{:+.3f}".format(b["rho_dom"]))
-                L.append("| {} | {} | {} | {} | {} |".format(
-                    D1.SET_LABEL[s], rep, " | ".join(cells),
+                L.append("| {} | {} | {} | {} | {} | {} |".format(
+                    D1.SET_LABEL[s], rep,
+                    "—" if not plc else "{:+.3f}".format(plc["rho_dom"]),
+                    " | ".join(cells),
                     fci(r["delta_rho_dom_l2_minus_l025"], r["delta_ci"]),
-                    "met" if r["l2_exceeds_l025"] else ("—" if r["delta_rho_dom_l2_minus_l025"] is None else "not met")))
+                    "met" if r["l2_exceeds_l025"] else "not met"))
+                for lam in (0.0,) + LAMS_DOSE:
+                    b = r["by_lambda"][str(lam)]
+                    rows.append({
+                        "item": "dose_xseed", "set": s, "rep": rep, "lambda": lam,
+                        "rho_dom": b["rho_dom"], "rho_orth": b["rho_orth"],
+                        "delta_vs_xseed_placebo": b["delta_rho_dom_vs_xseed_placebo"],
+                        "delta_lo": b["delta_ci"][0], "delta_hi": b["delta_ci"][1],
+                    })
+        L += ["", "### Δρ_dom vs cross-seed placebo", "",
+              "| set | rep | " + " | ".join("λ={:g}".format(x) for x in LAMS_DOSE) + " |",
+              "|---|---|" + "|".join(["---:"] * len(LAMS_DOSE)) + "|"]
+        for s in SETS:
+            for rep in REPS:
+                r = dose["sets"][s]["reps"][rep]
+                cells = [fci(r["by_lambda"][str(lam)]["delta_rho_dom_vs_xseed_placebo"],
+                             r["by_lambda"][str(lam)]["delta_ci"]) for lam in LAMS_DOSE]
+                L.append("| {} | {} | {} |".format(D1.SET_LABEL[s], rep, " | ".join(cells)))
         vd = dose["verdict"]
-        L += ["", "Dose test: {}/{} sets met (tested {}).".format(
-            vd["latent_n_met"], vd["n_sets_tested"], vd.get("sets_tested")), ""]
+        L += ["", "Dose test (cross-seed): **{}/5** latent → λ2>λ0.25 {} (backbone {}/5).".format(
+            vd["latent_n_met"], "supported" if vd["l2_exceeds_l025"] else "not supported",
+            vd["backbone_n_met"]), ""]
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     pd.DataFrame(rows).to_csv(OUT / "summary.csv", index=False)
@@ -294,7 +356,7 @@ def amend_parent_report():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=("placebo", "dose", "all"), default="placebo",
-                    help="placebo (default): λ0 pairs + λ0→λ2 now; dose/all when mid-λ item4 features exist")
+                    help="placebo: matched §1; dose: cross-seed §2; all: both")
     a = ap.parse_args()
     pre = R.prereg()
     n_boot, seed = int(pre["n_resamples"]), int(pre["rng_seed"])
@@ -302,18 +364,17 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     placebo = dose = None
     if a.stage in ("placebo", "all"):
-        print("placebo (item4 lesion-level)…", flush=True)
+        print("placebo (matched item4)…", flush=True)
         placebo = analyse_placebo(hmask, n_boot, seed)
         R.write_json(OUT / "placebo.json", placebo)
     if a.stage in ("dose", "all"):
-        print("dose (item4 lesion-level)…", flush=True)
-        if placebo is None and (OUT / "placebo.json").exists():
-            import json
-            placebo = json.loads((OUT / "placebo.json").read_text())
+        print("dose (cross-seed item4)…", flush=True)
         dose = analyse_dose(hmask, n_boot, seed, placebo)
         R.write_json(OUT / "dose.json", dose)
     if placebo is None:
         import json
+        if not (OUT / "placebo.json").exists():
+            raise SystemExit("need placebo.json (run --stage placebo first) to write combined REPORT")
         placebo = json.loads((OUT / "placebo.json").read_text())
     write_report(placebo, dose)
     R.write_json(OUT / "D1_FOLLOWUP.json", {
