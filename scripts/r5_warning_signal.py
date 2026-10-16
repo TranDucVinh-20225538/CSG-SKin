@@ -217,8 +217,10 @@ def bbse_audit(df):
         sub = df.dropna(subset=["true_tv", "bbse_abs_err_tv"])
         r_true, _, _ = boot_rho(sub["tier2_bbse_tv"], sub["true_tv"])
         r_err, _, _ = boot_rho(sub["bbse_abs_err_tv"], sub["ood_auroc_maha"])
-        lines.append("- Among labelled pad_heldout runs (n = {}): Spearman(bbse_tv, true_tv) = {:.3f}; "
-                     "Spearman(bbse_abs_err_tv, auroc) = {:.3f}.".format(len(sub), r_true, r_err))
+        def _f(x):
+            return "—" if x is None else "{:.3f}".format(x)
+        lines.append("- Among labelled pad_heldout runs (n = {}): Spearman(bbse_tv, true_tv) = {}; "
+                     "Spearman(bbse_abs_err_tv, auroc) = {}.".format(len(sub), _f(r_true), _f(r_err)))
     lines += [
         "",
         "**Reading:** positive ρ is not a sign bug. At λ = 0, PAD has real class-mix shift so BBSE TV is large "
