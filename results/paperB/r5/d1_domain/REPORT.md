@@ -6,6 +6,8 @@ Pass criterion unchanged from `f0bb6ee` (committed before job 68092): ρ_dom > 0
 
 Domain classifier validity (balanced accuracy, ISIC test vs pad_heldout, λ = 0): latent 0.91351 ± 0.01698, backbone 0.96903 ± 0.00256; BCN↔HAM site classifiers (ID test vs OOD held-out): BCN→HAM 0.955 (adversary pool n = 6975), HAM→BCN 0.943 (adversary pool n = 8749).
 
+**Clarifications (definitions only; no D1 number or verdict changed).** **backbone** = `backbone_raw_lesion`: pre-projection features of the same DANN-trained model (they receive the reversed gradient), not a separately trained backbone. **pull** for a contrast λ = 0 → λ = k (same seed unless noted) is the change in Mahalanobis distance from the λ = 0 run to the λ = k run, with the same primary / secondary pull formulae as above; domain score and orthogonal control always come from the source λ = 0 model.
+
 ## Per-image test (primary pull = d₀/med₀ − d₂/med₂; Spearman, mean over seeds)
 
 Bootstrap unit per set is in the table; within a draw the same resample is applied to all 5 seed pairs (lesion-level) and the statistic is the seed mean (pooled over the 5 pairs). BCN↔HAM / HAM→BCN: n = 1 seed pair per direction; verdicts reported as is.
