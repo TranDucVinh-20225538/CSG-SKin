@@ -117,16 +117,29 @@ def main():
     t_train = time.time() - t0
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    net = M.load_dual_net(best, kw, device)
 
-    def forward(x):
-        out = net(x, x_lesion=None, return_latents=True)
-        return out[0], out[3]
+    def evaluate(ckpt, out_dir):
+        net = M.load_dual_net(ckpt, kw, device)
 
-    summ = R.eval_isic(forward, D, device, run_dir, workers=a.num_workers)
+        def forward(x):
+            out = net(x, x_lesion=None, return_latents=True)
+            return out[0], out[3]
+
+        return R.eval_isic(forward, D, device, out_dir, workers=a.num_workers)
+
+    # Primary = last.ckpt (decisions/paperB_r5_p8.md 21:57; P11 amendment 2026-10-16); best-val secondary.
+    summ = evaluate(last, run_dir)
+    sec = evaluate(best, run_dir / "bestval")
     rows = [json.loads(l) for l in adv_log.read_text().splitlines() if l.strip()] if adv_log.exists() else []
+    ep_last = int(torch.load(str(last), map_location="cpu", weights_only=False)["epoch"])
+    ep_best = int(torch.load(str(best), map_location="cpu", weights_only=False)["epoch"])
     summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone, "penalty": a.penalty,
-                 "penalty_weight": a.penalty_weight, "max_epochs": epochs, "best_checkpoint": str(best),
+                 "penalty_weight": a.penalty_weight, "max_epochs": epochs, "checkpoint_policy": "last",
+                 "primary_checkpoint": str(last), "primary_epoch": ep_last, "best_checkpoint": str(best),
+                 "best_epoch": ep_best,
+                 "secondary_bestval": {"checkpoint": str(best), "epoch": ep_best, "out_dir": str(run_dir / "bestval"),
+                                       **{k: sec[k] for k in ("id_balanced_acc", "leakage", "ood", "xfer_pad_heldout_6class",
+                                                              "val_balanced_acc") if k in sec}},
                  "recipe": a.recipe, "gate": adversary_gate(rows, M.LN2, a.lambda_adv,
                                                             leakage_bal=summ["leakage"]["test_vs_pad_full"]["bal_acc_mean"],
                                                             floor=0.5),

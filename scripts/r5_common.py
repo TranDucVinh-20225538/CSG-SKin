@@ -428,6 +428,14 @@ def isic_bootstrap(groups_by_run, ood_sets=("pad_heldout", "fitzpatrick17k"), de
             n_o = len(next(iter(S.values()))["{}__mahalanobis_classcond".format(ood)])
             if ood == "pad_heldout":
                 go = gpad
+            elif ood == "fitzpatrick17k":
+                p13 = R5 / "p13" / "fitz_clusters.csv"
+                if p13.exists():
+                    paths = sorted(p3.FITZ_DIR.glob("*.jpg"))
+                    cl = pd.read_csv(p13).set_index("md5hash")["cluster_union"]
+                    go = idx_groups([str(cl[p.stem]) for p in paths])
+                else:
+                    go = [np.array([i]) for i in range(n_o)]
             elif ood in EXTRA_SETS:
                 go = idx_groups(pd.read_csv(P7A_SETS / "{}.csv".format(ood), keep_default_na=False).group.astype(str))
             else:
