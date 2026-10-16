@@ -50,7 +50,23 @@
      "ood_nv_vs_rest": {
       "nv": 0.683390297289054,
       "non_nv": 0.8107744755310684
+     },
+     "ood_nv_vs_rest_label": "true_class",
+     "ood_nv_vs_rest_nearest_centroid": {
+      "nv": 0.7281172378237346,
+      "non_nv": 0.826221071183967,
+      "split": "nearest_centroid"
      }
+    },
+    "ood_nv_vs_rest_true_class": {
+     "nv": 0.683390297289054,
+     "non_nv": 0.8107744755310684,
+     "split": "true_class"
+    },
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.7281172378237346,
+     "non_nv": 0.826221071183967,
+     "split": "nearest_centroid"
     }
    },
    "knn_k50": {
@@ -98,7 +114,23 @@
      "ood_nv_vs_rest": {
       "nv": 0.7809421927983207,
       "non_nv": 0.9043684060342997
+     },
+     "ood_nv_vs_rest_label": "true_class",
+     "ood_nv_vs_rest_nearest_centroid": {
+      "nv": 0.8576919498978013,
+      "non_nv": 0.9038245385050953,
+      "split": "nearest_centroid"
      }
+    },
+    "ood_nv_vs_rest_true_class": {
+     "nv": 0.7809421927983207,
+     "non_nv": 0.9043684060342997,
+     "split": "true_class"
+    },
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.8576919498978013,
+     "non_nv": 0.9038245385050953,
+     "split": "nearest_centroid"
     }
    },
    "cosine_max": {
@@ -146,7 +178,23 @@
      "ood_nv_vs_rest": {
       "nv": 0.7519174874858712,
       "non_nv": 0.8541499323083421
+     },
+     "ood_nv_vs_rest_label": "true_class",
+     "ood_nv_vs_rest_nearest_centroid": {
+      "nv": 0.8326956231432723,
+      "non_nv": 0.8457116358586354,
+      "split": "nearest_centroid"
      }
+    },
+    "ood_nv_vs_rest_true_class": {
+     "nv": 0.7519174874858712,
+     "non_nv": 0.8541499323083421,
+     "split": "true_class"
+    },
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.8326956231432723,
+     "non_nv": 0.8457116358586354,
+     "split": "nearest_centroid"
     }
    },
    "MSP": {
@@ -194,7 +242,23 @@
      "ood_nv_vs_rest": {
       "nv": 0.8211443924143746,
       "non_nv": 0.9512409508760946
+     },
+     "ood_nv_vs_rest_label": "true_class",
+     "ood_nv_vs_rest_nearest_centroid": {
+      "nv": 0.8971404327387458,
+      "non_nv": 0.9529430377320187,
+      "split": "nearest_centroid"
      }
+    },
+    "ood_nv_vs_rest_true_class": {
+     "nv": 0.8211443924143746,
+     "non_nv": 0.9512409508760946,
+     "split": "true_class"
+    },
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.8971404327387458,
+     "non_nv": 0.9529430377320187,
+     "split": "nearest_centroid"
     }
    },
    "Energy_T1": {
@@ -242,7 +306,23 @@
      "ood_nv_vs_rest": {
       "nv": 0.8917034465435887,
       "non_nv": 0.9792424819520339
+     },
+     "ood_nv_vs_rest_label": "true_class",
+     "ood_nv_vs_rest_nearest_centroid": {
+      "nv": 0.9505463789624321,
+      "non_nv": 0.9768101307510041,
+      "split": "nearest_centroid"
      }
+    },
+    "ood_nv_vs_rest_true_class": {
+     "nv": 0.8917034465435887,
+     "non_nv": 0.9792424819520339,
+     "split": "true_class"
+    },
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.9505463789624321,
+     "non_nv": 0.9768101307510041,
+     "split": "nearest_centroid"
     }
    }
   },
@@ -258,6 +338,12 @@
      "DF": 0.2581521739130435,
      "VASC": 0.21507589400565988,
      "SCC": 0.2881317864595456
+    },
+    "ood_nv_vs_rest_true_class": null,
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.6414532309732511,
+     "non_nv": 0.7762617505005375,
+     "split": "nearest_centroid"
     }
    },
    "knn_k50": {
@@ -271,6 +357,12 @@
      "DF": 0.4952351856616071,
      "VASC": 0.6370960012510278,
      "SCC": 0.5515331936736619
+    },
+    "ood_nv_vs_rest_true_class": null,
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.7508705751466929,
+     "non_nv": 0.8497486023000425,
+     "split": "nearest_centroid"
     }
    },
    "cosine_max": {
@@ -284,6 +376,12 @@
      "DF": 0.5597343709801904,
      "VASC": 0.7039604110231693,
      "SCC": 0.5999444628207171
+    },
+    "ood_nv_vs_rest_true_class": null,
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.7324963627633612,
+     "non_nv": 0.7779384122903529,
+     "split": "nearest_centroid"
     }
    },
    "MSP": {
@@ -297,6 +395,12 @@
      "DF": 0.7272425177943572,
      "VASC": 0.8374723184874671,
      "SCC": 0.6777312245539671
+    },
+    "ood_nv_vs_rest_true_class": null,
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.7869012548917673,
+     "non_nv": 0.886491403162781,
+     "split": "nearest_centroid"
     }
    },
    "Energy_T1": {
@@ -310,6 +414,12 @@
      "DF": 0.8769616670954464,
      "VASC": 0.8832407673643166,
      "SCC": 0.9015338062160805
+    },
+    "ood_nv_vs_rest_true_class": null,
+    "ood_nv_vs_rest_nearest_centroid": {
+     "nv": 0.920005989857856,
+     "non_nv": 0.9450533086256203,
+     "split": "nearest_centroid"
     }
    }
   }

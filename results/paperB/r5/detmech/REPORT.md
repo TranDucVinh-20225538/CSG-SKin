@@ -50,14 +50,16 @@ Design: `decisions/paperB_r5_detmech.md`. last.ckpt features for A4; item4 for o
 
 |Δ| = |reweighted − identity|; **≈ 0 is the identity check** (reweighting algebra), not a failed detector. Compare those two columns to **unweighted pooled AUROC** (ordinary ID-vs-OOD AUROC).
 
-| recipe | λ | unweighted pooled AUROC | measured AUROC, ID reweighted to PAD mix | Σ w_c·AUROC_c (identity) | |Δ| | NV OOD AUROC | non-NV OOD AUROC |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| old_recipe | 0 | 0.808 ± 0.027 | 0.631 ± 0.055 | 0.631 ± 0.055 | 0.000 ± 0.000 | 0.688 ± 0.020 | 0.824 ± 0.028 |
-| old_recipe | 2 | 0.403 ± 0.028 | 0.235 ± 0.028 | 0.235 ± 0.028 | 0.000 ± 0.000 | 0.286 ± 0.033 | 0.419 ± 0.029 |
-| a4 | 0 | 0.786 ± 0.019 | 0.639 ± 0.028 | 0.639 ± 0.028 | 0.000 ± 0.000 | 0.620 ± 0.027 | 0.809 ± 0.020 |
-| a4 | 2 | 0.452 ± 0.014 | 0.303 ± 0.016 | 0.303 ± 0.016 | 0.000 ± 0.000 | 0.325 ± 0.039 | 0.470 ± 0.014 |
+**NV / non-NV splits (both reported):** `true class` = OOD images with label NV vs not; `nearest centroid` = OOD images whose Mahalanobis nearest ISIC-train class is NV vs not.
+
+| recipe | λ | unweighted pooled AUROC | measured AUROC, ID reweighted to PAD mix | Σ w_c·AUROC_c (identity) | |Δ| | NV OOD (true class) | non-NV OOD (true class) | NV-nearest OOD | non-NV-nearest OOD |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| old_recipe | 0 | 0.808 ± 0.027 | 0.631 ± 0.055 | 0.631 ± 0.055 | 0.000 ± 0.000 | 0.688 ± 0.020 | 0.824 ± 0.028 | 0.720 ± 0.025 | 0.831 ± 0.030 |
+| old_recipe | 2 | 0.403 ± 0.028 | 0.235 ± 0.028 | 0.235 ± 0.028 | 0.000 ± 0.000 | 0.286 ± 0.033 | 0.419 ± 0.029 | 0.250 ± 0.020 | 0.621 ± 0.032 |
+| a4 | 0 | 0.786 ± 0.019 | 0.639 ± 0.028 | 0.639 ± 0.028 | 0.000 ± 0.000 | 0.620 ± 0.027 | 0.809 ± 0.020 | 0.698 ± 0.024 | 0.820 ± 0.018 |
+| a4 | 2 | 0.452 ± 0.014 | 0.303 ± 0.016 | 0.303 ± 0.016 | 0.000 ± 0.000 | 0.325 ± 0.039 | 0.470 ± 0.014 | 0.320 ± 0.021 | 0.642 ± 0.049 |
 
 ## Plain words
 
-Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC and decomposition for every detector. In the decomposition table, |Δ| ≈ 0 confirms the reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number.
+Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC and decomposition for every detector. In the decomposition table, |Δ| ≈ 0 confirms the reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number. NV columns: true-class split (legacy) and nearest-centroid split (aligned with R1 detmech_shift).
 
