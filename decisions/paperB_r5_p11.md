@@ -118,3 +118,56 @@ Scan fixed (11 runs). Seed stage only for a selected penalty. A failed run is re
 failure is reported.
 
 ## Deviations
+
+## Amendment 2026-10-16 07:33 (UTC+7) — queue order, MK-MMD citation, comparable invariance (committed before any P11 run)
+
+User decision 2026-10-16 07:32. Fixed now; not changed after results are seen.
+
+### Queue
+
+P11 is raised to run **right after P9 and before P7(b)**. Dependency: P11 scan starts after the P9 v2 report job
+(68090); P7(b) is held until the P11 seeds report finishes. Recipe: `RECIPE=auto` → the main-recipe rule outcome
+(`current` / old Table 1 recipe). Checkpoint policy: **last.ckpt** primary (P8 deviation 2026-10-15 21:57), best-val
+secondary.
+
+### MK-MMD (DAN)
+
+MK-MMD is as in DAN (Long et al. 2015): multi-kernel Gaussian MMD with bandwidths = median pairwise squared distance
+of the pooled batch (detached) × {0.25, 0.5, 1, 2, 4}, unbiased MMD², kernels averaged (`scripts/r5_models.py:mk_mmd`).
+Wu et al. (2023, arXiv:2309.11705) report that under DAN on rotated MNIST, OOD detection stays weak (Mahalanobis AUROC
+32.9, ODIN 30.8) — i.e. alignment need not produce a useful OOD detector; P11 tests the complementary claim on derm
+data (whether matched invariance with MK-MMD / CORAL produces detector collapse or inversion).
+
+### Comparable invariance (outcome rule; replaces the old “matched leakage ±0.05 on Table 1 pad_full probe” claim)
+
+Verbatim:
+
+> “Comparable invariance”: held-out-probe leakage (balanced accuracy, same probe as P6/A3) within 0.03 of GRL at λ = 2
+> on the same probe, with ID bal acc within 0.05 of λ = 0.
+> If no MMD / MK-MMD setting meets both, report “equivalent invariance not reached”, not “MMD does not collapse”.
+> If a setting meets both, report all 5 detectors on pad_heldout and Fitzpatrick with rule A, and state whether it
+> collapses or inverts.
+
+Operationalisation (fixed):
+- Held-out probe = P6 V1: ISIC test ∪ pad_heldout, 70/30 GroupShuffleSplit by lesion / patient, probe seeds 42/52/62,
+  logistic probe on `z_lesion_norm` (same function as `r5_p9v2.v1_probe` / P6 A3). Chance floor 0.5.
+- GRL λ = 2 reference: mean V1 over the five Table 1 runs `runB_orth1_ladv2_s{42,52,62,72,82}` from
+  `results/paperB/r5/p6/per_run/*.json` (`z_lesion_norm.V1.bal_acc_mean`). GRL λ = 0 reference: mean ID test balanced
+  accuracy over the five Table 1 λ = 0 runs (item-4 summaries).
+- A P11 setting (penalty, weight, epochs; after the seed stage if selected, else the seed-42 scan row) **meets**
+  comparable invariance iff |V1_P11 − V1_GRL_λ2| ≤ 0.03 and |ID_P11 − ID_GRL_λ0| ≤ 0.05 (means over seeds when n ≥ 3;
+  seed-42 only for unscanned reporting of non-selected weights).
+- **Collapse** = mean Mahalanobis AUROC on pad_heldout in [0.45, 0.55] (descriptive band). **Inversion** = rule A met
+  on pad_heldout (pooled CI upper bound < 0.5 and ≥ 3/5 seed CIs upper bound < 0.5). Both stated; neither is a
+  pass/fail for the item.
+- Scan / weight selection (val vs pad_adv → 0.60, classifier intact) is unchanged and is only a pipeline to pick which
+  configs get 5 seeds. The claim language above is the only outcome language for the MMD / MK-MMD arms.
+
+### Predicted outcome (written before any P11 score exists)
+
+- P1: at least one MK-MMD weight in {10, 30} (40 epochs) reaches comparable invariance (V1 within 0.03 of GRL λ = 2,
+  ID within 0.05 of λ = 0); scaled CORAL does not (selection probe can fall, but held-out V1 stays > GRL λ = 2 + 0.03).
+- P2: every MK-MMD setting that meets comparable invariance **inverts** on pad_heldout (rule A met; mean Maha
+  0.40–0.48), Fitzpatrick in the same direction; reading: inversion is not adversary-specific.
+- P3: if P1 fails for all MK-MMD and CORAL weights, the report states only “equivalent invariance not reached” (no
+  claim that “MMD does not collapse”).
