@@ -41,6 +41,7 @@ case "${STEP}" in
   warning)       ${PY} scripts/r5_warning_signal.py ${ARGS} ;;
   detmech)       ${PY} scripts/r5_detmech.py ${ARGS} ;;
   d1)            ${PY} scripts/r5_d1_domain_direction.py ${ARGS} ;;
+  d1fu)          ${PY} scripts/r5_d1_followup.py ${ARGS} ;;
   p10_report)    ${PY} scripts/r5_p10_report.py ${ARGS} ;;
   rescore)       ${PY} scripts/r5_rescore_heldout.py run ${SLURM_ARRAY_TASK_ID} ;;
   rescore_report) ${PY} scripts/r5_rescore_heldout.py report ;;

@@ -12,3 +12,7 @@ When a Paper B (or related) job finishes and you report its status or numbers to
 3. **Untracked results do not count as done.** Saying a job COMPLETED without a commit that includes its outputs is incomplete.
 4. Prefer committing as author `vinhtranduc` (existing Paper B convention). Do not commit secrets, credentials, or unrelated dirty WIP.
 5. Large regenerated caches may be omitted only if the decisions/report already name a reproducible regenerator and the user explicitly excludes them; default is to include what the job wrote.
+
+# Fill free CPU
+
+When Paper B has a ready CPU item (decisions committed, script ready, inputs on disk) and the vip2 CPU budget has spare room, **submit it immediately** — do not wait to be asked again. Prefer lean CPU requests so jobs can share the QOS with GPU-array sidecars. GPU order rules (R1/R2 first; ERM nice=1000) still apply; this rule is for CPU fill only.
