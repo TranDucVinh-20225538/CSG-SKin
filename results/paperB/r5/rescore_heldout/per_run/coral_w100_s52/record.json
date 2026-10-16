@@ -1,0 +1,53 @@
+{
+ "run": "coral_w100_s52",
+ "source": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase15/objectives/coral_w100_s52",
+ "table": "obj",
+ "objective": "coral",
+ "weight": 100.0,
+ "seed": 52,
+ "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/objectives/coral_w100_s52/best-38.ckpt",
+ "auroc": {
+  "pad_full": {
+   "mahalanobis_classcond": 0.9994573154885543,
+   "knn_k50": 0.9995649248718177,
+   "cosine_max": 0.9995706789250329,
+   "MSP": 0.9514755968885515,
+   "Energy_T1": 0.6666130337378176
+  },
+  "pad_heldout": {
+   "mahalanobis_classcond": 0.9986353257412129,
+   "knn_k50": 0.9986951387717435,
+   "cosine_max": 0.9986692289797163,
+   "MSP": 0.9467025930740369,
+   "Energy_T1": 0.6673166165560264
+  }
+ },
+ "check_minus_stored": {
+  "pad_full": {
+   "mahalanobis_classcond": 1.374102260309762e-06,
+   "knn_k50": 5.152883476577941e-07,
+   "cosine_max": 9.446953040948003e-07,
+   "MSP": -3.6499591289373967e-06,
+   "Energy_T1": -2.6236765033438303e-05
+  }
+ },
+ "max_abs_check": 2.6236765033438303e-05,
+ "check_flag": false,
+ "heldout_probe": {
+  "bal_acc_mean": 0.9930146382039524,
+  "bal_acc_sd": 0.0022915722415618846,
+  "per_probe_seed": [
+   0.9908249216445428,
+   0.9953960264601376,
+   0.992822966507177
+  ]
+ },
+ "stored_leakage_pad_full": 0.9982217772692601,
+ "id_balanced_acc": 0.785616664057095,
+ "n": {
+  "isic_train": 16211,
+  "isic_test": 5067,
+  "pad_full": 2298,
+  "pad_heldout": 716
+ }
+}

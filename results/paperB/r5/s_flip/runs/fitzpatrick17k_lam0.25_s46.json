@@ -1,0 +1,39 @@
+{
+  "set": "fitzpatrick17k",
+  "lambda": 0.25,
+  "seed": 46,
+  "auroc": 0.3682426770191195,
+  "auroc_flip": 0.6317573229808805,
+  "flip_identity_dev": 0.0,
+  "t_val": 57.34311828613278,
+  "t_val_flip": -3.1588417530059814,
+  "id_acc": 0.9431616341030196,
+  "ood_acc": 0.9822485207100592,
+  "id_acc_flip": 0.9522399842115651,
+  "ood_acc_flip": 0.9091844610239259,
+  "fpr95_testcal": 0.9840493954206329,
+  "fpr95_testcal_flip": 0.9053254437869822,
+  "n_unmapped_ood": 3301,
+  "per_class": {
+    "matched_NV": {
+      "n_id": 2575,
+      "n_ood": 2,
+      "auroc": 0.5124271844660194
+    },
+    "matched_nonNV": {
+      "n_id": 2492,
+      "n_ood": 584,
+      "auroc": 0.21882317937949383
+    },
+    "oodonly_NV": {
+      "n_id": 5067,
+      "n_ood": 2,
+      "auroc": 0.3323465561476219
+    },
+    "oodonly_nonNV": {
+      "n_id": 5067,
+      "n_ood": 584,
+      "auroc": 0.3622119421667464
+    }
+  }
+}

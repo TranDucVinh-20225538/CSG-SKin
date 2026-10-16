@@ -1,0 +1,45 @@
+{
+  "set": "ham_bcn",
+  "lambda": 2.0,
+  "seed": 42,
+  "auroc": 0.6491413046281332,
+  "auroc_flip": 0.3508586953718667,
+  "flip_identity_dev": 5.551115123125783e-17,
+  "t_val": 4110.10899658203,
+  "t_val_flip": -686.5969268798829,
+  "id_acc": 0.937007874015748,
+  "ood_acc": 0.8215065502183406,
+  "id_acc_flip": 0.9448818897637795,
+  "ood_acc_flip": 0.9770742358078602,
+  "fpr95_testcal": 0.8482532751091703,
+  "fpr95_testcal_flip": 0.9795305676855895,
+  "n_unmapped_ood": 0,
+  "per_class": {
+    "matched_NV": {
+      "n_id": 673,
+      "n_ood": 1174,
+      "auroc": 0.5095772444570448
+    },
+    "matched_nonNV": {
+      "n_id": 343,
+      "n_ood": 2490,
+      "auroc": 0.5889084032924702
+    },
+    "oodonly_NV": {
+      "n_id": 1016,
+      "n_ood": 1174,
+      "auroc": 0.4005100672041208
+    },
+    "oodonly_nonNV": {
+      "n_id": 1016,
+      "n_ood": 2490,
+      "auroc": 0.7663674382569649
+    }
+  },
+  "stored_check": {
+    "run": "ham_bcn_ladv2_s42",
+    "maha_auroc_recomputed": 0.6491413046281334,
+    "maha_auroc_stored": 0.6491413046281334,
+    "abs_diff": 0.0
+  }
+}

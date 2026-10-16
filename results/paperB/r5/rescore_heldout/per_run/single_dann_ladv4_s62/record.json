@@ -1,0 +1,60 @@
+{
+ "run": "single_dann_ladv4_s62",
+ "source": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase15/single_dann/single_dann_ladv4_s62",
+ "table": "single",
+ "objective": "lambda",
+ "weight": 4.0,
+ "seed": 62,
+ "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/phase15/single_dann/single_dann_ladv4_s62/best-37.ckpt",
+ "auroc": {
+  "pad_full": {
+   "mahalanobis_classcond": 0.5265567590973728,
+   "knn_k50": 0.4989791279019537,
+   "cosine_max": 0.468609922083249,
+   "MSP": 0.46218947221247475,
+   "Energy_T1": 0.4368200662901284
+  },
+  "pad_heldout": {
+   "mahalanobis_classcond": 0.5338304705769504,
+   "knn_k50": 0.5255101197032391,
+   "cosine_max": 0.5066792136212738,
+   "MSP": 0.5158596868994578,
+   "Energy_T1": 0.491888856915103
+  }
+ },
+ "check_minus_stored": {
+  "pad_full": {
+   "mahalanobis_classcond": -0.0001566905983751976,
+   "knn_k50": -3.8474863289672534e-05,
+   "cosine_max": -0.00010116827891798463,
+   "MSP": -0.00013573553890483536,
+   "Energy_T1": -4.538831528699827e-05
+  },
+  "pad_heldout": {
+   "mahalanobis_classcond": -0.00016593292340727483,
+   "knn_k50": -4.96144953709976e-05,
+   "cosine_max": -7.745373999579197e-05,
+   "MSP": -0.0001343725916297389,
+   "Energy_T1": -3.307633024729473e-05
+  }
+ },
+ "max_abs_check": 0.00016593292340727483,
+ "check_flag": false,
+ "heldout_probe": {
+  "bal_acc_mean": 0.7192177647078619,
+  "bal_acc_sd": 0.016563321766801392,
+  "per_probe_seed": [
+   0.7019006959808259,
+   0.7349071579078188,
+   0.7208454402349412
+  ]
+ },
+ "stored_leakage_pad_full": 0.7886473429951691,
+ "id_balanced_acc": 0.7516421031398958,
+ "n": {
+  "isic_train": 16211,
+  "isic_test": 5067,
+  "pad_full": 2298,
+  "pad_heldout": 716
+ }
+}

@@ -36,9 +36,28 @@ OODS = ("pad_heldout", "fitzpatrick17k")
 TOL = 2e-3
 
 
+def _jsonable(o):
+    if isinstance(o, dict):
+        return {k: _jsonable(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_jsonable(v) for v in o]
+    if isinstance(o, (np.integer,)):
+        return int(o)
+    if isinstance(o, (np.floating,)):
+        return float(o)
+    if isinstance(o, np.ndarray):
+        return o.tolist()
+    if hasattr(o, "item"):
+        try:
+            return o.item()
+        except Exception:
+            pass
+    return o
+
+
 def wjson(p, obj):
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(obj, indent=2) + "\n")
+    p.write_text(json.dumps(_jsonable(obj), indent=2) + "\n")
 
 
 def extract_last(tag, data):

@@ -1,0 +1,45 @@
+{
+  "n_images": 3887,
+  "hamming_threshold": 8,
+  "cosine_threshold": 0.95,
+  "n_edges_phash": 11,
+  "n_edges_embed": 144,
+  "hosts": {
+    "atlasdermatologico.com.br": 3887
+  },
+  "cluster_phash": {
+    "n_clusters": 3876,
+    "n_singletons": 3867,
+    "largest": 4,
+    "images_in_multi": 20,
+    "effective_n": 3859.2002554278415
+  },
+  "cluster_embed": {
+    "n_clusters": 3752,
+    "n_singletons": 3646,
+    "largest": 16,
+    "images_in_multi": 241,
+    "effective_n": 3422.1447338618345
+  },
+  "cluster_union": {
+    "n_clusters": 3747,
+    "n_singletons": 3639,
+    "largest": 16,
+    "images_in_multi": 248,
+    "effective_n": 3408.24926686217
+  },
+  "cluster_imageid_run": {
+    "n_clusters": 222,
+    "n_singletons": 17,
+    "largest": 175,
+    "images_in_multi": 3870,
+    "effective_n": 67.61558014956299
+  },
+  "cluster_diagnosis": {
+    "n_clusters": 90,
+    "n_singletons": 2,
+    "largest": 257,
+    "images_in_multi": 3885,
+    "effective_n": 37.791290536399906
+  }
+}

@@ -1,0 +1,16 @@
+heldout,n,n_inverted,threshold,sensitivity,specificity,signal
+csg_dual_image,31,20,0.023826069545852868,0.9,0.7272727272727273,pred_maj_frac_excess
+csg_dual_lesion,35,27,0.047569086305629504,0.8518518518518519,0.875,pred_maj_frac_excess
+single_dann_image,3,1,0.047569086305629504,1.0,0.5,pred_maj_frac_excess
+csg_dual_image,31,20,0.08663015819664338,0.95,0.09090909090909091,bbse_tv
+csg_dual_lesion,35,27,0.09172697426827617,0.9259259259259259,0.0,bbse_tv
+single_dann_image,3,1,0.10381050819940073,0.0,0.5,bbse_tv
+csg_dual_image,31,20,0.7082292005505887,1.0,0.45454545454545453,bbse_maj_ratio
+csg_dual_lesion,35,27,0.9413136505151328,0.7407407407407407,0.875,bbse_maj_ratio
+single_dann_image,3,1,0.8738255013491586,1.0,0.0,bbse_maj_ratio
+csg_dual_image,31,20,0.04528516570205254,0.0,1.0,q4_maj_share_excess
+csg_dual_lesion,35,27,0.02416813392782724,0.9259259259259259,0.5,q4_maj_share_excess
+single_dann_image,3,1,0.02416813392782724,1.0,0.0,q4_maj_share_excess
+csg_dual_image,31,20,0.043379142171551255,0.85,0.7272727272727273,deploy_maj_share_excess
+csg_dual_lesion,35,27,0.06572551088663503,0.7777777777777778,0.875,deploy_maj_share_excess
+single_dann_image,3,1,0.05455232652909314,1.0,0.5,deploy_maj_share_excess

@@ -1,0 +1,39 @@
+{
+  "set": "pad_heldout",
+  "lambda": 0.25,
+  "seed": 44,
+  "auroc": 0.5773498251915946,
+  "auroc_flip": 0.42265017480840533,
+  "flip_identity_dev": 5.551115123125783e-17,
+  "t_val": 43.10506210327147,
+  "t_val_flip": -3.1580304145812987,
+  "id_acc": 0.9447404776001579,
+  "ood_acc": 0.9189944134078212,
+  "id_acc_flip": 0.9532267613972765,
+  "ood_acc_flip": 0.973463687150838,
+  "fpr95_testcal": 0.9301675977653632,
+  "fpr95_testcal_flip": 0.9678770949720671,
+  "n_unmapped_ood": 0,
+  "per_class": {
+    "matched_NV": {
+      "n_id": 2575,
+      "n_ood": 88,
+      "auroc": 0.5070653133274492
+    },
+    "matched_nonNV": {
+      "n_id": 2492,
+      "n_ood": 628,
+      "auroc": 0.46621481735183157
+    },
+    "oodonly_NV": {
+      "n_id": 5067,
+      "n_ood": 88,
+      "auroc": 0.3629702890360084
+    },
+    "oodonly_nonNV": {
+      "n_id": 5067,
+      "n_ood": 628,
+      "auroc": 0.6073902697484284
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "locked": {
+    "D": 50,
+    "K": 8,
+    "K_ood": 6,
+    "n0": 20000,
+    "n_t": 2900,
+    "delta": 2.0,
+    "delta2": 3.0,
+    "label_scale": 2.0,
+    "tau": 1.0,
+    "encoder": "mlp",
+    "hidden": [
+      128,
+      128
+    ],
+    "m": 16,
+    "adversary": "mlp_derm",
+    "adv_lr_mult": 30.0,
+    "epochs": 40,
+    "batch": 256,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "patient_sd": 0.5,
+    "imgs_per_patient": 1.7,
+    "heldout_patient_frac": 0.3
+  },
+  "p_src": [
+    0.5,
+    0.18,
+    0.13,
+    0.1,
+    0.035,
+    0.025,
+    0.015,
+    0.015
+  ],
+  "q_pad": [
+    0.12,
+    0.025,
+    0.36,
+    0.1,
+    0.315,
+    0.08
+  ],
+  "shifts": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "lams": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cells": {
+    "primary": {
+      "bn": false,
+      "shifts": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "prior": "ISIC-like",
+      "oracle": false
+    },
+    "bn_on": {
+      "bn": true,
+      "shifts": [
+        0.0,
+        1.0
+      ],
+      "prior": "ISIC-like",
+      "oracle": false
+    },
+    "uniform": {
+      "bn": false,
+      "shifts": [
+        null
+      ],
+      "prior": "uniform",
+      "oracle": false
+    },
+    "oracle": {
+      "bn": false,
+      "shifts": [
+        0.5,
+        1.0
+      ],
+      "prior": "ISIC-like",
+      "oracle": true
+    }
+  }
+}
