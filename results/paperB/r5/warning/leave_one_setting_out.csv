@@ -1,0 +1,9 @@
+tp,tn,fp,fn,sensitivity,specificity,n_pos,n_neg,holdout_setting,statistic,threshold_from_other_lambda0,weak
+8,0,6,1,0.8888888888888888,0.0,9,6,a4_p8,tier1_val_centroid_collapse_excess,0.04482430934890935,True
+9,1,5,0,1.0,0.16666666666666666,9,6,a4_p8,tier1_test_centroid_collapse_excess,0.0416143545712059,True
+9,5,1,0,1.0,0.8333333333333334,9,6,a4_p8,tier2_pred_maj_frac_excess,-0.31025214274464985,True
+0,6,0,9,0.0,1.0,9,6,a4_p8,tier2_bbse_tv,0.8731360943990417,True
+0,8,0,27,0.0,1.0,27,8,old_recipe,tier1_val_centroid_collapse_excess,0.05997358149300012,True
+6,8,0,21,0.2222222222222222,1.0,27,8,old_recipe,tier1_test_centroid_collapse_excess,0.05045587815518066,True
+27,2,6,0,1.0,0.25,27,8,old_recipe,tier2_pred_maj_frac_excess,-0.3909783997278901,True
+0,7,1,27,0.0,0.875,27,8,old_recipe,tier2_bbse_tv,0.8639364151453107,True

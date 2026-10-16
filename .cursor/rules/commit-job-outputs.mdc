@@ -13,6 +13,6 @@ When a Paper B (or related) job finishes and you report its status or numbers to
 4. Prefer committing as author `vinhtranduc` (existing Paper B convention). Do not commit secrets, credentials, or unrelated dirty WIP.
 5. Large regenerated caches may be omitted only if the decisions/report already name a reproducible regenerator and the user explicitly excludes them; default is to include what the job wrote.
 
-# Fill free CPU
+# Fill free CPU (never idle)
 
-When Paper B has a ready CPU item (decisions committed, script ready, inputs on disk) and the vip2 CPU budget has spare room, **submit it immediately** — do not wait to be asked again. Prefer lean CPU requests so jobs can share the QOS with GPU-array sidecars. GPU order rules (R1/R2 first; ERM nice=1000) still apply; this rule is for CPU fill only.
+Keep vip2 busy: whenever CPU headroom exists (`MaxTRES cpu=48` minus running), **immediately** submit every Paper B CPU item that is ready (decisions committed, script ready, inputs on disk, outputs missing) — do not wait to be asked. Prefer lean `--cpus-per-task` / mem so multiple CPU jobs can share with GPU-array sidecars (R1/t1last). Same for committing finished outputs as soon as a job completes. GPU order rules still apply (R1/R2 first; ERM `--nice=1000`); do not steal GPU from R1/R2.

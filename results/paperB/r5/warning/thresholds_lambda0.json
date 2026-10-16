@@ -1,0 +1,10 @@
+{
+ "rule": "95th percentile over \u03bb = 0 runs only; fixed before reading invert labels for flagging",
+ "n_lambda0": 10,
+ "stats": {
+  "tier1_val_centroid_collapse_excess": 0.059726850676321115,
+  "tier1_test_centroid_collapse_excess": 0.04927174553232689,
+  "tier2_pred_maj_frac_excess": -0.31583873492342085,
+  "tier2_bbse_tv": 0.872479142636123
+ }
+}

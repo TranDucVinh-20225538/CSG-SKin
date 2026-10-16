@@ -1,0 +1,18 @@
+{
+ "run_id": "old_recipe/runB_orth1_ladv2_s42",
+ "task": "isic_skin",
+ "protocol": "isic_lesion_split",
+ "family": "old_recipe",
+ "lambda": 2.0,
+ "seed": 42,
+ "source": "r2/item4",
+ "tier1_val_centroid_collapse_excess": 0.04117269326206008,
+ "tier1_test_centroid_collapse_excess": 0.04883756357061386,
+ "tier2_pred_maj_frac_excess": 0.09226182373579705,
+ "tier2_bbse_tv": 0.1329290613397916,
+ "bbse_cond": 174.1680752403979,
+ "ood_auroc_maha": 0.37099624804160564,
+ "inverts_proxy_auroc_lt_0p5": true,
+ "setting": "old_recipe",
+ "ood_auroc_maha_fitz": 0.3881361507789447
+}

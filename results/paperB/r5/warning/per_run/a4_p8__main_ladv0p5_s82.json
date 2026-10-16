@@ -1,0 +1,18 @@
+{
+ "run_id": "a4_p8/main_ladv0p5_s82",
+ "task": "isic_skin",
+ "protocol": "isic_lesion_split",
+ "family": "a4_p8",
+ "lambda": 0.5,
+ "seed": 82,
+ "source": "r5/p8/main last.ckpt",
+ "tier1_val_centroid_collapse_excess": 0.047094232862356145,
+ "tier1_test_centroid_collapse_excess": 0.04883756357061386,
+ "tier2_pred_maj_frac_excess": -0.013883427660850989,
+ "tier2_bbse_tv": 0.19899907885913554,
+ "bbse_cond": 84.31172423054305,
+ "ood_auroc_maha": 0.461169766470083,
+ "inverts_proxy_auroc_lt_0p5": true,
+ "setting": "a4_p8",
+ "ood_auroc_maha_fitz": 0.36713980690646547
+}
