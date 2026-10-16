@@ -227,3 +227,6 @@ Implementation (fixed now):
   reported with CIs. (2) In every report that states the 0.70 competence threshold: keep the original ≥ 0.70 verdict
   visible, and add that 0.70 was set from the image-level single-encoder ERM 0.779, which is leakage-inflated on the
   image-level split; the lesion-level ERM reference is reported alongside. The threshold itself is not changed.
+- 2026-10-16 08:19 (UTC+7), user-directed. Lesion-level ERM GPU jobs (array formerly 68497, now 68503) stay
+  behind R1/R2 in the GPU scheduler order (`--nice=1000`). They may run when a GPU slot is free alongside R1,
+  but must not delay R1 or R2.

@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=pB-p8erm
+#SBATCH --nice=1000
 #SBATCH --array=0-4%2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
