@@ -1,0 +1,23 @@
+{
+ "run_id": "r1/r1_cur_shift0_ladv0p5_s52",
+ "task": "isic_skin",
+ "protocol": "isic_lesion_split_r1_three_stream",
+ "family": "r1_shift0",
+ "lambda": 0.5,
+ "seed": 52,
+ "source": "r6/r1/cur features",
+ "shift_pct": 0,
+ "tier1_val_centroid_collapse_excess": 0.05424942654604725,
+ "tier1_test_centroid_collapse_excess": 0.053376738624886566,
+ "tier2_pred_maj_frac_excess": -0.3546655505658789,
+ "tier2_bbse_tv": 0.6690518380075853,
+ "bbse_cond": 145.99636708841146,
+ "ood_auroc_maha": 0.48964462790782287,
+ "inverts_pad_heldout": true,
+ "inverts_proxy_auroc_lt_0p5": true,
+ "setting": "r1_shift0",
+ "true_tv": 0.5706628937599298,
+ "bbse_abs_err_tv": 0.34492504335522833,
+ "ood_auroc_maha_fitz": 0.6620576276860991,
+ "inverts_fitz": false
+}

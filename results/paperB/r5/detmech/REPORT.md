@@ -48,14 +48,16 @@ Design: `decisions/paperB_r5_detmech.md`. last.ckpt features for A4; item4 for o
 
 ## Decomposition (Mahalanobis, pad_heldout; mean over seeds)
 
-| recipe | λ | reweighted | identity | |Δ| | NV OOD AUROC | non-NV OOD AUROC |
-|---|---:|---:|---:|---:|---:|---:|
-| old_recipe | 0 | 0.631 ± 0.055 | 0.631 ± 0.055 | 0.000 ± 0.000 | 0.688 ± 0.020 | 0.824 ± 0.028 |
-| old_recipe | 2 | 0.235 ± 0.028 | 0.235 ± 0.028 | 0.000 ± 0.000 | 0.286 ± 0.033 | 0.419 ± 0.029 |
-| a4 | 0 | 0.639 ± 0.028 | 0.639 ± 0.028 | 0.000 ± 0.000 | 0.620 ± 0.027 | 0.809 ± 0.020 |
-| a4 | 2 | 0.303 ± 0.016 | 0.303 ± 0.016 | 0.000 ± 0.000 | 0.325 ± 0.039 | 0.470 ± 0.014 |
+|Δ| = |reweighted − identity|; **≈ 0 is the identity check** (reweighting algebra), not a failed detector. Compare those two columns to **unweighted pooled AUROC** (ordinary ID-vs-OOD AUROC).
+
+| recipe | λ | unweighted pooled AUROC | measured AUROC, ID reweighted to PAD mix | Σ w_c·AUROC_c (identity) | |Δ| | NV OOD AUROC | non-NV OOD AUROC |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| old_recipe | 0 | 0.808 ± 0.027 | 0.631 ± 0.055 | 0.631 ± 0.055 | 0.000 ± 0.000 | 0.688 ± 0.020 | 0.824 ± 0.028 |
+| old_recipe | 2 | 0.403 ± 0.028 | 0.235 ± 0.028 | 0.235 ± 0.028 | 0.000 ± 0.000 | 0.286 ± 0.033 | 0.419 ± 0.029 |
+| a4 | 0 | 0.786 ± 0.019 | 0.639 ± 0.028 | 0.639 ± 0.028 | 0.000 ± 0.000 | 0.620 ± 0.027 | 0.809 ± 0.020 |
+| a4 | 2 | 0.452 ± 0.014 | 0.303 ± 0.016 | 0.303 ± 0.016 | 0.000 ± 0.000 | 0.325 ± 0.039 | 0.470 ± 0.014 |
 
 ## Plain words
 
-Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC and decomposition for every detector.
+Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC and decomposition for every detector. In the decomposition table, |Δ| ≈ 0 confirms the reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number.
 

@@ -6,13 +6,18 @@
  "lambda": 0.0,
  "seed": 82,
  "source": "r5/p8/main last.ckpt",
+ "shift_pct": null,
  "tier1_val_centroid_collapse_excess": 0.06017096614634332,
  "tier1_test_centroid_collapse_excess": 0.043706322204914216,
  "tier2_pred_maj_frac_excess": -0.41891136062174483,
  "tier2_bbse_tv": 0.8668122650295772,
  "bbse_cond": 90.10260962853833,
  "ood_auroc_maha": 0.8159591639626766,
+ "inverts_pad_heldout": false,
  "inverts_proxy_auroc_lt_0p5": false,
  "setting": "a4_p8",
- "ood_auroc_maha_fitz": 0.857722317193497
+ "true_tv": 0.5706628937599298,
+ "bbse_abs_err_tv": 0.58857043975096,
+ "ood_auroc_maha_fitz": 0.857722317193497,
+ "inverts_fitz": false
 }

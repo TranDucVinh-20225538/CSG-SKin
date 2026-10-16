@@ -1,0 +1,42 @@
+{
+ "verdict": "tier 1 failed",
+ "note": "Original primary on old_recipe+A4 only; specificity used all non-inverting runs (incl. \u03bb = 0).",
+ "rows": [
+  {
+   "statistic": "tier1_val_centroid_collapse_excess",
+   "tier": "1",
+   "threshold": 0.0597,
+   "sens": 0.194,
+   "spec": 0.857,
+   "n_pos": 36,
+   "n_neg": 14
+  },
+  {
+   "statistic": "tier1_test_centroid_collapse_excess",
+   "tier": "1",
+   "threshold": 0.0493,
+   "sens": 0.389,
+   "spec": 0.857,
+   "n_pos": 36,
+   "n_neg": 14
+  },
+  {
+   "statistic": "tier2_pred_maj_frac_excess",
+   "tier": "2",
+   "threshold": -0.3158,
+   "sens": 1.0,
+   "spec": 0.643,
+   "n_pos": 36,
+   "n_neg": 14
+  },
+  {
+   "statistic": "tier2_bbse_tv",
+   "tier": "2",
+   "threshold": 0.8725,
+   "sens": 0.0,
+   "spec": 0.929,
+   "n_pos": 36,
+   "n_neg": 14
+  }
+ ]
+}

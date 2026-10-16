@@ -6,13 +6,18 @@
  "lambda": 4.0,
  "seed": 45,
  "source": "r2/item4",
+ "shift_pct": null,
  "tier1_val_centroid_collapse_excess": 0.046107309595640134,
  "tier1_test_centroid_collapse_excess": 0.03719359277921852,
  "tier2_pred_maj_frac_excess": 0.07689869524417692,
  "tier2_bbse_tv": 0.0752722660936389,
  "bbse_cond": 116.45406557783808,
  "ood_auroc_maha": 0.4405207647688571,
+ "inverts_pad_heldout": true,
  "inverts_proxy_auroc_lt_0p5": true,
  "setting": "old_recipe",
- "ood_auroc_maha_fitz": 0.4245705945272885
+ "true_tv": 0.5706628937599298,
+ "bbse_abs_err_tv": 0.6160702004402504,
+ "ood_auroc_maha_fitz": 0.4245705945272885,
+ "inverts_fitz": true
 }
