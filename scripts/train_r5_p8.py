@@ -10,6 +10,7 @@ Stages (each a SLURM array over --task_id; see slurm/r5_p8_*.sbatch and scripts/
   main  selected recipe, λ ∈ {0, 0.5, 2} x seeds 42/52/62/72/82, full evaluation (λ = 0 seeds 42/52 reuse the
         stage A/B checkpoint of the selected recipe: identical recipe, λ and seed)
   ext   λ ∈ {0.25, 1, 4, 8} x 5 seeds; runs only if MAIN_RECIPE_RULE.json outcome is A4 (decisions, main-recipe rule)
+  erm   lesion-level single-encoder ERM λ = 0, seeds 42/52/62/72/82 (train if needed + last/best-val eval)
 """
 
 from __future__ import annotations
@@ -53,6 +54,9 @@ def grid_spec(cid, epochs, seed):
 
 
 def jobs(stage):
+    if stage == "erm":
+        return [{"kind": "erm_ref", "tag": "erm_ref_s{}".format(s), "seed": s, "lam": 0.0, "mode": "single-encoder",
+                 "recipe": {"name": "single_encoder_erm"}} for s in R.SEEDS]
     if stage == "A":
         out = [grid_spec(cid, 40, s) for cid in R.P8_GRID for s in GRID_SEEDS]
         out += [{"kind": "erm_ref", "tag": "erm_ref_s{}".format(s), "seed": s, "lam": 0.0, "mode": "single-encoder",
@@ -140,18 +144,24 @@ def select_b():
 
 
 def run_erm_ref(seed, a):
-    import train_phase15_1_single_dann as sd
+    """Train (if last.ckpt missing) then dual-ckpt eval via r5_erm_lesion_ref."""
+    import r5_erm_lesion_ref as erm
 
-    sd.p2.isic_splits = R.T.isic_splits_by_lesion
-    sys.argv = [sys.argv[0], "--lambda_adv", "0", "--seed", str(seed), "--output_root", str(ERM),
-                "--ckpt_root", str(CK / "erm_ref"), "--num_workers", str(a.num_workers)]
-    sys.argv += [f for f, on in (("--resume", a.resume), ("--skip_done", a.skip_done), ("--dry_run", a.dry_run)) if on]
-    sd.main()
+    class _A:
+        pass
+
+    aa = _A()
+    aa.num_workers = a.num_workers
+    aa.resume = a.resume
+    aa.skip_done = a.skip_done
+    aa.dry_run = a.dry_run
+    erm.train_seed(seed, aa)
+    erm.eval_seed(seed, aa)
 
 
 def main():
     p = R.common_args(argparse.ArgumentParser())
-    p.add_argument("--stage", required=True, choices=("A", "selA", "B", "selB", "main", "ext", "traj"))
+    p.add_argument("--stage", required=True, choices=("A", "selA", "B", "selB", "main", "ext", "traj", "erm"))
     p.add_argument("--force_ext", action="store_true", help="run ext even if the gate file says no")
     a = p.parse_args()
     if a.stage == "selA":

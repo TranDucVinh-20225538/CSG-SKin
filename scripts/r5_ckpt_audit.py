@@ -113,11 +113,11 @@ ERM_CKPT = R.CKPT / "r5_p8" / "erm_ref"
 
 
 def erm(task):
-    """Lesion-level single-encoder ERM reference (P8 stage A, seeds 42/52): val/test bal acc at best-val and last.ckpt."""
+    """Lesion-level single-encoder ERM reference (seeds 42/52/62/72/82): val/test bal acc at best-val and last.ckpt."""
     import train_phase15_1_single_dann as sd
 
     torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "8")))
-    seed = (42, 52)[task]
+    seed = R.SEEDS[task]
     tag = "single_dann_ladv0_s{}".format(seed)
     out = OUT / "compete" / "erm_{}.json".format(tag)
     if out.exists():
@@ -178,9 +178,11 @@ def report():
          "## Item 4: Table 1 selected epochs (35 runs)", "",
          ep.to_markdown(index=False, floatfmt=".3f"), "",
          "λ > 0 runs flagged: {}".format(int(ep.before_alpha_on.sum())), "",
-         "## Item 3: competence, λ = 0, lesion-level split (5 seeds; single-encoder ERM: 2 seeds)", "",
-         "Image-level references (not like-for-like): paper single-encoder ERM {:.3f}; phase 15 image-level "
-         "single-encoder λ = 0 ID test bal acc {} (5 seeds, best-val).".format(
+         "## Item 3: competence, λ = 0, lesion-level split (5 seeds; single-encoder ERM: 5 seeds)", "",
+         "Image-level references (not like-for-like; leakage-inflated): paper single-encoder ERM {:.3f} "
+         "(the 0.70 competence threshold was set from this figure; original ≥ 0.70 verdicts stay visible). "
+         "Phase 15 image-level single-encoder λ = 0 ID test bal acc {} (5 seeds, best-val). "
+         "Lesion-level ERM competence reference: `results/paperB/r5/p8/erm_ref/REPORT.md`.".format(
              R.ERM_SINGLE_ENCODER_IMAGE_LEVEL,
              R.pm(R.ms([json.loads(p.read_text())["id_balanced_acc"]
                         for p in sorted((R.RES / "phase15" / "single_dann").glob("single_dann_ladv0_s*/summary.json"))]))), "",

@@ -202,11 +202,20 @@ def report_p8(a, data, idg):
             n, rec["latent"], rec["cls_lr_mult"], rec["balance"], rec["max_epochs"], "/".join(str(r[1]) for r in rs),
             R.pm(R.ms([r[2]["bal_acc"] for r in rs])), R.pm(R.ms([r[2]["acc"] for r in rs])),
             R.pm(R.ms([r[2]["ece"] for r in rs])), R.pm(R.ms([min(r[2]["recall"].values()) for r in rs]))))
-    erm = [json.loads(p.read_text()) for p in sorted((root / "erm_ref").glob("single_dann_ladv0_s*/summary.json"))]
+    erm = []
+    for p in sorted((root / "erm_ref").glob("single_dann_ladv0_s*/summary.json")):
+        e = json.loads(p.read_text())
+        if e.get("checkpoint_policy") == R.CKPT_POLICY:
+            erm.append(e)
+    if not erm:
+        erm = [json.loads(p.read_text()) for p in sorted((root / "erm_ref").glob("single_dann_ladv0_s*/summary.json"))]
     erm_ms = R.ms([e["id_balanced_acc"] for e in erm])
-    L += ["", "Lesion-level single-encoder ERM reference (ID test bal acc, seeds {}): {}. Image-level single-encoder "
-          "ERM in the paper: {:.3f}.".format("/".join(str(e["seed"]) for e in erm) or "—", R.pm(erm_ms),
-                                             R.ERM_SINGLE_ENCODER_IMAGE_LEVEL), ""]
+    L += ["", "Lesion-level single-encoder ERM reference (ID test bal acc, last.ckpt, seeds {}): {}. "
+          "Image-level single-encoder ERM in the paper: {:.3f} (leakage-inflated on the image-level split; "
+          "the 0.70 competence threshold was set from that figure; original ≥ 0.70 verdicts stay visible; "
+          "this lesion-level mean ± SD is the competence reference). Full detector AUROCs: "
+          "`results/paperB/r5/p8/erm_ref/REPORT.md`.".format(
+              "/".join(str(e["seed"]) for e in erm) or "—", R.pm(erm_ms), R.ERM_SINGLE_ENCODER_IMAGE_LEVEL), ""]
     sel = json.loads((root / "selection_stageB.json").read_text()) if (root / "selection_stageB.json").exists() else None
     selA = json.loads((root / "selection_stageA.json").read_text()) if (root / "selection_stageA.json").exists() else None
     if selA:
@@ -265,8 +274,9 @@ def report_p8(a, data, idg):
         (root / "RECIPE_DECISION.json").write_text(json.dumps(dec, indent=1, default=float) + "\n")
         paragraphs.append(
             "Competence. Under A4 (last.ckpt) the λ = 0 model reaches ID test balanced accuracy {} (n = {}), against "
-            "the target {:.2f}, the paper's image-level single-encoder ERM {:.3f} and the lesion-level single-encoder "
-            "reference {}. Competence flag (≥ {:.2f}): {}.".format(
+            "the target {:.2f} (set from the image-level single-encoder ERM {:.3f}, which is leakage-inflated on the "
+            "image-level split; the lesion-level single-encoder ERM reference, last.ckpt, is {}). "
+            "Competence flag (≥ {:.2f}): {}.".format(
                 R.pm(idb), idb["n"] if idb else 0, R.COMPETENCE_TARGET, R.ERM_SINGLE_ENCODER_IMAGE_LEVEL, R.pm(erm_ms),
                 R.COMPETENCE_TARGET, "yes" if competent else "no"))
         paragraphs.append(
