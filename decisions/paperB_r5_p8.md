@@ -220,3 +220,10 @@ Implementation (fixed now):
   is None (40-epoch lock, stage B not run) and the report formatted it with `{:+.3f}`. Fixed; report rerun. The
   rerun also bootstraps A4 at λ ∈ {0.5, 2} for last.ckpt and best-val (all 5 detectors; pad_heldout by patient;
   Fitzpatrick by P13 cluster_union; rule A on Mahalanobis). P8 ext cancelled (main-recipe rule = old).
+- 2026-10-16 07:59 (UTC+7), user-directed, before the three new lesion-level ERM seeds exist. (1) Single-encoder ERM
+  λ = 0 on the lesion-level split is extended from seeds 42/52 to five seeds (42, 52, 62, 72, 82), with the same
+  eval and last.ckpt primary + best-val secondary. Test balanced accuracy mean ± SD (last.ckpt) is the paper's
+  competence reference; all five detectors on pad_heldout (patient bootstrap) and Fitzpatrick (P13 cluster) are
+  reported with CIs. (2) In every report that states the 0.70 competence threshold: keep the original ≥ 0.70 verdict
+  visible, and add that 0.70 was set from the image-level single-encoder ERM 0.779, which is leakage-inflated on the
+  image-level split; the lesion-level ERM reference is reported alongside. The threshold itself is not changed.
