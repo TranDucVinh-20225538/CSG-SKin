@@ -72,3 +72,10 @@ GPU 0. CPU ≈ 0.5–1 h on 8–16 CPUs for the current corpus.
 Tier definitions, λ = 0 95th-percentile rule, and primary vs weak evaluation fixed now.
 
 ## Deviations
+
+- 2026-10-16 (+07). Expanded readout: (a) specificity recomputed on λ > 0 non-inverting runs only, with
+  n_pos/n_neg beside every sens/spec; (b) R1 shift 0%/100% (λ = 2 now; other λ as features arrive) plus
+  R2/P9/P11/P10 when feature dirs appear; (c) invert labels on Fitzpatrick as well as pad_heldout;
+  (d) BBSE TV audit — positive Spearman with AUROC is not a sign bug (TV unsigned; BBSE shrinks under
+  collapse). **Frozen** `thresholds_lambda0.json` unchanged (not refit). Pre-committed verdict “tier 1
+  failed” kept visible in `REPORT.md` / `precommitted_primary.json`.

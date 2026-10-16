@@ -54,3 +54,7 @@ GPU 0. CPU ≈ 1–2 h on 8–16 CPUs (Fitzpatrick + five detectors × two recip
 Detector list, OOD sets, and decomposition definitions fixed now.
 
 ## Deviations
+
+- 2026-10-16 (+07). Decomposition table columns renamed to “measured AUROC, ID reweighted to PAD mix”
+  and “Σ w_c·AUROC_c (identity)”; added unweighted pooled AUROC beside them so |Δ| ≈ 0 is read as the
+  identity check, not a failed reweight. Numbers unchanged (report labelling only).

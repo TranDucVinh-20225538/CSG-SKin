@@ -89,21 +89,35 @@ def pm(m):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--report-only", action="store_true",
+                    help="rebuild REPORT.md / summary.csv from existing per_run JSON (no recompute)")
+    a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "per_run").mkdir(exist_ok=True)
     rows = []
-    for recipe, lam, seed, d in feat_dirs():
-        rec = run_one(recipe, lam, seed, d)
-        if rec is None:
-            print("missing", recipe, lam, seed, d, flush=True)
-            continue
-        tag = "{}_ladv{}_s{}".format(recipe, R.lam_tag(lam), seed)
-        (OUT / "per_run" / "{}.json".format(tag)).write_text(json.dumps(rec, indent=1, default=float) + "\n")
-        for ood in OODS:
-            for det in DETS:
-                rows.append({"recipe": recipe, "lambda": lam, "seed": seed, "ood": ood, "detector": det,
-                             "auroc": rec["ood"][ood][det]["auroc"]})
-        print("ok", tag, flush=True)
+    if a.report_only:
+        for p in sorted((OUT / "per_run").glob("*.json")):
+            rec = json.loads(p.read_text())
+            for ood in OODS:
+                for det in DETS:
+                    rows.append({"recipe": rec["recipe"], "lambda": rec["lambda"], "seed": rec["seed"],
+                                 "ood": ood, "detector": det, "auroc": rec["ood"][ood][det]["auroc"]})
+        print("report-only: loaded", len(rows), "summary rows from per_run", flush=True)
+    else:
+        for recipe, lam, seed, d in feat_dirs():
+            rec = run_one(recipe, lam, seed, d)
+            if rec is None:
+                print("missing", recipe, lam, seed, d, flush=True)
+                continue
+            tag = "{}_ladv{}_s{}".format(recipe, R.lam_tag(lam), seed)
+            (OUT / "per_run" / "{}.json".format(tag)).write_text(json.dumps(rec, indent=1, default=float) + "\n")
+            for ood in OODS:
+                for det in DETS:
+                    rows.append({"recipe": recipe, "lambda": lam, "seed": seed, "ood": ood, "detector": det,
+                                 "auroc": rec["ood"][ood][det]["auroc"]})
+            print("ok", tag, flush=True)
     df = pd.DataFrame(rows)
     df.to_csv(OUT / "summary.csv", index=False)
 
@@ -127,23 +141,34 @@ def main():
                 dlt = "—" if m0 is None or m2 is None else "{:+.3f}".format(m2["mean"] - m0["mean"])
                 L.append("| {} | {} | {} | {} |".format(det, pm(m0), pm(m2), dlt))
             L.append("")
-    L += ["## Decomposition (Mahalanobis, pad_heldout; mean over seeds)", "",
-          "| recipe | λ | reweighted | identity | |Δ| | NV OOD AUROC | non-NV OOD AUROC |",
-          "|---|---:|---:|---:|---:|---:|---:|"]
+    L += [
+        "## Decomposition (Mahalanobis, pad_heldout; mean over seeds)",
+        "",
+        "|Δ| = |reweighted − identity|; **≈ 0 is the identity check** (reweighting algebra), not a failed "
+        "detector. Compare those two columns to **unweighted pooled AUROC** (ordinary ID-vs-OOD AUROC).",
+        "",
+        "| recipe | λ | unweighted pooled AUROC | measured AUROC, ID reweighted to PAD mix | "
+        "Σ w_c·AUROC_c (identity) | |Δ| | NV OOD AUROC | non-NV OOD AUROC |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
+    ]
     for recipe in ("old_recipe", "a4"):
         for lam in LAMS:
-            blocks = []
+            blocks, pooled = [], []
             for s in SEEDS:
                 p = OUT / "per_run" / "{}_ladv{}_s{}.json".format(recipe, R.lam_tag(lam), s)
                 if not p.exists():
                     continue
-                dec = json.loads(p.read_text())["ood"]["pad_heldout"]["mahalanobis_classcond"].get("decomposition")
+                blk = json.loads(p.read_text())["ood"]["pad_heldout"]["mahalanobis_classcond"]
+                dec = blk.get("decomposition")
                 if dec:
                     blocks.append(dec)
+                if blk.get("auroc") is not None:
+                    pooled.append(blk["auroc"])
             if not blocks:
                 continue
-            L.append("| {} | {:g} | {} | {} | {} | {} | {} |".format(
+            L.append("| {} | {:g} | {} | {} | {} | {} | {} | {} |".format(
                 recipe, lam,
+                pm(ms(pooled)),
                 pm(ms([b["reweighted_to_ood_mix"] for b in blocks])),
                 pm(ms([b["identity_sum"] for b in blocks])),
                 pm(ms([b["identity_abs_diff"] for b in blocks])),
@@ -153,7 +178,8 @@ def main():
     L += ["", "## Plain words", "",
           "Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against "
           "Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC "
-          "and decomposition for every detector.", ""]
+          "and decomposition for every detector. In the decomposition table, |Δ| ≈ 0 confirms the "
+          "reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number.", ""]
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print("\n".join(L[-40:]))
     print("wrote", OUT / "REPORT.md", flush=True)
