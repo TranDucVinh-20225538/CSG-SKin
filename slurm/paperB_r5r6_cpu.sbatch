@@ -54,6 +54,7 @@ case "${STEP}" in
   p8heldout)     ${PY} scripts/r5_p8_heldout.py ;;
   t1last)        ${PY} scripts/r5_t1_last.py run ${SLURM_ARRAY_TASK_ID} ;;
   t1last_report) ${PY} scripts/r5_t1_last.py report ;;
+  bcnham_maha0)  ${PY} scripts/r5_bcnham_maha0_explain.py ${ARGS} ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="
