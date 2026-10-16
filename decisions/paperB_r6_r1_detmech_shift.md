@@ -59,3 +59,7 @@ Let AUROC_rw(s) = OOD-reweighted Mahalanobis on a set at shift s.
 GPU 0. CPU ≈ 1–2 h on 8–16 CPUs.
 
 ## Deviations
+
+- 2026-10-16 23:05 (+07). NV / non-NV OOD AUROC originally **nearest-centroid** only. Added the
+  **true-class** split (where labels / mapped labels exist) alongside, both labelled — aligned with
+  `r5/detmech`.

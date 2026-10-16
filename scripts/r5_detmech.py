@@ -37,6 +37,23 @@ def feat_dirs():
     return out
 
 
+def nv_splits(sid_d, so_d, yood, nc):
+    """True-class and nearest-centroid NV / non-NV OOD AUROCs (ID = all)."""
+    out = {}
+    if yood is not None:
+        out["ood_nv_vs_rest_true_class"] = {
+            "nv": R.auroc(sid_d, so_d[yood == R.NV]) if (yood == R.NV).any() else None,
+            "non_nv": R.auroc(sid_d, so_d[yood != R.NV]) if (yood != R.NV).any() else None,
+            "split": "true_class",
+        }
+    out["ood_nv_vs_rest_nearest_centroid"] = {
+        "nv": R.auroc(sid_d, so_d[nc == R.NV]) if (nc == R.NV).any() else None,
+        "non_nv": R.auroc(sid_d, so_d[nc != R.NV]) if (nc != R.NV).any() else None,
+        "split": "nearest_centroid",
+    }
+    return out
+
+
 def run_one(recipe, lam, seed, feat_dir):
     feat_dir = Path(feat_dir)
     need = ("isic_train", "isic_test") + OODS
@@ -52,6 +69,7 @@ def run_one(recipe, lam, seed, feat_dir):
         so = sc.scores(Fs[ood])
         yood = Fs[ood]["labels"].astype(int)
         has_labels = bool((yood >= 0).all()) and ood.startswith("pad_")
+        nc = sc.nearest_class(Fs[ood]["z_lesion_norm"])
         blk = {}
         for d in DETS:
             overall = R.auroc(sid[d], so[d])
@@ -60,12 +78,16 @@ def run_one(recipe, lam, seed, feat_dir):
             entry["id_class_auroc"] = {
                 R.LABELS[c]: R.auroc(sid[d][yid == c], so[d]) for c in range(R.NCLS) if (yid == c).any()
             }
+            entry.update(nv_splits(sid[d], so[d], yood if has_labels else None, nc))
             if has_labels:
                 entry["ood_class_auroc"] = {
                     R.LABELS[c]: R.auroc(sid[d], so[d][yood == c])
                     for c in R.PAD_CLASSES if (yood == c).sum() >= 1
                 }
                 entry["decomposition"] = R.decomposition(sid[d], yid, so[d], yood)
+                # keep legacy key; identical to true-class split
+                entry["decomposition"]["ood_nv_vs_rest"] = entry["ood_nv_vs_rest_true_class"]
+                entry["decomposition"]["ood_nv_vs_rest_label"] = "true_class"
             blk[d] = entry
         rec["ood"][ood] = blk
     return rec
@@ -93,11 +115,41 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--report-only", action="store_true",
                     help="rebuild REPORT.md / summary.csv from existing per_run JSON (no recompute)")
+    ap.add_argument("--augment-nearest", action="store_true",
+                    help="re-score only NV nearest/true splits into existing per_run JSON, then report")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "per_run").mkdir(exist_ok=True)
     rows = []
-    if a.report_only:
+    if a.augment_nearest:
+        for recipe, lam, seed, d in feat_dirs():
+            tag = "{}_ladv{}_s{}".format(recipe, R.lam_tag(lam), seed)
+            p = OUT / "per_run" / "{}.json".format(tag)
+            if not p.exists():
+                print("missing per_run", tag, flush=True)
+                continue
+            rec = run_one(recipe, lam, seed, d)
+            if rec is None:
+                print("missing feats", tag, flush=True)
+                continue
+            old = json.loads(p.read_text())
+            for ood in OODS:
+                for det in DETS:
+                    old["ood"][ood][det]["ood_nv_vs_rest_true_class"] = rec["ood"][ood][det].get(
+                        "ood_nv_vs_rest_true_class")
+                    old["ood"][ood][det]["ood_nv_vs_rest_nearest_centroid"] = rec["ood"][ood][det][
+                        "ood_nv_vs_rest_nearest_centroid"]
+                    if "decomposition" in old["ood"][ood][det] and rec["ood"][ood][det].get("decomposition"):
+                        old["ood"][ood][det]["decomposition"]["ood_nv_vs_rest_label"] = "true_class"
+                        old["ood"][ood][det]["decomposition"]["ood_nv_vs_rest_nearest_centroid"] = (
+                            rec["ood"][ood][det]["ood_nv_vs_rest_nearest_centroid"])
+            p.write_text(json.dumps(old, indent=1, default=float) + "\n")
+            for ood in OODS:
+                for det in DETS:
+                    rows.append({"recipe": recipe, "lambda": lam, "seed": seed, "ood": ood, "detector": det,
+                                 "auroc": old["ood"][ood][det]["auroc"]})
+            print("augmented", tag, flush=True)
+    elif a.report_only:
         for p in sorted((OUT / "per_run").glob("*.json")):
             rec = json.loads(p.read_text())
             for ood in OODS:
@@ -147,13 +199,17 @@ def main():
         "|Δ| = |reweighted − identity|; **≈ 0 is the identity check** (reweighting algebra), not a failed "
         "detector. Compare those two columns to **unweighted pooled AUROC** (ordinary ID-vs-OOD AUROC).",
         "",
+        "**NV / non-NV splits (both reported):** `true class` = OOD images with label NV vs not; "
+        "`nearest centroid` = OOD images whose Mahalanobis nearest ISIC-train class is NV vs not.",
+        "",
         "| recipe | λ | unweighted pooled AUROC | measured AUROC, ID reweighted to PAD mix | "
-        "Σ w_c·AUROC_c (identity) | |Δ| | NV OOD AUROC | non-NV OOD AUROC |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "Σ w_c·AUROC_c (identity) | |Δ| | NV OOD (true class) | non-NV OOD (true class) | "
+        "NV-nearest OOD | non-NV-nearest OOD |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for recipe in ("old_recipe", "a4"):
         for lam in LAMS:
-            blocks, pooled = [], []
+            blocks, pooled, nearest = [], [], []
             for s in SEEDS:
                 p = OUT / "per_run" / "{}_ladv{}_s{}.json".format(recipe, R.lam_tag(lam), s)
                 if not p.exists():
@@ -162,11 +218,13 @@ def main():
                 dec = blk.get("decomposition")
                 if dec:
                     blocks.append(dec)
+                nearest.append(blk.get("ood_nv_vs_rest_nearest_centroid")
+                               or (dec or {}).get("ood_nv_vs_rest_nearest_centroid"))
                 if blk.get("auroc") is not None:
                     pooled.append(blk["auroc"])
             if not blocks:
                 continue
-            L.append("| {} | {:g} | {} | {} | {} | {} | {} | {} |".format(
+            L.append("| {} | {:g} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
                 recipe, lam,
                 pm(ms(pooled)),
                 pm(ms([b["reweighted_to_ood_mix"] for b in blocks])),
@@ -174,12 +232,15 @@ def main():
                 pm(ms([b["identity_abs_diff"] for b in blocks])),
                 pm(ms([(b.get("ood_nv_vs_rest") or {}).get("nv") for b in blocks])),
                 pm(ms([(b.get("ood_nv_vs_rest") or {}).get("non_nv") for b in blocks])),
+                pm(ms([(n or {}).get("nv") for n in nearest])),
+                pm(ms([(n or {}).get("non_nv") for n in nearest])),
             ))
     L += ["", "## Plain words", "",
           "Compare λ = 0 vs λ = 2 for Mahalanobis/cosine (inversion on pad_heldout / Fitz) against "
           "Energy/kNN/MSP (collapse on Fitz, milder on pad_heldout). Per-run JSON holds per-class AUROC "
           "and decomposition for every detector. In the decomposition table, |Δ| ≈ 0 confirms the "
-          "reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number.", ""]
+          "reweight↔identity algebra; the unweighted pooled AUROC is the ordinary detection number. "
+          "NV columns: true-class split (legacy) and nearest-centroid split (aligned with R1 detmech_shift).", ""]
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print("\n".join(L[-40:]))
     print("wrote", OUT / "REPORT.md", flush=True)

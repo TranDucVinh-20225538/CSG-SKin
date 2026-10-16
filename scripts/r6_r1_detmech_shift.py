@@ -287,6 +287,36 @@ def analyse_cell(cell, n_boot):
         nv_b = boot_partition("nv")
         non_b = boot_partition("non")
 
+        def boot_true_class(which):
+            """Partition OOD by true label NV vs not (requires labels)."""
+            if not lab_mask.any():
+                return None
+            m_true = (lab_mask & (y_ref == R.NV)) if which == "nv" else (lab_mask & (y_ref != R.NV))
+            rng = np.random.default_rng(RNG + (10 if which == "nv" else 11) + (abs(hash(ood)) % 1000))
+            id_draws = R5.draws(gi, n_boot, rng)
+            ood_draws = R5.draws(go, n_boot, np.random.default_rng(RNG + 111))
+            seeds = sorted(scored)
+            pts, mat = [], np.full((n_boot, len(seeds)), np.nan)
+            for j, s in enumerate(seeds):
+                pack = scored[s]
+                so = pack["sc"].scores(pack["Fs"][ood])["mahalanobis_classcond"]
+                pts.append(R5.auroc(pack["sid"], so[m_true]) if m_true.any() else float("nan"))
+                for b, (ii, oo) in enumerate(zip(id_draws, ood_draws)):
+                    sel = np.asarray(oo, int)[m_true[np.asarray(oo, int)]]
+                    if len(sel) == 0:
+                        continue
+                    mat[b, j] = R5.auroc(pack["sid"][ii], so[sel])
+            v = np.asarray(pts, float)
+            pooled = np.nanmean(mat, 1)
+            ok = pooled[np.isfinite(pooled)]
+            lo, hi = (np.nanpercentile(ok, [2.5, 97.5]) if len(ok) else (np.nan, np.nan))
+            return {"mean": float(np.nanmean(v)), "sd": float(np.nanstd(v, ddof=1)) if len(v) > 1 else 0.0,
+                    "ci_lo": float(lo), "ci_hi": float(hi), "n_seeds": int(np.isfinite(v).sum()),
+                    "split": "true_class"}
+
+        nv_true = boot_true_class("nv")
+        non_true = boot_true_class("non")
+
         # class-matched
         cm_rows = []
         if lab_mask.any():
@@ -310,6 +340,8 @@ def analyse_cell(cell, n_boot):
                     k: bb[k] for k in ("mean", "sd", "ci_lo", "ci_hi")}})
 
         id_nv = float(np.mean([scored[s]["id_nv_nearest"] for s in scored]))
+        nv_b["split"] = "nearest_centroid"
+        non_b["split"] = "nearest_centroid"
         out["ood"][ood] = {
             "nv_frac_ood_mean": float(np.mean(nv_fracs)),
             "nv_frac_ood_sd": float(np.std(nv_fracs, ddof=1)) if len(nv_fracs) > 1 else 0.0,
@@ -318,6 +350,8 @@ def analyse_cell(cell, n_boot):
             "maha_ood_reweighted_to_id_mix": rw,
             "maha_nv_nearest_ood": nv_b,
             "maha_non_nv_nearest_ood": non_b,
+            "maha_nv_true_class_ood": nv_true,
+            "maha_non_nv_true_class_ood": non_true,
             "class_matched": cm_rows,
             "n_labelled_ood": int(lab_mask.sum()),
         }
@@ -384,19 +418,26 @@ def main():
         L.append("- **{}**: seeds {}; skipped {}".format(
             rec["label"], rec["seeds"], rec.get("skipped")))
     L += ["", "## Per set (pooled)", ""]
+    L += [
+        "NV / non-NV columns: **nearest centroid** = Mahalanobis nearest ISIC-train class is NV; "
+        "**true class** = OOD label is NV (pad / mapped labels only; — if unavailable).",
+        "",
+    ]
     for ood in OODS:
         L += ["### {}".format(ood), "",
-              "| cell | nv_frac OOD (ID base) | Maha | Maha OOD→ID mix | NV-nearest OOD | non-NV-nearest OOD |",
-              "|---|---|---|---|---|---|"]
+              "| cell | nv_frac OOD (ID base) | Maha | Maha OOD→ID mix | "
+              "NV-nearest OOD | non-NV-nearest OOD | NV OOD (true class) | non-NV OOD (true class) |",
+              "|---|---|---|---|---|---|---|---|"]
         for rec in results:
             if rec.get("empty") or ood not in rec.get("ood", {}):
                 continue
             b = rec["ood"][ood]
             rw = b["maha_ood_reweighted_to_id_mix"]
-            L.append("| {} | {:.3f} (ID {:.3f}) | {} | {} | {} | {} |".format(
+            L.append("| {} | {:.3f} (ID {:.3f}) | {} | {} | {} | {} | {} | {} |".format(
                 rec["label"], b["nv_frac_ood_mean"], b["id_nv_nearest_base"],
                 fmt(b["maha_unweighted"]), fmt(rw),
-                fmt(b["maha_nv_nearest_ood"]), fmt(b["maha_non_nv_nearest_ood"])))
+                fmt(b["maha_nv_nearest_ood"]), fmt(b["maha_non_nv_nearest_ood"]),
+                fmt(b.get("maha_nv_true_class_ood")), fmt(b.get("maha_non_nv_true_class_ood"))))
         L.append("")
 
     # class-matched tables for each cell × pad (and note others)

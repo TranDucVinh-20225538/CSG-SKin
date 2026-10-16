@@ -58,3 +58,6 @@ Detector list, OOD sets, and decomposition definitions fixed now.
 - 2026-10-16 (+07). Decomposition table columns renamed to “measured AUROC, ID reweighted to PAD mix”
   and “Σ w_c·AUROC_c (identity)”; added unweighted pooled AUROC beside them so |Δ| ≈ 0 is read as the
   identity check, not a failed reweight. Numbers unchanged (report labelling only).
+- 2026-10-16 23:05 (+07). Clarified NV / non-NV OOD AUROC: the original columns used the **true class**
+  split (`y_ood == NV`). Added the **nearest-centroid** split alongside, both labelled in `REPORT.md`
+  (aligned with R1 `detmech_shift`).
