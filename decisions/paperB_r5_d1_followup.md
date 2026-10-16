@@ -94,12 +94,14 @@ item4 features; one `pB-d1fu` job, 8 CPUs, ≈ 1–2 h. No GPU. Cap 4 CPU-h.
 
 ## Deviations
 
-- 2026-10-16 10:20 (UTC+7), before any follow-up number. Feature inventory vs the pre-registered path
-  `r2/item4/features/..._s{42,52,62,72,82}`: λ ∈ {0, 2} exist at those seeds with all five OOD sets; mid-λ
-  (0.25, 0.5, 1, 4, 8) on item4 are seeds **42–46** only. `phase13/features` has pad_heldout + Fitzpatrick for
-  λ ∈ {0, 0.25, 1, 2, 8} × {42…82} and λ ∈ {0.5, 4} × {42, 52, 62}, but not MED-NODE / SD-198 / SCIN.
-  Implementation: placebo uses item4 (all 5 sets, seeds 42–82). Dose uses phase13 (else item4) for pad_heldout and
-  Fitzpatrick with matched seeds as available; P7a dose rows at mid-λ are omitted (no matched λ = 0); λ ∈ {0, 2}
-  P7a remain. The λ = 2 vs 0.25 test is reported on every set that has ≥ 3 matched seeds; if fewer than 5 sets
-  qualify, the report states that the 5-set rule cannot be applied and lists which sets were tested. Predictions
-  unchanged. Job 68515 failed on missing item4 `ladv0p25_s52`; rerun after this deviation.
+- 2026-10-16 10:25 (UTC+7), before any follow-up number is reported. **No `phase13/features`:** those caches are
+  the old image-level ISIC split; mixing them with lesion-level λ = 0 / λ = 2 (item4) would mix splits. Job 68516
+  (phase13 path) was cancelled; `d1_followup/` outputs from it were deleted. Job 68515 had failed earlier on missing
+  item4 mid-λ s52.
+- Same timestamp. **Lesion-level mid-λ inventory:** `checkpoints/r2_item4` + complete `item4/features` exist for
+  λ ∈ {0.25, 0.5, 1, 4, 8} × seeds **42–46** only. Mid-λ seeds 52/62/72/82 exist only as **image-level** phase3
+  checkpoints / phase13 features (e.g. λ = 0 s52 id bal ≈ 0.67 vs item4 lesion-level ≈ 0.52) — not used for extract.
+  There is no lesion-level checkpoint to extract mid-λ s52+ from. Matched-seed dose at those λ for seeds 42–82 needs
+  new lesion-level training (behind R1/R2, `--nice=1000`), then `scripts/r5_d1_followup_extract.py` (same path as
+  `train_r2_item4_lesion_split.extract_features`). Until then: **placebo** and **λ0→λ2** (item4 only) run now; mid-λ
+  dose rows pending. Predictions unchanged.
