@@ -1,0 +1,19 @@
+{
+  "licence": "CC-BY-4.0",
+  "zenodo": "10.5281/zenodo.1214456",
+  "n_eval": 4995,
+  "seed": 20261016,
+  "manifest": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p10/nct_crc_he_eval_paths.txt",
+  "source_n_images": 100000,
+  "classes": {
+    "LYM": 11557,
+    "TUM": 14317,
+    "DEB": 11512,
+    "NORM": 8763,
+    "ADI": 10407,
+    "BACK": 10566,
+    "MUS": 13536,
+    "MUC": 8896,
+    "STR": 10446
+  }
+}
