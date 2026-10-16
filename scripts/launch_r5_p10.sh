@@ -1,8 +1,8 @@
 #!/bin/bash
-# Paper B R5 P10 launcher (decisions/paperB_r5_p10.md). Prepared under the compute HOLD; not executed.
+# Paper B R5 P10 launcher (decisions/paperB_r5_p10.md).
 # Usage: GO=1 [RECIPE=current|p8] bash scripts/launch_r5_p10.sh [AFTER_JOBID]
-# Chain: ladder (5 rungs, sequential, each skips itself once a rung met the gate or the 12 GPU-h cap is near)
-#        -> stage 2 (2 seeds of the gate-meeting rung; no-op if none) -> report.
+# GPU order: R1 → R2 → P10 → P9 → … . Chain: ladder (5 rungs %1) → stage2 → report.
+# Cap 40 GPU-h; gate = held-out hospital probe drop ≥ 0.10 vs λ=0.
 # Camelyon17 uses the WILDS copy in DST-Skin/data/raw/wilds (no staging step). RECIPE=current|p8 (env): only the
 # classifier LR multiplier applies to Camelyon (see the decisions file).
 set -euo pipefail

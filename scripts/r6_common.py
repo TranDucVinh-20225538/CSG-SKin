@@ -11,7 +11,7 @@ New behaviour lives only here, behind explicit arguments:
                 "three" = ISIC classifier stream + separate ISIC adversary stream + PAD adversary stream
                 "p7b"   = ISIC classifier stream + BCN adversary stream + HAM adversary stream (no PAD anywhere)
   dose_mix      class mix of the ISIC adversary stream (R6 R1)
-  align         dann / cdan / iwdan / iwcdan (R6 R2)
+  align         dann / cdan / iwdan / iwcdan / iwdan_oracle (R6 R2)
 
 PAD labels never enter a loss: PAD streams are built from the path column only, the legacy collate's y_supcon tensor
 (which carries PAD labels) is discarded, and the supervised-contrastive term is not computed.
@@ -76,6 +76,11 @@ PAD_CLASSES = C.PAD_CLASSES
 FEAT_KEYS = ("z_lesion", "z_lesion_norm", "z_context", "logits", "labels")
 COMPETENCE_TARGET = 0.70
 ERM_SINGLE_ENCODER_IMAGE_LEVEL = 0.779
+# R1 degraded-run rule (decisions/paperB_r6_r1.md, 2026-10-16 10:05): chance = 1/8; degraded < 2× chance.
+CHANCE_ID_BAL = 1.0 / NCLS
+DEGRADED_ID_BAL = 2.0 * CHANCE_ID_BAL  # 0.25
+ID_DROP_FLAG = 0.10  # flag (keep in verdict) if ID bal is > this below matched λ = 0
+REPLACEMENT_SEEDS = (92, 102)  # only if > 1 of 5 seeds degrade in a cell
 BOOT_DETS = ("mahalanobis_classcond", "knn_k50", "cosine_max")
 DETS = BOOT_DETS + ("MSP", "Energy_T1")
 DET_LABEL = {"mahalanobis_classcond": "Mahalanobis", "knn_k50": "kNN k=50", "cosine_max": "Cosine", "MSP": "MSP",
@@ -325,18 +330,21 @@ class R6Lightning(CSGLiteLightning):
     (iii) CDAN / IWDAN / IWCDAN domain losses. With align='dann', class_weights=None and a legacy two-stream batch the
     loss equals the base class's (λ_supcon = 0 there, so its term is dropped here)."""
 
-    def __init__(self, align="dann", class_weights=None, iw_cls=True, iw_ma=0.5, iw_max=None, iw_log=None, **kwargs):
+    def __init__(self, align="dann", class_weights=None, iw_cls=True, iw_ma=0.5, iw_max=None, iw_log=None,
+                 oracle_w=None, **kwargs):
         super().__init__(**kwargs)
         self.save_hyperparameters()
-        if align not in ("dann", "cdan", "iwdan", "iwcdan"):
+        if align not in ("dann", "cdan", "iwdan", "iwcdan", "iwdan_oracle"):
             raise ValueError(align)
         self.align = align
-        self.iw = align in ("iwdan", "iwcdan")
+        self.oracle = align == "iwdan_oracle"
+        self.iw = align in ("iwdan", "iwcdan", "iwdan_oracle")
         self.cond = align in ("cdan", "iwcdan")
         nc = int(self.hparams.lesion_classes)
         cw = torch.ones(nc) if class_weights is None else torch.as_tensor(class_weights, dtype=torch.float32)
         self.register_buffer("cls_w", cw.float())
-        self.register_buffer("im_w", torch.ones(nc))
+        ow = torch.ones(nc) if oracle_w is None else torch.as_tensor(oracle_w, dtype=torch.float32)
+        self.register_buffer("im_w", ow.float())
         self.register_buffer("acc_conf", torch.zeros(nc, nc, dtype=torch.float64))
         self.register_buffer("acc_tgt", torch.zeros(nc, dtype=torch.float64))
         if self.cond:
@@ -389,7 +397,7 @@ class R6Lightning(CSGLiteLightning):
 
         with torch.no_grad():
             pred = y_hat32.argmax(1)
-            if self.iw:
+            if self.iw and not self.oracle:
                 nc = self.acc_tgt.numel()
                 src = (b["d_adv"] == 0) & (b["y_src"] >= 0)
                 tgt = b["d_adv"] == 1
@@ -410,7 +418,18 @@ class R6Lightning(CSGLiteLightning):
 
     def on_train_epoch_end(self):
         super().on_train_epoch_end()
-        if not self.iw or self.acc_conf.sum() <= 0 or self.acc_tgt.sum() <= 0:
+        if not self.iw:
+            return
+        if self.oracle:
+            w = self.im_w.detach().cpu().numpy()
+            row = {"epoch": int(self.current_epoch) + 1, "oracle": True, "w": w.tolist(),
+                   "note": "oracle, not deployable; w fixed from true pad_adv mix"}
+            print("[iw-oracle] epoch {} w={}".format(row["epoch"], np.round(w, 3).tolist()), flush=True)
+            if self.hparams.iw_log:
+                with open(self.hparams.iw_log, "a") as f:
+                    f.write(json.dumps(row) + "\n")
+            return
+        if self.acc_conf.sum() <= 0 or self.acc_tgt.sum() <= 0:
             return
         conf = (self.acc_conf / self.acc_conf.sum()).cpu().numpy()
         mu = (self.acc_tgt / self.acc_tgt.sum()).cpu().numpy()
@@ -439,10 +458,19 @@ class R6Lightning(CSGLiteLightning):
         ])
 
 
-def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e-4, iw_cls=True):
+def oracle_weights_from_mix(p_src, p_tgt, eps=1e-8):
+    """w_j = π_T(j)/P_S(j) so Σ_j w_j P_S(j) = 1 when π_T sums to 1."""
+    p_src, p_tgt = np.asarray(p_src, float), np.asarray(p_tgt, float)
+    w = np.zeros_like(p_src)
+    m = p_src > eps
+    w[m] = p_tgt[m] / p_src[m]
+    return w
+
+
+def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e-4, iw_cls=True, oracle_w=None):
     """Same constructor arguments as train_phase3_sweep.main except the recipe fields."""
     return R6Lightning(
-        align=align, class_weights=class_weights, iw_cls=iw_cls, iw_log=iw_log,
+        align=align, class_weights=class_weights, iw_cls=iw_cls, iw_log=iw_log, oracle_w=oracle_w,
         lesion_classes=8, domain_classes=2, lesion_latent_dim=int(recipe["latent"]), context_latent_dim=64,
         learning_rate=lr, weight_decay=1e-4, lambda_ctx=1.0, lambda_adv=float(lam), lambda_orth=1.0, lambda_supcon=0.0,
         adv_lr_multiplier=30.0, lesion_cls_lr_multiplier=float(recipe["cls_lr_mult"]), backbone_variant="b3",
@@ -549,6 +577,10 @@ class Scorer:
         d2 = np.einsum("nd,nd->n", zp, z)[:, None] + np.einsum("cd,cd->c", M @ P, M)[None] - 2.0 * zp @ M.T
         return d2.argmin(1)
 
+    def nearest_class_share(self, z):
+        nc = self.nearest_class(z)
+        return {LABELS[c]: float(np.mean(nc == c)) for c in range(NCLS)}
+
 
 def auroc(sid, sood, w_id=None):
     y = np.r_[np.zeros(len(sid)), np.ones(len(sood))]
@@ -648,12 +680,17 @@ def run_metrics(Fs, ood_names=None, site_test=None):
         so = sc.scores(Fs[n])
         blk = {d: auroc(sid[d], so[d]) for d in DETS}
         blk["n"] = int(len(so["MSP"]))
-        blk["nv_nearest_frac"] = float(np.mean(sc.nearest_class(Fs[n]["z_lesion_norm"]) == NV))
+        nc = sc.nearest_class(Fs[n]["z_lesion_norm"])
+        blk["nv_nearest_frac"] = float(np.mean(nc == NV))
+        blk["nearest_class_share"] = {LABELS[c]: float(np.mean(nc == c)) for c in range(NCLS)}
         if n.startswith("pad_"):
             blk["decomposition_maha"] = decomposition(sid["mahalanobis_classcond"], te["labels"],
                                                       so["mahalanobis_classcond"], Fs[n]["labels"])
         out["ood"][n] = blk
-    out["id_nv_nearest_frac"] = float(np.mean(sc.nearest_class(te["z_lesion_norm"]) == NV))
+    id_nc = sc.nearest_class(te["z_lesion_norm"])
+    out["id_nv_nearest_frac"] = float(np.mean(id_nc == NV))
+    out["id_nearest_class_share"] = {LABELS[c]: float(np.mean(id_nc == c)) for c in range(NCLS)}
+    out["degraded"] = bool(out["id"]["bal_acc"] < DEGRADED_ID_BAL)
     return out
 
 
@@ -712,11 +749,19 @@ def run(spec, args):
     if best is not None:
         print("checkpoint exists, evaluation only (reuse = {})".format(bool(spec.get("reuse_ckpt"))), best, flush=True)
     else:
-        iw_log = str(run_dir / "iw_log.jsonl") if spec.get("align", "dann").startswith("iw") else None
+        align = spec.get("align", "dann")
+        iw_log = str(run_dir / "iw_log.jsonl") if align.startswith("iw") else None
         if iw_log and not args.resume and Path(iw_log).exists():
             Path(iw_log).write_text("")
-        model = make_model(recipe, spec["lam"], align=spec.get("align", "dann"), class_weights=cw, iw_log=iw_log,
-                           iw_cls=spec.get("iw_cls", True))
+        oracle_w = None
+        if align == "iwdan_oracle":
+            oracle_w = oracle_weights_from_mix(class_mix(data["train"].label_idx),
+                                               class_mix(data["pad_adv"].label_idx)).tolist()
+            cfg["oracle_w"] = oracle_w
+            cfg["oracle_note"] = "oracle, not deployable; PAD labels set w only"
+            (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
+        model = make_model(recipe, spec["lam"], align=align, class_weights=cw, iw_log=iw_log,
+                           iw_cls=spec.get("iw_cls", True), oracle_w=oracle_w)
         ckpt_cb = pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir), filename="best-{epoch:02d}", monitor="val/acc",
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
         cbs = [ckpt_cb]
@@ -800,9 +845,11 @@ def ood_groups(name, data):
     return idx_groups(meta.group.astype(str).to_numpy()), "P7a group column"
 
 
-def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None, dets=None):
-    """feat_dirs: {seed: Path}. Draws shared across seeds within the cell. Returns per-detector block with rule A."""
+def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None, dets=None, exclude_seeds=None):
+    """feat_dirs: {seed: Path}. Draws shared across seeds within the cell. Returns per-detector block with rule A.
+    exclude_seeds: optional set of seeds dropped from the pooled verdict (still listed under excluded_seeds)."""
     dets = tuple(dets) if dets is not None else BOOT_DETS
+    exclude_seeds = set(exclude_seeds or ())
     pre = json.loads(PREREG.read_text())
     n_boot = int(pre["n_resamples"])
     rng = np.random.default_rng(int(pre["rng_seed"]) if rng_seed is None else rng_seed)
@@ -818,8 +865,12 @@ def bootstrap_cell(feat_dirs, ood_name, id_groups, o_groups, rng_seed=None, dets
         return None
     id_draws = [np.concatenate([id_groups[j] for j in rng.integers(0, len(id_groups), len(id_groups))]) for _ in range(n_boot)]
     oo_draws = [np.concatenate([o_groups[j] for j in rng.integers(0, len(o_groups), len(o_groups))]) for _ in range(n_boot)]
-    seeds = sorted(sc)
-    out = {}
+    seeds_all = sorted(sc)
+    seeds = [s for s in seeds_all if s not in exclude_seeds]
+    if not seeds:
+        return {"rule_A": None, "excluded_seeds": sorted(exclude_seeds), "n_seeds": 0,
+                "note": "all seeds excluded (degraded)"}
+    out = {"excluded_seeds": sorted(s for s in seeds_all if s in exclude_seeds)}
     for det in dets:
         per, draws = {}, {}
         for s in seeds:

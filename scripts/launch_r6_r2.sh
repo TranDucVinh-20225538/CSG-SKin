@@ -9,6 +9,6 @@ if [[ "${GO:-0}" != "1" ]]; then echo "compute HOLD: set GO=1 to submit"; exit 1
 RECIPE="${RECIPE:-auto}"
 DEP=()
 if [[ -n "${1:-}" ]]; then DEP=(--dependency=afterany:$1); fi
-J=$(sbatch --parsable ${DEP[@]+"${DEP[@]}"} --array=0-29%2 --export=ALL,RECIPE=${RECIPE} slurm/r6_r2.sbatch)
+J=$(sbatch --parsable ${DEP[@]+"${DEP[@]}"} --array=0-39%2 --export=ALL,RECIPE=${RECIPE} slurm/r6_r2.sbatch)
 R=$(sbatch --parsable --dependency=afterany:${J} --export=ALL,ITEM=r2,RECIPE=${RECIPE} slurm/r6_report.sbatch)
 echo "R2 train=${J} report=${R} recipe=${RECIPE}"

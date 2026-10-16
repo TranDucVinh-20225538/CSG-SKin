@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=paperB-r6-r2
-#SBATCH --array=0-29%2
+#SBATCH --array=0-39%2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=16:00:00
 #SBATCH --output=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r6r2_%A_%a.out
 #SBATCH --error=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r6r2_%A_%a.err
-# R6 R2 CDAN / IWDAN / IWCDAN, 30 runs (scripts/train_r6_iwdan.py --list). RECIPE (env): current | p8 | auto.
+# R6 R2 CDAN/IWDAN/IWCDAN (30) + IWDAN oracle (10) = 40 runs. RECIPE (env): current | p8 | auto.
 
 set -euo pipefail
 ROOT="/data2/cmdir/home/toandq/CSG-Skin-paperB"

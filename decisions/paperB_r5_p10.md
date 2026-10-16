@@ -1,7 +1,7 @@
 # Paper B R5 / P10 — Camelyon17: held-out hospital gate, semantic OOD, 40 GPU-h cap
 
 Committed before any P10 job runs. Fixed now; not changed after results are seen. Deviations are appended at the end.
-Does not change the Paper B GPU queue order relative to R1/R2.
+GPU order (2026-10-16): **R1 → R2 → P10 → P9 → P11 → P7(b) → Q1 → Q3**. P10 runs immediately after R2.
 
 ## Question
 
@@ -124,3 +124,5 @@ a second failure is reported. Gate fail → “invariance not reached”.
   semantic OOD NCT-CRC-HE (CC-BY-4.0) added; prediction rewritten (gate met → hospital inverts, semantic OOD at least
   collapses); hard cap raised 12 → 40 GPU-h. Absolute probe cut 0.852 and the old “collapse yes, inversion no”
   same-modality prediction are superseded for P10 (R2 item 5 numbers remain the λ = 0 reference).
+- 2026-10-16 14:30 (+07), before R2 starts. GPU order: P10 moved to immediately after R2 (before P9). NCT-CRC-HE
+  download / eval manifest prepared so paths exist before R2 ends (`scripts/fetch_nct_crc_he.py`).

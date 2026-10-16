@@ -110,7 +110,8 @@ user's approval. A failed run is re-run once; a second failure is reported.
 ## Amendment 2026-10-15 — user-directed redesign (written before any P9 job has run)
 
 This section replaces the Design, ladder, selection, stage 2, stop-rule, GPU-h and prediction sections above. Nothing
-above has run; the earlier text is kept only as a record. GPU order (user): P8 → R1 → R2 → P9 → P7(b) → Q1 → rest.
+above has run; the earlier text is kept only as a record. GPU order (user, 2026-10-16): R1 → R2 → P10 → P9 → P11 →
+P7(b) → Q1 → Q3.
 
 **Hypothesis.** The single encoder does not invert on pad_heldout because it does not reach the dual encoder's
 invariance (Table 1 leakage 0.555 vs 0.76); inversion needs that deeper invariance.
