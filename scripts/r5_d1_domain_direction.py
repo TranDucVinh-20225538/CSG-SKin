@@ -142,6 +142,56 @@ def valid_bal_acc(clf, sc, Xid, Xood):
     return float(balanced_accuracy_score(y, clf.predict(sc.transform(np.r_[Xid, Xood]))))
 
 
+def domain_margin(clf, sc, Xid, Xood):
+    """Mean decision_function(OOD) − mean decision_function(ID). Larger ⇒ stronger separation along the domain score."""
+    sid = clf.decision_function(sc.transform(Xid))
+    sood = clf.decision_function(sc.transform(Xood))
+    return float(np.mean(sood) - np.mean(sid))
+
+
+def separation_table(hmask):
+    """Post-hoc (labelled): λ = 0 domain-classifier bal acc and margin on ID test vs each OOD set.
+    Lesion-level sets share the ISIC↔pad_adv classifier (mean ± SD over 5 seeds); BCN↔HAM each use their site
+    classifier (seed 42 only). Does not change the per-set criterion verdict."""
+    rows = []
+    for seed in SEEDS:
+        t0 = R.run_tag(0.0, seed)
+        A = {s: R.load(t0, s) for s in ("isic_train", "isic_test", "pad_full") + LESION_SETS}
+        for rep_name, rep in REPS.items():
+            X0, X1 = A["isic_train"][rep], A["pad_full"][rep][~hmask]
+            clf, sc, _score = domain_fit(X0, X1)
+            for s in LESION_SETS:
+                rows.append({"set": s, "rep": rep_name, "seed": seed, "classifier": "ISIC↔pad_adv",
+                             "bal_acc": valid_bal_acc(clf, sc, A["isic_test"][rep], A[s][rep]),
+                             "margin": domain_margin(clf, sc, A["isic_test"][rep], A[s][rep])})
+    for name, (sub, prefix, _split) in P16.items():
+        r0 = "{}_ladv0_s42".format(prefix)
+        L0 = {k: dict(np.load(S16 / r0 / "{}.npz".format(k), allow_pickle=True))
+              for k in ("id_train", "id_test", "ood")}
+        adv = dict(np.load(OUT / "features_adv" / r0 / "adv_pool.npz", allow_pickle=True))
+        clf, sc, _score = domain_fit(L0["id_train"]["z"], adv["z"])
+        rows.append({"set": name, "rep": "latent", "seed": 42, "classifier": name,
+                     "bal_acc": valid_bal_acc(clf, sc, L0["id_test"]["z"], L0["ood"]["z"]),
+                     "margin": domain_margin(clf, sc, L0["id_test"]["z"], L0["ood"]["z"])})
+    df = pd.DataFrame(rows)
+    out = []
+    for s in SET_ORDER:
+        for rep in ("latent", "backbone"):
+            sub = df[(df.set == s) & (df.rep == rep)]
+            if sub.empty:
+                continue
+            out.append({"set": s, "label": SET_LABEL[s], "rep": rep, "classifier": sub.classifier.iloc[0],
+                        "n_seeds": int(sub.seed.nunique()),
+                        "bal_acc_mean": float(sub.bal_acc.mean()), "bal_acc_sd": float(sub.bal_acc.std(ddof=1))
+                        if len(sub) > 1 else None,
+                        "margin_mean": float(sub.margin.mean()), "margin_sd": float(sub.margin.std(ddof=1))
+                        if len(sub) > 1 else None})
+    return {"definition": "margin = mean(decision_function(OOD)) - mean(decision_function(ID_test)); "
+                          "bal_acc = balanced accuracy of the λ = 0 domain classifier on ID test vs that OOD set. "
+                          "Labelled post-hoc; does not change criterion verdicts.",
+            "rows": out, "per_seed": rows}
+
+
 def pulls(sid0, sood0, sid2, sood2):
     d = [np.sqrt(np.maximum(x, 0.0)) for x in (sid0, sood0, sid2, sood2)]
     med0, med2 = np.median(d[0]), np.median(d[2])
@@ -305,6 +355,8 @@ def _phase16_part(res, seed, n_boot):
             P16[name][1]), index=False)
         res["sets"][name] = analyse_set({42: row}, g, ("latent",), np.random.default_rng(seed), n_boot)
         print(name, meta, res["sets"][name]["point"], flush=True)
+    hmask = pad_heldout_mask()
+    res["domain_separation"] = separation_table(hmask)
     res.update({"commit": R.git_head(), "n_boot": n_boot, "rng_seed": seed})
     R.write_json(OUT / "D1_RESULTS.json", res)
     return res
@@ -314,12 +366,24 @@ def fci(p, c, k):
     return "{:+.3f} [{:+.3f}, {:+.3f}]".format(p[k], *c[k])
 
 
+# Jobs that produced / attempted D1 numbers (load/IO fixes only; criterion from f0bb6ee unchanged).
+D1_RUNS = (
+    ("68092", "97faa14", "FAILED — missing pyarrow/fastparquet for to_parquet"),
+    ("68190", "c4cc443", "FAILED — object group arrays need allow_pickle=True"),
+    ("68243", "54d5cd6", "COMPLETED (includes 5f7e4fd object-array load + lesion cache; csv.gz per-image)"),
+)
+
+
 def report(res):
     mix = pd.read_csv(R.R6 / "r5" / "summary.csv").set_index("pair")
     rows, L = [], ["# Paper B R5 D1: domain direction vs per-image pull", "",
                    "Decisions: `decisions/paperB_r5_d1.md`. Commit {}. Bootstrap {} draws, rng seed {}; CI = percentile 95% "
                    "of the seed mean (lesion-level: 5 matched seeds; BCN↔HAM: seed 42 only).".format(
-                       res["commit"], res["n_boot"], res["rng_seed"]), ""]
+                       res["commit"], res["n_boot"], res["rng_seed"]), "",
+                   "Pass criterion unchanged from `f0bb6ee` (committed before job 68092): ρ_dom > 0 and the CI of "
+                   "Δ = ρ_dom − |ρ_orth| entirely above 0; hypothesis supported if met in ≥ 4 of 7 sets (latent). "
+                   "The three D1 jobs differ only in load/IO fixes: {}.".format(
+                       "; ".join("job {} @ `{}` ({})".format(j, c, note) for j, c, note in D1_RUNS)), ""]
     va = pd.DataFrame(res["meta_lesion"])
     L += ["Domain classifier validity (balanced accuracy, ISIC test vs pad_heldout, λ = 0): latent {}, backbone {}; "
           "BCN↔HAM site classifiers (ID test vs OOD held-out): {}.".format(
@@ -328,7 +392,8 @@ def report(res):
                         for k, m in res["meta_phase16"].items())), "",
           "## Per-image test (primary pull = d₀/med₀ − d₂/med₂; Spearman, mean over seeds)", "",
           "Bootstrap unit per set is in the table; within a draw the same resample is applied to all 5 seed pairs "
-          "(lesion-level) and the statistic is the seed mean (pooled over the 5 pairs).", "",
+          "(lesion-level) and the statistic is the seed mean (pooled over the 5 pairs). BCN↔HAM / HAM→BCN: n = 1 seed "
+          "pair per direction; verdicts reported as is.", "",
           "| set | unit | n (groups) | rep | ρ_dom [CI] | ρ_orth [CI] | Δ = ρ_dom − abs(ρ_orth) [CI] | criterion | partial ρ_dom given P₀ "
           "[CI] | partial ρ_orth [CI] |", "|---|---|---|---|---|---|---|---|---|---|"]
     for s in SET_ORDER:
@@ -357,8 +422,24 @@ def report(res):
           "Negative partial ρ_orth ({}): reported as is; any reading of the sign was formed after the seed-42 smoke test "
           "and is labelled as such.".format(", ".join(neg) or "none")]
     L += ["", "Criterion (ρ_dom > 0 and Δ CI entirely above 0) met in **{} of 7** sets (latent) → hypothesis {} (rule fixed "
-          "in decisions: ≥ 4 of 7). Backbone: {} of 5 lesion-level sets.".format(k_lat, verdict, k_bb), "",
-          "## Secondary pulls (points, mean over seeds)", "",
+          "in decisions: ≥ 4 of 7). Backbone: {} of 5 lesion-level sets.".format(k_lat, verdict, k_bb), ""]
+    sep = res.get("domain_separation")
+    if sep:
+        L += ["## Post-hoc: λ = 0 domain-classifier separation (labelled; does not change verdicts)", "",
+              sep["definition"], "",
+              "BCN↔HAM / HAM→BCN criterion rows above stay **not met** (n = 1 seed pair each). This table only asks "
+              "whether the domain direction itself is weaker there than for ISIC↔PAD / other OOD sets.", "",
+              "| set | rep | classifier | n seeds | bal acc | margin (OOD − ID) |",
+              "|---|---|---|---:|---|---|"]
+        for row in sep["rows"]:
+            ba = "{:.3f}".format(row["bal_acc_mean"]) if row["bal_acc_sd"] is None else "{:.3f} ± {:.3f}".format(
+                row["bal_acc_mean"], row["bal_acc_sd"])
+            mg = "{:+.3f}".format(row["margin_mean"]) if row["margin_sd"] is None else "{:+.3f} ± {:.3f}".format(
+                row["margin_mean"], row["margin_sd"])
+            L.append("| {} | {} | {} | {} | {} | {} |".format(
+                row["label"], row["rep"], row["classifier"], row["n_seeds"], ba, mg))
+        L.append("")
+    L += ["## Secondary pulls (points, mean over seeds)", "",
           "| set | rep | ρ_dom pct | ρ_orth pct | ρ_dom raw | ρ_orth raw |", "|---|---|---:|---:|---:|---:|"]
     for s in SET_ORDER:
         sec = res["sets"][s]["secondary"]
@@ -409,10 +490,18 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--extract_only", action="store_true")
     ap.add_argument("--report_only", action="store_true")
+    ap.add_argument("--posthoc_sep", action="store_true",
+                    help="compute domain_separation, merge into D1_RESULTS.json, rewrite REPORT.md")
     a = ap.parse_args()
     (OUT / "per_image").mkdir(parents=True, exist_ok=True)
     if a.report_only:
         report(json.loads((OUT / "D1_RESULTS.json").read_text()))
+        return
+    if a.posthoc_sep:
+        res = json.loads((OUT / "D1_RESULTS.json").read_text())
+        res["domain_separation"] = separation_table(pad_heldout_mask())
+        R.write_json(OUT / "D1_RESULTS.json", res)
+        report(res)
         return
     extract_adv_pools()
     sd198_clusters()

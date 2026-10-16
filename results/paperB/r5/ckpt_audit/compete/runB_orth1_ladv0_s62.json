@@ -1,0 +1,14 @@
+{
+  "run": "runB_orth1_ladv0_s62",
+  "seed": 62,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r2_item4/runB_orth1_ladv0_s62/best-19.ckpt",
+  "best_epoch": 19,
+  "last_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r2_item4/runB_orth1_ladv0_s62/last.ckpt",
+  "last_epoch": 39,
+  "best_val_bal_acc": 0.4842733596649943,
+  "best_test_bal_acc": 0.49692434393672846,
+  "last_val_bal_acc": 0.4401824228547209,
+  "last_test_bal_acc": 0.4701882583621114,
+  "stored_test_bal_acc_best": 0.49697288762604885,
+  "check_best_test_vs_stored": true
+}

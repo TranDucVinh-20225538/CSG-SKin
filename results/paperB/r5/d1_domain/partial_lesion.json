@@ -1,0 +1,741 @@
+{
+  "meta_lesion": [
+    {
+      "seed": 42,
+      "lambda0": "runB_orth1_ladv0_s42",
+      "lambda2": "runB_orth1_ladv2_s42",
+      "valid_bal_acc_latent": 0.8921616539488177,
+      "valid_bal_acc_backbone": 0.9691370275184041
+    },
+    {
+      "seed": 52,
+      "lambda0": "runB_orth1_ladv0_s52",
+      "lambda2": "runB_orth1_ladv2_s52",
+      "valid_bal_acc_latent": 0.9392985943662189,
+      "valid_bal_acc_backbone": 0.9724237122006454
+    },
+    {
+      "seed": 62,
+      "lambda0": "runB_orth1_ladv0_s62",
+      "lambda2": "runB_orth1_ladv2_s62",
+      "valid_bal_acc_latent": 0.9097561943697471,
+      "valid_bal_acc_backbone": 0.9657289251405469
+    },
+    {
+      "seed": 72,
+      "lambda0": "runB_orth1_ladv0_s72",
+      "lambda2": "runB_orth1_ladv2_s72",
+      "valid_bal_acc_latent": 0.9101736452210767,
+      "valid_bal_acc_backbone": 0.9703135801489096
+    },
+    {
+      "seed": 82,
+      "lambda0": "runB_orth1_ladv0_s82",
+      "lambda2": "runB_orth1_ladv2_s82",
+      "valid_bal_acc_latent": 0.916170521712957,
+      "valid_bal_acc_backbone": 0.9675354440442208
+    }
+  ],
+  "sets": {
+    "pad_heldout": {
+      "n": 716,
+      "n_groups": 412,
+      "n_seeds": 5,
+      "point": {
+        "rho_dom_latent": 0.344473323027143,
+        "rho_orth_latent": -0.06820540966839628,
+        "delta_latent": 0.2720569396771279,
+        "prho_dom_latent": 0.2080520918794515,
+        "prho_orth_latent": -0.25525433766848205,
+        "rho_dom_backbone": 0.43939864156075437,
+        "rho_orth_backbone": -0.1678763327320041,
+        "delta_backbone": 0.2715223088287503,
+        "prho_dom_backbone": 0.3746073978450982,
+        "prho_orth_backbone": -0.24596408194781622
+      },
+      "ci": {
+        "rho_dom_latent": [
+          0.3030948644608656,
+          0.38334188241923256
+        ],
+        "rho_orth_latent": [
+          -0.11585390483979853,
+          -0.018512333944745538
+        ],
+        "delta_latent": [
+          0.20222103172337472,
+          0.3251187990574579
+        ],
+        "prho_dom_latent": [
+          0.1673958282557451,
+          0.24577604260307376
+        ],
+        "prho_orth_latent": [
+          -0.29398421251023704,
+          -0.21429507610985185
+        ],
+        "rho_dom_backbone": [
+          0.39982958109843875,
+          0.47514321830938666
+        ],
+        "rho_orth_backbone": [
+          -0.21088591165632398,
+          -0.11777489585004834
+        ],
+        "delta_backbone": [
+          0.2191392350833149,
+          0.32583036233035106
+        ],
+        "prho_dom_backbone": [
+          0.33347408119023675,
+          0.4122325097449396
+        ],
+        "prho_orth_backbone": [
+          -0.28854138252279393,
+          -0.200188930106444
+        ]
+      },
+      "per_seed": {
+        "42": {
+          "rho_dom_latent": 0.3962943320448552,
+          "rho_orth_latent": 0.010527434204047038,
+          "delta_latent": 0.38576689784080814,
+          "prho_dom_latent": 0.2023115570001413,
+          "prho_orth_latent": -0.24533468719906396,
+          "rho_dom_backbone": 0.4724365313172104,
+          "rho_orth_backbone": -0.07864564726920692,
+          "delta_backbone": 0.3937908840480035,
+          "prho_dom_backbone": 0.3904550506570596,
+          "prho_orth_backbone": -0.2732608256292437
+        },
+        "52": {
+          "rho_dom_latent": 0.2959868054610549,
+          "rho_orth_latent": -0.03844408401384021,
+          "delta_latent": 0.2575427214472147,
+          "prho_dom_latent": 0.13122708810181657,
+          "prho_orth_latent": -0.29420534210939686,
+          "rho_dom_backbone": 0.41699900248174043,
+          "rho_orth_backbone": -0.22248325244077313,
+          "delta_backbone": 0.1945157500409673,
+          "prho_dom_backbone": 0.3377557023923295,
+          "prho_orth_backbone": -0.25860728072640016
+        },
+        "62": {
+          "rho_dom_latent": 0.41644931720467676,
+          "rho_orth_latent": -0.13779543152165874,
+          "delta_latent": 0.278653885683018,
+          "prho_dom_latent": 0.3016136808550087,
+          "prho_orth_latent": -0.29081618005379384,
+          "rho_dom_backbone": 0.41458684722523603,
+          "rho_orth_backbone": -0.2918758720469383,
+          "delta_backbone": 0.12271097517829771,
+          "prho_dom_backbone": 0.3537813908262774,
+          "prho_orth_backbone": -0.3495568573246467
+        },
+        "72": {
+          "rho_dom_latent": 0.16757298208921434,
+          "rho_orth_latent": -0.06194710170068486,
+          "delta_latent": 0.10562588038852948,
+          "prho_dom_latent": 0.0843534614496474,
+          "prho_orth_latent": -0.14570792865317495,
+          "rho_dom_backbone": 0.372341340041756,
+          "rho_orth_backbone": -0.1532054172474626,
+          "delta_backbone": 0.21913592279429342,
+          "prho_dom_backbone": 0.3466472548798053,
+          "prho_orth_backbone": -0.17070591646975236
+        },
+        "82": {
+          "rho_dom_latent": 0.44606317833591397,
+          "rho_orth_latent": -0.11336786530984458,
+          "delta_latent": 0.33269531302606936,
+          "prho_dom_latent": 0.3207546719906436,
+          "prho_orth_latent": -0.30020755032698065,
+          "rho_dom_backbone": 0.5206294867378293,
+          "rho_orth_backbone": -0.09317147465563962,
+          "delta_backbone": 0.42745801208218964,
+          "prho_dom_backbone": 0.4443975904700195,
+          "prho_orth_backbone": -0.17768952958903814
+        }
+      },
+      "secondary": {
+        "rho_dom_latent_pull_pct": 0.27674331649027517,
+        "rho_orth_latent_pull_pct": -0.15763857066184395,
+        "rho_dom_latent_pull_raw": 0.3475881365206514,
+        "rho_orth_latent_pull_raw": -0.06361444241385773,
+        "mean_dom_latent": 2.2996647357940674,
+        "rho_dom_backbone_pull_pct": 0.4201363621809097,
+        "rho_orth_backbone_pull_pct": -0.21093759467242434,
+        "rho_dom_backbone_pull_raw": 0.440770598997251,
+        "rho_orth_backbone_pull_raw": -0.16508950618558402,
+        "mean_dom_backbone": 20.731510162353516
+      },
+      "auroc0": 0.8076276773911154,
+      "auroc2": 0.40263921551765003,
+      "delta_auroc": -0.4049884618734654,
+      "criterion": {
+        "latent": true,
+        "backbone": true
+      }
+    },
+    "fitzpatrick17k": {
+      "n": 3887,
+      "n_groups": 3747,
+      "n_seeds": 5,
+      "point": {
+        "rho_dom_latent": 0.4191649756339226,
+        "rho_orth_latent": -0.06559785540057357,
+        "delta_latent": 0.35356712023334913,
+        "prho_dom_latent": 0.2568062145038513,
+        "prho_orth_latent": -0.2387457270235041,
+        "rho_dom_backbone": 0.47521948127077895,
+        "rho_orth_backbone": -0.1198828309790018,
+        "delta_backbone": 0.35533665029177713,
+        "prho_dom_backbone": 0.39806591997625174,
+        "prho_orth_backbone": -0.3123345986869536
+      },
+      "ci": {
+        "rho_dom_latent": [
+          0.40429566113201093,
+          0.4345766366801137
+        ],
+        "rho_orth_latent": [
+          -0.08405076217565438,
+          -0.046726327529607106
+        ],
+        "delta_latent": [
+          0.32856425158473923,
+          0.3762461699995949
+        ],
+        "prho_dom_latent": [
+          0.23771341230619586,
+          0.2765749626049864
+        ],
+        "prho_orth_latent": [
+          -0.2554127438449693,
+          -0.22148094658454678
+        ],
+        "rho_dom_backbone": [
+          0.4596475800313447,
+          0.4904227885259234
+        ],
+        "rho_orth_backbone": [
+          -0.1400500785206489,
+          -0.09925179270626312
+        ],
+        "delta_backbone": [
+          0.3370199007366131,
+          0.3740914408658672
+        ],
+        "prho_dom_backbone": [
+          0.3782136130980096,
+          0.41812306732505683
+        ],
+        "prho_orth_backbone": [
+          -0.3309148859158879,
+          -0.2923564488472255
+        ]
+      },
+      "per_seed": {
+        "42": {
+          "rho_dom_latent": 0.46337792501798486,
+          "rho_orth_latent": -0.039939033142298026,
+          "delta_latent": 0.42343889187568684,
+          "prho_dom_latent": 0.27261250918015434,
+          "prho_orth_latent": -0.24687622001801252,
+          "rho_dom_backbone": 0.5200214525523362,
+          "rho_orth_backbone": -0.09526607212633696,
+          "delta_backbone": 0.42475538042599925,
+          "prho_dom_backbone": 0.4474990893297956,
+          "prho_orth_backbone": -0.32390010177557227
+        },
+        "52": {
+          "rho_dom_latent": 0.5399874098805573,
+          "rho_orth_latent": -0.006751480506690658,
+          "delta_latent": 0.5332359293738667,
+          "prho_dom_latent": 0.3763745556239635,
+          "prho_orth_latent": -0.20577771506290404,
+          "rho_dom_backbone": 0.5359198049975162,
+          "rho_orth_backbone": -0.26886392054120295,
+          "delta_backbone": 0.2670558844563133,
+          "prho_dom_backbone": 0.4260004676099713,
+          "prho_orth_backbone": -0.41668779717539794
+        },
+        "62": {
+          "rho_dom_latent": 0.43283296794587006,
+          "rho_orth_latent": -0.10668361609366003,
+          "delta_latent": 0.32614935185221006,
+          "prho_dom_latent": 0.26009523017391706,
+          "prho_orth_latent": -0.2753061351855511,
+          "rho_dom_backbone": 0.4400259126016452,
+          "rho_orth_backbone": -0.13355230640768342,
+          "delta_backbone": 0.3064736061939618,
+          "prho_dom_backbone": 0.3831231381252451,
+          "prho_orth_backbone": -0.35253202957990654
+        },
+        "72": {
+          "rho_dom_latent": 0.15864966634246866,
+          "rho_orth_latent": -0.0912551684327459,
+          "delta_latent": 0.06739449790972275,
+          "prho_dom_latent": 0.017869867823251586,
+          "prho_orth_latent": -0.2180678153918927,
+          "rho_dom_backbone": 0.34674595148049864,
+          "rho_orth_backbone": -0.06107440684203689,
+          "delta_backbone": 0.2856715446384617,
+          "prho_dom_backbone": 0.30584231559030733,
+          "prho_orth_backbone": -0.2049210872614844
+        },
+        "82": {
+          "rho_dom_latent": 0.5009769089827325,
+          "rho_orth_latent": -0.08335997882747323,
+          "delta_latent": 0.41761693015525925,
+          "prho_dom_latent": 0.35707890971796996,
+          "prho_orth_latent": -0.24770074945915999,
+          "rho_dom_backbone": 0.5333842847218985,
+          "rho_orth_backbone": -0.040657448977748846,
+          "delta_backbone": 0.4927268357441496,
+          "prho_dom_backbone": 0.42786458922593934,
+          "prho_orth_backbone": -0.26363197764240703
+        }
+      },
+      "secondary": {
+        "rho_dom_latent_pull_pct": 0.3755376034776809,
+        "rho_orth_latent_pull_pct": -0.1431086592331791,
+        "rho_dom_latent_pull_raw": 0.4206422807085831,
+        "rho_orth_latent_pull_raw": -0.06260169440148385,
+        "mean_dom_latent": -0.040705759078264236,
+        "rho_dom_backbone_pull_pct": 0.48111073191026427,
+        "rho_orth_backbone_pull_pct": -0.19268226302668906,
+        "rho_dom_backbone_pull_raw": 0.47596324248055144,
+        "rho_orth_backbone_pull_raw": -0.11627692565726107,
+        "mean_dom_backbone": 7.178324222564697
+      },
+      "auroc0": 0.7169055723538695,
+      "auroc2": 0.40150499895178726,
+      "delta_auroc": -0.3154005734020823,
+      "criterion": {
+        "latent": true,
+        "backbone": true
+      }
+    },
+    "mednode": {
+      "n": 170,
+      "n_groups": 170,
+      "n_seeds": 5,
+      "point": {
+        "rho_dom_latent": 0.43300541643004137,
+        "rho_orth_latent": -0.1437155366662392,
+        "delta_latent": 0.2892898797638021,
+        "prho_dom_latent": 0.16653505031497287,
+        "prho_orth_latent": -0.08113186676606096,
+        "rho_dom_backbone": 0.442545172538028,
+        "rho_orth_backbone": 0.19142311050860703,
+        "delta_backbone": 0.25112206202942094,
+        "prho_dom_backbone": 0.18716798809321902,
+        "prho_orth_backbone": -0.22990730189974978
+      },
+      "ci": {
+        "rho_dom_latent": [
+          0.34796343579676264,
+          0.5101312501538421
+        ],
+        "rho_orth_latent": [
+          -0.22785563260825056,
+          -0.057702592127765275
+        ],
+        "delta_latent": [
+          0.1800288535580085,
+          0.37444371273955995
+        ],
+        "prho_dom_latent": [
+          0.08173113218704242,
+          0.253212675189333
+        ],
+        "prho_orth_latent": [
+          -0.16271619285438668,
+          0.0025783726134583763
+        ],
+        "rho_dom_backbone": [
+          0.35384137418752787,
+          0.5207790156930088
+        ],
+        "rho_orth_backbone": [
+          0.11081689477258926,
+          0.2715949909222474
+        ],
+        "delta_backbone": [
+          0.12985999967611497,
+          0.3478723534074733
+        ],
+        "prho_dom_backbone": [
+          0.09049643820650766,
+          0.279638814268565
+        ],
+        "prho_orth_backbone": [
+          -0.2982648071386064,
+          -0.1474072536420158
+        ]
+      },
+      "per_seed": {
+        "42": {
+          "rho_dom_latent": 0.28882945267798804,
+          "rho_orth_latent": -0.22569598378124217,
+          "delta_latent": 0.06313346889674587,
+          "prho_dom_latent": 0.13640698027929818,
+          "prho_orth_latent": -0.16525025662112452,
+          "rho_dom_backbone": 0.37006491167005573,
+          "rho_orth_backbone": 0.3238023705277813,
+          "delta_backbone": 0.046262541142274405,
+          "prho_dom_backbone": 0.13892022665207332,
+          "prho_orth_backbone": -0.1383658792317964
+        },
+        "52": {
+          "rho_dom_latent": 0.49064795647315296,
+          "rho_orth_latent": -0.2398849542931467,
+          "delta_latent": 0.25076300218000624,
+          "prho_dom_latent": 0.15767464113585636,
+          "prho_orth_latent": -0.1322364543190572,
+          "rho_dom_backbone": 0.5298441020755857,
+          "rho_orth_backbone": 0.2779086595709601,
+          "delta_backbone": 0.25193544250462563,
+          "prho_dom_backbone": 0.20215030094189398,
+          "prho_orth_backbone": -0.24882218235198028
+        },
+        "62": {
+          "rho_dom_latent": 0.56227917513938,
+          "rho_orth_latent": -0.06885033677127032,
+          "delta_latent": 0.49342883836810963,
+          "prho_dom_latent": 0.21765748786748226,
+          "prho_orth_latent": -0.026867339414534546,
+          "rho_dom_backbone": 0.5231416515531782,
+          "rho_orth_backbone": 0.1333003584492034,
+          "delta_backbone": 0.38984129310397475,
+          "prho_dom_backbone": 0.3215968854799984,
+          "prho_orth_backbone": -0.36404999140497757
+        },
+        "72": {
+          "rho_dom_latent": 0.3590806113787776,
+          "rho_orth_latent": -0.02536257106392853,
+          "delta_latent": 0.3337180403148491,
+          "prho_dom_latent": 0.1199606698753484,
+          "prho_orth_latent": -0.007918930469187534,
+          "rho_dom_backbone": 0.29061498158902305,
+          "rho_orth_backbone": 0.02395564267438523,
+          "delta_backbone": 0.26665933891463783,
+          "prho_dom_backbone": 0.08072139676712237,
+          "prho_orth_backbone": -0.1918118360215128
+        },
+        "82": {
+          "rho_dom_latent": 0.46418988648090814,
+          "rho_orth_latent": -0.15878383742160831,
+          "delta_latent": 0.3054060490592998,
+          "prho_dom_latent": 0.2009754724168792,
+          "prho_orth_latent": -0.07338635300640103,
+          "rho_dom_backbone": 0.49906021580229726,
+          "rho_orth_backbone": 0.19814852132070518,
+          "delta_backbone": 0.30091169448159205,
+          "prho_dom_backbone": 0.1924511306250072,
+          "prho_orth_backbone": -0.2064866204884817
+        }
+      },
+      "secondary": {
+        "rho_dom_latent_pull_pct": 0.41422647464638895,
+        "rho_orth_latent_pull_pct": -0.15508899467226395,
+        "rho_dom_latent_pull_raw": 0.4297958610413957,
+        "rho_orth_latent_pull_raw": -0.144041377373123,
+        "mean_dom_latent": -1.6039495468139648,
+        "rho_dom_backbone_pull_pct": 0.43023444462450644,
+        "rho_orth_backbone_pull_pct": 0.1702357083228146,
+        "rho_dom_backbone_pull_raw": 0.44129652359230837,
+        "rho_orth_backbone_pull_raw": 0.193871068203052,
+        "mean_dom_backbone": 0.7426457405090332
+      },
+      "auroc0": 0.5356509827139855,
+      "auroc2": 0.3057318984432139,
+      "delta_auroc": -0.22991908427077157,
+      "criterion": {
+        "latent": true,
+        "backbone": true
+      }
+    },
+    "sd198": {
+      "n": 6584,
+      "n_groups": 6016,
+      "n_seeds": 5,
+      "point": {
+        "rho_dom_latent": 0.46724223844754353,
+        "rho_orth_latent": -0.0298537980946151,
+        "delta_latent": 0.4351567147590859,
+        "prho_dom_latent": 0.2998366746013786,
+        "prho_orth_latent": -0.23400566005818274,
+        "rho_dom_backbone": 0.5402203244396764,
+        "rho_orth_backbone": -0.1617824282188362,
+        "delta_backbone": 0.37843789622084006,
+        "prho_dom_backbone": 0.4622145970505618,
+        "prho_orth_backbone": -0.3850631524233009
+      },
+      "ci": {
+        "rho_dom_latent": [
+          0.45544782823459,
+          0.47818822397907806
+        ],
+        "rho_orth_latent": [
+          -0.04351177413145039,
+          -0.016765203754329768
+        ],
+        "delta_latent": [
+          0.4167187018120768,
+          0.45007637700025904
+        ],
+        "prho_dom_latent": [
+          0.2853059120232301,
+          0.3134641430706902
+        ],
+        "prho_orth_latent": [
+          -0.24674561506901452,
+          -0.22089754016039573
+        ],
+        "rho_dom_backbone": [
+          0.5293637918032972,
+          0.5511326305494412
+        ],
+        "rho_orth_backbone": [
+          -0.17625311683377795,
+          -0.14646145320321458
+        ],
+        "delta_backbone": [
+          0.3629813274542454,
+          0.39407931921088446
+        ],
+        "prho_dom_backbone": [
+          0.44924826627492254,
+          0.4744910926623997
+        ],
+        "prho_orth_backbone": [
+          -0.3967250836862348,
+          -0.3722734429558461
+        ]
+      },
+      "per_seed": {
+        "42": {
+          "rho_dom_latent": 0.486420826999249,
+          "rho_orth_latent": -0.024813172161887852,
+          "delta_latent": 0.46160765483736116,
+          "prho_dom_latent": 0.30574583173036396,
+          "prho_orth_latent": -0.2623047298131137,
+          "rho_dom_backbone": 0.5587025558365496,
+          "rho_orth_backbone": -0.11682451524148613,
+          "delta_backbone": 0.44187804059506347,
+          "prho_dom_backbone": 0.48471661836211855,
+          "prho_orth_backbone": -0.38301500305608605
+        },
+        "52": {
+          "rho_dom_latent": 0.5359274020457083,
+          "rho_orth_latent": -0.026327846063410393,
+          "delta_latent": 0.5095995559822979,
+          "prho_dom_latent": 0.3852593565447901,
+          "prho_orth_latent": -0.25284935605933845,
+          "rho_dom_backbone": 0.5706814845677665,
+          "rho_orth_backbone": -0.3049447847148609,
+          "delta_backbone": 0.26573669985290554,
+          "prho_dom_backbone": 0.4934572508321508,
+          "prho_orth_backbone": -0.48657821547899965
+        },
+        "62": {
+          "rho_dom_latent": 0.4510078317669428,
+          "rho_orth_latent": -0.08380783571583632,
+          "delta_latent": 0.3671999960511065,
+          "prho_dom_latent": 0.2631555947394317,
+          "prho_orth_latent": -0.26699763546606026,
+          "rho_dom_backbone": 0.5101271181191996,
+          "rho_orth_backbone": -0.17393653393573824,
+          "delta_backbone": 0.33619058418346137,
+          "prho_dom_backbone": 0.4579727305793998,
+          "prho_orth_backbone": -0.4069299290745498
+        },
+        "72": {
+          "rho_dom_latent": 0.31310837728737523,
+          "rho_orth_latent": 0.005579313984606344,
+          "delta_latent": 0.30752906330276886,
+          "prho_dom_latent": 0.14717588143313445,
+          "prho_orth_latent": -0.16463200103491846,
+          "rho_dom_backbone": 0.4713639002977289,
+          "rho_orth_backbone": -0.13630736571606195,
+          "delta_backbone": 0.33505653458166695,
+          "prho_dom_backbone": 0.41559468999191396,
+          "prho_orth_backbone": -0.3041146537867222
+        },
+        "82": {
+          "rho_dom_latent": 0.5497467541384423,
+          "rho_orth_latent": -0.01989945051654729,
+          "delta_latent": 0.529847303621895,
+          "prho_dom_latent": 0.3978467085591727,
+          "prho_orth_latent": -0.22324457791748287,
+          "rho_dom_backbone": 0.5902265633771367,
+          "rho_orth_backbone": -0.0768989414860338,
+          "delta_backbone": 0.5133276218911029,
+          "prho_dom_backbone": 0.4593316954872257,
+          "prho_orth_backbone": -0.3446779607201471
+        }
+      },
+      "secondary": {
+        "rho_dom_latent_pull_pct": 0.4252459613772192,
+        "rho_orth_latent_pull_pct": -0.11740089583644124,
+        "rho_dom_latent_pull_raw": 0.46802429196884654,
+        "rho_orth_latent_pull_raw": -0.02616349741020692,
+        "mean_dom_latent": 0.0006633430602960289,
+        "rho_dom_backbone_pull_pct": 0.549250372327988,
+        "rho_orth_backbone_pull_pct": -0.24171772798139882,
+        "rho_dom_backbone_pull_raw": 0.5401364702318177,
+        "rho_orth_backbone_pull_raw": -0.15743414225542854,
+        "mean_dom_backbone": 8.032784461975098
+      },
+      "auroc0": 0.7133805907282272,
+      "auroc2": 0.37465779934059784,
+      "delta_auroc": -0.3387227913876294,
+      "criterion": {
+        "latent": true,
+        "backbone": true
+      }
+    },
+    "scin": {
+      "n": 10406,
+      "n_groups": 5033,
+      "n_seeds": 5,
+      "point": {
+        "rho_dom_latent": 0.3327387394878094,
+        "rho_orth_latent": 0.020866246593961107,
+        "delta_latent": 0.3030822603994517,
+        "prho_dom_latent": 0.20777230997817314,
+        "prho_orth_latent": -0.11192923843275135,
+        "rho_dom_backbone": 0.3169484565628607,
+        "rho_orth_backbone": -0.05974947013022058,
+        "delta_backbone": 0.2571989864326401,
+        "prho_dom_backbone": 0.24117520239750112,
+        "prho_orth_backbone": -0.2768399080231798
+      },
+      "ci": {
+        "rho_dom_latent": [
+          0.3215799778667882,
+          0.3432536004640645
+        ],
+        "rho_orth_latent": [
+          0.01017017024248932,
+          0.032064053554730534
+        ],
+        "delta_latent": [
+          0.28886071759069554,
+          0.3135385361670537
+        ],
+        "prho_dom_latent": [
+          0.196357507980318,
+          0.21845950555891858
+        ],
+        "prho_orth_latent": [
+          -0.12261610850821747,
+          -0.1009530736268725
+        ],
+        "rho_dom_backbone": [
+          0.305295557199884,
+          0.32790713975245017
+        ],
+        "rho_orth_backbone": [
+          -0.07185414536190952,
+          -0.0475950167811823
+        ],
+        "delta_backbone": [
+          0.24495915410074076,
+          0.26919042577394814
+        ],
+        "prho_dom_backbone": [
+          0.22871420024299552,
+          0.25271815729991254
+        ],
+        "prho_orth_backbone": [
+          -0.2881344147423929,
+          -0.26531954527486096
+        ]
+      },
+      "per_seed": {
+        "42": {
+          "rho_dom_latent": 0.3575777639569639,
+          "rho_orth_latent": -0.021975581235991547,
+          "delta_latent": 0.33560218272097236,
+          "prho_dom_latent": 0.20863925642079784,
+          "prho_orth_latent": -0.1761297132962256,
+          "rho_dom_backbone": 0.3154998623544492,
+          "rho_orth_backbone": -0.019028844796203568,
+          "delta_backbone": 0.2964710175582456,
+          "prho_dom_backbone": 0.25691624713159783,
+          "prho_orth_backbone": -0.3009531067916612
+        },
+        "52": {
+          "rho_dom_latent": 0.3626150075575061,
+          "rho_orth_latent": 0.0014395869233420188,
+          "delta_latent": 0.3611754206341641,
+          "prho_dom_latent": 0.24789147115064653,
+          "prho_orth_latent": -0.08266870243053075,
+          "rho_dom_backbone": 0.3426046958026349,
+          "rho_orth_backbone": -0.1882005373546804,
+          "delta_backbone": 0.15440415844795452,
+          "prho_dom_backbone": 0.26481101976137006,
+          "prho_orth_backbone": -0.3743963110174957
+        },
+        "62": {
+          "rho_dom_latent": 0.32564191343261506,
+          "rho_orth_latent": 0.01371340609074742,
+          "delta_latent": 0.31192850734186767,
+          "prho_dom_latent": 0.17413969047718503,
+          "prho_orth_latent": -0.16250874070204552,
+          "rho_dom_backbone": 0.2854702996409449,
+          "rho_orth_backbone": -0.016662009651435897,
+          "delta_backbone": 0.268808289989509,
+          "prho_dom_backbone": 0.1973234718618449,
+          "prho_orth_backbone": -0.22620092743583065
+        },
+        "72": {
+          "rho_dom_latent": 0.2859739401527727,
+          "rho_orth_latent": 0.04127655375953179,
+          "delta_latent": 0.24469738639324093,
+          "prho_dom_latent": 0.17553895617465357,
+          "prho_orth_latent": -0.062009117143124515,
+          "rho_dom_backbone": 0.3006759053165865,
+          "rho_orth_backbone": -0.0472653290494948,
+          "delta_backbone": 0.2534105762670917,
+          "prho_dom_backbone": 0.24261641253274796,
+          "prho_orth_backbone": -0.210633002311659
+        },
+        "82": {
+          "rho_dom_latent": 0.3318850723391893,
+          "rho_orth_latent": 0.06987726743217586,
+          "delta_latent": 0.2620078049070134,
+          "prho_dom_latent": 0.2326521756675828,
+          "prho_orth_latent": -0.07632991859183046,
+          "rho_dom_backbone": 0.3404915196996878,
+          "rho_orth_backbone": -0.027590629799288214,
+          "delta_backbone": 0.31290088990039955,
+          "prho_dom_backbone": 0.24420886069994496,
+          "prho_orth_backbone": -0.2720161925592525
+        }
+      },
+      "secondary": {
+        "rho_dom_latent_pull_pct": 0.3121630165299999,
+        "rho_orth_latent_pull_pct": -0.02938830133343271,
+        "rho_dom_latent_pull_raw": 0.33410550333087474,
+        "rho_orth_latent_pull_raw": 0.022888278542175344,
+        "mean_dom_latent": -1.0374113321304321,
+        "rho_dom_backbone_pull_pct": 0.3201934663358631,
+        "rho_orth_backbone_pull_pct": -0.10931510773639667,
+        "rho_dom_backbone_pull_raw": 0.3173315076125379,
+        "rho_orth_backbone_pull_raw": -0.054397844480651256,
+        "mean_dom_backbone": 2.5142366886138916
+      },
+      "auroc0": 0.7264327149390556,
+      "auroc2": 0.5586021917112158,
+      "delta_auroc": -0.16783052322783976,
+      "criterion": {
+        "latent": true,
+        "backbone": true
+      }
+    }
+  }
+}

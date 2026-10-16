@@ -1,0 +1,14 @@
+---
+description: Completed job outputs must be committed when reported; untracked results do not count as done.
+alwaysApply: true
+---
+
+# Commit completed job outputs
+
+When a Paper B (or related) job finishes and you report its status or numbers to the user:
+
+1. **Commit the job’s outputs in the same step** — `REPORT.md`, `summary.csv`, `*.json`, and other artifacts under the item’s `results/...` directory that the job wrote.
+2. **Push** if the branch tracks a remote and the user expects results on the branch (default for completed Paper B items).
+3. **Untracked results do not count as done.** Saying a job COMPLETED without a commit that includes its outputs is incomplete.
+4. Prefer committing as author `vinhtranduc` (existing Paper B convention). Do not commit secrets, credentials, or unrelated dirty WIP.
+5. Large regenerated caches may be omitted only if the decisions/report already name a reproducible regenerator and the user explicitly excludes them; default is to include what the job wrote.

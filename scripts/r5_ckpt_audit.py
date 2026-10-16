@@ -158,6 +158,30 @@ def p8_a4_rows():
     return rows
 
 
+def _md_table(df, floatfmt=".3f"):
+    """Plain markdown table (no tabulate dependency)."""
+    if df is None or len(df) == 0:
+        return "(no rows yet)"
+    flat = df.copy()
+    if isinstance(flat.columns, pd.MultiIndex):
+        flat.columns = ["_".join(str(x) for x in c if str(x) != "").strip("_") for c in flat.columns]
+    if isinstance(flat.index, pd.MultiIndex) or flat.index.name is not None:
+        flat = flat.reset_index()
+    cols = [str(c) for c in flat.columns]
+
+    def cell(v):
+        if isinstance(v, (float, np.floating)) and np.isfinite(v):
+            return format(float(v), floatfmt)
+        if pd.isna(v):
+            return ""
+        return str(v)
+
+    lines = ["| " + " | ".join(cols) + " |", "|" + "|".join(["---"] * len(cols)) + "|"]
+    for _, row in flat.iterrows():
+        lines.append("| " + " | ".join(cell(row[c]) for c in flat.columns) + " |")
+    return "\n".join(lines)
+
+
 def report():
     ep = pd.read_csv(OUT / "table1_selected_epochs.csv")
     old = []
@@ -176,7 +200,7 @@ def report():
          "is applied from step 0). `grl_alpha_epoch_mean` is the epoch mean of the logged α. Flag: λ > 0 and α < {} at "
          "the selected epoch (criterion fixed after the selected epochs were listed).".format(ALPHA_ON), "",
          "## Item 4: Table 1 selected epochs (35 runs)", "",
-         ep.to_markdown(index=False, floatfmt=".3f"), "",
+         _md_table(ep), "",
          "λ > 0 runs flagged: {}".format(int(ep.before_alpha_on.sum())), "",
          "## Item 3: competence, λ = 0, lesion-level split (5 seeds; single-encoder ERM: 5 seeds)", "",
          "Image-level references (not like-for-like; leakage-inflated): paper single-encoder ERM {:.3f} "
@@ -186,10 +210,10 @@ def report():
              R.ERM_SINGLE_ENCODER_IMAGE_LEVEL,
              R.pm(R.ms([json.loads(p.read_text())["id_balanced_acc"]
                         for p in sorted((R.RES / "phase15" / "single_dann").glob("single_dann_ladv0_s*/summary.json"))]))), "",
-         comp.to_markdown(index=False, floatfmt=".3f") if len(comp) else "(no rows yet)", ""]
+         _md_table(comp) if len(comp) else "(no rows yet)", ""]
     if len(comp):
         g = comp.groupby("recipe")[cols].agg(["mean", "std", "count"])
-        L += ["Mean ± SD (n):", "", g.to_markdown(floatfmt=".3f"), "", "LaTeX rows:", "", "```"]
+        L += ["Mean ± SD (n):", "", _md_table(g), "", "LaTeX rows:", "", "```"]
         for rc, d in comp.groupby("recipe"):
             L.append("{} & ".format(rc) + " & ".join("{:.3f} $\\pm$ {:.3f}".format(d[c].mean(), d[c].std()) for c in cols)
                      + " \\\\")

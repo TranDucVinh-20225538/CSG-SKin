@@ -1,0 +1,14 @@
+{
+  "run": "single_dann_ladv0_s52",
+  "seed": 52,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p8/erm_ref/single_dann_ladv0_s52/best-07.ckpt",
+  "best_epoch": 7,
+  "last_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p8/erm_ref/single_dann_ladv0_s52/last.ckpt",
+  "last_epoch": 39,
+  "best_val_bal_acc": 0.5243382368381184,
+  "best_test_bal_acc": 0.5449609757278859,
+  "last_val_bal_acc": 0.5293304860571604,
+  "last_test_bal_acc": 0.5776146062411582,
+  "stored_test_bal_acc_best": 0.5451990709659811,
+  "check_best_test_vs_stored": true
+}
