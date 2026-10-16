@@ -56,6 +56,9 @@ case "${STEP}" in
   t1last_report) ${PY} scripts/r5_t1_last.py report ;;
   bcnham_maha0)  ${PY} scripts/r5_bcnham_maha0_explain.py ${ARGS} ;;
   r1_detmech_shift) ${PY} scripts/r6_r1_detmech_shift.py ${ARGS} ;;
+  posthoc_mitigation) ${PY} scripts/r5_posthoc_scoring.py mitigation ${ARGS} ;;
+  posthoc_clinical)   ${PY} scripts/r5_posthoc_scoring.py clinical ${ARGS} ;;
+  posthoc_nvfrac)     ${PY} scripts/r5_posthoc_scoring.py nvfrac ${ARGS} ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="
