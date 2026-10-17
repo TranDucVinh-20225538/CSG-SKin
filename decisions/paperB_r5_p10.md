@@ -227,3 +227,6 @@ R2-prior on the other. Does not wait for held R2 cells.
 - 2026-10-17 ~16:40 (+07), **before any P10 training**. Collapse requires \(u_\Delta < 0\) (CI of
   \(\bar a-\bar a_0\) entirely below 0), not a bare point drop. Always report Δ and its CI (incl. Survives).
   Bootstrap spelled out: B = 2,000, percentile 95%, rng 20261017, seed-mean only.
+- 2026-10-17 ~18:10 (+07), **order only** (no cells dropped). GPU array task order changed from
+  “all induced then all natural” to **interleaved by seed**: natural s42 → induced s42 → natural s52 →
+  induced s52 → … (`slurm/r5_p10_shift_arms.sbatch`). `--skip_done` keeps any already-finished cells.
