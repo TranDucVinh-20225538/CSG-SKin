@@ -157,6 +157,8 @@ only.
 ## GPU queue order (Paper B)
 
 User order (2026-10-16): **R1 → R2 → P10 → P9 → P11 → P7(b) → Q1 → Q3**.
+Amended 2026-10-17: after R2, **P10 ∥ R2-prior** (one GPU each; see `decisions/paperB_r6_r2_prior.md`).
+P10 dependency chain unchanged — R2-prior must not delay P10.
 
 ## Throughput knobs (before R2; do not change mid-block)
 
@@ -202,3 +204,5 @@ Order of action (user 2026-10-16):
 - 2026-10-17 ~12:05 (UTC+7), **gap recovered formula locked** (before interim job `68666` / oracle λ = 2 results).
   See section “Gap recovered” above: \\((\\mathrm{method}-\\mathrm{DANN})/(\\lambda0-\\mathrm{DANN})\\), λ0 per set
   from R1 shift100 λ = 0 `last.ckpt` same recipe; always co-report absolute Δ; flag mean `|λ0−DANN| < 0.05`.
+- 2026-10-17 ~16:25 (UTC+7), **R2-prior** queued to run **in parallel with P10** after R2 train (not in the P10
+  dependency chain). Design: `decisions/paperB_r6_r2_prior.md` (committed before any R2-prior run).
