@@ -331,14 +331,15 @@ class R6Lightning(CSGLiteLightning):
     loss equals the base class's (λ_supcon = 0 there, so its term is dropped here)."""
 
     def __init__(self, align="dann", class_weights=None, iw_cls=True, iw_ma=0.5, iw_max=None, iw_log=None,
-                 oracle_w=None, **kwargs):
+                 oracle_w=None, temp_T=1.0, p_source=None, **kwargs):
         super().__init__(**kwargs)
         self.save_hyperparameters()
-        if align not in ("dann", "cdan", "iwdan", "iwcdan", "iwdan_oracle"):
+        if align not in ("dann", "cdan", "iwdan", "iwcdan", "iwdan_oracle", "iwdan_em", "iwdan_n50"):
             raise ValueError(align)
         self.align = align
-        self.oracle = align == "iwdan_oracle"
-        self.iw = align in ("iwdan", "iwcdan", "iwdan_oracle")
+        self.oracle = align in ("iwdan_oracle", "iwdan_n50")  # fixed w (n50 = few-label prior)
+        self.em_prior = align == "iwdan_em"
+        self.iw = align in ("iwdan", "iwcdan", "iwdan_oracle", "iwdan_em", "iwdan_n50")
         self.cond = align in ("cdan", "iwcdan")
         nc = int(self.hparams.lesion_classes)
         cw = torch.ones(nc) if class_weights is None else torch.as_tensor(class_weights, dtype=torch.float32)
@@ -347,6 +348,10 @@ class R6Lightning(CSGLiteLightning):
         self.register_buffer("im_w", ow.float())
         self.register_buffer("acc_conf", torch.zeros(nc, nc, dtype=torch.float64))
         self.register_buffer("acc_tgt", torch.zeros(nc, dtype=torch.float64))
+        self.register_buffer("acc_tgt_soft", torch.zeros(nc, dtype=torch.float64))
+        ps = torch.ones(nc) / nc if p_source is None else torch.as_tensor(p_source, dtype=torch.float32)
+        self.register_buffer("p_source", ps.float())
+        self.temp_T = float(temp_T)
         if self.cond:
             self.cdan_head = derm_domain_head(int(self.hparams.lesion_latent_dim) * nc, int(self.hparams.domain_classes))
 
@@ -401,9 +406,16 @@ class R6Lightning(CSGLiteLightning):
                 nc = self.acc_tgt.numel()
                 src = (b["d_adv"] == 0) & (b["y_src"] >= 0)
                 tgt = b["d_adv"] == 1
-                idx = pred[src] * nc + b["y_src"][src]
-                self.acc_conf.view(-1).index_add_(0, idx, torch.ones_like(idx, dtype=torch.float64))
-                self.acc_tgt.index_add_(0, pred[tgt], torch.ones_like(pred[tgt], dtype=torch.float64))
+                if self.em_prior:
+                    # Soft target histogram for Saerens EM (temperature-scaled logits).
+                    T = max(float(self.temp_T), 1e-3)
+                    soft = torch.softmax(y_hat32[tgt] / T, dim=1).double()
+                    if soft.numel():
+                        self.acc_tgt_soft += soft.sum(0)
+                else:
+                    idx = pred[src] * nc + b["y_src"][src]
+                    self.acc_conf.view(-1).index_add_(0, idx, torch.ones_like(idx, dtype=torch.float64))
+                    self.acc_tgt.index_add_(0, pred[tgt], torch.ones_like(pred[tgt], dtype=torch.float64))
             acc_adv = (d_logits[ma].argmax(1) == b["d_adv"][ma]).float().mean() if ma.any() else zero
             acc_ctx = (d_ctx[mc].argmax(1) == b["d_ctx"][mc]).float().mean() if mc.any() else zero
             acc_cls = (pred[has_cls] == b["y_cls"][has_cls]).float().mean() if has_cls.any() else zero
@@ -422,12 +434,69 @@ class R6Lightning(CSGLiteLightning):
             return
         if self.oracle:
             w = self.im_w.detach().cpu().numpy()
-            row = {"epoch": int(self.current_epoch) + 1, "oracle": True, "w": w.tolist(),
-                   "note": "oracle, not deployable; w fixed from true pad_adv mix"}
-            print("[iw-oracle] epoch {} w={}".format(row["epoch"], np.round(w, 3).tolist()), flush=True)
+            note = ("few-label n50 prior; w fixed from 50 pad_adv labels" if self.align == "iwdan_n50"
+                    else "oracle, not deployable; w fixed from true pad_adv mix")
+            row = {"epoch": int(self.current_epoch) + 1, "oracle": self.align == "iwdan_oracle",
+                   "n50": self.align == "iwdan_n50", "w": w.tolist(), "note": note}
+            print("[iw-{}] epoch {} w={}".format(self.align, row["epoch"], np.round(w, 3).tolist()), flush=True)
             if self.hparams.iw_log:
                 with open(self.hparams.iw_log, "a") as f:
                     f.write(json.dumps(row) + "\n")
+            return
+        if self.em_prior:
+            if self.acc_tgt_soft.sum() <= 0:
+                return
+            # Fit temperature on ISIC val (locked: before EM); fall back to current T.
+            try:
+                vdl = self.trainer.val_dataloaders
+                if vdl is not None:
+                    loader = vdl[0] if isinstance(vdl, (list, tuple)) else vdl
+                    logits_l, ys = [], []
+                    self.eval()
+                    with torch.no_grad():
+                        for batch in loader:
+                            b = self._unify(batch)
+                            x = b["x"].to(self.device)
+                            y_hat, *_ = self.model(x, x_lesion=None, return_latents=True)
+                            logits_l.append(y_hat.float().cpu().numpy())
+                            ys.append(b["y_cls"].cpu().numpy().astype(int) if torch.is_tensor(b["y_cls"])
+                                      else np.asarray(b["y_cls"], int))
+                    self.train()
+                    if logits_l:
+                        self.temp_T, _nll = fit_temperature_nll(np.concatenate(logits_l), np.concatenate(ys))
+            except Exception as exc:  # noqa: BLE001
+                print("[iw-em] temp fit skipped:", exc, flush=True)
+            # Recompute soft_mean with new T from stored? acc_tgt_soft used old T — acceptable within-epoch.
+            # Saerens et al. 2002 EM prior adjustment on temperature-scaled soft predictions.
+            p_s = self.p_source.detach().cpu().numpy().astype(float)
+            p_s = np.clip(p_s, 1e-8, None); p_s /= p_s.sum()
+            # Initialise π from current implied mix (or uniform)
+            w_cur = self.im_w.detach().cpu().numpy().astype(float)
+            pi = np.clip(w_cur * p_s, 1e-8, None); pi /= pi.sum()
+            soft_mean = (self.acc_tgt_soft / self.acc_tgt_soft.sum()).cpu().numpy().astype(float)
+            # One EM M-step using mean soft labels reweighted by π/π_s (iterated)
+            for _ in range(20):
+                ratio = pi / p_s
+                # q(y) ∝ soft(y) * (π(y)/π_s(y)); renormalise per-example approx via mean soft
+                q = soft_mean * ratio
+                q = np.clip(q, 1e-12, None); q /= q.sum()
+                if float(np.max(np.abs(q - pi))) < 1e-6:
+                    pi = q
+                    break
+                pi = q
+            w_new = oracle_weights_from_mix(p_s, pi)
+            ma = float(self.hparams.iw_ma)
+            w = ma * w_cur + (1.0 - ma) * w_new
+            self.im_w.copy_(torch.as_tensor(w, dtype=self.im_w.dtype))
+            row = {"epoch": int(self.current_epoch) + 1, "em": True, "temp_T": float(self.temp_T),
+                   "pi": pi.tolist(), "w_new": w_new.tolist(), "w": w.tolist(),
+                   "soft_mean_target": soft_mean.tolist()}
+            print("[iw-em] epoch {} T={:.3f} pi={}".format(row["epoch"], self.temp_T, np.round(pi, 3).tolist()),
+                  flush=True)
+            if self.hparams.iw_log:
+                with open(self.hparams.iw_log, "a") as f:
+                    f.write(json.dumps(row) + "\n")
+            self.acc_tgt_soft.zero_()
             return
         if self.acc_conf.sum() <= 0 or self.acc_tgt.sum() <= 0:
             return
@@ -468,14 +537,30 @@ def oracle_weights_from_mix(p_src, p_tgt, eps=1e-8):
 
 
 def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e-4, iw_cls=True, oracle_w=None,
-               adv_lr_multiplier=30.0):
+               adv_lr_multiplier=30.0, temp_T=1.0, p_source=None):
     """Same constructor arguments as train_phase3_sweep.main except the recipe fields."""
     return R6Lightning(
         align=align, class_weights=class_weights, iw_cls=iw_cls, iw_log=iw_log, oracle_w=oracle_w,
+        temp_T=temp_T, p_source=p_source,
         lesion_classes=8, domain_classes=2, lesion_latent_dim=int(recipe["latent"]), context_latent_dim=64,
         learning_rate=lr, weight_decay=1e-4, lambda_ctx=1.0, lambda_adv=float(lam), lambda_orth=1.0, lambda_supcon=0.0,
         adv_lr_multiplier=float(adv_lr_multiplier), lesion_cls_lr_multiplier=float(recipe["cls_lr_mult"]),
         backbone_variant="b3", pretrained=True)
+
+
+def fit_temperature_nll(logits, y, grid=None):
+    """Scalar temperature by NLL on a held-out set (ISIC val). logits [N,C], y [N]."""
+    import torch.nn.functional as F
+    logits = np.asarray(logits, np.float64)
+    y = np.asarray(y, int)
+    grid = np.concatenate([np.linspace(0.5, 5.0, 46), [1.0]]) if grid is None else grid
+    best_T, best_nll = 1.0, float("inf")
+    for T in grid:
+        z = torch.as_tensor(logits / max(float(T), 1e-3))
+        nll = float(F.cross_entropy(z, torch.as_tensor(y), reduction="mean"))
+        if nll < best_nll:
+            best_nll, best_T = nll, float(T)
+    return best_T, best_nll
 
 
 # Primary checkpoint policy (decisions/paperB_r5_p8.md, deviation 2026-10-15 21:57): last.ckpt (end of training) for
@@ -755,15 +840,32 @@ def run(spec, args):
         if iw_log and not args.resume and Path(iw_log).exists():
             Path(iw_log).write_text("")
         oracle_w = None
+        temp_T, p_src = 1.0, class_mix(data["train"].label_idx)
         if align == "iwdan_oracle":
-            oracle_w = oracle_weights_from_mix(class_mix(data["train"].label_idx),
-                                               class_mix(data["pad_adv"].label_idx)).tolist()
+            oracle_w = oracle_weights_from_mix(p_src, class_mix(data["pad_adv"].label_idx)).tolist()
             cfg["oracle_w"] = oracle_w
             cfg["oracle_note"] = "oracle, not deployable; PAD labels set w only"
-            (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
+        elif align == "iwdan_n50":
+            import train_r6_r2_prior as RP  # noqa: WPS433
+            y_pad = np.asarray(data["pad_adv"].label_idx, int)
+            idx = RP.n50_indices(len(y_pad), seed)
+            pi = np.bincount(y_pad[idx], minlength=NCLS).astype(float)
+            pi = pi / max(pi.sum(), 1.0)
+            oracle_w = oracle_weights_from_mix(p_src, pi).tolist()
+            cfg.update(oracle_w=oracle_w, n50_indices=idx.tolist(), n50_pi=pi.tolist(),
+                       n50_note="few-label target; 50 pad_adv labels set w only; not unsupervised DA")
+            (run_dir / "n50_indices.json").write_text(json.dumps({"seed": seed, "indices": idx.tolist(),
+                                                                  "pi": pi.tolist()}, indent=2) + "\n")
+        elif align == "iwdan_em":
+            # T fitted on ISIC val each epoch before EM (see R6Lightning.on_train_epoch_end); init T=1.
+            temp_T = 1.0
+            oracle_w = np.ones(NCLS).tolist()
+            cfg.update(temp_T=temp_T, em_note="Saerens EM; T fit on ISIC val each epoch before EM; reported in iw_log")
+        (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
         model = make_model(recipe, spec["lam"], align=align, class_weights=cw, iw_log=iw_log,
                            iw_cls=spec.get("iw_cls", True), oracle_w=oracle_w,
-                           adv_lr_multiplier=float(spec.get("adv_lr_multiplier", 30.0)))
+                           adv_lr_multiplier=float(spec.get("adv_lr_multiplier", 30.0)),
+                           temp_T=temp_T, p_source=p_src.tolist())
         ckpt_cb = pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir), filename="best-{epoch:02d}", monitor="val/acc",
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
         cbs = [ckpt_cb]

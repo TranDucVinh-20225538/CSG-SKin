@@ -206,3 +206,7 @@ Order of action (user 2026-10-16):
   from R1 shift100 λ = 0 `last.ckpt` same recipe; always co-report absolute Δ; flag mean `|λ0−DANN| < 0.05`.
 - 2026-10-17 ~16:25 (UTC+7), **R2-prior** queued to run **in parallel with P10** after R2 train (not in the P10
   dependency chain). Design: `decisions/paperB_r6_r2_prior.md` (committed before any R2-prior run).
+- 2026-10-17 ~16:30 (UTC+7), **order only — hold remaining R2** (no cells dropped, criteria unchanged). Let
+  running tasks finish: oracle s82 (`68562_14`) and CDAN λ=2 s42 (`68562_15`). **Hold** (do not cancel)
+  `68562_[16-39]` = remaining CDAN λ=2 + all λ=0.5. Then **P10 ∥ R2-prior**; **release** held R2 after both
+  complete, **before R1-hi**.

@@ -14,15 +14,14 @@ R2 confusion-matrix / QP estimate did not (or improve the within-class held-out 
 
 ## Queue (critical)
 
-**P10 must not be delayed.** R2-prior starts **after R2 train finishes** and runs **in parallel with P10**
-(vip2 `MaxGRES=2`: one GPU each). Implementation:
+**P10 must not be delayed.** Amended 2026-10-17 ~16:30: remaining R2 (CDAN + λ=0.5) is **held**. R2-prior and
+P10 both start when **`68562_14` and `68562_15` finish** (oracle s82 + CDAN s42), **one GPU each**.
 
-- Do **not** insert R2-prior into the P10 dependency chain (`68563 → 68564…` stays as submitted).
-- Submit R2-prior with `afterany:68562` (R2 train array) so it may overlap the R2 report CPU job; P10 remains
-  `afterany:68563`. Both GPU consumers then share the two slots when P10 is eligible.
-- Never `scontrol hold` / reprioritize P10 for R2-prior.
+- Do **not** put R2-prior on the critical path ahead of P10; submit both with the same `afterany:68562_14:68562_15`.
+- Held R2 `68562_[16-39]` is released **after P10 and R2-prior complete**, then R1-hi.
+- Never hold P10 for R2-prior.
 
-GPU order note (2026-10-17): **R1 → R2 → (P10 ∥ R2-prior) → …**
+GPU order: **R1 → R2 (partial) → (P10 ∥ R2-prior) → R2 remainder → R1-hi → …**
 
 ## Arms (new GPU trainings)
 
