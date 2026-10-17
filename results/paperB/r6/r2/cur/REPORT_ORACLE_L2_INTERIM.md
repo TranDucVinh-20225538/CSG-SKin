@@ -40,5 +40,5 @@ Absolute Δ is primary when the denom is small; ratio is still printed for every
 - **mednode:** DANN 0.298±0.032; IWDAN 0.350±0.046; oracle 0.563±0.050
 - **sd198:** DANN 0.325±0.069; IWDAN 0.488±0.075; oracle 0.693±0.052
 
-**On origin/paperb/reviewer-r1:** _(fill after push)._
+**On origin/paperb/reviewer-r1:** `7fcfb1a`.
 
