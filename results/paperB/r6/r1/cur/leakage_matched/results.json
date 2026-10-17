@@ -1,0 +1,233 @@
+{
+ "commit": "ae25a0f",
+ "decision": "decisions/paperB_r6_r1.md (94e2399 leakage-matched test)",
+ "n_pool": 76,
+ "n_ab": 75,
+ "n_degraded_excluded": 1,
+ "regression_a": {
+  "fitzpatrick17k": {
+   "n": 75,
+   "recipe_base": "A4",
+   "coefs": {
+    "intercept": {
+     "coef": -0.06659959974464745,
+     "ci_lo": -0.2685729488761472,
+     "ci_hi": 0.12537640805312986,
+     "excludes_0": 0
+    },
+    "leakage": {
+     "coef": 0.9803202787906635,
+     "ci_lo": 0.771865508388179,
+     "ci_hi": 1.1924689695459,
+     "excludes_0": 1
+    },
+    "shift_level": {
+     "coef": -0.16604327386726325,
+     "ci_lo": -0.2165260978571518,
+     "ci_hi": -0.11547426655947625,
+     "excludes_0": 1
+    },
+    "recipe_R1": {
+     "coef": -0.022871720248922173,
+     "ci_lo": -0.1443128520727076,
+     "ci_hi": 0.10051905115022955,
+     "excludes_0": 0
+    },
+    "recipe_Table1": {
+     "coef": 0.05254464059299152,
+     "ci_lo": -0.06980073182807284,
+     "ci_hi": 0.17894139132380915,
+     "excludes_0": 0
+    }
+   },
+   "vif_shift_vs_leakage": 1.0439425870984493,
+   "vif_shift_vs_recipe": 1.0274530831099205,
+   "identifiable": 1,
+   "supported_direction": 1
+  },
+  "mednode": {
+   "n": 75,
+   "recipe_base": "A4",
+   "coefs": {
+    "intercept": {
+     "coef": -0.13842443541709837,
+     "ci_lo": -0.3119688860558825,
+     "ci_hi": 0.03751998376080889,
+     "excludes_0": 0
+    },
+    "leakage": {
+     "coef": 0.7641483395324826,
+     "ci_lo": 0.5709040557986836,
+     "ci_hi": 0.9502274864081315,
+     "excludes_0": 1
+    },
+    "shift_level": {
+     "coef": -0.10738790327448666,
+     "ci_lo": -0.14823548229676883,
+     "ci_hi": -0.0649120473561863,
+     "excludes_0": 1
+    },
+    "recipe_R1": {
+     "coef": 0.05241001183837818,
+     "ci_lo": -0.03412047947380266,
+     "ci_hi": 0.1399631113457145,
+     "excludes_0": 0
+    },
+    "recipe_Table1": {
+     "coef": 0.09632092406898912,
+     "ci_lo": 0.004693046647748948,
+     "ci_hi": 0.18652998805322452,
+     "excludes_0": 1
+    }
+   },
+   "vif_shift_vs_leakage": 1.0439425870984493,
+   "vif_shift_vs_recipe": 1.0274530831099205,
+   "identifiable": 1,
+   "supported_direction": 1
+  },
+  "sd198": {
+   "n": 75,
+   "recipe_base": "A4",
+   "coefs": {
+    "intercept": {
+     "coef": -0.12089973005511566,
+     "ci_lo": -0.30880476415095304,
+     "ci_hi": 0.06304179470073117,
+     "excludes_0": 0
+    },
+    "leakage": {
+     "coef": 1.0282307561423873,
+     "ci_lo": 0.8278680940374492,
+     "ci_hi": 1.233825207416095,
+     "excludes_0": 1
+    },
+    "shift_level": {
+     "coef": -0.17208368166531596,
+     "ci_lo": -0.2209081224073288,
+     "ci_hi": -0.12317732166475139,
+     "excludes_0": 1
+    },
+    "recipe_R1": {
+     "coef": -0.013450740096209002,
+     "ci_lo": -0.13009964790525988,
+     "ci_hi": 0.10268041254320213,
+     "excludes_0": 0
+    },
+    "recipe_Table1": {
+     "coef": 0.06045832798797446,
+     "ci_lo": -0.06047983496035971,
+     "ci_hi": 0.1847118771967012,
+     "excludes_0": 0
+    }
+   },
+   "vif_shift_vs_leakage": 1.0439425870984493,
+   "vif_shift_vs_recipe": 1.0274530831099205,
+   "identifiable": 1,
+   "supported_direction": 1
+  },
+  "pad_heldout": {
+   "n": 75,
+   "recipe_base": "A4",
+   "coefs": {
+    "intercept": {
+     "coef": -0.3212704181806654,
+     "ci_lo": -0.5280566381334669,
+     "ci_hi": -0.10749563641878665,
+     "excludes_0": 1
+    },
+    "leakage": {
+     "coef": 1.031213090594763,
+     "ci_lo": 0.8061163486456052,
+     "ci_hi": 1.246240384369971,
+     "excludes_0": 1
+    },
+    "shift_level": {
+     "coef": 0.040731948787508854,
+     "ci_lo": -0.033043409391231446,
+     "ci_hi": 0.1101176546983543,
+     "excludes_0": 0
+    },
+    "recipe_R1": {
+     "coef": 0.02050433124204426,
+     "ci_lo": -0.08272203371247809,
+     "ci_hi": 0.12381119958129376,
+     "excludes_0": 0
+    },
+    "recipe_Table1": {
+     "coef": 0.10268241845914572,
+     "ci_lo": 0.000318990493739044,
+     "ci_hi": 0.20518694489441372,
+     "excludes_0": 1
+    }
+   },
+   "vif_shift_vs_leakage": 1.0439425870984493,
+   "vif_shift_vs_recipe": 1.0274530831099205,
+   "identifiable": 1,
+   "supported_direction": 0
+  }
+ },
+ "matched_b": {
+  "fitzpatrick17k": {
+   "n_r1": 4,
+   "n_a4": 5,
+   "mean_r1": 0.690944235081145,
+   "mean_a4": 0.4578256355827537,
+   "diff_r1_minus_a4": 0.2331185994983913,
+   "ci_lo": 0.18240414850826558,
+   "ci_hi": 0.28747916759645104,
+   "excludes_0": 1,
+   "supported_direction": 1,
+   "leakage_r1": 0.7905292556572591,
+   "leakage_a4": 0.7863961988304093,
+   "label": "cross-recipe"
+  },
+  "mednode": {
+   "n_r1": 4,
+   "n_a4": 5,
+   "mean_r1": 0.5407640557703246,
+   "mean_a4": 0.29808727753979036,
+   "diff_r1_minus_a4": 0.24267677823053424,
+   "ci_lo": 0.2054282032528819,
+   "ci_hi": 0.277972080010216,
+   "excludes_0": 1,
+   "supported_direction": 1,
+   "leakage_r1": 0.7905292556572591,
+   "leakage_a4": 0.7863961988304093,
+   "label": "cross-recipe"
+  },
+  "sd198": {
+   "n_r1": 4,
+   "n_a4": 5,
+   "mean_r1": 0.693664288719494,
+   "mean_a4": 0.4300890335602562,
+   "diff_r1_minus_a4": 0.26357525515923785,
+   "ci_lo": 0.21179358203955218,
+   "ci_hi": 0.3173672461517187,
+   "excludes_0": 1,
+   "supported_direction": 1,
+   "leakage_r1": 0.7905292556572591,
+   "leakage_a4": 0.7863961988304093,
+   "label": "cross-recipe"
+  },
+  "pad_heldout": {
+   "n_r1": 4,
+   "n_a4": 5,
+   "mean_r1": 0.4584001750840414,
+   "mean_a4": 0.4518185090733887,
+   "diff_r1_minus_a4": 0.006581666010652687,
+   "ci_lo": -0.004766554841106841,
+   "ci_hi": 0.017403441922925533,
+   "excludes_0": 0,
+   "supported_direction": 0,
+   "leakage_r1": 0.7905292556572591,
+   "leakage_a4": 0.7863961988304093,
+   "label": "cross-recipe"
+  }
+ },
+ "verdict_a": "supported (\u22652/3 primary sets: shift coef negative, CI excludes 0)",
+ "verdict_b": "supported (\u22652/3: R1 shift0 \u03bb2 > A4 \u03bb2, CI excludes 0)",
+ "n_primary_a_supported": 3,
+ "n_primary_b_supported": 3,
+ "reading": "label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets (prediction).",
+ "identification_note": "The shift coefficient is identified from variation within R1; A4 and Table 1 only extend the leakage range at shift = 100%."
+}

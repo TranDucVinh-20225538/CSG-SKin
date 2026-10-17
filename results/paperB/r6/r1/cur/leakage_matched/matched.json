@@ -1,0 +1,58 @@
+{
+ "fitzpatrick17k": {
+  "n_r1": 4,
+  "n_a4": 5,
+  "mean_r1": 0.690944235081145,
+  "mean_a4": 0.4578256355827537,
+  "diff_r1_minus_a4": 0.2331185994983913,
+  "ci_lo": 0.18240414850826558,
+  "ci_hi": 0.28747916759645104,
+  "excludes_0": 1,
+  "supported_direction": 1,
+  "leakage_r1": 0.7905292556572591,
+  "leakage_a4": 0.7863961988304093,
+  "label": "cross-recipe"
+ },
+ "mednode": {
+  "n_r1": 4,
+  "n_a4": 5,
+  "mean_r1": 0.5407640557703246,
+  "mean_a4": 0.29808727753979036,
+  "diff_r1_minus_a4": 0.24267677823053424,
+  "ci_lo": 0.2054282032528819,
+  "ci_hi": 0.277972080010216,
+  "excludes_0": 1,
+  "supported_direction": 1,
+  "leakage_r1": 0.7905292556572591,
+  "leakage_a4": 0.7863961988304093,
+  "label": "cross-recipe"
+ },
+ "sd198": {
+  "n_r1": 4,
+  "n_a4": 5,
+  "mean_r1": 0.693664288719494,
+  "mean_a4": 0.4300890335602562,
+  "diff_r1_minus_a4": 0.26357525515923785,
+  "ci_lo": 0.21179358203955218,
+  "ci_hi": 0.3173672461517187,
+  "excludes_0": 1,
+  "supported_direction": 1,
+  "leakage_r1": 0.7905292556572591,
+  "leakage_a4": 0.7863961988304093,
+  "label": "cross-recipe"
+ },
+ "pad_heldout": {
+  "n_r1": 4,
+  "n_a4": 5,
+  "mean_r1": 0.4584001750840414,
+  "mean_a4": 0.4518185090733887,
+  "diff_r1_minus_a4": 0.006581666010652687,
+  "ci_lo": -0.004766554841106841,
+  "ci_hi": 0.017403441922925533,
+  "excludes_0": 0,
+  "supported_direction": 0,
+  "leakage_r1": 0.7905292556572591,
+  "leakage_a4": 0.7863961988304093,
+  "label": "cross-recipe"
+ }
+}
