@@ -1,0 +1,3089 @@
+{
+ "commit": "1ea63f0",
+ "decision": "decisions/paperB_r5_posthoc_scoring.md",
+ "label": "post hoc",
+ "label_maps": {
+  "fitzpatrick17k": {
+   "melanoma": "MEL",
+   "basal cell carcinoma": "BCC",
+   "squamous cell carcinoma": "SCC",
+   "actinic keratosis": "AK",
+   "dermatofibroma": "DF",
+   "congenital nevus": "NV"
+  },
+  "sd198": "SD198_MAP in scripts/r5_p7a_sets.py",
+  "malignant": [
+   "MEL",
+   "BCC",
+   "SCC",
+   "AK"
+  ],
+  "threshold": "95th percentile of ISIC val standard Mahalanobis (per run, per \u03bb)"
+ },
+ "cells": {
+  "a4 \u03bb=0": {
+   "label": "a4 \u03bb=0",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 110.9966957920478,
+    "sd": 3.0576249097909662,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.8506024096385543,
+        "sd": 0.07258973653682922,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.07710843373493975,
+        "sd": 0.010776231216866454,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.8,
+        0.8987654320987654
+       ],
+       "nv09_ci": [
+        0.04047619047619048,
+        0.11904761904761904
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.7688715953307393,
+        "sd": 0.09239094568525294,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.04202334630350195,
+        "sd": 0.021205333219359863,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.7389918237565297,
+        0.7976746430816198
+       ],
+       "nv09_ci": [
+        0.028125,
+        0.05836575875486381
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.730188679245283,
+        "sd": 0.07867607794176727,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.02830188679245283,
+        "sd": 0.014538712271153246,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.6943396226415095,
+        0.7669850075294534
+       ],
+       "nv09_ci": [
+        0.01435066554797161,
+        0.04423963133640553
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.825,
+        "sd": 0.05432668671002208,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.05833333333333333,
+        "sd": 0.037267799624996496,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.75,
+        0.8916666666666668
+       ],
+       "nv09_ci": [
+        0.008333333333333333,
+        0.125
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9185840707964603,
+        "sd": 0.05949641173087293,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.10265486725663715,
+        "sd": 0.05476725113899399,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.8867256637168142,
+        0.9451327433628318
+       ],
+       "nv09_ci": [
+        0.06902654867256637,
+        0.13805309734513274
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.76,
+        "sd": 0.10775486583496408,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.04,
+        "sd": 0.04503085362035432,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.6966666666666667,
+        0.8133333333333335
+       ],
+       "nv09_ci": [
+        0.016666666666666666,
+        0.06666666666666667
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.7731092436974791,
+        "sd": 0.04790653046635034,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.04873949579831933,
+        "sd": 0.05159691237986135,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.7243697478991596,
+        0.8201680672268907
+       ],
+       "nv09_ci": [
+        0.028529411764705883,
+        0.07226890756302522
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.7866666666666667,
+        "sd": 0.09888264649460884,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.016666666666666666,
+        "sd": 0.020412414523193152,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.7333333333333334,
+        0.8399999999999999
+       ],
+       "nv09_ci": [
+        0.0,
+        0.03674999999999955
+       ]
+      }
+     }
+    }
+   }
+  },
+  "a4 \u03bb=2": {
+   "label": "a4 \u03bb=2",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 109.85141277617674,
+    "sd": 3.9472408038307067,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.9542168674698794,
+        "sd": 0.013198133915787148,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.39759036144578314,
+        "sd": 0.04587815124014403,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.925301204819277,
+        0.9777845528455285
+       ],
+       "nv09_ci": [
+        0.3048780487804878,
+        0.48605584266436974
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9821011673151752,
+        "sd": 0.010513039755724766,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5813229571984435,
+        "sd": 0.12404459327713056,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.97431906614786,
+        0.9891891891891891
+       ],
+       "nv09_ci": [
+        0.5374938725490196,
+        0.6237593751386855
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.9367924528301886,
+        "sd": 0.028223160946512425,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.44811320754716977,
+        "sd": 0.0957442600480398,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9164319248826291,
+        0.9552380952380952
+       ],
+       "nv09_ci": [
+        0.3953906333726288,
+        0.5014354066985647
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.9916666666666668,
+        "sd": 0.01863389981249823,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5499999999999999,
+        "sd": 0.11562030771259671,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.975,
+        1.0
+       ],
+       "nv09_ci": [
+        0.39166666666666666,
+        0.7
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9787610619469026,
+        "sd": 0.01835083305604221,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.6371681415929202,
+        "sd": 0.19195585808392798,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9557522123893806,
+        0.9946902654867257
+       ],
+       "nv09_ci": [
+        0.5805309734513274,
+        0.695575221238938
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 1.0,
+        "sd": 0.0,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.72,
+        "sd": 0.10697871023920807,
+        "n": 5
+       },
+       "accepted_ci": [
+        1.0,
+        1.0
+       ],
+       "nv09_ci": [
+        0.6466666666666667,
+        0.7866666666666667
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.9764705882352942,
+        "sd": 0.018218053267797303,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5815126050420169,
+        "sd": 0.11264893161974936,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9596638655462184,
+        0.9899159663865547
+       ],
+       "nv09_ci": [
+        0.5210084033613445,
+        0.6453781512605042
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.9966666666666667,
+        "sd": 0.007453559924999322,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.6533333333333333,
+        "sd": 0.13457752825457567,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.99,
+        1.0
+       ],
+       "nv09_ci": [
+        0.5733333333333334,
+        0.7333333333333334
+       ]
+      }
+     }
+    }
+   }
+  },
+  "old_recipe \u03bb=0": {
+   "label": "old_recipe \u03bb=0",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 53.344027822035045,
+    "sd": 6.386515623743725,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.9951807228915662,
+        "sd": 0.006599066957893588,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.0746987951807229,
+        "sd": 0.04293621609929027,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9879518072289157,
+        1.0
+       ],
+       "nv09_ci": [
+        0.039012635909491625,
+        0.11606481481481472
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9797665369649806,
+        "sd": 0.010071734712486225,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.0443579766536965,
+        "sd": 0.026188822833406754,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.97109375,
+        0.9875
+       ],
+       "nv09_ci": [
+        0.029451699463327367,
+        0.06201550387596899
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.9443396226415095,
+        "sd": 0.04803452686075837,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.04716981132075472,
+        "sd": 0.03450174254322593,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9285714285714286,
+        0.9592421449885905
+       ],
+       "nv09_ci": [
+        0.03033175355450237,
+        0.06602893382684843
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.975,
+        "sd": 0.022821773229381902,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.08333333333333333,
+        "sd": 0.04166666666666667,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.95,
+        1.0
+       ],
+       "nv09_ci": [
+        0.016666666666666666,
+        0.16666666666666666
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.976991150442478,
+        "sd": 0.0100900480097269,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.08141592920353982,
+        "sd": 0.040746422772464916,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9575221238938052,
+        0.9911504424778761
+       ],
+       "nv09_ci": [
+        0.049557522123893805,
+        0.1168141592920354
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.9833333333333332,
+        "sd": 0.011785113019775788,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.03666666666666667,
+        "sd": 0.021730674684008827,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9633333333333333,
+        0.9966666666666667
+       ],
+       "nv09_ci": [
+        0.01,
+        0.06999999999999999
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.9529411764705882,
+        "sd": 0.02696942274938019,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.04873949579831933,
+        "sd": 0.04382657079127831,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9327731092436975,
+        0.9714285714285715
+       ],
+       "nv09_ci": [
+        0.030252100840336138,
+        0.07058823529411765
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.99,
+        "sd": 0.014907119849998601,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.01,
+        "sd": 0.009128709291752768,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9766666666666666,
+        1.0
+       ],
+       "nv09_ci": [
+        0.0,
+        0.023333333333333334
+       ]
+      }
+     }
+    }
+   }
+  },
+  "old_recipe \u03bb=2": {
+   "label": "old_recipe \u03bb=2",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 53.32470906955407,
+    "sd": 4.115260271359389,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.9831325301204819,
+        "sd": 0.02498366428111772,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.48674698795180726,
+        "sd": 0.07004550290963196,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9638554216867469,
+        0.9975609756097562
+       ],
+       "nv09_ci": [
+        0.39276888039964736,
+        0.580252935862692
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9782101167315176,
+        "sd": 0.01594856150343906,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.6926070038910506,
+        "sd": 0.06700068232576875,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9674418604651163,
+        0.9875
+       ],
+       "nv09_ci": [
+        0.6488324952859836,
+        0.7328125
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.941509433962264,
+        "sd": 0.036170357571095886,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.4641509433962264,
+        "sd": 0.052800699316814026,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9199999999999999,
+        0.9601895734597157
+       ],
+       "nv09_ci": [
+        0.4093457943925234,
+        0.5198160377358491
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.975,
+        "sd": 0.03726779962499651,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7,
+        "sd": 0.06846531968814576,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9416666666666667,
+        1.0
+       ],
+       "nv09_ci": [
+        0.5583333333333333,
+        0.8333333333333334
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9858407079646018,
+        "sd": 0.007915284876105462,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.8123893805309734,
+        "sd": 0.01583056975221089,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9734513274336283,
+        0.9946902654867257
+       ],
+       "nv09_ci": [
+        0.7575221238938052,
+        0.8654867256637168
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.99,
+        "sd": 0.014907119849998601,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.82,
+        "sd": 0.0776387646590141,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9800000000000001,
+        1.0
+       ],
+       "nv09_ci": [
+        0.75,
+        0.8833333333333332
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.9663865546218486,
+        "sd": 0.033613445378151266,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.715966386554622,
+        "sd": 0.04540926415497912,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9478991596638655,
+        0.9831932773109244
+       ],
+       "nv09_ci": [
+        0.6521008403361345,
+        0.7781512605042017
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.99,
+        "sd": 0.014907119849998601,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.8333333333333334,
+        "sd": 0.07453559924999298,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9733333333333334,
+        1.0
+       ],
+       "nv09_ci": [
+        0.77,
+        0.8933333333333333
+       ]
+      }
+     }
+    }
+   }
+  },
+  "R1 shift 0% \u03bb=2": {
+   "label": "R1 shift 0% \u03bb=2",
+   "n_seeds": 4,
+   "tau": {
+    "mean": 51.524674806418346,
+    "sd": 2.688494860357813,
+    "n": 4
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.9126506024096385,
+        "sd": 0.03980768594698595,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.21385542168674698,
+        "sd": 0.0669912743679208,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8796268406961179,
+        0.9427710843373494
+       ],
+       "nv09_ci": [
+        0.14632876016260163,
+        0.28658536585365857
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9075875486381324,
+        "sd": 0.0436046575201407,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.13813229571984437,
+        "sd": 0.04361912249234821,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8866279069767442,
+        0.9270428015564203
+       ],
+       "nv09_ci": [
+        0.10576171875000001,
+        0.17248062015503876
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.8372641509433962,
+        "sd": 0.06046819032399184,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.08136792452830188,
+        "sd": 0.03839344480212195,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8110257338423061,
+        0.8630952380952381
+       ],
+       "nv09_ci": [
+        0.05449850607871419,
+        0.11214953271028036
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.8958333333333334,
+        "sd": 0.07216878364870322,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.11458333333333333,
+        "sd": 0.020833333333333336,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8333333333333334,
+        0.948177083333332
+       ],
+       "nv09_ci": [
+        0.010416666666666666,
+        0.23984374999999858
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9292035398230089,
+        "sd": 0.04023062447488451,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.33849557522123896,
+        "sd": 0.08591366300419291,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8960176991150443,
+        0.9579646017699115
+       ],
+       "nv09_ci": [
+        0.2676991150442478,
+        0.40707964601769914
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.8916666666666666,
+        "sd": 0.02151657414559674,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.175,
+        "sd": 0.0957427107756338,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8375,
+        0.9416666666666667
+       ],
+       "nv09_ci": [
+        0.10833333333333334,
+        0.24583333333333335
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.8550420168067226,
+        "sd": 0.053313351010292095,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.14915966386554624,
+        "sd": 0.0583716134010496,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.8214285714285714,
+        0.8865546218487395
+       ],
+       "nv09_ci": [
+        0.10714285714285714,
+        0.19747899159663865
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.9458333333333333,
+        "sd": 0.03154949081000151,
+        "n": 4
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.1,
+        "sd": 0.059317101400173954,
+        "n": 4
+       },
+       "accepted_ci": [
+        0.9124999999999999,
+        0.9750000000000001
+       ],
+       "nv09_ci": [
+        0.05416666666666667,
+        0.15416666666666667
+       ]
+      }
+     }
+    }
+   }
+  },
+  "R1 shift 100% \u03bb=2": {
+   "label": "R1 shift 100% \u03bb=2",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 60.48795573429486,
+    "sd": 3.322589060985029,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.9879518072289157,
+        "sd": 0.01204819277108432,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5301204819277109,
+        "sd": 0.09486756474713025,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9701149425287356,
+        1.0
+       ],
+       "nv09_ci": [
+        0.43863430996714126,
+        0.619277108433735
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9898832684824903,
+        "sd": 0.008524864708251626,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7665369649805448,
+        "sd": 0.07979025935568047,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9836575875486382,
+        0.9953307392996109
+       ],
+       "nv09_ci": [
+        0.7286274509803923,
+        0.802353172765169
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.9556603773584907,
+        "sd": 0.01476648664386654,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5669811320754717,
+        "sd": 0.0943042386472755,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9368408639523337,
+        0.9723809523809523
+       ],
+       "nv09_ci": [
+        0.5113102476973979,
+        0.6215987908583578
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 1.0,
+        "sd": 0.0,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7750000000000001,
+        "sd": 0.11636866703140784,
+        "n": 5
+       },
+       "accepted_ci": [
+        1.0,
+        1.0
+       ],
+       "nv09_ci": [
+        0.6666666666666666,
+        0.8833333333333334
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9946902654867257,
+        "sd": 0.004847102278806787,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.831858407079646,
+        "sd": 0.07714865386797652,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9876106194690266,
+        1.0
+       ],
+       "nv09_ci": [
+        0.7823008849557522,
+        0.8761061946902654
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.99,
+        "sd": 0.014907119849998601,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.8933333333333333,
+        "sd": 0.04346134936801765,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9766666666666668,
+        1.0
+       ],
+       "nv09_ci": [
+        0.8400000000000001,
+        0.9400000000000001
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.9815126050420169,
+        "sd": 0.009205421134540604,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7798319327731092,
+        "sd": 0.07262954768514926,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9630252100840337,
+        0.9949579831932773
+       ],
+       "nv09_ci": [
+        0.7210084033613445,
+        0.8319327731092437
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.9966666666666667,
+        "sd": 0.007453559924999322,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.8766666666666667,
+        "sd": 0.04801620096962641,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.99,
+        1.0
+       ],
+       "nv09_ci": [
+        0.8233333333333335,
+        0.9233333333333335
+       ]
+      }
+     }
+    }
+   }
+  }
+ },
+ "per_run": [
+  {
+   "recipe": "old_recipe",
+   "lambda": 0.0,
+   "seed": 42,
+   "shift": null,
+   "tau_95_val": 55.710144013913315,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.12048192771084337
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.980544747081712,
+      "share_pred_nv_conf09": 0.08171206225680934
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9716981132075472,
+      "share_pred_nv_conf09": 0.04245283018867924
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.08333333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9646017699115044,
+      "share_pred_nv_conf09": 0.13274336283185842
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.05
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9747899159663865,
+      "share_pred_nv_conf09": 0.07563025210084033
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 0.0,
+   "seed": 52,
+   "shift": null,
+   "tau_95_val": 59.73650071200382,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.07228915662650602
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9766536964980544,
+      "share_pred_nv_conf09": 0.042801556420233464
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.8632075471698113,
+      "share_pred_nv_conf09": 0.03773584905660377
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.041666666666666664
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9734513274336283,
+      "share_pred_nv_conf09": 0.061946902654867256
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.06666666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9327731092436975,
+      "share_pred_nv_conf09": 0.04201680672268908
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 0.0,
+   "seed": 62,
+   "shift": null,
+   "tau_95_val": 49.29173731039875,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.060240963855421686
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9649805447470817,
+      "share_pred_nv_conf09": 0.011673151750972763
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9433962264150944,
+      "share_pred_nv_conf09": 0.009433962264150943
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.041666666666666664
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9734513274336283,
+      "share_pred_nv_conf09": 0.07964601769911504
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.016666666666666666
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9159663865546218,
+      "share_pred_nv_conf09": 0.008403361344537815
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.0
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 0.0,
+   "seed": 72,
+   "shift": null,
+   "tau_95_val": 44.3128387698964,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.012048192771084338
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9844357976653697,
+      "share_pred_nv_conf09": 0.0311284046692607
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9858490566037735,
+      "share_pred_nv_conf09": 0.04245283018867924
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.125
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.02654867256637168
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.03333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.008403361344537815
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.0
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 0.0,
+   "seed": 82,
+   "shift": null,
+   "tau_95_val": 57.668918303962904,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.10843373493975904
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.054474708171206226
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9575471698113207,
+      "share_pred_nv_conf09": 0.10377358490566038
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.125
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.10619469026548672
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.016666666666666666
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9747899159663865,
+      "share_pred_nv_conf09": 0.1092436974789916
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 2.0,
+   "seed": 42,
+   "shift": null,
+   "tau_95_val": 58.22738347149635,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.5662650602409639
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.7821011673151751
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9811320754716981,
+      "share_pred_nv_conf09": 0.5377358490566038
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6666666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.7876106194690266
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.9
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7899159663865546
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8666666666666667
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 2.0,
+   "seed": 52,
+   "shift": null,
+   "tau_95_val": 51.27671303067792,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.42168674698795183
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9961089494163424,
+      "share_pred_nv_conf09": 0.669260700389105
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9481132075471698,
+      "share_pred_nv_conf09": 0.42924528301886794
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6666666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.8141592920353983
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7666666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9495798319327731,
+      "share_pred_nv_conf09": 0.7226890756302521
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8166666666666667
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 2.0,
+   "seed": 62,
+   "shift": null,
+   "tau_95_val": 48.25565408542362,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.40963855421686746
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9727626459143969,
+      "share_pred_nv_conf09": 0.6381322957198443
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9481132075471698,
+      "share_pred_nv_conf09": 0.4056603773584906
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.625
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9734513274336283,
+      "share_pred_nv_conf09": 0.8141592920353983
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9831932773109243,
+      "share_pred_nv_conf09": 0.6722689075630253
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.7166666666666667
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 2.0,
+   "seed": 72,
+   "shift": null,
+   "tau_95_val": 52.04821178889478,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9397590361445783,
+      "share_pred_nv_conf09": 0.5421686746987951
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9571984435797666,
+      "share_pred_nv_conf09": 0.6303501945525292
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.8820754716981132,
+      "share_pred_nv_conf09": 0.4528301886792453
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9166666666666666,
+      "share_pred_nv_conf09": 0.75
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.831858407079646
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.7166666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9159663865546218,
+      "share_pred_nv_conf09": 0.7058823529411765
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.85
+     }
+    }
+   }
+  },
+  {
+   "recipe": "old_recipe",
+   "lambda": 2.0,
+   "seed": 82,
+   "shift": null,
+   "tau_95_val": 56.81558297127768,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.4939759036144578
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9727626459143969,
+      "share_pred_nv_conf09": 0.7431906614785992
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9481132075471698,
+      "share_pred_nv_conf09": 0.49528301886792453
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7916666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.8141592920353983
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8833333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9831932773109243,
+      "share_pred_nv_conf09": 0.6890756302521008
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.9166666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 0.0,
+   "seed": 42,
+   "shift": null,
+   "tau_95_val": 114.08998247764039,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.8674698795180723,
+      "share_pred_nv_conf09": 0.08433734939759036
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.8443579766536965,
+      "share_pred_nv_conf09": 0.058365758754863814
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.839622641509434,
+      "share_pred_nv_conf09": 0.04245283018867924
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.7916666666666666,
+      "share_pred_nv_conf09": 0.08333333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9646017699115044,
+      "share_pred_nv_conf09": 0.061946902654867256
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.8833333333333333,
+      "share_pred_nv_conf09": 0.03333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.8067226890756303,
+      "share_pred_nv_conf09": 0.008403361344537815
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9,
+      "share_pred_nv_conf09": 0.0
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 0.0,
+   "seed": 52,
+   "shift": null,
+   "tau_95_val": 112.51475743682025,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9036144578313253,
+      "share_pred_nv_conf09": 0.060240963855421686
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.7003891050583657,
+      "share_pred_nv_conf09": 0.019455252918287938
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.7594339622641509,
+      "share_pred_nv_conf09": 0.018867924528301886
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.8333333333333334,
+      "share_pred_nv_conf09": 0.0
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9380530973451328,
+      "share_pred_nv_conf09": 0.10619469026548672
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.6833333333333333,
+      "share_pred_nv_conf09": 0.016666666666666666
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.7815126050420168,
+      "share_pred_nv_conf09": 0.01680672268907563
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.75,
+      "share_pred_nv_conf09": 0.0
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 0.0,
+   "seed": 62,
+   "shift": null,
+   "tau_95_val": 111.54640755870858,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9156626506024096,
+      "share_pred_nv_conf09": 0.08433734939759036
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.8443579766536965,
+      "share_pred_nv_conf09": 0.07003891050583658
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.7311320754716981,
+      "share_pred_nv_conf09": 0.02830188679245283
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9166666666666666,
+      "share_pred_nv_conf09": 0.08333333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9380530973451328,
+      "share_pred_nv_conf09": 0.1415929203539823
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.8,
+      "share_pred_nv_conf09": 0.11666666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.7983193277310925,
+      "share_pred_nv_conf09": 0.13445378151260504
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.8833333333333333,
+      "share_pred_nv_conf09": 0.05
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 0.0,
+   "seed": 72,
+   "shift": null,
+   "tau_95_val": 105.97660707542073,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.8313253012048193,
+      "share_pred_nv_conf09": 0.07228915662650602
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.8132295719844358,
+      "share_pred_nv_conf09": 0.0311284046692607
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.6933962264150944,
+      "share_pred_nv_conf09": 0.009433962264150943
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.7916666666666666,
+      "share_pred_nv_conf09": 0.041666666666666664
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9380530973451328,
+      "share_pred_nv_conf09": 0.168141592920354
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.8166666666666667,
+      "share_pred_nv_conf09": 0.0
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.7899159663865546,
+      "share_pred_nv_conf09": 0.058823529411764705
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.7166666666666667,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 0.0,
+   "seed": 82,
+   "shift": null,
+   "tau_95_val": 110.85572441164912,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.7349397590361446,
+      "share_pred_nv_conf09": 0.08433734939759036
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.642023346303502,
+      "share_pred_nv_conf09": 0.0311284046692607
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.6273584905660378,
+      "share_pred_nv_conf09": 0.04245283018867924
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.7916666666666666,
+      "share_pred_nv_conf09": 0.08333333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.8141592920353983,
+      "share_pred_nv_conf09": 0.035398230088495575
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.6166666666666667,
+      "share_pred_nv_conf09": 0.03333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.6890756302521008,
+      "share_pred_nv_conf09": 0.025210084033613446
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.6833333333333333,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 2.0,
+   "seed": 42,
+   "shift": null,
+   "tau_95_val": 110.39928373958354,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9518072289156626,
+      "share_pred_nv_conf09": 0.39759036144578314
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9883268482490273,
+      "share_pred_nv_conf09": 0.5836575875486382
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9528301886792453,
+      "share_pred_nv_conf09": 0.36792452830188677
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.4583333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.6902654867256637
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.5210084033613446
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.5666666666666667
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 2.0,
+   "seed": 52,
+   "shift": null,
+   "tau_95_val": 114.01376905548013,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9759036144578314,
+      "share_pred_nv_conf09": 0.37349397590361444
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9688715953307393,
+      "share_pred_nv_conf09": 0.5836575875486382
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.8867924528301887,
+      "share_pred_nv_conf09": 0.44339622641509435
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.4166666666666667
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.5929203539823009
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8166666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.957983193277311,
+      "share_pred_nv_conf09": 0.6890756302521008
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.65
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 2.0,
+   "seed": 62,
+   "shift": null,
+   "tau_95_val": 106.69993125283912,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9518072289156626,
+      "share_pred_nv_conf09": 0.4578313253012048
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9883268482490273,
+      "share_pred_nv_conf09": 0.688715953307393
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9433962264150944,
+      "share_pred_nv_conf09": 0.5943396226415094
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6666666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.7610619469026548
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8166666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.7142857142857143
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.75
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 2.0,
+   "seed": 72,
+   "shift": null,
+   "tau_95_val": 113.16781747176212,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9397590361445783,
+      "share_pred_nv_conf09": 0.42168674698795183
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.6731517509727627
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9481132075471698,
+      "share_pred_nv_conf09": 0.47641509433962265
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6666666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.8141592920353983
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.75
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9915966386554622,
+      "share_pred_nv_conf09": 0.5210084033613446
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8166666666666667
+     }
+    }
+   }
+  },
+  {
+   "recipe": "a4",
+   "lambda": 2.0,
+   "seed": 82,
+   "shift": null,
+   "tau_95_val": 104.9762623612188,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9518072289156626,
+      "share_pred_nv_conf09": 0.3373493975903614
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9727626459143969,
+      "share_pred_nv_conf09": 0.377431906614786
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9528301886792453,
+      "share_pred_nv_conf09": 0.3584905660377358
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.5416666666666666
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9469026548672567,
+      "share_pred_nv_conf09": 0.3274336283185841
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.5833333333333334
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.46218487394957986
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.48333333333333334
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 42,
+   "shift": 0,
+   "tau_95_val": 55.525699541577694,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9397590361445783,
+      "share_pred_nv_conf09": 0.27710843373493976
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.914396887159533,
+      "share_pred_nv_conf09": 0.16342412451361868
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.8113207547169812,
+      "share_pred_nv_conf09": 0.09433962264150944
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.8333333333333334,
+      "share_pred_nv_conf09": 0.125
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9203539823008849,
+      "share_pred_nv_conf09": 0.39823008849557523
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.8833333333333333,
+      "share_pred_nv_conf09": 0.2
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.8739495798319328,
+      "share_pred_nv_conf09": 0.17647058823529413
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.95,
+      "share_pred_nv_conf09": 0.13333333333333333
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 62,
+   "shift": 0,
+   "tau_95_val": 50.58240357784755,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.8674698795180723,
+      "share_pred_nv_conf09": 0.14457831325301204
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.8443579766536965,
+      "share_pred_nv_conf09": 0.08560311284046693
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.7783018867924528,
+      "share_pred_nv_conf09": 0.03773584905660377
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.875,
+      "share_pred_nv_conf09": 0.125
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.8761061946902655,
+      "share_pred_nv_conf09": 0.22123893805309736
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.8666666666666667,
+      "share_pred_nv_conf09": 0.1
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.7815126050420168,
+      "share_pred_nv_conf09": 0.06722689075630252
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.016666666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 72,
+   "shift": 0,
+   "tau_95_val": 50.22976909177066,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.891566265060241,
+      "share_pred_nv_conf09": 0.1686746987951807
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9299610894941635,
+      "share_pred_nv_conf09": 0.12062256809338522
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.839622641509434,
+      "share_pred_nv_conf09": 0.0660377358490566
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.08333333333333333
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9646017699115044,
+      "share_pred_nv_conf09": 0.3274336283185841
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9,
+      "share_pred_nv_conf09": 0.1
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.907563025210084,
+      "share_pred_nv_conf09": 0.15126050420168066
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.1
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 82,
+   "shift": 0,
+   "tau_95_val": 49.760827014477485,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9518072289156626,
+      "share_pred_nv_conf09": 0.26506024096385544
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9416342412451362,
+      "share_pred_nv_conf09": 0.1828793774319066
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9198113207547169,
+      "share_pred_nv_conf09": 0.12735849056603774
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.875,
+      "share_pred_nv_conf09": 0.125
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9557522123893806,
+      "share_pred_nv_conf09": 0.40707964601769914
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9166666666666666,
+      "share_pred_nv_conf09": 0.3
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.8571428571428571,
+      "share_pred_nv_conf09": 0.20168067226890757
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9,
+      "share_pred_nv_conf09": 0.15
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 42,
+   "shift": 100,
+   "tau_95_val": 64.86028659301844,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.5903614457831325
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.7821011673151751
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9622641509433962,
+      "share_pred_nv_conf09": 0.5849056603773585
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.8584070796460177
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8666666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9915966386554622,
+      "share_pred_nv_conf09": 0.7647058823529411
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 52,
+   "shift": 100,
+   "tau_95_val": 62.985989779758214,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.4457831325301205
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9883268482490273,
+      "share_pred_nv_conf09": 0.7821011673151751
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9481132075471698,
+      "share_pred_nv_conf09": 0.5613207547169812
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.875
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.7168141592920354
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.9
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9831932773109243,
+      "share_pred_nv_conf09": 0.7899159663865546
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8833333333333333
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 62,
+   "shift": 100,
+   "tau_95_val": 58.02766373863935,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9759036144578314,
+      "share_pred_nv_conf09": 0.40963855421686746
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9766536964980544,
+      "share_pred_nv_conf09": 0.6303501945525292
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9339622641509434,
+      "share_pred_nv_conf09": 0.41037735849056606
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.5833333333333334
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.8407079646017699
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.6638655462184874
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 72,
+   "shift": 100,
+   "tau_95_val": 57.05338017753973,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6144578313253012
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.7976653696498055
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9716981132075472,
+      "share_pred_nv_conf09": 0.6273584905660378
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8333333333333334
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8141592920353983
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.9333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9831932773109243,
+      "share_pred_nv_conf09": 0.8403361344537815
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.8833333333333333
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 82,
+   "shift": 100,
+   "tau_95_val": 59.51245838251856,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9759036144578314,
+      "share_pred_nv_conf09": 0.5903614457831325
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8404669260700389
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9622641509433962,
+      "share_pred_nv_conf09": 0.6509433962264151
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.75
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.9292035398230089
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 0.9666666666666667,
+      "share_pred_nv_conf09": 0.9333333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9831932773109243,
+      "share_pred_nv_conf09": 0.8403361344537815
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.95
+     }
+    }
+   }
+  }
+ ]
+}
