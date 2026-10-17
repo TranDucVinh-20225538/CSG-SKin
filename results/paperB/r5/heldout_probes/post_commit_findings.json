@@ -1,0 +1,103 @@
+{
+  "label": "finding made after decisions commit c144f7b / paperB_r5_heldout_probes.md",
+  "primary_unchanged": "pad_full remains primary leakage variable (94e2399)",
+  "n_divergent_cells": 12,
+  "cells": [
+    {
+      "family": "a4_main",
+      "lambda": 0.5,
+      "shift": NaN,
+      "heldout_linear": 0.6633818921486134,
+      "pad_full_linear": 0.7802695143656242,
+      "gap": 0.11688762221701077
+    },
+    {
+      "family": "a4_main",
+      "lambda": 2.0,
+      "shift": NaN,
+      "heldout_linear": 0.669511889484791,
+      "pad_full_linear": 0.7864181286549707,
+      "gap": 0.11690623917017973
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 0.5,
+      "shift": 0.0,
+      "heldout_linear": 0.6123028189387701,
+      "pad_full_linear": 0.790165744978388,
+      "gap": 0.17786292603961784
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 2.0,
+      "shift": 0.0,
+      "heldout_linear": 0.6288533260491859,
+      "pad_full_linear": 0.7823893974065599,
+      "gap": 0.15353607135737402
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 0.5,
+      "shift": 50.0,
+      "heldout_linear": 0.531242554491321,
+      "pad_full_linear": 0.6286014704635986,
+      "gap": 0.09735891597227764
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 2.0,
+      "shift": 50.0,
+      "heldout_linear": 0.5468668359846798,
+      "pad_full_linear": 0.6583185015679295,
+      "gap": 0.1114516655832497
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 0.5,
+      "shift": 100.0,
+      "heldout_linear": 0.5101362324778703,
+      "pad_full_linear": 0.6283079074497839,
+      "gap": 0.11817167497191361
+    },
+    {
+      "family": "r1_cur",
+      "lambda": 2.0,
+      "shift": 100.0,
+      "heldout_linear": 0.5100705072538547,
+      "pad_full_linear": 0.6340903890160183,
+      "gap": 0.12401988176216361
+    },
+    {
+      "family": "table1",
+      "lambda": 0.0,
+      "shift": NaN,
+      "heldout_linear": 0.8268753156248652,
+      "pad_full_linear": 0.9270385202135774,
+      "gap": 0.1001632045887122
+    },
+    {
+      "family": "table1",
+      "lambda": 0.25,
+      "shift": NaN,
+      "heldout_linear": 0.5375743002649933,
+      "pad_full_linear": 0.6140001271294178,
+      "gap": 0.07642582686442445
+    },
+    {
+      "family": "table1",
+      "lambda": 4.0,
+      "shift": NaN,
+      "heldout_linear": 0.5159954257793193,
+      "pad_full_linear": 0.6363710907704043,
+      "gap": 0.12037566499108499
+    },
+    {
+      "family": "table1",
+      "lambda": 8.0,
+      "shift": NaN,
+      "heldout_linear": 0.5504219657015784,
+      "pad_full_linear": 0.6629284261378083,
+      "gap": 0.11250646043622992
+    }
+  ]
+}
