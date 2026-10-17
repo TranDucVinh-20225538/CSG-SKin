@@ -200,7 +200,7 @@ def main():
     train_idx = np.r_[sp["a_train"], sp["b_adv"]]
     is_a = np.r_[np.ones(len(sp["a_train"]), bool), np.zeros(len(sp["b_adv"]), bool)]
     # labels for induced resampling (y from dataset metadata)
-    y_all = np.asarray(ds.y[train_idx], int).reshape(-1)
+    y_all = np.asarray(ds.y_array[train_idx], int).reshape(-1)
     train_ds = p12.CamelyonIndexDataset(ds, train_idx, p12.train_tf())
     a_pos, b_pos = np.where(is_a)[0], np.where(~is_a)[0]
     induced = rung.startswith("induced")
