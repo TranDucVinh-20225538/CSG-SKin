@@ -357,4 +357,4 @@ two-stream DANN (same recipe) & 2 & 5 & 0.555\,$\pm$\,0.046 & 0.473\,$\pm$\,0.02
 
 ## Leakage-matched test (94e2399)
 
-See `leakage_matched/REPORT.md` (commit `c9ba9b8`). Verdict (a): supported (≥2/3 primary sets: shift coef negative, CI excludes 0). Verdict (b): supported (≥2/3: R1 shift0 λ2 > A4 λ2, CI excludes 0). label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets (prediction).
+See `leakage_matched/REPORT.md` (commit `dbe0c8d`). Verdict (a): supported (≥2/3 primary sets: shift coef negative, CI excludes 0). Verdict (b): supported (≥2/3: R1 shift0 λ2 > A4 λ2, CI excludes 0). label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets (prediction).

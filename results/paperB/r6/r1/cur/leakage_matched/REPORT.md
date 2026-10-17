@@ -1,6 +1,6 @@
 # Paper B R6 R1 — leakage-matched test (label shift vs invariance depth)
 
-Design: `decisions/paperB_r6_r1.md` (committed `94e2399`). Analysis commit `c9ba9b8`. Pool: R1 (shift×λ∈{0.5,2}) + Table 1 + A4 (λ∈{0,0.5,2}). Leakage = pad_full probe **bal_acc_mean**. Degraded R1 (ID bal < 0.25) excluded from (a)/(b); marked on (c) plots.
+Design: `decisions/paperB_r6_r1.md` (committed `94e2399`). Analysis commit `dbe0c8d`. Pool: R1 (shift×λ∈{0.5,2}) + Table 1 + A4 (λ∈{0,0.5,2}). Leakage = pad_full probe **bal_acc_mean**. Degraded R1 (ID bal < 0.25) excluded from (a)/(b); marked on (c) plots.
 
 The shift coefficient is identified from variation within R1; A4 and Table 1 only extend the leakage range at shift = 100%.
 
