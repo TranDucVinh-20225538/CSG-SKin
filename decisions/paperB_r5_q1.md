@@ -24,7 +24,8 @@ Two accounts make different predictions on Shenzhen (written here, before any sc
 |---|---|---|---|
 | NIH ChestX-ray14 | labelled (domain 0) | `DST-Skin/data/staged/nih_256/images_0{01..12}.tar`, metadata `Data_Entry_2017_v2020.csv` | normal = `Finding Labels == "No Finding"`; pneumonia = `"Pneumonia"` is one of the `|`-separated labels (co-findings allowed); every other image excluded (50,328) |
 | Kermany pediatric CXR v2 | adversary target (domain 1) | `DST-Skin/data/staged/p2a_ood_256/kermany_ped.tar` (map: `DST-Skin/results/r3/8/p2a/ood.csv.gz`) | folder NORMAL → normal; PNEUMONIA (bacteria + virus) → pneumonia. Never enters a loss |
-| Shenzhen | OOD only | `DST-Skin/data/staged/p2a_ood_256/shenzhen.tar` | none (TB flag `_1` kept for descriptive subsets) |
+| Shenzhen | OOD only (unseen) | `DST-Skin/data/staged/p2a_ood_256/shenzhen.tar` | none (TB flag `_1` kept for descriptive subsets) |
+| Montgomery County CXR (NLM) | OOD only (unseen) | fetch to `CSG-Skin-paperB/data/montgomery_cxr/` (not yet staged; see amendment 2026-10-17 ~22:10) | none (TB / normal from filename / ClinicalReadings; descriptive subsets) |
 
 Splits (patient-level; metadata-only dry run of the index script, numbers below):
 
@@ -49,6 +50,7 @@ Class mix per domain:
 | kerm_heldout | 1,758 | 933 | 475 | 1,283 | 0.730 |
 | kerm_full | 5,856 | 3,118 | 1,583 | 4,273 (2,780 bacterial, 1,493 viral) | 0.730 |
 | shenzhen (OOD) | 662 | 662 | 326 normal | 336 TB | — |
+| montgomery (OOD) | 138 | 138 | 80 normal | 58 TB | — |
 
 Staging: each job extracts the needed PNGs (≈1.7 GB) to node-local `/tmp` (`r5_q1_cxr_data.py --stage_to`), removed
 on exit. The index build (`--index`) reads metadata only; it is run as the first CPU job of the gate stage.
@@ -92,14 +94,16 @@ replacement OOD candidates that are on disk:
 4. Brain MRI Cheng (`DST-Skin/data/staged/brain_cheng_256.tar`) — far-OOD.
 5. PneumoniaMNIST / OCTMNIST — derivatives of Kermany CXR / OCT.
 
-Not on disk: CheXpert, PadChest, MIMIC-CXR, Montgomery (download and data-use agreements needed). The choice among
+Not on disk (still need agreements / large pulls): CheXpert, PadChest, MIMIC-CXR. The choice among remaining
 candidates goes back to the user; it is not made by the report.
 
 ## OOD sets, detectors, metrics
 
 - ID = NIH test; detectors fit on NIH train only (Mahalanobis class-conditional with shared covariance, kNN k = 50,
   cosine max on `z_lesion_norm`; MSP, Energy on logits).
-- OOD primary: Shenzhen (all 662). Descriptive subsets: Shenzhen normal (326), Shenzhen TB (336).
+- **Unseen OOD (co-primary):** **Shenzhen** (all 662) and **Montgomery County CXR** (all 138). Same detector suite on
+  both, on every scored run (headroom-gate λ = 0 cells and both natural/balanced arms). Descriptive subsets: Shenzhen
+  normal/TB; Montgomery normal/TB.
 - OOD secondary: `kerm_heldout` (per-class AUROC normal / pneumonia; decomposition check = OOD reweighted to the NIH
   class mix; majority-nearest fraction = share nearest to the NIH normal mean).
 - Leakage (Table 1 analogue): logistic probe NIH test vs Kermany full, 70/30, probe seeds 42/52/62, balanced accuracy;
@@ -110,9 +114,10 @@ candidates goes back to the user; it is not made by the report.
 ## CI / bootstrap and rule A
 
 PREREGISTER_BOOTSTRAP.json unchanged (2,000 draws, rng seed 20261005, percentile 95 %, draws shared across seeds).
-Resampling units: NIH test by patient; Shenzhen by image (= patient); kerm_heldout by patient. Rule A (Shenzhen,
-Mahalanobis, λ = 2): pooled CI entirely below 0.5 and ≥ 3 of 5 per-seed CIs entirely below 0.5. Rules B / C / above
-as in R3. Reported for every λ cell and for kerm_heldout too.
+Resampling units: NIH test by patient; Shenzhen by image (= patient); Montgomery by image (= patient); kerm_heldout by
+patient. Rule A / collapse / survives / indeterminate applied **separately** to Shenzhen and to Montgomery (same
+numeric definitions as `paperB_r5_p10.md` for the natural/balanced arms; headroom gate criterion remains Shenzhen
+only — see below). Reported for every λ cell and for kerm_heldout too.
 
 ## Controls
 
@@ -201,10 +206,10 @@ seed-mean only; λ = 0 cell mean from the gate runs as \(\bar a_0\)).
 
 Natural adversary-domain TV (Bernoulli pneumonia): \(\mathrm{TV}=|0.023-0.730|=\mathbf{0.707}\).
 
-| Arm | Adversary class mix | TV | Prediction if headroom gate met (unseen OOD: Shenzhen; secondary kerm_heldout reported) |
-|-----|---------------------|---:|----------------------------------------------------------------------------------------|
-| **Natural** | Existing NIH / Kermany mixes (table) | **0.707** | **Inverts** on the unseen OOD set(s) |
-| **Balanced** | Resample **both** adversary feeds (NIH and Kermany) to a **common** pneumonia rate \(p^\*=\mathbf{0.50}\) (with replacement where needed); classifier stream keeps natural NIH mix | **0** (≤ 0.05) | **Does not invert** (collapse / survives / indeterminate allowed by the numeric table; not inversion) |
+| Arm | Adversary class mix | TV | Prediction if headroom gate met (unseen OOD: **Shenzhen and Montgomery**; secondary kerm_heldout reported) |
+|-----|---------------------|---:|----------------------------------------------------------------------------------------------------------|
+| **Natural** | Existing NIH / Kermany mixes (table) | **0.707** | **Inverts** on the unseen OOD set(s) (Shenzhen and Montgomery each) |
+| **Balanced** | Resample **both** adversary feeds (NIH and Kermany) to a **common** pneumonia rate \(p^\*=\mathbf{0.50}\) (with replacement where needed); classifier stream keeps natural NIH mix | **0** (≤ 0.05) | **Does not invert** on either unseen OOD set (collapse / survives / indeterminate allowed; not inversion) |
 
 Report for the balanced arm: target \(p^\*=0.50\), realised mix per domain, **effective unique image counts** per
 domain (and per class) after sampling with replacement, and TV between the two adversary feeds (must be ≤ 0.05; by
@@ -224,4 +229,14 @@ Headroom gate still runs first; if it fails, neither arm is launched (replacemen
 - 2026-10-17 ~22:05 (+07), **before any Q1 gate/arm run under this schedule**. Replaced the 20/80 induced arm with a
   **balanced** control (\(p^*=0.50\), TV = 0); predictions: natural inverts, balanced does not; only natural-vs-balanced
   is read as label-shift evidence.
+- 2026-10-17 ~22:10 (+07), **before any Q1 gate run**. Add **Montgomery County CXR** (NLM; 138 PA films, 80 normal /
+  58 TB) as a co-primary **unseen OOD** alongside Shenzhen: same detectors on both sets in gate λ = 0 cells and in both
+  arms. **Availability check:** not staged on this cluster (`p2a_ood_256` has `shenzhen.tar` / `kermany_ped.tar` only).
+  Public download **without registration**: Open-i
+  `https://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip` (HTTP 200, ~589 MB verified 2026-10-17);
+  LHNCBC public tree `data.lhncbc.nlm.nih.gov/public/Tuberculosis-Chest-X-ray-Datasets/Montgomery-County-CXR-Set/`
+  serves files (README PDF HTTP 200; root `MontgomerySet.zip` returned 403 from this host — use Open-i zip or per-file
+  pull). Staging target: `CSG-Skin-paperB/data/montgomery_cxr/`. Headroom **gate criterion unchanged** (Shenzhen only);
+  Montgomery AUROC at λ = 0 is reported descriptively. Natural/balanced inversion predictions apply to **each** unseen
+  OOD set.
 
