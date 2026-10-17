@@ -1,5 +1,6 @@
 # Paper B R6 R2 — label-shift-aware alignment (recipe: cur)
 
+**On origin/paperb/reviewer-r1:** `f8d3584` (baseline correction; full cluster-CI tables when R2 finishes).
 Design: `decisions/paperB_r6_r2.md`. Commit `9877217`.
 
 ## Baseline and pairing (fixed 2026-10-17)
