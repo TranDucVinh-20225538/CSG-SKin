@@ -138,3 +138,5 @@ GPU 0 for (1)–(3). CPU ≈ 2–4 h on 8 CPUs each (bootstrap-heavy). P12 extra
 - 2026-10-17: P12 GPU extract job `68633` submitted with `afterany:67547` and additionally
   `scontrol hold` so it cannot take a vip2 GPU while R1 array 67547 is still running. Release the
   hold after 67547 completes; CPU `STEP=p12` is `68634` (`afterok:68633`).
+- 2026-10-17: P12 `68633` released with `--nice=10000` and `Dependency=afterok:68655` (R1 s82 requeue), so it
+  only takes a GPU after that one R1 run and then loses to R2 once the R2 hold is released.

@@ -174,4 +174,7 @@ in `REPORT.md`. CPU only after the pooled runs exist.
 - 2026-10-16 12:51 (UTC+7), before remaining λ = 2 shift-100% seeds finish. **Leakage-matched test** (section above)
   pre-committed: pool R1 + Table 1 + A4; primary sets Fitz / MED-NODE / SD-198; (a) regression with VIF gate;
   (b) cross-recipe matched R1 shift0 λ2 vs A4 λ2; (c) AUROC–leakage plot. No analysis numbers computed at this commit.
+- 2026-10-17: requeue cancelled task 17 (`shift0% λ=0.5 s82`) as job `68655` ahead of remaining R2 (R2 pending
+  `68562_[8-39]` held). After it finishes, `68656` runs `r6_report.py --item r1` and
+  `scripts/r6_r1_leakage_matched.py` ((a)/(b)/(c) as written at `94e2399`), then releases the R2 hold.
 
