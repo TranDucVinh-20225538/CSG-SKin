@@ -181,14 +181,14 @@ seed; a second failure is reported, not replaced by another seed.
 The conditional dose test uses 3 seeds (42, 52, 62): f ∈ {1, 0.5, 0} × 3 = 9 runs, **≈ 24 GPU-h**. Still runs only if
 INVERSION.json has `inverted = true`.
 
-## Amendment 2026-10-17 (~22:00 +07) — natural / induced arms (before headroom gate runs under the new schedule)
+## Amendment 2026-10-17 (~22:00 +07; revised ~22:05 before headroom gate) — natural / balanced arms
 
 After the headroom gate on Shenzhen (unchanged: λ = 0, seeds 42/52/62; mean ≥ 0.60, pooled CI lower ≥ 0.55, every
 seed CI lower > 0.50), if the gate is **met**, run two pre-registered arms at **λ = 2** × seeds `(42, 52, 62, 72, 82)`,
-same dual-encoder recipe as above. Mirror P10’s label-shift contrast; detection labels and CIs match
-`decisions/paperB_r5_p10.md` (mutually exclusive **inversion / collapse / survives / indeterminate**; always report
-\(\bar a\), \([\ell,u]\), \(\Delta=\bar a-\bar a_0\), \([\ell_\Delta,u_\Delta]\); B = **2,000** percentile bootstrap,
-rng **20261017**, seed-mean only; λ = 0 cell mean from the gate runs as \(\bar a_0\)).
+same dual-encoder recipe as above. Detection labels and CIs match `decisions/paperB_r5_p10.md` (mutually exclusive
+**inversion / collapse / survives / indeterminate**; always report \(\bar a\), \([\ell,u]\),
+\(\Delta=\bar a-\bar a_0\), \([\ell_\Delta,u_\Delta]\); B = **2,000** percentile bootstrap, rng **20261017**,
+seed-mean only; λ = 0 cell mean from the gate runs as \(\bar a_0\)).
 
 **Class mix (normal / pneumonia) — locked from the index table above:**
 
@@ -201,14 +201,19 @@ rng **20261017**, seed-mean only; λ = 0 cell mean from the gate runs as \(\bar 
 
 Natural adversary-domain TV (Bernoulli pneumonia): \(\mathrm{TV}=|0.023-0.730|=\mathbf{0.707}\).
 
-| Arm | Adversary class mix | TV | Prediction (Shenzhen Maha) if headroom gate met |
-|-----|---------------------|---:|--------------------------------------------------|
-| **Natural** | Existing NIH / Kermany mixes (table) | 0.707 | Same two accounts as the original Q1 prediction (point: collapse toward 0.5); report with locked labels |
-| **Induced** | Resample **adversary-stream** rows only: domain-0 (NIH) batches **20%** pneumonia, domain-1 (Kermany) **80%** pneumonia; classifier stream keeps natural NIH mix | **0.60** | **Inversion** if labels apply |
+| Arm | Adversary class mix | TV | Prediction if headroom gate met (unseen OOD: Shenzhen; secondary kerm_heldout reported) |
+|-----|---------------------|---:|----------------------------------------------------------------------------------------|
+| **Natural** | Existing NIH / Kermany mixes (table) | **0.707** | **Inverts** on the unseen OOD set(s) |
+| **Balanced** | Resample **both** adversary feeds (NIH and Kermany) to a **common** pneumonia rate \(p^\*=\mathbf{0.50}\) (with replacement where needed); classifier stream keeps natural NIH mix | **0** (≤ 0.05) | **Does not invert** (collapse / survives / indeterminate allowed by the numeric table; not inversion) |
+
+Report for the balanced arm: target \(p^\*=0.50\), realised mix per domain, **effective unique image counts** per
+domain (and per class) after sampling with replacement, and TV between the two adversary feeds (must be ≤ 0.05; by
+construction TV = 0 when both hit \(p^*\)).
 
 **Confounder note (locked):** natural NIH vs Kermany also differs in **age, scanner, and anatomy**. Only the
-**induced-vs-natural** contrast (same modality pair, controlled class-mix gap) speaks to label shift. Do not attribute
-a natural-arm inversion/collapse solely to label shift.
+**natural-vs-balanced** contrast speaks to label shift. Do not attribute a natural-arm result solely to label shift.
+
+The earlier draft’s 20%/80% induced arm is **dropped** (never run). Headroom gate unchanged.
 
 Headroom gate still runs first; if it fails, neither arm is launched (replacement OOD candidates unchanged).
 
@@ -216,3 +221,7 @@ Headroom gate still runs first; if it fails, neither arm is launched (replacemen
 
 - 2026-10-17 ~22:00 (+07), **order only**. Q1 headroom gate re-queued to run **after R2-prior**, in parallel with the
   Camelyon adversary ladder pilot (one GPU each). Old dependency chain left pending is superseded for the gate stage.
+- 2026-10-17 ~22:05 (+07), **before any Q1 gate/arm run under this schedule**. Replaced the 20/80 induced arm with a
+  **balanced** control (\(p^*=0.50\), TV = 0); predictions: natural inverts, balanced does not; only natural-vs-balanced
+  is read as label-shift evidence.
+

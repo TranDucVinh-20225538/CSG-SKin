@@ -8,24 +8,38 @@ whether a stronger adversary can meet the gate at all on Camelyon17.
 
 ## Question
 
-Can a stronger DANN adversary (higher λ and/or adversary LR, then periodic head re-init) drive the held-out hospital
-site probe down by ≥ 0.10 vs λ = 0 without collapsing ID accuracy? If yes, at which weakest level, and does that
-level then support the natural / induced label-shift arms?
+Can a stronger DANN adversary (higher λ and/or adversary LR, then a setting beyond the current toolbox) drive the
+held-out hospital site probe down by ≥ 0.10 vs λ = 0 without collapsing ID accuracy? If yes, at which weakest level,
+and does that level then support the natural / induced label-shift arms?
 
 ## Pilot (seed 42, natural arm only)
 
-Same data / split / DenseNet-121 / L3-style toolbox base as P10 shift-arms
-(`grl_schedule=ganin`, `adv_warmup_epochs=1`, 5-head bank, 5 inner steps). Cap **10 GPU-h**.
+Same data / split / DenseNet-121 as P10 shift-arms. Cap **10 GPU-h**.
 
-Fixed order, weakest → strongest; **stop at the first level that passes**:
+**L1–L4 — current P10 toolbox unchanged**, vary only λ and adversary LR:
 
-| Level | λ | adv LR multiplier | Extra |
-|-------|--:|------------------:|-------|
-| **L1** | 5 | ×30 | — |
-| **L2** | 5 | ×100 | — |
-| **L3** | 10 | ×30 | — |
-| **L4** | 10 | ×100 | — |
-| **L5** | 10 | ×100 | + re-init all adversary heads every **2 epochs** |
+Toolbox (locked, identical to shift-arms `natural_l2`): `grl_schedule=ganin`, `adv_warmup_epochs=1`,
+`adv_lr_multiplier` overridden per level, `adv_inner_steps=5`, `reinit_every_steps=500`, head bank
+`[[1,1],[1,1],[2,1],[2,2],[3,1]]`.
+
+| Level | λ | adv LR multiplier | Toolbox |
+|-------|--:|------------------:|---------|
+| **L1** | 5 | ×30 | current P10 (above) |
+| **L2** | 5 | ×100 | current P10 |
+| **L3** | 10 | ×30 | current P10 |
+| **L4** | 10 | ×100 | current P10 |
+
+**L5 — stronger than the current toolbox** (not a λ/LR-only tweak):
+
+| | |
+|--|--|
+| λ | **20** |
+| Head bank | **deepest**: `[[1,1],[1,1],[2,2],[3,1],[3,2]]` (upgrades L3’s derm head to wide×2 and adds a wide depth-3 head vs L3’s `[2,1]` / single `[3,1]`) |
+| Re-init | every **100** steps (round-robin head re-init; vs 500 in the current toolbox) |
+| Else | Ganin + warm-up 1 + inner steps 5 (same as L1–L4) |
+| adv LR | ×100 |
+
+Fixed order L1 → L5; **stop at the first level that passes**.
 
 **Pass** (both required):
 
@@ -38,7 +52,7 @@ If a level fails, continue to the next. If **no** level passes within the cap: s
 ## Multi-seed arms (only if a level is selected)
 
 Run **5 seeds** `(42, 52, 62, 72, 82)` × **both arms** (natural TV = 0.056; induced A 80% / B 20% tumour,
-TV = 0.60) at the **selected** level only (same λ, adv LR, re-init policy).
+TV = 0.60) at the **selected** level only (same λ, adv LR, head bank, re-init policy).
 
 **Seed rule (locked):**
 
@@ -70,4 +84,6 @@ Held R2 cells release after both; then R1-hi.
 
 ## Deviations
 
-(none yet)
+- 2026-10-17 ~22:05 (+07), **before any pilot run**. L1–L4 redefined to keep the full current P10 toolbox (incl. adv LR
+  base overridden only by the level’s ×30/×100, re-init every 500 steps); L5 replaced by λ = 20 + deepest head bank +
+  re-init every 100 steps (stronger than toolbox), not “L4 + re-init every 2 epochs”.

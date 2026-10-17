@@ -94,18 +94,20 @@ def pilot_level_passes(summary, probe0=None, id0=None):
 _L1 = {"head_specs": [[1, 1.0], [2, 1.0], [3, 1.0]], "adv_inner_steps": 2, "reinit_every_steps": 500}
 _L2 = dict(_L1, grl_schedule="ganin", adv_warmup_epochs=1)
 _L3 = dict(_L2, head_specs=[[1, 1.0], [1, 1.0], [2, 1.0], [2, 2.0], [3, 1.0]], adv_inner_steps=5, adv_lr_multiplier=10.0)
-# Camelyon adversary ladder pilot (decisions/paperB_r5_p10_ladder_pilot.md): L3 toolbox, escalate λ / adv LR.
-_P = dict(_L3, reinit_every_steps=0)  # pilot L1–L4: no step re-init; L5 uses epoch re-init
+# Camelyon adversary ladder pilot (decisions/paperB_r5_p10_ladder_pilot.md).
+# L1–L4: full current P10 toolbox (_L3), vary only λ and adv_lr_multiplier.
+# L5: stronger than toolbox — λ=20, deepest heads, re-init every 100 steps.
+_P_DEEP = [[1, 1.0], [1, 1.0], [2, 2.0], [3, 1.0], [3, 2.0]]
 RUNGS = {"L1_bank": (_L1, 1.0), "L2_ganin": (_L2, 1.0), "L3_strong": (_L3, 1.0), "L4_lam3": (_L3, 3.0),
          "L5_lam10": (_L3, 10.0),
          # 2026-10-17 label-shift arms (decisions amendment): L3 toolbox @ λ=2
          "natural_l2": (_L3, 2.0), "induced_l2": (_L3, 2.0),
-         # 2026-10-17 pilot ladder (weak → strong), natural arm seed 42
-         "P_L1": (dict(_P, adv_lr_multiplier=30.0), 5.0),
-         "P_L2": (dict(_P, adv_lr_multiplier=100.0), 5.0),
-         "P_L3": (dict(_P, adv_lr_multiplier=30.0), 10.0),
-         "P_L4": (dict(_P, adv_lr_multiplier=100.0), 10.0),
-         "P_L5": (dict(_P, adv_lr_multiplier=100.0, reinit_every_epochs=2), 10.0)}
+         # pilot ladder (weak → strong), natural arm seed 42
+         "P_L1": (dict(_L3, adv_lr_multiplier=30.0), 5.0),
+         "P_L2": (dict(_L3, adv_lr_multiplier=100.0), 5.0),
+         "P_L3": (dict(_L3, adv_lr_multiplier=30.0), 10.0),
+         "P_L4": (dict(_L3, adv_lr_multiplier=100.0), 10.0),
+         "P_L5": (dict(_L3, adv_lr_multiplier=100.0, head_specs=_P_DEEP, reinit_every_steps=100), 20.0)}
 ORDER = tuple(RUNGS)
 PILOT_ORDER = ("P_L1", "P_L2", "P_L3", "P_L4", "P_L5")
 SHIFT_SEEDS = (42, 52, 62, 72, 82)
