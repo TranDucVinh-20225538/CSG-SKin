@@ -1,7 +1,7 @@
 # Paper B — held-out domain probes (linear / MLP / kNN)
 
 Design: `decisions/paperB_r5_heldout_probes.md`. Job 68660.
-**On origin/paperb/reviewer-r1:** `df31679` (this REPORT + summary/λ0.25 tables).
+**On origin/paperb/reviewer-r1:** content `df31679`; stamped REPORT `d6367a6`.
 Protocol: P6 V1 (ISIC-test ∪ pad_heldout, GroupShuffleSplit 70/30 by lesion/patient).
 Representation: `z_lesion_norm`. Probe seeds 42/52/62.
 
