@@ -386,7 +386,7 @@ def write_report(per_seed, pe, fixes, leak_dann, leak_thr):
           "## Prior-error test (locked)",
           "",
           "x = TV(π̂, true pad_adv); y = mean Maha AUROC over Fitz/MED/SD; "
-          "points = {BBSE, EM, 50-label, oracle} × 5 seeds. Spearman ρ; bootstrap CI "
+          "points = {{BBSE, EM, 50-label, oracle}} × 5 seeds. Spearman ρ; bootstrap CI "
           "({}, rng {}). **Supported** if ρ ≤ −0.5 and CI excludes 0.".format(
               SPEARMAN_BOOT_N, SPEARMAN_RNG),
           "",

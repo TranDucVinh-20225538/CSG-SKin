@@ -32,7 +32,13 @@ case "${STAGE}" in
 esac
 echo "=== R5 Q1 stage=${STAGE} task=${T} lam=${LAM} seed=${SEED} shift=${SHIFT:-none} recipe=${RECIPE} start $(date) host=$(hostname) ==="
 "${ROOT}/.venv/bin/python" -c "import torch; print('CUDA', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu')"
-D=$(mktemp -d /tmp/r5q1_XXXXXX)
+# Compute nodes often deny mkdir under shared /tmp; prefer Slurm tmp or project scratch.
+if [[ -n "${SLURM_TMPDIR:-}" && -w "${SLURM_TMPDIR}" ]]; then
+  D=$(mktemp -d "${SLURM_TMPDIR}/r5q1_XXXXXX")
+else
+  mkdir -p "${ROOT}/scratch/r5q1"
+  D=$(mktemp -d "${ROOT}/scratch/r5q1/r5q1_XXXXXX")
+fi
 trap 'rm -rf "${D}"' EXIT
 "${ROOT}/.venv/bin/python" scripts/r5_q1_cxr_data.py --stage_to "${D}"
 ARGS=(--stage "${STAGE}" --lambda_adv "${LAM}" --seed "${SEED}" --root "${D}" --recipe "${RECIPE}" --skip_done --num_workers 8)
