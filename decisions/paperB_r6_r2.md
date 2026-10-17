@@ -43,7 +43,10 @@ recipe's own stream mode (two-stream unless the recipe uses class-balanced sampl
 ## Data, OOD sets
 
 Lesion-level ISIC split; Phase 2 PAD split (target = pad_adv). OOD: pad_heldout (reported separately), pad_full,
-Fitzpatrick17k, MED-NODE, SD-198 (primary for the fix reading below), P7a SCIN when available.
+Fitzpatrick17k, MED-NODE, SD-198 (primary for the fix reading below). **SCIN** is scored on the same checkpoints /
+detectors with case-level cluster CIs but reported **separately** (`decisions/paperB_r6_r2_scin.md`,
+`REPORT_SCIN.md`) — only ~0.6% of SCIN maps to ISIC classes; it does **not** enter the fix reading. No new
+dermatology datasets for the SCIN item.
 
 ## Reported
 
@@ -210,3 +213,7 @@ Order of action (user 2026-10-16):
   running tasks finish: oracle s82 (`68562_14`) and CDAN λ=2 s42 (`68562_15`). **Hold** (do not cancel)
   `68562_[16-39]` = remaining CDAN λ=2 + all λ=0.5. Then **P10 ∥ R2-prior**; **release** held R2 after both
   complete, **before R1-hi**.
+- 2026-10-17 ~22:14 (UTC+7), **SCIN separate report** (before CPU score job). Design
+  `decisions/paperB_r6_r2_scin.md`: score SCIN on all R2 `last.ckpt` (λ = 2 first wave; remaining cells on re-run)
+  with R1 detectors + case-level cluster CIs; main `REPORT.md` drops SCIN from primary OOD tables; no new derm
+  datasets.

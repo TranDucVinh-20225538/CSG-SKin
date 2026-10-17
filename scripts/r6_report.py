@@ -731,7 +731,8 @@ def report_r2(a, data, idg, rt):
             lab = "IWDAN_ORACLE" if m == "iwdan_oracle" else m.upper()
             src.append((lab, lam, own_runs(root, "r2_" + rt + "_" + m + "_ladv{lam}_s{s}", lam)))
     src = [c for c in src if c[2]]
-    oods = ["pad_heldout", "fitzpatrick17k"] + list(R.P7A_NAMES)
+    # SCIN: separate report (decisions/paperB_r6_r2_scin.md) — 0.6% ISIC-mapped; not in fix reading.
+    oods = ["pad_heldout", "fitzpatrick17k", "mednode", "sd198"]
     boots = {} if a.no_boot else boots_for(src, oods, data, idg)
     cells = metrics(src)
 
@@ -753,6 +754,8 @@ def report_r2(a, data, idg, rt):
          "reference is the R1 shift-100% last.ckpt cell at the same λ/seed.".format(list(R.SEEDS)),
          "- Pre-committed fix reading (estimated vs oracle on Fitz/MED/SD) is **unchanged**; interpret only after "
          "oracle, CDAN, and λ = 0.5 cells are complete.",
+         "- **SCIN** is scored separately (`REPORT_SCIN.md` / `decisions/paperB_r6_r2_scin.md`): same detectors + "
+         "case-level cluster CIs; only 0.6% of images map to ISIC classes; does **not** enter the fix reading.",
          ""]
     tex = []
     standard_sections(L, tex, cells, boots, oods)
