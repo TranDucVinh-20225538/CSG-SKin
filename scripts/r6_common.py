@@ -322,6 +322,86 @@ def bbse_estimate(y_src, pred_src, pred_tgt):
     return solve_label_shift_qp(conf, mu)
 
 
+def tv_error(est, true):
+    """Total variation distance between two class mixes (½ L1)."""
+    a, b = np.asarray(est, float), np.asarray(true, float)
+    a = np.clip(a, 0.0, None); a = a / max(a.sum(), 1e-12)
+    b = np.clip(b, 0.0, None); b = b / max(b.sum(), 1e-12)
+    return float(0.5 * np.abs(a - b).sum())
+
+
+def saerens_em_prior(probs, p_source, max_iter=50, tol=1e-6, eps=1e-12, p_s_floor=1e-6):
+    """Saerens et al. (2002) EM prior adjustment in log space.
+
+    probs: [N, C] temperature-scaled target softmax. Returns (pi, info).
+    Computation-only fix: clamp away from 0, log-domain E/M, convergence check.
+    Classes with source prior < p_s_floor are held at 0 (avoids 1/π_s blow-ups).
+    """
+    from scipy.special import logsumexp
+
+    p = np.asarray(probs, float)
+    finite = np.isfinite(p).all(axis=1) & (p.sum(axis=1) > 0)
+    n_drop = int((~finite).sum()) if finite.size else 0
+    p = p[finite]
+    info = {"n_used": int(p.shape[0]), "n_dropped_nonfinite": n_drop,
+            "converged": False, "iters": 0, "delta": float("nan"), "fallback": None}
+    if p.shape[0] == 0:
+        info["fallback"] = "empty_probs"
+        return None, info
+    p = np.clip(p, eps, None)
+    p /= p.sum(axis=1, keepdims=True)
+    p_s_raw = np.asarray(p_source, float)
+    support = p_s_raw >= p_s_floor
+    if not support.any():
+        info["fallback"] = "no_source_support"
+        return None, info
+    p_s = np.where(support, p_s_raw, 0.0)
+    p_s = p_s / p_s.sum()
+    p_s = np.where(support, np.maximum(p_s, p_s_floor), 0.0)
+    p_s = p_s / p_s.sum()
+    # Restrict classifier probs to source support before EM.
+    p = p * support.astype(float)
+    p = np.clip(p, eps, None)
+    p *= support.astype(float)
+    row = p.sum(axis=1, keepdims=True)
+    p = np.where(row > 0, p / np.maximum(row, eps), 0.0)
+    keep = p.sum(axis=1) > 0
+    p = p[keep]
+    if p.shape[0] == 0:
+        info["fallback"] = "empty_probs_after_support"
+        return None, info
+    info["n_used"] = int(p.shape[0])
+    log_p = np.log(np.clip(p, eps, None))
+    log_p = np.where(support, log_p, -1e30)
+    log_ps = np.where(support, np.log(np.maximum(p_s, p_s_floor)), 0.0)
+    log_pi = np.where(support, np.log(np.maximum(p_s, p_s_floor)), -1e30)
+    delta = float("inf")
+    it = 0
+    for it in range(1, max_iter + 1):
+        # E-step: q_i(y) ∝ p(y|x_i) * π(y) / π_s(y)
+        log_q = log_p + (log_pi - log_ps)
+        log_q = np.where(support, log_q, -1e30)
+        log_q -= logsumexp(log_q, axis=1, keepdims=True)
+        # M-step: π(y) = mean_i q_i(y)
+        log_pi_new = logsumexp(log_q, axis=0) - np.log(log_q.shape[0])
+        log_pi_new = np.where(support, log_pi_new, -1e30)
+        log_pi_new -= logsumexp(log_pi_new)
+        pi = np.exp(np.where(support, log_pi, -np.inf))
+        pi_new = np.exp(np.where(support, log_pi_new, -np.inf))
+        pi = np.nan_to_num(pi, nan=0.0); pi_new = np.nan_to_num(pi_new, nan=0.0)
+        if pi.sum() > 0:
+            pi /= pi.sum()
+        if pi_new.sum() > 0:
+            pi_new /= pi_new.sum()
+        delta = float(np.max(np.abs(pi_new - pi)))
+        log_pi = log_pi_new
+        if delta < tol:
+            info.update(converged=True, iters=it, delta=delta)
+            return pi_new, info
+    info.update(converged=False, iters=it, delta=delta, fallback="max_iter")
+    return pi_new, info
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 # Model
 # ----------------------------------------------------------------------------------------------------------------------
@@ -352,6 +432,8 @@ class R6Lightning(CSGLiteLightning):
         ps = torch.ones(nc) / nc if p_source is None else torch.as_tensor(p_source, dtype=torch.float32)
         self.register_buffer("p_source", ps.float())
         self.temp_T = float(temp_T)
+        self._em_prob_chunks = []  # per-example target softmax for Saerens EM (cleared each epoch)
+        self._em_fallback_bbse = False
         if self.cond:
             self.cdan_head = derm_domain_head(int(self.hparams.lesion_latent_dim) * nc, int(self.hparams.domain_classes))
 
@@ -359,6 +441,13 @@ class R6Lightning(CSGLiteLightning):
     def _unify(batch):
         if isinstance(batch, dict):
             return batch
+        # Val / single-stream loaders yield (x, y); train multi-stream yields the 5-tuple.
+        if len(batch) == 2:
+            x, y = batch
+            if not torch.is_tensor(y):
+                y = torch.as_tensor(y)
+            neg = torch.full_like(y, -1)
+            return {"x": x, "y_cls": y, "y_src": y, "d_adv": neg, "d_ctx": neg}
         images_ctx, _les, y, _y_supcon_discarded, domain = batch
         return {"x": images_ctx, "y_cls": y, "y_src": y, "d_adv": domain, "d_ctx": domain}
 
@@ -406,16 +495,18 @@ class R6Lightning(CSGLiteLightning):
                 nc = self.acc_tgt.numel()
                 src = (b["d_adv"] == 0) & (b["y_src"] >= 0)
                 tgt = b["d_adv"] == 1
-                if self.em_prior:
-                    # Soft target histogram for Saerens EM (temperature-scaled logits).
-                    T = max(float(self.temp_T), 1e-3)
-                    soft = torch.softmax(y_hat32[tgt] / T, dim=1).double()
-                    if soft.numel():
-                        self.acc_tgt_soft += soft.sum(0)
-                else:
+                # Hard counts always (BBSE path / EM→BBSE fallback).
+                if src.any():
                     idx = pred[src] * nc + b["y_src"][src]
                     self.acc_conf.view(-1).index_add_(0, idx, torch.ones_like(idx, dtype=torch.float64))
+                if tgt.any():
                     self.acc_tgt.index_add_(0, pred[tgt], torch.ones_like(pred[tgt], dtype=torch.float64))
+                if self.em_prior and tgt.any():
+                    # Per-example soft preds for Saerens EM (T applied at epoch-end with fitted T).
+                    soft = torch.softmax(y_hat32[tgt].float(), dim=1)
+                    if torch.isfinite(soft).all():
+                        self._em_prob_chunks.append(soft.detach().cpu())
+                        self.acc_tgt_soft += soft.double().sum(0)
             acc_adv = (d_logits[ma].argmax(1) == b["d_adv"][ma]).float().mean() if ma.any() else zero
             acc_ctx = (d_ctx[mc].argmax(1) == b["d_ctx"][mc]).float().mean() if mc.any() else zero
             acc_cls = (pred[has_cls] == b["y_cls"][has_cls]).float().mean() if has_cls.any() else zero
@@ -444,9 +535,11 @@ class R6Lightning(CSGLiteLightning):
                     f.write(json.dumps(row) + "\n")
             return
         if self.em_prior:
-            if self.acc_tgt_soft.sum() <= 0:
-                return
-            # Fit temperature on ISIC val (locked: before EM); fall back to current T.
+            p_s = self.p_source.detach().cpu().numpy().astype(float)
+            p_s = np.clip(p_s, 1e-8, None); p_s /= p_s.sum()
+            w_cur = self.im_w.detach().cpu().numpy().astype(float)
+            # Fit temperature on ISIC val (locked: before EM); keep previous T on failure.
+            temp_ok, temp_nll = False, float("nan")
             try:
                 vdl = self.trainer.val_dataloaders
                 if vdl is not None:
@@ -457,46 +550,90 @@ class R6Lightning(CSGLiteLightning):
                         for batch in loader:
                             b = self._unify(batch)
                             x = b["x"].to(self.device)
-                            y_hat, *_ = self.model(x, x_lesion=None, return_latents=True)
+                            out = self.model(x, x_lesion=None, return_latents=True)
+                            y_hat = out[0] if isinstance(out, (tuple, list)) else out
                             logits_l.append(y_hat.float().cpu().numpy())
                             ys.append(b["y_cls"].cpu().numpy().astype(int) if torch.is_tensor(b["y_cls"])
                                       else np.asarray(b["y_cls"], int))
                     self.train()
                     if logits_l:
-                        self.temp_T, _nll = fit_temperature_nll(np.concatenate(logits_l), np.concatenate(ys))
+                        self.temp_T, temp_nll = fit_temperature_nll(np.concatenate(logits_l), np.concatenate(ys))
+                        temp_ok = True
             except Exception as exc:  # noqa: BLE001
-                print("[iw-em] temp fit skipped:", exc, flush=True)
-            # Recompute soft_mean with new T from stored? acc_tgt_soft used old T — acceptable within-epoch.
-            # Saerens et al. 2002 EM prior adjustment on temperature-scaled soft predictions.
-            p_s = self.p_source.detach().cpu().numpy().astype(float)
-            p_s = np.clip(p_s, 1e-8, None); p_s /= p_s.sum()
-            # Initialise π from current implied mix (or uniform)
-            w_cur = self.im_w.detach().cpu().numpy().astype(float)
-            pi = np.clip(w_cur * p_s, 1e-8, None); pi /= pi.sum()
-            soft_mean = (self.acc_tgt_soft / self.acc_tgt_soft.sum()).cpu().numpy().astype(float)
-            # One EM M-step using mean soft labels reweighted by π/π_s (iterated)
-            for _ in range(20):
-                ratio = pi / p_s
-                # q(y) ∝ soft(y) * (π(y)/π_s(y)); renormalise per-example approx via mean soft
-                q = soft_mean * ratio
-                q = np.clip(q, 1e-12, None); q /= q.sum()
-                if float(np.max(np.abs(q - pi))) < 1e-6:
-                    pi = q
-                    break
-                pi = q
-            w_new = oracle_weights_from_mix(p_s, pi)
-            ma = float(self.hparams.iw_ma)
-            w = ma * w_cur + (1.0 - ma) * w_new
+                print("[iw-em] temp fit skipped:", repr(exc), flush=True)
+            # Apply fitted T to stored per-example logits-softmax (re-scale from T=1 chunks).
+            probs = None
+            if self._em_prob_chunks:
+                p1 = torch.cat(self._em_prob_chunks, dim=0).numpy().astype(float)
+                T = max(float(self.temp_T), 1e-3)
+                if abs(T - 1.0) > 1e-6:
+                    # chunks were softmax(z); recover via log and re-softmax(z/T) ≈ p^{1/T} / Z
+                    log_p = np.log(np.clip(p1, 1e-12, None)) / T
+                    log_p -= log_p.max(axis=1, keepdims=True)
+                    pT = np.exp(log_p)
+                    pT /= np.clip(pT.sum(axis=1, keepdims=True), 1e-12, None)
+                    probs = pT
+                else:
+                    probs = p1
+            pi, em_info = (None, {"fallback": "no_probs"}) if probs is None else saerens_em_prior(probs, p_s)
+            used_bbse = False
+            if pi is None or not em_info.get("converged", False) or not np.isfinite(pi).all():
+                # Computation fallback (same estimator as R2 IWDAN) — not a design change.
+                if self.acc_conf.sum() > 0 and self.acc_tgt.sum() > 0:
+                    conf = (self.acc_conf / self.acc_conf.sum()).cpu().numpy()
+                    mu = (self.acc_tgt / self.acc_tgt.sum()).cpu().numpy()
+                    w_bbse, bbse_info = solve_label_shift_qp(conf, mu, self.hparams.iw_max)
+                    pi = np.asarray(bbse_info["est_target_mix"], float)
+                    w_new = w_bbse
+                    used_bbse = True
+                    em_info = {**em_info, "fallback": em_info.get("fallback") or "nonconvergent_or_nan",
+                               "bbse": bbse_info}
+                    self._em_fallback_bbse = True
+                    print("[iw-em] epoch {} EM→BBSE fallback ({})".format(
+                        int(self.current_epoch) + 1, em_info.get("fallback")), flush=True)
+                else:
+                    print("[iw-em] epoch {} EM failed and BBSE unavailable; keeping w".format(
+                        int(self.current_epoch) + 1), flush=True)
+                    row = {"epoch": int(self.current_epoch) + 1, "em": True, "temp_T": float(self.temp_T),
+                           "temp_fit_ok": temp_ok, "temp_nll": temp_nll, "em_info": em_info,
+                           "w": w_cur.tolist(), "kept_previous_w": True}
+                    if self.hparams.iw_log:
+                        with open(self.hparams.iw_log, "a") as f:
+                            f.write(json.dumps(row) + "\n")
+                    self.acc_tgt_soft.zero_()
+                    self.acc_conf.zero_()
+                    self.acc_tgt.zero_()
+                    self._em_prob_chunks = []
+                    return
+            else:
+                w_new = oracle_weights_from_mix(p_s, pi)
+            if not np.isfinite(w_new).all():
+                print("[iw-em] non-finite w_new; keeping previous w", flush=True)
+                w = w_cur
+            else:
+                ma = float(self.hparams.iw_ma)
+                w = ma * w_cur + (1.0 - ma) * np.asarray(w_new, float)
+                w = np.where(np.isfinite(w), w, w_cur)
             self.im_w.copy_(torch.as_tensor(w, dtype=self.im_w.dtype))
+            soft_mean = (probs.mean(0) if probs is not None else np.full(p_s.shape, np.nan)).tolist()
+            true_mix = getattr(self, "true_tgt_mix", None)
+            prior_tv = None if true_mix is None else tv_error(pi, true_mix)
             row = {"epoch": int(self.current_epoch) + 1, "em": True, "temp_T": float(self.temp_T),
-                   "pi": pi.tolist(), "w_new": w_new.tolist(), "w": w.tolist(),
-                   "soft_mean_target": soft_mean.tolist()}
-            print("[iw-em] epoch {} T={:.3f} pi={}".format(row["epoch"], self.temp_T, np.round(pi, 3).tolist()),
-                  flush=True)
+                   "temp_fit_ok": temp_ok, "temp_nll": temp_nll, "pi": np.asarray(pi, float).tolist(),
+                   "w_new": np.asarray(w_new, float).tolist(), "w": np.asarray(w, float).tolist(),
+                   "soft_mean_target": soft_mean, "em_info": em_info, "used_bbse_fallback": used_bbse,
+                   "prior_tv_error": prior_tv}
+            print("[iw-em] epoch {} T={:.3f} fit_ok={} conv={} bbse_fb={} tv={} pi={}".format(
+                row["epoch"], self.temp_T, temp_ok, em_info.get("converged"), used_bbse,
+                "{:.4f}".format(prior_tv) if prior_tv is not None else "n/a",
+                np.round(pi, 3).tolist()), flush=True)
             if self.hparams.iw_log:
                 with open(self.hparams.iw_log, "a") as f:
                     f.write(json.dumps(row) + "\n")
             self.acc_tgt_soft.zero_()
+            self.acc_conf.zero_()
+            self.acc_tgt.zero_()
+            self._em_prob_chunks = []
             return
         if self.acc_conf.sum() <= 0 or self.acc_tgt.sum() <= 0:
             return
@@ -553,12 +690,17 @@ def fit_temperature_nll(logits, y, grid=None):
     import torch.nn.functional as F
     logits = np.asarray(logits, np.float64)
     y = np.asarray(y, int)
+    ok = (y >= 0) & np.isfinite(logits).all(axis=1)
+    logits, y = logits[ok], y[ok]
+    if len(y) == 0:
+        return 1.0, float("inf")
     grid = np.concatenate([np.linspace(0.5, 5.0, 46), [1.0]]) if grid is None else grid
     best_T, best_nll = 1.0, float("inf")
+    y_t = torch.as_tensor(y)
     for T in grid:
         z = torch.as_tensor(logits / max(float(T), 1e-3))
-        nll = float(F.cross_entropy(z, torch.as_tensor(y), reduction="mean"))
-        if nll < best_nll:
+        nll = float(F.cross_entropy(z, y_t, reduction="mean"))
+        if np.isfinite(nll) and nll < best_nll:
             best_nll, best_T = nll, float(T)
     return best_T, best_nll
 
@@ -848,24 +990,38 @@ def run(spec, args):
         elif align == "iwdan_n50":
             import train_r6_r2_prior as RP  # noqa: WPS433
             y_pad = np.asarray(data["pad_adv"].label_idx, int)
+            true_pad = class_mix(y_pad)
             idx = RP.n50_indices(len(y_pad), seed)
             pi = np.bincount(y_pad[idx], minlength=NCLS).astype(float)
             pi = pi / max(pi.sum(), 1.0)
+            prior_tv = tv_error(pi, true_pad)
             oracle_w = oracle_weights_from_mix(p_src, pi).tolist()
             cfg.update(oracle_w=oracle_w, n50_indices=idx.tolist(), n50_pi=pi.tolist(),
+                       prior_tv_error=prior_tv, true_pad_adv_mix=true_pad.tolist(),
                        n50_note="few-label target; 50 pad_adv labels set w only; not unsupervised DA")
-            (run_dir / "n50_indices.json").write_text(json.dumps({"seed": seed, "indices": idx.tolist(),
-                                                                  "pi": pi.tolist()}, indent=2) + "\n")
+            (run_dir / "n50_indices.json").write_text(json.dumps({
+                "seed": seed, "indices": idx.tolist(), "pi": pi.tolist(),
+                "true_pad_adv_mix": true_pad.tolist(), "prior_tv_error": prior_tv,
+            }, indent=2) + "\n")
+            print("[n50] before train: prior_tv_error={:.4f} pi={} true={}".format(
+                prior_tv, np.round(pi, 3).tolist(), np.round(true_pad, 3).tolist()), flush=True)
         elif align == "iwdan_em":
             # T fitted on ISIC val each epoch before EM (see R6Lightning.on_train_epoch_end); init T=1.
             temp_T = 1.0
             oracle_w = np.ones(NCLS).tolist()
-            cfg.update(temp_T=temp_T, em_note="Saerens EM; T fit on ISIC val each epoch before EM; reported in iw_log")
+            true_pad = class_mix(data["pad_adv"].label_idx)
+            cfg.update(temp_T=temp_T, true_pad_adv_mix=true_pad.tolist(),
+                       em_note="Saerens EM (log-space); T fit on ISIC val each epoch before EM; "
+                               "BBSE fallback if non-convergent; prior_tv_error in iw_log")
+            print("[em] true pad_adv mix={} (TV vs estimates logged each epoch before w update)".format(
+                np.round(true_pad, 3).tolist()), flush=True)
         (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
         model = make_model(recipe, spec["lam"], align=align, class_weights=cw, iw_log=iw_log,
                            iw_cls=spec.get("iw_cls", True), oracle_w=oracle_w,
                            adv_lr_multiplier=float(spec.get("adv_lr_multiplier", 30.0)),
                            temp_T=temp_T, p_source=p_src.tolist())
+        if align == "iwdan_em":
+            model.true_tgt_mix = class_mix(data["pad_adv"].label_idx)
         ckpt_cb = pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir), filename="best-{epoch:02d}", monitor="val/acc",
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
         cbs = [ckpt_cb]

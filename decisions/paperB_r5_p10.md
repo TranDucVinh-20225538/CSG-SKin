@@ -206,8 +206,9 @@ with other P10 work, run **induced-shift with 3 seeds first** (42/52/62), report
 
 ### Queue
 
-Start when R2 tasks **68562_14** (oracle s82) and **68562_15** (CDAN s42) finish; **one GPU**, parallel with
-R2-prior on the other. Does not wait for held R2 cells.
+Start when R2 tasks **68562_14** (oracle s82) and **68562_15** (CDAN s42) finish. Amended 2026-10-17 ~18:20:
+**both GPUs** (`%2`) while R2-prior is paused for an EM computation bug fix; R2-prior follows P10. Does not wait
+for held R2 cells.
 
 ## Deviations
 
@@ -230,3 +231,5 @@ R2-prior on the other. Does not wait for held R2 cells.
 - 2026-10-17 ~18:10 (+07), **order only** (no cells dropped). GPU array task order changed from
   “all induced then all natural” to **interleaved by seed**: natural s42 → induced s42 → natural s52 →
   induced s52 → … (`slurm/r5_p10_shift_arms.sbatch`). `--skip_done` keeps any already-finished cells.
+- 2026-10-17 ~18:20 (+07), **order only**. R2-prior paused (EM NaN implementation failure); P10 takes **both GPUs**
+  (`array%2`), still interleaved. R2-prior resumes after P10 completes.

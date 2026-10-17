@@ -53,8 +53,9 @@ def jobs(recipe_name):
     r = R.resolve_recipe(recipe_name)
     rt = R.recipe_tag(r)
     out = []
-    for arm in ARMS:
-        for s in R.SEEDS:
+    # Interleaved by seed: EM s42, n50 s42, EM s52, n50 s52, ... (both GPUs after P10).
+    for s in R.SEEDS:
+        for arm in ARMS:
             out.append(_spec(r, rt, arm, s))
     return out
 

@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=paperB-r2-prior
-#SBATCH --array=0-9%1
+#SBATCH --array=0-9%2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=16:00:00
 #SBATCH --output=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r6r2p_%A_%a.out
 #SBATCH --error=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r6r2p_%A_%a.err
-# R2-prior EM + n50 (decisions/paperB_r6_r2_prior.md). One GPU; parallel with P10.
+# R2-prior EM + n50 (decisions/paperB_r6_r2_prior.md).
+# Interleaved by seed: EM s42, n50 s42, EM s52, ...; both GPUs (%2) after P10.
 
 set -euo pipefail
 ROOT="/data2/cmdir/home/toandq/CSG-Skin-paperB"

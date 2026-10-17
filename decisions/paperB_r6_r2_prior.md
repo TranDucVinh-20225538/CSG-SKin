@@ -14,14 +14,15 @@ R2 confusion-matrix / QP estimate did not (or improve the within-class held-out 
 
 ## Queue (critical)
 
-**P10 must not be delayed.** Amended 2026-10-17 ~16:30: remaining R2 (CDAN + λ=0.5) is **held**. R2-prior and
-P10 both start when **`68562_14` and `68562_15` finish** (oracle s82 + CDAN s42), **one GPU each**.
+**P10 must not be delayed.** Amended 2026-10-17 ~18:20: R2-prior paused for EM NaN bugfix; **both GPUs to P10**
+(interleaved natural/induced, `%2`). After P10 finishes, R2-prior (fixed EM + 50-label, interleaved by seed,
+`%2`) runs on both GPUs; held R2 `68562_[16-39]` releases after R2-prior, then R1-hi.
 
-- Do **not** put R2-prior on the critical path ahead of P10; submit both with the same `afterany:68562_14:68562_15`.
-- Held R2 `68562_[16-39]` is released **after P10 and R2-prior complete**, then R1-hi.
 - Never hold P10 for R2-prior.
+- EM s42 run under the broken implementation is **excluded** (labelled `implementation failure (NaN)`); rerun s42
+  with the same seed after the computation fix.
 
-GPU order: **R1 → R2 (partial) → (P10 ∥ R2-prior) → R2 remainder → R1-hi → …**
+GPU order: **R1 → R2 (partial) → P10 (both GPUs) → R2-prior (both GPUs) → R2 remainder → R1-hi → …**
 
 ## Arms (new GPU trainings)
 
@@ -118,8 +119,9 @@ Checkpoints: `checkpoints/r6_r2_prior/cur/`.
 
 ## GPU-hour estimate
 
-Basis ~1.6 GPU-h / run (R2 two-stream). **10** new runs → **~16 GPU-h**. Cap **20 GPU-h**. CPU report +
-probes ~2 CPU-h after features exist. Wall with 1 GPU concurrent alongside P10: ~16 h (does not extend P10).
+Basis ~1.6 GPU-h / run (R2 two-stream). **10** new runs → **~16 GPU-h** (+ 1 failed EM s42 ~1.1 GPU-h sunk,
+not counted as a result). Cap **20 GPU-h**. CPU report + probes ~2 CPU-h after features exist. Wall with **2 GPUs**
+after P10: ~5 waves × ~1.1 h ≈ **~5.5–6 h**.
 
 ## Stop rules
 
@@ -128,4 +130,10 @@ flag and keep (no redraw). Cap 20 GPU-h.
 
 ## Deviations
 
-(none yet)
+- 2026-10-17 ~18:20 (+07), **order + computation bug fix** (no arm/design change). EM s42 produced NaN `pi`/`w`
+  (temp-fit crashed on val 2-tuple unpack → T stuck at 1; mean-soft EM without log-space/guards). Run kept under
+  `results/paperB/r6/r2_prior/cur/_impl_failure_nan_*/` labelled **implementation failure (NaN)** — **excluded from
+  results**. Cancelled remaining EM array tasks; **both GPUs given to P10** (`%2`, interleaved). EM fix (log-space
+  Saerens, clamp, convergence, BBSE fallback if non-convergent; temp-fit `_unify` 2-tuple + finite NLL) committed
+  before rerun. After P10: R2-prior on both GPUs, interleaved EM/n50 by seed, **rerun EM s42 same seed**. Report
+  per-seed prior TV for n50 before train and for EM each epoch in `iw_log`.
