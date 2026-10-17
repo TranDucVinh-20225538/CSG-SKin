@@ -1,7 +1,8 @@
 # Paper B R6 / R1-hi — high-λ R1 at shift 0% (held-out invariance without label shift)
 
 Committed before any R1-hi training, feature extraction, or scoring. Fixed now; deviations appended after runs.
-Queued on GPU **right after P10** (does not cut ahead of P10; does not change R1 s82 / R2 hold policy).
+Queued on GPU **after held R2 remainder resumes and finishes** (order 2026-10-17: P10 ∥ R2-prior →
+release R2 CDAN/λ0.5 → R1-hi). Does not cut ahead of P10.
 
 ## Question
 
