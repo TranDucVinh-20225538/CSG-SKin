@@ -1,0 +1,55 @@
+{
+  "lambda": 4.0,
+  "seed": 43,
+  "run": "runB_orth1_ladv4_s43",
+  "msp_mean": {
+    "isic_test": 0.8658145786312834,
+    "pad_heldout": 0.8855161246318748,
+    "fitzpatrick17k": 0.8999463989180208
+  },
+  "msp_median": {
+    "isic_test": 0.9565719548806977,
+    "pad_heldout": 0.973747470103892,
+    "fitzpatrick17k": 0.9714627409218242
+  },
+  "gap_pad_minus_id": 0.019701546000591375,
+  "gap_fitz_minus_id": 0.034131820286737335,
+  "frac_pad_msp_above_id_median": 0.5796089385474861,
+  "id_ece": 0.17842920397388978,
+  "ood_ece_pad_heldout_8cls": 0.6809096212316513,
+  "ood_ece_pad_heldout_6cls": 0.6901769692674421,
+  "xfer6": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.20810055865921787,
+    "balanced_accuracy": 0.2519529960242401,
+    "per_class_recall": {
+      "MEL": 0.2222222222222222,
+      "NV": 0.9431818181818182,
+      "BCC": 0.18115942028985507,
+      "AK": 0.01485148514851485,
+      "BKL": 0.12,
+      "SCC": 0.030303030303030304
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "ak_recall_6cls": 0.01485148514851485,
+  "ak_recall_8cls": 0.01485148514851485,
+  "pred_nv_share_pad_8cls": 0.5963687150837989,
+  "id_bal_acc": 0.48542919799843,
+  "check_vs_r3c": {
+    "msp_isic_test": 1.2019039763444539e-08,
+    "msp_pad_heldout": -0.008944553468711147,
+    "ece_isic_test": 5.201975272761672e-08,
+    "ece_pad_heldout": -0.009267320097889109
+  }
+}
