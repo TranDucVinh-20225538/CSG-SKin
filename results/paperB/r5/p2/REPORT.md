@@ -1,5 +1,7 @@
 # Paper B R5 P2 — §4.4 confidence and calibration, lesion-level runs
 
+**On origin/paperb/reviewer-r1:** `aeb1345`.
+
 Design: `decisions/paperB_r5_p2.md`. Commit `a7195ca`. 35 runs. MSP = max softmax over 8 classes. ECE 15 bins. AK recall: pad_heldout AK images (n = 202), 6-class restricted argmax (phase15_common.six_class_xfer). Mean ± s.d. over seeds.
 
 | λ | n | Mean MSP, ISIC test | Mean MSP, pad_heldout | Gap (pad − ID) | Mean MSP, Fitzpatrick | ID ECE | OOD ECE (8-cls) | OOD ECE (6-cls) | AK recall (6-cls) | Predicted NV share (pad) |

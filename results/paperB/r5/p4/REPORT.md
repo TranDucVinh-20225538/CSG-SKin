@@ -1,5 +1,7 @@
 # Paper B R5 P4 (CPU) — tail truncation and shrinkage, lesion-level runs
 
+**On origin/paperb/reviewer-r1:** `aeb1345`.
+
 Design: `decisions/paperB_r5_p4.md`. Commit `a7195ca`. ridge_0.001 is the Table 1 estimator. Mean ± s.d. over seeds; 'k<0.5' = seeds with point AUROC below 0.5.
 
 ## z_lesion_norm|pad_heldout

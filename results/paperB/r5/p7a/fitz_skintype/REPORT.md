@@ -1,5 +1,7 @@
 # Paper B R5 P7(a): Fitzpatrick17k by skin type
 
+**On origin/paperb/reviewer-r1:** `aeb1345`.
+
 Design: `decisions/paperB_r5_p7a.md` (addition of 2026-10-15). Commit `6e5713c`. Mahalanobis (class-conditional) on z_lesion_norm, fit on ISIC train; ID = lesion-level ISIC test. Mean ± s.d. over 5 seeds; 95% CI of the seed mean, PREREGISTER draws, Fitzpatrick side resampled by P13 `cluster_union` within the stratum (image-level CI in the last column). 153 of 3887 images have no skin-type label (−1) and are excluded.
 
 | stratum | n images | n clusters | mapped to an ISIC class | λ | Mahalanobis | CI (clusters) | k seeds CI<0.5 | rule A | CI (images) |
