@@ -233,3 +233,11 @@ for held R2 cells.
   induced s52 → … (`slurm/r5_p10_shift_arms.sbatch`). `--skip_done` keeps any already-finished cells.
 - 2026-10-17 ~18:20 (+07), **order only**. R2-prior paused (EM NaN implementation failure); P10 takes **both GPUs**
   (`array%2`), still interleaved. R2-prior resumes after P10 completes.
+- 2026-10-17 ~21:55 (+07). Shift-arms finished: **gate failed** on every seed of both arms (probe drop ≈ 0.01). Report
+  **invariance not reached**; no collapse/inversion/survives claims. Do not interpret induced Maha ā = 0.749.
+- 2026-10-17 ~22:00 (+07), **bug fix**. NCT-CRC-HE was named in `config.semantic_ood` but never scored into `ood`
+  (eval loop only `b_hold`/`b_adv`/`c`). Fix + CPU re-score of existing shift-arms checkpoints; NCT AUROC labelled
+  **gate failed, descriptive only**. Follow-on: Camelyon adversary ladder pilot
+  (`decisions/paperB_r5_p10_ladder_pilot.md`).
+- 2026-10-17 ~22:00 (+07), **order only**. After R2-prior: Camelyon pilot (1 GPU) ∥ Q1 headroom (1 GPU) → release held
+  R2 → R1-hi.

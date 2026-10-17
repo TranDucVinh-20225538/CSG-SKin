@@ -137,3 +137,5 @@ flag and keep (no redraw). Cap 20 GPU-h.
   Saerens, clamp, convergence, BBSE fallback if non-convergent; temp-fit `_unify` 2-tuple + finite NLL) committed
   before rerun. After P10: R2-prior on both GPUs, interleaved EM/n50 by seed, **rerun EM s42 same seed**. Report
   per-seed prior TV for n50 before train and for EM each epoch in `iw_log`.
+- 2026-10-17 ~22:00 (+07), **order only**. R2-prior keeps **both GPUs** until the array finishes; then Camelyon
+  ladder pilot ∥ Q1 headroom (one GPU each); held R2 after both; then R1-hi.

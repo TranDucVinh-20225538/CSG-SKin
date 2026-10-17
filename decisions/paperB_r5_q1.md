@@ -181,4 +181,38 @@ seed; a second failure is reported, not replaced by another seed.
 The conditional dose test uses 3 seeds (42, 52, 62): f ∈ {1, 0.5, 0} × 3 = 9 runs, **≈ 24 GPU-h**. Still runs only if
 INVERSION.json has `inverted = true`.
 
+## Amendment 2026-10-17 (~22:00 +07) — natural / induced arms (before headroom gate runs under the new schedule)
+
+After the headroom gate on Shenzhen (unchanged: λ = 0, seeds 42/52/62; mean ≥ 0.60, pooled CI lower ≥ 0.55, every
+seed CI lower > 0.50), if the gate is **met**, run two pre-registered arms at **λ = 2** × seeds `(42, 52, 62, 72, 82)`,
+same dual-encoder recipe as above. Mirror P10’s label-shift contrast; detection labels and CIs match
+`decisions/paperB_r5_p10.md` (mutually exclusive **inversion / collapse / survives / indeterminate**; always report
+\(\bar a\), \([\ell,u]\), \(\Delta=\bar a-\bar a_0\), \([\ell_\Delta,u_\Delta]\); B = **2,000** percentile bootstrap,
+rng **20261017**, seed-mean only; λ = 0 cell mean from the gate runs as \(\bar a_0\)).
+
+**Class mix (normal / pneumonia) — locked from the index table above:**
+
+| Domain | Role | n | Normal | Pneumonia | P(pneumonia) |
+|--------|------|--:|------:|----------:|-------------:|
+| nih_train | labelled / adv domain 0 | 39,546 | 38,630 | 916 | **0.023** |
+| kerm_adv | adversary domain 1 | 4,098 | 1,108 | 2,990 | **0.730** |
+| nih_test | ID eval | 12,358 | 12,072 | 286 | 0.023 |
+| kerm_heldout | secondary OOD | 1,758 | 475 | 1,283 | 0.730 |
+
+Natural adversary-domain TV (Bernoulli pneumonia): \(\mathrm{TV}=|0.023-0.730|=\mathbf{0.707}\).
+
+| Arm | Adversary class mix | TV | Prediction (Shenzhen Maha) if headroom gate met |
+|-----|---------------------|---:|--------------------------------------------------|
+| **Natural** | Existing NIH / Kermany mixes (table) | 0.707 | Same two accounts as the original Q1 prediction (point: collapse toward 0.5); report with locked labels |
+| **Induced** | Resample **adversary-stream** rows only: domain-0 (NIH) batches **20%** pneumonia, domain-1 (Kermany) **80%** pneumonia; classifier stream keeps natural NIH mix | **0.60** | **Inversion** if labels apply |
+
+**Confounder note (locked):** natural NIH vs Kermany also differs in **age, scanner, and anatomy**. Only the
+**induced-vs-natural** contrast (same modality pair, controlled class-mix gap) speaks to label shift. Do not attribute
+a natural-arm inversion/collapse solely to label shift.
+
+Headroom gate still runs first; if it fails, neither arm is launched (replacement OOD candidates unchanged).
+
 ## Deviations
+
+- 2026-10-17 ~22:00 (+07), **order only**. Q1 headroom gate re-queued to run **after R2-prior**, in parallel with the
+  Camelyon adversary ladder pilot (one GPU each). Old dependency chain left pending is superseded for the gate stage.
