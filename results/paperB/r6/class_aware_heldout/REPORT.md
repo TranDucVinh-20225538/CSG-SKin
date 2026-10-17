@@ -24,5 +24,5 @@ Oracle λ=2 seeds on disk: [42, 52, 62, 72, 82]; complete=True.
 | 72 | 0.639 | 0.540 | 0.562 |
 | 82 | 0.685 | 0.597 | 0.592 |
 
-**On origin/paperb/reviewer-r1:** _(fill after push)._
+**On origin/paperb/reviewer-r1:** `a7dbf25`.
 
