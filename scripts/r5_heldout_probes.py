@@ -70,10 +70,9 @@ def inventory():
                 continue
             if not all((d / n).is_file() for n in NEED):
                 continue
-            # single: need z_lesion_norm in npz
             try:
                 z = np.load(d / "isic_test.npz")
-                if REP not in z:
+                if REP not in z and "z" not in z:
                     continue
             except Exception:  # noqa: BLE001
                 continue
@@ -126,18 +125,27 @@ def _summarize(vals):
     }
 
 
+def _rep_key(npz_dict) -> str:
+    if REP in npz_dict:
+        return REP
+    if "z" in npz_dict:  # single-encoder p5 cache
+        return "z"
+    raise KeyError(f"no {REP} or z in {list(npz_dict.keys())}")
+
+
 def analyse_run(feat_root: Path, tag: str) -> dict:
     te = R.load(tag, "isic_test", feat_root=feat_root)
     hold = R.load(tag, "pad_heldout", feat_root=feat_root)
     full = R.load(tag, "pad_full", feat_root=feat_root)
     gi, gp = R.id_test_groups(), R.pad_heldout_patients()
     assert len(gi) == len(te["labels"]) and len(gp) == len(hold["labels"])
+    rk = _rep_key(te)
 
-    Xh = np.r_[te[REP], hold[REP]]
+    Xh = np.r_[te[rk], hold[rk]]
     dh = np.r_[np.zeros(len(te["labels"])), np.ones(len(hold["labels"]))]
     gh = np.r_[np.char.add("I", gi.astype(str)), np.char.add("P", gp.astype(str))]
 
-    Xp = np.r_[te[REP], full[REP]]
+    Xp = np.r_[te[rk], full[rk]]
     dp = np.r_[np.zeros(len(te["labels"])), np.ones(len(full["labels"]))]
 
     linear, mlp, knn, pad_full = [], [], [], []
@@ -150,7 +158,7 @@ def analyse_run(feat_root: Path, tag: str) -> dict:
         pad_full.append(fit_linear(atr, ytr, ate, yte, s))
 
     return {
-        "rep": REP,
+        "rep": rk,
         "heldout_linear": _summarize(linear),
         "heldout_mlp": _summarize(mlp),
         "heldout_knn20": _summarize(knn),
@@ -170,7 +178,8 @@ def maha_auroc_sets(feat_root: Path, tag: str, sets=("pad_heldout", "fitzpatrick
             oods[o] = dict(np.load(p))
     if not oods:
         return {}
-    scores, _ = R.detector_scores(tr, te, oods, rep=REP)
+    rk = _rep_key(tr)
+    scores, _ = R.detector_scores(tr, te, oods, rep=rk)
     sid, so = scores["mahalanobis_classcond"]
     return {o: R.auroc(sid, so[o]) for o in so}
 
