@@ -592,26 +592,207 @@ def report_r1(a, data, idg, rt):
           [(cells, "pad_heldout"), ([c for c in ref if c[2]], "pad_heldout")], "r6_r1", extra_json=extra)
 
 
+def r1_shift100_runs(rt, lam):
+    """R1 shift 100% / RECIPE=current / last.ckpt features+runs (DANN and λ=0 references for R2)."""
+    r1 = item_dir("r1", rt)
+    fmt = "r1_" + rt + "_shift100_ladv{lam}_s{s}"
+    return own_runs(r1, fmt, lam)
+
+
+def _score_packs(feat_dirs, ood_name, det="mahalanobis_classcond"):
+    """{seed: (s_id, s_ood)} for one detector."""
+    out = {}
+    for s, d in feat_dirs.items():
+        Fs = R.load_feats(d, ("isic_train", "isic_test", ood_name))
+        if ood_name not in Fs:
+            continue
+        S = R.Scorer(Fs["isic_train"])
+        a, b = S.scores(Fs["isic_test"]), S.scores(Fs[ood_name])
+        if det not in a:
+            continue
+        out[int(s)] = (a[det], b[det])
+    return out
+
+
+def paired_delta_cluster_ci(feat_a, feat_b, ood_name, id_groups, o_groups, det="mahalanobis_classcond"):
+    """Paired-by-seed Δ(AUROC_a − AUROC_b) with shared cluster/patient bootstrap of the seed-mean."""
+    sa, sb = _score_packs(feat_a, ood_name, det), _score_packs(feat_b, ood_name, det)
+    seeds = sorted(set(sa) & set(sb))
+    if len(seeds) < 1:
+        return None
+    pre = json.loads(R.PREREG.read_text())
+    n_boot = int(pre["n_resamples"])
+    rng = np.random.default_rng(int(pre["rng_seed"]))
+    id_draws = [np.concatenate([id_groups[j] for j in rng.integers(0, len(id_groups), len(id_groups))])
+                for _ in range(n_boot)]
+    oo_draws = [np.concatenate([o_groups[j] for j in rng.integers(0, len(o_groups), len(o_groups))])
+                for _ in range(n_boot)]
+    point = []
+    boot = np.zeros(n_boot)
+    per = {}
+    for s in seeds:
+        aid, ao = sa[s]
+        bid, bo = sb[s]
+        dpt = R.auroc(aid, ao) - R.auroc(bid, bo)
+        point.append(dpt)
+        da = np.array([R.auroc(aid[id_draws[b]], ao[oo_draws[b]]) for b in range(n_boot)])
+        db = np.array([R.auroc(bid[id_draws[b]], bo[oo_draws[b]]) for b in range(n_boot)])
+        boot += (da - db) / len(seeds)
+        per[str(s)] = {"delta": float(dpt)}
+    pts = np.asarray(point, float)
+    return {"mean": float(pts.mean()), "sd": float(pts.std(ddof=1)) if len(pts) > 1 else 0.0,
+            "ci_lo": float(np.quantile(boot, 0.025)), "ci_hi": float(np.quantile(boot, 0.975)),
+            "n_seeds": len(seeds), "per_seed": per, "det": det, "ood": ood_name}
+
+
+def gap_recovered_seed_boot(feat_iw, feat_dann, feat_l0, ood_name, det="mahalanobis_classcond", n_boot=None):
+    """Share of gap recovered: (IW − DANN) / (λ0 − DANN), paired by seed; bootstrap CI of the seed-mean."""
+    si, sd, s0 = (_score_packs(feat_iw, ood_name, det), _score_packs(feat_dann, ood_name, det),
+                  _score_packs(feat_l0, ood_name, det))
+    seeds = sorted(set(si) & set(sd) & set(s0))
+    gaps = []
+    per = {}
+    for s in seeds:
+        iw = R.auroc(*si[s])
+        dann = R.auroc(*sd[s])
+        l0 = R.auroc(*s0[s])
+        denom = l0 - dann
+        if abs(denom) < 1e-6:
+            g = float("nan")
+        else:
+            g = (iw - dann) / denom
+        gaps.append(g)
+        per[str(s)] = {"iw": iw, "dann": dann, "lambda0": l0, "gap_recovered": g, "denom": denom}
+    gaps = np.asarray(gaps, float)
+    ok = np.isfinite(gaps)
+    if ok.sum() < 1:
+        return None
+    g = gaps[ok]
+    pre = json.loads(R.PREREG.read_text())
+    n_boot = int(pre["n_resamples"]) if n_boot is None else n_boot
+    rng = np.random.default_rng(int(pre["rng_seed"]) + 17)
+    boots = np.array([g[rng.integers(0, len(g), len(g))].mean() for _ in range(n_boot)])
+    return {"mean": float(g.mean()), "sd": float(g.std(ddof=1)) if len(g) > 1 else 0.0,
+            "ci_lo": float(np.quantile(boots, 0.025)), "ci_hi": float(np.quantile(boots, 0.975)),
+            "n_seeds": int(ok.sum()), "per_seed": per, "det": det, "ood": ood_name}
+
+
+def _fmt_delta(d):
+    if d is None:
+        return "—"
+    return "{:+.3f} ± {:.3f} [{:.3f}, {:.3f}] (n={})".format(
+        d["mean"], d["sd"], d["ci_lo"], d["ci_hi"], d["n_seeds"])
+
+
 def report_r2(a, data, idg, rt):
     root = item_dir("r2", rt)
     true_adv = R.class_mix(data["pad_adv"].label_idx)
     true_hold = R.class_mix(data["pad_heldout"].label_idx)
-    src = [("λ=0 baseline", 0.0, ref_runs(rt, 0.0))]
+    # Baselines: R1 shift 100% last.ckpt (not Table 1 / item4 best-val). Deviation 2026-10-17.
+    src = [("λ=0 (R1 shift100 last.ckpt)", 0.0, r1_shift100_runs(rt, 0.0))]
+    methods = ("cdan", "iwdan", "iwcdan", "iwdan_oracle")
     for lam in (0.5, 2.0):
-        src.append(("DANN", lam, ref_runs(rt, lam)))
-        for m in ("cdan", "iwdan", "iwcdan"):
-            src.append((m.upper(), lam, own_runs(root, "r2_" + rt + "_" + m + "_ladv{lam}_s{s}", lam)))
+        src.append(("DANN (R1 shift100 last.ckpt)", lam, r1_shift100_runs(rt, lam)))
+        for m in methods:
+            lab = "IWDAN_ORACLE" if m == "iwdan_oracle" else m.upper()
+            src.append((lab, lam, own_runs(root, "r2_" + rt + "_" + m + "_ladv{lam}_s{s}", lam)))
     src = [c for c in src if c[2]]
     oods = ["pad_heldout", "fitzpatrick17k"] + list(R.P7A_NAMES)
     boots = {} if a.no_boot else boots_for(src, oods, data, idg)
     cells = metrics(src)
+
+    # Headline DANN λ=2 means (for the prose; matches decisions deviation)
+    dann2 = next((c for c in cells if c[0].startswith("DANN") and c[1] == 2.0), None)
+    l0 = next((c for c in cells if c[1] == 0.0), None)
+
     L = ["# Paper B R6 R2 — label-shift-aware alignment (recipe: {})".format(rt), "",
-         "Design: `decisions/paperB_r6_r2.md`. Commit `{}`. λ = 0 baseline and DANN rows are the same recipe's "
-         "existing runs (current: R2 item 4 / R4 lesion-level runs, DANN λ = 0.5 seeds 42–46; p8: P8 main runs).".format(
-             R.C.git_head()), ""]
+         "Design: `decisions/paperB_r6_r2.md`. Commit `{}`.".format(R.C.git_head()), "",
+         "## Baseline and pairing (fixed 2026-10-17)", "",
+         "- **DANN reference** and **λ = 0 reference** are **R1 shift 100%, RECIPE=`current`, primary=`last.ckpt`** "
+         "(`results/paperB/r6/r1/{}/`), **not** Table 1 / item4 best-val.".format(rt),
+         "- Headline DANN λ = 2 cell means (R1 shift100 last.ckpt): Maha pad_heldout **0.368**, Fitzpatrick **0.340**, "
+         "leakage **0.634** (verify against the DANN row below).",
+         "- **Paired-by-seed deltas are valid:** R2 and R1 use the **same seeds** `{}` and the **same data split** "
+         "(lesion-level ISIC train/val/test from `train_r2_item4_lesion_split` / Phase 3; Phase 2 PAD patient split "
+         "pad_adv / pad_heldout). R2 `default_mode(current)` is the two-stream Table 1 path; R1 shift 100% is "
+         "three-stream with `adv_shift=1` (ISIC mix), so the **classifier stream and split match**; the DANN "
+         "reference is the R1 shift-100% last.ckpt cell at the same λ/seed.".format(list(R.SEEDS)),
+         "- Pre-committed fix reading (estimated vs oracle on Fitz/MED/SD) is **unchanged**; interpret only after "
+         "oracle, CDAN, and λ = 0.5 cells are complete.",
+         ""]
     tex = []
     standard_sections(L, tex, cells, boots, oods)
     label_shift_extras(L, cells)
+
+    # Paired Δ and gap recovered vs DANN / λ0
+    L += ["## Paired-by-seed Δ vs DANN (R1 shift100 last.ckpt) and gap recovered", "",
+          "Δ = method − DANN at the same λ and seed (Mahalanobis unless noted), with **cluster/patient bootstrap CI** "
+          "of the seed-mean (shared draws). Gap recovered = (IW − DANN) / (λ0 − DANN) using R1 shift100 last.ckpt "
+          "λ = 0 as the λ0 reference; **seed bootstrap** CI of the mean ratio. Denominator near zero → seed dropped.",
+          ""]
+    gap_json, delta_json = {}, {}
+    unseen = [o for o in ("pad_heldout", "fitzpatrick17k", "mednode", "sd198") if o in oods or True]
+    L += ["| method | λ | set | Δ Maha vs DANN [cluster CI] | gap recovered (IW−DANN)/(λ0−DANN) [seed boot CI] |",
+          "|---|---:|---|---|---|"]
+    for lam in (0.5, 2.0):
+        dann_pairs = r1_shift100_runs(rt, lam)
+        l0_pairs = r1_shift100_runs(rt, 0.0)
+        if not dann_pairs or not l0_pairs:
+            continue
+        dann_feat = {s: f for s, (f, _r) in dann_pairs.items()}
+        l0_feat = {s: f for s, (f, _r) in l0_pairs.items()}
+        for m in methods:
+            lab = "IWDAN_ORACLE" if m == "iwdan_oracle" else m.upper()
+            pairs = own_runs(root, "r2_" + rt + "_" + m + "_ladv{lam}_s{s}", lam)
+            if not pairs:
+                continue
+            feat = {s: f for s, (f, _r) in pairs.items()}
+            for ood in unseen:
+                try:
+                    og, _unit = R.ood_groups(ood, data)
+                except FileNotFoundError:
+                    continue
+                if a.no_boot:
+                    dlt = gap = None
+                else:
+                    dlt = paired_delta_cluster_ci(feat, dann_feat, ood, idg, og)
+                    gap = gap_recovered_seed_boot(feat, dann_feat, l0_feat, ood)
+                key = "{}|{:g}|{}".format(lab, lam, ood)
+                if dlt:
+                    delta_json[key] = dlt
+                if gap:
+                    gap_json[key] = gap
+                L.append("| {} | {:g} | {} | {} | {} |".format(
+                    lab, lam, ood, _fmt_delta(dlt), _fmt_delta(gap)))
+    L.append("")
+
+    # leakage paired Δ (point + seed boot) for the DANN leakage baseline story
+    L += ["### Leakage paired Δ vs DANN (pad_full probe; seed bootstrap of seed-mean)", "",
+          "| method | λ | Δ leakage (method − DANN) |",
+          "|---|---:|---|"]
+    for lam in (0.5, 2.0):
+        dann_c = next((c for c in cells if c[0].startswith("DANN") and c[1] == lam), None)
+        if dann_c is None:
+            continue
+        for m in methods:
+            lab = "IWDAN_ORACLE" if m == "iwdan_oracle" else m.upper()
+            c = next((x for x in cells if x[0] == lab and x[1] == lam), None)
+            if c is None:
+                continue
+            seeds = sorted(set(c[2]) & set(dann_c[2]))
+            if not seeds:
+                continue
+            deltas = [c[2][s]["leakage"]["bal_acc_mean"] - dann_c[2][s]["leakage"]["bal_acc_mean"] for s in seeds]
+            arr = np.asarray(deltas, float)
+            pre = json.loads(R.PREREG.read_text())
+            rng = np.random.default_rng(int(pre["rng_seed"]) + 23)
+            leak_boots = np.array([arr[rng.integers(0, len(arr), len(arr))].mean()
+                                   for _ in range(int(pre["n_resamples"]))])
+            L.append("| {} | {:g} | {:+.3f} ± {:.3f} [{:.3f}, {:.3f}] (n={}) |".format(
+                lab, lam, arr.mean(), arr.std(ddof=1) if len(arr) > 1 else 0.0,
+                float(np.quantile(leak_boots, 0.025)), float(np.quantile(leak_boots, 0.975)), len(arr)))
+    L.append("")
+
     L += ["## Estimated vs true PAD class proportions", "",
           "IW = final-epoch training estimate (w ⊙ p_S, renormalised; target = pad_adv, no target labels). BBSE = "
           "post-hoc estimate from the final checkpoint (confusion on ISIC val, predictions on pad_heldout). True mixes "
@@ -636,8 +817,20 @@ def report_r2(a, data, idg, rt):
     L += ["", "True mixes: pad_adv NV {:.3f}, AK {:.3f}; pad_heldout NV {:.3f}, AK {:.3f}.".format(
         true_adv[R.NV], true_adv[R.AK], true_hold[R.NV], true_hold[R.AK]), ""]
     paragraphs = []
+    if dann2 is not None:
+        paragraphs.append(
+            "DANN reference (R1 shift 100% last.ckpt) at λ = 2: leakage {}, Mahalanobis pad_heldout {}, "
+            "Fitzpatrick {} — baseline for all R2 comparisons (not Table 1 best-val).".format(
+                R.pm(mean_of(dann2, lambda m: m["leakage"]["bal_acc_mean"])),
+                fmt_ci(boots.get((dann2[0], 2.0, "pad_heldout"))),
+                fmt_ci(boots.get((dann2[0], 2.0, "fitzpatrick17k")))))
+    if l0 is not None:
+        paragraphs.append(
+            "λ = 0 reference (R1 shift 100% last.ckpt): leakage {}, Mahalanobis pad_heldout {}.".format(
+                R.pm(mean_of(l0, lambda m: m["leakage"]["bal_acc_mean"])),
+                fmt_ci(boots.get((l0[0], 0.0, "pad_heldout")))))
     for lam in (0.5, 2.0):
-        for label in ("DANN", "CDAN", "IWDAN", "IWCDAN"):
+        for label in ("DANN (R1 shift100 last.ckpt)", "CDAN", "IWDAN", "IWCDAN", "IWDAN_ORACLE"):
             c = next((x for x in cells if x[0] == label and x[1] == lam), None)
             if c is None:
                 continue
@@ -649,9 +842,17 @@ def report_r2(a, data, idg, rt):
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["bal_acc_6cls"])),
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["recall_6cls"]["AK"])),
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["pred_share_6cls"]["NV"]))))
-    paragraphs.append("Prediction: " + PRED["r2"])
+    paragraphs.append(
+        "Interpretation deferred until oracle, CDAN, and λ = 0.5 cells finish. Pre-committed reading unchanged. "
+        "Prediction (decisions): " + PRED["r2"])
     L += ["## Results in plain words", ""] + [p + "\n" for p in paragraphs]
-    write(root, L, tex, [(cells, "pad_heldout")], "r6_r2", {"label_shift_estimates": est_json})
+    write(root, L, tex, [(cells, "pad_heldout")], "r6_r2", {
+        "label_shift_estimates": est_json,
+        "dann_baseline": "r1_shift100_last.ckpt",
+        "paired_delta_vs_dann": delta_json,
+        "gap_recovered": gap_json,
+        "pairing_note": "R2 and R1 share SEEDS and lesion-level ISIC + Phase2 PAD split",
+    })
 
 
 def report_p7b(a, data, idg, rt):

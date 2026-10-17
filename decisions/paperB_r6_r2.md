@@ -155,3 +155,9 @@ Order of action (user 2026-10-16):
   after R2.
 - 2026-10-16 22:30 (UTC+7), before R2. Throughput plan above: measure util/VRAM → workers → AMP (already on);
   optional 2-seed/GPU pilot with **16 CPUs**, epoch-time vs solo, adopt only if throughput ≳ **1.3×**.
+- 2026-10-17 (UTC+7), **reporting baseline correction** (R2 train still running; pre-committed fix reading unchanged).
+  DANN reference and λ = 0 reference for every R2 comparison are **R1 shift 100%, RECIPE=current, `last.ckpt`**
+  (not Table 1 / item4 best-val). Headline cell means at λ = 2: Maha pad_heldout **0.368**, Fitzpatrick **0.340**,
+  leakage **0.634**. Report: paired-by-seed Δ(IW − DANN) with cluster CIs; gap recovered
+  (IW − DANN) / (λ0 − DANN) with bootstrap CI on every R2 method including oracle; explicit note that R2 and R1
+  share seeds `(42,52,62,72,82)` and the lesion-level ISIC + Phase 2 PAD split.
