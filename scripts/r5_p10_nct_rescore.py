@@ -166,11 +166,12 @@ def main():
     sp_global = dict(np.load(c2.split_path("primary")))
 
     if args.local_scratch:
-        # Prefer Slurm per-job tmp; else user-private dir under $TMPDIR|/tmp (shared /tmp/p10_nct may be denied).
+        # Prefer Slurm per-job tmp; compute nodes often deny mkdir under shared /tmp.
+        # Fall back to project-local scratch (NFS, but single-threaded num_workers=0).
         if os.environ.get("SLURM_TMPDIR"):
             scratch = Path(os.environ["SLURM_TMPDIR"]) / "p10_nct"
         else:
-            scratch = Path(os.environ.get("TMPDIR") or "/tmp") / "toandq_p10_nct_{}".format(os.getuid())
+            scratch = Path("/data2/cmdir/home/toandq/CSG-Skin-paperB/scratch/p10_nct_eval")
         scratch.mkdir(parents=True, exist_ok=True)
         os.environ["NCT_LOCAL_SCRATCH"] = str(scratch)
         nct_paths = stage_nct_local(scratch)
