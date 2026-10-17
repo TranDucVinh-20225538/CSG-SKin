@@ -161,3 +161,8 @@ Order of action (user 2026-10-16):
   leakage **0.634**. Report: paired-by-seed Δ(IW − DANN) with cluster CIs; gap recovered
   (IW − DANN) / (λ0 − DANN) with bootstrap CI on every R2 method including oracle; explicit note that R2 and R1
   share seeds `(42,52,62,72,82)` and the lesion-level ISIC + Phase 2 PAD split.
+- 2026-10-17 ~12:00 (UTC+7), **run-order only** (no cells dropped; criteria / reading unchanged). After IWCDAN λ = 2
+  finishes, remaining queue is: **oracle λ = 2 (5 seeds) → CDAN λ = 2 → all λ = 0.5 (IWDAN, IWCDAN, CDAN, oracle)**.
+  Implemented in `scripts/train_r6_iwdan.py` `ORDER`. Interim send when oracle λ = 2 completes:
+  `scripts/r6_r2_oracle_l2_interim.py` → `REPORT_ORACLE_L2_INTERIM.md` (oracle + matched IWDAN λ = 2 + R1 DANN,
+  gap recovered per unseen set).
