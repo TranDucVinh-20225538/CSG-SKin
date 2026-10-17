@@ -60,6 +60,8 @@ case "${STEP}" in
   posthoc_clinical)   ${PY} scripts/r5_posthoc_scoring.py clinical ${ARGS} ;;
   posthoc_nvfrac)     ${PY} scripts/r5_posthoc_scoring.py nvfrac ${ARGS} ;;
   r1_leakage_matched) ${PY} scripts/r6_r1_leakage_matched.py ${ARGS} ;;
+  heldout_probes)     ${PY} scripts/r5_heldout_probes.py ${ARGS} ;;
+  stage_manifest)     ${PY} scripts/r5_stage_manifest_numbers.py ${ARGS} ;;
   *) echo "unknown STEP ${STEP}"; exit 2 ;;
 esac
 echo "=== done ${STEP} $(date) ==="
