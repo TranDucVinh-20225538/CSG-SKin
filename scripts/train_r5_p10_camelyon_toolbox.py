@@ -40,7 +40,7 @@ import numpy as np  # noqa: E402
 import torch  # noqa: E402
 import torch.nn as nn  # noqa: E402
 import torch.nn.functional as F  # noqa: E402
-from torch.utils.data import DataLoader  # noqa: E402
+from torch.utils.data import DataLoader, Dataset  # noqa: E402
 from torchvision.models import DenseNet121_Weights, densenet121  # noqa: E402
 from wilds import get_dataset  # noqa: E402
 
@@ -54,6 +54,8 @@ CKPT = c2.PAPERB / "checkpoints" / "r5_p10"
 GATE_DROP = 0.10  # probe_λ0 − probe_run ≥ this
 CAP_GPU_H, EST_GPU_H = 40.0, 1.5
 ITEM5_L0 = c2.PAPERB / "results" / "paperB" / "r2" / "item5" / "runs"
+NCT_PATHS = OUT / "nct_crc_he_eval_paths.txt"
+NCT_KEY = "nct_crc_he"
 
 
 def lambda0_probe_mean():
@@ -65,16 +67,50 @@ def lambda0_probe_mean():
     if not vals:
         raise SystemExit("P10 gate needs R2 item5 λ = 0 summaries (seeds 42–44)")
     return float(np.mean(vals))
+
+
+def lambda0_id_bal_mean():
+    vals = []
+    for s in (42, 43, 44):
+        p = ITEM5_L0 / "camelyon2_ladv0_s{}".format(s) / "summary.json"
+        if p.exists():
+            d = json.loads(p.read_text())["id_test"]
+            vals.append(float(d.get("balanced_acc", d["acc"])))
+    if not vals:
+        raise SystemExit("P10 pilot needs R2 item5 λ = 0 ID bal (seeds 42–44)")
+    return float(np.mean(vals))
+
+
+def pilot_level_passes(summary, probe0=None, id0=None):
+    """Probe drop ≥ 0.10 and ID bal within 0.05 of λ = 0 (pilot decisions)."""
+    probe0 = lambda0_probe_mean() if probe0 is None else probe0
+    id0 = lambda0_id_bal_mean() if id0 is None else id0
+    probe = summary["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"]
+    id_bal = float(summary["id_test"].get("balanced_acc", summary["id_test"]["acc"]))
+    drop = float(probe0 - probe)
+    return drop >= GATE_DROP and abs(id_bal - id0) <= ID_BAL_TOL, {
+        "probe_drop": drop, "id_bal": id_bal, "id0": id0, "id_delta": float(id_bal - id0),
+    }
 _L1 = {"head_specs": [[1, 1.0], [2, 1.0], [3, 1.0]], "adv_inner_steps": 2, "reinit_every_steps": 500}
 _L2 = dict(_L1, grl_schedule="ganin", adv_warmup_epochs=1)
 _L3 = dict(_L2, head_specs=[[1, 1.0], [1, 1.0], [2, 1.0], [2, 2.0], [3, 1.0]], adv_inner_steps=5, adv_lr_multiplier=10.0)
+# Camelyon adversary ladder pilot (decisions/paperB_r5_p10_ladder_pilot.md): L3 toolbox, escalate λ / adv LR.
+_P = dict(_L3, reinit_every_steps=0)  # pilot L1–L4: no step re-init; L5 uses epoch re-init
 RUNGS = {"L1_bank": (_L1, 1.0), "L2_ganin": (_L2, 1.0), "L3_strong": (_L3, 1.0), "L4_lam3": (_L3, 3.0),
          "L5_lam10": (_L3, 10.0),
          # 2026-10-17 label-shift arms (decisions amendment): L3 toolbox @ λ=2
-         "natural_l2": (_L3, 2.0), "induced_l2": (_L3, 2.0)}
+         "natural_l2": (_L3, 2.0), "induced_l2": (_L3, 2.0),
+         # 2026-10-17 pilot ladder (weak → strong), natural arm seed 42
+         "P_L1": (dict(_P, adv_lr_multiplier=30.0), 5.0),
+         "P_L2": (dict(_P, adv_lr_multiplier=100.0), 5.0),
+         "P_L3": (dict(_P, adv_lr_multiplier=30.0), 10.0),
+         "P_L4": (dict(_P, adv_lr_multiplier=100.0), 10.0),
+         "P_L5": (dict(_P, adv_lr_multiplier=100.0, reinit_every_epochs=2), 10.0)}
 ORDER = tuple(RUNGS)
+PILOT_ORDER = ("P_L1", "P_L2", "P_L3", "P_L4", "P_L5")
 SHIFT_SEEDS = (42, 52, 62, 72, 82)
 INDUCED_TUMOUR_A, INDUCED_TUMOUR_B = 0.80, 0.20
+ID_BAL_TOL = 0.05  # pilot gate: ID bal within this of λ=0 mean
 
 
 class Net(nn.Module):
@@ -106,6 +142,55 @@ class _EvalWrap(nn.Module):
         return logits, logits, z
 
 
+class _PathImageDataset(Dataset):
+    """RGB paths (NCT-CRC-HE patches) with dummy y/h for p12.collect."""
+
+    def __init__(self, paths, tf):
+        from PIL import Image
+        self.paths = list(paths)
+        self.tf = tf
+        self._Image = Image
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, i):
+        im = self._Image.open(self.paths[i]).convert("RGB")
+        x = self.tf(im)
+        # y unused for AUROC ID-vs-OOD; h unused
+        return x, 0, 0
+
+
+def nct_path_list():
+    if not NCT_PATHS.exists():
+        raise FileNotFoundError("NCT eval manifest missing: {}".format(NCT_PATHS))
+    paths = [ln.strip() for ln in NCT_PATHS.read_text().splitlines() if ln.strip()]
+    missing = [p for p in paths[:20] if not Path(p).exists()]
+    if missing:
+        raise FileNotFoundError("NCT paths missing on disk (e.g. {})".format(missing[0]))
+    return paths
+
+
+def collect_nct(ev, device, num_workers=4, batch=256):
+    """Features/logits on the fixed NCT-CRC-HE eval path list (semantic OOD)."""
+    paths = nct_path_list()
+    ds = _PathImageDataset(paths, p12.eval_tf())
+    loader = DataLoader(ds, batch_size=batch, shuffle=False, num_workers=num_workers,
+                        pin_memory=device.type == "cuda")
+    return p12.collect(ev, loader, device)
+
+
+def score_nct_into_ood(ood, packs, ev, device, seed, num_workers=4):
+    """Bug-fix helper: attach NCT detectors (A-test vs NCT) into ood dict."""
+    nct = collect_nct(ev, device, num_workers=num_workers)
+    tr, idp = packs["a_train"], packs["a_test"]
+    block = p12.detector_block(tr["z"], tr["y"], idp["z"], idp["logits"], nct["z"], nct["logits"],
+                               p12.KNN_BANK, seed)
+    ood[NCT_KEY] = {"n": int(len(nct["y"])), "detectors": block,
+                    "note": "semantic OOD NCT-CRC-HE-100K; AUROC ID(a_test) vs OOD; no label map"}
+    return ood
+
+
 def gate_met(s, probe0=None):
     """Held-out hospital probe drop ≥ GATE_DROP vs λ = 0 mean; else invariance not reached."""
     probe0 = lambda0_probe_mean() if probe0 is None else probe0
@@ -132,6 +217,8 @@ def main():
     ap.add_argument("--stage2", action="store_true", help="run the first gate-meeting ladder rung at --seed")
     ap.add_argument("--shift_arm", action="store_true",
                     help="2026-10-17 arms: write under p10/shift_arms/; no ladder stop rule")
+    ap.add_argument("--pilot", action="store_true",
+                    help="Camelyon adversary ladder pilot (decisions/paperB_r5_p10_ladder_pilot.md)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--batch_size", type=int, default=32)
@@ -144,8 +231,10 @@ def main():
     rec, rsrc = r5_recipe.resolve(args.recipe)
     args.cls_lr_multiplier = float(rec["cls_lr_multiplier"])
     probe0 = lambda0_probe_mean()
+    id0 = lambda0_id_bal_mean()
     used, hits = p10_state(r5_recipe.tag(args.recipe))
-    stage = "shift_arms" if args.shift_arm else ("stage2" if args.stage2 else "ladder")
+    stage = ("pilot" if args.pilot else "shift_arms" if args.shift_arm else
+             ("stage2" if args.stage2 else "ladder"))
     if args.stage2:
         if not hits:
             print("P10 stage 2: no ladder rung met the gate; nothing to run")
@@ -153,8 +242,10 @@ def main():
         rung = hits[0]["rung"]
     else:
         if args.rung is None:
-            raise SystemExit("--rung required for the ladder / shift arm")
+            raise SystemExit("--rung required for the ladder / shift arm / pilot")
         rung = args.rung
+    if args.pilot and rung not in PILOT_ORDER:
+        raise SystemExit("pilot rung must be one of {}".format(PILOT_ORDER))
     tb_over, lam = RUNGS[rung]
     tb = dict(M.TOOLBOX_DEFAULT)
     tb.update(tb_over)
@@ -165,7 +256,29 @@ def main():
     if args.skip_done and (run_dir / "summary.json").exists():
         print("skip_done", tag)
         return
-    if not args.shift_arm and not args.stage2 and (hits or used + EST_GPU_H > CAP_GPU_H):
+    # Pilot: stop if an earlier level already passed, or GPU-h used by pilot ≥ 10.
+    if args.pilot:
+        pilot_used = 0.0
+        selected = None
+        for pr in PILOT_ORDER:
+            for f in sorted((OUT / "pilot").glob("camelyon2_{}_*/summary.json".format(pr))):
+                s = json.loads(f.read_text())
+                pilot_used += float(s.get("gpu_hours") or 0.0)
+                ok, _ = pilot_level_passes(s, probe0, id0)
+                if ok and selected is None:
+                    selected = s
+        if selected is not None:
+            why = {"tag": tag, "skipped": True, "reason": "earlier_pilot_level_passed",
+                   "passed_tag": selected["tag"], "pilot_gpu_h_used": pilot_used, "cap": 10.0}
+            (run_dir / "skipped.json").write_text(json.dumps(why, indent=2) + "\n")
+            print("P10 pilot stop", why, flush=True)
+            return
+        if pilot_used + EST_GPU_H > 10.0:
+            why = {"tag": tag, "skipped": True, "reason": "pilot_cap", "pilot_gpu_h_used": pilot_used, "cap": 10.0}
+            (run_dir / "skipped.json").write_text(json.dumps(why, indent=2) + "\n")
+            print("P10 pilot over cap", why, flush=True)
+            return
+    if not args.shift_arm and not args.stage2 and not args.pilot and (hits or used + EST_GPU_H > CAP_GPU_H):
         why = {"tag": tag, "skipped": True, "gate_met_by": [h["tag"] for h in hits], "p10_gpu_h_used": used,
                "cap": CAP_GPU_H}
         (run_dir / "skipped.json").write_text(json.dumps(why, indent=2) + "\n")
@@ -272,7 +385,7 @@ def main():
                 l_in.backward()
                 inner.step()
                 inn.append(float(l_in))
-            n = int(tb["reinit_every_steps"])
+            n = int(tb.get("reinit_every_steps") or 0)
             if n > 0 and step > 0 and step % n == 0:
                 k = reinits % len(model.adv.heads)
                 model.adv.reinit(k)
@@ -283,6 +396,15 @@ def main():
             ce.append(float(l_adv))
             ac.append(float(torch.stack([(o.argmax(1) == d).float().mean() for o in outs]).mean()))
             step += 1
+        # Pilot L5: re-init all heads every N epochs (decisions/paperB_r5_p10_ladder_pilot.md).
+        n_ep = int(tb.get("reinit_every_epochs") or 0)
+        if n_ep > 0 and epoch % n_ep == 0:
+            for k in range(len(model.adv.heads)):
+                model.adv.reinit(k)
+                for p in model.adv.heads[k].parameters():
+                    opt.state.pop(p, None)
+                    inner.state.pop(p, None)
+                reinits += 1
         sel = p12.eval_acc(_EvalWrap(model), sel_loader, device)
         rec = {"epoch": epoch, "loss_adv": float(np.mean(ce)), "acc_adv": float(np.mean(ac)),
                "inner_ce": float(np.mean(inn)) if inn else None, "id_select_acc": sel, "coef_end": coef,
@@ -314,6 +436,8 @@ def main():
             idp = packs[idk]
             ood[k][lab] = p12.detector_block(tr["z"], tr["y"], idp["z"], idp["logits"], op["z"], op["logits"],
                                              p12.KNN_BANK, args.seed)
+    # NCT-CRC-HE was previously only named in config.semantic_ood and never scored (bug).
+    score_nct_into_ood(ood, packs, ev, device, args.seed, num_workers=args.num_workers)
     rows = [json.loads(l) for l in log.read_text().splitlines() if l.strip()]
     summary = {"tag": tag, "stage": stage, "rung": rung, "assign": "primary", "hospitals": [ha, hb, hc],
                "lambda_adv": lam, "seed": args.seed, "toolbox": tb, "best_epoch": int(blob["epoch"]),
@@ -330,6 +454,16 @@ def main():
     summary["gate_met"] = bool(gate_met(summary, probe0))
     summary["invariance_not_reached"] = not summary["gate_met"]
     summary["b_heldout_accuracy"] = ood["b_hold"]["accuracy"]
+    if args.pilot:
+        ok, info = pilot_level_passes(summary, probe0, id0)
+        summary["pilot_level_passed"] = bool(ok)
+        summary["pilot_gate"] = info
+        if ok:
+            (OUT / "pilot" / "SELECTED.json").write_text(json.dumps({
+                "tag": tag, "rung": rung, "lambda_adv": lam, "seed": args.seed,
+                "toolbox": tb, **info,
+            }, indent=2) + "\n")
+            print("P10 pilot SELECTED", tag, info, flush=True)
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print("saved", run_dir / "summary.json", "probe", probe, "drop", summary["probe_drop_vs_lambda0"],
           "ID acc", summary["id_test"]["acc"], "gate", summary["gate_met"],
