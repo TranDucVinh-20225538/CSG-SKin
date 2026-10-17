@@ -245,3 +245,7 @@ Headroom gate still runs first; if it fails, neither arm is launched (replacemen
   parallel with Q1). CPU Q1 report `68732` may still run after gate. Paper B GPU resume: pilot → release held R2 → …
 - 2026-10-18 ~01:34 (+07), **order only**. Q1 gate array `68731` throttle set to **%2** (both GPUs) so gate finishes faster before maxim; maxim gen stays %2. Criteria unchanged.
 
+- 2026-10-18 ~01:36 (+07), **order only (optimal GPU handoff)**. After R2-prior: Q1 gate `%2` → maxim
+  (smoke → gen DEV `%2` → score DEV CPU ∥ gen TEST `%2` → score TEST) → pilot `%2` (`afterok:68751,68749`)
+  → release held R2. CPU reports (`68732`, `68744`) overlap GPU waves. Criteria unchanged.
+

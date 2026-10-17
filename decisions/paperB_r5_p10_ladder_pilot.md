@@ -91,3 +91,7 @@ Held R2 cells release after both; then R1-hi.
 - 2026-10-18 ~01:32 (+07), **order only**. Pilot array `68725` no longer starts after R2-prior in parallel with Q1;
   dependency set to `afterok:68751` (maxim TEST score) so maxim can use both GPUs after Q1 gate. Criteria unchanged.
 
+- 2026-10-18 ~01:36 (+07), **order only (optimal GPU handoff)**. After R2-prior: Q1 gate `%2` → maxim
+  (smoke → gen DEV `%2` → score DEV CPU ∥ gen TEST `%2` → score TEST) → pilot `%2` (`afterok:68751,68749`)
+  → release held R2. CPU reports (`68732`, `68744`) overlap GPU waves. Criteria unchanged.
+
