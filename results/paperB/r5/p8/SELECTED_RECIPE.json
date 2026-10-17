@@ -1,0 +1,8 @@
+{
+ "lesion_latent_dim": 64,
+ "cls_lr_multiplier": 1.0,
+ "max_epochs": 40,
+ "class_balance": "weighted_ce",
+ "_source": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/selection_stageB.json",
+ "_grid_name": "A4_e40"
+}

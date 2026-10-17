@@ -1,0 +1,55 @@
+[
+ {
+  "lambda_adv": 0.5,
+  "shift_pct": -1,
+  "n_done": 4,
+  "n_ok": 4,
+  "seeds": [
+   42,
+   52,
+   62,
+   72
+  ],
+  "ready_for_leak_a": false
+ },
+ {
+  "lambda_adv": 2.0,
+  "shift_pct": -1,
+  "n_done": 5,
+  "n_ok": 5,
+  "seeds": [
+   42,
+   52,
+   62,
+   72,
+   82
+  ],
+  "ready_for_leak_a": false
+ },
+ {
+  "lambda_adv": 2.0,
+  "shift_pct": 50,
+  "n_done": 3,
+  "n_ok": 3,
+  "seeds": [
+   42,
+   52,
+   62
+  ],
+  "ready_for_leak_a": false
+ },
+ {
+  "lambda_adv": 2.0,
+  "shift_pct": 100,
+  "n_done": 5,
+  "n_ok": 5,
+  "seeds": [
+   42,
+   52,
+   62,
+   72,
+   82
+  ],
+  "ready_for_leak_a": true
+ }
+]

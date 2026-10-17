@@ -1,0 +1,60 @@
+{
+  "item": "r6_r2",
+  "tag": "r2_cur_iwcdan_ladv2_s42",
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "lam": 2.0,
+  "seed": 42,
+  "mode": "two",
+  "align": "iwcdan",
+  "eval": "full",
+  "iw_cls": true,
+  "extra": {
+    "method": "iwcdan"
+  },
+  "adv_mix": null,
+  "out_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur",
+  "ckpt_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r6_r2/cur/r2_cur_iwcdan_ladv2_s42",
+  "streams": [
+    {
+      "name": "legacy CombinedTrainDataset",
+      "isic": 16211,
+      "pad_adv": 1582
+    }
+  ],
+  "class_weights": null,
+  "isic_train_mix": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "pad_adv_mix_for_resampling_only": [
+    0.02718078381795196,
+    0.0986093552465234,
+    0.35967130214917825,
+    0.33375474083438683,
+    0.1011378002528445,
+    0.0,
+    0.0,
+    0.07964601769911504
+  ],
+  "n": {
+    "train": 16211,
+    "val": 4053,
+    "test": 5067,
+    "pad_full": 2298,
+    "pad_adv": 1582,
+    "pad_heldout": 716
+  },
+  "commit": "1ea63f0"
+}

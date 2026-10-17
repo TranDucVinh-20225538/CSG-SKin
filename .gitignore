@@ -10,12 +10,15 @@ logs/
 **/adversary_log.jsonl
 data/
 
-# Cached embeddings / heavy feature stores
+# Cached embeddings / heavy feature stores (regenerable via frozen extract)
 results/paperB/phase13/features/
 results/paperB/phase1_6/
 results/paperB/phase2_5/
 results/paperB/phase35_mech/
+**/features/
+**/features_bestval/
 
 *.npz
 *.ckpt
 *.pth
+*.pt

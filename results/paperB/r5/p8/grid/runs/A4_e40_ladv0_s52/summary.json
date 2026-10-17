@@ -1,0 +1,38 @@
+{
+ "tag": "A4_e40_ladv0_s52",
+ "item": "p8",
+ "recipe": {
+  "latent": 64,
+  "cls_lr_mult": 1.0,
+  "balance": "loss",
+  "name": "A4_e40",
+  "max_epochs": 40,
+  "grid_id": "A4"
+ },
+ "lambda_adv": 0.0,
+ "seed": 52,
+ "mode": "two",
+ "align": "dann",
+ "adv_shift": null,
+ "adv_mix": null,
+ "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p8/grid/A4_e40_ladv0_s52/best-01.ckpt",
+ "reused_checkpoint": false,
+ "eval": "val",
+ "metrics": {
+  "val": {
+   "bal_acc": 0.5459311529615647,
+   "acc": 0.5714285714285714,
+   "ece": 0.020380870849739732,
+   "recall": {
+    "MEL": 0.38450899031811897,
+    "NV": 0.7014563106796117,
+    "BCC": 0.4350282485875706,
+    "AK": 0.6690647482014388,
+    "BKL": 0.4119047619047619,
+    "DF": 0.5897435897435898,
+    "VASC": 0.75,
+    "SCC": 0.42574257425742573
+   }
+  }
+ }
+}

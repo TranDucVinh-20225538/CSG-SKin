@@ -1,0 +1,55 @@
+{
+  "run": "runB_orth1_ladv4_s44",
+  "lambda_adv": 4.0,
+  "seed": 44,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r2_item4/runB_orth1_ladv4_s44/best-16.ckpt",
+  "best_epoch": 16,
+  "last_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r2_item4/runB_orth1_ladv4_s44/last.ckpt",
+  "last_epoch": 39,
+  "best": {
+    "heldout_leakage_V1": 0.5111826131746279,
+    "heldout_leakage_V1_sd": 0.004626098191076043,
+    "padfull_leakage": 0.6896612001017036,
+    "id_bal_acc": 0.5161472779658207,
+    "ood": {
+      "pad_heldout": {
+        "mahalanobis_classcond": 0.40997146615244,
+        "knn_k50": 0.4085431199579269,
+        "cosine_max": 0.4118515798909143,
+        "MSP": 0.41757736829280934,
+        "Energy_T1": 0.4608592624198864
+      },
+      "fitzpatrick17k": {
+        "mahalanobis_classcond": 0.37449029416927143,
+        "knn_k50": 0.4025961049134802,
+        "cosine_max": 0.39126225684142246,
+        "MSP": 0.40284278651660754,
+        "Energy_T1": 0.4857287952448256
+      }
+    }
+  },
+  "last": {
+    "heldout_leakage_V1": 0.5231175766955709,
+    "heldout_leakage_V1_sd": 0.004785770695738045,
+    "padfull_leakage": 0.6703597762522248,
+    "id_bal_acc": 0.46649892510025853,
+    "ood": {
+      "pad_heldout": {
+        "mahalanobis_classcond": 0.37600262626062164,
+        "knn_k50": 0.3599969900539475,
+        "cosine_max": 0.37669888301232757,
+        "MSP": 0.3445952725103722,
+        "Energy_T1": 0.318531399911576
+      },
+      "fitzpatrick17k": {
+        "mahalanobis_classcond": 0.36828375253973905,
+        "knn_k50": 0.3782232923182328,
+        "cosine_max": 0.4009226709405518,
+        "MSP": 0.3747277604361906,
+        "Energy_T1": 0.4118071761727049
+      }
+    }
+  },
+  "stored_best_maha_pad_heldout": 0.40997146615244,
+  "check_best_vs_stored": true
+}

@@ -1,0 +1,17 @@
+{
+  "run_id": "csg_dual_lesion/runB_orth1_ladv4_s46",
+  "task": "isic_skin",
+  "protocol": "isic_lesion_split",
+  "family": "csg_dual_lesion",
+  "lambda": 4.0,
+  "seed": 46,
+  "maj_share": 0.5539767120584173,
+  "maj_share_excess": 0.04567987657633721,
+  "fisher_ratio": 4.570566912763133,
+  "part_ratio": 0.29522142570361504,
+  "train_prior_majority": 0.50829683548208,
+  "pred_maj_excess": 0.028509953544957667,
+  "maha_auroc|pad_heldout": 0.41981636021446694,
+  "maha_auroc|fitzpatrick17k": 0.3413851000656041,
+  "ood_auroc_primary": 0.41981636021446694
+}

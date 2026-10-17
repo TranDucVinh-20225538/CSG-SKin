@@ -1,0 +1,18 @@
+{
+ "recipe": {
+  "latent": 64,
+  "cls_lr_mult": 1.0,
+  "balance": "loss",
+  "max_epochs": 40,
+  "grid_name": "A4_e40",
+  "grid_id": "A4"
+ },
+ "stageA_winner": "A4",
+ "val_bal_acc_e40": [
+  0.5390821932358194,
+  0.5459311529615647
+ ],
+ "val_bal_acc_e80": [],
+ "gain_e80_minus_e40": null,
+ "rule": "40 epochs fixed by the user (2026-10-15); stage B not run"
+}

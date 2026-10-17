@@ -4,6 +4,8 @@ Decisions: `decisions/paperB_r5_d1.md`. Commit 0d57cb7. Bootstrap 2000 draws, rn
 
 Pass criterion unchanged from `f0bb6ee` (committed before job 68092): ρ_dom > 0 and the CI of Δ = ρ_dom − |ρ_orth| entirely above 0; hypothesis supported if met in ≥ 4 of 7 sets (latent). The three D1 jobs differ only in load/IO fixes: job 68092 @ `97faa14` (FAILED — missing pyarrow/fastparquet for to_parquet); job 68190 @ `c4cc443` (FAILED — object group arrays need allow_pickle=True); job 68243 @ `54d5cd6` (COMPLETED (includes 5f7e4fd object-array load + lesion cache; csv.gz per-image)).
 
+**Definitions (follow-up clarification):** backbone = `backbone_raw_lesion` (pre-projection features of the same DANN-trained model; they receive the reversed gradient). pull = change from λ = 0 to λ = k (here k = 2), same primary/secondary formulae as above.
+
 Domain classifier validity (balanced accuracy, ISIC test vs pad_heldout, λ = 0): latent 0.91351 ± 0.01698, backbone 0.96903 ± 0.00256; BCN↔HAM site classifiers (ID test vs OOD held-out): BCN→HAM 0.955 (adversary pool n = 6975), HAM→BCN 0.943 (adversary pool n = 8749).
 
 **Clarifications (definitions only; no D1 number or verdict changed).** **backbone** = `backbone_raw_lesion`: pre-projection features of the same DANN-trained model (they receive the reversed gradient), not a separately trained backbone. **pull** for a contrast λ = 0 → λ = k (same seed unless noted) is the change in Mahalanobis distance from the λ = 0 run to the λ = k run, with the same primary / secondary pull formulae as above; domain score and orthogonal control always come from the source λ = 0 model.

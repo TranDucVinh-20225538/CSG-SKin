@@ -1,0 +1,67 @@
+{
+ "rule": "decisions/paperB_r5_p8.md, Main-recipe rule (2026-10-15 23:48)",
+ "split": "lesion-level ISIC val",
+ "checkpoint": "last.ckpt (both recipes)",
+ "seeds": [
+  42,
+  52,
+  62,
+  72,
+  82
+ ],
+ "per_seed": [
+  {
+   "seed": 42,
+   "A4_val_bal_acc_last": 0.5259521931357809,
+   "A4_epoch": 39,
+   "old_val_bal_acc_last": 0.4454578987876497,
+   "old_epoch": 39,
+   "diff": 0.08049429434813121
+  },
+  {
+   "seed": 52,
+   "A4_val_bal_acc_last": 0.46967094617998884,
+   "A4_epoch": 39,
+   "old_val_bal_acc_last": 0.409460891379696,
+   "old_epoch": 39,
+   "diff": 0.060210054800292845
+  },
+  {
+   "seed": 62,
+   "A4_val_bal_acc_last": 0.4649330527899625,
+   "A4_epoch": 39,
+   "old_val_bal_acc_last": 0.4401824228547209,
+   "old_epoch": 39,
+   "diff": 0.024750629935241575
+  },
+  {
+   "seed": 72,
+   "A4_val_bal_acc_last": 0.4499000654684906,
+   "A4_epoch": 39,
+   "old_val_bal_acc_last": 0.46154499251742254,
+   "old_epoch": 39,
+   "diff": -0.011644927048931941
+  },
+  {
+   "seed": 82,
+   "A4_val_bal_acc_last": 0.4885226061468023,
+   "A4_epoch": 39,
+   "old_val_bal_acc_last": 0.49023738402648065,
+   "old_epoch": 39,
+   "diff": -0.0017147778796783308
+  }
+ ],
+ "D": 0.030419054831011073,
+ "sd_diff": 0.03946240650587729,
+ "ci": [
+  -0.01857999460981885,
+  0.079418104271841
+ ],
+ "t_df": 4,
+ "D_min": 0.03,
+ "D_ge_D_min": true,
+ "ci_excludes_0": false,
+ "outcome": "old",
+ "main_recipe": "current",
+ "p8_ext": "skip"
+}

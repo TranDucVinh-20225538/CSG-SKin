@@ -1,0 +1,17 @@
+{
+  "run_id": "csg_dual_image/runB_orth1_ladv0_s72",
+  "task": "isic_skin",
+  "protocol": "isic_image_split",
+  "family": "csg_dual_image",
+  "lambda": 0.0,
+  "seed": 72,
+  "maj_share": 0.5277284389184922,
+  "maj_share_excess": 0.019431603436412148,
+  "fisher_ratio": 5.2011416733357585,
+  "part_ratio": 0.2770995431969623,
+  "train_prior_majority": 0.50829683548208,
+  "pred_maj_excess": 0.015287139256423998,
+  "maha_auroc|pad_heldout": 0.8203585915216545,
+  "maha_auroc|fitzpatrick17k": 0.7364281326393043,
+  "ood_auroc_primary": 0.8203585915216545
+}

@@ -1,0 +1,50 @@
+{
+  "family": "a4_main",
+  "tag": "main_ladv0_s72",
+  "lambda": 0.0,
+  "seed": 72,
+  "shift": null,
+  "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features",
+  "rep": "z_lesion_norm",
+  "heldout_linear": {
+    "bal_acc_mean": 0.8410533406237204,
+    "bal_acc_sd": 0.013742923324338173,
+    "bal_acc_per_probe_seed": [
+      0.8565894206822461,
+      0.8360854084155869,
+      0.8304851927733283
+    ]
+  },
+  "heldout_mlp": {
+    "bal_acc_mean": 0.819733378173675,
+    "bal_acc_sd": 0.025167469293713957,
+    "bal_acc_per_probe_seed": [
+      0.8476896740693315,
+      0.7988824105355079,
+      0.8126280499161855
+    ]
+  },
+  "heldout_knn20": {
+    "bal_acc_mean": 0.8241331562275965,
+    "bal_acc_sd": 0.0041719849787292,
+    "bal_acc_per_probe_seed": [
+      0.8222546567337483,
+      0.8289141358454839,
+      0.8212306761035575
+    ]
+  },
+  "pad_full_linear": {
+    "bal_acc_mean": 0.8952215230104246,
+    "bal_acc_sd": 0.003702430129916704,
+    "bal_acc_per_probe_seed": [
+      0.8964101830663616,
+      0.8910707475209764,
+      0.8981836384439359
+    ]
+  },
+  "n": {
+    "isic_test": 5067,
+    "pad_heldout": 716,
+    "pad_full": 2298
+  }
+}

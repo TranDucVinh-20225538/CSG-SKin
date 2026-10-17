@@ -1,0 +1,17 @@
+{
+  "run_id": "single_dann_image/single_dann_ladv4_s42",
+  "task": "isic_skin",
+  "protocol": "isic_image_split",
+  "family": "single_dann_image",
+  "lambda": 4.0,
+  "seed": 42,
+  "maj_share": 0.5591079534241168,
+  "maj_share_excess": 0.05081111794203674,
+  "fisher_ratio": 0.40174343879099766,
+  "part_ratio": 0.012960729700063024,
+  "train_prior_majority": 0.50829683548208,
+  "pred_maj_excess": 0.04054863521063756,
+  "maha_auroc|pad_heldout": 0.4819731243791297,
+  "maha_auroc|fitzpatrick17k": 0.5583147236853789,
+  "ood_auroc_primary": 0.4819731243791297
+}

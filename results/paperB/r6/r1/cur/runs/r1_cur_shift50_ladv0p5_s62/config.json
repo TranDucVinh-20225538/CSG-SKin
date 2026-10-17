@@ -1,0 +1,114 @@
+{
+  "item": "r6_r1",
+  "tag": "r1_cur_shift50_ladv0p5_s62",
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "lam": 0.5,
+  "seed": 62,
+  "mode": "three",
+  "align": "dann",
+  "adv_shift": 0.5,
+  "eval": "full",
+  "reuse_ckpt": null,
+  "extra": {
+    "shift_pct": 50,
+    "lambda0_reused": false
+  },
+  "adv_mix": [
+    0.10288161391872246,
+    0.3034530953643017,
+    0.24547009682130433,
+    0.18396453345463712,
+    0.10235472456661718,
+    0.004688174696193943,
+    0.004996607241996176,
+    0.052191153936227065
+  ],
+  "out_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur",
+  "ckpt_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r6_r1/cur/r1_cur_shift50_ladv0p5_s62",
+  "streams": [
+    {
+      "name": "isic_cls",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": true,
+      "adv_domain": -1,
+      "ctx_domain": -1,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "isic_adv",
+      "n": 16211,
+      "sampling": "weighted",
+      "classifier": false,
+      "adv_domain": 0,
+      "ctx_domain": 0,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.10288161391872425,
+        0.3034530953643177,
+        0.24547009682131454,
+        0.18396453345463637,
+        0.10235472456661313,
+        0.004688174696193936,
+        0.004996607241996168,
+        0.052191153936227544
+      ]
+    },
+    {
+      "name": "pad_adv",
+      "n": 1582,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 1,
+      "ctx_domain": 1,
+      "labels_loaded": false,
+      "expected_mix": null
+    }
+  ],
+  "class_weights": null,
+  "isic_train_mix": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "pad_adv_mix_for_resampling_only": [
+    0.02718078381795196,
+    0.0986093552465234,
+    0.35967130214917825,
+    0.33375474083438683,
+    0.1011378002528445,
+    0.0,
+    0.0,
+    0.07964601769911504
+  ],
+  "n": {
+    "train": 16211,
+    "val": 4053,
+    "test": 5067,
+    "pad_full": 2298,
+    "pad_adv": 1582,
+    "pad_heldout": 716
+  },
+  "commit": "1ea63f0"
+}
