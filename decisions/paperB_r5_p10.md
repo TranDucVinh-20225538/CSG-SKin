@@ -145,26 +145,39 @@ Source: `results/paperB/r2/item5/split_camelyon2.json` (primary assignment). Hos
 Thresholds (locked): **TV < 0.10** → predict **collapse** (not inversion) on the held-out hospital;
 **TV ≥ 0.30** → predict **inversion**. Natural mix is in the collapse-only band.
 
-### Detection labels (locked 2026-10-17 ~16:35 — before any P10 training under this plan)
+### Detection labels (locked 2026-10-17 ~16:35; patched ~16:40 — before any P10 training under this plan)
 
 Primary detector: **Mahalanobis** class-conditional AUROC, **A-test vs B_heldout** (NCT uses the same
-labels for A-test vs NCT). Because B_heldout has few slides, the CI is the **seed-bootstrap** percentile
-interval of the **seed-mean** AUROC (2,000 draws, rng **20261017**); not a patch/slide cluster bootstrap.
-λ = 0 reference mean = R2 item5 λ = 0 Mahalanobis on the same OOD set (seeds 42–44), denoted \(\bar a_0\).
-Let \(\bar a\) be the arm’s seed-mean AUROC and \([\ell, u]\) its 95% CI.
+labels for A-test vs NCT).
+
+**CI method (locked; coarse at n = 5 seeds — state this in the REPORT):**  
+**percentile** 95% interval from a **seed bootstrap** of the seed-mean: resample the arm’s seed-level AUROCs
+with replacement, **B = 2,000** draws, rng seed **20261017**. Not a patch/slide cluster bootstrap (degenerate
+on B_heldout’s few slides). The same B / rng / percentile recipe is used for CIs on \(\bar a\) and on
+\(\Delta = \bar a - \bar a_0\) below. With only 5 seeds the CI is rough; do not over-read width.
+
+λ = 0 reference: R2 item5 λ = 0 Mahalanobis on the same OOD set (seeds 42–44). For Δ, pair by taking
+\(\bar a_0\) as that fixed λ = 0 **cell mean** (3 seeds); bootstrap Δ by resampling the **arm’s** seeds only
+and subtracting the fixed \(\bar a_0\) (λ = 0 set is the committed baseline, not re-bootstrapped). Denote
+\(\bar a\) = arm seed-mean, \([\ell, u]\) = 95% CI of \(\bar a\), \(\Delta = \bar a - \bar a_0\),
+\([\ell_\Delta, u_\Delta]\) = 95% CI of Δ.
 
 Labels are **mutually exclusive**, checked in order:
 
 | Label | Numeric definition |
 |-------|--------------------|
-| **Inversion** | \(u < 0.5\) (CI entirely below chance) |
-| **Collapse** | not inversion, **and** \(\bar a < \bar a_0\) (AUROC fell vs λ = 0), **and** \(\ell \le 0.5 \le u\) (CI still covers 0.5) |
-| **Survives** | \(\ell > 0.5\) (CI entirely above chance), whether or not \(\bar a\) fell vs λ = 0 |
-| **Indeterminate** | anything else (e.g. \(\bar a \ge \bar a_0\) while CI covers 0.5; or \(u \ge 0.5\) with \(\ell < 0.5\) but no drop vs λ = 0) |
+| **Inversion** | \(u < 0.5\) (CI of \(\bar a\) entirely below chance) |
+| **Collapse** | not inversion, **and** \(u_\Delta < 0\) (CI of Δ entirely below 0 — a real drop vs λ = 0, not a 0.001 wobble), **and** \(\ell \le 0.5 \le u\) (CI of \(\bar a\) still covers 0.5) |
+| **Survives** | \(\ell > 0.5\) (CI of \(\bar a\) entirely above chance) |
+| **Indeterminate** | anything else |
 
-Do **not** call “collapse” a point estimate “near 0.5” without the CI-covers-0.5 + drop-vs-λ0 tests.
-Do **not** use “rule A” (CI **lower** bound > 0.5) as the inversion criterion — that is the opposite direction
-(survives / “fixes”-style). Gate fail → still **no** collapse/inversion/survives claim (“invariance not reached”).
+**Always report** (every arm / OOD cell, every label including Survives): \(\bar a\), \([\ell, u]\),
+\(\Delta = \bar a - \bar a_0\), and \([\ell_\Delta, u_\Delta]\). Survives can still hide a large drop
+(e.g. 0.95 → 0.60 with \(\ell > 0.5\)); the Δ column is required so that is visible without renaming the label.
+
+Do **not** call “collapse” from \(\bar a < \bar a_0\) alone.  
+Do **not** use “rule A” (CI **lower** bound > 0.5) as the inversion criterion.  
+Gate fail → still **no** collapse/inversion/survives claim (“invariance not reached”).
 
 ### (2) Two pre-registered arms (λ = 2 × seeds, same toolbox + gate)
 
@@ -211,3 +224,6 @@ R2-prior on the other. Does not wait for held R2 cells.
 - 2026-10-17 ~16:35 (+07), **before any P10 training**. Locked numeric **inversion / collapse / survives /
   indeterminate** definitions (CI upper &lt; 0.5; drop vs λ0 + CI covers 0.5; CI lower &gt; 0.5). Corrects the
   earlier draft that mis-stated inversion as “CI lower bound &lt; 0.5”.
+- 2026-10-17 ~16:40 (+07), **before any P10 training**. Collapse requires \(u_\Delta < 0\) (CI of
+  \(\bar a-\bar a_0\) entirely below 0), not a bare point drop. Always report Δ and its CI (incl. Survives).
+  Bootstrap spelled out: B = 2,000, percentile 95%, rng 20261017, seed-mean only.
