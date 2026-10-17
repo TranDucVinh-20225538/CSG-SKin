@@ -43,4 +43,4 @@ Mahalanobis AUROC vs pad_full leakage; colour = shift level; marker = recipe; re
 
 label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets (prediction).
 
-**On origin/paperb/reviewer-r1:** `c9ba9b8`.
+******On origin/paperb/reviewer-r1:** `332c12d`.
