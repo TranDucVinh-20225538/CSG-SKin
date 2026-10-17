@@ -279,18 +279,29 @@ def build():
             },
         })
 
+    # Primary Spearman: exclude degraded (EM s42 was incorrectly in the first n=20).
     pairs = [(r["prior"]["tv"], r["maha_unseen3_mean"]) for r in per_seed
-             if np.isfinite(r["prior"]["tv"]) and np.isfinite(r["maha_unseen3_mean"])]
+             if (not r["degraded"]) and np.isfinite(r["prior"]["tv"]) and np.isfinite(r["maha_unseen3_mean"])]
     pe = spearman_boot(pairs)
+    pe["excluded_degraded"] = [{"estimator": r["estimator"], "seed": r["seed"]}
+                               for r in per_seed if r["degraded"]]
+    # Post-hoc sensitivity (not locked): drop all EM points — BBSE / n50 / oracle only.
+    pairs_no_em = [(r["prior"]["tv"], r["maha_unseen3_mean"]) for r in per_seed
+                   if r["estimator"] != "em" and (not r["degraded"])
+                   and np.isfinite(r["prior"]["tv"]) and np.isfinite(r["maha_unseen3_mean"])]
+    pe_no_em = spearman_boot(pairs_no_em)
+    pe_no_em["label"] = "post-hoc sensitivity: BBSE + n50 + oracle (no EM)"
 
     # Primary fixes (EM / n50 only; exclude degraded from pooled — point table still lists all)
+    # Also tabulate oracle the same way (reference; not an arm under the success rule).
     fixes = {}
-    for arm, est in (("iwdan_em", "em"), ("iwdan_n50", "n50")):
-        rows = [r for r in per_seed if r["arm"] == arm and not r["degraded"]]
+    for arm, est in (("iwdan_em", "em"), ("iwdan_n50", "n50"), ("iwdan_oracle", "oracle")):
+        rows = [r for r in per_seed if r["estimator"] == est and not r["degraded"]]
+        if not rows and est == "oracle":
+            rows = [r for r in per_seed if r["estimator"] == "oracle"]
         cell = {}
         for ood in UNSEEN3:
             pts = [r["detectors"][ood]["mahalanobis_classcond"] for r in rows]
-            # pooled CI via seed bootstrap of mean (simple; full cluster CI is in main R2 tooling)
             rng = np.random.default_rng(20261017)
             if pts:
                 boots = [float(np.mean(rng.choice(pts, size=len(pts), replace=True)))
@@ -300,43 +311,76 @@ def build():
             else:
                 lo = hi = mean = float("nan")
             leaks = [r["leakage_pad_full"] for r in rows]
-            leak_ok = bool(leaks) and float(np.mean(leaks)) <= leak_thr
+            leak_mean = float(np.mean(leaks)) if leaks else None
+            leak_ok = leak_mean is not None and leak_mean <= leak_thr
+            maha_ok = bool(lo > 0.5)
             cell[ood] = {
                 "maha_mean": mean, "ci_lo": lo, "ci_hi": hi,
-                "ci_lo_gt_0.5": bool(lo > 0.5),
-                "leakage_mean": float(np.mean(leaks)) if leaks else None,
+                "ci_lo_gt_0.5": maha_ok,
+                "leakage_mean": leak_mean,
                 "leakage_ok": leak_ok,
-                "fixes": bool(lo > 0.5 and leak_ok),
+                "fixes": bool(maha_ok and leak_ok),
                 "n_seeds_non_degraded": len(rows),
             }
         n_fix = sum(1 for o in UNSEEN3 if cell[o]["fixes"])
-        fixes[est] = {"sets": cell, "n_fixes": n_fix, "arm_success": n_fix >= 2,
-                      "leakage_threshold": leak_thr, "dann_leakage": leak_dann}
+        id_bals = [r["id_bal_acc"] for r in rows]
+        fixes[est] = {
+            "sets": cell, "n_fixes": n_fix, "arm_success": n_fix >= 2 if est != "oracle" else None,
+            "leakage_threshold": leak_thr, "dann_leakage": leak_dann,
+            "leakage_mean": float(np.mean([r["leakage_pad_full"] for r in rows])) if rows else None,
+            "id_bal_mean": float(np.mean(id_bals)) if id_bals else None,
+            "id_bal_sd": float(np.std(id_bals, ddof=1)) if len(id_bals) > 1 else None,
+            # shared leakage fails every set the same way — surface once
+            "fail_mode": (
+                "leakage_only" if (
+                    all(cell[o]["ci_lo_gt_0.5"] for o in UNSEEN3)
+                    and not any(cell[o]["leakage_ok"] for o in UNSEEN3)
+                ) else
+                "maha_only" if (
+                    all(cell[o]["leakage_ok"] for o in UNSEEN3)
+                    and not all(cell[o]["ci_lo_gt_0.5"] for o in UNSEEN3)
+                ) else
+                "both_or_mixed"
+            ),
+        }
 
-    return per_seed, pe, fixes, leak_dann, leak_thr
+    return per_seed, pe, pe_no_em, fixes, leak_dann, leak_thr
 
 
-def write_report(per_seed, pe, fixes, leak_dann, leak_thr):
+def write_report(per_seed, pe, pe_no_em, fixes, leak_dann, leak_thr):
+    em_bad = [r for r in per_seed if r["estimator"] == "em" and r["prior"]["tv"] >= 0.99]
     L = [
         "# Paper B R6 R2-prior — IWDAN with better class priors",
         "",
         "Design: `decisions/paperB_r6_r2_prior.md`. Commit `{}`.".format(R.C.git_head()),
         "",
-        "All 5 seeds × {EM, 50-label} present. Numbers only — no post-hoc reading beyond the "
-        "pre-committed criteria / Spearman rule.",
+        "All 5 seeds × {EM, 50-label} present. Locked verdicts unchanged: **EM 0/3**, **n50 0/3**, "
+        "primary Spearman **not supported**. Condition tables below clarify *why* before any prose reading.",
         "",
         "## Per-seed priors (π̂ vs true pad_adv; TV / L1)",
         "",
-        "| estimator | seed | TV | L1 | temp_T | BBSE fallback | degraded |",
-        "|---|---:|---:|---:|---:|---|---|",
+        "| estimator | seed | TV | L1 | temp_T | BBSE fallback | degraded | EM note |",
+        "|---|---:|---:|---:|---:|---|---|---|",
     ]
     for r in sorted(per_seed, key=lambda z: (z["estimator"], z["seed"])):
         p = r["prior"]
-        L.append("| {} | {} | {:.3f} | {:.3f} | {} | {} | {} |".format(
+        em_note = "—"
+        if r["estimator"] == "em" and p["tv"] >= 0.99:
+            em_note = "invalid prior (mass on DF/VASC absent from pad_adv)"
+        elif r["degraded"]:
+            em_note = "degraded ID bal"
+        L.append("| {} | {} | {:.3f} | {:.3f} | {} | {} | {} | {} |".format(
             r["estimator"], r["seed"], p["tv"], p["l1"],
             "—" if p["temp_T"] is None else "{:.3f}".format(p["temp_T"]),
             "yes" if p.get("used_bbse_fallback") else "no",
-            "yes" if r["degraded"] else "no"))
+            "yes" if r["degraded"] else "no", em_note))
+    if em_bad:
+        L += ["",
+              "**EM validity:** seeds {} have TV ≈ 1.0 (π̂ on DF/VASC; true pad_adv has DF=VASC=0). "
+              "Treat as **failed estimation / not a valid error level**, not as a calibrated prior. "
+              "High AUROC at those seeds (e.g. s72) is not evidence that EM “worked”.".format(
+                  ", ".join("s{}".format(r["seed"]) for r in em_bad)),
+              ""]
     L += ["",
           "## Per-seed ID bal, leakage, detectors (Maha / kNN / cosine / MSP / Energy), class-aware (a)/(b)/(c)",
           "",
@@ -355,46 +399,75 @@ def write_report(per_seed, pe, fixes, leak_dann, leak_thr):
                 r["class_aware"]["a"], r["class_aware"]["b"], r["class_aware"]["c"]))
         L.append("")
 
-    L += ["## Primary fixes (EM / 50-label; non-degraded seeds; seed-bootstrap CI of Maha mean)",
+    L += ["## Primary fixes — condition breakdown (same rule as oracle)",
           "",
-          "Fixes set if Maha CI lower > 0.5 **and** pad_full leakage ≤ DANN λ=2 leakage + 0.05 "
-          "({:.3f} + 0.05 = {:.3f}). Arm success = ≥ 2/3 primary sets.".format(leak_dann, leak_thr),
+          "Fixes set if **(i)** Maha seed-bootstrap CI lower > 0.5 **and** **(ii)** pad_full leakage "
+          "(Table 1, unweighted) ≤ DANN λ=2 leakage + 0.05 "
+          "({:.3f} + 0.05 = {:.3f}). Arm success = ≥ 2/3 primary sets. "
+          "Oracle is reference only (not an arm under the success rule). "
+          "ID bal is reported for context; it is **not** a primary fixes conjunct.".format(
+              leak_dann, leak_thr),
           "",
-          "| arm | Fitz fixes | MED fixes | SD fixes | n_fixes | arm success |",
-          "|---|---|---|---|---:|---|"]
-    for est in ("em", "n50"):
+          "| arm | set | Maha mean [CI] | Maha CI>0.5 | leak mean | leak ≤ thr | fixes |",
+          "|---|---|---|---|---:|---|---|"]
+    for est in ("n50", "oracle", "em"):
         f = fixes[est]
-        L.append("| {} | {} | {} | {} | {} | {} |".format(
-            est,
-            "yes" if f["sets"]["fitzpatrick17k"]["fixes"] else "no",
-            "yes" if f["sets"]["mednode"]["fixes"] else "no",
-            "yes" if f["sets"]["sd198"]["fixes"] else "no",
-            f["n_fixes"], "yes" if f["arm_success"] else "no"))
+        for ood in UNSEEN3:
+            s = f["sets"][ood]
+            L.append("| {} | {} | {:.3f} [{:.3f}, {:.3f}] | {} | {:.3f} | {} | {} |".format(
+                est, ood, s["maha_mean"], s["ci_lo"], s["ci_hi"],
+                "yes" if s["ci_lo_gt_0.5"] else "no",
+                s["leakage_mean"] if s["leakage_mean"] is not None else float("nan"),
+                "yes" if s["leakage_ok"] else "no",
+                "yes" if s["fixes"] else "no"))
     L += ["",
+          "| arm | n_fixes | arm success | fail_mode | ID bal mean | leak mean |",
+          "|---|---:|---|---|---:|---:|"]
+    for est in ("n50", "oracle", "em"):
+        f = fixes[est]
+        succ = "—" if f["arm_success"] is None else ("yes" if f["arm_success"] else "no")
+        L.append("| {} | {} | {} | {} | {:.3f} | {:.3f} |".format(
+            est, f["n_fixes"], succ, f["fail_mode"],
+            f["id_bal_mean"] if f["id_bal_mean"] is not None else float("nan"),
+            f["leakage_mean"] if f["leakage_mean"] is not None else float("nan")))
+    L += ["",
+          "**n50 vs oracle:** both have Maha CI > 0.5 on all three primary sets but fail the "
+          "**same leakage conjunct** (unweighted pad_full probe above DANN+0.05). Locked label remains "
+          "n50 **0/3 / not success**; the miss is not low AUROC.",
+          "",
           "### Secondary within-class probe (c) vs DANN 0.618 (does not override primary)",
           "",
           "| arm | seed | (c) | ≤ 0.618 |",
           "|---|---:|---:|---|"]
     for r in sorted(per_seed, key=lambda z: (z["estimator"], z["seed"])):
-        if r["estimator"] not in ("em", "n50"):
+        if r["estimator"] not in ("em", "n50", "oracle"):
             continue
         c = r["class_aware"]["c"]
         L.append("| {} | {} | {:.3f} | {} |".format(
             r["estimator"], r["seed"], c, "yes" if c <= DANN_WITHIN_C else "no"))
 
+    excl = pe.get("excluded_degraded") or []
     L += ["",
           "## Prior-error test (locked)",
           "",
-          "x = TV(π̂, true pad_adv); y = mean Maha AUROC over Fitz/MED/SD; "
-          "points = {{BBSE, EM, 50-label, oracle}} × 5 seeds. Spearman ρ; bootstrap CI "
-          "({}, rng {}). **Supported** if ρ ≤ −0.5 and CI excludes 0.".format(
+          "x = TV(π̂, true pad_adv); y = mean Maha AUROC over Fitz/MED/SD. "
+          "Primary: {{BBSE, EM, 50-label, oracle}} × seeds, **excluding degraded** "
+          "(dropped: {}). Bootstrap CI ({}, rng {}). "
+          "**Supported** if ρ ≤ −0.5 and CI excludes 0.".format(
+              ", ".join("{} s{}".format(e["estimator"], e["seed"]) for e in excl) or "none",
               SPEARMAN_BOOT_N, SPEARMAN_RNG),
           "",
-          "| ρ | 95% CI | n | supported |",
-          "|---:|---|---:|---|",
-          "| {:.3f} | [{:.3f}, {:.3f}] | {} | {} |".format(
+          "| analysis | ρ | 95% CI | n | supported |",
+          "|---|---:|---|---:|---|",
+          "| primary (excl. degraded) | {:.3f} | [{:.3f}, {:.3f}] | {} | {} |".format(
               pe["rho"], pe["ci_lo"], pe["ci_hi"], pe["n_points"],
               "yes" if pe["supported"] else "no"),
+          "| post-hoc sensitivity (no EM: BBSE+n50+oracle) | {:.3f} | [{:.3f}, {:.3f}] | {} | {} |".format(
+              pe_no_em["rho"], pe_no_em["ci_lo"], pe_no_em["ci_hi"], pe_no_em["n_points"],
+              "yes" if pe_no_em["supported"] else "no"),
+          "",
+          "Post-hoc row is **not** a locked criterion (EM estimation is unreliable: TV≈1 on s42/s72). "
+          "Primary locked call remains **not supported** on the excl.-degraded set.",
           "",
           "Prediction (decisions, written before results): EM TV between BBSE and oracle; "
           "Spearman ρ ≈ −0.6 to −0.9 if prior quality drives detection; else ρ ≈ 0.",
@@ -406,15 +479,25 @@ def write_report(per_seed, pe, fixes, leak_dann, leak_thr):
         "design": "decisions/paperB_r6_r2_prior.md",
         "per_seed": per_seed,
         "prior_error": pe,
+        "prior_error_no_em_posthoc": pe_no_em,
         "fixes": fixes,
         "dann_leakage": leak_dann,
         "leakage_threshold": leak_thr,
-        "note": "tabular only; no post-hoc interpretation",
+        "locked_verdicts": {
+            "em_n_fixes": fixes["em"]["n_fixes"], "em_arm_success": fixes["em"]["arm_success"],
+            "n50_n_fixes": fixes["n50"]["n_fixes"], "n50_arm_success": fixes["n50"]["arm_success"],
+            "spearman_supported": pe["supported"],
+            "n50_fail_mode": fixes["n50"]["fail_mode"],
+            "oracle_fail_mode": fixes["oracle"]["fail_mode"],
+        },
+        "note": "Locked EM 0/3, n50 0/3, Spearman not supported. Condition tables + no-EM Spearman are diagnostic.",
     }
     (root() / "prior_error.json").write_text(json.dumps(payload, indent=2) + "\n")
     print("wrote", root() / "REPORT.md", flush=True)
     print("wrote", root() / "prior_error.json", flush=True)
-    print("Spearman", pe, flush=True)
+    print("Spearman primary", pe, flush=True)
+    print("Spearman no-EM posthoc", pe_no_em, flush=True)
+    print("n50 fail_mode", fixes["n50"]["fail_mode"], "oracle", fixes["oracle"]["fail_mode"], flush=True)
 
 
 def main():
@@ -429,8 +512,8 @@ def main():
         sys.exit(2)
     if miss:
         print("WARNING partial:", miss, flush=True)
-    per_seed, pe, fixes, leak_dann, leak_thr = build()
-    write_report(per_seed, pe, fixes, leak_dann, leak_thr)
+    per_seed, pe, pe_no_em, fixes, leak_dann, leak_thr = build()
+    write_report(per_seed, pe, pe_no_em, fixes, leak_dann, leak_thr)
 
 
 if __name__ == "__main__":

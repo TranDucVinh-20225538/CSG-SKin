@@ -139,3 +139,11 @@ flag and keep (no redraw). Cap 20 GPU-h.
   per-seed prior TV for n50 before train and for EM each epoch in `iw_log`.
 - 2026-10-17 ~22:00 (+07), **order only**. R2-prior keeps **both GPUs** until the array finishes; then Camelyon
   ladder pilot ∥ Q1 headroom (one GPU each); held R2 after both; then R1-hi.
+
+- 2026-10-18 ~03:50 (+07), **reporting clarification (criteria unchanged)**. Locked verdicts stay EM 0/3, n50 0/3,
+  Spearman not supported. (1) Primary Spearman **excludes degraded** (EM s42 was in the first n=20 by bug).
+  (2) n50 / oracle condition table: both pass Maha CI>0.5 on Fitz/MED/SD and fail the **same** unweighted
+  pad_full leakage ≤ DANN+0.05 conjunct (`fail_mode=leakage_only`). (3) EM TV≈1 at s42/s72 = mass on DF/VASC
+  (absent from pad_adv) — invalid estimation, not a calibrated prior. (4) Post-hoc Spearman without EM
+  (BBSE+n50+oracle) reported as sensitivity only.
+
