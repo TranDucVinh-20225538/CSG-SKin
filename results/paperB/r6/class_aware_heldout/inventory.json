@@ -1,0 +1,181 @@
+{
+  "n": 25,
+  "runs": [
+    {
+      "cell": "r2_iwdan_l2",
+      "family": "R2 IWDAN \u03bb=2",
+      "tag": "r2_cur_iwdan_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l2",
+      "family": "R2 IWDAN \u03bb=2",
+      "tag": "r2_cur_iwdan_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l2",
+      "family": "R2 IWDAN \u03bb=2",
+      "tag": "r2_cur_iwdan_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l2",
+      "family": "R2 IWDAN \u03bb=2",
+      "tag": "r2_cur_iwdan_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l2",
+      "family": "R2 IWDAN \u03bb=2",
+      "tag": "r2_cur_iwdan_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwcdan_l2",
+      "family": "R2 IWCDAN \u03bb=2",
+      "tag": "r2_cur_iwcdan_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwcdan_l2",
+      "family": "R2 IWCDAN \u03bb=2",
+      "tag": "r2_cur_iwcdan_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwcdan_l2",
+      "family": "R2 IWCDAN \u03bb=2",
+      "tag": "r2_cur_iwcdan_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwcdan_l2",
+      "family": "R2 IWCDAN \u03bb=2",
+      "tag": "r2_cur_iwcdan_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwcdan_l2",
+      "family": "R2 IWCDAN \u03bb=2",
+      "tag": "r2_cur_iwcdan_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l2",
+      "family": "R2 IWDAN_ORACLE \u03bb=2",
+      "tag": "r2_cur_iwdan_oracle_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l2",
+      "family": "R2 IWDAN_ORACLE \u03bb=2",
+      "tag": "r2_cur_iwdan_oracle_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l2",
+      "family": "R2 IWDAN_ORACLE \u03bb=2",
+      "tag": "r2_cur_iwdan_oracle_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l2",
+      "family": "R2 IWDAN_ORACLE \u03bb=2",
+      "tag": "r2_cur_iwdan_oracle_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l2",
+      "family": "R2 IWDAN_ORACLE \u03bb=2",
+      "tag": "r2_cur_iwdan_oracle_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r1_shift0_l2",
+      "family": "R1 shift0% \u03bb=2",
+      "tag": "r1_cur_shift0_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift0_l2",
+      "family": "R1 shift0% \u03bb=2",
+      "tag": "r1_cur_shift0_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift0_l2",
+      "family": "R1 shift0% \u03bb=2",
+      "tag": "r1_cur_shift0_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift0_l2",
+      "family": "R1 shift0% \u03bb=2",
+      "tag": "r1_cur_shift0_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift0_l2",
+      "family": "R1 shift0% \u03bb=2",
+      "tag": "r1_cur_shift0_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l2",
+      "family": "R1 shift100% \u03bb=2",
+      "tag": "r1_cur_shift100_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l2",
+      "family": "R1 shift100% \u03bb=2",
+      "tag": "r1_cur_shift100_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l2",
+      "family": "R1 shift100% \u03bb=2",
+      "tag": "r1_cur_shift100_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l2",
+      "family": "R1 shift100% \u03bb=2",
+      "tag": "r1_cur_shift100_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l2",
+      "family": "R1 shift100% \u03bb=2",
+      "tag": "r1_cur_shift100_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    }
+  ],
+  "commit": "94279f5"
+}
