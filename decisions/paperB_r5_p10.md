@@ -142,9 +142,29 @@ Source: `results/paperB/r2/item5/split_camelyon2.json` (primary assignment). Hos
 **Adversary-domain TV** (total variation between Bernoulli mixes of A_train vs B_adv):
 \(\mathrm{TV} = \tfrac12\sum_c |p_A(c)-p_B(c)| = \mathbf{0.056}\).
 
-Thresholds (locked): **TV < 0.10** → predict **collapse without inversion** on the held-out hospital;
-**TV ≥ 0.30** → predict **inversion** (rule A: Maha 95% CI LB < 0.5 on B_heldout). Natural mix is in the
-collapse-only band.
+Thresholds (locked): **TV < 0.10** → predict **collapse** (not inversion) on the held-out hospital;
+**TV ≥ 0.30** → predict **inversion**. Natural mix is in the collapse-only band.
+
+### Detection labels (locked 2026-10-17 ~16:35 — before any P10 training under this plan)
+
+Primary detector: **Mahalanobis** class-conditional AUROC, **A-test vs B_heldout** (NCT uses the same
+labels for A-test vs NCT). Because B_heldout has few slides, the CI is the **seed-bootstrap** percentile
+interval of the **seed-mean** AUROC (2,000 draws, rng **20261017**); not a patch/slide cluster bootstrap.
+λ = 0 reference mean = R2 item5 λ = 0 Mahalanobis on the same OOD set (seeds 42–44), denoted \(\bar a_0\).
+Let \(\bar a\) be the arm’s seed-mean AUROC and \([\ell, u]\) its 95% CI.
+
+Labels are **mutually exclusive**, checked in order:
+
+| Label | Numeric definition |
+|-------|--------------------|
+| **Inversion** | \(u < 0.5\) (CI entirely below chance) |
+| **Collapse** | not inversion, **and** \(\bar a < \bar a_0\) (AUROC fell vs λ = 0), **and** \(\ell \le 0.5 \le u\) (CI still covers 0.5) |
+| **Survives** | \(\ell > 0.5\) (CI entirely above chance), whether or not \(\bar a\) fell vs λ = 0 |
+| **Indeterminate** | anything else (e.g. \(\bar a \ge \bar a_0\) while CI covers 0.5; or \(u \ge 0.5\) with \(\ell < 0.5\) but no drop vs λ = 0) |
+
+Do **not** call “collapse” a point estimate “near 0.5” without the CI-covers-0.5 + drop-vs-λ0 tests.
+Do **not** use “rule A” (CI **lower** bound > 0.5) as the inversion criterion — that is the opposite direction
+(survives / “fixes”-style). Gate fail → still **no** collapse/inversion/survives claim (“invariance not reached”).
 
 ### (2) Two pre-registered arms (λ = 2 × seeds, same toolbox + gate)
 
@@ -153,10 +173,10 @@ inner steps as L3; classifier LR ×0.2). Gate unchanged (held-out hospital site 
 
 | Arm | Adversary class mix | Seeds | Pre-registered prediction (B_heldout detection) |
 |-----|---------------------|------:|--------------------------------------------------|
-| **Natural** | Class mix as in the manifest (TV = 0.056 < 0.10) | 5 (42–82) | **Collapse without inversion** (Maha → ~0.5, not rule-A invert) if gate met; if gate not met → “invariance not reached” |
-| **Induced shift** | Resample **only** images fed to the adversary so domain A batches are **80% tumour** and domain B batches **20% tumour** (TV = **0.60** ≥ 0.30). Classifier stream keeps natural A mix. | 5 (42–82), see cap | **Inversion** on B_heldout (rule A) if gate met |
+| **Natural** | Class mix as in the manifest (TV = 0.056 < 0.10) | 5 (42–82) | **Collapse** if gate met; if gate not met → “invariance not reached” |
+| **Induced shift** | Resample **only** images fed to the adversary so domain A batches are **80% tumour** and domain B batches **20% tumour** (TV = **0.60** ≥ 0.30). Classifier stream keeps natural A mix. | 5 (42–82), see cap | **Inversion** if gate met |
 
-Report each arm **against its prediction**. Do not flip the prediction after seeing AUROC.
+Report each arm **against its prediction** using the table above. Do not flip the prediction after seeing AUROC.
 
 ### (3) NCT-CRC-HE
 
@@ -188,3 +208,6 @@ R2-prior on the other. Does not wait for held R2 cells.
 - 2026-10-17 ~16:30 (+07), **before any P10 training**. Label-shift arms amendment above (class mix TV = 0.056;
   natural vs induced; NCT semantic-only; cap rule). Queued ladder `68564`/`68565`/`68566` **cancelled before any
   rung**. P10 ∥ R2-prior after R2 tasks 14–15; held R2 (CDAN remainder + λ = 0.5) resumes after both.
+- 2026-10-17 ~16:35 (+07), **before any P10 training**. Locked numeric **inversion / collapse / survives /
+  indeterminate** definitions (CI upper &lt; 0.5; drop vs λ0 + CI covers 0.5; CI lower &gt; 0.5). Corrects the
+  earlier draft that mis-stated inversion as “CI lower bound &lt; 0.5”.
