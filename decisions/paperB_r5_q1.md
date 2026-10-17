@@ -243,4 +243,5 @@ Headroom gate still runs first; if it fails, neither arm is launched (replacemen
 - 2026-10-18 ~01:32 (+07), **order only**. After Q1 gate GPU array `68731` completes, external maxim pipeline
   (`68747`→`68751`) gets both GPUs until finished; Camelyon pilot `68725` re-pointed to `afterok:68751` (no longer
   parallel with Q1). CPU Q1 report `68732` may still run after gate. Paper B GPU resume: pilot → release held R2 → …
+- 2026-10-18 ~01:34 (+07), **order only**. Q1 gate array `68731` throttle set to **%2** (both GPUs) so gate finishes faster before maxim; maxim gen stays %2. Criteria unchanged.
 
