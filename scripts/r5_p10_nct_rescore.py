@@ -166,7 +166,11 @@ def main():
     sp_global = dict(np.load(c2.split_path("primary")))
 
     if args.local_scratch:
-        scratch = Path(os.environ.get("SLURM_TMPDIR") or os.environ.get("TMPDIR") or "/tmp") / "p10_nct"
+        # Prefer Slurm per-job tmp; else user-private dir under $TMPDIR|/tmp (shared /tmp/p10_nct may be denied).
+        if os.environ.get("SLURM_TMPDIR"):
+            scratch = Path(os.environ["SLURM_TMPDIR"]) / "p10_nct"
+        else:
+            scratch = Path(os.environ.get("TMPDIR") or "/tmp") / "toandq_p10_nct_{}".format(os.getuid())
         scratch.mkdir(parents=True, exist_ok=True)
         os.environ["NCT_LOCAL_SCRATCH"] = str(scratch)
         nct_paths = stage_nct_local(scratch)

@@ -13,12 +13,13 @@ ROOT="/data2/cmdir/home/toandq/CSG-Skin-paperB"
 export PYTHONUNBUFFERED=1
 export PYTHONPATH=/data2/hpcshared/Vinh/CSG-Skin:${ROOT}/scripts
 cd "${ROOT}"
-echo "=== P10 NCT rescore missing induced 72/82 $(date) host=$(hostname) TMP=${SLURM_TMPDIR:-/tmp} ==="
-# Prefer conda torch-env if .venv lacks wilds; fall back to .venv
+echo "=== P10 NCT rescore missing induced 72/82 $(date) host=$(hostname) SLURM_TMPDIR=${SLURM_TMPDIR:-unset} ==="
+# Same env as successful partial run 68724; fall back to torch-env if needed.
 PY="${ROOT}/.venv/bin/python"
-if ! "$PY" -c "import wilds" 2>/dev/null; then
+if ! "$PY" -c "import wilds,torch" 2>/dev/null; then
   PY="/data2/cmdir/home/toandq/.conda/envs/torch-env/bin/python"
 fi
+echo "python=$PY"
 "$PY" scripts/r5_p10_nct_rescore.py --device cpu --num_workers 0 \
   --local_scratch --retries 4 --retry_sleep 10 \
   --only induced_l2:72 --only induced_l2:82
