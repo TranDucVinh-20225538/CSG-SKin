@@ -240,3 +240,7 @@ Headroom gate still runs first; if it fails, neither arm is launched (replacemen
   Montgomery AUROC at λ = 0 is reported descriptively. Natural/balanced inversion predictions apply to **each** unseen
   OOD set.
 
+- 2026-10-18 ~01:32 (+07), **order only**. After Q1 gate GPU array `68731` completes, external maxim pipeline
+  (`68747`→`68751`) gets both GPUs until finished; Camelyon pilot `68725` re-pointed to `afterok:68751` (no longer
+  parallel with Q1). CPU Q1 report `68732` may still run after gate. Paper B GPU resume: pilot → release held R2 → …
+

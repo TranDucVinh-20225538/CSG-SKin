@@ -87,3 +87,7 @@ Held R2 cells release after both; then R1-hi.
 - 2026-10-17 ~22:05 (+07), **before any pilot run**. L1–L4 redefined to keep the full current P10 toolbox (incl. adv LR
   base overridden only by the level’s ×30/×100, re-init every 500 steps); L5 replaced by λ = 20 + deepest head bank +
   re-init every 100 steps (stronger than toolbox), not “L4 + re-init every 2 epochs”.
+
+- 2026-10-18 ~01:32 (+07), **order only**. Pilot array `68725` no longer starts after R2-prior in parallel with Q1;
+  dependency set to `afterok:68751` (maxim TEST score) so maxim can use both GPUs after Q1 gate. Criteria unchanged.
+
