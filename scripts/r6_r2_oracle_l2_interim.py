@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Interim R2 send: oracle λ=2 (5 seeds) + matched IWDAN λ=2 + R1 DANN shift100 last.ckpt.
 
-Gap recovered (oracle−DANN)/(λ0−DANN) and (IWDAN−DANN)/(λ0−DANN) per unseen set.
-Does not change the pre-committed reading. Full R2 report still runs after all 40 cells.
+Gap recovered locked (decisions/paperB_r6_r2.md): (method−DANN)/(λ0−DANN) per unseen set;
+λ0 = R1 shift100 λ=0 last.ckpt (same recipe), computed per set. Always co-report absolute
+Δ = method−DANN; flag small |λ0−DANN|. Does not close the pre-committed fix reading.
 """
 
 from __future__ import annotations
@@ -59,8 +60,12 @@ def main():
         "",
         f"Commit `{R.C.git_head()}`. Order deviation 2026-10-17 (oracle λ=2 advanced; criteria unchanged).",
         "",
-        "**Baselines:** DANN = R1 shift 100% λ=2 `last.ckpt` (pad ≈ 0.368, Fitz ≈ 0.340, leakage ≈ 0.634); "
-        "λ0 = R1 shift 100% λ=0 `last.ckpt`. Same seeds `(42,52,62,72,82)` and same lesion-level / Phase 2 split.",
+        "**Baselines (locked):** DANN = R1 shift 100% λ=2 `last.ckpt` (pad ≈ 0.368, Fitz ≈ 0.340, leakage ≈ 0.634); "
+        "λ0 = R1 shift 100% λ=0 `last.ckpt`, **AUROC per unseen set**. Same recipe `current`, seeds "
+        "`(42,52,62,72,82)`, lesion-level / Phase 2 split.",
+        "",
+        "**Gap recovered (locked):** `(method−DANN)/(λ0−DANN)` Mahalanobis, paired by seed; always co-report "
+        "absolute Δ. If mean `|λ0−DANN| < 0.05` → flag **small denom — prefer absolute Δ**.",
         "",
         "Pre-committed fix reading **not** closed here — wait for CDAN and λ = 0.5.",
         "",
@@ -91,7 +96,9 @@ def main():
         }
 
     lines += ["", "## Gap recovered and paired Δ vs DANN (per unseen set)", "",
-              "| method | set | Δ vs DANN [cluster CI] | gap recovered (method−DANN)/(λ0−DANN) [seed boot CI] |",
+              "Absolute Δ is primary when the denom is small; ratio is still printed for every set.",
+              "",
+              "| method | set | Δ vs DANN [cluster CI] | gap recovered (method−DANN)/(λ0−DANN) [seed boot CI · Δabs · denom] |",
               "|---|---|---|---|"]
 
     for name, feat in (("IWDAN", iw_f), ("IWDAN_ORACLE", ora_f)):
@@ -108,7 +115,7 @@ def main():
             if gap:
                 rows_json["gap_recovered"][key] = gap
             lines.append("| {} | {} | {} | {} |".format(
-                name, ood, RR._fmt_delta(dlt), RR._fmt_delta(gap)))
+                name, ood, RR._fmt_delta(dlt), RR._fmt_gap(gap)))
 
     lines += [
         "",

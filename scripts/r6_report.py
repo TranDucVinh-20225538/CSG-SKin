@@ -645,36 +645,58 @@ def paired_delta_cluster_ci(feat_a, feat_b, ood_name, id_groups, o_groups, det="
             "n_seeds": len(seeds), "per_seed": per, "det": det, "ood": ood_name}
 
 
+# Locked in decisions/paperB_r6_r2.md (2026-10-17): drop seed if |λ0−DANN| below this; flag set if mean |denom| < SMALL.
+GAP_DENOM_EPS = 1e-6
+GAP_SMALL_DENOM = 0.05
+
+
 def gap_recovered_seed_boot(feat_iw, feat_dann, feat_l0, ood_name, det="mahalanobis_classcond", n_boot=None):
-    """Share of gap recovered: (IW − DANN) / (λ0 − DANN), paired by seed; bootstrap CI of the seed-mean."""
+    """Share of gap recovered: (method − DANN) / (λ0 − DANN), paired by seed; bootstrap CI of the seed-mean.
+
+    λ0 and DANN are per-set Mahalanobis AUROCs from R1 shift100 last.ckpt (same recipe). Always also
+    returns mean absolute Δ (method − DANN) and mean(λ0 − DANN) so small-denominator sets are not
+    read from the ratio alone.
+    """
     si, sd, s0 = (_score_packs(feat_iw, ood_name, det), _score_packs(feat_dann, ood_name, det),
                   _score_packs(feat_l0, ood_name, det))
     seeds = sorted(set(si) & set(sd) & set(s0))
-    gaps = []
+    gaps, abs_deltas, denoms = [], [], []
     per = {}
     for s in seeds:
         iw = R.auroc(*si[s])
         dann = R.auroc(*sd[s])
         l0 = R.auroc(*s0[s])
         denom = l0 - dann
-        if abs(denom) < 1e-6:
+        abs_d = iw - dann
+        denoms.append(denom)
+        abs_deltas.append(abs_d)
+        if abs(denom) < GAP_DENOM_EPS:
             g = float("nan")
         else:
-            g = (iw - dann) / denom
+            g = abs_d / denom
         gaps.append(g)
-        per[str(s)] = {"iw": iw, "dann": dann, "lambda0": l0, "gap_recovered": g, "denom": denom}
+        per[str(s)] = {"iw": iw, "dann": dann, "lambda0": l0, "gap_recovered": g,
+                       "delta_abs": abs_d, "denom": denom}
     gaps = np.asarray(gaps, float)
     ok = np.isfinite(gaps)
     if ok.sum() < 1:
         return None
     g = gaps[ok]
+    den_arr = np.asarray(denoms, float)
+    abs_arr = np.asarray(abs_deltas, float)
     pre = json.loads(R.PREREG.read_text())
     n_boot = int(pre["n_resamples"]) if n_boot is None else n_boot
     rng = np.random.default_rng(int(pre["rng_seed"]) + 17)
     boots = np.array([g[rng.integers(0, len(g), len(g))].mean() for _ in range(n_boot)])
+    mean_denom = float(den_arr.mean())
     return {"mean": float(g.mean()), "sd": float(g.std(ddof=1)) if len(g) > 1 else 0.0,
             "ci_lo": float(np.quantile(boots, 0.025)), "ci_hi": float(np.quantile(boots, 0.975)),
-            "n_seeds": int(ok.sum()), "per_seed": per, "det": det, "ood": ood_name}
+            "n_seeds": int(ok.sum()), "per_seed": per, "det": det, "ood": ood_name,
+            "mean_delta_abs": float(abs_arr.mean()),
+            "sd_delta_abs": float(abs_arr.std(ddof=1)) if len(abs_arr) > 1 else 0.0,
+            "mean_denom": mean_denom,
+            "sd_denom": float(den_arr.std(ddof=1)) if len(den_arr) > 1 else 0.0,
+            "small_denom": bool(abs(mean_denom) < GAP_SMALL_DENOM)}
 
 
 def _fmt_delta(d):
@@ -682,6 +704,18 @@ def _fmt_delta(d):
         return "—"
     return "{:+.3f} ± {:.3f} [{:.3f}, {:.3f}] (n={})".format(
         d["mean"], d["sd"], d["ci_lo"], d["ci_hi"], d["n_seeds"])
+
+
+def _fmt_gap(d):
+    """Gap-recovered ratio plus denom context; flags small |λ0−DANN|."""
+    if d is None:
+        return "—"
+    base = _fmt_delta(d)
+    extra = " · Δabs={:+.3f} · mean(λ0−DANN)={:+.3f}".format(
+        d.get("mean_delta_abs", float("nan")), d.get("mean_denom", float("nan")))
+    if d.get("small_denom"):
+        extra += " · **small denom — prefer absolute Δ**"
+    return base + extra
 
 
 def report_r2(a, data, idg, rt):
@@ -724,15 +758,19 @@ def report_r2(a, data, idg, rt):
     standard_sections(L, tex, cells, boots, oods)
     label_shift_extras(L, cells)
 
-    # Paired Δ and gap recovered vs DANN / λ0
+    # Paired Δ and gap recovered vs DANN / λ0 (formula locked in decisions/paperB_r6_r2.md)
     L += ["## Paired-by-seed Δ vs DANN (R1 shift100 last.ckpt) and gap recovered", "",
-          "Δ = method − DANN at the same λ and seed (Mahalanobis unless noted), with **cluster/patient bootstrap CI** "
-          "of the seed-mean (shared draws). Gap recovered = (IW − DANN) / (λ0 − DANN) using R1 shift100 last.ckpt "
-          "λ = 0 as the λ0 reference; **seed bootstrap** CI of the mean ratio. Denominator near zero → seed dropped.",
+          "Locked formula (decisions/paperB_r6_r2.md): "
+          "**gap recovered** = (method − DANN) / (λ0 − DANN), Mahalanobis, paired by seed; "
+          "λ0 = R1 shift100 λ = 0 `last.ckpt` **per unseen set**; DANN = R1 shift100 same λ `last.ckpt`. "
+          "Δ = method − DANN with **cluster/patient bootstrap CI** of the seed-mean. "
+          "Ratio uses **seed bootstrap** CI; `|λ0−DANN| < 1e-6` → seed dropped from the ratio. "
+          "Always read absolute Δ with the ratio; if mean `|λ0−DANN| < 0.05`, flag "
+          "**small denom — prefer absolute Δ** (MED-NODE is the smallest pre-committed denom among the four sets).",
           ""]
     gap_json, delta_json = {}, {}
     unseen = [o for o in ("pad_heldout", "fitzpatrick17k", "mednode", "sd198") if o in oods or True]
-    L += ["| method | λ | set | Δ Maha vs DANN [cluster CI] | gap recovered (IW−DANN)/(λ0−DANN) [seed boot CI] |",
+    L += ["| method | λ | set | Δ Maha vs DANN [cluster CI] | gap recovered (method−DANN)/(λ0−DANN) [seed boot CI] |",
           "|---|---:|---|---|---|"]
     for lam in (0.5, 2.0):
         dann_pairs = r1_shift100_runs(rt, lam)
@@ -763,7 +801,7 @@ def report_r2(a, data, idg, rt):
                 if gap:
                     gap_json[key] = gap
                 L.append("| {} | {:g} | {} | {} | {} |".format(
-                    lab, lam, ood, _fmt_delta(dlt), _fmt_delta(gap)))
+                    lab, lam, ood, _fmt_delta(dlt), _fmt_gap(gap)))
     L.append("")
 
     # leakage paired Δ (point + seed boot) for the DANN leakage baseline story

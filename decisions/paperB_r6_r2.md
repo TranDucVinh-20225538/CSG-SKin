@@ -78,6 +78,39 @@ As R1 (`PREREGISTER_BOOTSTRAP.json` unchanged; ID by lesion, pad_heldout by pati
 present else image; P7a by group; rule A per cell). Flags: adversary not engaged (leakage not ≥ 0.05 below λ = 0),
 no headroom at λ = 0, QP not converged in the final epoch (logged; estimated branch only).
 
+## Gap recovered (locked 2026-10-17 ~12:05 UTC+7 — before oracle λ = 2 / interim job 68666 results)
+
+Fixed now so the share is not re-chosen after seeing IW / oracle numbers. Applies to every R2 method
+(CDAN, IWDAN, IWCDAN, oracle) at every reported λ, and to the oracle-λ=2 interim send.
+
+**Primary detector:** Mahalanobis class-conditional AUROC (same as Table 1 primary).
+
+**Anchors (same recipe, `last.ckpt`, paired by seed):**
+- DANN = R1 shift 100% at the **same λ** as the method cell (`results/paperB/r6/r1/<recipe>/`).
+- λ0 = R1 shift 100% **λ = 0**, same recipe / seeds / split. The λ0 AUROC is computed **per unseen set**
+  (pad_heldout, Fitzpatrick17k, MED-NODE, SD-198, …) from that checkpoint’s features — not a single
+  pooled number reused across sets.
+
+**Formula (per seed s, then mean over seeds):**
+\[
+g_s = \frac{\mathrm{AUROC}_{\mathrm{method},s} - \mathrm{AUROC}_{\mathrm{DANN},s}}
+           {\mathrm{AUROC}_{\lambda0,s} - \mathrm{AUROC}_{\mathrm{DANN},s}}
+\]
+Report mean ± s.d. and seed-bootstrap CI of \(\{g_s\}\) (`PREREGISTER_BOOTSTRAP.json` `n_resamples` / `rng_seed`).
+If \(|\mathrm{AUROC}_{\lambda0,s} - \mathrm{AUROC}_{\mathrm{DANN},s}| < 10^{-6}\), drop that seed from the ratio
+(denominator undefined); never substitute another baseline after the fact.
+
+**Always co-report the absolute gap** \(\Delta_s = \mathrm{AUROC}_{\mathrm{method},s} - \mathrm{AUROC}_{\mathrm{DANN},s}\)
+(with the usual cluster/patient bootstrap CI of the seed-mean). The ratio alone is not enough when
+\(|\lambda0 - \mathrm{DANN}|\) is small: the share becomes high-variance (MED-NODE has the smallest
+pre-committed mean \(\lambda0 - \mathrm{DANN}\) among the four primary unseen sets under R1 shift100
+`last.ckpt` at λ = 2 — see R1/R2 baseline tables). For any set whose seed-mean
+\(|\lambda0 - \mathrm{DANN}| < 0.05\), the report **flags “small denom — prefer absolute Δ”** and still
+prints both columns.
+
+Code: `scripts/r6_report.py::gap_recovered_seed_boot`, `paired_delta_cluster_ci`; interim
+`scripts/r6_r2_oracle_l2_interim.py`.
+
 ## Predicted outcome (written now)
 
 - CDAN: inversion persists at λ = 2 (Mahalanobis pad_heldout 0.38–0.50; rule A may or may not be met); conditioning on
@@ -166,3 +199,6 @@ Order of action (user 2026-10-16):
   Implemented in `scripts/train_r6_iwdan.py` `ORDER`. Interim send when oracle λ = 2 completes:
   `scripts/r6_r2_oracle_l2_interim.py` → `REPORT_ORACLE_L2_INTERIM.md` (oracle + matched IWDAN λ = 2 + R1 DANN,
   gap recovered per unseen set).
+- 2026-10-17 ~12:05 (UTC+7), **gap recovered formula locked** (before interim job `68666` / oracle λ = 2 results).
+  See section “Gap recovered” above: \\((\\mathrm{method}-\\mathrm{DANN})/(\\lambda0-\\mathrm{DANN})\\), λ0 per set
+  from R1 shift100 λ = 0 `last.ckpt` same recipe; always co-report absolute Δ; flag mean `|λ0−DANN| < 0.05`.
