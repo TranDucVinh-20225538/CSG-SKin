@@ -467,14 +467,15 @@ def oracle_weights_from_mix(p_src, p_tgt, eps=1e-8):
     return w
 
 
-def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e-4, iw_cls=True, oracle_w=None):
+def make_model(recipe, lam, align="dann", class_weights=None, iw_log=None, lr=1e-4, iw_cls=True, oracle_w=None,
+               adv_lr_multiplier=30.0):
     """Same constructor arguments as train_phase3_sweep.main except the recipe fields."""
     return R6Lightning(
         align=align, class_weights=class_weights, iw_cls=iw_cls, iw_log=iw_log, oracle_w=oracle_w,
         lesion_classes=8, domain_classes=2, lesion_latent_dim=int(recipe["latent"]), context_latent_dim=64,
         learning_rate=lr, weight_decay=1e-4, lambda_ctx=1.0, lambda_adv=float(lam), lambda_orth=1.0, lambda_supcon=0.0,
-        adv_lr_multiplier=30.0, lesion_cls_lr_multiplier=float(recipe["cls_lr_mult"]), backbone_variant="b3",
-        pretrained=True)
+        adv_lr_multiplier=float(adv_lr_multiplier), lesion_cls_lr_multiplier=float(recipe["cls_lr_mult"]),
+        backbone_variant="b3", pretrained=True)
 
 
 # Primary checkpoint policy (decisions/paperB_r5_p8.md, deviation 2026-10-15 21:57): last.ckpt (end of training) for
@@ -761,7 +762,8 @@ def run(spec, args):
             cfg["oracle_note"] = "oracle, not deployable; PAD labels set w only"
             (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
         model = make_model(recipe, spec["lam"], align=align, class_weights=cw, iw_log=iw_log,
-                           iw_cls=spec.get("iw_cls", True), oracle_w=oracle_w)
+                           iw_cls=spec.get("iw_cls", True), oracle_w=oracle_w,
+                           adv_lr_multiplier=float(spec.get("adv_lr_multiplier", 30.0)))
         ckpt_cb = pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_dir), filename="best-{epoch:02d}", monitor="val/acc",
                                                mode="max", save_top_k=1, save_last=True, auto_insert_metric_name=False)
         cbs = [ckpt_cb]
