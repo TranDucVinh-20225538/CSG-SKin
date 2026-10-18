@@ -92,9 +92,9 @@ adversary sees, and we locate the mechanism in the feature space.
 \begin{enumerate}
 \item \textbf{The failure.} Under a lesion-disjoint split, gradient reversal inverts
 Mahalanobis OOD detection on held-out smartphone images and on three clinical datasets
-that no branch of training saw, with flat in-distribution accuracy and calibration, at a
-model competence matching a standard ERM baseline on the same split, and under two
-training recipes.
+that no branch of training saw, with flat in-distribution accuracy and calibration,
+under two training recipes whose accuracy is within $0.06$ of a standard ERM baseline on
+the same split.
 \item \textbf{The cause.} Setting the class mix seen by the adversary to that of the target
 removes the inversion on unseen domains (AUROC difference $0.24$--$0.37$); a regression at
 matched domain leakage attributes the effect to label shift rather than to deeper
@@ -156,7 +156,8 @@ Fitzpatrick17k~\cite{groh2021} (3{,}887 images obtained), MED-NODE (170 images),
 SD-198 (6{,}584 images) and SCIN (10{,}406 images, 5{,}033 cases)
 \pending{cite MED-NODE, SD-198, SCIN; licences: SCIN CC~BY~4.0, MED-NODE none stated, SD-198 official source}.
 SCIN is mostly inflammatory conditions; only $0.6\%$ of its images map to the ISIC classes,
-so we report it separately. Images are cropped to a lesion-centred box and resized to
+so we use it only as an OOD set for detection and report it separately; no label-based
+analysis is done on SCIN. Images are cropped to a lesion-centred box and resized to
 $224\times224$.
 
 \subsection{Model and training}
@@ -185,8 +186,10 @@ than one SE, so best-validation selection picks early epochs by noise. Both are 
 \pending{Table 1 at last checkpoint (t1last)}.
 
 \paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.496$ (main
-recipe) and $0.520$ (A4), against $0.556$ for a standard single-encoder ERM on the same
-split \pending{ERM reference at 5 seeds}.
+recipe) and $0.520$ (A4), $0.04$--$0.06$ below a standard single-encoder ERM on the same
+split ($0.556$ \pending{ERM reference at 5 seeds, with SE}) and four times chance ($0.125$).
+Lesion-disjoint eight-class ISIC~2019 is hard; the image-level split inflates the same
+model's balanced accuracy by $0.20$~\cite{leakagepaper}.
 
 \subsection{Interventions on label shift}
 
@@ -213,9 +216,10 @@ are functions of the same latent, so they are not independent evidence.
 
 \paragraph{Inversion.} We call a cell inverted when the cluster-bootstrap $95\%$ CI of the
 seed-mean Mahalanobis AUROC lies below $0.5$ and at least three of five seeds' own
-intervals do. Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
+intervals do \pending{confirm against code: 3/5 or 5/5; threshold for 3-seed cells (2/3 or 3/3)}. Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
 patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k, SD-198) or case
-(SCIN); MED-NODE has no grouping and is resampled by image. Runs with in-distribution
+(SCIN); MED-NODE has no grouping and is resampled by image, so its intervals may be too
+narrow \pending{confirm SD-198 uses P13 clusters in every table}. Runs with in-distribution
 balanced accuracy below $0.25$ are excluded as degraded and reported.
 
 \paragraph{Domain leakage.} Balanced accuracy (chance $0.5$) of a logistic probe for the
