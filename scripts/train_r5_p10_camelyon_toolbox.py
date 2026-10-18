@@ -108,8 +108,12 @@ RUNGS = {"L1_bank": (_L1, 1.0), "L2_ganin": (_L2, 1.0), "L3_strong": (_L3, 1.0),
          "P_L3": (dict(_L3, adv_lr_multiplier=30.0), 10.0),
          "P_L4": (dict(_L3, adv_lr_multiplier=100.0), 10.0),
          "P_L5": (dict(_L3, adv_lr_multiplier=100.0, head_specs=_P_DEEP, reinit_every_steps=100), 20.0)}
-ORDER = tuple(RUNGS)
 PILOT_ORDER = ("P_L1", "P_L2", "P_L3", "P_L4", "P_L5")
+# Multi-seed arms at the pilot-selected level (same toolbox/λ; natural vs induced label shift).
+for _pl in PILOT_ORDER:
+    RUNGS["natural_{}".format(_pl)] = RUNGS[_pl]
+    RUNGS["induced_{}".format(_pl)] = RUNGS[_pl]
+ORDER = tuple(RUNGS)
 SHIFT_SEEDS = (42, 52, 62, 72, 82)
 INDUCED_TUMOUR_A, INDUCED_TUMOUR_B = 0.80, 0.20
 ID_BAL_TOL = 0.05  # pilot gate: ID bal within this of λ=0 mean
@@ -235,8 +239,6 @@ def main():
     probe0 = lambda0_probe_mean()
     id0 = lambda0_id_bal_mean()
     used, hits = p10_state(r5_recipe.tag(args.recipe))
-    stage = ("pilot" if args.pilot else "shift_arms" if args.shift_arm else
-             ("stage2" if args.stage2 else "ladder"))
     if args.stage2:
         if not hits:
             print("P10 stage 2: no ladder rung met the gate; nothing to run")
@@ -248,6 +250,15 @@ def main():
         rung = args.rung
     if args.pilot and rung not in PILOT_ORDER:
         raise SystemExit("pilot rung must be one of {}".format(PILOT_ORDER))
+    # Pilot follow-up multi-seed → shift_arms_pilot/ (outside the 40 GPU-h ladder cap).
+    if args.pilot:
+        stage = "pilot"
+    elif args.shift_arm:
+        stage = "shift_arms_pilot" if "_P_L" in rung else "shift_arms"
+    elif args.stage2:
+        stage = "stage2"
+    else:
+        stage = "ladder"
     tb_over, lam = RUNGS[rung]
     tb = dict(M.TOOLBOX_DEFAULT)
     tb.update(tb_over)
@@ -291,7 +302,8 @@ def main():
                                                           "cap": CAP_GPU_H}, indent=2) + "\n")
         print("P10 stage 2 over cap")
         return
-    if args.shift_arm and used + EST_GPU_H > CAP_GPU_H:
+    # Cap applies only to the old L3@λ=2 shift_arms wave; pilot multi-seed is outside the cap.
+    if args.shift_arm and stage == "shift_arms" and used + EST_GPU_H > CAP_GPU_H:
         (run_dir / "skipped.json").write_text(json.dumps({"tag": tag, "skipped": True, "p10_gpu_h_used": used,
                                                           "cap": CAP_GPU_H}, indent=2) + "\n")
         print("P10 shift arm over cap")

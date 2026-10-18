@@ -82,6 +82,18 @@ the pilot ladder; multi-seed arms are outside that cap and are scheduled only af
 After R2-prior finishes (both GPUs freed): pilot on **one GPU** (serial `%1`), Q1 headroom gate on the **other**.
 Held R2 cells release after both; then R1-hi.
 
+### Standing rule — after pilot (locked 2026-10-18)
+
+**If the pilot passes** (`results/paperB/r5/p10/pilot/SELECTED.json` exists): run the full Camelyon
+**10 runs** (5 seeds × natural + induced at the **selected** level) on both GPUs **before** releasing
+held R2 `68562_[16-39]`. Width at the selected adversary level outranks remaining R2 robustness work.
+
+**If the pilot fails** (no `SELECTED.json`): release held R2 as previously scheduled; do **not** launch
+the 10 Camelyon arms.
+
+Dispatcher: `scripts/r5_p10_after_pilot_dispatch.py` / `slurm/r5_p10_after_pilot.sbatch` (depends on the
+pilot array). Agents must keep this order; do not release R2 ahead of the Camelyon 10 when SELECTED exists.
+
 ## Deviations
 
 - 2026-10-17 ~22:05 (+07), **before any pilot run**. L1–L4 redefined to keep the full current P10 toolbox (incl. adv LR
@@ -94,4 +106,8 @@ Held R2 cells release after both; then R1-hi.
 - 2026-10-18 ~01:36 (+07), **order only (optimal GPU handoff)**. After R2-prior: Q1 gate `%2` → maxim
   (smoke → gen DEV `%2` → score DEV CPU ∥ gen TEST `%2` → score TEST) → pilot `%2` (`afterok:68751,68749`)
   → release held R2. CPU reports (`68732`, `68744`) overlap GPU waves. Criteria unchanged.
+
+- 2026-10-18 ~10:10 (+07), **order only**. After pilot: if `SELECTED.json` → full Camelyon 10
+  (`shift_arms_pilot/`, selected level) **before** held R2; if pilot fails → release R2 immediately
+  (same as prior schedule). Criteria / ladder levels unchanged.
 
