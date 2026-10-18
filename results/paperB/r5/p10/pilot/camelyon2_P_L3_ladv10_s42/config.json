@@ -1,0 +1,105 @@
+{
+  "rung": "P_L3",
+  "stage2": false,
+  "shift_arm": false,
+  "pilot": true,
+  "seed": 42,
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "num_workers": 6,
+  "skip_done": true,
+  "recipe": {
+    "lesion_latent_dim": 16,
+    "context_latent_dim": 64,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "adv_lr_multiplier": 30.0,
+    "max_epochs": 40,
+    "batch_size": 32,
+    "lambda_orth": 1.0,
+    "lambda_ctx": 1.0,
+    "class_balance": "none"
+  },
+  "cls_lr_multiplier": 0.2,
+  "tag": "camelyon2_P_L3_ladv10_s42",
+  "stage": "pilot",
+  "lambda_adv": 10.0,
+  "toolbox": {
+    "grl_schedule": "ganin",
+    "adv_warmup_epochs": 1,
+    "head_specs": [
+      [
+        1,
+        1.0
+      ],
+      [
+        1,
+        1.0
+      ],
+      [
+        2,
+        1.0
+      ],
+      [
+        2,
+        2.0
+      ],
+      [
+        3,
+        1.0
+      ]
+    ],
+    "adv_lr_multiplier": 30.0,
+    "adv_inner_steps": 5,
+    "reinit_every_steps": 500,
+    "max_epochs": 40
+  },
+  "hospitals": [
+    3,
+    0,
+    2
+  ],
+  "split": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item5/split_camelyon2.npz",
+  "n_batches_per_epoch": 2382,
+  "induced_shift": false,
+  "induced_tumour_frac": null,
+  "gate": {
+    "drop_ge": 0.1,
+    "lambda0_probe_mean": 0.9594444444444443,
+    "rule": "probe_\u03bb0 \u2212 probe \u2265 0.10 else invariance not reached"
+  },
+  "placement": "grl (R2 item 5)",
+  "semantic_ood": {
+    "name": "NCT-CRC-HE-100K",
+    "licence": "CC-BY-4.0",
+    "zenodo": "10.5281/zenodo.1214456",
+    "classes": [
+      "ADI",
+      "BACK",
+      "DEB",
+      "LYM",
+      "MUC",
+      "MUS",
+      "NORM",
+      "STR",
+      "TUM"
+    ],
+    "note": "semantic OOD only; AUROC needs no label map; see decisions/paperB_r5_p10.md"
+  },
+  "recipe_source": "current (Phase 3 / R2 item 4 values)",
+  "recipe_not_applicable": [
+    "adv_lr_multiplier",
+    "batch_size",
+    "class_balance",
+    "context_latent_dim",
+    "lambda_ctx",
+    "lambda_orth",
+    "lesion_latent_dim",
+    "lr",
+    "max_epochs",
+    "weight_decay"
+  ]
+}

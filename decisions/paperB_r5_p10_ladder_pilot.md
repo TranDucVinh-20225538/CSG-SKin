@@ -111,3 +111,12 @@ pilot array). Agents must keep this order; do not release R2 ahead of the Camely
   (`shift_arms_pilot/`, selected level) **before** held R2; if pilot fails → release R2 immediately
   (same as prior schedule). Criteria / ladder levels unchanged.
 
+- 2026-10-18 ~13:30 (+07), **result + audit (no criteria change)**. Pilot job `68725` finished: all five
+  levels failed the pass rule; no `SELECTED.json`; locked report
+  **"DANN did not remove site information on Camelyon17"**; R2 released (no Camelyon 10).
+  L1–L4 headline metrics matched to many decimals; audit (`results/paperB/r5/p10/pilot/AUDIT_identical_L1_L4.md`)
+  shows configs had the intended λ / `adv_lr_multiplier`, train logs diverged after epoch 1, and each level
+  had its own run dir / `best.pt`. Identity is from **best epoch = 1** (adv warmup, GRL coef = 0) under the
+  locked A-select checkpoint rule — not from toolbox overwrite or a shared checkpoint path. **Not a bug fix;
+  no re-run.** Vacuous note: post-warmup encoders were never selected for probe eval because ID-select collapsed.
+
