@@ -22,128 +22,88 @@
 \newcommand{\nMEL}{9}
 \newcommand{\repolink}{\url{https://github.com/TranDucVinh-20225538/CSG-SKin}}
 
-\title[OOD Detection Inverts Under Gradient Reversal]{Out-of-Distribution Detection
-Inverts Under Domain-Adversarial Training}
+\title[DANN Can Silently Invert OOD Detection]{Domain-Adversarial Training Under Label
+Shift Can Silently Invert Out-of-Distribution Detection}
 
-% TODO replace with the real author block before submission
-\midlauthor{\Name{Author Name} \Email{author@example.edu}\\
- \addr Affiliation}
+\midlauthor{\Name{Tran Duc Vinh} \Email{vinhtran9969@gmail.com}\\
+ \addr Hanoi University of Science and Technology \pending{verify author list and affiliations}}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent\textbf{Background.} Domain-adversarial invariance training is widely
-recommended for removing acquisition shortcuts from medical imaging models. Its effect
-on the out-of-distribution (OOD) monitoring such models rely on at deployment has not
-been measured.
-
-\noindent\textbf{Methods.} We swept the adversarial weight $\lam$ over seven values,
-five seeds each, on ISIC~2019 and PAD-UFES-20 under a lesion-disjoint ISIC split with
-everything else fixed, measuring domain leakage, in-distribution accuracy and
-calibration, out-of-domain calibration, OOD detection with five scoring rules and
-zero-shot cross-domain accuracy on a patient-level held-out partition. We repeated the
-sweep with single-encoder adversarial training, four non-adversarial invariance
-objectives, and Fitzpatrick17k, which no training branch saw.
-
-\noindent\textbf{Results.} Under the leak-free split, out-of-distribution detection
-fell from AUROC $0.808$ at $\lam = 0$ to $0.426$ by $\lam = 0.5$ and
-\textbf{stayed inverted below chance for every larger weight} ($0.387$--$0.454$;
-at $\lam = 2$, $95\%$ CI $[0.380, 0.425]$ with all five seeds below $0.5$), ranking
-images from an unseen clinic as more in-distribution than its own test data. All
-five scoring rules collapsed together and the inversion held on Fitzpatrick17k
-($0.717 \to 0.402$). \textbf{In-distribution metrics stayed flat throughout}:
-balanced accuracy varied only between $0.473$ and $0.501$, a paired per-seed
-difference of $-0.023$ ($95\%$ CI $[-0.063, +0.017]$) between $\lam = 0$ and
-$\lam = 2$, and in-distribution ECE held at $0.18$, while out-of-domain calibration
-error rose $0.219 \to 0.717$ and actinic keratosis recall fell
-$0.245 \to 0.016$. Domain leakage fell from $0.927$ only to $0.555$ against a floor
-of $0.5$, then rose to $0.64$--$0.66$ at the largest weights with detection still
-inverted, so the inversion neither requires nor tracks domain invariance. After six
-explanations were refuted, a mechanism met three pre-registered criteria: invariance
-pressure displaces out-of-domain images into the majority class's region, their
-nearest-centroid share rising $0.332 \to 0.601$ while the in-distribution share stays
-flat.
-
-\noindent\textbf{Conclusions.} Across imaging modality, adversarial training does not
-merely weaken OOD monitoring but reverses it, by the one move that defeats a
-density-based novelty score, while every routinely monitored metric improves. Between
-two hospitals sharing a modality the collapse persists and the reversal does not. OOD
-detection and out-of-domain calibration should be reported as a function of achieved
-invariance.
+Domain-adversarial training (DANN) is a standard remedy for site and device shortcuts
+in medical imaging, and deployed models increasingly rely on out-of-distribution (OOD)
+monitors to flag unfamiliar inputs. We show that the two can conflict silently. On
+skin-lesion classification with a lesion-disjoint ISIC~2019 split, gradient reversal
+toward smartphone images drives Mahalanobis OOD detection from AUROC $0.808$ to $0.403$
+($95\%$ CI $[0.380, 0.425]$), and to $0.402$, $0.306$ and $0.375$ on three clinical
+datasets no part of training saw, while in-distribution balanced accuracy
+($-0.023$, CI $[-0.063, +0.017]$) and calibration do not change. The
+inversion is caused by label shift between the domains the adversary aligns: changing
+only the class mix the adversary sees moves unseen-domain AUROC by $0.24$--$0.37$, and the
+effect persists at matched domain leakage. Mechanistically, DANN pulls unfamiliar images
+toward the majority class; under label shift it reaches chance-level unweighted domain
+leakage by misaligning classes, while the domain stays decodable within each class.
+The consequence is clinical: the share of melanomas from unseen sources predicted
+benign nevus with confidence above $0.9$ rises from $8\%$ to $49$--$81\%$. Importance-weighted
+alignment recovers $32$--$45\%$ of the lost AUROC at matched leakage; with the true target
+class priors detection returns to its pre-adaptation level, but no estimator we tried
+(BBSE, EM, $50$ labelled target images) gets close enough to deploy. OOD monitoring
+should be re-validated after domain adaptation, and domain leakage should be measured
+within class.
 \end{abstract}
 
 \begin{keywords}
-domain-adversarial training; out-of-distribution detection; calibration; distribution shift; skin lesion classification; model monitoring
+domain-adversarial training; out-of-distribution detection; label shift; calibration;
+skin lesion classification; deployment monitoring
 \end{keywords}
-
-
 
 % ------------------------------------------------------------
 \section{Introduction}
 
-Deep models for skin lesion classification are known to exploit acquisition artefacts
-rather than pathology: ruler marks, ink annotations, imaging hardware and site identity
-all correlate with diagnosis in public benchmarks
-\cite{winkler2019,bissoto2020,daneshjou2022}. The standard remedy is to make the
-representation invariant to the acquisition domain, most often through
-domain-adversarial training with a gradient reversal layer
-\cite{ganin2016,bousmalis2016}, and its stated purpose is safe deployment across sites.
-Deployment across sites also relies on a second mechanism: out-of-distribution
-monitoring, by which a system flags inputs unlike its training data so a human reviews
-them rather than the model acting alone. This paper asks what invariance training does
-to that mechanism.
+Skin lesion classifiers learn acquisition artefacts as readily as pathology: ink
+markings, rulers, dermatoscope type and contributing site all correlate with diagnosis
+in public datasets~\cite{winkler2019,bissoto2020,daneshjou2022}. The standard remedy is to
+make the representation invariant to the acquisition domain, most often by
+domain-adversarial training with a gradient reversal layer~\cite{ganin2016,bousmalis2016}.
+A deployed model also needs a second safeguard: an out-of-distribution (OOD) monitor that
+flags inputs unlike its training data so that a clinician reviews them. This paper asks
+what invariance training does to that monitor.
 
-It reverses it. Sweeping the adversarial weight in a controlled setting, we find that
-out-of-distribution detection does not merely weaken as domain information is removed
---- it passes through chance and inverts. From the weight at which leakage stops
-falling onward, a model asked which inputs are unlike its training data answers with
-its own test split and ranks images from a clinic it has never seen as the more
-routine of the two. AUROC falls from $0.808$ to a minimum of $0.387$ and stays
-inverted at every larger weight, with a $95\%$ confidence interval of
-$[0.380, 0.425]$ at $\lam = 2$ lying entirely below chance, across every scoring rule
-we tried.
+In our setting it can turn the monitor upside down. As the adversarial weight grows,
+OOD detection does not merely weaken; it falls below chance, so that images from clinics
+the model has never seen score as \emph{more} familiar than its own test data. Nothing in a
+standard evaluation reveals this: in-distribution accuracy and calibration stay flat,
+and the domain-leakage probe, the quantity the method is meant to reduce, improves.
 
-Degradation would be unsurprising: a representation stripped of domain information
-should be worse at recognising a domain, and chance is what that argument predicts.
-Inversion is not, and accounting for it took six refuted explanations and a failed
-pre-registered synthetic reproduction before a mechanism held --- invariance is
-obtained by displacing out-of-domain images into the region the majority class
-occupies, which a density-based novelty score reads as familiarity.
-
-What makes the reversal consequential rather than merely odd is that nothing in a
-standard evaluation reveals it. Over the same range the model becomes more confident on
-unseen-domain images than on its own held-out data and its predictions collapse toward
-the benign majority class, while in-distribution accuracy does not fall,
-in-distribution calibration does not change, and the domain leakage probe --- the very
-metric the technique is adopted to improve --- improves exactly as intended. The
-technique disables the cross-site safety machinery while every monitored number moves
-in the direction its user is hoping for.
+We trace the failure to label shift. ISIC~2019 is $50.8\%$ nevus, the smartphone images the
+adversary aligns against are $12.3\%$ nevus, and matching the marginal feature
+distributions of domains with different class priors forces the representation to
+misplace one domain's classes~\cite{zhao2019invariant,tachet2020domain}. We show the
+consequence for OOD monitoring with an intervention that changes only the class mix the
+adversary sees, and we locate the mechanism in the feature space.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item A controlled intervention: a seven-point sweep of the adversarial weight,
-27 training runs with everything else held fixed, isolating invariance pressure
-from architectural and data confounds.
-\item The inversion: OOD detection passes through chance and reverses, as a
-cliff rather than a trade-off curve, across five scoring rules, on a third
-dataset the adversary never saw, and robustly to shrinkage estimation and tail
-truncation.
-\item The invisibility: in-distribution accuracy, in-distribution calibration
-and the domain leakage probe all fail to reveal it, under both an image-level and
-a lesion-disjoint ISIC split at five seeds, and the leakage probe does not
-mediate it, so it cannot serve as a proxy either.
-\item Scope: the failure reproduces in plain single-encoder adversarial
-training, so it is not an artefact of the factorized architecture; and it does
-not appear under moment-matching objectives that reduce leakage along the same
-axis, so it belongs to adversarial optimisation rather than to invariance.
-\item A mechanism with predictive content, satisfying three pre-registered criteria
-and replicating on a second representation, after six alternative accounts and a
-pre-registered synthetic reproduction were tested and refuted.
-\item A reporting protocol that makes the failure visible at near-zero cost.
+\item \textbf{The failure.} Under a lesion-disjoint split, gradient reversal inverts
+Mahalanobis OOD detection on held-out smartphone images and on three clinical datasets
+that no branch of training saw, with flat in-distribution accuracy and calibration, at a
+model competence matching a standard ERM baseline on the same split, and under two
+training recipes.
+\item \textbf{The cause.} Setting the class mix seen by the adversary to that of the target
+removes the inversion on unseen domains (AUROC difference $0.24$--$0.37$); a regression at
+matched domain leakage attributes the effect to label shift rather than to deeper
+invariance.
+\item \textbf{The mechanism and a measurement lesson.} DANN pulls images that differ from
+the source along the domain direction toward the majority class. Under label shift, an
+unweighted domain probe reports chance-level leakage while a within-class probe still
+reads the domain: invariance should be measured within class.
+\item \textbf{Consequence and mitigation.} Melanomas from unseen sources are called benign
+nevi with high confidence up to ten times more often. Importance weighting recovers part
+of the loss; with the true target class priors it recovers fully, which makes estimating
+target class priors the bottleneck for a deployable fix.
 \end{enumerate}
-
-% ------------------------------------------------------------
 \section{Related work}
 
 \paragraph{Shortcut learning in dermatology.}
