@@ -36,10 +36,10 @@ Domain-adversarial training (DANN) is a standard remedy for site and device shor
 in medical imaging, and deployed models increasingly rely on out-of-distribution (OOD)
 monitors to flag unfamiliar inputs. We show that the two can conflict silently. On
 skin-lesion classification with a lesion-disjoint ISIC~2019 split, gradient reversal
-toward smartphone images drives Mahalanobis OOD detection from AUROC $0.808$ to $0.403$
-($95\%$ CI $[0.380, 0.425]$), and to $0.402$, $0.306$ and $0.375$ on three clinical
-datasets no part of training saw, while in-distribution balanced accuracy
-($-0.023$, CI $[-0.063, +0.017]$) and calibration do not change. The
+toward smartphone images drives Mahalanobis OOD detection from AUROC $0.825$ to $0.381$
+($95\%$ CI $[0.358, 0.404]$), and below chance on three clinical datasets no part of training
+saw (Fitzpatrick17k $0.405$; MED-NODE and SD-198 \pending{last-checkpoint values}), while
+in-distribution balanced accuracy stays at $0.47$--$0.48$ \pending{paired CI, calibration}. The
 inversion is caused by label shift between the domains the adversary aligns: changing
 only the class mix the adversary sees moves unseen-domain AUROC by $0.24$--$0.37$, and the
 effect persists at matched domain leakage. Mechanistically, DANN pulls unfamiliar images
@@ -47,11 +47,11 @@ toward the majority class; under label shift it reaches chance-level unweighted 
 leakage by misaligning classes, while the domain stays decodable within each class.
 The consequence is clinical: the share of melanomas from unseen sources predicted
 benign nevus with confidence above $0.9$ rises from $8\%$ to $49$--$81\%$. Importance-weighted
-alignment recovers $32$--$45\%$ of the lost AUROC at matched leakage; with the true target
-class priors detection returns to its pre-adaptation level, but no estimator we tried
-(BBSE, EM, $50$ labelled target images) gets close enough to deploy. OOD monitoring
-should be re-validated after domain adaptation, and domain leakage should be measured
-within class.
+alignment helps in proportion to how well the target class priors are known: with
+label-free BBSE estimates it recovers $32$--$45\%$ of the lost AUROC at matched leakage,
+and with priors from $50$ labelled target images detection returns to its pre-adaptation
+level, at a cost of $0.08$ in-distribution balanced accuracy. OOD monitoring should be
+re-validated after domain adaptation, and domain leakage should be measured within class.
 \end{abstract}
 
 \begin{keywords}
@@ -104,9 +104,9 @@ the source along the domain direction toward the majority class. Under label shi
 unweighted domain probe reports chance-level leakage while a within-class probe still
 reads the domain: invariance should be measured within class.
 \item \textbf{Consequence and mitigation.} Melanomas from unseen sources are called benign
-nevi with high confidence up to ten times more often. Importance weighting recovers part
-of the loss; with the true target class priors it recovers fully, which makes estimating
-target class priors the bottleneck for a deployable fix.
+nevi with high confidence up to ten times more often. Importance weighting with label-free
+prior estimates recovers part of the loss; with priors from $50$ labelled target images it
+recovers fully, at a cost in in-distribution accuracy.
 \end{enumerate}
 \section{Related work}
 
@@ -178,12 +178,10 @@ $\lam\in\{0,0.25,0.5,1,2,4,8\}$ with everything else fixed (seeds 42--82 at $\la
 42--46 elsewhere). A second recipe (A4: $z_\ell\in\mathbb{R}^{64}$, classifier
 $\times1$, class-weighted loss) serves as a robustness check.
 
-\paragraph{Checkpoints.} The sweep in Table~\ref{tab:dial} uses the best-validation
-checkpoint (selected epochs 6--39). All other experiments use the last checkpoint:
-validation balanced accuracy (eight classes, chance $0.125$) has a lesion-clustered
-bootstrap SE of $0.023$--$0.026$, and the best-validation and last checkpoints differ by less
-than one SE, so best-validation selection picks early epochs by noise. Both are reported
-\pending{Table 1 at last checkpoint (t1last)}.
+\paragraph{Checkpoints.} We report the last checkpoint. Validation balanced accuracy (eight
+classes, chance $0.125$) has a lesion-clustered bootstrap SE of $0.023$--$0.026$, and the
+best-validation and last checkpoints differ by less than one SE, so best-validation selection
+picks early epochs by noise. Best-validation values are given for comparison.
 
 \paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.496$ (main
 recipe) and $0.520$ (A4), $0.04$--$0.06$ below a standard single-encoder ERM on the same
@@ -245,31 +243,28 @@ these are views of one phenomenon.
 \begin{table}[t]
 \centering
 \small
-\caption{The adversarial-weight sweep (main recipe, lesion-disjoint ISIC split,
-best-validation checkpoint). Mean $\pm$ s.d.\ over five seeds per $\lam$ (42--82 at
-$\lam\in\{0,2\}$, 42--46 otherwise). Leakage: balanced accuracy of the domain probe used in
-earlier work, scored on ISIC test against all of PAD (chance $0.5$; held-out and
-within-class probes in Section~\ref{sec:mechanism}). OOD AUROC: Mahalanobis, OOD positive,
-on \texttt{pad\_heldout}; Fitz: Fitzpatrick17k. ID balanced accuracy: eight classes, chance
-$0.125$. X-dom: zero-shot balanced accuracy on \texttt{pad\_heldout}, six classes, chance
-$0.167$.}
+\caption{The adversarial-weight sweep (main recipe, lesion-disjoint ISIC split, last
+checkpoint). Mean $\pm$ s.d.\ over five seeds per $\lam$ (42--82 at $\lam\in\{0,2\}$, 42--46
+otherwise). Leakage: linear domain probe on held-out images (chance $0.5$). ID: balanced
+accuracy, eight classes (chance $0.125$). Mahalanobis AUROC, OOD positive; $k$: seeds whose
+interval lies below $0.5$. Best-val: the best-validation checkpoint, for comparison.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccccccc}
+\begin{tabular}{rccccccc}
 \toprule
-$\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
-& OOD ECE & OOD AUROC & Fitz.\ AUROC & X-dom bal.\ acc \\
+$\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k & $k$ & \texttt{pad\_heldout} (best-val) \\
 \midrule
-0    & 5 & 0.927\,$\pm$\,0.018 & 0.496\,$\pm$\,0.016 & 0.181\,$\pm$\,0.026 & 0.219\,$\pm$\,0.046 & \textbf{0.808\,$\pm$\,0.027} & 0.717\,$\pm$\,0.034 & 0.275\,$\pm$\,0.023 \\
-0.25 & 5 & 0.614\,$\pm$\,0.092 & 0.487\,$\pm$\,0.005 & 0.141\,$\pm$\,0.076 & 0.561\,$\pm$\,0.221 & 0.525\,$\pm$\,0.121 & 0.496\,$\pm$\,0.167 & 0.289\,$\pm$\,0.049 \\
-0.5  & 5 & 0.581\,$\pm$\,0.031 & 0.501\,$\pm$\,0.012 & 0.191\,$\pm$\,0.008 & 0.710\,$\pm$\,0.017 & \textbf{0.426\,$\pm$\,0.008} & 0.411\,$\pm$\,0.047 & 0.259\,$\pm$\,0.025 \\
-1    & 5 & 0.563\,$\pm$\,0.045 & 0.495\,$\pm$\,0.011 & 0.176\,$\pm$\,0.016 & 0.730\,$\pm$\,0.015 & \textbf{0.387\,$\pm$\,0.016} & 0.375\,$\pm$\,0.042 & 0.229\,$\pm$\,0.027 \\
-2    & 5 & 0.555\,$\pm$\,0.046 & 0.473\,$\pm$\,0.023 & 0.181\,$\pm$\,0.027 & 0.717\,$\pm$\,0.022 & \textbf{0.403\,$\pm$\,0.028} & 0.402\,$\pm$\,0.018 & 0.254\,$\pm$\,0.015 \\
-4    & 5 & 0.636\,$\pm$\,0.076 & 0.498\,$\pm$\,0.012 & 0.161\,$\pm$\,0.050 & 0.696\,$\pm$\,0.032 & \textbf{0.433\,$\pm$\,0.020} & 0.376\,$\pm$\,0.037 & 0.258\,$\pm$\,0.010 \\
-8    & 5 & 0.663\,$\pm$\,0.068 & 0.489\,$\pm$\,0.019 & 0.161\,$\pm$\,0.029 & 0.710\,$\pm$\,0.027 & \textbf{0.454\,$\pm$\,0.044} & 0.412\,$\pm$\,0.051 & 0.254\,$\pm$\,0.022 \\
+0    & $0.842\pm0.050$ & $0.481\pm0.016$ & $0.825\pm0.022$ & 0/5 & $0.712\pm0.013$ & 0/5 & $0.808\pm0.027$ \\
+0.25 & $0.502\pm0.002$ & $0.481\pm0.010$ & $\mathbf{0.445\pm0.022}$ & 4/5 & $\mathbf{0.396\pm0.032}$ & 5/5 & $0.525\pm0.121$ \\
+0.5  & $0.508\pm0.010$ & $0.484\pm0.005$ & $\mathbf{0.415\pm0.016}$ & 5/5 & $\mathbf{0.377\pm0.046}$ & 5/5 & $0.426\pm0.008$ \\
+1    & $0.505\pm0.005$ & $0.482\pm0.017$ & $\mathbf{0.390\pm0.022}$ & 5/5 & $\mathbf{0.388\pm0.039}$ & 5/5 & $0.387\pm0.016$ \\
+2    & $0.507\pm0.009$ & $0.472\pm0.018$ & $\mathbf{0.381\pm0.023}$ & 5/5 & $\mathbf{0.405\pm0.031}$ & 5/5 & $0.403\pm0.028$ \\
+4    & $0.527\pm0.035$ & $0.480\pm0.016$ & $\mathbf{0.416\pm0.034}$ & 5/5 & $\mathbf{0.354\pm0.066}$ & 5/5 & $0.433\pm0.020$ \\
+8    & $0.520\pm0.028$ & $0.480\pm0.018$ & $\mathbf{0.439\pm0.020}$ & 5/5 & $\mathbf{0.383\pm0.036}$ & 5/5 & $0.454\pm0.044$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
+
 
 \begin{figure}[t]
 \centering
@@ -282,16 +277,18 @@ nothing wrong.}
 \label{fig:dial}
 \end{figure}
 
-\paragraph{The sweep.} Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.808$ at
-$\lam=0$ to $0.426$ at $\lam=0.5$ and stays between $0.387$ and $0.454$ at every larger weight
-(Table~\ref{tab:dial}). At $\lam=2$ the seed-mean interval is $[0.380, 0.425]$ and all five
-seeds' intervals lie below $0.5$. At $\lam=0.25$ the seeds disagree ($0.525\pm0.121$) and we
-call no inversion. Over the same range in-distribution balanced accuracy stays within
-$0.473$--$0.501$ (paired $\lam=2$ minus $\lam=0$: $-0.023$, $95\%$ CI $[-0.063, +0.017]$) and
-in-distribution ECE within $0.14$--$0.19$, while out-of-domain ECE rises from $0.219$ to
-$0.717$. All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ ($k$-NN $0.427$,
-cosine $0.420$, MSP $0.455$, energy $0.468$); the standard $k$-th-neighbour $k$-NN gives the
-same values within $0.01$.
+\paragraph{The sweep.} At the last checkpoint, Mahalanobis AUROC on \texttt{pad\_heldout}
+falls from $0.825$ at $\lam=0$ to $0.445$ at $\lam=0.25$ and stays between $0.381$ and $0.445$
+at every larger weight, meeting the inversion criterion at all six non-zero weights; on
+Fitzpatrick17k it falls from $0.712$ to $0.354$--$0.405$ (Table~\ref{tab:dial}). At
+$\lam=2$ the seed-mean interval is $[0.358, 0.404]$ on \texttt{pad\_heldout} and
+$[0.392, 0.419]$ on Fitzpatrick17k. In-distribution balanced accuracy stays within
+$0.472$--$0.484$ \pending{paired $\lam=2-\lam=0$ CI and ID/OOD ECE at the last checkpoint}.
+All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ ($k$-NN $0.427$,
+cosine $0.420$, MSP $0.455$, energy $0.468$; best-validation checkpoint); the standard
+$k$-th-neighbour $k$-NN gives the same values within $0.01$. The best-validation checkpoint
+gives the same picture from $\lam=0.5$ on, but at $\lam=0.25$ it selects an earlier epoch and
+the inversion is not yet visible ($0.525\pm0.121$).
 
 \paragraph{Unseen domains.} The inversion is not confined to the domain the adversary was
 trained against (Table~\ref{tab:unseen}). On three clinical datasets that entered no part of
@@ -314,7 +311,7 @@ collapse. A plain single-encoder DANN collapses to chance ($0.51$--$0.56$) witho
 \small
 \caption{Unseen domains: Mahalanobis AUROC at $\lam=0$ and $\lam=2$, mean $\pm$ s.d.\ over five
 seeds, with the number of seeds whose interval lies below $0.5$. Main recipe, best-validation
-checkpoint; A4, last checkpoint. MED-NODE and SD-198 are resampled by image. --: not
+checkpoint \pending{MED-NODE/SD-198/SCIN at the last checkpoint}; A4, last checkpoint. MED-NODE and SD-198 are resampled by image. --: not
 bootstrapped.}
 \label{tab:unseen}
 \begin{tabular}{llcccc}
@@ -322,7 +319,7 @@ bootstrapped.}
 recipe & set & $\lam=0$ & $\lam=2$ & seeds $<0.5$ & inverted \\
 \midrule
 main & \texttt{pad\_heldout} & $0.808\pm0.027$ & $0.403\pm0.028$ & 5/5 & yes \\
-main & Fitzpatrick17k & $0.717\pm0.034$ & $0.402\pm0.018$ & \pending{k} & yes \\
+main & Fitzpatrick17k & $0.717\pm0.034$ & $0.402\pm0.018$ & 5/5 & yes \\
 main & MED-NODE & $0.536\pm0.037$ & $0.306\pm0.071$ & 5/5 & yes \\
 main & SD-198 & $0.713\pm0.037$ & $0.375\pm0.026$ & 5/5 & yes \pending{SD-198 cluster CI} \\
 main & SCIN & $0.726\pm0.021$ & $0.559\pm0.034$ & 0/5 & no \\
@@ -371,8 +368,8 @@ condition by moving them toward nevus.
 \small
 \caption{Label-shift intervention: Mahalanobis AUROC (main recipe, last checkpoint) by the
 class mix the adversary sees. Shift $100\%$: ISIC's own mix; $0\%$: PAD's mix. Leakage: probe
-of Table~\ref{tab:dial}. Shift $0\%$ at $\lam=2$ has four non-degraded seeds; shift $50\%$ has
-three.}
+of Table~\ref{tab:dial}. Shift $0\%$ at $\lam=2$: four seeds after excluding one degraded run (in-distribution
+balanced accuracy $0.139<0.25$); shift $50\%$: three seeds.}
 \label{tab:shift}
 \begin{tabular}{rcccccc}
 \toprule
@@ -442,18 +439,24 @@ false-positive rate of $0.84$--$0.95$ at $95\%$ true-positive rate \pending{veri
 turn $0.808$ into $0.192$. Relative Mahalanobis~\cite{ren2021relative} and per-class
 standardised distances stay below $0.5$ on all three unseen datasets at $\lam=2$.
 
-\paragraph{Importance-weighted alignment.} IWDAN with BBSE prior estimates keeps leakage at
-the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the AUROC lost on
-\texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), bringing both back to about chance; MED-NODE stays inverted ($0.350$) \pending{SD-198, gap CIs, IWCDAN, CDAN, $\lam=0.5$}.
-With the true target priors as weights (an oracle, not deployable), detection returns to
-its pre-adaptation level on the unseen domains (Fitzpatrick17k $0.717$, SD-198 $0.697$,
-MED-NODE $0.557$) with lower within-class leakage than DANN ($0.572$), but at higher
-unweighted leakage ($0.76$--$0.81$), so it does not meet our leakage condition for a fix, and
-in-distribution balanced accuracy drops to $0.40$ \pending{oracle seed 82}. Priors estimated
-from $50$ labelled target images did not meet the criterion, EM estimation failed, and
-across estimators the error in the estimated priors did not predict detection
-(Spearman $-0.33$, $[-0.80, +0.28]$). Estimating target class priors well enough remains
-the open step.
+\paragraph{Importance-weighted alignment.} IWDAN reweights the source in the adversarial loss
+by estimated target class priors, and how well it works depends on the estimate.
+\emph{BBSE} priors are far from the truth (total variation $0.65$--$0.76$), plausibly because
+its assumption of unchanged class-conditional inputs fails across these domains; IWDAN then
+keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
+\texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
+($0.350$) and SD-198 ($0.488$) stay at or below chance. \emph{EM} estimation was unstable:
+in two of five seeds it placed mass on classes absent from PAD, so we treat it as not
+having run correctly. With priors from \emph{$50$ labelled target images} (total variation
+$0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
+priors (Fitzpatrick17k $0.741$ vs $0.717$, SD-198 $0.734$ vs $0.693$, MED-NODE $0.606$ vs $0.563$;
+\texttt{pad\_heldout} $0.619$ vs $0.647$), and within-class leakage is lower than under DANN
+($0.58$ vs $0.62$). Neither the 50-label nor the true-prior variant meets our condition for a
+fix, because unweighted leakage rises ($0.81$ and $0.78$ against $0.63$), and both cost
+in-distribution balanced accuracy ($0.39$--$0.40$ against $0.48$). Across estimators, the
+error in the estimated priors did not predict detection as a rank correlation (Spearman
+$-0.33$, $[-0.80, +0.28]$), with the EM runs contributing invalid priors
+\pending{IWCDAN, CDAN, $\lam=0.5$ cells; per-method details to appendix}.
 
 \begin{table}[t]
 \centering
@@ -470,7 +473,8 @@ condition & unweighted & class-balanced & within-class & Fitz \\
 DANN, shift $100\%$ & $0.510$ & $0.602$ & $0.618$ & $0.340$ \\
 DANN, shift $0\%$ & $0.629$ & $0.539$ & $0.560$ & $0.691$ \\
 IWDAN (BBSE) & $0.534$ & $0.562$ & $0.597$ & $0.508$ \\
-IWDAN (oracle priors) & $0.635$ & $0.537$ & $0.572$ & $0.717$ \\
+IWDAN (50 labels) & \pending{} & \pending{} & $0.583$ & $0.741$ \\
+IWDAN (true priors) & $0.635$ & $0.537$ & $0.576$ & $0.717$ \\
 \bottomrule
 \end{tabular}
 \end{table}
