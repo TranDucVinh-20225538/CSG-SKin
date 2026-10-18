@@ -238,6 +238,9 @@ for held R2 cells.
 - 2026-10-18 ~13:35 (+07), **clarification (criteria unchanged)**. All 10 shift-arms had `best_epoch=1` (warmup);
   locked “invariance not reached” scored the pre-adversary encoder. Posthoc last-epoch probe/ID (derm-style
   `last.ckpt`) is descriptive only — does not rewrite the locked gate label.
+- 2026-10-18 ~13:40 (+07), **order only**. Remaining R2 held; 2-run trajectory smoke first (natural s42 + pilot L4)
+  with per-epoch fast probe/ID. Full 15-run / checkpoint-rule change only if smoke finds a passing epoch (new
+  decisions file required). Audit: `results/paperB/r5/p10/CAMELYON_BEST_EPOCH_AUDIT.md`.
 - 2026-10-17 ~22:00 (+07), **bug fix**. NCT-CRC-HE was named in `config.semantic_ood` but never scored into `ood`
   (eval loop only `b_hold`/`b_adv`/`c`). Fix + CPU re-score of existing shift-arms checkpoints; NCT AUROC labelled
   **gate failed, descriptive only**. Follow-on: Camelyon adversary ladder pilot

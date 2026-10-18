@@ -204,6 +204,9 @@ def gate_met(s, probe0=None):
     return float(probe0 - probe) >= GATE_DROP
 
 
+FAST_PROBE_N = 2000  # per-epoch trajectory; full gate still uses PROBE_MAX at end
+
+
 def score_site_and_id(model, ds, sp, device, seed, num_workers, probe0, score_nct=True):
     """Collect packs; return id_test, site probe, drop vs λ0, optional NCT ood (no gate labels)."""
     model.eval()
@@ -243,6 +246,41 @@ def score_site_and_id(model, ds, sp, device, seed, num_workers, probe0, score_nc
     }
 
 
+def fast_epoch_site_id(model, ds, sp, device, num_workers, probe0, id0, n_probe=FAST_PROBE_N):
+    """Cheap per-epoch site probe + ID bal (subsampled). Descriptive; not locked."""
+    model.eval()
+    ev = _EvalWrap(model)
+    rng = np.random.default_rng(0)
+    # Subsample indices before collect to keep the epoch loop affordable.
+    def take(key, n=4000):
+        idx = np.asarray(sp[key])
+        if len(idx) > n:
+            idx = idx[rng.choice(len(idx), n, replace=False)]
+        return idx
+
+    packs = {
+        k: p12.collect(ev, p12.loader_for(ds, take(k), p12.eval_tf(), 256, num_workers, False), device)
+        for k in ("a_test", "b_hold")
+    }
+
+    def sub(z, n=n_probe):
+        return z[rng.choice(len(z), min(n, len(z)), replace=False)]
+
+    id_test = p12.acc_pack(packs["a_test"]["logits"], packs["a_test"]["y"])
+    id_bal = float(id_test.get("balanced_acc", id_test["acc"]))
+    probe = float(p12.leakage_binary(sub(packs["a_test"]["z"]), sub(packs["b_hold"]["z"]))["balanced_acc_mean"])
+    drop = float(probe0 - probe)
+    return {
+        "site_probe_fast": probe,
+        "probe_drop_vs_lambda0_fast": drop,
+        "id_bal_fast": id_bal,
+        "id_acc_fast": float(id_test["acc"]),
+        "fast_probe_n": int(n_probe),
+        "fast_would_pass_p10_gate": bool(drop >= GATE_DROP),
+        "fast_would_pass_pilot": bool(drop >= GATE_DROP and abs(id_bal - id0) <= ID_BAL_TOL),
+    }
+
+
 def p10_state(suffix):
     used, hits = 0.0, []
     for st in ("ladder", "stage2"):
@@ -273,6 +311,8 @@ def main():
     ap.add_argument("--skip_done", action="store_true")
     ap.add_argument("--force", action="store_true",
                     help="retrain even if summary.json exists (for posthoc last.pt scoring)")
+    ap.add_argument("--epoch_traj", action="store_true",
+                    help="each epoch: fast site probe + ID bal into history (descriptive)")
     r5_recipe.add_args(ap)
     args = ap.parse_args()
     rec, rsrc = r5_recipe.resolve(args.recipe)
@@ -464,6 +504,9 @@ def main():
         rec = {"epoch": epoch, "loss_adv": float(np.mean(ce)), "acc_adv": float(np.mean(ac)),
                "inner_ce": float(np.mean(inn)) if inn else None, "id_select_acc": sel, "coef_end": coef,
                "n_reinit": reinits, "warmup": warm}
+        if args.epoch_traj:
+            traj = fast_epoch_site_id(model, ds, sp, device, args.num_workers, probe0, id0)
+            rec.update(traj)
         with log.open("a") as f:
             f.write(json.dumps(rec) + "\n")
         print("epoch", rec, flush=True)
@@ -492,6 +535,17 @@ def main():
     model.load_state_dict(blob["state_dict"])
     best_metrics = score_site_and_id(model, ds, sp, device, args.seed, args.num_workers, probe0, score_nct=True)
     rows = [json.loads(l) for l in log.read_text().splitlines() if l.strip()]
+    pass_pilot = [int(r["epoch"]) for r in rows if r.get("fast_would_pass_pilot")]
+    pass_p10 = [int(r["epoch"]) for r in rows if r.get("fast_would_pass_p10_gate")]
+    epoch_traj = {
+        "note": "per-epoch fast site probe (n={}) + ID bal; descriptive; does not change best/gate".format(
+            FAST_PROBE_N),
+        "enabled": bool(args.epoch_traj),
+        "any_fast_would_pass_pilot": bool(pass_pilot),
+        "any_fast_would_pass_p10_gate": bool(pass_p10),
+        "epochs_fast_pass_pilot": pass_pilot,
+        "epochs_fast_pass_p10_gate": pass_p10,
+    }
     summary = {"tag": tag, "stage": stage, "rung": rung, "assign": "primary", "hospitals": [ha, hb, hc],
                "lambda_adv": lam, "seed": args.seed, "toolbox": tb, "best_epoch": int(blob["epoch"]),
                "id_test": best_metrics["id_test"],
@@ -501,7 +555,8 @@ def main():
                "ood": best_metrics["ood"], "history": rows,
                "adversary": {"min_epoch_ce": min(r["loss_adv"] for r in rows), "last": rows[-1]},
                "gpu_hours": (time.time() - t0) / 3600.0,
-               "posthoc_last": posthoc_last}
+               "posthoc_last": posthoc_last,
+               "epoch_traj": epoch_traj}
     probe = summary["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"]
     summary["lambda0_probe_mean"] = probe0
     summary["probe_drop_vs_lambda0"] = float(probe0 - probe)

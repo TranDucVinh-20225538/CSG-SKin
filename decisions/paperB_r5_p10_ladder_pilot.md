@@ -122,6 +122,11 @@ pilot array). Agents must keep this order; do not release R2 ahead of the Camely
 - 2026-10-18 ~13:35 (+07), **wording + posthoc last (criteria unchanged)**. Correct locked failure sentence:
   *no post-adversary checkpoint passed ID-select; site-removal test did not take place.* All 10 P10
   shift-arms also have `best_epoch=1` (`results/paperB/r5/p10/BEST_EPOCHS.md`). Save `last.pt` + descriptive
-  `posthoc_last` probe/ID (derm uses `last.ckpt`); retrain array after remaining R2 — does **not** change
-  gate or best-epoch rule.
+  `posthoc_last` probe/ID (derm uses `last.ckpt`); does **not** change gate or best-epoch rule.
+
+- 2026-10-18 ~13:40 (+07), **order + traj smoke (criteria unchanged)**. Cancel full 15-run posthoc ahead of R2.
+  Hold remaining R2; run **2** trajectory smokes first (natural s42 + pilot L4 s42) with per-epoch fast site
+  probe + ID bal. Expand to 15 / change checkpoint selection **only if** an epoch fast-passes the gate —
+  that change requires a **new** decisions file. Camelyon best_epoch audit: `CAMELYON_BEST_EPOCH_AUDIT.md`
+  (P10/pilot all epoch 1; item5/matched not; phase12 coarse mostly epoch 1; P9 is derm, not Camelyon).
 
