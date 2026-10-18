@@ -72,7 +72,7 @@ also expected to have an out-of-distribution (OOD) monitor, which flags inputs t
 from the training data so that a clinician can review them. We study how invariance
 training affects this monitor.
 
-We find that it can invert it. When the adversarial weight increases, OOD detection does
+We find that it can invert the monitor. When the adversarial weight increases, OOD detection does
 not just get worse but falls below chance, so images from clinics the model has never seen
 get scores that look more in-distribution than the model's own test images. Standard
 evaluation does not show this. In-distribution accuracy stays about the same
@@ -492,7 +492,8 @@ IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 Full-spectrum OOD detection argues that covariate-shifted inputs should be
 accepted~\cite{yang2023}. After DANN, our models accept images from unseen clinics more
 readily than their own test images, but their zero-shot balanced accuracy on these images
-is only $0.254$ at $\lam=2$ (chance $0.167$; best-validation checkpoint). If the goal were
+is only $0.254$ at $\lam=2$ (chance $0.167$; best-validation checkpoint
+\pending{X-dom at the last checkpoint}). If the goal were
 tolerance, the AUROC should be close to $0.5$. Values well below $0.5$ mean that the
 monitor ranks the shifted images as more typical than real in-distribution data, which is
 not useful for deployment. We think claims of tolerance to covariate shift should be
@@ -525,7 +526,7 @@ structure, also stays below chance. In our experiments the problem had to be add
 training, through the class priors used by the adversary.
 
 \paragraph{Recommendations.}
-After a domain-alignment step we suggest to (i) check OOD detection again on images from
+After a domain-alignment step, we recommend that practitioners (i) check OOD detection again on images from
 unseen sources, per class and pooled, (ii) report domain leakage within class and not only
 unweighted, (iii) compare the class priors of the aligned domains and correct for them if
 they differ, which in our case required a small labelled sample from the target domain, and
