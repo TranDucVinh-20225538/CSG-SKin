@@ -34,7 +34,7 @@ Shift Can Silently Invert Out-of-Distribution Detection}
 \begin{abstract}
 Domain-adversarial training (DANN) is a standard remedy for site and device shortcuts
 in medical imaging, and deployed models increasingly rely on out-of-distribution (OOD)
-monitors to flag unfamiliar inputs. We show that the two can conflict silently. On
+monitors to flag unfamiliar inputs. We show that the first can break the second without any sign in the usual metrics. On
 skin-lesion classification with a lesion-disjoint ISIC~2019 split, gradient reversal
 toward smartphone images drives Mahalanobis OOD detection from AUROC $0.825$ to $0.381$
 ($95\%$ CI $[0.358, 0.404]$), and below chance on three clinical datasets no part of training
@@ -62,52 +62,48 @@ skin lesion classification; deployment monitoring
 % ------------------------------------------------------------
 \section{Introduction}
 
-Skin lesion classifiers learn acquisition artefacts as readily as pathology: ink
-markings, rulers, dermatoscope type and contributing site all correlate with diagnosis
-in public datasets~\cite{winkler2019,bissoto2020,daneshjou2022}. The standard remedy is to
-make the representation invariant to the acquisition domain, most often by
-domain-adversarial training with a gradient reversal layer~\cite{ganin2016,bousmalis2016}.
-A deployed model also needs a second safeguard: an out-of-distribution (OOD) monitor that
-flags inputs unlike its training data so that a clinician reviews them. This paper asks
-what invariance training does to that monitor.
+Skin lesion classifiers often learn acquisition artefacts such as ink markings, rulers,
+dermatoscope type and contributing site, because these correlate with diagnosis in public
+datasets~\cite{winkler2019,bissoto2020,daneshjou2022}. A common remedy is to make the
+representation invariant to the acquisition domain, usually with domain-adversarial
+training and a gradient reversal layer~\cite{ganin2016,bousmalis2016}. Deployed models are
+also expected to have an out-of-distribution (OOD) monitor, which flags inputs that differ
+from the training data so that a clinician can review them. We study how invariance
+training affects this monitor.
 
-In our setting it can turn the monitor upside down. As the adversarial weight grows,
-OOD detection does not merely weaken; it falls below chance, so that images from clinics
-the model has never seen score as \emph{more} familiar than its own test data. Nothing in a
-standard evaluation reveals this: in-distribution accuracy stays flat
-\pending{calibration at the last checkpoint}, and the domain-leakage probe, the quantity the method
-is meant to reduce, improves. The
-cost falls on the patients a monitor exists to protect: under the same training,
-melanomas from unseen clinics are predicted benign nevus with confidence above $0.9$ up
-to ten times more often, and the OOD monitor that should route them to a clinician ranks
-them as routine.
+We find that it can invert it. When the adversarial weight increases, OOD detection does
+not just get worse but falls below chance, so images from clinics the model has never seen
+get scores that look more in-distribution than the model's own test images. Standard
+evaluation does not show this. In-distribution accuracy stays about the same
+\pending{calibration at the last checkpoint} and the domain-leakage probe, which the method is
+supposed to reduce, goes down. In the same models, melanomas from unseen clinics are
+predicted as benign nevus with confidence above $0.9$ up to ten times more often than
+without adaptation, and the monitor does not flag them.
 
-We trace the failure to label shift. ISIC~2019 is $50.8\%$ nevus, the smartphone images the
-adversary aligns against are $12.3\%$ nevus, and matching the marginal feature
-distributions of domains with different class priors forces the representation to
-misplace one domain's classes~\cite{zhao2019invariant,tachet2020domain}. We show the
-consequence for OOD monitoring with an intervention that changes only the class mix the
-adversary sees, and we locate the mechanism in the feature space.
+The cause is label shift. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
+second domain are $12.3\%$ nevus. When two domains have different class priors, matching
+their marginal feature distributions forces the model to misplace the classes of one
+domain~\cite{zhao2019invariant,tachet2020domain}. We test what this does to OOD monitoring by
+changing only the class mix that the adversary sees, and we look at where the OOD images
+end up in feature space.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item \textbf{The failure.} Under a lesion-disjoint split, gradient reversal inverts
-Mahalanobis OOD detection on held-out smartphone images and on three clinical datasets
-that no branch of training saw, with flat in-distribution accuracy \pending{and calibration},
-under two training recipes whose accuracy is within $0.06$ of a standard ERM baseline on
-the same split.
-\item \textbf{The cause.} Setting the class mix seen by the adversary to that of the target
-removes the inversion on unseen domains (AUROC difference $0.24$--$0.37$); a regression at
-matched domain leakage attributes the effect to label shift rather than to deeper
-invariance.
-\item \textbf{The mechanism and a measurement lesson.} DANN pulls images that differ from
-the source along the domain direction toward the majority class. Under label shift, an
-unweighted domain probe reports chance-level leakage while a within-class probe still
-reads the domain: invariance should be measured within class.
-\item \textbf{Consequence and mitigation.} Melanomas from unseen sources are called benign
-nevi with high confidence up to ten times more often. Importance weighting with label-free
-prior estimates recovers part of the loss; in a post hoc analysis, priors from $50$ labelled
-target images bring detection back to the oracle level, at a cost in in-distribution accuracy.
+\item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
+held-out smartphone images and on three clinical datasets that were not used in training.
+In-distribution accuracy does not change \pending{and calibration}. This holds for two training
+recipes, both within $0.06$ balanced accuracy of a standard ERM baseline on the same split.
+\item When the class mix seen by the adversary is set to that of the target domain, the
+inversion on unseen domains disappears (AUROC difference $0.24$--$0.37$). A regression at
+matched domain leakage shows that the effect comes from label shift and not only from
+deeper invariance.
+\item DANN moves images that differ from the source along the domain direction toward the
+majority class. Under label shift, an unweighted domain probe gives chance-level leakage
+even though a within-class probe can still read the domain, so we recommend measuring
+leakage within class.
+\item Importance weighting with label-free prior estimates reduces the problem but does not
+remove it. In a post hoc analysis, priors from $50$ labelled target images bring detection
+back to the oracle level, but in-distribution accuracy drops.
 \end{enumerate}
 \section{Related work}
 
@@ -491,47 +487,48 @@ IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 
 \section{Discussion}
 
-\paragraph{Tolerance without generalisation.}\label{sec:tolerance}
-Full-spectrum OOD detection asks that covariate-shifted inputs be accepted~\cite{yang2023}.
-After DANN our models accept unseen-clinic images more readily than their own test data
-while classifying them at a zero-shot balanced accuracy of $0.254$ at $\lam=2$ (chance $0.167$;
-best-validation checkpoint).
-A tolerant detector would score such inputs near $0.5$; scoring them below $0.5$ is not
-tolerance but a monitor that has lost its meaning. Claims of tolerance to covariate shift
-should report cross-domain accuracy on the same inputs.
+\paragraph{Accepting shifted inputs.}\label{sec:tolerance}
+Full-spectrum OOD detection argues that covariate-shifted inputs should be
+accepted~\cite{yang2023}. After DANN, our models accept images from unseen clinics more
+readily than their own test images, but their zero-shot balanced accuracy on these images
+is only $0.254$ at $\lam=2$ (chance $0.167$; best-validation checkpoint). If the goal were
+tolerance, the AUROC should be close to $0.5$. Values well below $0.5$ mean that the
+monitor ranks the shifted images as more typical than real in-distribution data, which is
+not useful for deployment. We think claims of tolerance to covariate shift should be
+reported together with the accuracy on the same inputs.
 
-\paragraph{Why label shift.}
-Matching marginal feature distributions across domains with different class priors
-cannot keep both domains' classes in place~\cite{zhao2019invariant}. Our results show what
-this misplacement does to a distance-based monitor: unfamiliar images that differ along the
-domain direction land in the majority class's region, where a class-conditional score reads
-them as typical. The BCN$\to$HAM case shows that a nevus-heavy OOD set alone is enough to
-invert such a score; DANN produces that condition in feature space when the aligned domains
-differ in class mix. Without label shift the inversion stays on the adversary's own target
-domain, where a smaller within-class pull remains. The same misplacement explains why an
-unweighted domain probe reports chance-level leakage: it measures marginal, not
-class-conditional, alignment.
+\paragraph{Why label shift matters.}
+\citet{zhao2019invariant} showed that when class priors differ, matching marginal feature
+distributions cannot keep the classes of both domains in place. Our results show the effect
+of this on a distance-based monitor. OOD images that differ from the source along the domain
+direction are moved into the region of the majority class, and a class-conditional score
+then treats them as typical. The BCN$\to$HAM case shows that an OOD set with more nevi than
+the ID set can invert such a score even without DANN. In the main setting the OOD sets have
+fewer nevi than ISIC, and DANN creates the problem by moving them toward nevus. Without label
+shift the inversion is only seen on the adversary's target domain, where a smaller
+within-class pull remains. This misplacement is also why the unweighted domain probe reaches
+chance level, since it measures marginal rather than class-conditional alignment.
 
-\paragraph{Checkpoint selection can hide the failure.}\label{sec:discussion-ckpt}
-As an observation made after the sweep, at $\lam=0.25$ the last checkpoint is inverted on
-both \texttt{pad\_heldout} and Fitzpatrick17k, whereas best-validation selection picks
-earlier epochs at which the seeds still disagree (seed s.d.\ $0.121$). Validation accuracy
-cannot tell these checkpoints apart, so a model selected in the usual way can look safe
-because it was stopped before the failure formed.
+\paragraph{Checkpoint selection.}\label{sec:discussion-ckpt}
+We noticed after the sweep that at $\lam=0.25$ the last checkpoint is inverted on both
+\texttt{pad\_heldout} and Fitzpatrick17k, while best-validation selection picks earlier
+epochs where the seeds still disagree (seed s.d.\ $0.121$). Validation accuracy does not
+separate these checkpoints, so a model selected in the usual way may look safe only because
+training was stopped early.
 
-\paragraph{No fix at scoring time.}
-Reversing the score works only if one knows in advance that the model is inverted; at
-$\lam=0$ it would turn a working monitor into a broken one, and at $\lam\ge0.5$ it leaves
-most OOD images accepted at a $95\%$ ID-acceptance threshold. Scores designed to be less
-sensitive to class structure, such as Relative Mahalanobis, also stay below chance. The
-remedy has to act on training, through the class priors the adversary aligns.
+\paragraph{Fixes at scoring time.}
+Reversing the score only helps if one already knows that the model is inverted. At $\lam=0$
+it would break a working monitor, and at $\lam\ge0.5$ most OOD images are still accepted at a
+$95\%$ ID-acceptance threshold. Relative Mahalanobis, which is less sensitive to class
+structure, also stays below chance. In our experiments the problem had to be addressed during
+training, through the class priors used by the adversary.
 
 \paragraph{Recommendations.}
-After any domain-alignment step: (i) re-validate OOD detection on images from unseen
-sources, per class as well as pooled; (ii) report domain leakage within class, not only
-unweighted; (iii) compare class priors between the aligned domains, and if they differ,
-correct for them, which in our setting needed a small labelled sample from the target
-domain; and (iv) report results at more than one checkpoint.
+After a domain-alignment step we suggest to (i) check OOD detection again on images from
+unseen sources, per class and pooled, (ii) report domain leakage within class and not only
+unweighted, (iii) compare the class priors of the aligned domains and correct for them if
+they differ, which in our case required a small labelled sample from the target domain, and
+(iv) report results for more than one checkpoint.
 
 \section{Limitations}
 \label{sec:limitations}
@@ -557,13 +554,14 @@ remedy is a post hoc analysis, costs in-distribution accuracy, and did not meet 
 criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images.
 
 \section{Conclusion}
-Domain-adversarial training can make an OOD monitor rank images from unseen clinics as more
-familiar than its own test data, while every routinely reported in-distribution metric
-stays flat. In our setting the cause is label shift between the domains the adversary
-aligns: it misplaces unfamiliar images into the majority class and hides the misalignment
-from the usual leakage probe. Checking OOD detection on unseen sources after adaptation,
-measuring leakage within class and correcting for class priors are inexpensive steps that
-make the failure visible and, with a small labelled target sample, reduce it.
+We showed that domain-adversarial training can make an OOD monitor rank images from unseen
+clinics as more in-distribution than the model's own test images, while in-distribution
+accuracy does not change. In our experiments this is caused by label shift between the
+domains that the adversary aligns. The adversary moves unfamiliar images toward the majority
+class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
+on unseen sources after adaptation, measuring leakage within class and correcting for class
+priors are cheap steps. With a small labelled sample from the target domain, the last of
+these also reduced the problem in our setting.
 
 \section*{Data and code availability}
 \repolink. ISIC 2019 CC~BY-NC~4.0; PAD-UFES-20 CC~BY~4.0;
