@@ -22,5 +22,5 @@ best.pt is epoch 1 (adv warmup, GRL coef=0) for all P_L1–P_L5 because later ep
 
 ## Locked conclusion
 
-Under the locked protocol (best epoch by A-select accuracy; pilot pass = probe drop ≥ 0.10 and ID bal within 0.05 of λ=0): **no level passed**. Report: "DANN did not remove site information on Camelyon17". No multi-seed arms.
+Under the locked protocol (best epoch by A-select accuracy; pilot pass = probe drop ≥ 0.10 and ID bal within 0.05 of λ=0): **no level passed**. Correct report: **no post-adversary checkpoint passed ID-select; the site-removal test did not take place.** No multi-seed arms. (Not “DANN could not remove site” — post-adversary encoders were never scored.)
 

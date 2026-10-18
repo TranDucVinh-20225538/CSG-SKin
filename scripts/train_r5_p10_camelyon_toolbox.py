@@ -204,6 +204,45 @@ def gate_met(s, probe0=None):
     return float(probe0 - probe) >= GATE_DROP
 
 
+def score_site_and_id(model, ds, sp, device, seed, num_workers, probe0, score_nct=True):
+    """Collect packs; return id_test, site probe, drop vs λ0, optional NCT ood (no gate labels)."""
+    model.eval()
+    ev = _EvalWrap(model)
+    packs = {k: p12.collect(ev, p12.loader_for(ds, sp[k], p12.eval_tf(), 256, num_workers, False), device)
+             for k in ("a_train", "a_test", "a_clean", "b_adv", "b_hold", "c")}
+    tr = packs["a_train"]
+    rng = np.random.default_rng(0)
+
+    def sub(z, n=c2.PROBE_MAX):
+        return z[rng.choice(len(z), min(n, len(z)), replace=False)]
+
+    ood = {}
+    for k in ("b_hold", "b_adv", "c"):
+        op = packs[k]
+        ood[k] = {"accuracy": p12.acc_pack(op["logits"], op["y"]), "n": int(len(op["y"]))}
+        for idk, lab in (("a_test", "detectors"), ("a_clean", "detectors_slide_disjoint_id")):
+            idp = packs[idk]
+            ood[k][lab] = p12.detector_block(tr["z"], tr["y"], idp["z"], idp["logits"], op["z"], op["logits"],
+                                             p12.KNN_BANK, seed)
+    if score_nct:
+        score_nct_into_ood(ood, packs, ev, device, seed, num_workers=num_workers)
+    id_test = p12.acc_pack(packs["a_test"]["logits"], packs["a_test"]["y"])
+    probe_blk = p12.leakage_binary(sub(packs["a_test"]["z"]), sub(packs["b_hold"]["z"]))
+    probe = float(probe_blk["balanced_acc_mean"])
+    return {
+        "id_test": id_test,
+        "id_test_slide_disjoint": p12.acc_pack(packs["a_clean"]["logits"], packs["a_clean"]["y"]),
+        "leakage_site_probe_a_vs_bhold": probe_blk,
+        "leakage_site_probe_aclean_vs_bhold": p12.leakage_binary(sub(packs["a_clean"]["z"]),
+                                                                sub(packs["b_hold"]["z"])),
+        "ood": ood,
+        "b_heldout_accuracy": ood["b_hold"]["accuracy"],
+        "site_probe": probe,
+        "probe_drop_vs_lambda0": float(probe0 - probe),
+        "id_bal": float(id_test.get("balanced_acc", id_test["acc"])),
+    }
+
+
 def p10_state(suffix):
     used, hits = 0.0, []
     for st in ("ladder", "stage2"):
@@ -232,6 +271,8 @@ def main():
     ap.add_argument("--weight_decay", type=float, default=1e-4)
     ap.add_argument("--num_workers", type=int, default=6)
     ap.add_argument("--skip_done", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="retrain even if summary.json exists (for posthoc last.pt scoring)")
     r5_recipe.add_args(ap)
     args = ap.parse_args()
     rec, rsrc = r5_recipe.resolve(args.recipe)
@@ -266,7 +307,7 @@ def main():
     run_dir, ckpt_dir = OUT / stage / tag, CKPT / stage / tag
     run_dir.mkdir(parents=True, exist_ok=True)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
-    if args.skip_done and (run_dir / "summary.json").exists():
+    if args.skip_done and not args.force and (run_dir / "summary.json").exists():
         print("skip_done", tag)
         return
     # Pilot: stop if an earlier level already passed, or GPU-h used by pilot ≥ 10.
@@ -430,44 +471,43 @@ def main():
             best = sel
             torch.save({"state_dict": model.state_dict(), "epoch": epoch, "sel": sel}, ckpt_dir / "best.pt")
 
+    # Last-epoch weights (derm R1/R2 use last.ckpt). Official Camelyon gate still uses best/ID-select.
+    torch.save({"state_dict": model.state_dict(), "epoch": args.epochs, "sel": sel}, ckpt_dir / "last.pt")
+    print("scoring posthoc last.pt (descriptive; does not enter gate)", flush=True)
+    last_metrics = score_site_and_id(model, ds, sp, device, args.seed, args.num_workers, probe0, score_nct=False)
+    posthoc_last = {
+        "note": "post hoc; not locked; derm R1/R2 analogue (last epoch). Gate/best unchanged.",
+        "epoch": int(args.epochs),
+        "site_probe": last_metrics["site_probe"],
+        "probe_drop_vs_lambda0": last_metrics["probe_drop_vs_lambda0"],
+        "id_bal": last_metrics["id_bal"],
+        "id_test": last_metrics["id_test"],
+        "b_heldout_accuracy": last_metrics["b_heldout_accuracy"],
+        "leakage_site_probe_a_vs_bhold": last_metrics["leakage_site_probe_a_vs_bhold"],
+    }
+    print("posthoc_last", {k: posthoc_last[k] for k in ("site_probe", "probe_drop_vs_lambda0", "id_bal")},
+          flush=True)
+
     blob = torch.load(ckpt_dir / "best.pt", map_location="cpu")
     model.load_state_dict(blob["state_dict"])
-    model.eval()
-    ev = _EvalWrap(model)
-    packs = {k: p12.collect(ev, p12.loader_for(ds, sp[k], p12.eval_tf(), 256, args.num_workers, False), device)
-             for k in ("a_train", "a_test", "a_clean", "b_adv", "b_hold", "c")}
-    tr = packs["a_train"]
-    rng = np.random.default_rng(0)
-
-    def sub(z, n=c2.PROBE_MAX):
-        return z[rng.choice(len(z), min(n, len(z)), replace=False)]
-
-    ood = {}
-    for k in ("b_hold", "b_adv", "c"):
-        op = packs[k]
-        ood[k] = {"accuracy": p12.acc_pack(op["logits"], op["y"]), "n": int(len(op["y"]))}
-        for idk, lab in (("a_test", "detectors"), ("a_clean", "detectors_slide_disjoint_id")):
-            idp = packs[idk]
-            ood[k][lab] = p12.detector_block(tr["z"], tr["y"], idp["z"], idp["logits"], op["z"], op["logits"],
-                                             p12.KNN_BANK, args.seed)
-    # NCT-CRC-HE was previously only named in config.semantic_ood and never scored (bug).
-    score_nct_into_ood(ood, packs, ev, device, args.seed, num_workers=args.num_workers)
+    best_metrics = score_site_and_id(model, ds, sp, device, args.seed, args.num_workers, probe0, score_nct=True)
     rows = [json.loads(l) for l in log.read_text().splitlines() if l.strip()]
     summary = {"tag": tag, "stage": stage, "rung": rung, "assign": "primary", "hospitals": [ha, hb, hc],
                "lambda_adv": lam, "seed": args.seed, "toolbox": tb, "best_epoch": int(blob["epoch"]),
-               "id_test": p12.acc_pack(packs["a_test"]["logits"], packs["a_test"]["y"]),
-               "id_test_slide_disjoint": p12.acc_pack(packs["a_clean"]["logits"], packs["a_clean"]["y"]),
-               "leakage_site_probe_a_vs_bhold": p12.leakage_binary(sub(packs["a_test"]["z"]), sub(packs["b_hold"]["z"])),
-               "leakage_site_probe_aclean_vs_bhold": p12.leakage_binary(sub(packs["a_clean"]["z"]), sub(packs["b_hold"]["z"])),
-               "ood": ood, "history": rows,
+               "id_test": best_metrics["id_test"],
+               "id_test_slide_disjoint": best_metrics["id_test_slide_disjoint"],
+               "leakage_site_probe_a_vs_bhold": best_metrics["leakage_site_probe_a_vs_bhold"],
+               "leakage_site_probe_aclean_vs_bhold": best_metrics["leakage_site_probe_aclean_vs_bhold"],
+               "ood": best_metrics["ood"], "history": rows,
                "adversary": {"min_epoch_ce": min(r["loss_adv"] for r in rows), "last": rows[-1]},
-               "gpu_hours": (time.time() - t0) / 3600.0}
+               "gpu_hours": (time.time() - t0) / 3600.0,
+               "posthoc_last": posthoc_last}
     probe = summary["leakage_site_probe_a_vs_bhold"]["balanced_acc_mean"]
     summary["lambda0_probe_mean"] = probe0
     summary["probe_drop_vs_lambda0"] = float(probe0 - probe)
     summary["gate_met"] = bool(gate_met(summary, probe0))
     summary["invariance_not_reached"] = not summary["gate_met"]
-    summary["b_heldout_accuracy"] = ood["b_hold"]["accuracy"]
+    summary["b_heldout_accuracy"] = best_metrics["b_heldout_accuracy"]
     if args.pilot:
         ok, info = pilot_level_passes(summary, probe0, id0)
         summary["pilot_level_passed"] = bool(ok)
@@ -481,7 +521,9 @@ def main():
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print("saved", run_dir / "summary.json", "probe", probe, "drop", summary["probe_drop_vs_lambda0"],
           "ID acc", summary["id_test"]["acc"], "gate", summary["gate_met"],
-          "invariance_not_reached", summary["invariance_not_reached"], flush=True)
+          "invariance_not_reached", summary["invariance_not_reached"],
+          "posthoc_last_drop", posthoc_last["probe_drop_vs_lambda0"],
+          "posthoc_last_id_bal", posthoc_last["id_bal"], flush=True)
 
 
 if __name__ == "__main__":

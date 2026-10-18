@@ -46,8 +46,10 @@ Fixed order L1 → L5; **stop at the first level that passes**.
 1. Site probe drop ≥ **0.10** vs λ = 0 mean (item5 seeds 42–44; same as P10).
 2. ID balanced accuracy within **0.05** of λ = 0 mean ID bal (item5 seeds 42–44).
 
-If a level fails, continue to the next. If **no** level passes within the cap: stop and report
-**"DANN did not remove site information on Camelyon17"** — do not launch the multi-seed arms.
+If a level fails, continue to the next. If **no** level passes within the cap: stop and report that
+**no post-adversary checkpoint passed the ID-select criterion; the site-removal test did not take
+place** — do not launch the multi-seed arms. (Do not paraphrase this as “DANN could not remove site
+information” unless a post-adversary encoder was actually scored.)
 
 ## Multi-seed arms (only if a level is selected)
 
@@ -69,7 +71,8 @@ Detection labels, CIs (B = 2,000, rng 20261017, percentile 95%), and Δ vs λ = 
 - L1–L2 may still fail the probe drop (λ = 2 already failed); L3–L5 more likely to move the probe if anything will.
 - Risk: high adv LR / λ degrades ID bal past the 0.05 band → level fails even if probe moves.
 - If the pilot selects a level and ≥ 4/5 seeds pass: natural still predicted collapse-band; induced inversion-band
-  (same TV thresholds as P10). If the pilot fails entirely: Camelyon site signal is not removable by this DANN family.
+  (same TV thresholds as P10). If no level yields a selectable post-adversary checkpoint: report the ID-select
+  failure (site-removal test not executed), not a positive “site not removable” claim.
 
 ## Outputs
 
@@ -112,11 +115,13 @@ pilot array). Agents must keep this order; do not release R2 ahead of the Camely
   (same as prior schedule). Criteria / ladder levels unchanged.
 
 - 2026-10-18 ~13:30 (+07), **result + audit (no criteria change)**. Pilot job `68725` finished: all five
-  levels failed the pass rule; no `SELECTED.json`; locked report
-  **"DANN did not remove site information on Camelyon17"**; R2 released (no Camelyon 10).
-  L1–L4 headline metrics matched to many decimals; audit (`results/paperB/r5/p10/pilot/AUDIT_identical_L1_L4.md`)
-  shows configs had the intended λ / `adv_lr_multiplier`, train logs diverged after epoch 1, and each level
-  had its own run dir / `best.pt`. Identity is from **best epoch = 1** (adv warmup, GRL coef = 0) under the
-  locked A-select checkpoint rule — not from toolbox overwrite or a shared checkpoint path. **Not a bug fix;
-  no re-run.** Vacuous note: post-warmup encoders were never selected for probe eval because ID-select collapsed.
+  levels failed the pass rule; no `SELECTED.json`; R2 released (no Camelyon 10). L1–L4 locked metrics matched;
+  audit (`AUDIT_identical_L1_L4.md`) shows λ / adv_lr applied and **best epoch = 1** (warmup). Wording fix
+  below replaces the incorrect “DANN did not remove site” paraphrase.
+
+- 2026-10-18 ~13:35 (+07), **wording + posthoc last (criteria unchanged)**. Correct locked failure sentence:
+  *no post-adversary checkpoint passed ID-select; site-removal test did not take place.* All 10 P10
+  shift-arms also have `best_epoch=1` (`results/paperB/r5/p10/BEST_EPOCHS.md`). Save `last.pt` + descriptive
+  `posthoc_last` probe/ID (derm uses `last.ckpt`); retrain array after remaining R2 — does **not** change
+  gate or best-epoch rule.
 
