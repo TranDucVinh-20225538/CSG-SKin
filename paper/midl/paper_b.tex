@@ -75,7 +75,7 @@ In our setting it can turn the monitor upside down. As the adversarial weight gr
 OOD detection does not merely weaken; it falls below chance, so that images from clinics
 the model has never seen score as \emph{more} familiar than its own test data. Nothing in a
 standard evaluation reveals this: in-distribution accuracy and calibration stay flat,
-and the domain-leakage probe, the quantity the method is meant to reduce, improves. The
+and the domain-leakage probe, the quantity the method is meant to reduce, improves \pending{ID accuracy/ECE at last checkpoint}. The
 cost falls on the patients a monitor exists to protect: under the same training,
 melanomas from unseen clinics are predicted benign nevus with confidence above $0.9$ up
 to ten times more often, and the OOD monitor that should route them to a clinician ranks
@@ -288,7 +288,7 @@ All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ ($k$-NN $0
 cosine $0.420$, MSP $0.455$, energy $0.468$; best-validation checkpoint); the standard
 $k$-th-neighbour $k$-NN gives the same values within $0.01$. The best-validation checkpoint
 gives the same picture from $\lam=0.5$ on, but at $\lam=0.25$ it selects an earlier epoch and
-the inversion is not yet visible ($0.525\pm0.121$).
+the inversion is not yet visible ($0.525$, seed s.d.\ $0.121$; an observation made after the sweep).
 
 \paragraph{Unseen domains.} The inversion is not confined to the domain the adversary was
 trained against (Table~\ref{tab:unseen}). On three clinical datasets that entered no part of
@@ -441,8 +441,8 @@ standardised distances stay below $0.5$ on all three unseen datasets at $\lam=2$
 
 \paragraph{Importance-weighted alignment.} IWDAN reweights the source in the adversarial loss
 by estimated target class priors, and how well it works depends on the estimate.
-\emph{BBSE} priors are far from the truth (total variation $0.65$--$0.76$), plausibly because
-its assumption of unchanged class-conditional inputs fails across these domains; IWDAN then
+With weights estimated from unlabelled target data, as in the original method
+(total variation from the true priors \pending{confirm which estimate R2 IWDAN used and its TV}), IWDAN
 keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
 \texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
 ($0.350$) and SD-198 ($0.488$) stay at or below chance. \emph{EM} estimation was unstable:
@@ -451,11 +451,14 @@ having run correctly. With priors from \emph{$50$ labelled target images} (total
 $0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
 priors (Fitzpatrick17k $0.741$ vs $0.717$, SD-198 $0.734$ vs $0.693$, MED-NODE $0.606$ vs $0.563$;
 \texttt{pad\_heldout} $0.619$ vs $0.647$), and within-class leakage is lower than under DANN
-($0.58$ vs $0.62$). Neither the 50-label nor the true-prior variant meets our condition for a
-fix, because unweighted leakage rises ($0.81$ and $0.78$ against $0.63$), and both cost
-in-distribution balanced accuracy ($0.39$--$0.40$ against $0.48$). Across estimators, the
-error in the estimated priors did not predict detection as a rank correlation (Spearman
-$-0.33$, $[-0.80, +0.28]$), with the EM runs contributing invalid priors
+($0.58$ vs $0.62$). This is a promising but post hoc mitigation: neither the 50-label nor the true-prior
+variant meets our leakage criterion, because unweighted leakage rises ($0.81$ and $0.78$
+against $0.63$), and both cost in-distribution balanced accuracy ($0.39$--$0.40$, against
+$0.48$ both under DANN and before adaptation). BBSE estimates computed separately were far from the truth (total variation
+$0.65$--$0.76$), plausibly because its assumption of unchanged class-conditional inputs fails
+across these domains. Across estimators, the error in the estimated priors did not predict
+detection as a rank correlation (Spearman $-0.33$, $[-0.80, +0.28]$), with the EM runs
+contributing invalid priors
 \pending{IWCDAN, CDAN, $\lam=0.5$ cells; per-method details to appendix}.
 
 \begin{table}[t]
@@ -481,185 +484,79 @@ IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 
 \section{Discussion}
 
-\paragraph{An inversion, not a degradation.}
-The central result is not that out-of-distribution detection weakens under adversarial
-invariance training but that the ordering reverses. Degradation would be unsurprising
---- a representation stripped of domain information should be worse at recognising a
-domain, and chance is what that argument predicts, which is what a single-encoder model
-reaches at $\lam = 0.25$ ($0.525$). Going \emph{past} chance is not predicted by it,
-and is what Section~\ref{sec:mechanism} accounts for. The results then compose into one
-failure sequence: a model trained with invariance to acquisition domain, as
-recommended, is deployed at a new site, where it increasingly predicts the benign
-majority class --- actinic keratosis recall $0.245 \to 0.016$ --- with higher
-confidence than on its own test data, while the monitor that should flag those images
-ranks them as more routine than familiar ones and every metric the developer watches
-moves favourably.
-
-\paragraph{The failure belongs to gradient reversal, not to invariance.}
-Reducing leakage is not sufficient to produce it, and in this sweep leakage is not even
-achieved: it bottoms out at $0.555$ against a floor of $0.5$ and rises again at the
-largest weights while detection stays inverted. MMD reduces leakage along the same axis
-and collapses nothing at the levels it reaches with the classifier intact, where
-gradient reversal has already inverted. The two also fail in opposite manners: pushed
-harder, MMD becomes less accurate \emph{and} less confident and its out-of-domain
-calibration error falls, while under gradient reversal accuracy falls as confidence
-rises and calibration error triples. One degrades honestly, the other is confidently
-wrong. Wald et al.~\cite{wald2021} showed that enforcing multi-domain calibration
-\emph{produces} invariance; the converse fails here, which suggests that where
-invariance is the goal, calibration-based or moment-matching objectives may be
-preferable because they leave the out-of-domain uncertainty signal intact. We offer
-that as a hypothesis: MMD never reached the invariance level gradient reversal reaches
-without destroying the task, and we tested one adversarial formulation, so whether CDAN
-or adversarial discriminative adaptation behaves the same way is not established here.
-
-\paragraph{The danger zone is where the method succeeds.}
-Risk scales with \emph{achieved} invariance, not with the nominal weight or the
-presence of an adversarial term. Where the adversary never learned, leakage stayed at
-$0.94$ across four orders of magnitude of $\lam$ and the safety failure did not appear
-either. A weak adversary produces neither debiasing nor harm --- so many deployed
-configurations may be harmless, and a configuration's safety cannot be read off its
-hyperparameters.
-
 \paragraph{Tolerance without generalisation.}\label{sec:tolerance}
-Full-spectrum OOD detection \cite{yang2023} prescribes that covariate-shifted
-in-distribution inputs be accepted rather than flagged. Our models achieve that
-prescription and are unsafe because of it: they accept out-of-domain images more
-readily than their own test data while classifying them at $0.254$ balanced accuracy
-against a floor of $0.167$. Acceptance and competence are separate properties, and
-current protocols evaluate them separately or not at all. Any claim of tolerance to
-covariate shift should carry cross-domain accuracy on the same inputs, since tolerating
-inputs a model cannot classify is a failure mode rather than a success.
+Full-spectrum OOD detection asks that covariate-shifted inputs be accepted~\cite{yang2023}.
+After DANN our models accept unseen-clinic images more readily than their own test data
+while classifying them at a zero-shot balanced accuracy of about $0.25$ (chance $0.167$).
+A tolerant detector would score such inputs near $0.5$; scoring them below $0.5$ is not
+tolerance but a monitor that has lost its meaning. Claims of tolerance to covariate shift
+should report cross-domain accuracy on the same inputs.
 
-\paragraph{Recommendation.}
-Report OOD detection and out-of-domain calibration \textbf{as a function of achieved
-invariance} rather than at a single operating point; report cross-domain accuracy
-alongside any claim of tolerance to covariate shift; and state, when a separate
-dataset serves as the OOD set, that this measures covariate shift rather than
-semantic novelty. Practitioners tuning $\lam$ already train at several values, so
-this changes what is reported rather than what is run. It converts an invisible
-failure into a visible number.
+\paragraph{Why label shift.}
+Matching marginal feature distributions across domains with different class priors
+cannot keep both domains' classes in place~\cite{zhao2019invariant}. Our results show what
+this misplacement does to a distance-based monitor: unfamiliar images that differ along the
+domain direction land in the majority class's region, where a class-conditional score reads
+them as typical. The BCN$\to$HAM case shows that a nevus-heavy OOD set alone is enough to
+invert such a score; DANN produces that condition in feature space when the aligned domains
+differ in class mix. Without label shift the inversion stays on the adversary's own target
+domain, where a smaller within-class pull remains. The same misplacement explains why an
+unweighted domain probe reports chance-level leakage: it measures marginal, not
+class-conditional, alignment.
 
-\paragraph{Monitor outside the adversarial path.}
-Since the collapse is a property of the representation that received adversarial
-gradient, one mitigation is to score novelty on a representation that did not. A
-frozen ImageNet ResNet-50 gives Mahalanobis AUROC $0.988$ on Fitzpatrick17k and
-$0.833$ on \texttt{pad\_heldout}, against the trained model's $0.764$ and $0.843$ at
-$\lam = 0$ and $0.391$ and $0.427$ at $\lam = 2$. It never inverts, but \textbf{we
-had pre-registered $0.90$ in all four cells and \texttt{pad\_heldout} does not reach
-it}, where the frozen encoder merely matches the untrained model rather than
-improving on it. A partial mitigation, not a fix; retreating to an earlier layer of
-the \emph{same} encoder does not work at all (Section~\ref{sec:nonmediation}).
+\paragraph{Checkpoint selection can hide the failure.}\label{sec:discussion-ckpt}
+As an observation made after the sweep, at $\lam=0.25$ the last checkpoint is inverted on
+both \texttt{pad\_heldout} and Fitzpatrick17k, whereas best-validation selection picks
+earlier epochs at which the seeds still disagree (seed s.d.\ $0.121$). Validation accuracy
+cannot tell these checkpoints apart, so a model selected in the usual way can look safe
+because it was stopped before the failure formed.
 
-\paragraph{The inversion is deepened, not created, in the minority classes.}
-\label{sec:perclass}
-Per-class AUROC, which unlike the pooled value does not depend on the ID class mix,
-is $0.14$--$0.39$ on \texttt{pad\_heldout} and $0.10$--$0.34$ on Fitzpatrick17k at
-$\lam = 2$ for every non-nevus class. Two are already at or below chance beforehand: on
-\texttt{pad\_heldout} at $\lam = 0$, actinic keratosis is $0.499$ and squamous cell
-carcinoma $0.444$.
-Gradient reversal deepens an inversion that already exists for the rarest and most
-clinically consequential classes, and the pooled AUROC at $\lam = 0$ conceals this
-because nevus is half the in-distribution set.
+\paragraph{No fix at scoring time.}
+Reversing the score works only if one knows in advance that the model is inverted; at
+$\lam=0$ it would turn a working monitor into a broken one, and at $\lam\ge0.5$ it leaves
+most OOD images accepted at a $95\%$ ID-acceptance threshold. Scores designed to be less
+sensitive to class structure, such as Relative Mahalanobis, also stay below chance. The
+remedy has to act on training, through the class priors the adversary aligns.
 
-\paragraph{The mechanism, and what remains open.}
-Gradient reversal removes the acquisition signal by moving out-of-domain images into
-the region the majority class occupies (Section~\ref{sec:mechanism}) --- an efficient
-way to satisfy the adversary, since the densest part of the latent space is where
-domain information is hardest to recover, and simultaneously the worst outcome for a
-distance-based novelty score, which reads density as familiarity. The two objectives
-are not merely in tension: invariance is obtained by the move that defeats detection.
-What remains open is why gradient reversal takes this route and moment matching does
-not, why the synthetic reproduction failed, and whether the majority class is special
-or merely the densest available --- a dataset with two comparably sized dominant
-classes would separate the last of these.
+\paragraph{Recommendations.}
+After any domain-alignment step: (i) re-validate OOD detection on images from unseen
+sources, per class as well as pooled; (ii) report domain leakage within class, not only
+unweighted; (iii) compare class priors between the aligned domains, and if they differ,
+correct for them, which in our setting needed a small labelled sample from the target
+domain; and (iv) report results at more than one checkpoint.
 
 \section{Limitations}
 \label{sec:limitations}
 
-\textbf{Absolute cross-domain performance is poor for every model here.} Plain
-accuracy on \texttt{pad\_heldout} is $0.245$ for the factorized model and $0.391$ for
-the baseline against a $0.385$ majority rate, so no model here is deployable. Our
-claim concerns the \emph{effect of $\lam$}, and the deployment pathway above is a
-mechanism of harm rather than a description of a fielded system.
+\textbf{Scope.} The inversion is shown in dermatology only. We attempted two other
+modalities and neither experiment took place: on Camelyon17 no adversarial setting we tried
+removed hospital information before the classifier degraded, and on chest radiographs the
+detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
+nothing to invert. \textbf{Architecture.} The main results use a dual-encoder model; the A4
+recipe changes the latent size and loss, but a plain single-encoder DANN collapses detection
+to chance without inverting, and whether deeper invariance would invert it is untested
+\pending{R1-hi / P9}. \textbf{Competence.} In-distribution balanced accuracy is $0.04$--$0.06$
+below a standard ERM on the same lesion-disjoint split. \textbf{Statistics.} MED-NODE and
+SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
+narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
+The five OOD scores are functions of one latent and are not independent evidence.
+\textbf{Mechanism.} A two-domain Gaussian toy model with label shift did not reproduce the
+inversion, so the conditions we identify may not be sufficient in general. \textbf{Warning
+signals.} No statistic computed on in-distribution data alone flagged the inverted runs; the
+share of deployment images predicted as the majority class tracked inversion
+(Spearman $-0.73$) but needs unlabelled target data. \textbf{Mitigation.} The few-label
+remedy is a post hoc analysis, costs in-distribution accuracy, and did not meet our leakage
+criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images.
 
-\textbf{The inversion is observed only across imaging modality.} ISIC is dermoscopy
-while PAD-UFES and Fitzpatrick17k are clinical photography, so the main contrast
-confounds site with modality and Fitzpatrick17k does not resolve it. The
-same-modality contrast within ISIC (Section~\ref{sec:site}) separates the claims: the
-collapse reproduces between two hospitals, the inversion does not. We cannot say
-whether that reflects the size of the shift, modality gaps specifically, or these
-datasets.
-
-Three attempts to replicate outside dermatology returned no result, for the same
-underlying reason in different guises: the manipulation did not take, so there was
-nothing to measure. On three-hospital Camelyon17 the adversary head never trained; on
-iWildCam it trained but the encoder never became invariant; and on Camelyon17
-restricted to \emph{two} hospitals --- the obvious diagnosis, matching the dermatology
-domain count, with the gradient path verified first --- the adversary reached chance
-($\ln 2$) while a post-hoc probe still read the hospital at $0.92$--$0.95$, a fall of
-at most $0.037$ against the $0.10$ we had pre-committed. The pre-registered stopping
-rule returns a negative and we stop. \textbf{Domain count is not the barrier}, and we
-cannot say what is; the pattern --- an adversary driven to chance while the information
-it was asked to remove stays linearly decodable --- is a known failure mode of
-adversarial removal \cite{elazar2018}. \textbf{We report no inversion outside
-dermatology}; a single-seed sub-chance reading there did not replicate
-($0.534 \pm 0.050$ over three seeds). What those runs do support is the dissociation in
-Section~\ref{sec:nonmediation}. Details in Appendix~\ref{app:external}.
-
-Generality beyond dermatology remains untested. \textbf{Backbone coverage.} Comparable invariance was not reached with a ResNet-50
-backbone, so whether the inversion extends beyond EfficientNet-B3 is untested. Three of
-the nine runs failed their adversary gate outright and are reported as null experiments
-rather than negative results. \textbf{The objective comparison is bounded.} MMD never reached the invariance
-level gradient reversal attains; it could only approach it by destroying the
-classifier. We therefore cannot say what moment-matching would do at matched
-invariance, only that at the leakage levels it reaches, gradient reversal has
-already inverted and MMD has not.
-
-\textbf{Detector non-independence.} The five scoring rules are functions of one
-16-dimensional latent; the backbone analysis and the single-encoder replication carry
-the independent evidence. \textbf{Calibration arithmetic.} Out-of-domain ECE is close
-to mean confidence minus accuracy here, so those three results are one phenomenon
-viewed three ways. \textbf{Seeds.} Five at every $\lam$ on the leak-free split, and
-three at two interior points of the image-level sweep in the appendix; effect sizes
-are large relative to seed variance, but we claim no formal test across seven
-points.
-
-\textbf{Splits.} The main sweep uses the image-level ISIC split, in which
-$3{,}041$ of $5{,}067$ test images ($60.0\%$) share a \texttt{lesion\_id} with
-training or validation. This inflates in-distribution balanced accuracy by
-$0.20$ ($0.496 \to 0.692$ at $\lam = 0$), so the absolute values in
-Table~\ref{tab:dial} are optimistic by that amount;
-Section~\ref{sec:lesionsplit} reports the lesion-disjoint replication at five
-seeds, under which every conclusion is unchanged. PAD splits are patient-level,
-disjoint by patient and by lesion. \textbf{Third-domain coverage.} 3{,}887 of 16{,}577 Fitzpatrick17k images were
-obtained; the set is web-scraped under mixed copyright, used for evaluation only,
-and not redistributed.
-
-% ------------------------------------------------------------
 \section{Conclusion}
+Domain-adversarial training can make an OOD monitor rank images from unseen clinics as more
+familiar than its own test data, while every routinely reported in-distribution metric
+stays flat. In our setting the cause is label shift between the domains the adversary
+aligns: it misplaces unfamiliar images into the majority class and hides the misalignment
+from the usual leakage probe. Checking OOD detection on unseen sources after adaptation,
+measuring leakage within class and correcting for class priors are inexpensive steps that
+make the failure visible and, with a small labelled target sample, reduce it.
 
-Under domain-adversarial training, out-of-distribution detection does not merely
-weaken. It reverses: a model asked which inputs are unfamiliar answers with its
-own test data and ranks a new clinic's images as the more routine of the two.
-The reversal appears at the smallest adversarial weight that achieves
-invariance, holds on a dataset the adversary never saw, reproduces without the
-factorized architecture, and does not appear under moment-matching objectives
-that reduce leakage along the same axis.
-
-It is invisible to everything a developer monitors. In-distribution accuracy
-holds, in-distribution calibration is unchanged and the domain leakage probe
-improves exactly as intended --- under an image-level and a lesion-disjoint ISIC
-split alike --- while confidence on unseen domains overtakes confidence on
-familiar data and recall for a premalignant class falls to $0.016$.
-
-The cause is identifiable: invariance is obtained by moving out-of-domain
-images into the majority class's region of the latent space, which is exactly
-the move that makes a density-based novelty score call them familiar. Acting on
-it does not require the explanation. Reporting out-of-distribution detection,
-out-of-domain calibration and cross-domain accuracy as functions of achieved
-invariance costs almost nothing and makes the failure visible.
-
-% ------------------------------------------------------------
 \section*{Data and code availability}
 \repolink. ISIC 2019 CC~BY-NC~4.0; PAD-UFES-20 CC~BY~4.0;
 Fitzpatrick17k annotations CC~BY-NC-SA~3.0 with images used for evaluation
