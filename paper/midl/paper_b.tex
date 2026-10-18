@@ -37,21 +37,22 @@ medical imaging models, and deployed models are expected to have an out-of-distr
 (OOD) monitor that flags unfamiliar inputs. We study how DANN affects such monitors in skin
 lesion classification, using a lesion-disjoint ISIC~2019 split and smartphone images as the
 second domain. With gradient reversal, Mahalanobis OOD detection drops from AUROC $0.825$ to
-$0.381$ ($95\%$ CI $[0.358, 0.404]$), so unseen images look more in-distribution than the
-model's own test images. The same happens on three clinical datasets that were not used in
+$0.381$ ($95\%$ CI $[0.358, 0.404]$) on held-out smartphone images, which then look more
+in-distribution than the model's own test images. The same happens on three clinical datasets that were not used in
 training (Fitzpatrick17k $0.405$; MED-NODE and SD-198 \pending{last-checkpoint values}), while
-in-distribution balanced accuracy stays at $0.47$--$0.48$ \pending{paired CI, calibration}. We
-find that the cause is label shift between the two domains. When we change only the class
+in-distribution balanced accuracy stays at $0.47$--$0.48$ \pending{paired CI, calibration}. Our
+interventions point to label shift between the two domains as the cause. When we change only the class
 mix that the adversary sees, AUROC on the unseen datasets changes by $0.24$--$0.37$, and the
 effect remains when domain leakage is held fixed. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
 increases from $8\%$ to $49$--$81\%$. Importance-weighted alignment with class priors
-estimated online from unlabelled target data recovers $32$--$45\%$ of the lost AUROC. In a
+estimated online from unlabelled target data recovers $32$--$45\%$ of the lost AUROC on the
+smartphone images and Fitzpatrick17k at matched leakage, but not on the other two datasets. In a
 post hoc analysis, priors from $50$ labelled target images bring detection on the unseen
-datasets back to its level before adaptation, but in-distribution balanced accuracy drops by
-about $0.08$. We recommend checking OOD detection again after domain adaptation and
+datasets back to its level before adaptation, but in-distribution balanced accuracy drops from
+$0.48$ to $0.39$. We recommend checking OOD detection again after domain adaptation and
 measuring domain leakage within class.
 \end{abstract}
 
