@@ -442,7 +442,7 @@ standardised distances stay below $0.5$ on all three unseen datasets at $\lam=2$
 \paragraph{Importance-weighted alignment.} IWDAN reweights the source in the adversarial loss
 by estimated target class priors, and how well it works depends on the estimate.
 With weights updated online from unlabelled target predictions, as in the original method,
-the implied target priors end $0.43$--$0.55$ (total variation) from the truth: nevus is
+the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
 down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
 \texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
 ($0.350$) and SD-198 ($0.488$) stay at or below chance. \emph{EM} estimation was unstable:
@@ -457,9 +457,11 @@ against $0.63$), and both cost in-distribution balanced accuracy ($0.39$--$0.40$
 $0.48$ both under DANN and before adaptation). Read descriptively, detection improves as the prior error falls ($0.52$:
 partial; $0.10$--$0.14$: oracle level; $0$: oracle), but our planned rank-correlation test
 across estimators was not supported (Spearman $-0.33$, $[-0.80, +0.28]$), with EM
-contributing invalid priors. Black-box shift estimates computed after training were further
-from the truth ($0.65$--$0.76$), plausibly because their assumption of unchanged
-class-conditional inputs fails across these domains
+contributing invalid priors. As a diagnostic, black-box shift estimates computed on the final checkpoints were further
+from the truth ($0.65$--$0.76$): their assumption of unchanged class-conditional predictions
+fails across these domains, with target BCC and AK images predicted as MEL or NV. Label-free
+prior estimates thus remain about $0.5$ total variation off and recover detection only in part;
+$50$ labels bring the error to $0.10$--$0.14$ and detection to the oracle level
 \pending{IWCDAN, CDAN, $\lam=0.5$ cells; per-method details to appendix}.
 
 \begin{table}[t]
