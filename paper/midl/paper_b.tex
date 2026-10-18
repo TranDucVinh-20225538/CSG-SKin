@@ -215,11 +215,11 @@ below $0.5$ mean OOD images score as more familiar than ID test images. The five
 are functions of the same latent, so they are not independent evidence.
 
 \paragraph{Inversion.} We call a cell inverted when the cluster-bootstrap $95\%$ CI of the
-seed-mean Mahalanobis AUROC lies below $0.5$ and at least three of five seeds' own
-intervals do \pending{confirm against code: 3/5 or 5/5; threshold for 3-seed cells (2/3 or 3/3)}. Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
-patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k, SD-198) or case
-(SCIN); MED-NODE has no grouping and is resampled by image, so its intervals may be too
-narrow \pending{confirm SD-198 uses P13 clusters in every table}. Runs with in-distribution
+seed-mean Mahalanobis AUROC lies below $0.5$ and at least three seeds' own intervals do
+(all three in cells with three seeds). Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
+patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k) or case (SCIN);
+MED-NODE and SD-198 carry no patient identifiers and are resampled by image, so their
+intervals may be too narrow. Runs with in-distribution
 balanced accuracy below $0.25$ are excluded as degraded and reported.
 
 \paragraph{Domain leakage.} Balanced accuracy (chance $0.5$) of a logistic probe for the
