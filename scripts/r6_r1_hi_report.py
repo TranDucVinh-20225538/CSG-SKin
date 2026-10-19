@@ -350,9 +350,11 @@ def write_report(rows, cells):
                 f"{s['gate_pass']} | {maha('fitzpatrick17k')} | {maha('mednode')} | {maha('sd198')} |"
             )
         if c["gate_seeds"]:
-            lines.append(f"", f"Gated seeds: {c['gate_seeds']}. "
-                         f"Non-inverting sets (≥ CI lo>0.5): {c['noninv_sets']}; "
-                         f"inverting sets (CI hi<0.5): {c['invert_sets']}.")
+            lines.append(
+                f"Gated seeds: {c['gate_seeds']}. "
+                f"Non-inverting sets (≥ CI lo>0.5): {c['noninv_sets']}; "
+                f"inverting sets (CI hi<0.5): {c['invert_sets']}."
+            )
 
     lines += [
         "",

@@ -845,8 +845,15 @@ def report_r2(a, data, idg, rt):
         iw = []
         for s, (_f, r) in pairs.items():
             p = Path(r) / "iw_log.jsonl"
-            if p.exists() and p.read_text().strip():
-                iw.append(np.asarray(json.loads(p.read_text().strip().splitlines()[-1])["est_target_mix_from_w"]))
+            if not (p.exists() and p.read_text().strip()):
+                continue
+            last = json.loads(p.read_text().strip().splitlines()[-1])
+            mix = last.get("est_target_mix_from_w")
+            # Oracle / n50 logs store fixed w only (no QP mix); IW estimate ≡ true pad_adv by construction.
+            if mix is None and last.get("oracle"):
+                mix = true_adv.tolist()
+            if mix is not None:
+                iw.append(np.asarray(mix, float))
         c = next(x for x in cells if x[0] == label and x[1] == lam)
         bb = [np.asarray(m["bbse"]["pad_heldout"]["est_mix"]) for m in c[2].values() if "bbse" in m]
         est_json["{}|{:g}".format(label, lam)] = {"iw_est": [x.tolist() for x in iw], "bbse_est": [x.tolist() for x in bb],
