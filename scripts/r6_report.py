@@ -883,9 +883,16 @@ def report_r2(a, data, idg, rt):
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["bal_acc_6cls"])),
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["recall_6cls"]["AK"])),
                                   R.pm(mean_of(c, lambda m: m["xdom_pad_heldout"]["pred_share_6cls"]["NV"]))))
-    paragraphs.append(
-        "Interpretation deferred until oracle, CDAN, and λ = 0.5 cells finish. Pre-committed reading unchanged. "
-        "Prediction (decisions): " + PRED["r2"])
+    have_cdan05 = any(x[0] == "CDAN" and x[1] == 0.5 and len(x[2]) >= 5 for x in cells)
+    have_ora05 = any(x[0] == "IWDAN_ORACLE" and x[1] == 0.5 and len(x[2]) >= 5 for x in cells)
+    if have_cdan05 and have_ora05:
+        paragraphs.append(
+            "CDAN and IWDAN_ORACLE λ = 0.5 are complete (5 seeds each). Pre-committed reading unchanged. "
+            "Prediction (decisions): " + PRED["r2"])
+    else:
+        paragraphs.append(
+            "Interpretation deferred until oracle, CDAN, and λ = 0.5 cells finish. Pre-committed reading unchanged. "
+            "Prediction (decisions): " + PRED["r2"])
     L += ["## Results in plain words", ""] + [p + "\n" for p in paragraphs]
     write(root, L, tex, [(cells, "pad_heldout")], "r6_r2", {
         "label_shift_estimates": est_json,

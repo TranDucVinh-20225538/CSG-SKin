@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -78,14 +79,29 @@ def heldout_probes(feat_dir: Path) -> dict:
             "pad_full_linear": sm(pf), "heldout_mlp_mean": float(np.mean(mlp))}
 
 
+_PAD_PAT = re.compile(r"PAT_(\d+)_(\d+)_(\d+)")
+
+
+def _pad_patient_ids_from_master(n: int) -> np.ndarray:
+    """Master pad_ufes rows have no patient_id column; parse PAT_<id>_… from path."""
+    df = C5.T.p2.load_master()
+    pad = df[df.domain == "pad_ufes"].reset_index(drop=True)
+    g = []
+    for i, p in enumerate(pad.path.astype(str)):
+        m = _PAD_PAT.search(p)
+        g.append(m.group(1) if m else "row{}".format(i))
+    g = np.asarray(g, dtype=str)
+    if len(g) != n:
+        return np.arange(n).astype(str)
+    return g
+
+
 def ood_groups(name: str, n: int):
-    if name == "pad_heldout" or name == "pad_full":
-        if name == "pad_heldout":
-            return C5.pad_heldout_patients()
-        # pad_full: patient ids from master pad rows
-        df = C5.T.p2.load_master()
-        pad = df[df.domain == "pad_ufes"].reset_index(drop=True)
-        return pad.patient_id.astype(str).to_numpy()
+    if name == "pad_heldout":
+        g = C5.pad_heldout_patients()
+        return g if len(g) == n else np.arange(n).astype(str)
+    if name == "pad_full":
+        return _pad_patient_ids_from_master(n)
     if name == "fitzpatrick17k":
         try:
             return C5.fitz_groups("cluster_union")

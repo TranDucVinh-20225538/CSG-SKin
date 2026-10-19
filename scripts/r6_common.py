@@ -731,11 +731,16 @@ def find_best(ckpt_dir):
 
 
 def load_net(ckpt, device):
+    # P8 traj / older R6 ckpts may miss newer buffers (acc_tgt_soft, p_source); Table 1 may be CSGLite.
     try:
         lit = R6Lightning.load_from_checkpoint(str(ckpt), map_location="cpu")
-    except Exception as e:  # legacy CSGLiteLightning checkpoint (current-recipe Table 1 runs)
-        print("R6Lightning load failed ({}); loading as CSGLiteLightning".format(type(e).__name__), flush=True)
-        lit = CSGLiteLightning.load_from_checkpoint(str(ckpt), map_location="cpu")
+    except Exception as e:
+        print("R6Lightning strict load failed ({}); retry strict=False".format(type(e).__name__), flush=True)
+        try:
+            lit = R6Lightning.load_from_checkpoint(str(ckpt), map_location="cpu", strict=False)
+        except Exception as e2:  # legacy CSGLiteLightning checkpoint (current-recipe Table 1 runs)
+            print("R6Lightning load failed ({}); loading as CSGLiteLightning".format(type(e2).__name__), flush=True)
+            lit = CSGLiteLightning.load_from_checkpoint(str(ckpt), map_location="cpu", strict=False)
     return lit.model.to(device).eval()
 
 
