@@ -39,8 +39,8 @@ lesion classification, using a lesion-disjoint ISIC~2019 split and smartphone im
 second domain. With gradient reversal, Mahalanobis OOD detection drops from AUROC $0.825$ to
 $0.381$ ($95\%$ CI $[0.358, 0.404]$) on held-out smartphone images, which then look more
 in-distribution than the model's own test images. The same happens on three clinical datasets that were not used in
-training (Fitzpatrick17k $0.405$; MED-NODE and SD-198 \pending{last-checkpoint values}), while
-in-distribution balanced accuracy stays at $0.47$--$0.48$ \pending{paired CI, calibration}. Our
+training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
+accuracy (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and calibration do not change. Our
 interventions point to label shift between the two domains as the cause. When we change only the class
 mix that the adversary sees, AUROC on the unseen datasets changes by $0.24$--$0.37$, and the
 effect remains when domain leakage is held fixed. DANN moves unfamiliar images toward the
@@ -76,8 +76,8 @@ training affects this monitor.
 We find that it can invert the monitor. When the adversarial weight increases, OOD detection does
 not just get worse but falls below chance, so images from clinics the model has never seen
 get scores that look more in-distribution than the model's own test images. Standard
-evaluation does not show this. In-distribution accuracy stays about the same
-\pending{calibration at the last checkpoint} and the domain-leakage probe, which the method is
+evaluation does not show this. In-distribution accuracy and calibration stay about
+the same, and the domain-leakage probe, which the method is
 supposed to reduce, goes down. In the same models, melanomas from unseen clinics are
 predicted as benign nevus with confidence above $0.9$ up to ten times more often than
 without adaptation, and the monitor does not flag them.
@@ -93,7 +93,7 @@ end up in feature space.
 \begin{enumerate}
 \item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
 held-out smartphone images and on three clinical datasets that were not used in training.
-In-distribution accuracy does not change \pending{and calibration}. This holds for two training
+In-distribution accuracy and calibration do not change. This holds for two training
 recipes, both within $0.09$ balanced accuracy of a standard ERM baseline on the same split.
 \item When the class mix seen by the adversary is set to that of the target domain, the
 inversion on unseen domains disappears (AUROC difference $0.24$--$0.37$). A regression at
@@ -284,7 +284,9 @@ at every larger weight, meeting the inversion criterion at all six non-zero weig
 Fitzpatrick17k it falls from $0.712$ to $0.354$--$0.405$ (Table~\ref{tab:dial}). At
 $\lam=2$ the seed-mean interval is $[0.358, 0.404]$ on \texttt{pad\_heldout} and
 $[0.392, 0.419]$ on Fitzpatrick17k. In-distribution balanced accuracy stays within
-$0.472$--$0.484$ \pending{paired $\lam=2-\lam=0$ CI and ID/OOD ECE at the last checkpoint}.
+$0.472$--$0.484$ (paired $\lam=2$ minus $\lam=0$: $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and
+in-distribution ECE within $0.202$--$0.210$, while out-of-domain ECE on \texttt{pad\_heldout}
+rises from $0.305$ to $0.724$--$0.762$.
 All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ ($k$-NN $0.427$,
 cosine $0.420$, MSP $0.455$, energy $0.468$; best-validation checkpoint); the standard
 $k$-th-neighbour $k$-NN gives the same values within $0.01$. The best-validation checkpoint
@@ -293,10 +295,12 @@ the inversion is not yet visible ($0.525$, seed s.d.\ $0.121$; an observation ma
 
 \paragraph{Unseen domains.} The inversion is not confined to the domain the adversary was
 trained against (Table~\ref{tab:unseen}). On three clinical datasets that entered no part of
-training, Mahalanobis AUROC falls from $0.717$ to $0.402$ (Fitzpatrick17k), $0.536$ to $0.306$
-(MED-NODE) and $0.713$ to $0.375$ (SD-198) at $\lam=2$, each meeting the inversion criterion. On SCIN,
-whose images are mostly inflammatory conditions outside the ISIC label space, detection
-falls from $0.726$ to $0.559$ without inverting.
+training, Mahalanobis AUROC falls from $0.712$ to $0.405$ (Fitzpatrick17k), $0.559$ to $0.288$
+(MED-NODE) and $0.708$ to $0.376$ (SD-198) at $\lam=2$, inverted in all five seeds and at every
+$\lam\ge0.25$ on MED-NODE and SD-198. Clustering near-duplicate SD-198 images ($6{,}016$ clusters)
+leaves every interval and verdict unchanged. On SCIN, whose images are mostly inflammatory
+conditions outside the ISIC label space, detection falls from $0.723$ to $0.551$ without
+inverting.
 
 \paragraph{A second recipe.} With a $64$-dimensional latent, unweighted cross-entropy replaced
 by a class-weighted loss and the last checkpoint (A4), detection again inverts at
@@ -310,25 +314,26 @@ collapse. A plain single-encoder DANN collapses to chance ($0.51$--$0.56$) witho
 \begin{table}[t]
 \centering
 \small
-\caption{Unseen domains: Mahalanobis AUROC at $\lam=0$ and $\lam=2$, mean $\pm$ s.d.\ over five
-seeds, with the number of seeds whose interval lies below $0.5$. Main recipe, best-validation
-checkpoint \pending{MED-NODE/SD-198/SCIN at the last checkpoint}; A4, last checkpoint. MED-NODE and SD-198 are resampled by image. --: not
-bootstrapped.}
+\caption{Unseen domains: Mahalanobis AUROC at $\lam=0$ and $\lam=2$ (seed mean, $95\%$ interval at
+$\lam=2$) and the number of seeds whose interval lies below $0.5$. Last checkpoint. Intervals:
+patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k, SD-198), case (SCIN),
+image (MED-NODE).}
 \label{tab:unseen}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llcccc}
 \toprule
 recipe & set & $\lam=0$ & $\lam=2$ & seeds $<0.5$ & inverted \\
 \midrule
-main & \texttt{pad\_heldout} & $0.808\pm0.027$ & $0.403\pm0.028$ & 5/5 & yes \\
-main & Fitzpatrick17k & $0.717\pm0.034$ & $0.402\pm0.018$ & 5/5 & yes \\
-main & MED-NODE & $0.536\pm0.037$ & $0.306\pm0.071$ & 5/5 & yes \\
-main & SD-198 & $0.713\pm0.037$ & $0.375\pm0.026$ & 5/5 & yes \\
-main & SCIN & $0.726\pm0.021$ & $0.559\pm0.034$ & 0/5 & no \\
+main & \texttt{pad\_heldout} & $0.825$ & $0.381$ $[0.358, 0.404]$ & 5/5 & yes \\
+main & Fitzpatrick17k & $0.712$ & $0.405$ $[0.392, 0.419]$ & 5/5 & yes \\
+main & MED-NODE & $0.559$ & $0.288$ $[0.263, 0.315]$ & 5/5 & yes \\
+main & SD-198 & $0.708$ & $0.376$ $[0.362, 0.388]$ & 5/5 & yes \\
+main & SCIN & $0.723$ & $0.551$ $[0.538, 0.564]$ & 0/5 & no \\
 \midrule
-A4 & \texttt{pad\_heldout} & $0.786\pm0.019$ & $0.452\pm0.014$ & 4/5 & yes \\
-A4 & Fitzpatrick17k & $0.821\pm0.023$ & $0.458\pm0.061$ & 3/5 & yes \\
+A4 & \texttt{pad\_heldout} & $0.786$ & $0.452$ $[0.425, 0.478]$ & 4/5 & yes \\
+A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \subsection{Label shift between the aligned domains causes the inversion}
@@ -379,7 +384,7 @@ balanced accuracy $0.139<0.25$); shift $50\%$: three seeds.}
 \toprule
 $\lam$ & shift & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 \\
 \midrule
-0 & -- & $0.928$ & $0.825$ & $0.712$ & \pending{} & \pending{} \\
+0 & -- & $0.928$ & $0.825$ & $0.712$ & $0.559$ & $0.708$ \\
 0.5 & $0\%$ & $0.790$ & $0.499$ & $0.674$ & $0.525$ & $0.664$ \\
 0.5 & $50\%$ & $0.629$ & $0.490$ & $0.482$ & $0.303$ & $0.451$ \\
 0.5 & $100\%$ & $0.628$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
@@ -500,8 +505,7 @@ IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 Full-spectrum OOD detection argues that covariate-shifted inputs should be
 accepted~\cite{yang2023}. After DANN, our models accept images from unseen clinics more
 readily than their own test images, but their zero-shot balanced accuracy on these images
-is only $0.254$ at $\lam=2$ (chance $0.167$; best-validation checkpoint
-\pending{X-dom at the last checkpoint}). If the goal were
+is only $0.244$ at $\lam=2$ (chance $0.167$). If the goal were
 tolerance, the AUROC should be close to $0.5$. Values well below $0.5$ mean that the
 monitor ranks the shifted images as more typical than real in-distribution data, which is
 not useful for deployment. We think claims of tolerance to covariate shift should be
@@ -801,7 +805,8 @@ $0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$ \pending{oracle and CDAN
 
 Reversing the Mahalanobis score with the direction chosen on \texttt{pad\_heldout} at $\lam=2$
 gives $0.192$ at $\lam=0$ and $0.546$--$0.625$ on \texttt{pad\_heldout} and Fitzpatrick17k at
-$\lam\ge0.5$; on MED-NODE it reaches $0.69$--$0.71$ \pending{FPR@95 range}. Relative
+$\lam\ge0.5$; on MED-NODE it reaches $0.69$--$0.71$; false-positive rates at $95\%$ true-positive rate stay
+at $0.84$--$0.98$ across datasets. Relative
 Mahalanobis at $\lam=2$: Fitzpatrick17k $0.443$, MED-NODE $0.376$, SD-198 $0.427$,
 \texttt{pad\_heldout} $0.439$; per-class standardised Mahalanobis: $0.478$, $0.340$, $0.447$,
 $0.424$.
