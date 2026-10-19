@@ -61,14 +61,18 @@ def ensure_unseen_features(tag):
     if not need:
         return out
     torch.set_num_threads(int(os.environ.get("SLURM_CPUS_PER_TASK", "8")))
+    use_cuda = os.environ.get("T1LAST_USE_CUDA", "").strip() in ("1", "true", "yes")
+    device = torch.device("cuda" if use_cuda and torch.cuda.is_available() else "cpu")
+    print("device", device, flush=True)
     tf = build_val_transform_robust()
-    net = fin.load_csg(A.ITEM4_CKPT / tag / "last.ckpt", torch.device("cpu"))
+    net = fin.load_csg(A.ITEM4_CKPT / tag / "last.ckpt", device)
+    bs = 128 if device.type == "cuda" else 64
     for name in need:
         paths, _ = p7a_paths(name)
         ds = FolderJpegDataset(paths, tf)
         # nw=0: NFS-safe (avoids DataLoader tempdir .nfs EBUSY cleanup noise)
-        pack = x13.collect_depths(net, DataLoader(ds, batch_size=64, shuffle=False, num_workers=0),
-                                  torch.device("cpu"))
+        pack = x13.collect_depths(net, DataLoader(ds, batch_size=bs, shuffle=False, num_workers=0),
+                                  device)
         np.savez_compressed(out / "{}.npz".format(name), **{k: pack[k] for k in R.FEAT_KEYS})
         print("features", tag, name, pack["labels"].shape, flush=True)
     return out

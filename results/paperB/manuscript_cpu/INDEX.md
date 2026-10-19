@@ -4,7 +4,7 @@ Main recipe = `current` / A4 last.ckpt unless noted. Built by `scripts/r5_manusc
 
 | item | file | status |
 |---|---|---|
-| (1) Table 1 last.ckpt | `01_table1_last.md` | PENDING extract |
+| (1) Table 1 last.ckpt | `01_table1_last.md` | ready |
 | (2) R1 MED/SD + regression (a) | `02_r1.md` | ready |
 | (3) A4 k-below | `03_a4.md` | ready |
 | (4) Clinical | `04_clinical.md` | ready |
