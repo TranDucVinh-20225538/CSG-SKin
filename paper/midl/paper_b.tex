@@ -554,7 +554,9 @@ detector was near chance on the OOD set before any adaptation (AUROC $0.522$), s
 nothing to invert. \textbf{Architecture.} The main results use a dual-encoder model; the A4
 recipe changes the latent size and loss, but a plain single-encoder DANN collapses detection
 to chance without inverting, and whether deeper invariance would invert it is untested
-\pending{R1-hi / P9}. \textbf{Competence.} In-distribution balanced accuracy is $0.05$--$0.09$
+\pending{P9}. Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
+of five runs; in that run detection on the unseen datasets did not invert, which is consistent
+with label shift being necessary but rests on a single model. \textbf{Competence.} In-distribution balanced accuracy is $0.05$--$0.09$
 below a standard ERM on the same lesion-disjoint split \pending{ERM at 5 seeds}. \textbf{Statistics.} MED-NODE and
 SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
 narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
@@ -661,9 +663,77 @@ not an inversion of the feature scores.
 \section{Label-shift intervention: full results}
 \label{app:shift}
 
-\pending{Full R1 table: all shift levels $\times$ $\lam\in\{0.5,2\}$ $\times$ five sets and five
-scores, with intervals; regression (a) details (shift coding, resampling unit, wild cluster
-bootstrap, VIFs), the cross-recipe comparison (b) and the leakage plots (c).}
+Main recipe, last checkpoint; one degraded shift-$0\%$ run (in-distribution balanced accuracy
+$0.139$) is excluded. $k/n$: seeds whose interval lies below $0.5$.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Mahalanobis AUROC by the class mix seen by the adversary.}
+\label{tab:shiftfull}
+\begin{tabular}{llrccll}
+\toprule
+set & shift & $\lam$ & mean $\pm$ s.d. & $95\%$ CI & $k/n$ & inverted \\
+\midrule
+\texttt{pad\_heldout} & 100\% & 0 & 0.825\,$\pm$\,0.022 & [0.810, 0.839] & 0/5 & not met \\
+\texttt{pad\_heldout} & 100\% & 0.5 & 0.361\,$\pm$\,0.029 & [0.338, 0.383] & 5/5 & met \\
+\texttt{pad\_heldout} & 50\% & 0.5 & 0.490\,$\pm$\,0.058 & [0.466, 0.512] & 2/3 & not met \\
+\texttt{pad\_heldout} & 0\% & 0.5 & 0.498\,$\pm$\,0.025 & [0.478, 0.517] & 0/5 & not met \\
+\texttt{pad\_heldout} & 100\% & 2 & 0.368\,$\pm$\,0.017 & [0.344, 0.391] & 5/5 & met \\
+\texttt{pad\_heldout} & 50\% & 2 & 0.454\,$\pm$\,0.009 & [0.432, 0.476] & 3/3 & met \\
+\texttt{pad\_heldout} & 0\% & 2 & 0.458\,$\pm$\,0.003 & [0.438, 0.477] & 4/4 & met \\
+Fitzpatrick17k & 100\% & 0 & 0.712\,$\pm$\,0.013 & [0.698, 0.725] & 0/5 & not met \\
+Fitzpatrick17k & 100\% & 0.5 & 0.385\,$\pm$\,0.023 & [0.373, 0.398] & 5/5 & met \\
+Fitzpatrick17k & 50\% & 0.5 & 0.482\,$\pm$\,0.143 & [0.469, 0.494] & 2/3 & not met \\
+Fitzpatrick17k & 0\% & 0.5 & 0.672\,$\pm$\,0.046 & [0.661, 0.684] & 0/5 & not met \\
+Fitzpatrick17k & 100\% & 2 & 0.340\,$\pm$\,0.065 & [0.328, 0.352] & 5/5 & met \\
+Fitzpatrick17k & 50\% & 2 & 0.441\,$\pm$\,0.076 & [0.428, 0.454] & 2/3 & not met \\
+Fitzpatrick17k & 0\% & 2 & 0.691\,$\pm$\,0.031 & [0.680, 0.702] & 0/4 & not met \\
+MED-NODE & 100\% & 0 & 0.559\,$\pm$\,0.019 & [0.531, 0.587] & 0/5 & not met \\
+MED-NODE & 100\% & 0.5 & 0.310\,$\pm$\,0.055 & [0.284, 0.337] & 5/5 & met \\
+MED-NODE & 50\% & 0.5 & 0.303\,$\pm$\,0.054 & [0.272, 0.336] & 3/3 & met \\
+MED-NODE & 0\% & 0.5 & 0.525\,$\pm$\,0.050 & [0.497, 0.554] & 1/5 & not met \\
+MED-NODE & 100\% & 2 & 0.298\,$\pm$\,0.032 & [0.271, 0.326] & 5/5 & met \\
+MED-NODE & 50\% & 2 & 0.299\,$\pm$\,0.052 & [0.269, 0.331] & 3/3 & met \\
+MED-NODE & 0\% & 2 & 0.541\,$\pm$\,0.027 & [0.512, 0.572] & 0/4 & not met \\
+SD-198 & 100\% & 0 & 0.708\,$\pm$\,0.019 & [0.695, 0.722] & 0/5 & not met \\
+SD-198 & 100\% & 0.5 & 0.365\,$\pm$\,0.029 & [0.353, 0.377] & 5/5 & met \\
+SD-198 & 50\% & 0.5 & 0.451\,$\pm$\,0.133 & [0.439, 0.461] & 2/3 & not met \\
+SD-198 & 0\% & 0.5 & 0.664\,$\pm$\,0.058 & [0.653, 0.675] & 0/5 & not met \\
+SD-198 & 100\% & 2 & 0.325\,$\pm$\,0.069 & [0.315, 0.336] & 5/5 & met \\
+SD-198 & 50\% & 2 & 0.414\,$\pm$\,0.047 & [0.402, 0.425] & 3/3 & met \\
+SD-198 & 0\% & 2 & 0.694\,$\pm$\,0.031 & [0.683, 0.704] & 0/4 & not met \\
+SCIN & 100\% & 0 & 0.723\,$\pm$\,0.018 & [0.710, 0.736] & 0/5 & not met \\
+SCIN & 100\% & 0.5 & 0.534\,$\pm$\,0.015 & [0.521, 0.547] & 0/5 & not met \\
+SCIN & 50\% & 0.5 & 0.586\,$\pm$\,0.101 & [0.575, 0.599] & 1/3 & not met \\
+SCIN & 0\% & 0.5 & 0.718\,$\pm$\,0.036 & [0.708, 0.729] & 0/5 & not met \\
+SCIN & 100\% & 2 & 0.519\,$\pm$\,0.073 & [0.507, 0.532] & 1/5 & not met \\
+SCIN & 50\% & 2 & 0.566\,$\pm$\,0.051 & [0.553, 0.578] & 0/3 & not met \\
+SCIN & 0\% & 2 & 0.732\,$\pm$\,0.035 & [0.722, 0.742] & 0/4 & not met \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The regression uses one point per run ($n=75$): Mahalanobis AUROC on label-shift level
+(coded $0$, $0.5$, $1$), unweighted leakage and recipe. Intervals come from a wild cluster
+bootstrap with Webb weights over recipe $\times$ $\lam$ $\times$ shift cells ($2{,}000$ draws).
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Label-shift coefficient at fixed leakage.}
+\label{tab:reg}
+\begin{tabular}{lrcclccl}
+\toprule
+set & $n$ & coefficient & $95\%$ CI & excludes 0 & VIF (leakage) & VIF (recipe) & identifiable \\
+\midrule
+Fitzpatrick17k & 75 & -0.166 & [-0.217, -0.115] & yes & 1.04 & 1.03 & yes \\
+MED-NODE & 75 & -0.107 & [-0.148, -0.065] & yes & 1.04 & 1.03 & yes \\
+SD-198 & 75 & -0.172 & [-0.221, -0.123] & yes & 1.04 & 1.03 & yes \\
+\texttt{pad\_heldout} (not counted) & 75 & 0.041 & [-0.033, 0.110] & no & 1.04 & 1.03 & yes \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{BCN$\to$HAM: label shift without DANN (post hoc)}
 \label{app:site}
