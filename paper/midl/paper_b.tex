@@ -152,9 +152,10 @@ images, 961 patients), seen by the adversarial and context branches, and
 \texttt{pad\_heldout} (716 images, 412 patients), never seen.
 
 \textbf{Unseen domains.} Four clinical-photograph datasets enter no part of training:
-Fitzpatrick17k~\cite{groh2021} (3{,}887 images obtained), MED-NODE (170 images),
-SD-198 (6{,}584 images) and SCIN (10{,}406 images, 5{,}033 cases)
-\pending{cite MED-NODE, SD-198, SCIN; licences: SCIN CC~BY~4.0, MED-NODE none stated, SD-198 official source}.
+Fitzpatrick17k~\cite{groh2021} (3{,}887 images obtained), MED-NODE~\cite{giotis2015mednode}
+(170 images: 70 melanoma, 100 nevi), SD-198~\cite{sun2016sd198} (6{,}584 images, 198 conditions)
+and SCIN~\cite{ward2024scin} (10{,}406 images, 5{,}033 cases; SCIN Data Use License). All four
+are used for evaluation only and are not redistributed \pending{SD-198: confirm source and terms}.
 SCIN is mostly inflammatory conditions; only $0.6\%$ of its images map to the ISIC classes,
 so we use it only as an OOD set for detection and report it separately; no label-based
 analysis is done on SCIN. Images are cropped to a lesion-centred box and resized to
