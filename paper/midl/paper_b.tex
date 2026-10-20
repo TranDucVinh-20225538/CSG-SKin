@@ -460,8 +460,8 @@ With weights updated online from unlabelled target predictions, as in the origin
 the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
 down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
 \texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
-($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the same method
-recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
+($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the online priors are closer to the truth (total variation $0.38$--$0.47$,
+mean $0.428$) and the same method recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
 the gap), at leakage $0.665$ against $0.628$ for DANN, and SD-198 recovers to $0.607$ ($71\%$);
 MED-NODE improves from $0.310$ to $0.447$ but stays inverted. Unlike the variants with known
 priors, this costs no in-distribution accuracy ($0.482$ against $0.483$), and the within-class
@@ -868,7 +868,7 @@ IWDAN (true priors) & $0$ & $0.40$ & $0.780$ & $0.576$ & $0.647$ & $0.717$ & $0.
 \midrule
 \multicolumn{9}{l}{$\lam=0.5$} \\
 DANN (no weighting) & -- & $0.48$ & $0.628$ & $0.618$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
-IWDAN (online) & \pending{TV} & $0.48$ & $0.665$ & $0.588$ & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
+IWDAN (online) & $0.38$--$0.47$ & $0.48$ & $0.665$ & $0.588$ & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
 IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & $0.562$ & $0.680$ & $0.742$ & $0.622$ & $0.741$ \\
 \bottomrule
 \end{tabular}}
