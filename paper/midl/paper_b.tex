@@ -49,8 +49,8 @@ although the domain can still be read within each class. In the same models, the
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
 increases from $8\%$ to $49$--$81\%$. Importance-weighted alignment with class priors
 estimated online from unlabelled target data recovers $66$--$76\%$ of the lost AUROC on the
-smartphone images and Fitzpatrick17k at $\lam=0.5$ and $32$--$45\%$ at $\lam=2$, with leakage
-close to that of DANN; at $\lam=2$ it does not help on the other two datasets. In a
+smartphone images, Fitzpatrick17k and SD-198 at $\lam=0.5$ without loss of in-distribution
+accuracy, but only $32$--$45\%$ at $\lam=2$, and MED-NODE stays inverted. In a
 post hoc analysis, priors from $50$ labelled target images bring detection on the unseen
 datasets back to its level before adaptation, but in-distribution balanced accuracy drops from
 $0.48$ to $0.39$. We recommend checking OOD detection again after domain adaptation and
@@ -462,7 +462,10 @@ down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN th
 \texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
 ($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the same method
 recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
-the gap), at leakage $0.665$ against $0.628$ for DANN \pending{MED-NODE and SD-198 for IWDAN at $\lam=0.5$}. \emph{EM} estimation was unstable:
+the gap), at leakage $0.665$ against $0.628$ for DANN, and SD-198 recovers to $0.607$ ($71\%$);
+MED-NODE improves from $0.310$ to $0.447$ but stays inverted. Unlike the variants with known
+priors, this costs no in-distribution accuracy ($0.482$ against $0.483$), and the within-class
+probe is lower than under DANN ($0.588$ against $0.618$). \emph{EM} estimation was unstable:
 in two of five seeds it placed mass on classes absent from PAD, so we treat it as not
 having run correctly. With priors from \emph{$50$ labelled target images} (total variation
 $0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
