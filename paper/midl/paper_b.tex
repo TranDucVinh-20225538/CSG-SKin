@@ -48,8 +48,9 @@ majority class. Under label shift, a standard domain probe then shows chance-lev
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
 increases from $8\%$ to $49$--$81\%$. Importance-weighted alignment with class priors
-estimated online from unlabelled target data recovers $32$--$45\%$ of the lost AUROC on the
-smartphone images and Fitzpatrick17k at matched leakage, but not on the other two datasets. In a
+estimated online from unlabelled target data recovers $66$--$76\%$ of the lost AUROC on the
+smartphone images and Fitzpatrick17k at $\lam=0.5$ and $32$--$45\%$ at $\lam=2$, with leakage
+close to that of DANN; at $\lam=2$ it does not help on the other two datasets. In a
 post hoc analysis, priors from $50$ labelled target images bring detection on the unseen
 datasets back to its level before adaptation, but in-distribution balanced accuracy drops from
 $0.48$ to $0.39$. We recommend checking OOD detection again after domain adaptation and
@@ -94,7 +95,7 @@ end up in feature space.
 \item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
 held-out smartphone images and on three clinical datasets that were not used in training.
 In-distribution accuracy and calibration do not change. This holds for two training
-recipes, both within $0.09$ balanced accuracy of a standard ERM baseline on the same split.
+recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split.
 \item When the class mix seen by the adversary is set to that of the target domain, the
 inversion on unseen domains disappears (AUROC difference $0.24$--$0.37$). A regression at
 matched domain leakage shows that the effect comes from label shift and not only from
@@ -183,8 +184,8 @@ best-validation and last checkpoints differ by less than one SE, so best-validat
 picks early epochs by noise. Best-validation values are given for comparison.
 
 \paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.496$ (main
-recipe) and $0.520$ (A4), $0.05$--$0.09$ below a standard single-encoder ERM on the same
-split ($0.572$, two seeds \pending{ERM reference at 5 seeds}) and about four times chance ($0.125$).
+recipe) and $0.520$ (A4), $0.04$--$0.08$ below a standard single-encoder ERM on the same
+split ($0.558\pm0.022$, five seeds) and about four times chance ($0.125$).
 Lesion-disjoint eight-class ISIC~2019 is hard; the image-level split inflates the same
 model's balanced accuracy by $0.20$~\cite{leakagepaper}.
 
@@ -458,7 +459,9 @@ With weights updated online from unlabelled target predictions, as in the origin
 the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
 down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
 \texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
-($0.350$) and SD-198 ($0.488$) stay at or below chance. \emph{EM} estimation was unstable:
+($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the same method
+recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
+the gap), at leakage $0.665$ against $0.628$ for DANN \pending{MED-NODE and SD-198 for IWDAN at $\lam=0.5$}. \emph{EM} estimation was unstable:
 in two of five seeds it placed mass on classes absent from PAD, so we treat it as not
 having run correctly. With priors from \emph{$50$ labelled target images} (total variation
 $0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
@@ -556,8 +559,8 @@ recipe changes the latent size and loss, but a plain single-encoder DANN collaps
 to chance without inverting, and whether deeper invariance would invert it is untested
 \pending{P9}. Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
 of five runs; in that run detection on the unseen datasets did not invert, which is consistent
-with label shift being necessary but rests on a single model. \textbf{Competence.} In-distribution balanced accuracy is $0.05$--$0.09$
-below a standard ERM on the same lesion-disjoint split \pending{ERM at 5 seeds}. \textbf{Statistics.} MED-NODE and
+with label shift being necessary but rests on a single model. \textbf{Competence.} In-distribution balanced accuracy is $0.04$--$0.08$
+below a standard ERM on the same lesion-disjoint split. \textbf{Statistics.} MED-NODE and
 SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
 narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
 The five OOD scores are functions of one latent and are not independent evidence.
@@ -867,8 +870,9 @@ five seeds it placed mass on DF and VASC, which are absent from PAD, and its res
 used in any comparison. Black-box shift estimates computed on the final IWDAN checkpoints are a
 diagnostic, not a separate method (TV $0.65$--$0.76$). Conditional variants stay inverted
 (last checkpoint, five seeds unless noted): CDAN $0.378$ / $0.420$ (\texttt{pad\_heldout} /
-Fitzpatrick17k) at $\lam=2$ and $0.377$ / $0.391$ at $\lam=0.5$ (two seeds); IWCDAN $0.360$ /
-$0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$ \pending{oracle and CDAN at $\lam=0.5$}.
+Fitzpatrick17k) at $\lam=2$ and $0.372$ / $0.403$ at $\lam=0.5$; IWCDAN $0.360$ /
+$0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$ At $\lam=0.5$, IWDAN (online) reaches $0.667$ / $0.633$ and IWDAN with the true priors $0.680$ /
+$0.742$.
 
 \section{Sign reversal and scoring-side variants}
 \label{app:flip}
