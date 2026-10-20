@@ -10,3 +10,4 @@
 | (5) S1/S2 FPR | `05_s_flip_fpr.md` | `e7d3547` |
 | (6) Warning | `06_warning.md` | `86a44aa` |
 | (7) ERM + R2 | `07_erm_r2.md` | `a31e0d1` |
+| R2 REPORT (CDAN/oracle λ0.5) | `r6/r2/cur/REPORT.md` | *pending* |

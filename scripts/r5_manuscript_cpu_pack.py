@@ -197,7 +197,7 @@ def item7():
     bals = []
     for p in sorted(erm_root.glob("single_dann_ladv0_s*/summary.json")):
         s = json.loads(p.read_text())
-        bals.append(float(s["metrics"]["id"]["bal_acc"]))
+        bals.append(float(s.get("id_balanced_acc", s["metrics"]["id"]["bal_acc"])))
         seed = int(p.parent.name.rsplit("_s", 1)[1])
     n = len(bals)
     mean = float(np.mean(bals)) if bals else float("nan")
@@ -207,7 +207,11 @@ def item7():
     # R2 cells
     r2 = ROOT / "r6" / "r2" / "cur" / "runs"
     rows = []
-    for m in ("cdan", "iwcdan", "iwdan"):
+    def ms(v):
+        a = np.asarray(v, float)
+        return float(a.mean()), float(a.std(ddof=1)) if len(a) > 1 else 0.0, len(a)
+
+    for m in ("cdan", "iwcdan", "iwdan", "iwdan_oracle"):
         for lam_tag, lam in (("0p5", 0.5), ("2", 2.0)):
             vals_pad, vals_fitz, vals_id, vals_leak = [], [], [], []
             for s in (42, 52, 62, 72, 82):
@@ -220,21 +224,19 @@ def item7():
                 vals_fitz.append(o["fitzpatrick17k"]["mahalanobis_classcond"])
                 vals_id.append(j["metrics"]["id"]["bal_acc"])
                 vals_leak.append(j["metrics"]["leakage"]["bal_acc_mean"])
+            lab = "IWDAN_ORACLE" if m == "iwdan_oracle" else m.upper()
             if not vals_pad:
-                rows.append((m, lam, 0, None))
+                rows.append((lab, lam, 0, None))
                 continue
-            def ms(v):
-                a = np.asarray(v, float)
-                return float(a.mean()), float(a.std(ddof=1)) if len(a) > 1 else 0.0, len(a)
-            rows.append((m, lam, ms(vals_pad), ms(vals_fitz), ms(vals_id), ms(vals_leak)))
+            rows.append((lab, lam, ms(vals_pad), ms(vals_fitz), ms(vals_id), ms(vals_leak)))
 
+    erm_note = "complete (5/5)." if n >= 5 else "remaining seeds still queued/held on GPU."
     body = [
-        "# (7) ERM reference and R2 IWCDAN / CDAN / λ = 0.5",
+        "# (7) ERM reference and R2 IWCDAN / CDAN / oracle / λ = 0.5",
         "",
         "## ERM single-encoder reference (lesion-level, λ = 0)",
         "",
-        "Path: `r5/p8/erm_ref/single_dann_ladv0_s*`. **Available now: n = {}** of 5 "
-        "(remaining ERM seeds still queued/held on GPU).".format(n),
+        "Path: `r5/p8/erm_ref/single_dann_ladv0_s*`. **Available now: n = {}** of 5 — {}".format(n, erm_note),
         "",
     ]
     if n:
@@ -242,23 +244,23 @@ def item7():
             mean, sd, se, ", ".join("{:.3f}".format(x) for x in bals)))
     body += [
         "",
-        "## R2 cells (recipe `current`, last.ckpt) — point mean ± SD over available seeds",
+        "## R2 cells (recipe `current`, last.ckpt) — point mean ± SD; CIs in `r6/r2/cur/REPORT.md`",
         "",
         "| method | λ | n | Maha pad_heldout | Maha Fitz | ID bal | leakage |",
         "|---|---:|---:|---|---|---|---|",
     ]
     for row in rows:
         if row[2] == 0 or row[2] is None:
-            body.append("| {} | {:g} | 0 | — | — | — | — |".format(row[0].upper(), row[1]))
+            body.append("| {} | {:g} | 0 | — | — | — | — |".format(row[0], row[1]))
             continue
         m, lam, pad, fitz, idb, leak = row
         body.append(
             "| {} | {:g} | {} | {:.3f} ± {:.3f} | {:.3f} ± {:.3f} | {:.3f} ± {:.3f} | {:.3f} ± {:.3f} |".format(
-                m.upper(), lam, pad[2], pad[0], pad[1], fitz[0], fitz[1], idb[0], idb[1], leak[0], leak[1]))
+                m, lam, pad[2], pad[0], pad[1], fitz[0], fitz[1], idb[0], idb[1], leak[0], leak[1]))
     body += [
         "",
-        "Note: CDAN λ = 0.5 currently **2/5** seeds (42, 52); others complete at 5/5. "
-        "Oracle λ = 0.5 not started. Cluster CIs for incomplete cells deferred until n = 5.",
+        "Note: CDAN / IWDAN / IWCDAN / IWDAN_ORACLE at λ ∈ {0.5, 2} are **5/5**. "
+        "Full cluster CIs + unseen MED/SD + class-aware probes: `results/paperB/r6/r2/cur/REPORT.md`.",
         "",
     ]
     w("07_erm_r2.md", "\n".join(body), {"erm_n": n, "erm_mean": mean, "erm_se": se})
@@ -278,7 +280,7 @@ def index(ok1):
         "| (4) Clinical | `04_clinical.md` | ready |",
         "| (5) S1/S2 FPR@95 flipped | `05_s_flip_fpr.md` | ready |",
         "| (6) Warning majority Spearman | `06_warning.md` | ready |",
-        "| (7) ERM + R2 cells | `07_erm_r2.md` | ready (ERM n<5 noted) |",
+        "| (7) ERM + R2 cells | `07_erm_r2.md` | ready |",
         "",
         "SD-198 cluster sensitivity (no rule-A flips): `results/paperB/r5/p13_sd198/REPORT.md`.",
         "",

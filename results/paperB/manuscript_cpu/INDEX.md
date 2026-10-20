@@ -10,6 +10,6 @@ Main recipe = `current` / A4 last.ckpt unless noted. Built by `scripts/r5_manusc
 | (4) Clinical | `04_clinical.md` | ready |
 | (5) S1/S2 FPR@95 flipped | `05_s_flip_fpr.md` | ready |
 | (6) Warning majority Spearman | `06_warning.md` | ready |
-| (7) ERM + R2 cells | `07_erm_r2.md` | ready (ERM n<5 noted) |
+| (7) ERM + R2 cells | `07_erm_r2.md` | ready |
 
 SD-198 cluster sensitivity (no rule-A flips): `results/paperB/r5/p13_sd198/REPORT.md`.
