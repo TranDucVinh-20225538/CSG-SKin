@@ -933,7 +933,8 @@ SD-198 & AK & 60 & 0.010 [0.000, 0.023] & 0.833 [0.770, 0.893] \\
 
 \textbf{Warning signals.} Thresholds set at the $95$th percentile of each statistic over
 $\lam=0$ runs. A centroid-collapse statistic computed on in-distribution data only did not
-track inversion (sensitivity $0.15$--$0.38$; Spearman with AUROC $-0.14$ to $0.13$). The share
+track inversion (sensitivity $0.15$--$0.38$; Spearman with \texttt{pad\_heldout} AUROC $0.03$
+and $-0.14$ for the validation and test versions, over $64$ runs). The share
 of unlabelled deployment images predicted as the majority class tracked it (Spearman $-0.77$ $[-0.85, -0.63]$ against
 \texttt{pad\_heldout} AUROC and $-0.75$ $[-0.85, -0.57]$ against Fitzpatrick17k AUROC over $64$ runs; sensitivity $1.00$, specificity $0.75$ on twelve non-inverting runs with
 $\lam>0$ under the Fitzpatrick17k label, $0.33$ on six under the \texttt{pad\_heldout} label).
