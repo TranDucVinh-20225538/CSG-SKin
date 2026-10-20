@@ -560,8 +560,10 @@ removed hospital information while preserving the classifier, and on chest radio
 detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
 nothing to invert. \textbf{Architecture.} The main results use a dual-encoder model; the A4
 recipe changes the latent size and loss, but a plain single-encoder DANN collapses detection
-to chance without inverting, and whether deeper invariance would invert it is untested
-\pending{P9}. Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
+to chance without inverting, and whether deeper invariance would invert it is untested: with a stronger adversary
+(warm-up, higher adversary learning rate, deeper head) its held-out leakage stayed at
+$0.70$, above our target of $0.55$, and detection stayed near chance ($0.52$ on
+\texttt{pad\_heldout}, $0.62$ on Fitzpatrick17k). Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
 of five runs; in that run detection on the unseen datasets did not invert, which is consistent
 with label shift being necessary but rests on a single model. \textbf{Competence.} In-distribution balanced accuracy is $0.04$--$0.08$
 below a standard ERM on the same lesion-disjoint split. \textbf{Statistics.} MED-NODE and
