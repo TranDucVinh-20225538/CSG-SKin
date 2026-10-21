@@ -1,0 +1,997 @@
+{
+  "val_balanced_acc": 0.31654637936073915,
+  "id_acc": 0.6672587329780936,
+  "id_balanced_acc": 0.31552330636476134,
+  "id_ece": 0.045664388004882296,
+  "id_mean_confidence": 0.6215943694114685,
+  "ood_ece_pad_heldout": 0.2045237180782097,
+  "ood_mean_confidence_pad_heldout": 0.4684901833534241,
+  "leakage": {
+    "test_vs_pad_full": {
+      "acc_mean": 0.736500754147813,
+      "bal_acc_mean": 0.6476608187134504,
+      "auroc_mean": 0.7791015128400711,
+      "acc_std": 0.009602289015020846,
+      "bal_acc_std": 0.01080857515674241,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "test_vs_pad_heldout": {
+      "acc_mean": 0.882804995196926,
+      "bal_acc_mean": 0.5444359445124439,
+      "auroc_mean": 0.7526427988576092,
+      "acc_std": 0.003174392246274402,
+      "bal_acc_std": 0.010107263852172843,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "val_vs_pad_adv_selection": {
+      "acc_mean": 0.754977330967869,
+      "bal_acc_mean": 0.645109649122807,
+      "auroc_mean": 0.7915702908587258,
+      "acc_std": 0.0072266125684302684,
+      "bal_acc_std": 0.00520049907100164,
+      "n_probe_seeds": 3,
+      "n_domains": 2,
+      "chance_floor_balanced": 0.5,
+      "metric": "balanced_accuracy"
+    },
+    "primary": "test_vs_pad_full (Table 1 protocol)",
+    "z_dim": 16
+  },
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2639664804469274,
+    "balanced_accuracy": 0.20701581027667984,
+    "per_class_recall": {
+      "MEL": 0.0,
+      "NV": 0.8181818181818182,
+      "BCC": 0.42391304347826086,
+      "AK": 0.0,
+      "BKL": 0.0,
+      "SCC": 0.0
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "id_class_mix": {
+    "MEL": 904,
+    "NV": 2575,
+    "BCC": 664,
+    "AK": 174,
+    "BKL": 525,
+    "DF": 48,
+    "VASC": 51,
+    "SCC": 126
+  },
+  "ood": {
+    "pad_heldout": {
+      "mahalanobis_classcond": 0.5179841520276343,
+      "knn_k50": 0.8305626394029502,
+      "cosine_max": 0.7447692540074732,
+      "MSP": 0.7085724476374129,
+      "Energy_T1": 0.7412027986985568,
+      "n_ood": 716,
+      "majority_nearest_frac": 0.12569832402234637,
+      "nearest_class_frac": {
+        "MEL": 0.10474860335195531,
+        "NV": 0.12569832402234637,
+        "BCC": 0.41480446927374304,
+        "AK": 0.0013966480446927375,
+        "BKL": 0.12569832402234637,
+        "DF": 0.0,
+        "VASC": 0.0,
+        "SCC": 0.2276536312849162
+      },
+      "per_id_class_maha": {
+        "MEL": 0.4989262495674099,
+        "NV": 0.7004523512502033,
+        "BCC": 0.2368874941105203,
+        "AK": 0.14436043151608555,
+        "BKL": 0.28294759244479917,
+        "DF": 0.2000698324022346,
+        "VASC": 0.0844835140760215,
+        "SCC": 0.1988893322692205
+      },
+      "per_ood_class_maha": {
+        "MEL": {
+          "n": 9,
+          "auroc": 0.47694230642720875
+        },
+        "NV": {
+          "n": 88,
+          "auroc": 0.48833360245438406
+        },
+        "BCC": {
+          "n": 276,
+          "auroc": 0.5316111926274874
+        },
+        "AK": {
+          "n": 202,
+          "auroc": 0.5012046497722595
+        },
+        "BKL": {
+          "n": 75,
+          "auroc": 0.5028590224327346
+        },
+        "DF": {
+          "n": 0,
+          "auroc": null
+        },
+        "VASC": {
+          "n": 0,
+          "auroc": null
+        },
+        "SCC": {
+          "n": 66,
+          "auroc": 0.5746721208532931
+        }
+      },
+      "decomposition": {
+        "classes": [
+          "NV",
+          "BCC",
+          "AK",
+          "BKL",
+          "SCC"
+        ],
+        "mapped_all": 0.5185066083365506,
+        "reweighted_to_id_mix": 0.5005088930338991
+      },
+      "n_mapped": 716
+    },
+    "pad_full": {
+      "mahalanobis_classcond": 0.5204314406277036,
+      "knn_k50": 0.8416423579388672,
+      "cosine_max": 0.7596734652093625,
+      "MSP": 0.7090097566413369,
+      "Energy_T1": 0.7403315159113313,
+      "n_ood": 2298,
+      "majority_nearest_frac": 0.11488250652741515,
+      "nearest_class_frac": {
+        "MEL": 0.11401218450826806,
+        "NV": 0.11488250652741515,
+        "BCC": 0.4456048738033072,
+        "AK": 0.0004351610095735422,
+        "BKL": 0.10574412532637076,
+        "DF": 0.0,
+        "VASC": 0.0,
+        "SCC": 0.2193211488250653
+      },
+      "per_id_class_maha": {
+        "MEL": 0.5019779608278072,
+        "NV": 0.7042682957742908,
+        "BCC": 0.23669547642266195,
+        "AK": 0.14313045826955972,
+        "BKL": 0.28356997803473,
+        "DF": 0.19925841311285175,
+        "VASC": 0.08357651154456563,
+        "SCC": 0.19821929351955458
+      },
+      "per_ood_class_maha": {
+        "MEL": {
+          "n": 52,
+          "auroc": 0.46473789679828753
+        },
+        "NV": {
+          "n": 244,
+          "auroc": 0.4967776063050209
+        },
+        "BCC": {
+          "n": 845,
+          "auroc": 0.5285837236650189
+        },
+        "AK": {
+          "n": 730,
+          "auroc": 0.5151063421386302
+        },
+        "BKL": {
+          "n": 235,
+          "auroc": 0.5121600342642632
+        },
+        "DF": {
+          "n": 0,
+          "auroc": null
+        },
+        "VASC": {
+          "n": 0,
+          "auroc": null
+        },
+        "SCC": {
+          "n": 192,
+          "auroc": 0.5600669775014802
+        }
+      },
+      "decomposition": {
+        "classes": [
+          "MEL",
+          "NV",
+          "BCC",
+          "AK",
+          "BKL",
+          "SCC"
+        ],
+        "mapped_all": 0.5204314406277036,
+        "reweighted_to_id_mix": 0.4990712455999816
+      },
+      "n_mapped": 2298
+    },
+    "fitzpatrick17k": {
+      "mahalanobis_classcond": 0.6551019528439822,
+      "knn_k50": 0.7571653808607063,
+      "cosine_max": 0.7123744296201925,
+      "MSP": 0.7156949970472843,
+      "Energy_T1": 0.7749532391500586,
+      "n_ood": 3887,
+      "majority_nearest_frac": 0.16953949060972473,
+      "nearest_class_frac": {
+        "MEL": 0.11294057113455107,
+        "NV": 0.16953949060972473,
+        "BCC": 0.07049138152817083,
+        "AK": 0.0010290712631849757,
+        "BKL": 0.39773604322099304,
+        "DF": 0.011062516079238487,
+        "VASC": 0.0002572678157962439,
+        "SCC": 0.23694365834834064
+      },
+      "per_id_class_maha": {
+        "MEL": 0.6787211626683909,
+        "NV": 0.8111408453870383,
+        "BCC": 0.40566175171486046,
+        "AK": 0.28952831276669355,
+        "BKL": 0.4344214536856677,
+        "DF": 0.345478518137381,
+        "VASC": 0.13506560329302808,
+        "SCC": 0.3640482520081183
+      }
+    },
+    "mednode": {
+      "mahalanobis_classcond": 0.5741592077920571,
+      "knn_k50": 0.7491949059078931,
+      "cosine_max": 0.6783663613461963,
+      "MSP": 0.7251372781202475,
+      "Energy_T1": 0.7614262993533707,
+      "n_ood": 170,
+      "majority_nearest_frac": 0.1588235294117647,
+      "nearest_class_frac": {
+        "MEL": 0.08823529411764706,
+        "NV": 0.1588235294117647,
+        "BCC": 0.2411764705882353,
+        "AK": 0.0,
+        "BKL": 0.23529411764705882,
+        "DF": 0.0,
+        "VASC": 0.0,
+        "SCC": 0.27647058823529413
+      },
+      "per_id_class_maha": {
+        "MEL": 0.5745640291514836,
+        "NV": 0.7553009708737864,
+        "BCC": 0.2891832034018426,
+        "AK": 0.17931034482758623,
+        "BKL": 0.33400560224089637,
+        "DF": 0.23676470588235293,
+        "VASC": 0.09077277970011537,
+        "SCC": 0.24122315592903829
+      },
+      "per_ood_class_maha": {
+        "MEL": {
+          "n": 70,
+          "auroc": 0.5928021652710819
+        },
+        "NV": {
+          "n": 100,
+          "auroc": 0.5611091375567396
+        },
+        "BCC": {
+          "n": 0,
+          "auroc": null
+        },
+        "AK": {
+          "n": 0,
+          "auroc": null
+        },
+        "BKL": {
+          "n": 0,
+          "auroc": null
+        },
+        "DF": {
+          "n": 0,
+          "auroc": null
+        },
+        "VASC": {
+          "n": 0,
+          "auroc": null
+        },
+        "SCC": {
+          "n": 0,
+          "auroc": null
+        }
+      },
+      "decomposition": {
+        "classes": [
+          "MEL",
+          "NV"
+        ],
+        "mapped_all": 0.5741592077920571,
+        "reweighted_to_id_mix": 0.5693444054652667
+      },
+      "n_mapped": 170
+    },
+    "sd198": {
+      "mahalanobis_classcond": 0.644305462333288,
+      "knn_k50": 0.7422871312984379,
+      "cosine_max": 0.7052250751233591,
+      "MSP": 0.6954753898009685,
+      "Energy_T1": 0.7584392230382616,
+      "n_ood": 6584,
+      "majority_nearest_frac": 0.20929526123936817,
+      "nearest_class_frac": {
+        "MEL": 0.12818955042527339,
+        "NV": 0.20929526123936817,
+        "BCC": 0.058475091130012154,
+        "AK": 0.0009113001215066828,
+        "BKL": 0.4059842041312272,
+        "DF": 0.005771567436208992,
+        "VASC": 0.00015188335358444713,
+        "SCC": 0.19122114216281896
+      },
+      "per_id_class_maha": {
+        "MEL": 0.6651281196572005,
+        "NV": 0.8022642121530276,
+        "BCC": 0.3924981517808781,
+        "AK": 0.2780434281644112,
+        "BKL": 0.42225279176068964,
+        "DF": 0.334238304981774,
+        "VASC": 0.12921104043075313,
+        "SCC": 0.3513917819051477
+      },
+      "per_ood_class_maha": {
+        "MEL": {
+          "n": 113,
+          "auroc": 0.5748387536218216
+        },
+        "NV": {
+          "n": 426,
+          "auroc": 0.6062351346418091
+        },
+        "BCC": {
+          "n": 60,
+          "auroc": 0.5371192684691797
+        },
+        "AK": {
+          "n": 60,
+          "auroc": 0.5446121965660154
+        },
+        "BKL": {
+          "n": 72,
+          "auroc": 0.5507587220139025
+        },
+        "DF": {
+          "n": 60,
+          "auroc": 0.5396947569238866
+        },
+        "VASC": {
+          "n": 126,
+          "auroc": 0.6289075593397677
+        },
+        "SCC": {
+          "n": 119,
+          "auroc": 0.5371733062674449
+        }
+      },
+      "decomposition": {
+        "classes": [
+          "MEL",
+          "NV",
+          "BCC",
+          "AK",
+          "BKL",
+          "DF",
+          "VASC",
+          "SCC"
+        ],
+        "mapped_all": 0.582354366546196,
+        "reweighted_to_id_mix": 0.5815928993385592
+      },
+      "n_mapped": 1036
+    },
+    "scin": {
+      "mahalanobis_classcond": 0.6461372253357954,
+      "knn_k50": 0.6614588803707051,
+      "cosine_max": 0.635332631532392,
+      "MSP": 0.6048132518012239,
+      "Energy_T1": 0.6878412398973874,
+      "n_ood": 10406,
+      "majority_nearest_frac": 0.4764558908322122,
+      "nearest_class_frac": {
+        "MEL": 0.05458389390736114,
+        "NV": 0.4764558908322122,
+        "BCC": 0.018931385738996734,
+        "AK": 0.008456659619450317,
+        "BKL": 0.37699404189890445,
+        "DF": 0.01729771285796656,
+        "VASC": 0.0003843936190659235,
+        "SCC": 0.04689602152604267
+      },
+      "per_id_class_maha": {
+        "MEL": 0.666872541199002,
+        "NV": 0.798119307569009,
+        "BCC": 0.4047038142962008,
+        "AK": 0.29388935649415343,
+        "BKL": 0.4305049284753302,
+        "DF": 0.3491935742200013,
+        "VASC": 0.1375789985415654,
+        "SCC": 0.367574110174533
+      },
+      "per_ood_class_maha": {
+        "MEL": {
+          "n": 0,
+          "auroc": null
+        },
+        "NV": {
+          "n": 7,
+          "auroc": 0.6068397755786744
+        },
+        "BCC": {
+          "n": 10,
+          "auroc": 0.6193408328399448
+        },
+        "AK": {
+          "n": 11,
+          "auroc": 0.5918330731829843
+        },
+        "BKL": {
+          "n": 0,
+          "auroc": null
+        },
+        "DF": {
+          "n": 7,
+          "auroc": 0.4728072401251797
+        },
+        "VASC": {
+          "n": 13,
+          "auroc": 0.6515613851315449
+        },
+        "SCC": {
+          "n": 16,
+          "auroc": 0.6631512729425696
+        }
+      },
+      "decomposition": null,
+      "n_mapped": 64
+    }
+  },
+  "tag": "dual_effb3_ladv0_s42_coral10",
+  "seed": 42,
+  "lambda_adv": 0.0,
+  "backbone": "effb3",
+  "penalty": "coral",
+  "penalty_weight": 10.0,
+  "max_epochs": 40,
+  "checkpoint_policy": "last",
+  "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p11/dual_effb3_ladv0_s42_coral10/last.ckpt",
+  "primary_epoch": 39,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p11/dual_effb3_ladv0_s42_coral10/best-39.ckpt",
+  "best_epoch": 39,
+  "secondary_bestval": {
+    "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p11/dual_effb3_ladv0_s42_coral10/best-39.ckpt",
+    "epoch": 39,
+    "out_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p11/runs/dual_effb3_ladv0_s42_coral10/bestval",
+    "id_balanced_acc": 0.31552330636476134,
+    "leakage": {
+      "test_vs_pad_full": {
+        "acc_mean": 0.736500754147813,
+        "bal_acc_mean": 0.6476608187134504,
+        "auroc_mean": 0.7791015128400711,
+        "acc_std": 0.009602289015020846,
+        "bal_acc_std": 0.01080857515674241,
+        "n_probe_seeds": 3,
+        "n_domains": 2,
+        "chance_floor_balanced": 0.5,
+        "metric": "balanced_accuracy"
+      },
+      "test_vs_pad_heldout": {
+        "acc_mean": 0.882804995196926,
+        "bal_acc_mean": 0.5444359445124439,
+        "auroc_mean": 0.7526427988576092,
+        "acc_std": 0.003174392246274402,
+        "bal_acc_std": 0.010107263852172843,
+        "n_probe_seeds": 3,
+        "n_domains": 2,
+        "chance_floor_balanced": 0.5,
+        "metric": "balanced_accuracy"
+      },
+      "val_vs_pad_adv_selection": {
+        "acc_mean": 0.754977330967869,
+        "bal_acc_mean": 0.645109649122807,
+        "auroc_mean": 0.7915702908587258,
+        "acc_std": 0.0072266125684302684,
+        "bal_acc_std": 0.00520049907100164,
+        "n_probe_seeds": 3,
+        "n_domains": 2,
+        "chance_floor_balanced": 0.5,
+        "metric": "balanced_accuracy"
+      },
+      "primary": "test_vs_pad_full (Table 1 protocol)",
+      "z_dim": 16
+    },
+    "ood": {
+      "pad_heldout": {
+        "mahalanobis_classcond": 0.5179841520276343,
+        "knn_k50": 0.8305626394029502,
+        "cosine_max": 0.7447692540074732,
+        "MSP": 0.7085724476374129,
+        "Energy_T1": 0.7412027986985568,
+        "n_ood": 716,
+        "majority_nearest_frac": 0.12569832402234637,
+        "nearest_class_frac": {
+          "MEL": 0.10474860335195531,
+          "NV": 0.12569832402234637,
+          "BCC": 0.41480446927374304,
+          "AK": 0.0013966480446927375,
+          "BKL": 0.12569832402234637,
+          "DF": 0.0,
+          "VASC": 0.0,
+          "SCC": 0.2276536312849162
+        },
+        "per_id_class_maha": {
+          "MEL": 0.4989262495674099,
+          "NV": 0.7004523512502033,
+          "BCC": 0.2368874941105203,
+          "AK": 0.14436043151608555,
+          "BKL": 0.28294759244479917,
+          "DF": 0.2000698324022346,
+          "VASC": 0.0844835140760215,
+          "SCC": 0.1988893322692205
+        },
+        "per_ood_class_maha": {
+          "MEL": {
+            "n": 9,
+            "auroc": 0.47694230642720875
+          },
+          "NV": {
+            "n": 88,
+            "auroc": 0.48833360245438406
+          },
+          "BCC": {
+            "n": 276,
+            "auroc": 0.5316111926274874
+          },
+          "AK": {
+            "n": 202,
+            "auroc": 0.5012046497722595
+          },
+          "BKL": {
+            "n": 75,
+            "auroc": 0.5028590224327346
+          },
+          "DF": {
+            "n": 0,
+            "auroc": null
+          },
+          "VASC": {
+            "n": 0,
+            "auroc": null
+          },
+          "SCC": {
+            "n": 66,
+            "auroc": 0.5746721208532931
+          }
+        },
+        "decomposition": {
+          "classes": [
+            "NV",
+            "BCC",
+            "AK",
+            "BKL",
+            "SCC"
+          ],
+          "mapped_all": 0.5185066083365506,
+          "reweighted_to_id_mix": 0.5005088930338991
+        },
+        "n_mapped": 716
+      },
+      "pad_full": {
+        "mahalanobis_classcond": 0.5204314406277036,
+        "knn_k50": 0.8416423579388672,
+        "cosine_max": 0.7596734652093625,
+        "MSP": 0.7090097566413369,
+        "Energy_T1": 0.7403315159113313,
+        "n_ood": 2298,
+        "majority_nearest_frac": 0.11488250652741515,
+        "nearest_class_frac": {
+          "MEL": 0.11401218450826806,
+          "NV": 0.11488250652741515,
+          "BCC": 0.4456048738033072,
+          "AK": 0.0004351610095735422,
+          "BKL": 0.10574412532637076,
+          "DF": 0.0,
+          "VASC": 0.0,
+          "SCC": 0.2193211488250653
+        },
+        "per_id_class_maha": {
+          "MEL": 0.5019779608278072,
+          "NV": 0.7042682957742908,
+          "BCC": 0.23669547642266195,
+          "AK": 0.14313045826955972,
+          "BKL": 0.28356997803473,
+          "DF": 0.19925841311285175,
+          "VASC": 0.08357651154456563,
+          "SCC": 0.19821929351955458
+        },
+        "per_ood_class_maha": {
+          "MEL": {
+            "n": 52,
+            "auroc": 0.46473789679828753
+          },
+          "NV": {
+            "n": 244,
+            "auroc": 0.4967776063050209
+          },
+          "BCC": {
+            "n": 845,
+            "auroc": 0.5285837236650189
+          },
+          "AK": {
+            "n": 730,
+            "auroc": 0.5151063421386302
+          },
+          "BKL": {
+            "n": 235,
+            "auroc": 0.5121600342642632
+          },
+          "DF": {
+            "n": 0,
+            "auroc": null
+          },
+          "VASC": {
+            "n": 0,
+            "auroc": null
+          },
+          "SCC": {
+            "n": 192,
+            "auroc": 0.5600669775014802
+          }
+        },
+        "decomposition": {
+          "classes": [
+            "MEL",
+            "NV",
+            "BCC",
+            "AK",
+            "BKL",
+            "SCC"
+          ],
+          "mapped_all": 0.5204314406277036,
+          "reweighted_to_id_mix": 0.4990712455999816
+        },
+        "n_mapped": 2298
+      },
+      "fitzpatrick17k": {
+        "mahalanobis_classcond": 0.6551019528439822,
+        "knn_k50": 0.7571653808607063,
+        "cosine_max": 0.7123744296201925,
+        "MSP": 0.7156949970472843,
+        "Energy_T1": 0.7749532391500586,
+        "n_ood": 3887,
+        "majority_nearest_frac": 0.16953949060972473,
+        "nearest_class_frac": {
+          "MEL": 0.11294057113455107,
+          "NV": 0.16953949060972473,
+          "BCC": 0.07049138152817083,
+          "AK": 0.0010290712631849757,
+          "BKL": 0.39773604322099304,
+          "DF": 0.011062516079238487,
+          "VASC": 0.0002572678157962439,
+          "SCC": 0.23694365834834064
+        },
+        "per_id_class_maha": {
+          "MEL": 0.6787211626683909,
+          "NV": 0.8111408453870383,
+          "BCC": 0.40566175171486046,
+          "AK": 0.28952831276669355,
+          "BKL": 0.4344214536856677,
+          "DF": 0.345478518137381,
+          "VASC": 0.13506560329302808,
+          "SCC": 0.3640482520081183
+        }
+      },
+      "mednode": {
+        "mahalanobis_classcond": 0.5741592077920571,
+        "knn_k50": 0.7491949059078931,
+        "cosine_max": 0.6783663613461963,
+        "MSP": 0.7251372781202475,
+        "Energy_T1": 0.7614262993533707,
+        "n_ood": 170,
+        "majority_nearest_frac": 0.1588235294117647,
+        "nearest_class_frac": {
+          "MEL": 0.08823529411764706,
+          "NV": 0.1588235294117647,
+          "BCC": 0.2411764705882353,
+          "AK": 0.0,
+          "BKL": 0.23529411764705882,
+          "DF": 0.0,
+          "VASC": 0.0,
+          "SCC": 0.27647058823529413
+        },
+        "per_id_class_maha": {
+          "MEL": 0.5745640291514836,
+          "NV": 0.7553009708737864,
+          "BCC": 0.2891832034018426,
+          "AK": 0.17931034482758623,
+          "BKL": 0.33400560224089637,
+          "DF": 0.23676470588235293,
+          "VASC": 0.09077277970011537,
+          "SCC": 0.24122315592903829
+        },
+        "per_ood_class_maha": {
+          "MEL": {
+            "n": 70,
+            "auroc": 0.5928021652710819
+          },
+          "NV": {
+            "n": 100,
+            "auroc": 0.5611091375567396
+          },
+          "BCC": {
+            "n": 0,
+            "auroc": null
+          },
+          "AK": {
+            "n": 0,
+            "auroc": null
+          },
+          "BKL": {
+            "n": 0,
+            "auroc": null
+          },
+          "DF": {
+            "n": 0,
+            "auroc": null
+          },
+          "VASC": {
+            "n": 0,
+            "auroc": null
+          },
+          "SCC": {
+            "n": 0,
+            "auroc": null
+          }
+        },
+        "decomposition": {
+          "classes": [
+            "MEL",
+            "NV"
+          ],
+          "mapped_all": 0.5741592077920571,
+          "reweighted_to_id_mix": 0.5693444054652667
+        },
+        "n_mapped": 170
+      },
+      "sd198": {
+        "mahalanobis_classcond": 0.644305462333288,
+        "knn_k50": 0.7422871312984379,
+        "cosine_max": 0.7052250751233591,
+        "MSP": 0.6954753898009685,
+        "Energy_T1": 0.7584392230382616,
+        "n_ood": 6584,
+        "majority_nearest_frac": 0.20929526123936817,
+        "nearest_class_frac": {
+          "MEL": 0.12818955042527339,
+          "NV": 0.20929526123936817,
+          "BCC": 0.058475091130012154,
+          "AK": 0.0009113001215066828,
+          "BKL": 0.4059842041312272,
+          "DF": 0.005771567436208992,
+          "VASC": 0.00015188335358444713,
+          "SCC": 0.19122114216281896
+        },
+        "per_id_class_maha": {
+          "MEL": 0.6651281196572005,
+          "NV": 0.8022642121530276,
+          "BCC": 0.3924981517808781,
+          "AK": 0.2780434281644112,
+          "BKL": 0.42225279176068964,
+          "DF": 0.334238304981774,
+          "VASC": 0.12921104043075313,
+          "SCC": 0.3513917819051477
+        },
+        "per_ood_class_maha": {
+          "MEL": {
+            "n": 113,
+            "auroc": 0.5748387536218216
+          },
+          "NV": {
+            "n": 426,
+            "auroc": 0.6062351346418091
+          },
+          "BCC": {
+            "n": 60,
+            "auroc": 0.5371192684691797
+          },
+          "AK": {
+            "n": 60,
+            "auroc": 0.5446121965660154
+          },
+          "BKL": {
+            "n": 72,
+            "auroc": 0.5507587220139025
+          },
+          "DF": {
+            "n": 60,
+            "auroc": 0.5396947569238866
+          },
+          "VASC": {
+            "n": 126,
+            "auroc": 0.6289075593397677
+          },
+          "SCC": {
+            "n": 119,
+            "auroc": 0.5371733062674449
+          }
+        },
+        "decomposition": {
+          "classes": [
+            "MEL",
+            "NV",
+            "BCC",
+            "AK",
+            "BKL",
+            "DF",
+            "VASC",
+            "SCC"
+          ],
+          "mapped_all": 0.582354366546196,
+          "reweighted_to_id_mix": 0.5815928993385592
+        },
+        "n_mapped": 1036
+      },
+      "scin": {
+        "mahalanobis_classcond": 0.6461372253357954,
+        "knn_k50": 0.6614588803707051,
+        "cosine_max": 0.635332631532392,
+        "MSP": 0.6048132518012239,
+        "Energy_T1": 0.6878412398973874,
+        "n_ood": 10406,
+        "majority_nearest_frac": 0.4764558908322122,
+        "nearest_class_frac": {
+          "MEL": 0.05458389390736114,
+          "NV": 0.4764558908322122,
+          "BCC": 0.018931385738996734,
+          "AK": 0.008456659619450317,
+          "BKL": 0.37699404189890445,
+          "DF": 0.01729771285796656,
+          "VASC": 0.0003843936190659235,
+          "SCC": 0.04689602152604267
+        },
+        "per_id_class_maha": {
+          "MEL": 0.666872541199002,
+          "NV": 0.798119307569009,
+          "BCC": 0.4047038142962008,
+          "AK": 0.29388935649415343,
+          "BKL": 0.4305049284753302,
+          "DF": 0.3491935742200013,
+          "VASC": 0.1375789985415654,
+          "SCC": 0.367574110174533
+        },
+        "per_ood_class_maha": {
+          "MEL": {
+            "n": 0,
+            "auroc": null
+          },
+          "NV": {
+            "n": 7,
+            "auroc": 0.6068397755786744
+          },
+          "BCC": {
+            "n": 10,
+            "auroc": 0.6193408328399448
+          },
+          "AK": {
+            "n": 11,
+            "auroc": 0.5918330731829843
+          },
+          "BKL": {
+            "n": 0,
+            "auroc": null
+          },
+          "DF": {
+            "n": 7,
+            "auroc": 0.4728072401251797
+          },
+          "VASC": {
+            "n": 13,
+            "auroc": 0.6515613851315449
+          },
+          "SCC": {
+            "n": 16,
+            "auroc": 0.6631512729425696
+          }
+        },
+        "decomposition": null,
+        "n_mapped": 64
+      }
+    },
+    "xfer_pad_heldout_6class": {
+      "subset": "pad_heldout",
+      "n_images": 716,
+      "n_patients": 412,
+      "accuracy": 0.2639664804469274,
+      "balanced_accuracy": 0.20701581027667984,
+      "per_class_recall": {
+        "MEL": 0.0,
+        "NV": 0.8181818181818182,
+        "BCC": 0.42391304347826086,
+        "AK": 0.0,
+        "BKL": 0.0,
+        "SCC": 0.0
+      },
+      "class_counts": {
+        "MEL": 9,
+        "NV": 88,
+        "BCC": 276,
+        "AK": 202,
+        "BKL": 75,
+        "SCC": 66
+      },
+      "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+    },
+    "val_balanced_acc": 0.31654637936073915
+  },
+  "recipe": "auto",
+  "gate": {
+    "leakage_bal_acc": 0.6476608187134504,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "grl_alpha": 0.9185416974472287,
+      "lnK": 0.6931471805599453,
+      "loss_adv": 0.7790343797960771,
+      "acc_adv": 0.4998147233201581,
+      "loss_cls": 2.047182829483696,
+      "penalty": 1.1149954625033578
+    },
+    "best_epoch": {
+      "epoch": 28,
+      "grl_alpha": 0.9999998918640101,
+      "lnK": 0.6931471805599453,
+      "loss_adv": 0.7501494409774132,
+      "acc_adv": 0.50586709486166,
+      "loss_cls": 1.2779741852651,
+      "penalty": 0.011551495212849906
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "grl_alpha": 0.9999999958776926,
+      "lnK": 0.6931471805599453,
+      "loss_adv": 0.7753785536458841,
+      "acc_adv": 0.5166131422924901,
+      "loss_cls": 0.9411747069226895,
+      "penalty": 0.003660019188051815
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 0.0,
+    "status": "valid_control",
+    "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
+  },
+  "wall_seconds_train": 4064.9050402641296,
+  "wall_seconds_total": 4272.643588781357,
+  "gpu_hours": 1.1868454417917464,
+  "commit": "cc216b7"
+}

@@ -1,0 +1,85 @@
+{
+  "rule": "closest selection probe to 0.6 among val bal acc >= 0.95 x control; ties < 0.01 -> smaller weight, then 40 epochs",
+  "control_val_bal_acc": 0.4320988375239344,
+  "intact_floor": 0.4104938956477377,
+  "mkmmd": {
+    "weight": 10.0,
+    "epochs": 40,
+    "epochs_flag": 0,
+    "selection_probe": 0.6233059210526316,
+    "val_bal_acc": 0.4331046180957154,
+    "flag": null,
+    "scan": [
+      {
+        "weight": 1.0,
+        "epochs": 40,
+        "selection_probe": 0.5414583333333334,
+        "val_bal_acc": 0.4483572588144667
+      },
+      {
+        "weight": 10.0,
+        "epochs": 40,
+        "selection_probe": 0.6233059210526316,
+        "val_bal_acc": 0.4331046180957154
+      },
+      {
+        "weight": 10.0,
+        "epochs": 80,
+        "selection_probe": 0.5817379385964913,
+        "val_bal_acc": 0.4409235441216498
+      },
+      {
+        "weight": 3.0,
+        "epochs": 40,
+        "selection_probe": 0.5032785087719298,
+        "val_bal_acc": 0.449331280470888
+      },
+      {
+        "weight": 30.0,
+        "epochs": 40,
+        "selection_probe": 0.5219627192982457,
+        "val_bal_acc": 0.44603888128912184
+      }
+    ]
+  },
+  "coral": {
+    "weight": 10.0,
+    "epochs": 80,
+    "epochs_flag": 80,
+    "selection_probe": 0.6134155701754386,
+    "val_bal_acc": 0.4473076167766388,
+    "flag": null,
+    "scan": [
+      {
+        "weight": 1.0,
+        "epochs": 40,
+        "selection_probe": 0.5,
+        "val_bal_acc": 0.4459660181015115
+      },
+      {
+        "weight": 10.0,
+        "epochs": 40,
+        "selection_probe": 0.645109649122807,
+        "val_bal_acc": 0.31654637936073915
+      },
+      {
+        "weight": 10.0,
+        "epochs": 80,
+        "selection_probe": 0.6134155701754386,
+        "val_bal_acc": 0.4473076167766388
+      },
+      {
+        "weight": 3.0,
+        "epochs": 40,
+        "selection_probe": 0.631655701754386,
+        "val_bal_acc": 0.42611012203788856
+      },
+      {
+        "weight": 30.0,
+        "epochs": 40,
+        "selection_probe": 0.5911732456140352,
+        "val_bal_acc": 0.1930646799491056
+      }
+    ]
+  }
+}
