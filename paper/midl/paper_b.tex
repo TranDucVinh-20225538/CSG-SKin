@@ -378,9 +378,9 @@ condition by moving them toward nevus.
 Replacing the adversary with a multi-kernel MMD penalty~\cite{long2015} on the same model, at
 held-out leakage matched to gradient reversal ($0.506$ vs $0.502$) and with in-distribution
 accuracy within $0.04$, inverts detection on \texttt{pad\_heldout} ($0.354\pm0.022$; all five
-scores $0.34$--$0.43$), as \citet{wu2023meta} observed on rotated MNIST. On Fitzpatrick17k it
-only collapses ($0.553$). CORAL alignment at the same leakage leaves detection intact
-($0.820$; Fitzpatrick17k $0.788$). Matching the full feature distribution, adversarially or by
+scores $0.34$--$0.43$), as \citet{wu2023meta} observed on rotated MNIST. On the unseen datasets it only collapses
+(Fitzpatrick17k $0.553$, MED-NODE $0.523$, SD-198 $0.535$). CORAL alignment at the same leakage
+leaves detection intact ($0.820$; $0.788$, $0.702$, $0.788$). Matching the full feature distribution, adversarially or by
 kernel MMD, is what misaligns classes under label shift; matching second moments is not
 enough.
 
@@ -567,7 +567,7 @@ they differ, which in our case required a small labelled sample from the target 
 
 \textbf{Scope.} The inversion is shown in dermatology only, and its spread to unseen domains
 is shown for gradient reversal; multi-kernel MMD inverts detection on the target domain but
-only collapses it on Fitzpatrick17k. We attempted two other
+only collapses it on the unseen datasets. We attempted two other
 modalities and neither experiment took place: on Camelyon17 no adversarial setting we tried
 removed hospital information while preserving the classifier, and on chest radiographs the
 detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
