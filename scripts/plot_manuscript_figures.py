@@ -66,43 +66,92 @@ def intervention_band_x(lams=pfs.LAMS):
     return i0 - 0.5, i1 + 0.5
 
 
+def load_t1last_by_lambda(checkpoint="last"):
+    """Table 1 dual-encoder runs at last.ckpt (results/paperB/r5/t1last/summary.csv)."""
+    import csv
+
+    by = defaultdict(list)
+    with open(PAPERB / "r5" / "t1last" / "summary.csv", newline="") as f:
+        for r in csv.DictReader(f):
+            if r["checkpoint"] != checkpoint:
+                continue
+            by[float(r["lambda"])].append(r)
+    return by
+
+
+def load_t1last_ood_ece_by_lambda():
+    """OOD ECE (pad_heldout) from t1last UNSEEN_ECE.json, keyed by λ."""
+    rows = json.loads((PAPERB / "r5" / "t1last" / "UNSEEN_ECE.json").read_text())["ece_by_lambda"]
+    return {float(r["lambda"]): r for r in rows}
+
+
 def fig1_intervention(shared_ylim=(0.4, 1.0)):
-    rows = load_phase3_summaries()
-    by = by_lambda_summaries(rows)
-    dual = json.loads((PAPERB / "phase16" / "table1_ood_pad_dual_column.json").read_text())["by_lambda"]
+    """Fig 1 from t1last last.ckpt (held-out leakage, ID bal, Maha pad+Fitz, OOD ECE)."""
+    by = load_t1last_by_lambda("last")
+    ece_by = load_t1last_ood_ece_by_lambda()
     lams = pfs.LAMS
     x = pfs.lam_xpos(lams)
 
-    panels = [
-        ("a", "Leakage", lambda r: r["leakage"]["z_lesion"]["bal_acc_mean"], True, False, True),
-        ("b", "ID bal. acc.", lambda r: r["id_balanced_acc"], False, False, True),
-        ("c", "OOD AUROC", None, False, True, True),
-        ("d", "OOD ECE", None, False, False, False),
-    ]
+    def col_mean_std(lam, key):
+        rs = by.get(float(lam), [])
+        return mean_std([float(r[key]) for r in rs])
 
-    by13 = by_lambda_runs(load_phase13_runs())
+    # Panel c Fitzpatrick means dip to ~0.354; widen shared floor so nothing clips.
+    y_lo, y_hi = shared_ylim
+    for lam in lams:
+        for key in ("heldout_leakage_V1", "id_bal_acc", "maha_pad_heldout", "maha_fitz"):
+            m, s = col_mean_std(lam, key)
+            if np.isfinite(m):
+                y_lo = min(y_lo, m - (s if np.isfinite(s) else 0.0))
+                y_hi = max(y_hi, m + (s if np.isfinite(s) else 0.0))
+    if y_lo < shared_ylim[0] - 1e-9:
+        shared_ylim = (float(np.floor(y_lo * 20) / 20), shared_ylim[1])  # step 0.05
+        print("fig1: widened shared_ylim lower to {} (t1last Fitz/pad band)".format(shared_ylim[0]))
 
     fig = plt.figure(figsize=(9.6, 2.85), constrained_layout=True)
     gs = GridSpec(1, 4, figure=fig, wspace=0.32)
     x0, x1 = intervention_band_x(lams)
 
-    for i, (tag, title, fn, show_floor, show_chance, shared_scale) in enumerate(panels):
+    # (a) leakage  (b) ID bal  (c) Maha pad + Fitz  (d) OOD ECE
+    panels = [
+        ("a", "Leakage", "heldout_leakage_V1", True, False, True),
+        ("b", "ID bal. acc.", "id_bal_acc", False, False, True),
+        ("c", "OOD AUROC", None, False, True, True),
+        ("d", "OOD ECE", None, False, False, False),
+    ]
+
+    id_means = []
+    for i, (tag, title, key, show_floor, show_chance, shared_scale) in enumerate(panels):
         ax = fig.add_subplot(gs[0, i])
         pfs.style_axis(ax)
         pfs.set_lambda_axis(ax, lams)
         ax.axvspan(x0, x1, color="#CCCCCC", alpha=0.25, zorder=0)
-        means, stds = [], []
-        for lam in lams:
-            if tag == "d":
-                m, s = agg_lam(by13, lam, lambda r: r["confidence"]["pad_heldout"]["ece"])
-            elif tag == "c":
-                block = dual[_dual_pad_key(lam)]
-                m, s = block["pad_heldout"]["mean"], block["pad_heldout"]["std"]
-            else:
-                m, s = agg_lam(by, lam, fn)
-            means.append(m)
-            stds.append(s)
-        pfs.plot_series(ax, x, means, stds, 0, "runB orth=1")
+        if tag == "c":
+            for slot, (ckey, lab) in enumerate(
+                    (("maha_pad_heldout", "pad held-out"), ("maha_fitz", "Fitzpatrick17k"))):
+                means, stds = [], []
+                for lam in lams:
+                    m, s = col_mean_std(lam, ckey)
+                    means.append(m)
+                    stds.append(s)
+                pfs.plot_series(ax, x, means, stds, slot, lab)
+            ax.legend(frameon=False, fontsize=6, loc="upper right")
+        elif tag == "d":
+            means, stds = [], []
+            for lam in lams:
+                blk = ece_by[float(lam)]
+                means.append(float(blk["ood_ece_mean"]))
+                stds.append(float(blk["ood_ece_sd"]))
+            pfs.plot_series(ax, x, means, stds, 0, "pad held-out")
+        else:
+            means, stds = [], []
+            for lam in lams:
+                m, s = col_mean_std(lam, key)
+                means.append(m)
+                stds.append(s)
+            pfs.plot_series(ax, x, means, stds, 0, "Table 1 last.ckpt")
+            if tag == "b":
+                id_means = means
         if show_floor:
             pfs.floor_line(ax, 0.5)
         if show_chance:
@@ -114,8 +163,8 @@ def fig1_intervention(shared_ylim=(0.4, 1.0)):
             ax.set_ylabel("Accuracy / AUROC")
         elif tag == "d":
             ax.set_ylabel("ECE")
-        if tag == "b":
-            lo, hi = float(np.nanmin(means)), float(np.nanmax(means))
+        if tag == "b" and id_means:
+            lo, hi = float(np.nanmin(id_means)), float(np.nanmax(id_means))
             ax.text(
                 0.97,
                 0.06,
@@ -130,7 +179,7 @@ def fig1_intervention(shared_ylim=(0.4, 1.0)):
     fig.text(
         0.5,
         0.01,
-        r"shaded: practitioner-favourable $\lambda$ (0.25–2)",
+        r"shaded: practitioner-favourable $\lambda$ (0.25–2); last.ckpt",
         ha="center",
         va="bottom",
         fontsize=7,
