@@ -42,22 +42,24 @@ def lesion_groups(frame):
     return lid.fillna(stem).to_numpy(), lid.isna().to_numpy()
 
 
-def isic_splits_by_lesion(isic):
+def isic_splits_by_lesion(isic, isic_split_seed=42):
+    """Lesion-level StratifiedGroupKFold train/val/test. Same seed for both folds (default 42 = Table 1)."""
     isic = isic.reset_index(drop=True)
     groups, _ = lesion_groups(isic)
-    sgk = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
+    seed = int(isic_split_seed)
+    sgk = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
     tv_i, te_i = next(sgk.split(np.zeros(len(isic)), isic["label_idx"], groups))
     tv, test = isic.iloc[tv_i].reset_index(drop=True), isic.iloc[te_i].reset_index(drop=True)
     g_tv = groups[tv_i]
-    sgk2 = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
+    sgk2 = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
     tr_i, va_i = next(sgk2.split(np.zeros(len(tv)), tv["label_idx"], g_tv))
     return tv.iloc[tr_i].reset_index(drop=True), tv.iloc[va_i].reset_index(drop=True), test
 
 
-def split_record():
+def split_record(isic_split_seed=42):
     df = p2.load_master()
     isic = df[df.domain == "isic"].copy().reset_index(drop=True)
-    train, val, test = isic_splits_by_lesion(isic)
+    train, val, test = isic_splits_by_lesion(isic, isic_split_seed=isic_split_seed)
     rec = {"policy_null_lesion_id": "each image with null lesion_id is its own group (kept, not dropped)"}
     gs = {}
     for name, f in (("train", train), ("val", val), ("test", test)):
@@ -71,6 +73,7 @@ def split_record():
     rec["lesion_overlap_train_test"] = len(gs["train"] & gs["test"])
     rec["lesion_overlap_val_test"] = len(gs["val"] & gs["test"])
     rec["lesion_overlap_train_val"] = len(gs["train"] & gs["val"])
+    rec["isic_split_seed"] = int(isic_split_seed)
     assert rec["lesion_overlap_train_test"] == rec["lesion_overlap_val_test"] == rec["lesion_overlap_train_val"] == 0
     return rec, (train, val, test)
 
@@ -104,17 +107,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lambda_adv", type=float, required=True)
     ap.add_argument("--seed", type=int, required=True)
+    ap.add_argument("--isic_split_seed", type=int, default=42,
+                    help="StratifiedGroupKFold random_state for both ISIC folds (default 42 = Table 1).")
     ap.add_argument("--split_only", action="store_true")
     a, rest = ap.parse_known_args()
 
     OUT.mkdir(parents=True, exist_ok=True)
-    rec, splits = split_record()
+    rec, splits = split_record(isic_split_seed=a.isic_split_seed)
     (OUT / "split_record.json").write_text(json.dumps(rec, indent=2) + "\n")
-    print("split", {k: rec[k]["n"] for k in ("train", "val", "test")}, "null frac", rec["null_lesion_frac_all_isic"], flush=True)
+    print("split", {k: rec[k]["n"] for k in ("train", "val", "test")}, "null frac", rec["null_lesion_frac_all_isic"],
+          "isic_split_seed", a.isic_split_seed, flush=True)
     if a.split_only:
         return
 
-    p2.isic_splits = isic_splits_by_lesion
+    def _splits(isic):
+        return isic_splits_by_lesion(isic, isic_split_seed=a.isic_split_seed)
+
+    p2.isic_splits = _splits
     p3.find_best_ckpt = lambda _d: None
     sys.argv = [sys.argv[0], "--lambda_adv", str(a.lambda_adv), "--seed", str(a.seed),
                 "--output_root", str(RUNS), "--ckpt_root", str(CKPT)] + rest

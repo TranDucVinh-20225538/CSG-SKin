@@ -39,6 +39,11 @@ def parse():
     ap.add_argument("--backbone", default="effb3", choices=M.BACKBONES)
     ap.add_argument("--lambda_adv", type=float, required=True)
     ap.add_argument("--seed", type=int, required=True)
+    ap.add_argument("--isic_split_seed", type=int, default=42,
+                    help="StratifiedGroupKFold seed for both ISIC folds (default 42 = Table 1).")
+    ap.add_argument("--run_tag", default="", help="override run directory name (else derived from flags)")
+    ap.add_argument("--out_root", default="", help="override results root (default results/paperB/r5/<item>/runs)")
+    ap.add_argument("--ckpt_root", default="", help="override checkpoint root")
     ap.add_argument("--penalty", default="none", choices=("none", "mkmmd", "coral", "mmd_legacy"))
     ap.add_argument("--penalty_weight", type=float, default=0.0)
     ap.add_argument("--max_epochs", type=int, default=0, help="0 = recipe value; >0 overrides (P11 longer schedule)")
@@ -53,6 +58,8 @@ def parse():
 
 
 def run_tag(a, epochs_override):
+    if a.run_tag:
+        return a.run_tag
     t = "dual_{}_ladv{}_s{}".format(a.backbone, R.lam_tag(a.lambda_adv), a.seed)
     if a.penalty != "none":
         t += "_{}{}".format(a.penalty, R.lam_tag(a.penalty_weight))
@@ -66,8 +73,14 @@ def main():
     rec, src = r5_recipe.resolve(a.recipe)
     epochs = a.max_epochs or int(rec["max_epochs"])
     tag = run_tag(a, a.max_epochs)
-    run_dir = R.R5 / a.item / "runs" / tag
-    ckpt_dir = R.PAPERB / "checkpoints" / "r5_{}".format(a.item) / tag
+    if a.out_root:
+        run_dir = Path(a.out_root) / tag
+    else:
+        run_dir = R.R5 / a.item / "runs" / tag
+    if a.ckpt_root:
+        ckpt_dir = Path(a.ckpt_root) / tag
+    else:
+        ckpt_dir = R.PAPERB / "checkpoints" / "r5_{}".format(a.item) / tag
     run_dir.mkdir(parents=True, exist_ok=True)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     if a.skip_done and (run_dir / "summary.json").exists() and not a.dry_run:
@@ -79,7 +92,7 @@ def main():
             a.backbone, wpath))
     seed_everything(a.seed)
     pl.seed_everything(a.seed, workers=True)
-    D = R.isic_lesion_data()
+    D = R.isic_lesion_data(isic_split_seed=a.isic_split_seed)
     bb_mult = a.backbone_lr_mult if a.backbone_lr_mult > 0 else (0.1 if a.backbone in M.VIT_LIKE else 1.0)
     cw = R.class_weights(D["train"].label_idx, 8) if rec["class_balance"] == "weighted_ce" else None
     kw = dict(backbone=a.backbone, lesion_classes=8, domain_classes=2,
@@ -88,8 +101,9 @@ def main():
               lambda_ctx=float(rec["lambda_ctx"]), lambda_adv=float(a.lambda_adv), lambda_orth=float(rec["lambda_orth"]),
               adv_lr_multiplier=float(rec["adv_lr_multiplier"]), lesion_cls_lr_multiplier=float(rec["cls_lr_multiplier"]),
               cls_weight=cw, backbone_lr_mult=bb_mult, penalty=a.penalty, penalty_weight=float(a.penalty_weight))
-    cfg = {"tag": tag, "item": a.item, "architecture": "dual_encoder_csg", "split": "lesion-level (R2 item 4)",
-           "seed": a.seed, "max_epochs": epochs, "model_kwargs": kw, "weights": wpath,
+    cfg = {"tag": tag, "item": a.item, "architecture": "dual_encoder_csg",
+           "split": "lesion-level (R2 item 4)", "isic_split_seed": int(a.isic_split_seed),
+           "pad_split_seed": 42, "seed": a.seed, "max_epochs": epochs, "model_kwargs": kw, "weights": wpath,
            "scoring_space": "z_lesion_norm", **r5_recipe.describe(rec, src)}
     (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
     val_ds = SkinDataset(D["val"], transform=build_val_transform_robust())

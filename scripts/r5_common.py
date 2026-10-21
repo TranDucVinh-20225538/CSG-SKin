@@ -62,11 +62,12 @@ def lam_tag(x):
 # ----------------------------------------------------------------------------------------------------------------------
 
 
-def isic_lesion_data():
+def isic_lesion_data(isic_split_seed=42):
+    """Lesion-level ISIC split + fixed PAD patient split (Phase 2 split_seed=42)."""
     df = p2.load_master()
     isic = df[df.domain == "isic"].copy().reset_index(drop=True)
     pad = df[df.domain == "pad_ufes"].copy().reset_index(drop=True)
-    train, val, test = T4.isic_splits_by_lesion(isic)
+    train, val, test = T4.isic_splits_by_lesion(isic, isic_split_seed=int(isic_split_seed))
     spec = json.loads(p3.P2_SPLIT.read_text())
     pad_adv = pad[pad.path.isin(set(spec["pad_adv_paths"]))].reset_index(drop=True)
     pad_hold = pad[pad.path.isin(set(spec["pad_heldout_paths"]))].reset_index(drop=True)
@@ -74,7 +75,8 @@ def isic_lesion_data():
     extra = {n: pd.read_csv(P7A_SETS / "{}.csv".format(n), keep_default_na=False)
              for n in EXTRA_SETS if (P7A_SETS / "{}.csv".format(n)).exists()}
     return {"train": train, "val": val, "test": test, "pad": pad, "pad_adv": pad_adv, "pad_hold": pad_hold,
-            "fitz": sorted(p3.FITZ_DIR.glob("*.jpg")), "extra": extra, "hygiene": hygiene}
+            "fitz": sorted(p3.FITZ_DIR.glob("*.jpg")), "extra": extra, "hygiene": hygiene,
+            "isic_split_seed": int(isic_split_seed)}
 
 
 def class_weights(labels, n_classes):

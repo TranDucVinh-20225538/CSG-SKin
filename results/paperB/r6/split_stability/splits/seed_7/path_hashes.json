@@ -1,0 +1,11 @@
+{
+  "isic_split_seed": 7,
+  "train_sha256": "efd2d032a4f1d502ca3ea28785f6702706055d6ae9e19a3573469543c1e3a616",
+  "val_sha256": "f115bc559b27dd7d3c6f46dd67a2a6f1d1be766c99f8dcd66f74cb5f8ba52da7",
+  "test_sha256": "fbfd7806fa9f3607fe3eff0e1bb0ad50e522bffe35a587ee1952ba88fa0d1155",
+  "n_train": 16212,
+  "n_val": 4053,
+  "n_test": 5066,
+  "hash_unit": "sorted full image paths, sha256 of newline-joined UTF-8",
+  "pad_split": "Phase 2 JSON pad_adv/pad_heldout (split_seed=42, fixed)"
+}

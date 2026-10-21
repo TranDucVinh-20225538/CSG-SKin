@@ -1,0 +1,10 @@
+{
+  "isic_split_seed": 42,
+  "train_sha256": "fa6fca6b9a37b87adb0d2aa8c4f37b4d2ff63948d9bf80704cf0905548502ff8",
+  "val_sha256": "5adc1d6372bae072bde4738d6fdc86e7579377330b3650ed3eb10971239cf947",
+  "test_sha256": "0156db35350f97a016784dcabe6d3e55a537c19f74e221e4e7f38eccd2048e5d",
+  "n_train": 16211,
+  "n_val": 4053,
+  "n_test": 5067,
+  "hash_unit": "sorted full image paths, sha256 of newline-joined UTF-8"
+}
