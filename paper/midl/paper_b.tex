@@ -82,7 +82,8 @@ evaluation does not show this. In-distribution accuracy and calibration stay abo
 the same, and the domain-leakage probe, which the method is
 supposed to reduce, goes down. In the same models, melanomas from unseen clinics are
 predicted as benign nevus with confidence above $0.9$ up to ten times more often than
-without adaptation, and the monitor does not flag them.
+without adaptation; the monitor accepts almost all of these images with or without
+adaptation, so the added harm comes from the classifier, not from the monitor.
 
 In our setting, the main cause is label shift. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
 second domain are $12.3\%$ nevus. When two domains have different class priors, matching
