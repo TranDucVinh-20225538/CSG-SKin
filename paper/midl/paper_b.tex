@@ -432,7 +432,8 @@ excess exceeds $0.15$ on all four unseen datasets ($0.18$--$0.33$) but not on
 on all five).
 
 \paragraph{Chance-level leakage hides the misalignment.} The domain probe of
-Table~\ref{tab:dial} is scored partly on images the adversary trained on. On held-out images
+Table~\ref{tab:shift} (as in earlier work) is scored partly on images the adversary trained on,
+which is why it reads $0.928$ at $\lam=0$ against $0.842$ for the held-out probe of Table~\ref{tab:dial}. On held-out images
 a linear probe reads the domain at chance from $\lam=0.5$ on ($0.502$--$0.506$), but a $k$-NN
 probe still reads it ($0.55$--$0.61$), and under label shift an unweighted probe misreports
 invariance (Table~\ref{tab:probes}). With full label shift DANN reaches $0.510$ on an
