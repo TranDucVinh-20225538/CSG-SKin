@@ -156,7 +156,9 @@ images, 961 patients), seen by the adversarial and context branches, and
 Fitzpatrick17k~\cite{groh2021} (3{,}887 images obtained), MED-NODE~\cite{giotis2015mednode}
 (170 images: 70 melanoma, 100 nevi), SD-198~\cite{sun2016sd198} (6{,}584 images, 198 conditions)
 and SCIN~\cite{ward2024scin} (10{,}406 images, 5{,}033 cases; SCIN Data Use License). All four
-are used for evaluation only and are not redistributed \pending{SD-198: confirm source and terms}.
+are used for evaluation only and are not redistributed. SD-198 was obtained from the release
+linked by its first author; it states no licence, and its images originate from
+DermQuest~\cite{sun2016sd198}.
 SCIN is mostly inflammatory conditions; only $0.6\%$ of its images map to the ISIC classes,
 so we use it only as an OOD set for detection and report it separately; no label-based
 analysis is done on SCIN. Images are cropped to a lesion-centred box and resized to
