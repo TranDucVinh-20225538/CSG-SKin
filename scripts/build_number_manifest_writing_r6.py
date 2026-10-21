@@ -293,6 +293,59 @@ def build_store():
         if cs:
             put(store, ["r2_prior", est, "within_class", "mean"], mean_sd(cs)[0])
 
+    # shift 0% λ=0.5: manuscript / e7c4259 uses n=5; cells.json may omit s82 summary.
+    shift0_l05_five = RES / "r6/r1/cur/SHIFT0_L05_FIVE_SEED.json"
+    if shift0_l05_five.exists():
+        store["values"]["r1"]["shift0_l05"] = {
+            k: v for k, v in load(shift0_l05_five).items() if k != "note"
+        }
+
+    # --- P11 MK-MMD / CORAL at matched held-out leakage (dual EffNet-B3, recipe current) ---
+    p11_comp = load(RES / "r5/p11/COMPARABLE_INVARIANCE.json")
+    put(store, ["p11", "grl", "V1_lambda2"], p11_comp["refs"]["V1_lambda2"])
+    put(store, ["p11", "grl", "ID_lambda0"], p11_comp["refs"]["ID_lambda0"])
+    for arm in p11_comp["settings"]:
+        key = arm["arm"].replace("|", "_")
+        put(store, ["p11", key, "heldout_V1"], arm["heldout_V1"])
+        put(store, ["p11", key, "id_bal_acc"], arm["id_bal_acc"])
+        put(store, ["p11", key, "d_V1"], arm["d_V1"])
+        put(store, ["p11", key, "d_ID"], arm["d_ID"])
+        put(store, ["p11", key, "n"], arm["n"])
+        put(store, ["p11", key, "abs_d_ID"], abs(float(arm["d_ID"])))
+
+    p11_boot = load(RES / "r5/p11/BOOTSTRAP.json")
+    for arm_name, oods in p11_boot.items():
+        key = arm_name.replace("|", "_")
+        for ood, dets in oods.items():
+            blk = dets.get("mahalanobis_classcond") or {}
+            if "mean" in blk:
+                put(store, ["p11", key, ood, "maha", "mean"], blk["mean"])
+            if "sd" in blk:
+                put(store, ["p11", key, ood, "maha", "sd"], blk["sd"])
+
+    # five-detector pad means for mkmmd|w10|ep40 (manuscript range 0.34–0.43)
+    det_names = ["mahalanobis_classcond", "knn_k50", "cosine_max", "MSP", "Energy_T1"]
+    run_glob = sorted((RES / "r5/p11/runs").glob("dual_effb3_ladv0_s*_mkmmd10/summary.json"))
+    if run_glob:
+        det_means = []
+        for d in det_names:
+            vals = [float(load(p)["ood"]["pad_heldout"][d]) for p in run_glob]
+            det_means.append(sum(vals) / len(vals))
+        put(store, ["p11", "mkmmd_w10_ep40", "pad_five_det", "min"], min(det_means))
+        put(store, ["p11", "mkmmd_w10_ep40", "pad_five_det", "max"], max(det_means))
+        for d, m in zip(det_names, det_means):
+            put(store, ["p11", "mkmmd_w10_ep40", "pad_five_det", d], m)
+
+    # optional MED/SD bootstrap (report artefact; not required for tex pins)
+    med_sd = RES / "r5/p11/BOOTSTRAP_MED_SD.json"
+    if med_sd.exists():
+        for arm_name, oods in load(med_sd).items():
+            key = arm_name.replace("|", "_")
+            for ood, dets in oods.items():
+                blk = dets.get("mahalanobis_classcond") or {}
+                for leaf in ("mean", "sd", "ci_lo", "ci_hi"):
+                    if leaf in blk:
+                        put(store, ["p11", key, ood, "maha", leaf], blk[leaf])
     STORE.parent.mkdir(parents=True, exist_ok=True)
     STORE.write_text(json.dumps(store, indent=2) + "\n")
     return store
@@ -841,6 +894,51 @@ def build_manifest(store):
         E.append(entry(f"clin_{ds}_{cls}_l2", m2, clin, base2 + ["share_pred_nv_conf09", "mean"]))
         E.append(entry(f"clin_{ds}_{cls}_l2_lo", lo2, clin, base2 + ["nv09_ci", "0"]))
         E.append(entry(f"clin_{ds}_{cls}_l2_hi", hi2, clin, base2 + ["nv09_ci", "1"]))
+
+    # ========== P11 MK-MMD / CORAL (§4.2; 6e4182d adds MED-NODE / SD-198) ==========
+    p11_med_sd = "r5/p11/BOOTSTRAP_MED_SD.json"
+    E.append(entry("p11_mkmmd_v1", "0.506", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "heldout_V1"],
+                   note="P11 MK-MMD w10 ep40 held-out V1; COMPARABLE_INVARIANCE.json"))
+    E.append(entry("p11_grl_v1", "0.502", store_f,
+                   ["values", "p11", "grl", "V1_lambda2"],
+                   note="GRL λ=2 V1 reference for P11 matched leakage"))
+    E.append(entry("p11_mkmmd_pad_maha", "0.354", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "pad_heldout", "maha", "mean"],
+                   note="P11 MK-MMD pad_heldout Mahalanobis mean"))
+    E.append(entry("p11_mkmmd_pad_maha_sd", "0.022", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "pad_heldout", "maha", "sd"]))
+    E.append(entry("p11_mkmmd_five_lo", "0.34", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "pad_five_det", "min"],
+                   note="min of five detector means on pad_heldout"))
+    E.append(entry("p11_mkmmd_five_hi", "0.43", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "pad_five_det", "max"],
+                   note="max of five detector means on pad_heldout"))
+    E.append(entry("p11_mkmmd_fitz", "0.553", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "fitzpatrick17k", "maha", "mean"],
+                   label="fitzpatrick"))
+    # MED/SD labels are not in verify MANIFEST_DS; pin by source only (6e4182d).
+    E.append(entry("p11_mkmmd_med", "0.523", p11_med_sd,
+                   ["mkmmd|w10|ep40", "mednode", "mahalanobis_classcond", "mean"],
+                   note="P11 MK-MMD w10 MED-NODE; 6e4182d"))
+    E.append(entry("p11_mkmmd_sd", "0.535", p11_med_sd,
+                   ["mkmmd|w10|ep40", "sd198", "mahalanobis_classcond", "mean"],
+                   note="P11 MK-MMD w10 SD-198; 6e4182d"))
+    E.append(entry("p11_coral_pad_maha", "0.820", store_f,
+                   ["values", "p11", "coral_w10_ep80", "pad_heldout", "maha", "mean"],
+                   note="P11 CORAL w10 ep80 pad_heldout Mahalanobis"))
+    E.append(entry("p11_coral_fitz", "0.788", store_f,
+                   ["values", "p11", "coral_w10_ep80", "fitzpatrick17k", "maha", "mean"],
+                   note="CORAL tuple ($0.820$; $0.788$, $0.702$, $0.788$) = pad, Fitz, MED, SD"))
+    E.append(entry("p11_coral_med", "0.702", p11_med_sd,
+                   ["coral|w10|ep80", "mednode", "mahalanobis_classcond", "mean"],
+                   note="P11 CORAL w10 ep80 MED-NODE; 6e4182d"))
+    E.append(entry("p11_coral_sd", "0.788", p11_med_sd,
+                   ["coral|w10|ep80", "sd198", "mahalanobis_classcond", "mean"],
+                   note="second 0.788 in CORAL tuple (= SD-198); same digits as Fitz"))
+    E.append(entry("p11_id_within", "0.04", store_f,
+                   ["values", "p11", "mkmmd_w10_ep40", "abs_d_ID"],
+                   note="text: ID within 0.04 of GRL λ=0; abs(d_ID) rounds to 0.04"))
 
     # ========== tab:imagelevel (legacy; r4_results only has λ∈{0,0.25,1,2}) ==========
     r4 = "r4/r4_results.json"

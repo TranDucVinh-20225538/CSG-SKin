@@ -7484,6 +7484,185 @@
     ]
   },
   {
+    "id": "p11_mkmmd_v1",
+    "written": "0.506",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "heldout_V1"
+    ],
+    "note": "P11 MK-MMD w10 ep40 held-out V1; COMPARABLE_INVARIANCE.json"
+  },
+  {
+    "id": "p11_grl_v1",
+    "written": "0.502",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "grl",
+      "V1_lambda2"
+    ],
+    "note": "GRL \u03bb=2 V1 reference for P11 matched leakage"
+  },
+  {
+    "id": "p11_mkmmd_pad_maha",
+    "written": "0.354",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "pad_heldout",
+      "maha",
+      "mean"
+    ],
+    "note": "P11 MK-MMD pad_heldout Mahalanobis mean"
+  },
+  {
+    "id": "p11_mkmmd_pad_maha_sd",
+    "written": "0.022",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "pad_heldout",
+      "maha",
+      "sd"
+    ]
+  },
+  {
+    "id": "p11_mkmmd_five_lo",
+    "written": "0.34",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "pad_five_det",
+      "min"
+    ],
+    "note": "min of five detector means on pad_heldout"
+  },
+  {
+    "id": "p11_mkmmd_five_hi",
+    "written": "0.43",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "pad_five_det",
+      "max"
+    ],
+    "note": "max of five detector means on pad_heldout"
+  },
+  {
+    "id": "p11_mkmmd_fitz",
+    "written": "0.553",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "fitzpatrick17k",
+      "maha",
+      "mean"
+    ],
+    "label": "fitzpatrick"
+  },
+  {
+    "id": "p11_mkmmd_med",
+    "written": "0.523",
+    "file": "r5/p11/BOOTSTRAP_MED_SD.json",
+    "key": [
+      "mkmmd|w10|ep40",
+      "mednode",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "P11 MK-MMD w10 MED-NODE; 6e4182d"
+  },
+  {
+    "id": "p11_mkmmd_sd",
+    "written": "0.535",
+    "file": "r5/p11/BOOTSTRAP_MED_SD.json",
+    "key": [
+      "mkmmd|w10|ep40",
+      "sd198",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "P11 MK-MMD w10 SD-198; 6e4182d"
+  },
+  {
+    "id": "p11_coral_pad_maha",
+    "written": "0.820",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "coral_w10_ep80",
+      "pad_heldout",
+      "maha",
+      "mean"
+    ],
+    "note": "P11 CORAL w10 ep80 pad_heldout Mahalanobis"
+  },
+  {
+    "id": "p11_coral_fitz",
+    "written": "0.788",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "coral_w10_ep80",
+      "fitzpatrick17k",
+      "maha",
+      "mean"
+    ],
+    "note": "CORAL tuple ($0.820$; $0.788$, $0.702$, $0.788$) = pad, Fitz, MED, SD"
+  },
+  {
+    "id": "p11_coral_med",
+    "written": "0.702",
+    "file": "r5/p11/BOOTSTRAP_MED_SD.json",
+    "key": [
+      "coral|w10|ep80",
+      "mednode",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "P11 CORAL w10 ep80 MED-NODE; 6e4182d"
+  },
+  {
+    "id": "p11_coral_sd",
+    "written": "0.788",
+    "file": "r5/p11/BOOTSTRAP_MED_SD.json",
+    "key": [
+      "coral|w10|ep80",
+      "sd198",
+      "mahalanobis_classcond",
+      "mean"
+    ],
+    "note": "second 0.788 in CORAL tuple (= SD-198); same digits as Fitz"
+  },
+  {
+    "id": "p11_id_within",
+    "written": "0.04",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "p11",
+      "mkmmd_w10_ep40",
+      "abs_d_ID"
+    ],
+    "note": "text: ID within 0.04 of GRL \u03bb=0; abs(d_ID) rounds to 0.04"
+  },
+  {
     "id": "img_leakage_l0",
     "written": "0.915",
     "file": "r4/r4_results.json",
