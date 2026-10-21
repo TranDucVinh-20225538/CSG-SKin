@@ -48,7 +48,7 @@ leakage also inverts detection on the smartphone images, while CORAL does not. D
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
-increases from $8\%$ to $49$--$81\%$. Importance-weighted alignment with class priors
+increases from $8\%$ to $49$--$81\%$ (best-validation checkpoint). Importance-weighted alignment with class priors
 estimated online from unlabelled target data recovers $66$--$76\%$ of the lost AUROC on the
 smartphone images, Fitzpatrick17k and SD-198 at $\lam=0.5$ without loss of in-distribution
 accuracy, but only $32$--$45\%$ at $\lam=2$, and MED-NODE stays inverted. In a
@@ -133,7 +133,8 @@ in-distribution inputs be accepted; our smartphone and clinical images fall in t
 and Section~\ref{sec:tolerance} argues that acceptance is safe only when the model also
 classifies them. Calibration degrades under shift~\cite{ovadia2019} and after domain
 adaptation~\cite{wang2020}. Closest to our observation, Wu et al.\ report Mahalanobis and
-ODIN AUROC below $0.5$ on rotated MNIST after adaptation with an MMD-based method
+ODIN AUROC below $0.5$ after adaptation, with rotated MNIST as in-distribution and rotated
+notMNIST as OOD, with an MMD-based method
 (DAN)~\cite{wu2023meta}, as a baseline in a study of continually adaptive detection. We
 show the inversion on medical images, identify label shift as its cause, and characterise
 the mechanism.
@@ -178,8 +179,8 @@ cross-entropy on $z_c$, $\mathcal{L}_{\mathrm{adv}}$ a domain cross-entropy on
 $z_\ell^{\mathrm{norm}}$ behind a gradient reversal layer, and $\mathcal{L}_{\mathrm{orth}}$
 a squared-cosine penalty between the latents. AdamW (learning rate $10^{-4}$; adversary
 $\times30$, classifier $\times0.2$), 40 epochs, domain-balanced batches. We sweep
-$\lam\in\{0,0.25,0.5,1,2,4,8\}$ with everything else fixed (seeds 42--82 at $\lam\in\{0,2\}$,
-42--46 elsewhere). A second recipe (A4: $z_\ell\in\mathbb{R}^{64}$, classifier
+$\lam\in\{0,0.25,0.5,1,2,4,8\}$ with everything else fixed (seeds $\{42,52,62,72,82\}$ at $\lam\in\{0,2\}$,
+$\{42,\ldots,46\}$ elsewhere). A second recipe (A4: $z_\ell\in\mathbb{R}^{64}$, classifier
 $\times1$, class-weighted loss) serves as a robustness check.
 
 \paragraph{Checkpoints.} We report the last checkpoint. Validation balanced accuracy (eight
@@ -187,8 +188,8 @@ classes, chance $0.125$) has a lesion-clustered bootstrap SE of $0.023$--$0.026$
 best-validation and last checkpoints differ by less than one SE, so best-validation selection
 picks early epochs by noise. Best-validation values are given for comparison.
 
-\paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.496$ (main
-recipe) and $0.520$ (A4), $0.04$--$0.08$ below a standard single-encoder ERM on the same
+\paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.481$ (main
+recipe, last checkpoint) and $0.520$ (A4), $0.04$--$0.08$ below a standard single-encoder ERM on the same
 split ($0.558\pm0.022$, five seeds) and about four times chance ($0.125$).
 Lesion-disjoint eight-class ISIC~2019 is hard; the image-level split inflates the same
 model's balanced accuracy by $0.20$~\cite{leakagepaper}.
@@ -250,8 +251,8 @@ these are views of one phenomenon.
 \centering
 \small
 \caption{The adversarial-weight sweep (main recipe, lesion-disjoint ISIC split, last
-checkpoint). Mean $\pm$ s.d.\ over five seeds per $\lam$ (42--82 at $\lam\in\{0,2\}$, 42--46
-otherwise). Leakage: linear domain probe on held-out images (chance $0.5$). ID: balanced
+checkpoint). Mean $\pm$ s.d.\ over five seeds per $\lam$ ($\{42,52,62,72,82\}$ at $\lam\in\{0,2\}$,
+$\{42,\ldots,46\}$ otherwise). Leakage: linear domain probe on held-out images (chance $0.5$). ID: balanced
 accuracy, eight classes (chance $0.125$). Mahalanobis AUROC, OOD positive; $k$: seeds whose
 interval lies below $0.5$. Best-val: the best-validation checkpoint, for comparison.}
 \label{tab:dial}
@@ -279,7 +280,7 @@ $\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k &
 floor and in-distribution balanced accuracy does not degrade --- both favourable. Over
 the same range OOD AUROC collapses through chance and inverts, and out-of-domain
 calibration error triples. A developer monitoring the first two panels would see
-nothing wrong.}
+nothing wrong. Best-validation checkpoint; Table~\ref{tab:dial} gives the last checkpoint.}
 \label{fig:dial}
 \end{figure}
 
@@ -306,6 +307,11 @@ $\lam\ge0.25$ on MED-NODE and SD-198. Clustering near-duplicate SD-198 images ($
 leaves every interval and verdict unchanged. On SCIN, whose images are mostly inflammatory
 conditions outside the ISIC label space, detection falls from $0.723$ to $0.551$ without
 inverting.
+
+\paragraph{Other splits.} On three further lesion-disjoint splits of ISIC (three seeds each),
+Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.84$ at $\lam=0$ to
+$0.39$--$0.43$ at $\lam=2$, and at least two of the three unseen clinical datasets fall below
+$0.5$ on average in every split (Appendix~\ref{app:splits}).
 
 \paragraph{A second recipe.} With a $64$-dimensional latent, unweighted cross-entropy replaced
 by a class-weighted loss and the last checkpoint (A4), detection again inverts at
@@ -380,7 +386,7 @@ condition by moving them toward nevus.
 Replacing the adversary with a multi-kernel MMD penalty~\cite{long2015} on the same model, at
 held-out leakage matched to gradient reversal ($0.506$ vs $0.502$) and with in-distribution
 accuracy within $0.04$, inverts detection on \texttt{pad\_heldout} ($0.354\pm0.022$; all five
-scores $0.34$--$0.43$), as \citet{wu2023meta} observed on rotated MNIST. On the unseen datasets it only collapses
+scores $0.34$--$0.43$), as \citet{wu2023meta} observed with rotated MNIST and notMNIST. On the unseen datasets it only collapses
 (Fitzpatrick17k $0.553$, MED-NODE $0.523$, SD-198 $0.535$). CORAL alignment at the same leakage
 leaves detection intact ($0.820$; $0.788$, $0.702$, $0.788$). Matching the full feature distribution, adversarially or by
 kernel MMD, is what misaligns classes under label shift; matching second moments is not
@@ -392,7 +398,9 @@ enough.
 \caption{Label-shift intervention: Mahalanobis AUROC (main recipe, last checkpoint) by the
 class mix the adversary sees. Shift $100\%$: ISIC's own mix; $0\%$: PAD's mix. Leakage: linear
 probe on ISIC test against all of PAD, as in earlier work. Shift $0\%$ at $\lam=2$: four seeds after excluding one degraded run (in-distribution
-balanced accuracy $0.139<0.25$); shift $50\%$: three seeds.}
+balanced accuracy $0.139<0.25$); shift $50\%$: three seeds. These runs are trained separately from the sweep with the same recipe and seeds, so shift
+$100\%$ differs from Table~\ref{tab:dial} by run-to-run variation (e.g.\ $0.368$ vs $0.381$ on
+\texttt{pad\_heldout} at $\lam=2$).}
 \label{tab:shift}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{rcccccc}
@@ -494,7 +502,7 @@ contributing invalid priors. As a diagnostic, black-box shift estimates computed
 from the truth ($0.65$--$0.76$): their assumption of unchanged class-conditional predictions
 fails across these domains, with target BCC and AK images predicted as MEL or NV. Label-free
 prior estimates thus remain about $0.5$ total variation off and recover detection only in part;
-$50$ labels bring the error to $0.10$--$0.14$ and detection to the oracle level
+$50$ labels bring the error to $0.10$--$0.14$ and detection to the oracle level.
 Conditional alignment does not help: CDAN ($0.378$ on \texttt{pad\_heldout}, $0.420$ on
 Fitzpatrick17k) and IWCDAN ($0.360$, $0.384$) stay inverted at $\lam=2$ (Appendix~\ref{app:prior}).
 
@@ -974,6 +982,32 @@ remove hospital information while preserving the classifier. \textbf{Chest radio
 NIH ChestX-ray14 and pediatric radiographs as the aligned domains, Mahalanobis AUROC on
 Shenzhen was $0.522$ before any adaptation, below our headroom requirement, so we stopped
 before training adversarial models.
+
+\section{Other lesion-disjoint splits}
+\label{app:splits}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Three further lesion-disjoint ISIC splits (main recipe, last checkpoint, three seeds
+each; mean $\pm$ s.d.). Leakage: linear probe on held-out images.}
+\label{tab:splits}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{rrcccccc}
+\toprule
+split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 \\
+\midrule
+7 & 0 & $0.443\pm0.008$ & $0.845\pm0.034$ & $0.835\pm0.013$ & $0.713\pm0.020$ & $0.491\pm0.013$ & $0.724\pm0.022$ \\
+7 & 2 & $0.440\pm0.008$ & $0.509\pm0.007$ & $0.406\pm0.017$ & $0.344\pm0.049$ & $0.245\pm0.019$ & $0.338\pm0.043$ \\
+123 & 0 & $0.449\pm0.011$ & $0.840\pm0.028$ & $0.822\pm0.017$ & $0.739\pm0.019$ & $0.569\pm0.020$ & $0.745\pm0.018$ \\
+123 & 2 & $0.452\pm0.025$ & $0.512\pm0.010$ & $0.431\pm0.033$ & $0.408\pm0.072$ & $0.324\pm0.060$ & $0.392\pm0.069$ \\
+2027 & 0 & $0.460\pm0.023$ & $0.831\pm0.039$ & $0.827\pm0.007$ & $0.715\pm0.040$ & $0.544\pm0.043$ & $0.706\pm0.045$ \\
+2027 & 2 & $0.482\pm0.007$ & $0.514\pm0.014$ & $0.393\pm0.035$ & $0.376\pm0.050$ & $0.357\pm0.012$ & $0.348\pm0.026$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Bootstrap intervals are not reported for these splits \pending{split CIs}.
 
 \section{Image-level split (lesion leakage; for reference only)}
 \label{app:imagelevel}
