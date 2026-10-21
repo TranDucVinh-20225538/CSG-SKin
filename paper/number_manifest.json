@@ -7663,6 +7663,1108 @@
     "note": "text: ID within 0.04 of GRL \u03bb=0; abs(d_ID) rounds to 0.04"
   },
   {
+    "id": "ss_pad_l0_lo",
+    "written": "0.82",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "pad_l0",
+      "min"
+    ],
+    "note": "Other splits: pad_heldout \u03bb=0 range lo"
+  },
+  {
+    "id": "ss_pad_l0_hi",
+    "written": "0.84",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "pad_l0",
+      "max"
+    ],
+    "note": "Other splits: pad_heldout \u03bb=0 range hi (text 0.84; unrounded max\u22480.835)"
+  },
+  {
+    "id": "ss_pad_l2_lo",
+    "written": "0.39",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "pad_l2",
+      "min"
+    ],
+    "note": "Other splits: pad_heldout \u03bb=2 range lo"
+  },
+  {
+    "id": "ss_pad_l2_hi",
+    "written": "0.43",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "pad_l2",
+      "max"
+    ],
+    "note": "Other splits: pad_heldout \u03bb=2 range hi"
+  },
+  {
+    "id": "ss_fitz_sd_l2_lo",
+    "written": "0.34",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "fitz_sd_l2",
+      "min"
+    ],
+    "note": "Other splits: Fitz+SD \u03bb=2 joint range lo"
+  },
+  {
+    "id": "ss_fitz_sd_l2_hi",
+    "written": "0.41",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "fitz_sd_l2",
+      "max"
+    ],
+    "note": "Other splits: Fitz+SD \u03bb=2 joint range hi"
+  },
+  {
+    "id": "ss_med_l0_lo",
+    "written": "0.49",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "med_l0",
+      "min"
+    ],
+    "note": "Other splits: MED-NODE \u03bb=0 range lo"
+  },
+  {
+    "id": "ss_med_l0_hi",
+    "written": "0.57",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "med_l0",
+      "max"
+    ],
+    "note": "Other splits: MED-NODE \u03bb=0 range hi"
+  },
+  {
+    "id": "ss_med_l2_lo",
+    "written": "0.25",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "med_l2",
+      "min"
+    ],
+    "note": "Other splits: MED-NODE \u03bb=2 range lo (text 0.25; unrounded min\u22480.245)"
+  },
+  {
+    "id": "ss_med_l2_hi",
+    "written": "0.36",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "range",
+      "med_l2",
+      "max"
+    ],
+    "note": "Other splits: MED-NODE \u03bb=2 range hi"
+  },
+  {
+    "id": "ss_tab_7_0_id",
+    "written": "0.443",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "id"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 id mean"
+  },
+  {
+    "id": "ss_tab_7_0_id_sd",
+    "written": "0.008",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "id_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_0_leak",
+    "written": "0.845",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "leak"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 leak mean"
+  },
+  {
+    "id": "ss_tab_7_0_leak_sd",
+    "written": "0.034",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_0_pad",
+    "written": "0.835",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "pad"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 pad mean"
+  },
+  {
+    "id": "ss_tab_7_0_pad_sd",
+    "written": "0.013",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_0_fitz",
+    "written": "0.713",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "fitz"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 fitz mean"
+  },
+  {
+    "id": "ss_tab_7_0_fitz_sd",
+    "written": "0.020",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_0_med",
+    "written": "0.491",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "med"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 med mean"
+  },
+  {
+    "id": "ss_tab_7_0_med_sd",
+    "written": "0.013",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "med_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_0_sd",
+    "written": "0.724",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 sd mean"
+  },
+  {
+    "id": "ss_tab_7_0_sd_sd",
+    "written": "0.022",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_0",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=0 sd sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_id",
+    "written": "0.440",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "id"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 id mean"
+  },
+  {
+    "id": "ss_tab_7_2_id_sd",
+    "written": "0.008",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "id_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_leak",
+    "written": "0.509",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "leak"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 leak mean"
+  },
+  {
+    "id": "ss_tab_7_2_leak_sd",
+    "written": "0.007",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_pad",
+    "written": "0.406",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "pad"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 pad mean"
+  },
+  {
+    "id": "ss_tab_7_2_pad_sd",
+    "written": "0.017",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_fitz",
+    "written": "0.344",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "fitz"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 fitz mean"
+  },
+  {
+    "id": "ss_tab_7_2_fitz_sd",
+    "written": "0.049",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_med",
+    "written": "0.245",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "med"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 med mean"
+  },
+  {
+    "id": "ss_tab_7_2_med_sd",
+    "written": "0.019",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "med_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_7_2_sd",
+    "written": "0.338",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 sd mean"
+  },
+  {
+    "id": "ss_tab_7_2_sd_sd",
+    "written": "0.043",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "7_2",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=7 \u03bb=2 sd sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_id",
+    "written": "0.449",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "id"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 id mean"
+  },
+  {
+    "id": "ss_tab_123_0_id_sd",
+    "written": "0.011",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "id_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_leak",
+    "written": "0.840",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "leak"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 leak mean"
+  },
+  {
+    "id": "ss_tab_123_0_leak_sd",
+    "written": "0.028",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_pad",
+    "written": "0.822",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "pad"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 pad mean"
+  },
+  {
+    "id": "ss_tab_123_0_pad_sd",
+    "written": "0.017",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_fitz",
+    "written": "0.739",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "fitz"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 fitz mean"
+  },
+  {
+    "id": "ss_tab_123_0_fitz_sd",
+    "written": "0.019",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_med",
+    "written": "0.569",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "med"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 med mean"
+  },
+  {
+    "id": "ss_tab_123_0_med_sd",
+    "written": "0.020",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "med_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_0_sd",
+    "written": "0.745",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 sd mean"
+  },
+  {
+    "id": "ss_tab_123_0_sd_sd",
+    "written": "0.018",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_0",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=0 sd sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_id",
+    "written": "0.452",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "id"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 id mean"
+  },
+  {
+    "id": "ss_tab_123_2_id_sd",
+    "written": "0.025",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "id_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_leak",
+    "written": "0.512",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "leak"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 leak mean"
+  },
+  {
+    "id": "ss_tab_123_2_leak_sd",
+    "written": "0.010",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_pad",
+    "written": "0.431",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "pad"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 pad mean"
+  },
+  {
+    "id": "ss_tab_123_2_pad_sd",
+    "written": "0.033",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_fitz",
+    "written": "0.408",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "fitz"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 fitz mean"
+  },
+  {
+    "id": "ss_tab_123_2_fitz_sd",
+    "written": "0.072",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_med",
+    "written": "0.324",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "med"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 med mean"
+  },
+  {
+    "id": "ss_tab_123_2_med_sd",
+    "written": "0.060",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "med_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_123_2_sd",
+    "written": "0.392",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 sd mean"
+  },
+  {
+    "id": "ss_tab_123_2_sd_sd",
+    "written": "0.069",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "123_2",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=123 \u03bb=2 sd sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_id",
+    "written": "0.460",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "id"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 id mean"
+  },
+  {
+    "id": "ss_tab_2027_0_id_sd",
+    "written": "0.023",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "id_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_leak",
+    "written": "0.831",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "leak"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 leak mean"
+  },
+  {
+    "id": "ss_tab_2027_0_leak_sd",
+    "written": "0.039",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_pad",
+    "written": "0.827",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "pad"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 pad mean"
+  },
+  {
+    "id": "ss_tab_2027_0_pad_sd",
+    "written": "0.007",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_fitz",
+    "written": "0.715",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "fitz"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 fitz mean"
+  },
+  {
+    "id": "ss_tab_2027_0_fitz_sd",
+    "written": "0.040",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_med",
+    "written": "0.544",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "med"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 med mean"
+  },
+  {
+    "id": "ss_tab_2027_0_med_sd",
+    "written": "0.043",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "med_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_0_sd",
+    "written": "0.706",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 sd mean"
+  },
+  {
+    "id": "ss_tab_2027_0_sd_sd",
+    "written": "0.045",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_0",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=0 sd sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_id",
+    "written": "0.482",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "id"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 id mean"
+  },
+  {
+    "id": "ss_tab_2027_2_id_sd",
+    "written": "0.007",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "id_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 id sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_leak",
+    "written": "0.514",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "leak"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 leak mean"
+  },
+  {
+    "id": "ss_tab_2027_2_leak_sd",
+    "written": "0.014",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "leak_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 leak sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_pad",
+    "written": "0.393",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "pad"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 pad mean"
+  },
+  {
+    "id": "ss_tab_2027_2_pad_sd",
+    "written": "0.035",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "pad_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 pad sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_fitz",
+    "written": "0.376",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "fitz"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 fitz mean"
+  },
+  {
+    "id": "ss_tab_2027_2_fitz_sd",
+    "written": "0.050",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "fitz_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 fitz sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_med",
+    "written": "0.357",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "med"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 med mean"
+  },
+  {
+    "id": "ss_tab_2027_2_med_sd",
+    "written": "0.012",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "med_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 med sd",
+    "optional": true
+  },
+  {
+    "id": "ss_tab_2027_2_sd",
+    "written": "0.348",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 sd mean"
+  },
+  {
+    "id": "ss_tab_2027_2_sd_sd",
+    "written": "0.026",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "split_stability",
+      "cells",
+      "2027_2",
+      "sd_sd"
+    ],
+    "note": "tab:splits split=2027 \u03bb=2 sd sd",
+    "optional": true
+  },
+  {
     "id": "img_leakage_l0",
     "written": "0.915",
     "file": "r4/r4_results.json",

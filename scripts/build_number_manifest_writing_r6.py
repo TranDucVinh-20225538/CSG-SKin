@@ -346,6 +346,30 @@ def build_store():
                 for leaf in ("mean", "sd", "ci_lo", "ci_hi"):
                     if leaf in blk:
                         put(store, ["p11", key, ood, "maha", leaf], blk[leaf])
+
+    # --- R6 split-stability (3 further ISIC folds; paperb/split-stability ba0729e) ---
+    ss_cells = RES / "r6/split_stability/cells.json"
+    if ss_cells.exists():
+        cells = load(ss_cells)
+        for ck, blk in cells.items():
+            for leaf in ("id", "leak", "pad", "fitz", "med", "sd"):
+                if blk.get(leaf) is not None:
+                    put(store, ["split_stability", "cells", ck, leaf], blk[leaf])
+                if blk.get(leaf + "_sd") is not None:
+                    put(store, ["split_stability", "cells", ck, leaf + "_sd"], blk[leaf + "_sd"])
+        for metric in ("pad", "fitz", "med", "sd"):
+            for lam in (0, 2):
+                xs = [float(cells[f"{ss}_{lam}"][metric]) for ss in (7, 123, 2027)]
+                put(store, ["split_stability", "range", f"{metric}_l{lam}", "min"], min(xs))
+                put(store, ["split_stability", "range", f"{metric}_l{lam}", "max"], max(xs))
+        # prose "(0.34--0.41)" covers Fitzpatrick17k and SD-198 at λ=2 jointly
+        joint = (
+            [float(cells[f"{ss}_2"]["fitz"]) for ss in (7, 123, 2027)]
+            + [float(cells[f"{ss}_2"]["sd"]) for ss in (7, 123, 2027)]
+        )
+        put(store, ["split_stability", "range", "fitz_sd_l2", "min"], min(joint))
+        put(store, ["split_stability", "range", "fitz_sd_l2", "max"], max(joint))
+
     STORE.parent.mkdir(parents=True, exist_ok=True)
     STORE.write_text(json.dumps(store, indent=2) + "\n")
     return store
@@ -939,6 +963,67 @@ def build_manifest(store):
     E.append(entry("p11_id_within", "0.04", store_f,
                    ["values", "p11", "mkmmd_w10_ep40", "abs_d_ID"],
                    note="text: ID within 0.04 of GRL λ=0; abs(d_ID) rounds to 0.04"))
+
+    # ========== Other splits (prose) + tab:splits ==========
+    # Range endpoints recomputed from unrounded cell means (r6/split_stability/cells.json).
+    ss_cells_f = "r6/split_stability/cells.json"
+    E.append(entry("ss_pad_l0_lo", "0.82", store_f,
+                   ["values", "split_stability", "range", "pad_l0", "min"],
+                   note="Other splits: pad_heldout λ=0 range lo"))
+    E.append(entry("ss_pad_l0_hi", "0.84", store_f,
+                   ["values", "split_stability", "range", "pad_l0", "max"],
+                   note="Other splits: pad_heldout λ=0 range hi (text 0.84; unrounded max≈0.835)"))
+    E.append(entry("ss_pad_l2_lo", "0.39", store_f,
+                   ["values", "split_stability", "range", "pad_l2", "min"],
+                   note="Other splits: pad_heldout λ=2 range lo"))
+    E.append(entry("ss_pad_l2_hi", "0.43", store_f,
+                   ["values", "split_stability", "range", "pad_l2", "max"],
+                   note="Other splits: pad_heldout λ=2 range hi"))
+    E.append(entry("ss_fitz_sd_l2_lo", "0.34", store_f,
+                   ["values", "split_stability", "range", "fitz_sd_l2", "min"],
+                   note="Other splits: Fitz+SD λ=2 joint range lo"))
+    E.append(entry("ss_fitz_sd_l2_hi", "0.41", store_f,
+                   ["values", "split_stability", "range", "fitz_sd_l2", "max"],
+                   note="Other splits: Fitz+SD λ=2 joint range hi"))
+    E.append(entry("ss_med_l0_lo", "0.49", store_f,
+                   ["values", "split_stability", "range", "med_l0", "min"],
+                   note="Other splits: MED-NODE λ=0 range lo"))
+    E.append(entry("ss_med_l0_hi", "0.57", store_f,
+                   ["values", "split_stability", "range", "med_l0", "max"],
+                   note="Other splits: MED-NODE λ=0 range hi"))
+    E.append(entry("ss_med_l2_lo", "0.25", store_f,
+                   ["values", "split_stability", "range", "med_l2", "min"],
+                   note="Other splits: MED-NODE λ=2 range lo (text 0.25; unrounded min≈0.245)"))
+    E.append(entry("ss_med_l2_hi", "0.36", store_f,
+                   ["values", "split_stability", "range", "med_l2", "max"],
+                   note="Other splits: MED-NODE λ=2 range hi"))
+
+    # tab:splits cells (table_index collapses λ=0/2 under the same split key; pin by written+store)
+    splits_tex = {
+        (7, 0): dict(id=("0.443", "0.008"), leak=("0.845", "0.034"), pad=("0.835", "0.013"),
+                     fitz=("0.713", "0.020"), med=("0.491", "0.013"), sd=("0.724", "0.022")),
+        (7, 2): dict(id=("0.440", "0.008"), leak=("0.509", "0.007"), pad=("0.406", "0.017"),
+                     fitz=("0.344", "0.049"), med=("0.245", "0.019"), sd=("0.338", "0.043")),
+        (123, 0): dict(id=("0.449", "0.011"), leak=("0.840", "0.028"), pad=("0.822", "0.017"),
+                       fitz=("0.739", "0.019"), med=("0.569", "0.020"), sd=("0.745", "0.018")),
+        (123, 2): dict(id=("0.452", "0.025"), leak=("0.512", "0.010"), pad=("0.431", "0.033"),
+                       fitz=("0.408", "0.072"), med=("0.324", "0.060"), sd=("0.392", "0.069")),
+        (2027, 0): dict(id=("0.460", "0.023"), leak=("0.831", "0.039"), pad=("0.827", "0.007"),
+                        fitz=("0.715", "0.040"), med=("0.544", "0.043"), sd=("0.706", "0.045")),
+        (2027, 2): dict(id=("0.482", "0.007"), leak=("0.514", "0.014"), pad=("0.393", "0.035"),
+                        fitz=("0.376", "0.050"), med=("0.357", "0.012"), sd=("0.348", "0.026")),
+    }
+    for (ss, lam), cols in splits_tex.items():
+        ck = f"{ss}_{lam}"
+        for leaf, (mean_w, sd_w) in cols.items():
+            E.append(entry(f"ss_tab_{ck}_{leaf}", mean_w, store_f,
+                           ["values", "split_stability", "cells", ck, leaf],
+                           note=f"tab:splits split={ss} λ={lam} {leaf} mean"))
+            # sd sits inside $\pm$; free-scan often misses the token — optional presence check
+            E.append(entry(f"ss_tab_{ck}_{leaf}_sd", sd_w, store_f,
+                           ["values", "split_stability", "cells", ck, leaf + "_sd"],
+                           note=f"tab:splits split={ss} λ={lam} {leaf} sd",
+                           optional=True))
 
     # ========== tab:imagelevel (legacy; r4_results only has λ∈{0,0.25,1,2}) ==========
     r4 = "r4/r4_results.json"
