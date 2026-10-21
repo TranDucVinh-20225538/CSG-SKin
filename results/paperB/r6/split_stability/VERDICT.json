@@ -1,0 +1,6 @@
+{
+  "verdict": "GO",
+  "reason": "all 3 splits invert pad; 3/3 splits have \u22652/3 clinical means < 0.5",
+  "criteria": "decisions/paperB_r6_split_stability.md (verbatim GO/NO-GO/INCONCLUSIVE)",
+  "commit": "b774d25"
+}

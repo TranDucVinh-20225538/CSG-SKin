@@ -21,6 +21,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import train_phase3_sweep as p3  # noqa: E402  (transformers stub)
 import r5_common as R  # noqa: E402
@@ -206,7 +208,8 @@ def load_run(ss, lam, seed):
     s["_dir"] = str(d)
     s["_tag"] = tag
     s["isic_split_seed"] = ss
-    s["degraded"] = bool(float(s["id_balanced_acc"]) < R.DEGRADED_ID_BAL)
+    # R1 rule (decisions/paperB_r6_r1.md): degraded if ID bal < 2× chance = 0.25
+    s["degraded"] = bool(float(s["id_balanced_acc"]) < 0.25)
     v1 = _heldout_v1(d, ss)
     if v1 is None:
         v1 = float(s["leakage"]["test_vs_pad_heldout"]["bal_acc_mean"])
@@ -259,7 +262,98 @@ def verdict_from_cells(cells):
         clinical_ok_splits)
 
 
+def _ood_groups(ood, n_o):
+    import pandas as pd
+    if ood == "pad_heldout":
+        return R.pad_heldout_groups()
+    if ood == "fitzpatrick17k":
+        p13 = R.R5 / "p13" / "fitz_clusters.csv"
+        if p13.exists():
+            paths = sorted(p3.FITZ_DIR.glob("*.jpg"))
+            cl = pd.read_csv(p13).set_index("md5hash")["cluster_union"]
+            return R.idx_groups([str(cl[p.stem]) for p in paths])
+        return [np.array([i]) for i in range(n_o)]
+    if ood in R.EXTRA_SETS:
+        return R.idx_groups(
+            pd.read_csv(R.P7A_SETS / "{}.csv".format(ood), keep_default_na=False).group.astype(str))
+    return [np.array([i]) for i in range(n_o)]
+
+
+def _bal_acc(y, pred, n_classes=8):
+    y = np.asarray(y, int)
+    pred = np.asarray(pred, int)
+    recalls = []
+    for c in range(n_classes):
+        m = y == c
+        if not np.any(m):
+            continue
+        recalls.append(float((pred[m] == c).mean()))
+    return float(np.mean(recalls)) if recalls else float("nan")
+
+
+def bootstrap_id_bal(per_seed_logits_labels, id_groups, rng, n_boot):
+    """per_seed: {seed: (logits, labels)}. Lesion-cluster bootstrap of balanced accuracy."""
+    gi = [id_groups[j] for j in range(len(id_groups))]
+    di = [np.concatenate([gi[j] for j in rng.integers(0, len(gi), len(gi))]) for _ in range(n_boot)]
+    draws, per = {}, {}
+    for s, (logits, labels) in per_seed_logits_labels.items():
+        pred = np.asarray(logits).argmax(1)
+        y = np.asarray(labels, int)
+        pts = np.array([_bal_acc(y[di[b]], pred[di[b]]) for b in range(n_boot)])
+        draws[s] = pts
+        lo, hi = np.quantile(pts, [0.025, 0.975])
+        point = _bal_acc(y, pred)
+        per[str(s)] = {"point": point, "ci_lo": float(lo), "ci_hi": float(hi),
+                       "ci_entirely_below_0.5": bool(hi < 0.5)}
+    pooled = np.mean(np.stack(list(draws.values())), 0)
+    lo, hi = np.quantile(pooled, [0.025, 0.975])
+    k = int(sum(p["ci_entirely_below_0.5"] for p in per.values()))
+    return {"mean": float(np.mean([p["point"] for p in per.values()])),
+            "sd": float(np.std([p["point"] for p in per.values()], ddof=1)) if len(per) > 1 else 0.0,
+            "pooled_ci": [float(lo), float(hi)], "k_below": k, "n_seeds": len(per), "per_seed": per}
+
+
+def bootstrap_cell_split(ss, runs):
+    """Per-split lesion groups for ID side (fixes n=5066 vs 5067). runs: {seed: run_dir}."""
+    import numpy as np
+    n_boot, rng_seed = R.prereg()
+    _rec, (_tr, _va, test) = T4.split_record(isic_split_seed=ss)
+    g_les, _ = T4.lesion_groups(test)
+    gid = R.idx_groups(g_les)
+    rng = np.random.default_rng(rng_seed)
+    S = {s: dict(np.load(Path(d) / "scores.npz")) for s, d in runs.items()
+         if (Path(d) / "scores.npz").exists()}
+    if not S:
+        return {}
+    # sanity: ID score length matches this split's test
+    n_id = len(next(iter(S.values()))["id__mahalanobis_classcond"])
+    assert n_id == len(test), "id scores n={} vs test n={} for split {}".format(n_id, len(test), ss)
+    out = {}
+    for ood in ("pad_heldout", "fitzpatrick17k", "mednode", "sd198"):
+        if not all("{}__mahalanobis_classcond".format(ood) in v for v in S.values()):
+            continue
+        n_o = len(next(iter(S.values()))["{}__mahalanobis_classcond".format(ood)])
+        go = _ood_groups(ood, n_o)
+        out[ood] = {
+            "mahalanobis_classcond": R.bootstrap_cell(
+                {s: (v["id__mahalanobis_classcond"], v["{}__mahalanobis_classcond".format(ood)])
+                 for s, v in S.items()},
+                gid, go, rng, n_boot)}
+    # ID bal acc from features logits
+    LL = {}
+    for s, d in runs.items():
+        te = Path(d) / "features" / "isic_test.npz"
+        if te.exists():
+            pack = np.load(te)
+            LL[s] = (pack["logits"], pack["labels"])
+    if LL:
+        out["id_bal_acc"] = bootstrap_id_bal(LL, gid, rng, n_boot)
+    return out
+
+
 def cmd_report(_a):
+    import csv
+    import numpy as np
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
     by_cell = defaultdict(list)
@@ -285,8 +379,6 @@ def cmd_report(_a):
         rows.append(row)
         by_cell[(ss, lam)].append(row)
 
-    # CSV
-    import csv
     keys = ["isic_split_seed", "lambda", "seed", "tag", "status", "id_bal_acc", "leakage_heldout",
             "maha_pad_heldout", "maha_fitz", "maha_mednode", "maha_sd198", "degraded", "gpu_hours",
             "leakage_heldout_source"]
@@ -296,15 +388,16 @@ def cmd_report(_a):
         for r in rows:
             w.writerow(r)
 
-    # aggregates + bootstrap (Mahalanobis only on pad/fitz/med/sd)
     cells_agg = {}
-    boot_groups = {}
+    boot_out = {}
     for ss in SPLIT_SEEDS_NEW:
         for lam in LAMBDAS:
             rs = [r for r in by_cell[(ss, lam)] if not r.get("degraded") and r.get("status") != "MISSING"]
             all_rs = [r for r in by_cell[(ss, lam)] if r.get("status") != "MISSING"]
-            def col(name):
-                return [r[name] for r in rs if r.get(name) is not None]
+
+            def col(name, _rs=rs):
+                return [r[name] for r in _rs if r.get(name) is not None]
+
             agg = {
                 "n_ok": len(rs), "n_all": len(all_rs),
                 "degraded_seeds": [r["seed"] for r in all_rs if r.get("degraded")],
@@ -316,35 +409,43 @@ def cmd_report(_a):
                 agg[name + "_sd"] = sd
                 agg[name + "_n"] = n
             cells_agg[(ss, lam)] = agg
-            # bootstrap dirs
-            dirs = {}
-            for r in rs:
-                dirs[int(r["seed"])] = str(RUNS / r["tag"])
+            dirs = {int(r["seed"]): str(RUNS / r["tag"]) for r in rs}
+            key = "ss{}_l{}".format(ss, R.lam_tag(lam))
             if dirs:
-                boot_groups["ss{}_l{}".format(ss, R.lam_tag(lam))] = dirs
+                blk = bootstrap_cell_split(ss, dirs)
+                # serialise
+                ser = {}
+                for ood, dets in blk.items():
+                    if ood == "id_bal_acc":
+                        m = dets
+                        ser[ood] = {k: m[k] for k in ("mean", "sd", "pooled_ci", "k_below", "n_seeds")}
+                    else:
+                        ser[ood] = {}
+                        for d, m in dets.items():
+                            ser[ood][d] = {k: m[k] for k in ("mean", "sd", "pooled_ci", "k_below", "n_seeds", "rule")}
+                boot_out[key] = ser
+                # attach CI into cells_agg for LaTeX
+                if "pad_heldout" in ser:
+                    m = ser["pad_heldout"]["mahalanobis_classcond"]
+                    agg["pad_ci"] = m["pooled_ci"]
+                    agg["pad_k"] = m["k_below"]
+                if "fitzpatrick17k" in ser:
+                    m = ser["fitzpatrick17k"]["mahalanobis_classcond"]
+                    agg["fitz_ci"] = m["pooled_ci"]
+                    agg["fitz_k"] = m["k_below"]
+                if "mednode" in ser:
+                    m = ser["mednode"]["mahalanobis_classcond"]
+                    agg["med_ci"] = m["pooled_ci"]
+                    agg["med_k"] = m["k_below"]
+                if "sd198" in ser:
+                    m = ser["sd198"]["mahalanobis_classcond"]
+                    agg["sd_ci"] = m["pooled_ci"]
+                    agg["sd_k"] = m["k_below"]
+                if "id_bal_acc" in ser:
+                    m = ser["id_bal_acc"]
+                    agg["id_ci"] = m["pooled_ci"]
+                    agg["id_k"] = m["k_below"]
 
-    B = {}
-    if boot_groups:
-        try:
-            B = R.isic_bootstrap(boot_groups, ood_sets=("pad_heldout", "fitzpatrick17k", "mednode", "sd198"),
-                                 dets=("mahalanobis_classcond",))
-        except Exception as e:
-            B = {"error": str(e)}
-
-    # serialise bootstrap
-    boot_out = {}
-    for k, blk in (B.items() if isinstance(B, dict) and "error" not in B else []):
-        boot_out[k] = {}
-        for ood, dets in blk.items():
-            boot_out[k][ood] = {}
-            for d, m in dets.items():
-                boot_out[k][ood][d] = {
-                    "mean": m["mean"], "sd": m["sd"],
-                    "pooled_ci": m["pooled_ci"], "k_below": m["k_below"],
-                    "n_seeds": m["n_seeds"], "rule": m["rule"],
-                }
-    if isinstance(B, dict) and "error" in B:
-        boot_out = B
     (OUT / "BOOTSTRAP.json").write_text(json.dumps(boot_out, indent=2) + "\n")
 
     cells_for_verdict = {}
@@ -400,30 +501,56 @@ def cmd_report(_a):
             L.append("| {} | {:g} | {} | {} | {} | {} | {} | {} | {} |".format(
                 ss, lam, a["n_ok"], fmt("id"), fmt("leak"), fmt("pad"), fmt("fitz"), fmt("med"), fmt("sd")))
 
-    L += ["", "## Bootstrap (Mahalanobis, PREREGISTER_BOOTSTRAP.json)", ""]
-    if "error" in boot_out:
-        L.append("Bootstrap failed: `{}`".format(boot_out["error"]))
-    else:
-        L.append("| cell | ood | mean ± sd | pooled CI | k_below | rule |")
-        L.append("|---|---|---|---|---:|---|")
-        for k in sorted(boot_out):
-            for ood in ("pad_heldout", "fitzpatrick17k", "mednode", "sd198"):
-                if ood not in boot_out[k]:
-                    continue
-                m = boot_out[k][ood]["mahalanobis_classcond"]
-                L.append("| {} | {} | {:.3f} ± {:.3f} | [{:.3f}, {:.3f}] | {}/{} | {} |".format(
-                    k, ood, m["mean"], m["sd"], m["pooled_ci"][0], m["pooled_ci"][1],
-                    m["k_below"], m["n_seeds"], m["rule"]))
+    L += ["", "## Bootstrap (per-split ID lesion groups; PREREGISTER_BOOTSTRAP.json)", "",
+          "ID side rebuilt from each `isic_split_seed` test fold (not the seed-42 table). "
+          "pad_heldout by patient; Fitzpatrick17k by P13 `cluster_union`; MED-NODE/SD-198 by `group` column; "
+          "ID bal acc by lesion.", "",
+          "| cell | metric | mean ± sd | pooled CI | k_below |",
+          "|---|---|---|---|---:|"]
+    for k in sorted(boot_out):
+        blk = boot_out[k]
+        if "id_bal_acc" in blk:
+            m = blk["id_bal_acc"]
+            L.append("| {} | ID bal | {:.3f} ± {:.3f} | [{:.3f}, {:.3f}] | {}/{} |".format(
+                k, m["mean"], m["sd"], m["pooled_ci"][0], m["pooled_ci"][1], m["k_below"], m["n_seeds"]))
+        for ood, lab in (("pad_heldout", "Maha pad"), ("fitzpatrick17k", "Maha Fitz"),
+                         ("mednode", "Maha MED"), ("sd198", "Maha SD-198")):
+            if ood not in blk:
+                continue
+            m = blk[ood]["mahalanobis_classcond"]
+            L.append("| {} | {} | {:.3f} ± {:.3f} | [{:.3f}, {:.3f}] | {}/{} |".format(
+                k, lab, m["mean"], m["sd"], m["pooled_ci"][0], m["pooled_ci"][1],
+                m["k_below"], m["n_seeds"]))
 
-    L += ["", "## Criteria (pre-registered, unchanged)", "",
+    tex_rows = [
+        "% tab:splits rows with pooled 95\\% CI (PREREGISTER_BOOTSTRAP; per-split lesion groups).",
+        "% Columns: split, lam, ID, ID[lo,hi], leak, pad, pad[lo,hi], Fitz, Fitz[lo,hi], MED, MED[lo,hi], SD, SD[lo,hi]",
+    ]
+    for ss in SPLIT_SEEDS_NEW:
+        for lam in LAMBDAS:
+            a = cells_agg[(ss, lam)]
+
+            def msd(name):
+                return "{:.3f}\\,$\pm$\\,{:.3f}".format(a[name], a[name + "_sd"] or 0.0)
+
+            def cij(prefix):
+                c = a.get(prefix + "_ci")
+                return "[{:.3f}, {:.3f}]".format(c[0], c[1]) if c else "--"
+
+            tex_rows.append(
+                "{ss} & {lam:g} & ${id}$ & ${idci}$ & ${lk}$ & ${pad}$ & ${padci}$ & ${fz}$ & ${fzci}$ "
+                "& ${md}$ & ${mdci}$ & ${sd}$ & ${sdci}$ \\\\".format(
+                    ss=ss, lam=lam, id=msd("id"), idci=cij("id"), lk=msd("leak"),
+                    pad=msd("pad"), padci=cij("pad"), fz=msd("fitz"), fzci=cij("fitz"),
+                    md=msd("med"), mdci=cij("med"), sd=msd("sd"), sdci=cij("sd")))
+    (OUT / "LATEX_SPLITS_WITH_CI.tex").write_text("\n".join(tex_rows) + "\n")
+
+    L += ["", "## LaTeX (`LATEX_SPLITS_WITH_CI.tex`)", "", "```latex"] + tex_rows + ["```", "",
+          "## Criteria (pre-registered, unchanged)", "",
           "- **GO:** ở cả 3 split, AUROC Mahalanobis trên pad_heldout tại λ=2 có mean < 0.5 VÀ thấp hơn λ=0 cùng split; "
           "và ở ≥ 2/3 split, ít nhất 2/3 tập lâm sàng (Fitz, MED-NODE, SD-198) có mean < 0.5.",
           "- **NO-GO:** có ≥ 1 split mà pad_heldout λ=2 có mean ≥ 0.5.",
           "- **Còn lại: INCONCLUSIVE.**",
-          "",
-          "## Deviations",
-          "",
-          "_(none)_",
           ""]
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     (OUT / "cells.json").write_text(json.dumps(
@@ -431,6 +558,8 @@ def cmd_report(_a):
         indent=2) + "\n")
     print("verdict", verdict, reason)
     print("wrote", OUT / "REPORT.md")
+    print("wrote", OUT / "LATEX_SPLITS_WITH_CI.tex")
+    print("wrote", OUT / "BOOTSTRAP.json")
 
 
 def main():
