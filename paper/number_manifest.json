@@ -1460,38 +1460,35 @@
   {
     "id": "abs_mednode_l2",
     "written": "0.288",
-    "file": "r5/p7a/mednode.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "mednode|2|group(=image)",
       "mean"
     ],
-    "note": "p7a Table-1 scoring; abstract/tab:unseen may disagree"
+    "note": "last.ckpt Table 1 runs; r5/t1last/UNSEEN_ECE_REPORT.md (d3250a1)"
   },
   {
     "id": "abs_sd198_l2",
     "written": "0.376",
-    "file": "r5/p7a/sd198.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "sd198|2|cluster_union",
       "mean"
     ],
-    "note": "p7a Table-1 scoring; abstract/tab:unseen may disagree"
+    "note": "last.ckpt Table 1 runs; r5/t1last/UNSEEN_ECE_REPORT.md (d3250a1)"
   },
   {
     "id": "abs_scin_l2",
     "written": "0.551",
-    "file": "r5/p7a/scin.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "scin|2|case",
       "mean"
     ],
-    "note": "p7a Table-1 scoring; abstract/tab:unseen may disagree"
+    "note": "last.ckpt Table 1 runs; r5/t1last/UNSEEN_ECE_REPORT.md (d3250a1)"
   },
   {
     "id": "unseen_main_pad_l0",
@@ -1654,11 +1651,10 @@
   {
     "id": "unseen_main_med_l2",
     "written": "0.288",
-    "file": "r5/p7a/mednode.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "mednode|2|group(=image)",
       "mean"
     ]
   },
@@ -1677,11 +1673,10 @@
   {
     "id": "unseen_main_sd_l2",
     "written": "0.376",
-    "file": "r5/p7a/sd198.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "sd198|2|cluster_union",
       "mean"
     ]
   },
@@ -1700,11 +1695,10 @@
   {
     "id": "unseen_main_scin_l2",
     "written": "0.551",
-    "file": "r5/p7a/scin.json",
+    "file": "r5/t1last/UNSEEN_ECE.json",
     "key": [
-      "lambda",
-      "2",
-      "mahalanobis_classcond",
+      "bootstrap",
+      "scin|2|case",
       "mean"
     ]
   },
@@ -2646,7 +2640,7 @@
   },
   {
     "id": "shift_l0.5_s0pct_leak",
-    "written": "0.790",
+    "written": "0.783",
     "file": "r6/writing_r6_number_store.json",
     "key": [
       "values",

@@ -435,16 +435,20 @@ def build_manifest(store):
     E.append(entry("competence_erm_sd", "0.022", erm,
                    ["last_ckpt_test_bal_acc", "sd"]))
 
-    # Unseen MED/SD/SCIN: λ=0 matches R1; λ=2 in abstract/tab:unseen is closest to p7a
-    # (Table-1 runs) for SD/SCIN but matches neither R1 nor p7a for MED — pin and report.
+    # Unseen MED/SD/SCIN: λ=0 matches R1; λ=2 abstract/tab:unseen = last.ckpt (t1last UNSEEN_ECE).
+    unseen_ece = "r5/t1last/UNSEEN_ECE.json"
     for name, written0 in [("mednode", "0.559"), ("sd198", "0.708"), ("scin", "0.723")]:
         E.append(entry(f"abs_{name}_l0", written0, store_f,
                        ["values", "r1", "lam0_shift100", name, "mean"],
                        note="R1 λ=0 baseline; matches tab:unseen/shiftfull"))
-    for name, written2 in [("mednode", "0.288"), ("sd198", "0.376"), ("scin", "0.551")]:
-        E.append(entry(f"abs_{name}_l2", written2, f"r5/p7a/{name}.json",
-                       ["lambda", "2", "mahalanobis_classcond", "mean"],
-                       note="p7a Table-1 scoring; abstract/tab:unseen may disagree"))
+    # Units matching tab:unseen CIs: MED group(=image), SD cluster_union, SCIN case.
+    for eid, written, boot_key in [
+        ("abs_mednode_l2", "0.288", "mednode|2|group(=image)"),
+        ("abs_sd198_l2", "0.376", "sd198|2|cluster_union"),
+        ("abs_scin_l2", "0.551", "scin|2|case"),
+    ]:
+        E.append(entry(eid, written, unseen_ece, ["bootstrap", boot_key, "mean"],
+                       note="last.ckpt Table 1 runs; r5/t1last/UNSEEN_ECE_REPORT.md (d3250a1)"))
 
     # ========== tab:unseen (no cell pins: duplicate 'main'/'A4' row keys) ==========
     for eid, written, file, key in [
@@ -463,14 +467,11 @@ def build_manifest(store):
         ("unseen_a4_fitz_l0", "0.821", store_f, ["values", "p8", "a4_l0", "fitzpatrick17k", "mean"]),
         ("unseen_a4_fitz_l2", "0.458", store_f, ["values", "p8", "a4_l2", "fitzpatrick17k", "mean"]),
         ("unseen_main_med_l0", "0.559", store_f, ["values", "r1", "lam0_shift100", "mednode", "mean"]),
-        ("unseen_main_med_l2", "0.288", "r5/p7a/mednode.json",
-         ["lambda", "2", "mahalanobis_classcond", "mean"]),
+        ("unseen_main_med_l2", "0.288", unseen_ece, ["bootstrap", "mednode|2|group(=image)", "mean"]),
         ("unseen_main_sd_l0", "0.708", store_f, ["values", "r1", "lam0_shift100", "sd198", "mean"]),
-        ("unseen_main_sd_l2", "0.376", "r5/p7a/sd198.json",
-         ["lambda", "2", "mahalanobis_classcond", "mean"]),
+        ("unseen_main_sd_l2", "0.376", unseen_ece, ["bootstrap", "sd198|2|cluster_union", "mean"]),
         ("unseen_main_scin_l0", "0.723", store_f, ["values", "r1", "lam0_shift100", "scin", "mean"]),
-        ("unseen_main_scin_l2", "0.551", "r5/p7a/scin.json",
-         ["lambda", "2", "mahalanobis_classcond", "mean"]),
+        ("unseen_main_scin_l2", "0.551", unseen_ece, ["bootstrap", "scin|2|case", "mean"]),
     ]:
         E.append(entry(eid, written, file, key))
 
@@ -549,7 +550,7 @@ def build_manifest(store):
         tag = f"shift_l{lam}_s{shift.replace('%','pct').replace('--','na')}"
         # Written leakages from tab:shift (may disagree with seed-mean bal_acc_mean).
         leak_written = {
-            ("0", "--"): "0.928", ("0.5", "0%"): "0.790", ("0.5", "50%"): "0.629",
+            ("0", "--"): "0.928", ("0.5", "0%"): "0.783", ("0.5", "50%"): "0.629",
             ("0.5", "100%"): "0.628", ("2", "0%"): "0.791", ("2", "50%"): "0.658",
             ("2", "100%"): "0.634",
         }[(lam, shift)]
