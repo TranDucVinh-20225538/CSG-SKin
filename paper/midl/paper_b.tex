@@ -41,7 +41,7 @@ $0.381$ ($95\%$ CI $[0.358, 0.404]$) on held-out smartphone images, which then l
 in-distribution than the model's own test images. The same happens on three clinical datasets that were not used in
 training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
 accuracy (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and calibration do not change. Our
-interventions point to label shift between the two domains as the cause. When we change only the class
+interventions point to label shift between the two domains as the main cause in this setting. When we change only the class
 mix that the adversary sees, AUROC on the unseen datasets changes by $0.24$--$0.37$, and the
 effect remains when domain leakage is held fixed. Multi-kernel MMD alignment at the same
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
@@ -84,7 +84,7 @@ supposed to reduce, goes down. In the same models, melanomas from unseen clinics
 predicted as benign nevus with confidence above $0.9$ up to ten times more often than
 without adaptation, and the monitor does not flag them.
 
-The cause is label shift. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
+In our setting, the main cause is label shift. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
 second domain are $12.3\%$ nevus. When two domains have different class priors, matching
 their marginal feature distributions forces the model to misplace the classes of one
 domain~\cite{zhao2019invariant,tachet2020domain}. We test what this does to OOD monitoring by
@@ -135,7 +135,7 @@ classifies them. Calibration degrades under shift~\cite{ovadia2019} and after do
 adaptation~\cite{wang2020}. Closest to our observation, Wu et al.\ report Mahalanobis and
 ODIN AUROC below $0.5$ on rotated MNIST (rotated NOTMNIST as OOD) after adaptation with an MMD-based method
 (DAN)~\cite{wu2023meta}, as a baseline in a study of continually adaptive detection. We
-show the inversion on medical images, identify label shift as its cause, and characterise
+show the inversion on medical images, identify label shift as its main cause in this setting, and characterise
 the mechanism.
 
 \section{Materials and methods}
@@ -339,7 +339,7 @@ A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
 \end{tabular}}
 \end{table}
 
-\subsection{Label shift between the aligned domains causes the inversion}
+\subsection{Label shift between the aligned domains drives the inversion in this setting}
 \label{sec:site}
 
 \paragraph{Intervention.} Changing only the class mix of the ISIC images the adversary sees
@@ -595,7 +595,7 @@ criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k ima
 \section{Conclusion}
 We showed that domain-adversarial training can make an OOD monitor rank images from unseen
 clinics as more in-distribution than the model's own test images, while in-distribution
-accuracy does not change. In our experiments this is caused by label shift between the
+accuracy does not change. In our experiments (one dermatology task, one main architecture), this is driven mainly by label shift between the
 domains that the adversary aligns. The adversary moves unfamiliar images toward the majority
 class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
 on unseen sources after adaptation, measuring leakage within class and correcting for class
