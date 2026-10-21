@@ -43,7 +43,8 @@ training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-di
 accuracy (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and calibration do not change. Our
 interventions point to label shift between the two domains as the cause. When we change only the class
 mix that the adversary sees, AUROC on the unseen datasets changes by $0.24$--$0.37$, and the
-effect remains when domain leakage is held fixed. DANN moves unfamiliar images toward the
+effect remains when domain leakage is held fixed. Multi-kernel MMD alignment at the same
+leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
@@ -373,6 +374,16 @@ and no class-matched AUROC differs from $0.5$ (post hoc). In the main setting th
 are \emph{less} nevus-heavy than ISIC, so detection works at $\lam=0$; DANN creates the
 condition by moving them toward nevus.
 
+\paragraph{Other alignment objectives.} The inversion is not specific to gradient reversal.
+Replacing the adversary with a multi-kernel MMD penalty~\cite{long2015} on the same model, at
+held-out leakage matched to gradient reversal ($0.506$ vs $0.502$) and with in-distribution
+accuracy within $0.04$, inverts detection on \texttt{pad\_heldout} ($0.354\pm0.022$; all five
+scores $0.34$--$0.43$), as \citet{wu2023meta} observed on rotated MNIST. On Fitzpatrick17k it
+only collapses ($0.553$). CORAL alignment at the same leakage leaves detection intact
+($0.820$; Fitzpatrick17k $0.788$). Matching the full feature distribution, adversarially or by
+kernel MMD, is what misaligns classes under label shift; matching second moments is not
+enough.
+
 \begin{table}[t]
 \centering
 \small
@@ -554,7 +565,9 @@ they differ, which in our case required a small labelled sample from the target 
 \section{Limitations}
 \label{sec:limitations}
 
-\textbf{Scope.} The inversion is shown in dermatology only. We attempted two other
+\textbf{Scope.} The inversion is shown in dermatology only, and its spread to unseen domains
+is shown for gradient reversal; multi-kernel MMD inverts detection on the target domain but
+only collapses it on Fitzpatrick17k. We attempted two other
 modalities and neither experiment took place: on Camelyon17 no adversarial setting we tried
 removed hospital information while preserving the classifier, and on chest radiographs the
 detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
@@ -665,7 +678,8 @@ GroupDRO & 1 & 0.860 [0.843, 0.875] & 0.941 [0.930, 0.949] & 0.842 [0.828, 0.856
 
 MMD at weight $10{,}000$ reaches leakage $0.836$ only by reducing in-distribution balanced
 accuracy to $0.337$, so it never reaches the invariance gradient reversal attains with the
-classifier intact \pending{P11: MMD/MK-MMD at matched invariance}. IRM's low MSP and energy
+classifier intact. On the dual-encoder model at matched held-out leakage, multi-kernel MMD
+does invert detection on \texttt{pad\_heldout} (Section~\ref{sec:site}). IRM's low MSP and energy
 values reflect a classifier that has collapsed (balanced accuracy $0.167$ at weight $100$),
 not an inversion of the feature scores.
 
