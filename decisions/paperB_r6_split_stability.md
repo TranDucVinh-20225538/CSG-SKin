@@ -137,4 +137,9 @@ CPU: split hashes + report bootstrap ≈ 1–2 CPU-h. No GPU in Step 1.
 
 ## Deviations
 
-_(none yet)_
+- **2026-10-22 01:06 (UTC+7).** Slurm report job `69433` (`paperB-ss-rep`, after array `69432`) failed in
+  `load_run` with `AttributeError: module 'r5_common' has no attribute 'DEGRADED_ID_BAL'`. The degraded threshold is
+  the R1 rule (ID bal acc &lt; 0.25 = 2× chance); it lives on `r6_common`, not `r5_common`. **Change:**
+  `scripts/r6_split_stability.py` now compares against the literal `0.25` (same threshold; no criterion change).
+  `REPORT.md` / `VERDICT.json` / `summary.csv` / `cells.json` were regenerated locally on the login node from the
+  completed 18 runs (verdict **GO**). No GPU re-run; no edit to GO/NO-GO thresholds, splits, λ grid, or train seeds.
