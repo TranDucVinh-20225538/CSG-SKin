@@ -40,20 +40,21 @@ second domain. With gradient reversal, Mahalanobis OOD detection drops from AURO
 $0.381$ ($95\%$ CI $[0.358, 0.404]$) on held-out smartphone images, which then look more
 in-distribution than the model's own test images. The same happens on three clinical datasets that were not used in
 training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
-accuracy (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and calibration do not change. Our
-interventions point to label shift between the two domains as the main cause in this setting. When we change only the class
-mix that the adversary sees, AUROC on the unseen datasets changes by $0.24$--$0.37$, and the
-effect remains when domain leakage is held fixed. Multi-kernel MMD alignment at the same
+accuracy changes little (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and in-distribution
+ECE stays at $0.20$--$0.21$. Our
+interventions point to label shift between the two domains as the main driver in this setting. When we change only the class
+mix that the adversary sees, AUROC on the external datasets changes by $0.24$--$0.37$, and the
+association remains after adjusting for measured domain leakage. Multi-kernel MMD alignment at similar
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
 increases from $8\%$ to $49$--$81\%$ (best-validation checkpoint). Importance-weighted alignment with class priors
-estimated online from unlabelled target data recovers $66$--$76\%$ of the lost AUROC on the
+estimated online from unlabelled target data recovers $66$--$76\%$ of the AUROC lost in this setting on the
 smartphone images, Fitzpatrick17k and SD-198 at $\lam=0.5$ without loss of in-distribution
 accuracy, but only $32$--$45\%$ at $\lam=2$, and MED-NODE stays inverted. In a
-post hoc analysis, priors from $50$ labelled target images bring detection on the unseen
-datasets back to its level before adaptation, but in-distribution balanced accuracy drops from
+post hoc analysis, with priors from $50$ labelled target images the point estimates on the
+external datasets approach those obtained with the true priors, but in-distribution balanced accuracy drops from
 $0.48$ to $0.39$. We recommend checking OOD detection again after domain adaptation and
 measuring domain leakage within class.
 \end{abstract}
@@ -76,16 +77,16 @@ from the training data so that a clinician can review them. We study how invaria
 training affects this monitor.
 
 We find that it can invert the monitor. When the adversarial weight increases, OOD detection does
-not just get worse but falls below chance, so images from clinics the model has never seen
+not just get worse but falls below chance, so held-out images from the aligned domain and images from external sources
 get scores that look more in-distribution than the model's own test images. Standard
-evaluation does not show this. In-distribution accuracy and calibration stay about
-the same, and the domain-leakage probe, which the method is
-supposed to reduce, goes down. In the same models, melanomas from unseen clinics are
+evaluation does not show this. In-distribution accuracy and calibration change little, and the domain-leakage probe, which the method is
+supposed to reduce, goes down. In the same models, melanomas from external sources are
 predicted as benign nevus with confidence above $0.9$ up to ten times more often than
 without adaptation; the monitor accepts almost all of these images with or without
-adaptation, so the added harm comes from the classifier, not from the monitor.
+adaptation, so the increased risk of a missed malignant case comes from the classifier, not
+from the monitor.
 
-In our setting, the main cause is label shift. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
+In our experiments, label shift between the aligned domains is the main driver. ISIC~2019 is $50.8\%$ nevus while the smartphone images used as the
 second domain are $12.3\%$ nevus. When two domains have different class priors, matching
 their marginal feature distributions forces the model to misplace the classes of one
 domain~\cite{zhao2019invariant,tachet2020domain}. We test what this does to OOD monitoring by
@@ -96,19 +97,19 @@ end up in feature space.
 \begin{enumerate}
 \item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
 held-out smartphone images and on three clinical datasets that were not used in training.
-In-distribution accuracy and calibration do not change. This holds for two training
+In-distribution accuracy and calibration change little. This holds for two training
 recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split.
 \item When the class mix seen by the adversary is set to that of the target domain, the
-inversion on unseen domains disappears (AUROC difference $0.24$--$0.37$). A regression at
-matched domain leakage shows that the effect comes from label shift and not only from
-deeper invariance.
+inversion on external domains disappears (AUROC difference $0.24$--$0.37$). In a regression
+that adjusts for measured domain leakage, the label-shift effect remains, so it is not only a
+matter of deeper invariance.
 \item DANN moves images that differ from the source along the domain direction toward the
 majority class. Under label shift, an unweighted domain probe gives chance-level leakage
 even though a within-class probe can still read the domain, so we recommend measuring
 leakage within class.
 \item Importance weighting with label-free prior estimates recovers most of the lost AUROC at
-$\lam=0.5$ without loss of in-distribution accuracy, less at $\lam=2$, and not on MED-NODE. In a post hoc analysis, priors from $50$ labelled target images bring detection
-back to the oracle level, but in-distribution accuracy drops.
+$\lam=0.5$ without loss of in-distribution accuracy, less at $\lam=2$, and not on MED-NODE. In a post hoc analysis, priors from $50$ labelled target images give point estimates close to
+those with the true priors, but in-distribution accuracy drops.
 \end{enumerate}
 \section{Related work}
 
@@ -137,7 +138,7 @@ adaptation~\cite{wang2020}. Closest to our observation, Wu et al.\ report Mahala
 ODIN AUROC below $0.5$ after adaptation, with rotated MNIST as in-distribution and rotated
 notMNIST as OOD, with an MMD-based method
 (DAN)~\cite{wu2023meta}, as a baseline in a study of continually adaptive detection. We
-show the inversion on medical images, identify label shift as its main cause in this setting, and characterise
+show the inversion on medical images, show that label shift drives it in our setting, and characterise
 the mechanism.
 
 \section{Materials and methods}
@@ -429,9 +430,11 @@ the share of \texttt{pad\_heldout} images whose nearest class centroid is nevus 
 $0.28$ to $0.63$, and to $0.75$--$0.85$ on the unseen sets; without label shift it stays at
 $0.12$ and $0.39$--$0.49$. Images of non-nevus classes are pulled into the nevus region:
 split by true class, non-nevus OOD images fall to AUROC $0.42$ (main recipe) and $0.47$ (A4),
-whereas images still nearest a non-nevus centroid stay at $0.62$ and $0.64$. Because pooled
-AUROC is the class-share-weighted mean of per-class AUROCs, and nevus is half the ISIC test
-set, this displacement is enough to push the pooled score below chance.
+whereas images still nearest a non-nevus centroid stay at $0.62$ and $0.64$. Let $\mathrm{AUROC}_c$ compare all OOD images with the ID test images of
+class $c$. Because AUROC averages over ID samples, the pooled AUROC equals
+$\sum_c \pi_c\,\mathrm{AUROC}_c$, with $\pi_c$ the share of class $c$ in the ID test set (verified
+numerically to $10^{-15}$). Nevus is half of the ISIC test set, so OOD images placed in the nevus
+region are enough to push the pooled score below chance.
 
 \paragraph{The displacement follows the domain direction.} For each OOD image we measured
 how far it lies along the direction separating ISIC from PAD in the $\lam=0$ model, and how
@@ -457,7 +460,7 @@ DANN matches the marginal distributions by misaligning classes, as the theory of
 \citet{zhao2019invariant} implies; leakage should therefore be measured within class
 (post hoc).
 
-\subsection{Clinical consequence and mitigation}
+\subsection{Safety-relevant misclassification and mitigation}
 \label{sec:confidently}
 \label{sec:adversarial}
 
@@ -470,9 +473,13 @@ $[75.8, 86.5]$ on SD-198 ($n=113$) between $\lam=0$ and $\lam=2$ (best-validatio
 Appendix~\ref{app:clinical}); BCC, SCC and AK follow the same pattern ($46$--$83\%$ at
 $\lam=2$). Removing the label shift seen by the adversary (shift $0\%$) lowers the melanoma
 share at $\lam=2$ from $53.0\%$ to $21.4\%$ on Fitzpatrick17k and from $83.2\%$ to $33.8\%$
-on SD-198 (retrained runs of Table~\ref{tab:shift}, last checkpoint).
+on SD-198 (retrained runs of Table~\ref{tab:shift}, last checkpoint). The table uses the sweep's
+best-validation checkpoint because it was computed before we moved to the last checkpoint; at
+the last checkpoint the A4 recipe shows the same pattern ($7.7\%\to39.8\%$ on Fitzpatrick17k,
+$10.3\%\to63.7\%$ on SD-198) \pending{main recipe at the last checkpoint}.
 
-\paragraph{No fix at scoring time.} Reversing the sign of the score is not a remedy: at
+\paragraph{No reliable scoring-side fix among the variants tested.} Reversing the sign of the
+score is not a remedy: at
 $\lam\ge0.5$ it reaches only $0.55$--$0.63$ on \texttt{pad\_heldout} and Fitzpatrick17k with a
 false-positive rate of $0.84$--$0.98$ at $95\%$ true-positive rate across datasets, and at $\lam=0$ it would
 turn $0.808$ into $0.192$. Relative Mahalanobis~\cite{ren2021relative} and per-class
@@ -534,12 +541,13 @@ IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 
 \paragraph{Accepting shifted inputs.}\label{sec:tolerance}
 Full-spectrum OOD detection argues that covariate-shifted inputs should be
-accepted~\cite{yang2023}. After DANN, our models accept images from unseen clinics more
+accepted~\cite{yang2023}. After DANN, our models accept images from external sources more
 readily than their own test images, but their zero-shot balanced accuracy on these images
-is only $0.244$ at $\lam=2$ (chance $0.167$). If the goal were
-tolerance, the AUROC should be close to $0.5$. Values well below $0.5$ mean that the
-monitor ranks the shifted images as more typical than real in-distribution data, which is
-not useful for deployment. We think claims of tolerance to covariate shift should be
+is only $0.244$ at $\lam=2$ (chance $0.167$). AUROC below $0.5$ means that the ranking is
+reversed: the monitor scores the shifted images as more typical than real in-distribution
+data. Whether a monitor tolerates shifted inputs is a separate question, answered by the
+acceptance rate at the deployed threshold ($0.94$--$1.00$ here, Appendix~\ref{app:clinical})
+together with the accuracy on the same images. We think claims of tolerance to covariate shift should be
 reported together with the accuracy on the same inputs.
 
 \paragraph{Why label shift matters.}
@@ -565,8 +573,8 @@ training was stopped early.
 Reversing the score only helps if one already knows that the model is inverted. At $\lam=0$
 it would break a working monitor, and at $\lam\ge0.5$ most OOD images are still accepted at a
 $95\%$ ID-acceptance threshold. Relative Mahalanobis, which is less sensitive to class
-structure, also stays below chance. In our experiments the problem had to be addressed during
-training, through the class priors used by the adversary.
+structure, also stays below chance. Among the variants we tried, only changes during training,
+through the class priors used by the adversary, improved detection.
 
 \paragraph{Recommendations.}
 After a domain-alignment step, we recommend that practitioners (i) check OOD detection again on images from
@@ -605,14 +613,14 @@ remedy is a post hoc analysis, costs in-distribution accuracy, and did not meet 
 criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images.
 
 \section{Conclusion}
-We showed that domain-adversarial training can make an OOD monitor rank images from unseen
-clinics as more in-distribution than the model's own test images, while in-distribution
-accuracy does not change. In our experiments (one dermatology task, one main architecture), this is driven mainly by label shift between the
+We showed that domain-adversarial training can make an OOD monitor rank held-out images from the aligned domain and from external sources as more
+in-distribution than the model's own test images, while in-distribution accuracy changes
+little. In our experiments (one dermatology task, one main architecture), this is driven mainly by label shift between the
 domains that the adversary aligns. The adversary moves unfamiliar images toward the majority
 class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
 on unseen sources after adaptation, measuring leakage within class and correcting for class
 priors are cheap steps. With a small labelled sample from the target domain, the last of
-these also reduced the problem in our setting.
+these also reduced the problem in a post hoc analysis.
 
 \section*{Use of AI tools}
 \pending{Check the MIDL 2027 policy on AI use and adapt.} We used a large language model
@@ -994,7 +1002,7 @@ before training adversarial models.
 \scriptsize
 \caption{Three further lesion-disjoint ISIC splits (main recipe, last checkpoint, three seeds
 each). ID and leakage: mean $\pm$ s.d.; AUROC: seed mean with pooled $95\%$ interval (lesion groups
-rebuilt per split; patient, cluster or image resampling as in the main tables). At $\lam=2$
+rebuilt per split; patient, cluster or image resampling as in the main tables). No run met the degraded-model criterion. At $\lam=2$
 every interval lies below $0.5$ and all three seeds' intervals do in every cell. Leakage: linear
 probe on held-out images.}
 \label{tab:splits}
