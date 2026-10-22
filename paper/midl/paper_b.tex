@@ -49,7 +49,7 @@ leakage also inverts detection on the smartphone images, while CORAL does not. D
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
 although the domain can still be read within each class. In the same models, the share of
 melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
-increases from $8\%$ to $49$--$81\%$ (best-validation checkpoint). Importance-weighted alignment with class priors
+increases from $13\%$ to $51$--$81\%$. Importance-weighted alignment with class priors
 estimated online from unlabelled target data recovers $66$--$76\%$ of the AUROC lost in this setting on the
 smartphone images, Fitzpatrick17k and SD-198 at $\lam=0.5$ without loss of in-distribution
 accuracy, but only $32$--$45\%$ at $\lam=2$, and MED-NODE stays inverted. In a
@@ -81,7 +81,7 @@ not just get worse but falls below chance, so held-out images from the aligned d
 get scores that look more in-distribution than the model's own test images. Standard
 evaluation does not show this. In-distribution accuracy and calibration change little, and the domain-leakage probe, which the method is
 supposed to reduce, goes down. In the same models, melanomas from external sources are
-predicted as benign nevus with confidence above $0.9$ up to ten times more often than
+predicted as benign nevus with confidence above $0.9$ four to six times more often than
 without adaptation; the monitor accepts almost all of these images with or without
 adaptation, so the increased risk of a missed malignant case comes from the classifier, not
 from the monitor.
@@ -465,18 +465,15 @@ DANN matches the marginal distributions by misaligning classes, as the theory of
 \label{sec:adversarial}
 
 \paragraph{Melanomas called benign.} With a threshold accepting $95\%$ of ISIC validation
-images, almost all unseen-domain malignant images are accepted at every $\lam$, so the
-monitor does not catch them in either case. What changes is the classifier: the share of
-melanomas predicted nevus with confidence above $0.9$ rises from $7.5\%$ $[3.9, 11.6]$ to
-$48.7\%$ $[39.3, 58.0]$ on Fitzpatrick17k ($n=83$) and from $8.1\%$ $[5.0, 11.7]$ to $81.2\%$
-$[75.8, 86.5]$ on SD-198 ($n=113$) between $\lam=0$ and $\lam=2$ (best-validation checkpoint;
-Appendix~\ref{app:clinical}); BCC, SCC and AK follow the same pattern ($46$--$83\%$ at
+images, $0.90$--$1.00$ of the malignant images from external datasets are accepted at both
+$\lam=0$ and $\lam=2$, so the monitor does not catch them in either case. What changes is the
+classifier: the share of melanomas predicted nevus with confidence above $0.9$ rises from
+$12.5\%$ $[7.5, 17.6]$ to $51.1\%$ $[41.4, 61.0]$ on Fitzpatrick17k ($n=83$) and from $12.9\%$
+$[8.8, 17.2]$ to $81.4\%$ $[75.9, 86.5]$ on SD-198 ($n=113$) between $\lam=0$ and $\lam=2$
+(Appendix~\ref{app:clinical}); BCC, SCC and AK follow the same pattern ($50$--$87\%$ at
 $\lam=2$). Removing the label shift seen by the adversary (shift $0\%$) lowers the melanoma
 share at $\lam=2$ from $53.0\%$ to $21.4\%$ on Fitzpatrick17k and from $83.2\%$ to $33.8\%$
-on SD-198 (retrained runs of Table~\ref{tab:shift}, last checkpoint). The table uses the sweep's
-best-validation checkpoint because it was computed before we moved to the last checkpoint; at
-the last checkpoint the A4 recipe shows the same pattern ($7.7\%\to39.8\%$ on Fitzpatrick17k,
-$10.3\%\to63.7\%$ on SD-198) \pending{main recipe at the last checkpoint}.
+on SD-198 (retrained runs of Table~\ref{tab:shift}).
 
 \paragraph{No reliable scoring-side fix among the variants tested.} Reversing the sign of the
 score is not a remedy: at
@@ -546,7 +543,7 @@ readily than their own test images, but their zero-shot balanced accuracy on the
 is only $0.244$ at $\lam=2$ (chance $0.167$). AUROC below $0.5$ means that the ranking is
 reversed: the monitor scores the shifted images as more typical than real in-distribution
 data. Whether a monitor tolerates shifted inputs is a separate question, answered by the
-acceptance rate at the deployed threshold ($0.94$--$1.00$ here, Appendix~\ref{app:clinical})
+acceptance rate at the deployed threshold ($0.90$--$1.00$ here, Appendix~\ref{app:clinical})
 together with the accuracy on the same images. We think claims of tolerance to covariate shift should be
 reported together with the accuracy on the same inputs.
 
@@ -944,23 +941,25 @@ Actinic\_solar\_Damage (actinic keratosis) to AK; other SD-198 classes are exclu
 \begin{table}[h]
 \centering
 \scriptsize
-\caption{Share of malignant images from unseen datasets predicted NV with confidence above
-$0.9$ (main recipe, best-validation checkpoint; five seeds; bootstrap $95\%$ intervals). Almost
-all are accepted by the monitor in every cell ($0.94$--$1.00$).}
+\caption{Malignant images from external datasets (main recipe, last checkpoint, five seeds;
+bootstrap $95\%$ intervals): share accepted by the monitor at the $95\%$ ID threshold, and share
+predicted NV with confidence above $0.9$.}
 \label{tab:clinical}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llrcc}
+\begin{tabular}{llrcccc}
 \toprule
-dataset & class & $n$ & $\lam=0$ & $\lam=2$ \\
+& & & \multicolumn{2}{c}{accepted} & \multicolumn{2}{c}{predicted NV, conf.\ $>0.9$} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+dataset & class & $n$ & $\lam=0$ & $\lam=2$ & $\lam=0$ & $\lam=2$ \\
 \midrule
-Fitzpatrick17k & MEL & 83 & 0.075 [0.039, 0.116] & 0.487 [0.393, 0.580] \\
-Fitzpatrick17k & BCC & 257 & 0.044 [0.029, 0.062] & 0.693 [0.649, 0.733] \\
-Fitzpatrick17k & SCC & 212 & 0.047 [0.030, 0.066] & 0.464 [0.409, 0.520] \\
-Fitzpatrick17k & AK & 24 & 0.083 [0.017, 0.167] & 0.700 [0.558, 0.833] \\
-SD-198 & MEL & 113 & 0.081 [0.050, 0.117] & 0.812 [0.758, 0.865] \\
-SD-198 & BCC & 60 & 0.037 [0.010, 0.070] & 0.820 [0.750, 0.883] \\
-SD-198 & SCC & 119 & 0.049 [0.030, 0.071] & 0.716 [0.652, 0.778] \\
-SD-198 & AK & 60 & 0.010 [0.000, 0.023] & 0.833 [0.770, 0.893] \\
+Fitzpatrick17k & MEL & 83 & 0.961 [0.938, 0.981] & 0.990 [0.978, 1.000] & 0.125 [0.075, 0.176] & 0.511 [0.414, 0.610] \\
+Fitzpatrick17k & BCC & 257 & 0.932 [0.915, 0.948] & 0.985 [0.977, 0.992] & 0.068 [0.047, 0.092] & 0.742 [0.702, 0.781] \\
+Fitzpatrick17k & SCC & 212 & 0.896 [0.870, 0.921] & 0.946 [0.925, 0.965] & 0.069 [0.048, 0.093] & 0.498 [0.446, 0.551] \\
+Fitzpatrick17k & AK & 24 & 0.958 [0.925, 0.992] & 1.000 [1.000, 1.000] & 0.092 [0.033, 0.167] & 0.725 [0.583, 0.858] \\
+SD-198 & MEL & 113 & 0.963 [0.940, 0.981] & 0.979 [0.958, 0.996] & 0.129 [0.088, 0.172] & 0.814 [0.759, 0.865] \\
+SD-198 & BCC & 60 & 0.933 [0.903, 0.960] & 0.983 [0.967, 0.997] & 0.043 [0.013, 0.077] & 0.857 [0.793, 0.913] \\
+SD-198 & SCC & 119 & 0.921 [0.887, 0.950] & 0.976 [0.958, 0.992] & 0.089 [0.061, 0.121] & 0.721 [0.659, 0.778] \\
+SD-198 & AK & 60 & 0.950 [0.927, 0.973] & 0.997 [0.990, 1.000] & 0.033 [0.013, 0.053] & 0.867 [0.813, 0.917] \\
 \bottomrule
 \end{tabular}}
 \end{table}
