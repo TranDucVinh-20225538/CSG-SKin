@@ -277,11 +277,11 @@ $\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k &
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{../../results/paperB/figures/fig1_intervention.pdf}
-\caption{\textbf{The intervention, four views, one axis.} Leakage falls to its chance
-floor and in-distribution balanced accuracy does not degrade --- both favourable. Over
-the same range OOD AUROC collapses through chance and inverts, and out-of-domain
-calibration error triples. A developer monitoring the first two panels would see
-nothing wrong. Best-validation checkpoint; Table~\ref{tab:dial} gives the last checkpoint.}
+\caption{The adversarial-weight sweep at the last checkpoint (main recipe, five seeds;
+mean $\pm$ s.d.). Held-out domain leakage falls to chance and in-distribution balanced accuracy
+stays flat, while Mahalanobis AUROC on \texttt{pad\_heldout} and Fitzpatrick17k falls below
+$0.5$ and out-of-domain calibration error rises. Monitoring accuracy and leakage alone would show
+no problem}
 \label{fig:dial}
 \end{figure}
 
@@ -310,9 +310,9 @@ conditions outside the ISIC label space, detection falls from $0.723$ to $0.551$
 inverting.
 
 \paragraph{Other splits.} On three further lesion-disjoint splits of ISIC (three seeds each),
-Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.84$ at $\lam=0$ to
-$0.39$--$0.43$ at $\lam=2$, Fitzpatrick17k and SD-198 fall below $0.5$ in every split
-($0.34$--$0.41$), and MED-NODE drops from $0.49$--$0.57$ to $0.25$--$0.36$; in one split
+Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.83$ at $\lam=0$ to
+$0.39$--$0.43$ at $\lam=2$ (interval below $0.5$ in all nine runs), Fitzpatrick17k and SD-198 fall below $0.5$ in every split
+($0.34$--$0.41$), and MED-NODE drops from $0.49$--$0.57$ to $0.24$--$0.36$; in one split
 MED-NODE is already at chance before adaptation (Appendix~\ref{app:splits}).
 
 \paragraph{A second recipe.} With a $64$-dimensional latent, unweighted cross-entropy replaced
@@ -993,24 +993,26 @@ before training adversarial models.
 \centering
 \scriptsize
 \caption{Three further lesion-disjoint ISIC splits (main recipe, last checkpoint, three seeds
-each; mean $\pm$ s.d.). Leakage: linear probe on held-out images.}
+each). ID and leakage: mean $\pm$ s.d.; AUROC: seed mean with pooled $95\%$ interval (lesion groups
+rebuilt per split; patient, cluster or image resampling as in the main tables). At $\lam=2$
+every interval lies below $0.5$ and all three seeds' intervals do in every cell. Leakage: linear
+probe on held-out images.}
 \label{tab:splits}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{rrcccccc}
 \toprule
 split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 \\
 \midrule
-7 & 0 & $0.443\pm0.008$ & $0.845\pm0.034$ & $0.835\pm0.013$ & $0.713\pm0.020$ & $0.491\pm0.013$ & $0.724\pm0.022$ \\
-7 & 2 & $0.440\pm0.008$ & $0.509\pm0.007$ & $0.406\pm0.017$ & $0.344\pm0.049$ & $0.245\pm0.019$ & $0.338\pm0.043$ \\
-123 & 0 & $0.449\pm0.011$ & $0.840\pm0.028$ & $0.822\pm0.017$ & $0.739\pm0.019$ & $0.569\pm0.020$ & $0.745\pm0.018$ \\
-123 & 2 & $0.452\pm0.025$ & $0.512\pm0.010$ & $0.431\pm0.033$ & $0.408\pm0.072$ & $0.324\pm0.060$ & $0.392\pm0.069$ \\
-2027 & 0 & $0.460\pm0.023$ & $0.831\pm0.039$ & $0.827\pm0.007$ & $0.715\pm0.040$ & $0.544\pm0.043$ & $0.706\pm0.045$ \\
-2027 & 2 & $0.482\pm0.007$ & $0.514\pm0.014$ & $0.393\pm0.035$ & $0.376\pm0.050$ & $0.357\pm0.012$ & $0.348\pm0.026$ \\
+7 & 0 & $0.443\pm0.008$ & $0.845\pm0.034$ & $0.835$ $[0.820, 0.848]$ & $0.713$ $[0.699, 0.726]$ & $0.491$ $[0.457, 0.525]$ & $0.724$ $[0.712, 0.737]$ \\
+7 & 2 & $0.440\pm0.008$ & $0.509\pm0.007$ & $0.406$ $[0.383, 0.430]$ & $0.344$ $[0.330, 0.358]$ & $0.245$ $[0.220, 0.271]$ & $0.338$ $[0.327, 0.349]$ \\
+123 & 0 & $0.449\pm0.011$ & $0.840\pm0.028$ & $0.822$ $[0.807, 0.835]$ & $0.739$ $[0.725, 0.751]$ & $0.569$ $[0.535, 0.600]$ & $0.745$ $[0.733, 0.757]$ \\
+123 & 2 & $0.452\pm0.025$ & $0.512\pm0.010$ & $0.431$ $[0.407, 0.454]$ & $0.408$ $[0.395, 0.422]$ & $0.324$ $[0.294, 0.354]$ & $0.392$ $[0.380, 0.404]$ \\
+2027 & 0 & $0.460\pm0.023$ & $0.831\pm0.039$ & $0.827$ $[0.813, 0.841]$ & $0.715$ $[0.701, 0.729]$ & $0.544$ $[0.512, 0.575]$ & $0.706$ $[0.693, 0.720]$ \\
+2027 & 2 & $0.482\pm0.007$ & $0.514\pm0.014$ & $0.393$ $[0.369, 0.415]$ & $0.376$ $[0.362, 0.390]$ & $0.357$ $[0.326, 0.385]$ & $0.348$ $[0.337, 0.360]$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-Bootstrap intervals are not reported for these splits \pending{split CIs}.
 
 \section{Image-level split (lesion leakage; for reference only)}
 \label{app:imagelevel}
