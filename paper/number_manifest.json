@@ -7686,7 +7686,7 @@
       "pad_l0",
       "max"
     ],
-    "note": "Other splits: pad_heldout \u03bb=0 range hi (text 0.84; unrounded max\u22480.835)"
+    "note": "Other splits: pad_heldout \u03bb=0 range hi (text 0.82\u20130.83; c26247d)"
   },
   {
     "id": "ss_pad_l2_lo",
@@ -7777,7 +7777,7 @@
       "med_l2",
       "min"
     ],
-    "note": "Other splits: MED-NODE \u03bb=2 range lo (text 0.25; unrounded min\u22480.245)"
+    "note": "Other splits: MED-NODE \u03bb=2 range lo (text 0.24\u20130.36; c26247d)"
   },
   {
     "id": "ss_med_l2_hi",

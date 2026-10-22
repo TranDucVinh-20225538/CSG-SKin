@@ -1,0 +1,73 @@
+{
+ "n_seeds": 5,
+ "seeds": [
+  42,
+  52,
+  62,
+  72,
+  82
+ ],
+ "last_ckpt_test_bal_acc": {
+  "mean": 0.5584546649984341,
+  "sd": 0.021878614831251524,
+  "n": 5
+ },
+ "bestval_test_bal_acc": {
+  "mean": 0.5469558203342335,
+  "sd": 0.014900847420448612,
+  "n": 5
+ },
+ "per_seed": [
+  {
+   "seed": 42,
+   "last_test_bal_acc": 0.5667628908334701,
+   "bestval_test_bal_acc": 0.5673338168753721,
+   "last_val_bal_acc": 0.5128872876488889,
+   "bestval_val_bal_acc": 0.5221470351698563,
+   "last_epoch": 39,
+   "best_epoch": 31
+  },
+  {
+   "seed": 52,
+   "last_test_bal_acc": 0.5776146062411582,
+   "bestval_test_bal_acc": 0.5449609757278859,
+   "last_val_bal_acc": 0.5293304860571604,
+   "bestval_val_bal_acc": 0.5243382368381184,
+   "last_epoch": 39,
+   "best_epoch": 7
+  },
+  {
+   "seed": 62,
+   "last_test_bal_acc": 0.535130037836242,
+   "bestval_test_bal_acc": 0.5375885735653878,
+   "last_val_bal_acc": null,
+   "bestval_val_bal_acc": null,
+   "last_epoch": null,
+   "best_epoch": null
+  },
+  {
+   "seed": 72,
+   "last_test_bal_acc": 0.5348661284502068,
+   "bestval_test_bal_acc": 0.529399682391857,
+   "last_val_bal_acc": null,
+   "bestval_val_bal_acc": null,
+   "last_epoch": null,
+   "best_epoch": null
+  },
+  {
+   "seed": 82,
+   "last_test_bal_acc": 0.5778996616310929,
+   "bestval_test_bal_acc": 0.5554960531106645,
+   "last_val_bal_acc": null,
+   "bestval_val_bal_acc": null,
+   "last_epoch": null,
+   "best_epoch": null
+  }
+ ],
+ "image_level_erm_paper": 0.779,
+ "image_level_note": "leakage-inflated on the image-level split; not the competence reference",
+ "competence_target": 0.7,
+ "competence_target_note": "0.70 was set from the image-level single-encoder ERM 0.779, which is leakage-inflated; the lesion-level ERM reference (last.ckpt, this report) is reported alongside; original \u2265 0.70 verdicts are kept visible",
+ "bootstrap": {},
+ "source": "features/*/isic_test.npz logits (last.ckpt extract); written for number_manifest competence_erm_*"
+}
