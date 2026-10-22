@@ -7484,6 +7484,70 @@
     ]
   },
   {
+    "id": "clin_a4_fitz_MEL_l0_pct",
+    "written": "7.7",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_a4_pct",
+      "l0",
+      "fitzpatrick17k",
+      "MEL"
+    ],
+    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100"
+  },
+  {
+    "id": "clin_a4_fitz_MEL_l2_pct",
+    "written": "39.8",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_a4_pct",
+      "l2",
+      "fitzpatrick17k",
+      "MEL"
+    ],
+    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100",
+    "optional": true
+  },
+  {
+    "id": "clin_a4_sd_MEL_l0_pct",
+    "written": "10.3",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_a4_pct",
+      "l0",
+      "sd198",
+      "MEL"
+    ],
+    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100"
+  },
+  {
+    "id": "clin_a4_sd_MEL_l2_pct",
+    "written": "63.7",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_a4_pct",
+      "l2",
+      "sd198",
+      "MEL"
+    ],
+    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100",
+    "optional": true
+  },
+  {
+    "id": "decomp_auroc_identity_neg_log10",
+    "written": "15",
+    "file": "r5/posthoc/auroc_decomp_identity.json",
+    "key": [
+      "claim_precision_neg_log10"
+    ],
+    "note": "tex $10^{-15}$; verified abs residual \u226a 1e-15 (see abs_err / neg_log10_abs_err)",
+    "optional": true
+  },
+  {
     "id": "p11_mkmmd_v1",
     "written": "0.506",
     "file": "r6/writing_r6_number_store.json",

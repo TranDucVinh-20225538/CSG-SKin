@@ -1,0 +1,10 @@
+{
+  "run": "runB_orth1_ladv2_s42",
+  "ood": "pad_heldout",
+  "pooled_auroc": 0.4015003423400181,
+  "reconstructed": 0.401500342340018,
+  "abs_err": 5.551115123125783e-17,
+  "neg_log10_abs_err": 16.255619765854984,
+  "claim_precision_neg_log10": 15,
+  "note": "pooled AUROC = sum_c pi_c AUROC_c; tex claims verified numerically to 10^{-15}"
+}

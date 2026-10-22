@@ -347,6 +347,15 @@ def build_store():
                     if leaf in blk:
                         put(store, ["p11", key, ood, "maha", leaf], blk[leaf])
 
+    # A4 clinical MEL shares as percents (prose in §confidently / 57e080b)
+    clin = RES / "r5/posthoc/clinical/results.json"
+    if clin.exists():
+        cells = load(clin)["cells"]
+        for lam in (0, 2):
+            for ds in ("fitzpatrick17k", "sd198"):
+                m = cells[f"a4 λ={lam}"]["sets"][ds]["classes"]["MEL"]["share_pred_nv_conf09"]["mean"]
+                put(store, ["clinical_a4_pct", f"l{lam}", ds, "MEL"], 100.0 * float(m))
+
     # --- R6 split-stability (3 further ISIC folds; paperb/split-stability ba0729e) ---
     ss_cells = RES / "r6/split_stability/cells.json"
     if ss_cells.exists():
@@ -918,6 +927,29 @@ def build_manifest(store):
         E.append(entry(f"clin_{ds}_{cls}_l2", m2, clin, base2 + ["share_pred_nv_conf09", "mean"]))
         E.append(entry(f"clin_{ds}_{cls}_l2_lo", lo2, clin, base2 + ["nv09_ci", "0"]))
         E.append(entry(f"clin_{ds}_{cls}_l2_hi", hi2, clin, base2 + ["nv09_ci", "1"]))
+
+    # A4 last-checkpoint MEL shares as printed percents (57e080b prose).
+    # 39.8 / 63.7 sit after \to so the free-scan lookbehind misses them — optional presence.
+    for eid, written, lam, ds, opt in [
+        ("clin_a4_fitz_MEL_l0_pct", "7.7", 0, "fitzpatrick17k", False),
+        ("clin_a4_fitz_MEL_l2_pct", "39.8", 2, "fitzpatrick17k", True),
+        ("clin_a4_sd_MEL_l0_pct", "10.3", 0, "sd198", False),
+        ("clin_a4_sd_MEL_l2_pct", "63.7", 2, "sd198", True),
+    ]:
+        E.append(entry(
+            eid, written, store_f,
+            ["values", "clinical_a4_pct", f"l{lam}", ds, "MEL"],
+            note="A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells ×100",
+            optional=opt))
+
+    # Decomposition identity: pooled AUROC = Σ π_c AUROC_c (tex $10^{-15}$).
+    # Free-scan drops bare integers <1000 unless --ints, so presence is optional.
+    E.append(entry(
+        "decomp_auroc_identity_neg_log10", "15",
+        "r5/posthoc/auroc_decomp_identity.json",
+        ["claim_precision_neg_log10"],
+        note="tex $10^{-15}$; verified abs residual ≪ 1e-15 (see abs_err / neg_log10_abs_err)",
+        optional=True))
 
     # ========== P11 MK-MMD / CORAL (§4.2; 6e4182d adds MED-NODE / SD-198) ==========
     p11_med_sd = "r5/p11/BOOTSTRAP_MED_SD.json"
