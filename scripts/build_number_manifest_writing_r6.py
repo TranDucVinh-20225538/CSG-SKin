@@ -970,9 +970,9 @@ def build_manifest(store):
     E.append(entry("ss_pad_l0_lo", "0.82", store_f,
                    ["values", "split_stability", "range", "pad_l0", "min"],
                    note="Other splits: pad_heldout λ=0 range lo"))
-    E.append(entry("ss_pad_l0_hi", "0.84", store_f,
+    E.append(entry("ss_pad_l0_hi", "0.83", store_f,
                    ["values", "split_stability", "range", "pad_l0", "max"],
-                   note="Other splits: pad_heldout λ=0 range hi (text 0.84; unrounded max≈0.835)"))
+                   note="Other splits: pad_heldout λ=0 range hi (text 0.83; unrounded max≈0.835)"))
     E.append(entry("ss_pad_l2_lo", "0.39", store_f,
                    ["values", "split_stability", "range", "pad_l2", "min"],
                    note="Other splits: pad_heldout λ=2 range lo"))
@@ -991,7 +991,7 @@ def build_manifest(store):
     E.append(entry("ss_med_l0_hi", "0.57", store_f,
                    ["values", "split_stability", "range", "med_l0", "max"],
                    note="Other splits: MED-NODE λ=0 range hi"))
-    E.append(entry("ss_med_l2_lo", "0.25", store_f,
+    E.append(entry("ss_med_l2_lo", "0.24", store_f,
                    ["values", "split_stability", "range", "med_l2", "min"],
                    note="Other splits: MED-NODE λ=2 range lo (text 0.25; unrounded min≈0.245)"))
     E.append(entry("ss_med_l2_hi", "0.36", store_f,
