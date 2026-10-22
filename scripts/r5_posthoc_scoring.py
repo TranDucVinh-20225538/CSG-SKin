@@ -155,11 +155,18 @@ def _parse_r1(name):
     return ("r1", float(m.group(2).replace("p", ".")), int(m.group(3)), int(m.group(1)))
 
 
+def _parse_main_last(name):
+    """Table 1 dual-encoder last.ckpt features under r5/t1last/features_last/."""
+    m = re.fullmatch(r"runB_orth1_ladv([0-9p]+)_s(\d+)", name)
+    return ("main_last", float(m.group(1).replace("p", ".")), int(m.group(2)), None) if m else None
+
+
 def inventory(need=("isic_train", "isic_test", "isic_val") + OODS_ALL):
     roots = [
         (R.FEAT_L, _parse_old),
         (R.R5 / "p8" / "main" / "features", _parse_a4),
         (R.R6 / "r1" / "cur" / "features", _parse_r1),
+        (R.R5 / "t1last" / "features_last", _parse_main_last),
     ]
     rows = []
     for root, parse in roots:
@@ -479,16 +486,25 @@ def _write_mitigation_report(out_dir, payload):
 # ----------------------------------------------------------------------------------------------------------------------
 # (2) Clinical
 # ----------------------------------------------------------------------------------------------------------------------
-def run_clinical():
-    out_dir = OUT_ROOT / "clinical"
+def run_clinical(out_name="clinical", recipes=None):
+    """Clinical consequence table. Default: best-val main (old_recipe) + a4 + R1.
+
+    For Table 1 last.ckpt use out_name='clinical_t1last' and recipes=('main_last',).
+    """
+    out_dir = OUT_ROOT / out_name
     out_dir.mkdir(parents=True, exist_ok=True)
     pre = R.prereg()
     n_boot = int(pre["n_resamples"])
     lab_fixed = ood_label_arrays()
     groups = ood_group_arrays()
+    need = ("isic_train", "isic_val", "fitzpatrick17k", "sd198", "pad_heldout")
     rows = []
-    for r in inventory():
+    for r in inventory(need=need):
         if r["degraded"]:
+            continue
+        if recipes is not None:
+            if r["recipe"] in recipes and r["lambda"] in (0.0, 2.0):
+                rows.append(r)
             continue
         if r["recipe"] == "old_recipe" and r["lambda"] in (0.0, 2.0):
             rows.append(r)
@@ -496,7 +512,7 @@ def run_clinical():
             rows.append(r)
         elif r["recipe"] == "r1" and r["shift"] in (0, 100) and r["lambda"] == 2.0:
             rows.append(r)
-    print("clinical runs", len(rows), flush=True)
+    print("clinical runs", len(rows), "->", out_dir, flush=True)
 
     per_run2 = []
     for r in rows:
@@ -794,12 +810,14 @@ def run_nvfrac():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=("mitigation", "clinical", "nvfrac", "all"))
+    ap.add_argument("mode", choices=("mitigation", "clinical", "clinical_t1last", "nvfrac", "all"))
     a = ap.parse_args()
     if a.mode in ("mitigation", "all"):
         run_mitigation()
     if a.mode in ("clinical", "all"):
         run_clinical()
+    if a.mode == "clinical_t1last":
+        run_clinical(out_name="clinical_t1last", recipes=("main_last",))
     if a.mode in ("nvfrac", "all"):
         run_nvfrac()
 
