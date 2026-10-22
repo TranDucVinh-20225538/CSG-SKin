@@ -347,14 +347,56 @@ def build_store():
                     if leaf in blk:
                         put(store, ["p11", key, ood, "maha", leaf], blk[leaf])
 
-    # A4 clinical MEL shares as percents (prose in §confidently / 57e080b)
-    clin = RES / "r5/posthoc/clinical/results.json"
+    # clinical_t1last: prose percents + acceptance / NV09 ranges (0ef248b)
+    clin = RES / "r5/posthoc/clinical_t1last/results.json"
     if clin.exists():
         cells = load(clin)["cells"]
         for lam in (0, 2):
+            ck = f"main_last λ={lam}"
             for ds in ("fitzpatrick17k", "sd198"):
-                m = cells[f"a4 λ={lam}"]["sets"][ds]["classes"]["MEL"]["share_pred_nv_conf09"]["mean"]
-                put(store, ["clinical_a4_pct", f"l{lam}", ds, "MEL"], 100.0 * float(m))
+                for cls in ("MEL", "BCC", "SCC", "AK"):
+                    blk = cells[ck]["sets"][ds]["classes"][cls]
+                    put(store, ["clinical_t1last_pct", f"l{lam}", ds, cls, "nv09"],
+                        100.0 * float(blk["share_pred_nv_conf09"]["mean"]))
+                    put(store, ["clinical_t1last_pct", f"l{lam}", ds, cls, "nv09_lo"],
+                        100.0 * float(blk["nv09_ci"][0]))
+                    put(store, ["clinical_t1last_pct", f"l{lam}", ds, cls, "nv09_hi"],
+                        100.0 * float(blk["nv09_ci"][1]))
+                    put(store, ["clinical_t1last", f"l{lam}", ds, cls, "accepted"],
+                        float(blk["share_accepted_id"]["mean"]))
+        # abstract: 13% → 51--81% (MEL λ=0 round / MEL λ=2 range)
+        mel_l0 = [
+            float(cells["main_last λ=0"]["sets"][ds]["classes"]["MEL"]["share_pred_nv_conf09"]["mean"])
+            for ds in ("fitzpatrick17k", "sd198")
+        ]
+        mel_l2 = [
+            float(cells["main_last λ=2"]["sets"][ds]["classes"]["MEL"]["share_pred_nv_conf09"]["mean"])
+            for ds in ("fitzpatrick17k", "sd198")
+        ]
+        put(store, ["clinical_t1last_pct", "abstract", "mel_l0"],
+            round(100.0 * sum(mel_l0) / len(mel_l0)))
+        put(store, ["clinical_t1last_pct", "abstract", "mel_l2_lo"],
+            100.0 * min(mel_l2))
+        put(store, ["clinical_t1last_pct", "abstract", "mel_l2_hi"],
+            100.0 * max(mel_l2))
+        # results prose: BCC/SCC/AK at λ=2 → 50--87%
+        other_l2 = []
+        for ds in ("fitzpatrick17k", "sd198"):
+            for cls in ("BCC", "SCC", "AK"):
+                other_l2.append(float(
+                    cells["main_last λ=2"]["sets"][ds]["classes"][cls]["share_pred_nv_conf09"]["mean"]))
+        put(store, ["clinical_t1last_pct", "other_l2", "lo"], 100.0 * min(other_l2))
+        put(store, ["clinical_t1last_pct", "other_l2", "hi"], 100.0 * max(other_l2))
+        # acceptance 0.90--1.00 across malignant cells
+        acc = []
+        for lam in (0, 2):
+            for ds in ("fitzpatrick17k", "sd198"):
+                for cls in ("MEL", "BCC", "SCC", "AK"):
+                    acc.append(float(
+                        cells[f"main_last λ={lam}"]["sets"][ds]["classes"][cls]
+                        ["share_accepted_id"]["mean"]))
+        put(store, ["clinical_t1last", "accepted_range", "lo"], min(acc))
+        put(store, ["clinical_t1last", "accepted_range", "hi"], max(acc))
 
     # --- R6 split-stability (3 further ISIC folds; paperb/split-stability ba0729e) ---
     ss_cells = RES / "r6/split_stability/cells.json"
@@ -907,20 +949,43 @@ def build_manifest(store):
     ]:
         E.append(entry(eid, written, store_f, key))
 
-    # ========== tab:clinical ==========
-    clin = "r5/posthoc/clinical/results.json"
-    for ds, cls, m0, lo0, hi0, m2, lo2, hi2 in [
-        ("fitzpatrick17k", "MEL", "0.075", "0.039", "0.116", "0.487", "0.393", "0.580"),
-        ("fitzpatrick17k", "BCC", "0.044", "0.029", "0.062", "0.693", "0.649", "0.733"),
-        ("fitzpatrick17k", "SCC", "0.047", "0.030", "0.066", "0.464", "0.409", "0.520"),
-        ("fitzpatrick17k", "AK", "0.083", "0.017", "0.167", "0.700", "0.558", "0.833"),
-        ("sd198", "MEL", "0.081", "0.050", "0.117", "0.812", "0.758", "0.865"),
-        ("sd198", "BCC", "0.037", "0.010", "0.070", "0.820", "0.750", "0.883"),
-        ("sd198", "SCC", "0.049", "0.030", "0.071", "0.716", "0.652", "0.778"),
-        ("sd198", "AK", "0.010", "0.000", "0.023", "0.833", "0.770", "0.893"),
+    # ========== tab:clinical + prose (clinical_t1last / last.ckpt; 0ef248b) ==========
+    clin = "r5/posthoc/clinical_t1last/results.json"
+    # Appendix table: accepted + predicted NV conf>0.9
+    for ds, cls, a0, a0lo, a0hi, a2, a2lo, a2hi, m0, lo0, hi0, m2, lo2, hi2 in [
+        ("fitzpatrick17k", "MEL",
+         "0.961", "0.938", "0.981", "0.990", "0.978", "1.000",
+         "0.125", "0.075", "0.176", "0.511", "0.414", "0.610"),
+        ("fitzpatrick17k", "BCC",
+         "0.932", "0.915", "0.948", "0.985", "0.977", "0.992",
+         "0.068", "0.047", "0.092", "0.742", "0.702", "0.781"),
+        ("fitzpatrick17k", "SCC",
+         "0.896", "0.870", "0.921", "0.946", "0.925", "0.965",
+         "0.069", "0.048", "0.093", "0.498", "0.446", "0.551"),
+        ("fitzpatrick17k", "AK",
+         "0.958", "0.925", "0.992", "1.000", "1.000", "1.000",
+         "0.092", "0.033", "0.167", "0.725", "0.583", "0.858"),
+        ("sd198", "MEL",
+         "0.963", "0.940", "0.981", "0.979", "0.958", "0.996",
+         "0.129", "0.088", "0.172", "0.814", "0.759", "0.865"),
+        ("sd198", "BCC",
+         "0.933", "0.903", "0.960", "0.983", "0.967", "0.997",
+         "0.043", "0.013", "0.077", "0.857", "0.793", "0.913"),
+        ("sd198", "SCC",
+         "0.921", "0.887", "0.950", "0.976", "0.958", "0.992",
+         "0.089", "0.061", "0.121", "0.721", "0.659", "0.778"),
+        ("sd198", "AK",
+         "0.950", "0.927", "0.973", "0.997", "0.990", "1.000",
+         "0.033", "0.013", "0.053", "0.867", "0.813", "0.917"),
     ]:
-        base0 = ["cells", "old_recipe λ=0", "sets", ds, "classes", cls]
-        base2 = ["cells", "old_recipe λ=2", "sets", ds, "classes", cls]
+        base0 = ["cells", "main_last λ=0", "sets", ds, "classes", cls]
+        base2 = ["cells", "main_last λ=2", "sets", ds, "classes", cls]
+        E.append(entry(f"clin_{ds}_{cls}_acc_l0", a0, clin, base0 + ["share_accepted_id", "mean"]))
+        E.append(entry(f"clin_{ds}_{cls}_acc_l0_lo", a0lo, clin, base0 + ["accepted_ci", "0"]))
+        E.append(entry(f"clin_{ds}_{cls}_acc_l0_hi", a0hi, clin, base0 + ["accepted_ci", "1"]))
+        E.append(entry(f"clin_{ds}_{cls}_acc_l2", a2, clin, base2 + ["share_accepted_id", "mean"]))
+        E.append(entry(f"clin_{ds}_{cls}_acc_l2_lo", a2lo, clin, base2 + ["accepted_ci", "0"]))
+        E.append(entry(f"clin_{ds}_{cls}_acc_l2_hi", a2hi, clin, base2 + ["accepted_ci", "1"]))
         E.append(entry(f"clin_{ds}_{cls}_l0", m0, clin, base0 + ["share_pred_nv_conf09", "mean"]))
         E.append(entry(f"clin_{ds}_{cls}_l0_lo", lo0, clin, base0 + ["nv09_ci", "0"]))
         E.append(entry(f"clin_{ds}_{cls}_l0_hi", hi0, clin, base0 + ["nv09_ci", "1"]))
@@ -928,19 +993,47 @@ def build_manifest(store):
         E.append(entry(f"clin_{ds}_{cls}_l2_lo", lo2, clin, base2 + ["nv09_ci", "0"]))
         E.append(entry(f"clin_{ds}_{cls}_l2_hi", hi2, clin, base2 + ["nv09_ci", "1"]))
 
-    # A4 last-checkpoint MEL shares as printed percents (57e080b prose).
-    # 39.8 / 63.7 sit after \to so the free-scan lookbehind misses them — optional presence.
-    for eid, written, lam, ds, opt in [
-        ("clin_a4_fitz_MEL_l0_pct", "7.7", 0, "fitzpatrick17k", False),
-        ("clin_a4_fitz_MEL_l2_pct", "39.8", 2, "fitzpatrick17k", True),
-        ("clin_a4_sd_MEL_l0_pct", "10.3", 0, "sd198", False),
-        ("clin_a4_sd_MEL_l2_pct", "63.7", 2, "sd198", True),
+    # Results prose MEL shares as percents (same source as table ×100)
+    for eid, written, key in [
+        ("clin_prose_fitz_MEL_l0_pct", "12.5", ["values", "clinical_t1last_pct", "l0", "fitzpatrick17k", "MEL", "nv09"]),
+        ("clin_prose_fitz_MEL_l0_lo_pct", "7.5", ["values", "clinical_t1last_pct", "l0", "fitzpatrick17k", "MEL", "nv09_lo"]),
+        ("clin_prose_fitz_MEL_l0_hi_pct", "17.6", ["values", "clinical_t1last_pct", "l0", "fitzpatrick17k", "MEL", "nv09_hi"]),
+        ("clin_prose_fitz_MEL_l2_pct", "51.1", ["values", "clinical_t1last_pct", "l2", "fitzpatrick17k", "MEL", "nv09"]),
+        ("clin_prose_fitz_MEL_l2_lo_pct", "41.4", ["values", "clinical_t1last_pct", "l2", "fitzpatrick17k", "MEL", "nv09_lo"]),
+        ("clin_prose_fitz_MEL_l2_hi_pct", "61.0", ["values", "clinical_t1last_pct", "l2", "fitzpatrick17k", "MEL", "nv09_hi"]),
+        ("clin_prose_sd_MEL_l0_pct", "12.9", ["values", "clinical_t1last_pct", "l0", "sd198", "MEL", "nv09"]),
+        ("clin_prose_sd_MEL_l0_lo_pct", "8.8", ["values", "clinical_t1last_pct", "l0", "sd198", "MEL", "nv09_lo"]),
+        ("clin_prose_sd_MEL_l0_hi_pct", "17.2", ["values", "clinical_t1last_pct", "l0", "sd198", "MEL", "nv09_hi"]),
+        ("clin_prose_sd_MEL_l2_pct", "81.4", ["values", "clinical_t1last_pct", "l2", "sd198", "MEL", "nv09"]),
+        ("clin_prose_sd_MEL_l2_lo_pct", "75.9", ["values", "clinical_t1last_pct", "l2", "sd198", "MEL", "nv09_lo"]),
+        ("clin_prose_sd_MEL_l2_hi_pct", "86.5", ["values", "clinical_t1last_pct", "l2", "sd198", "MEL", "nv09_hi"]),
     ]:
-        E.append(entry(
-            eid, written, store_f,
-            ["values", "clinical_a4_pct", f"l{lam}", ds, "MEL"],
-            note="A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells ×100",
-            optional=opt))
+        E.append(entry(eid, written, store_f, key,
+                       note="clinical_t1last MEL pred-NV conf>0.9 as percent"))
+
+    # Abstract / results ranges (bare integers skipped by free-scan → optional)
+    E.append(entry("clin_abs_mel_l0_pct", "13", store_f,
+                   ["values", "clinical_t1last_pct", "abstract", "mel_l0"],
+                   note="abstract: ~13% melanomas pred NV conf>0.9 at λ=0",
+                   optional=True))
+    E.append(entry("clin_abs_mel_l2_lo_pct", "51", store_f,
+                   ["values", "clinical_t1last_pct", "abstract", "mel_l2_lo"],
+                   note="abstract: 51--81% at λ=2 (lo)", optional=True))
+    E.append(entry("clin_abs_mel_l2_hi_pct", "81", store_f,
+                   ["values", "clinical_t1last_pct", "abstract", "mel_l2_hi"],
+                   note="abstract: 51--81% at λ=2 (hi)", optional=True))
+    E.append(entry("clin_other_l2_lo_pct", "50", store_f,
+                   ["values", "clinical_t1last_pct", "other_l2", "lo"],
+                   note="results: BCC/SCC/AK 50--87% at λ=2 (lo)", optional=True))
+    E.append(entry("clin_other_l2_hi_pct", "87", store_f,
+                   ["values", "clinical_t1last_pct", "other_l2", "hi"],
+                   note="results: BCC/SCC/AK 50--87% at λ=2 (hi)", optional=True))
+    E.append(entry("clin_accept_range_lo", "0.90", store_f,
+                   ["values", "clinical_t1last", "accepted_range", "lo"],
+                   note="acceptance 0.90--1.00 (lo)"))
+    E.append(entry("clin_accept_range_hi", "1.00", store_f,
+                   ["values", "clinical_t1last", "accepted_range", "hi"],
+                   note="acceptance 0.90--1.00 (hi)"))
 
     # Decomposition identity: pooled AUROC = Σ π_c AUROC_c (tex $10^{-15}$).
     # Free-scan drops bare integers <1000 unless --ints, so presence is optional.

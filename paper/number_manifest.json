@@ -6764,12 +6764,102 @@
     ]
   },
   {
-    "id": "clin_fitzpatrick17k_MEL_l0",
-    "written": "0.075",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_fitzpatrick17k_MEL_acc_l0",
+    "written": "0.961",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_acc_l0_lo",
+    "written": "0.938",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_acc_l0_hi",
+    "written": "0.981",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_acc_l2",
+    "written": "0.990",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_acc_l2_lo",
+    "written": "0.978",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_acc_l2_hi",
+    "written": "1.000",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_MEL_l0",
+    "written": "0.125",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6780,11 +6870,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_MEL_l0_lo",
-    "written": "0.039",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.075",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6795,11 +6885,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_MEL_l0_hi",
-    "written": "0.116",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.176",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6810,11 +6900,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_MEL_l2",
-    "written": "0.487",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.511",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6825,11 +6915,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_MEL_l2_lo",
-    "written": "0.393",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.414",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6840,11 +6930,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_MEL_l2_hi",
-    "written": "0.580",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.610",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6854,12 +6944,102 @@
     ]
   },
   {
-    "id": "clin_fitzpatrick17k_BCC_l0",
-    "written": "0.044",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_fitzpatrick17k_BCC_acc_l0",
+    "written": "0.932",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_acc_l0_lo",
+    "written": "0.915",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_acc_l0_hi",
+    "written": "0.948",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_acc_l2",
+    "written": "0.985",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_acc_l2_lo",
+    "written": "0.977",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_acc_l2_hi",
+    "written": "0.992",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_BCC_l0",
+    "written": "0.068",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6870,11 +7050,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_BCC_l0_lo",
-    "written": "0.029",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.047",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6885,11 +7065,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_BCC_l0_hi",
-    "written": "0.062",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.092",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6900,11 +7080,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_BCC_l2",
-    "written": "0.693",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.742",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6915,11 +7095,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_BCC_l2_lo",
-    "written": "0.649",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.702",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6930,11 +7110,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_BCC_l2_hi",
-    "written": "0.733",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.781",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6944,12 +7124,102 @@
     ]
   },
   {
-    "id": "clin_fitzpatrick17k_SCC_l0",
-    "written": "0.047",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_fitzpatrick17k_SCC_acc_l0",
+    "written": "0.896",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_acc_l0_lo",
+    "written": "0.870",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_acc_l0_hi",
+    "written": "0.921",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_acc_l2",
+    "written": "0.946",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_acc_l2_lo",
+    "written": "0.925",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_acc_l2_hi",
+    "written": "0.965",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_SCC_l0",
+    "written": "0.069",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6960,11 +7230,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_SCC_l0_lo",
-    "written": "0.030",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.048",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6975,11 +7245,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_SCC_l0_hi",
-    "written": "0.066",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.093",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -6990,11 +7260,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_SCC_l2",
-    "written": "0.464",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.498",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7005,11 +7275,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_SCC_l2_lo",
-    "written": "0.409",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.446",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7020,11 +7290,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_SCC_l2_hi",
-    "written": "0.520",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.551",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7034,12 +7304,102 @@
     ]
   },
   {
-    "id": "clin_fitzpatrick17k_AK_l0",
-    "written": "0.083",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_fitzpatrick17k_AK_acc_l0",
+    "written": "0.958",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_acc_l0_lo",
+    "written": "0.925",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_acc_l0_hi",
+    "written": "0.992",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_acc_l2",
+    "written": "1.000",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_acc_l2_lo",
+    "written": "1.000",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_acc_l2_hi",
+    "written": "1.000",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "fitzpatrick17k",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_fitzpatrick17k_AK_l0",
+    "written": "0.092",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7050,11 +7410,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_AK_l0_lo",
-    "written": "0.017",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.033",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7066,10 +7426,10 @@
   {
     "id": "clin_fitzpatrick17k_AK_l0_hi",
     "written": "0.167",
-    "file": "r5/posthoc/clinical/results.json",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7080,11 +7440,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_AK_l2",
-    "written": "0.700",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.725",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7095,11 +7455,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_AK_l2_lo",
-    "written": "0.558",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.583",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7110,11 +7470,11 @@
   },
   {
     "id": "clin_fitzpatrick17k_AK_l2_hi",
-    "written": "0.833",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.858",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "fitzpatrick17k",
       "classes",
@@ -7124,12 +7484,102 @@
     ]
   },
   {
-    "id": "clin_sd198_MEL_l0",
-    "written": "0.081",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_sd198_MEL_acc_l0",
+    "written": "0.963",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_acc_l0_lo",
+    "written": "0.940",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_acc_l0_hi",
+    "written": "0.981",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_acc_l2",
+    "written": "0.979",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_acc_l2_lo",
+    "written": "0.958",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_acc_l2_hi",
+    "written": "0.996",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "MEL",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_MEL_l0",
+    "written": "0.129",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7140,11 +7590,11 @@
   },
   {
     "id": "clin_sd198_MEL_l0_lo",
-    "written": "0.050",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.088",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7155,11 +7605,11 @@
   },
   {
     "id": "clin_sd198_MEL_l0_hi",
-    "written": "0.117",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.172",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7170,11 +7620,11 @@
   },
   {
     "id": "clin_sd198_MEL_l2",
-    "written": "0.812",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.814",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7185,11 +7635,11 @@
   },
   {
     "id": "clin_sd198_MEL_l2_lo",
-    "written": "0.758",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.759",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7201,10 +7651,10 @@
   {
     "id": "clin_sd198_MEL_l2_hi",
     "written": "0.865",
-    "file": "r5/posthoc/clinical/results.json",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7214,12 +7664,102 @@
     ]
   },
   {
-    "id": "clin_sd198_BCC_l0",
-    "written": "0.037",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_sd198_BCC_acc_l0",
+    "written": "0.933",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_acc_l0_lo",
+    "written": "0.903",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_acc_l0_hi",
+    "written": "0.960",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_acc_l2",
+    "written": "0.983",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_acc_l2_lo",
+    "written": "0.967",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_acc_l2_hi",
+    "written": "0.997",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "BCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_BCC_l0",
+    "written": "0.043",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7230,11 +7770,11 @@
   },
   {
     "id": "clin_sd198_BCC_l0_lo",
-    "written": "0.010",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.013",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7245,11 +7785,11 @@
   },
   {
     "id": "clin_sd198_BCC_l0_hi",
-    "written": "0.070",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.077",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7260,11 +7800,11 @@
   },
   {
     "id": "clin_sd198_BCC_l2",
-    "written": "0.820",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.857",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7275,11 +7815,11 @@
   },
   {
     "id": "clin_sd198_BCC_l2_lo",
-    "written": "0.750",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.793",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7290,11 +7830,11 @@
   },
   {
     "id": "clin_sd198_BCC_l2_hi",
-    "written": "0.883",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.913",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7304,12 +7844,102 @@
     ]
   },
   {
-    "id": "clin_sd198_SCC_l0",
-    "written": "0.049",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_sd198_SCC_acc_l0",
+    "written": "0.921",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_acc_l0_lo",
+    "written": "0.887",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_acc_l0_hi",
+    "written": "0.950",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_acc_l2",
+    "written": "0.976",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_acc_l2_lo",
+    "written": "0.958",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_acc_l2_hi",
+    "written": "0.992",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "SCC",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_SCC_l0",
+    "written": "0.089",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7320,11 +7950,11 @@
   },
   {
     "id": "clin_sd198_SCC_l0_lo",
-    "written": "0.030",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.061",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7335,11 +7965,11 @@
   },
   {
     "id": "clin_sd198_SCC_l0_hi",
-    "written": "0.071",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.121",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7350,11 +7980,11 @@
   },
   {
     "id": "clin_sd198_SCC_l2",
-    "written": "0.716",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.721",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7365,11 +7995,11 @@
   },
   {
     "id": "clin_sd198_SCC_l2_lo",
-    "written": "0.652",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.659",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7381,10 +8011,10 @@
   {
     "id": "clin_sd198_SCC_l2_hi",
     "written": "0.778",
-    "file": "r5/posthoc/clinical/results.json",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7394,12 +8024,102 @@
     ]
   },
   {
-    "id": "clin_sd198_AK_l0",
-    "written": "0.010",
-    "file": "r5/posthoc/clinical/results.json",
+    "id": "clin_sd198_AK_acc_l0",
+    "written": "0.950",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_acc_l0_lo",
+    "written": "0.927",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_acc_l0_hi",
+    "written": "0.973",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_acc_l2",
+    "written": "0.997",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "share_accepted_id",
+      "mean"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_acc_l2_lo",
+    "written": "0.990",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "0"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_acc_l2_hi",
+    "written": "1.000",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=2",
+      "sets",
+      "sd198",
+      "classes",
+      "AK",
+      "accepted_ci",
+      "1"
+    ]
+  },
+  {
+    "id": "clin_sd198_AK_l0",
+    "written": "0.033",
+    "file": "r5/posthoc/clinical_t1last/results.json",
+    "key": [
+      "cells",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7410,11 +8130,11 @@
   },
   {
     "id": "clin_sd198_AK_l0_lo",
-    "written": "0.000",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.013",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7425,11 +8145,11 @@
   },
   {
     "id": "clin_sd198_AK_l0_hi",
-    "written": "0.023",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.053",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=0",
+      "main_last \u03bb=0",
       "sets",
       "sd198",
       "classes",
@@ -7440,11 +8160,11 @@
   },
   {
     "id": "clin_sd198_AK_l2",
-    "written": "0.833",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.867",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7455,11 +8175,11 @@
   },
   {
     "id": "clin_sd198_AK_l2_lo",
-    "written": "0.770",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.813",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7470,11 +8190,11 @@
   },
   {
     "id": "clin_sd198_AK_l2_hi",
-    "written": "0.893",
-    "file": "r5/posthoc/clinical/results.json",
+    "written": "0.917",
+    "file": "r5/posthoc/clinical_t1last/results.json",
     "key": [
       "cells",
-      "old_recipe \u03bb=2",
+      "main_last \u03bb=2",
       "sets",
       "sd198",
       "classes",
@@ -7484,58 +8204,261 @@
     ]
   },
   {
-    "id": "clin_a4_fitz_MEL_l0_pct",
-    "written": "7.7",
+    "id": "clin_prose_fitz_MEL_l0_pct",
+    "written": "12.5",
     "file": "r6/writing_r6_number_store.json",
     "key": [
       "values",
-      "clinical_a4_pct",
+      "clinical_t1last_pct",
       "l0",
       "fitzpatrick17k",
-      "MEL"
+      "MEL",
+      "nv09"
     ],
-    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100"
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
   },
   {
-    "id": "clin_a4_fitz_MEL_l2_pct",
-    "written": "39.8",
+    "id": "clin_prose_fitz_MEL_l0_lo_pct",
+    "written": "7.5",
     "file": "r6/writing_r6_number_store.json",
     "key": [
       "values",
-      "clinical_a4_pct",
+      "clinical_t1last_pct",
+      "l0",
+      "fitzpatrick17k",
+      "MEL",
+      "nv09_lo"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_fitz_MEL_l0_hi_pct",
+    "written": "17.6",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l0",
+      "fitzpatrick17k",
+      "MEL",
+      "nv09_hi"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_fitz_MEL_l2_pct",
+    "written": "51.1",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
       "l2",
       "fitzpatrick17k",
-      "MEL"
+      "MEL",
+      "nv09"
     ],
-    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100",
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_fitz_MEL_l2_lo_pct",
+    "written": "41.4",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l2",
+      "fitzpatrick17k",
+      "MEL",
+      "nv09_lo"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_fitz_MEL_l2_hi_pct",
+    "written": "61.0",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l2",
+      "fitzpatrick17k",
+      "MEL",
+      "nv09_hi"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l0_pct",
+    "written": "12.9",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l0",
+      "sd198",
+      "MEL",
+      "nv09"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l0_lo_pct",
+    "written": "8.8",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l0",
+      "sd198",
+      "MEL",
+      "nv09_lo"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l0_hi_pct",
+    "written": "17.2",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l0",
+      "sd198",
+      "MEL",
+      "nv09_hi"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l2_pct",
+    "written": "81.4",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l2",
+      "sd198",
+      "MEL",
+      "nv09"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l2_lo_pct",
+    "written": "75.9",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l2",
+      "sd198",
+      "MEL",
+      "nv09_lo"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_prose_sd_MEL_l2_hi_pct",
+    "written": "86.5",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "l2",
+      "sd198",
+      "MEL",
+      "nv09_hi"
+    ],
+    "note": "clinical_t1last MEL pred-NV conf>0.9 as percent"
+  },
+  {
+    "id": "clin_abs_mel_l0_pct",
+    "written": "13",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "abstract",
+      "mel_l0"
+    ],
+    "note": "abstract: ~13% melanomas pred NV conf>0.9 at \u03bb=0",
     "optional": true
   },
   {
-    "id": "clin_a4_sd_MEL_l0_pct",
-    "written": "10.3",
+    "id": "clin_abs_mel_l2_lo_pct",
+    "written": "51",
     "file": "r6/writing_r6_number_store.json",
     "key": [
       "values",
-      "clinical_a4_pct",
-      "l0",
-      "sd198",
-      "MEL"
+      "clinical_t1last_pct",
+      "abstract",
+      "mel_l2_lo"
     ],
-    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100"
+    "note": "abstract: 51--81% at \u03bb=2 (lo)",
+    "optional": true
   },
   {
-    "id": "clin_a4_sd_MEL_l2_pct",
-    "written": "63.7",
+    "id": "clin_abs_mel_l2_hi_pct",
+    "written": "81",
     "file": "r6/writing_r6_number_store.json",
     "key": [
       "values",
-      "clinical_a4_pct",
-      "l2",
-      "sd198",
-      "MEL"
+      "clinical_t1last_pct",
+      "abstract",
+      "mel_l2_hi"
     ],
-    "note": "A4 clinical MEL pred-NV conf>0.9 as percent; r5/posthoc/clinical a4 cells \u00d7100",
+    "note": "abstract: 51--81% at \u03bb=2 (hi)",
     "optional": true
+  },
+  {
+    "id": "clin_other_l2_lo_pct",
+    "written": "50",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "other_l2",
+      "lo"
+    ],
+    "note": "results: BCC/SCC/AK 50--87% at \u03bb=2 (lo)",
+    "optional": true
+  },
+  {
+    "id": "clin_other_l2_hi_pct",
+    "written": "87",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last_pct",
+      "other_l2",
+      "hi"
+    ],
+    "note": "results: BCC/SCC/AK 50--87% at \u03bb=2 (hi)",
+    "optional": true
+  },
+  {
+    "id": "clin_accept_range_lo",
+    "written": "0.90",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last",
+      "accepted_range",
+      "lo"
+    ],
+    "note": "acceptance 0.90--1.00 (lo)"
+  },
+  {
+    "id": "clin_accept_range_hi",
+    "written": "1.00",
+    "file": "r6/writing_r6_number_store.json",
+    "key": [
+      "values",
+      "clinical_t1last",
+      "accepted_range",
+      "hi"
+    ],
+    "note": "acceptance 0.90--1.00 (hi)"
   },
   {
     "id": "decomp_auroc_identity_neg_log10",
