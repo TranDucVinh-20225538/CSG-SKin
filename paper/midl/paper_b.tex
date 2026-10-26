@@ -7,7 +7,7 @@
 
 \jmlrvolume{-- Under Review}
 \jmlryear{2027}
-\jmlrworkshop{Validation Studies -- MIDL 2027 submission}
+\jmlrworkshop{Clinical Translation \& Validation -- MIDL 2027 submission}
 \editors{Under Review for MIDL 2027}
 
 \newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
@@ -28,6 +28,8 @@ Shift Can Silently Invert Out-of-Distribution Detection}
 \midlauthor{\Name{Duc-Vinh Tran} \Email{vinh.td225538@sis.hust.edu.vn}\\
  \Name{Quyet-Thang Huynh}\nametag{\thanks{Corresponding author}} \Email{thang.huynhquyet@hust.edu.vn}\\
  \addr School of Information and Communication Technology, Hanoi University of Science and Technology, Hanoi 100000, Vietnam}
+
+\usepackage{placeins}
 
 \begin{document}
 \maketitle
@@ -620,13 +622,6 @@ on unseen sources after adaptation, measuring leakage within class and correctin
 priors are cheap steps. With a small labelled sample from the target domain, the last of
 these also reduced the problem in a post hoc analysis.
 
-\section*{Use of AI tools}
-\pending{Check the MIDL 2027 policy on AI use and adapt.} We used a large language model
-(Claude, Anthropic) to help plan analyses, review code and analysis reports, and draft and
-edit the manuscript text. All experiments were run by the authors, all reported numbers were
-checked against the analysis outputs with an automated number checker, and the authors take
-full responsibility for the content.
-
 \section*{Data and code availability}
 \repolink. ISIC 2019 CC~BY-NC~4.0; PAD-UFES-20 CC~BY~4.0;
 Fitzpatrick17k annotations CC~BY-NC-SA~3.0 with images used for evaluation
@@ -641,6 +636,7 @@ The authors declare no competing interests.
 
 \appendix
 
+\FloatBarrier
 \section{Other alignment objectives and the single-encoder model}
 \label{app:single}
 
@@ -702,6 +698,7 @@ does invert detection on \texttt{pad\_heldout} (Section~\ref{sec:site}). IRM's l
 values reflect a classifier that has collapsed (balanced accuracy $0.167$ at weight $100$),
 not an inversion of the feature scores.
 
+\FloatBarrier
 \section{Label-shift intervention: full results}
 \label{app:shift}
 
@@ -777,6 +774,7 @@ SD-198 & 75 & -0.172 & [-0.221, -0.123] & yes & 1.04 & 1.03 & yes \\
 \end{tabular}
 \end{table}
 
+\FloatBarrier
 \section{BCN$\to$HAM: label shift without DANN (post hoc)}
 \label{app:site}
 
@@ -816,6 +814,7 @@ interval excludes $0.5$, and dispersion ratios are close to one. The inversion i
 a label-shift effect on the pooled score; we cannot exclude a small within-class
 contribution.
 
+\FloatBarrier
 \section{Domain-direction analysis}
 \label{app:domain}
 
@@ -851,6 +850,7 @@ slightly larger at $\lam=2$ on four of five sets (differences $0.02$--$0.08$). O
 BCN/HAM directions, the orthogonal deviation also predicts the pull, so the pattern is
 specific to the cross-modality setting.
 
+\FloatBarrier
 \section{Held-out domain probes}
 \label{app:probes}
 
@@ -881,6 +881,7 @@ leakage. At $\lam=0.25$ in the main recipe (observation after the fact, $n=5$), 
 whose held-out probe still reads the domain ($0.67$) does not invert on any set, three of the
 four seeds at chance invert on all four, and one inverts only on MED-NODE.
 
+\FloatBarrier
 \section{Importance-weighted alignment by prior estimate}
 \label{app:prior}
 
@@ -918,6 +919,7 @@ Fitzpatrick17k) at $\lam=2$ and $0.372$ / $0.403$ at $\lam=0.5$; IWCDAN $0.360$ 
 $0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$ At $\lam=0.5$, IWDAN (online) reaches $0.667$ / $0.633$ and IWDAN with the true priors $0.680$ /
 $0.742$.
 
+\FloatBarrier
 \section{Sign reversal and scoring-side variants}
 \label{app:flip}
 
@@ -929,6 +931,7 @@ Mahalanobis at $\lam=2$: Fitzpatrick17k $0.443$, MED-NODE $0.376$, SD-198 $0.427
 \texttt{pad\_heldout} $0.439$; per-class standardised Mahalanobis: $0.478$, $0.340$, $0.447$,
 $0.424$.
 
+\FloatBarrier
 \section{Clinical consequence}
 \label{app:clinical}
 
@@ -965,6 +968,7 @@ SD-198 & AK & 60 & 0.950 [0.927, 0.973] & 0.997 [0.990, 1.000] & 0.033 [0.013, 0
 \end{tabular}}
 \end{table}
 
+\FloatBarrier
 \section{Negative results}
 \label{app:negative}
 
@@ -980,6 +984,7 @@ and a label-shift level from $0$ to $1$, with a small encoder and gradient rever
 no inversion at any setting (Mahalanobis AUROC $0.57$--$0.66$); leakage in the toy stayed
 near $0.5$--$0.58$, so it may not reproduce the conditions of the real data.
 
+\FloatBarrier
 \section{Experiments that did not take place}
 \label{app:external}
 
@@ -994,8 +999,11 @@ NIH ChestX-ray14 and pediatric radiographs as the aligned domains, Mahalanobis A
 Shenzhen was $0.522$ before any adaptation, below our headroom requirement, so we stopped
 before training adversarial models.
 
+\FloatBarrier
 \section{Other lesion-disjoint splits}
 \label{app:splits}
+
+Table~\ref{tab:splits} repeats the main comparison ($\lam = 0$ vs.\ $\lam = 2$) on three further lesion-disjoint ISIC splits, built with split seeds 7, 123 and 2027.
 
 \begin{table}[h]
 \centering
@@ -1022,6 +1030,7 @@ split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k
 \end{table}
 
 
+\FloatBarrier
 \section{Image-level split (lesion leakage; for reference only)}
 \label{app:imagelevel}
 
@@ -1057,4 +1066,5 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 \end{tabular}}
 \end{table}
 
+\FloatBarrier
 \end{document}
