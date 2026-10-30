@@ -1,0 +1,37 @@
+[
+  {
+    "panel": "Fig 1a\u2013d",
+    "script_fn": "fig1_intervention",
+    "run_set": "Table 1 last.ckpt (r5/t1last/summary.csv)",
+    "checkpoint": "last.ckpt",
+    "note": "load_t1last_by_lambda; OOD ECE from UNSEEN_ECE.json"
+  },
+  {
+    "panel": "Fig 2",
+    "script_fn": "fig2_confidence",
+    "run_set": "phase13/per_run (STALE vs Table 1)",
+    "checkpoint": "phase13 (best-era)",
+    "note": "still load_phase13_runs; regenerate from t1last below"
+  },
+  {
+    "panel": "Fig 3",
+    "script_fn": "fig3_detectors",
+    "run_set": "phase3_sweep summaries",
+    "checkpoint": "phase3",
+    "note": "load_phase3_summaries"
+  },
+  {
+    "panel": "Fig 4\u20136 / S*",
+    "script_fn": "(various)",
+    "run_set": "see plot_manuscript_figures.py",
+    "checkpoint": "mixed / legacy",
+    "note": "FIGURES_REPORT.md header is stale; trust the script"
+  },
+  {
+    "panel": "\u00a74.4 / App clinical %",
+    "script_fn": "clinical_t1last",
+    "run_set": "Table 1 last.ckpt (clinical_t1last)",
+    "checkpoint": "last.ckpt",
+    "note": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/posthoc/clinical_t1last/results.json"
+  }
+]
