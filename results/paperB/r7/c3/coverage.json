@@ -1,0 +1,20 @@
+{
+  "csv": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase11_third_domain/fitzpatrick17k.csv",
+  "n_full_csv": 16577,
+  "n_kept": 3887,
+  "n_disk_jpg": 3887,
+  "download_logs_found": [
+    "/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/fitzpatrick_download.log",
+    "/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/fitzpatrick_download.log"
+  ],
+  "missing_by_reason": {
+    "ok": 37,
+    "error:HTTP Error 406: Not Acceptable": 113
+  },
+  "missing_by_host_sample": {
+    "atlasdermatologico.com.br": 37,
+    "www.dermaamin.com": 113
+  },
+  "header_sample_n": 150,
+  "tv": []
+}
