@@ -1,0 +1,49 @@
+{
+  "outcome": "invariance not reached (V1=0.884>0.60): test did not take place; W1 stays open",
+  "leakage": 0.8837843249427918,
+  "invariance": false,
+  "inverts": false,
+  "pad_rule": {
+    "mean": 0.5460497490057806,
+    "sd": 0.032506069572473754,
+    "pooled_ci": [
+      0.5187817037111866,
+      0.5724106696364775
+    ],
+    "k_below": 0,
+    "n_seeds": 5,
+    "rule": "above",
+    "per_seed": {
+      "42": {
+        "point": 0.5739655653351239,
+        "ci_lo": 0.5450596104361857,
+        "ci_hi": 0.601611756572126,
+        "ci_entirely_below_0.5": false
+      },
+      "52": {
+        "point": 0.5521726738795119,
+        "ci_lo": 0.52294864952335,
+        "ci_hi": 0.5804934513464088,
+        "ci_entirely_below_0.5": false
+      },
+      "62": {
+        "point": 0.5752004149976903,
+        "ci_lo": 0.5459040534681437,
+        "ci_hi": 0.6013519533233326,
+        "ci_entirely_below_0.5": false
+      },
+      "72": {
+        "point": 0.49766839435364985,
+        "ci_lo": 0.4679849917327486,
+        "ci_hi": 0.5271947531350282,
+        "ci_entirely_below_0.5": false
+      },
+      "82": {
+        "point": 0.5312416964629275,
+        "ci_lo": 0.5024056408179436,
+        "ci_hi": 0.5599947015639621,
+        "ci_entirely_below_0.5": false
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "tag": "r7_t1_dual_dinov2_vits14_ladv2_s72",
+  "item": "t1",
+  "architecture": "dual_encoder_csg",
+  "split": "lesion-level (R2 item 4)",
+  "seed": 72,
+  "max_epochs": 40,
+  "model_kwargs": {
+    "backbone": "dinov2_vits14",
+    "lesion_classes": 8,
+    "domain_classes": 2,
+    "lesion_latent_dim": 16,
+    "context_latent_dim": 64,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "lambda_ctx": 1.0,
+    "lambda_adv": 2.0,
+    "lambda_orth": 1.0,
+    "adv_lr_multiplier": 30.0,
+    "lesion_cls_lr_multiplier": 0.2,
+    "cls_weight": null,
+    "backbone_lr_mult": 0.1,
+    "penalty": "none",
+    "penalty_weight": 0.0
+  },
+  "weights": "/data2/cmdir/home/toandq/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+  "pad_adv_frac": 1.0,
+  "pad_adv_subsample": {
+    "frac": 1.0,
+    "seed": 0,
+    "n_images": 1582,
+    "n_patients": null,
+    "class_counts": {
+      "MEL": 43,
+      "NV": 156,
+      "BCC": 569,
+      "AK": 528,
+      "BKL": 160,
+      "DF": 0,
+      "VASC": 0,
+      "SCC": 126
+    }
+  },
+  "pad_adv_feeds": "adversarial and context branches; pad_heldout unchanged",
+  "scoring_space": "z_lesion_norm",
+  "recipe": {
+    "lesion_latent_dim": 16,
+    "context_latent_dim": 64,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "adv_lr_multiplier": 30.0,
+    "max_epochs": 40,
+    "batch_size": 32,
+    "lambda_orth": 1.0,
+    "lambda_ctx": 1.0,
+    "class_balance": "none"
+  },
+  "recipe_source": "current (Phase 3 / R2 item 4 values)",
+  "recipe_not_applicable": []
+}

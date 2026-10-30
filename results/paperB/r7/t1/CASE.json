@@ -1,0 +1,8 @@
+{
+  "case": "C",
+  "reason": "gap=0.095 (near=False), pad Rule A=True, labelled-unseen Rule A count=3, leakage \u03bb=2=0.576",
+  "gap": 0.09525779830839765,
+  "id_dual_l0": 0.4699365895265982,
+  "id_erm": 0.5651943878349959,
+  "leakage_l2": 0.5759051614543607
+}
