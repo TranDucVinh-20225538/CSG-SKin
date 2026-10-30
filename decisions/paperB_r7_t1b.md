@@ -38,3 +38,7 @@ If T1b cannot run (GPU time, failure), write in this decisions file: "W1 is not 
 `results/paperB/r7/t1b/runs/<tag>/`, `results/paperB/r7/t1b/{summary.csv,BOOTSTRAP.json,REPORT.md}`.
 
 ## Deviations
+
+### Amendment 2026-10-30 (before the first T1b run)
+
+Work-order update: T1b uses **5 seeds** (42, 52, 62, **72, 82**) at λ = 2; λ = 0 reference = the T1 ERM runs at the same five seeds. Original pending 3-seed array cancelled before any T1b task started; resubmitted as 5-seed array. Reading rules above are **not** edited. Rule A remains the absolute count (≥3 seeds with CI upper < 0.5, and pooled CI upper < 0.5); with 5 seeds that is not “all 5”.

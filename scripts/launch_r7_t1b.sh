@@ -10,5 +10,5 @@ RECIPE="${RECIPE:-current}"
 VIT="${VIT:-dinov2_vits14}"
 DEP=()
 if [[ -n "${AFTER_JOBID:-}" ]]; then DEP=(--dependency=afterany:${AFTER_JOBID}); fi
-J=$(sbatch --parsable ${DEP[@]+"${DEP[@]}"} --array=0-2%2 --export=ALL,STAGE=t1b,BACKBONE=${VIT},RECIPE=${RECIPE} slurm/r7_single_gpu.sbatch)
-echo "T1b=${J} backbone=${VIT}"
+J=$(sbatch --parsable ${DEP[@]+"${DEP[@]}"} --array=0-4%2 --export=ALL,STAGE=t1b,BACKBONE=${VIT},RECIPE=${RECIPE} slurm/r7_single_gpu.sbatch)
+echo "T1b=${J} backbone=${VIT} (5 seeds)"

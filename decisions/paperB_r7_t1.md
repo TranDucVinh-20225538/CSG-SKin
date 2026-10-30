@@ -44,3 +44,7 @@ Rule A for "inverts": pooled CI upper < 0.5 and at least 3 seeds with their own 
 `results/paperB/r7/t1/runs/<tag>/`, `results/paperB/r7/t1/{summary.csv,BOOTSTRAP.json,REPORT.md,probes/}`, checkpoints under `checkpoints/r7_t1/`.
 
 ## Deviations
+
+### Amendment 2026-10-30 (before T1b; ERM still running)
+
+Work-order update: the T1 ERM reference uses **5 seeds** (42, 52, 62, **72, 82**), not 3. Dual grid unchanged (λ ∈ {0, 2} × 5 seeds). Seeds 72 and 82 for ERM are submitted as additional runs after the original 3-seed array; reading rules above are **not** edited. Competence gap and Cases A/B/C still use the ERM-DINOv2 mean over whatever ERM seeds completed (now five).

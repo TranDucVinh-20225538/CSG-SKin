@@ -44,8 +44,9 @@ def main():
     leak = float(df.leakage.mean())
     inv = leak <= 0.60
     pad = B.get("single|lam2", {}).get("pad_heldout", {}).get("mahalanobis_classcond", {})
-    # With 3 seeds Rule A requires all 3 CI uppers < 0.5
-    inverts = bool(pad) and pad.get("rule") == "A" and pad.get("k_below", 0) >= 3 and pad.get("n_seeds", 0) == 3
+    # Rule A absolute count (≥3 seeds with CI upper < 0.5); amendment 2026-10-30: 5 seeds, not "all 5"
+    inverts = bool(pad) and pad.get("rule") == "A" and pad.get("k_below", 0) >= 3
+
     if inv and inverts:
         outcome = "invariance reached and inverts on pad_heldout: W1 answered for standard DANN on this backbone"
     elif inv and not inverts:

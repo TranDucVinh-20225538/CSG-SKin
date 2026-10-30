@@ -11,5 +11,5 @@ VIT="${VIT:-dinov2_vits14}"
 CK="${HOME}/.cache/torch/hub/checkpoints"
 [[ -f "${CK}/${VIT}_pretrain.pth" ]] || { echo "missing ${CK}/${VIT}_pretrain.pth"; exit 1; }
 DUAL=$(sbatch --parsable --array=0-9%2 --export=ALL,STAGE=t1_dual,BACKBONE=${VIT},RECIPE=${RECIPE} slurm/r7_dual_gpu.sbatch)
-ERM=$(sbatch --parsable --array=0-2%2 --export=ALL,STAGE=t1_erm,BACKBONE=${VIT},RECIPE=${RECIPE} slurm/r7_single_gpu.sbatch)
-echo "T1 dual=${DUAL} erm=${ERM} backbone=${VIT}"
+ERM=$(sbatch --parsable --array=0-4%2 --export=ALL,STAGE=t1_erm,BACKBONE=${VIT},RECIPE=${RECIPE} slurm/r7_single_gpu.sbatch)
+echo "T1 dual=${DUAL} erm=${ERM} backbone=${VIT} (ERM 5 seeds)"

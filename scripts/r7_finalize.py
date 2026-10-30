@@ -36,15 +36,14 @@ def main():
     (OUT / "STATUS.json").write_text(json.dumps(status, indent=2) + "\n")
     print("status", status, flush=True)
 
-    if status["t1_dual"] >= 10 and status["t1_erm"] >= 3:
+    if status["t1_dual"] >= 10 and status["t1_erm"] >= 5:
         run([sys.executable, "scripts/r7_t1_report.py"])
-        # class-aware probes on T1 dual λ=0/2 if script accepts paths
         try:
             run([sys.executable, "scripts/r6_class_aware_heldout_probes.py",
                  "--out", str(OUT / "t1" / "probes")])
         except Exception as e:
             print("probes skipped:", e, flush=True)
-    if status["t1b"] >= 3:
+    if status["t1b"] >= 5:
         run([sys.executable, "scripts/r7_t1b_report.py"])
     if status["t2"] >= 9:
         run([sys.executable, "scripts/r7_t2_report.py"])
@@ -56,7 +55,7 @@ def main():
          "## Item hashes and status", "",
          "| item | summaries | report |",
          "|---|---:|---|"]
-    for item, need in (("t1", 13), ("t1b", 3), ("t2", 9)):
+    for item, need in (("t1", 15), ("t1b", 5), ("t2", 9)):
         n = status.get(item, status.get("t1_dual", 0) if item == "t1" else 0)
         if item == "t1":
             n = status["t1_dual"] + status["t1_erm"]
