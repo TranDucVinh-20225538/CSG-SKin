@@ -35,7 +35,7 @@ from src.utils.seed import seed_everything  # noqa: E402
 
 def parse():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--item", required=True, help="output folder under results/paperB/r5 (q3, p11, ...)")
+    ap.add_argument("--item", required=True, help="output folder name under results base (q3, p11, t1, t2, ...)")
     ap.add_argument("--backbone", default="effb3", choices=M.BACKBONES)
     ap.add_argument("--lambda_adv", type=float, required=True)
     ap.add_argument("--seed", type=int, required=True)
@@ -44,6 +44,14 @@ def parse():
     ap.add_argument("--max_epochs", type=int, default=0, help="0 = recipe value; >0 overrides (P11 longer schedule)")
     ap.add_argument("--backbone_lr_mult", type=float, default=-1.0,
                     help="-1 = 0.1 for ViT backbones (DINOv2 / timm ViT), 1.0 otherwise")
+    ap.add_argument("--pad_adv_frac", type=float, default=1.0,
+                    help="patient-stratified fraction of pad_adv (1.0 = Table 1; feeds adv + context branches)")
+    ap.add_argument("--pad_adv_subsample_seed", type=int, default=0,
+                    help="fixed subsample seed (one draw per frac; default 0)")
+    ap.add_argument("--results_dir", default="",
+                    help="If set, write under this dir/runs/<tag> (e.g. results/paperB/r7/t1). Else r5/<item>/runs.")
+    ap.add_argument("--tag_prefix", default="", help="e.g. r7_t1_")
+    ap.add_argument("--ckpt_subdir", default="", help="checkpoints/<subdir>/<tag>; empty = r5_<item>")
     ap.add_argument("--num_workers", type=int, default=6)
     ap.add_argument("--dry_run", action="store_true")
     ap.add_argument("--resume", action="store_true")
@@ -53,7 +61,9 @@ def parse():
 
 
 def run_tag(a, epochs_override):
-    t = "dual_{}_ladv{}_s{}".format(a.backbone, R.lam_tag(a.lambda_adv), a.seed)
+    t = "{}dual_{}_ladv{}_s{}".format(a.tag_prefix, a.backbone, R.lam_tag(a.lambda_adv), a.seed)
+    if abs(float(a.pad_adv_frac) - 1.0) > 1e-12:
+        t += "_pad{}".format(R.lam_tag(a.pad_adv_frac))
     if a.penalty != "none":
         t += "_{}{}".format(a.penalty, R.lam_tag(a.penalty_weight))
     if epochs_override:
@@ -66,8 +76,12 @@ def main():
     rec, src = r5_recipe.resolve(a.recipe)
     epochs = a.max_epochs or int(rec["max_epochs"])
     tag = run_tag(a, a.max_epochs)
-    run_dir = R.R5 / a.item / "runs" / tag
-    ckpt_dir = R.PAPERB / "checkpoints" / "r5_{}".format(a.item) / tag
+    base = Path(a.results_dir) if a.results_dir else (R.R5 / a.item)
+    if a.results_dir and not Path(a.results_dir).is_absolute():
+        base = R.PAPERB / a.results_dir
+    run_dir = base / "runs" / tag
+    ck_name = a.ckpt_subdir or "r5_{}".format(a.item)
+    ckpt_dir = R.PAPERB / "checkpoints" / ck_name / tag
     run_dir.mkdir(parents=True, exist_ok=True)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     if a.skip_done and (run_dir / "summary.json").exists() and not a.dry_run:
@@ -80,6 +94,7 @@ def main():
     seed_everything(a.seed)
     pl.seed_everything(a.seed, workers=True)
     D = R.isic_lesion_data()
+    D["pad_adv"], pad_meta = R.subsample_pad_adv(D["pad_adv"], a.pad_adv_frac, a.pad_adv_subsample_seed)
     bb_mult = a.backbone_lr_mult if a.backbone_lr_mult > 0 else (0.1 if a.backbone in M.VIT_LIKE else 1.0)
     cw = R.class_weights(D["train"].label_idx, 8) if rec["class_balance"] == "weighted_ce" else None
     kw = dict(backbone=a.backbone, lesion_classes=8, domain_classes=2,
@@ -90,12 +105,15 @@ def main():
               cls_weight=cw, backbone_lr_mult=bb_mult, penalty=a.penalty, penalty_weight=float(a.penalty_weight))
     cfg = {"tag": tag, "item": a.item, "architecture": "dual_encoder_csg", "split": "lesion-level (R2 item 4)",
            "seed": a.seed, "max_epochs": epochs, "model_kwargs": kw, "weights": wpath,
+           "pad_adv_frac": float(a.pad_adv_frac), "pad_adv_subsample": pad_meta,
+           "pad_adv_feeds": "adversarial and context branches; pad_heldout unchanged",
            "scoring_space": "z_lesion_norm", **r5_recipe.describe(rec, src)}
     (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
     val_ds = SkinDataset(D["val"], transform=build_val_transform_robust())
     if a.dry_run:
         print("dry_run", tag, "train", len(D["train"]), "val", len(val_ds), "pad_adv", len(D["pad_adv"]),
-              "pad_hold", len(D["pad_hold"]), "extra", {k: len(v) for k, v in D["extra"].items()})
+              "pad_hold", len(D["pad_hold"]), "pad_meta", pad_meta.get("class_counts"),
+              "extra", {k: len(v) for k, v in D["extra"].items()})
         return
 
     t0 = time.time()
@@ -135,6 +153,7 @@ def main():
     ep_best = int(torch.load(str(best), map_location="cpu", weights_only=False)["epoch"])
     summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone, "penalty": a.penalty,
                  "penalty_weight": a.penalty_weight, "max_epochs": epochs, "checkpoint_policy": "last",
+                 "pad_adv_frac": float(a.pad_adv_frac), "pad_adv_subsample": pad_meta,
                  "primary_checkpoint": str(last), "primary_epoch": ep_last, "best_checkpoint": str(best),
                  "best_epoch": ep_best,
                  "secondary_bestval": {"checkpoint": str(best), "epoch": ep_best, "out_dir": str(run_dir / "bestval"),

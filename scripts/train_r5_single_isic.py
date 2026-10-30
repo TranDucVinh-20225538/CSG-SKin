@@ -50,16 +50,17 @@ CONFIGS = {"baseline": {}, "T1_ganin_warmup": _T1, "T2_bank_reinit": _T2, "T3_st
 LADDER = ("baseline", "T1_ganin_warmup", "T2_bank_reinit", "T3_strong", "T4_long")
 STOP_LEAKAGE = 0.60
 BUDGET_GPU_H = 20.0
-EST_GPU_H = {"resnet50": 1.1, "effb3": 1.2}
+EST_GPU_H = {"resnet50": 1.1, "effb3": 1.2, "dinov2_vits14": 1.6, "dinov2_vitb14": 2.4}
 P9_LADDER = R.R5 / "p9" / "ladder"
 SELECTED = R.R5 / "p9" / "SELECTED_{}{}.json"
+SINGLE_BACKBONES = ("resnet50", "effb3", "dinov2_vits14", "dinov2_vitb14")
 
 
 def parse():
     ap = argparse.ArgumentParser()
     ap.add_argument("--item", default="p9")
-    ap.add_argument("--stage", default="ladder", help="subfolder: ladder | stage2 | cells")
-    ap.add_argument("--backbone", default="resnet50", choices=("resnet50", "effb3"))
+    ap.add_argument("--stage", default="ladder", help="subfolder: ladder | stage2 | cells | erm | runs")
+    ap.add_argument("--backbone", default="resnet50", choices=SINGLE_BACKBONES)
     ap.add_argument("--config", default="baseline",
                     help="toolbox config name, or 'selected' = P9's pick for this backbone (else baseline)")
     ap.add_argument("--lambda_adv", type=float, required=True)
@@ -67,8 +68,14 @@ def parse():
     ap.add_argument("--penalty", default="none", choices=("none", "mkmmd", "coral", "mmd_legacy"))
     ap.add_argument("--penalty_weight", type=float, default=0.0)
     ap.add_argument("--max_epochs", type=int, default=0)
+    ap.add_argument("--backbone_lr_mult", type=float, default=-1.0,
+                    help="-1 = 0.1 for ViT backbones (DINOv2), 1.0 otherwise")
     ap.add_argument("--cap_gpu_h", type=float, default=0.0, help="stage-wide GPU-h cap (0 = none)")
     ap.add_argument("--ladder", action="store_true", help="apply the P9 stop rule / budget cap before training")
+    ap.add_argument("--results_dir", default="",
+                    help="If set, write under this dir/<stage>/<tag>. Else r5/<item>/<stage>.")
+    ap.add_argument("--tag_prefix", default="", help="e.g. r7_t1_")
+    ap.add_argument("--ckpt_subdir", default="", help="checkpoints/<subdir>/<tag>; empty = r5_<item>/<stage>")
     ap.add_argument("--num_workers", type=int, default=6)
     ap.add_argument("--dry_run", action="store_true")
     ap.add_argument("--resume", action="store_true")
@@ -119,23 +126,33 @@ def main():
     cname, tb, csrc = resolve_config(a.config, a.backbone, a.recipe)
     epochs = a.max_epochs or int(rec["max_epochs"]) * int(tb.pop("epoch_mult", 1))
     tb["adv_lr_multiplier"] = float(tb.get("adv_lr_multiplier", rec["adv_lr_multiplier"]))
-    tag = "single_{}_{}_ladv{}_s{}".format(a.backbone, cname, R.lam_tag(a.lambda_adv), a.seed)
+    tag = "{}single_{}_{}_ladv{}_s{}".format(a.tag_prefix, a.backbone, cname, R.lam_tag(a.lambda_adv), a.seed)
     if a.penalty != "none":
         tag += "_{}{}".format(a.penalty, R.lam_tag(a.penalty_weight))
     if a.max_epochs:
         tag += "_ep{}".format(a.max_epochs)
     tag += r5_recipe.tag(a.recipe)
-    run_dir = R.R5 / a.item / a.stage / tag
-    ckpt_dir = R.PAPERB / "checkpoints" / "r5_{}".format(a.item) / a.stage / tag
+    base = Path(a.results_dir) if a.results_dir else (R.R5 / a.item)
+    if a.results_dir and not Path(a.results_dir).is_absolute():
+        base = R.PAPERB / a.results_dir
+    run_dir = base / a.stage / tag
+    ck_name = a.ckpt_subdir or "r5_{}".format(a.item)
+    ckpt_dir = R.PAPERB / "checkpoints" / ck_name / a.stage / tag
     run_dir.mkdir(parents=True, exist_ok=True)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     if a.skip_done and (run_dir / "summary.json").exists() and not a.dry_run:
         print("skip_done", tag)
         return
+    if a.backbone in M.BACKBONES:
+        ok, wpath = M.weights_available(a.backbone)
+        if not ok:
+            raise SystemExit("pretrained weights for {} not in cache ({})".format(a.backbone, wpath))
+    else:
+        wpath = None
     if a.cap_gpu_h:
         used = sum(float(json.loads(f.read_text()).get("gpu_hours", 0.0))
-                   for f in (R.R5 / a.item / a.stage).glob("*/summary.json"))
-        est = EST_GPU_H[a.backbone] * epochs / 40.0
+                   for f in (base / a.stage).glob("*/summary.json"))
+        est = EST_GPU_H.get(a.backbone, 1.6) * epochs / 40.0
         if used + est > a.cap_gpu_h:
             why = {"tag": tag, "skipped": True, "stage_gpu_h_used": used, "this_run_est": est, "cap": a.cap_gpu_h}
             (run_dir / "skipped.json").write_text(json.dumps(why, indent=2) + "\n")
@@ -143,7 +160,7 @@ def main():
             return
     if a.ladder:
         used, reached = ladder_state(a.backbone, a.recipe)
-        est = EST_GPU_H[a.backbone] * epochs / 40.0
+        est = EST_GPU_H.get(a.backbone, 1.6) * epochs / 40.0
         if reached or used + est > BUDGET_GPU_H:
             why = {"tag": tag, "skipped": True, "reached_by": reached, "ladder_gpu_h_used": used, "this_run_est": est,
                    "cap": BUDGET_GPU_H, "stop_leakage": STOP_LEAKAGE}
@@ -157,17 +174,21 @@ def main():
     val_ds = SkinDataset(D["val"], transform=build_val_transform_robust())
     bs = int(rec["batch_size"])
     total = epochs * (len(D["train"]) // bs)
+    bb_mult = a.backbone_lr_mult if a.backbone_lr_mult > 0 else (0.1 if a.backbone in M.VIT_LIKE else 1.0)
     kw = dict(backbone=a.backbone, n_classes=8, n_domains=2, lr=float(rec["lr"]), weight_decay=float(rec["weight_decay"]),
               cls_lr_multiplier=float(rec["cls_lr_multiplier"]), lambda_adv=float(a.lambda_adv), toolbox=tb,
-              cls_weight=cw, penalty=a.penalty, penalty_weight=float(a.penalty_weight), total_steps=total)
+              cls_weight=cw, penalty=a.penalty, penalty_weight=float(a.penalty_weight), total_steps=total,
+              backbone_lr_mult=bb_mult)
     cfg = {"tag": tag, "item": a.item, "stage": a.stage, "architecture": "single_encoder_dann_" + a.backbone,
            "split": "lesion-level (R2 item 4)", "config": cname, "config_source": csrc,
            "toolbox": dict(M.TOOLBOX_DEFAULT, **tb), "max_epochs": epochs, "model_kwargs": kw,
+           "weights": wpath, "backbone_lr_mult": bb_mult,
+           "erm_note": ("λ_adv=0: no domain-head gradient reaches the encoder" if float(a.lambda_adv) == 0 else None),
            "scoring_space": "z_norm (BN of pooled backbone features)",
            **r5_recipe.describe(rec, src, not_applicable=r5_recipe.DUAL_ONLY)}
     (run_dir / "config.json").write_text(json.dumps(cfg, indent=2) + "\n")
     if a.dry_run:
-        print("dry_run", tag, "train", len(D["train"]), "steps", total)
+        print("dry_run", tag, "train", len(D["train"]), "steps", total, "bb_lr_mult", bb_mult)
         return
 
     t0 = time.time()

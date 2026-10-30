@@ -327,13 +327,14 @@ class SingleEncToolboxLit(pl.LightningModule):
 
     def __init__(self, backbone="resnet50", n_classes=8, n_domains=2, lr=1e-4, weight_decay=1e-4,
                  cls_lr_multiplier=0.2, lambda_adv=0.0, toolbox=None, cls_weight=None, penalty="none",
-                 penalty_weight=0.0, total_steps=1, log_path=None, pretrained=True):
+                 penalty_weight=0.0, total_steps=1, log_path=None, pretrained=True, backbone_lr_mult=1.0):
         super().__init__()
         self.automatic_optimization = False
         tb = dict(TOOLBOX_DEFAULT)
         tb.update(toolbox or {})
         self.tb = tb
         self.lr, self.wd, self.cls_mult = float(lr), float(weight_decay), float(cls_lr_multiplier)
+        self.backbone_lr_mult = float(backbone_lr_mult)
         self.lambda_adv = float(lambda_adv)
         self.net = SingleEncNet(backbone, n_classes, n_domains, [tuple(h) for h in tb["head_specs"]], pretrained)
         self.register_buffer("cls_weight", torch.tensor(cls_weight, dtype=torch.float32) if cls_weight is not None
@@ -352,8 +353,9 @@ class SingleEncToolboxLit(pl.LightningModule):
 
     def configure_optimizers(self):
         adv_lr = self.lr * float(self.tb["adv_lr_multiplier"])
+        bb_lr = self.lr * self.backbone_lr_mult
         return torch.optim.AdamW([
-            {"params": list(self.net.backbone.parameters()) + list(self.net.feat_bn.parameters()), "lr": self.lr,
+            {"params": list(self.net.backbone.parameters()) + list(self.net.feat_bn.parameters()), "lr": bb_lr,
              "weight_decay": self.wd},
             {"params": self.net.adv.parameters(), "lr": adv_lr, "weight_decay": self.wd},
             {"params": self.net.classifier.parameters(), "lr": self.lr * self.cls_mult, "weight_decay": self.wd},

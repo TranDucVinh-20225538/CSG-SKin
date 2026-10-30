@@ -14,6 +14,7 @@ ood_metrics.mahalanobis_min_squared_distances, which loops in Python).
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -37,7 +38,9 @@ from src.utils import ood_metrics  # noqa: E402
 
 PAPERB = Path("/data2/cmdir/home/toandq/CSG-Skin-paperB")
 R5 = PAPERB / "results" / "paperB" / "r5"
+R7 = PAPERB / "results" / "paperB" / "r7"
 PREREG = PAPERB / "results" / "paperB" / "PREREGISTER_BOOTSTRAP.json"
+PAD_PAT = re.compile(r"PAT_(\d+)_(\d+)_(\d+)")
 P7A_SETS = R5 / "p7a" / "sets"
 EXTRA_SETS = ("mednode", "sd198", "scin")
 LABELS = ("MEL", "NV", "BCC", "AK", "BKL", "DF", "VASC", "SCC")
@@ -75,6 +78,47 @@ def isic_lesion_data():
              for n in EXTRA_SETS if (P7A_SETS / "{}.csv".format(n)).exists()}
     return {"train": train, "val": val, "test": test, "pad": pad, "pad_adv": pad_adv, "pad_hold": pad_hold,
             "fitz": sorted(p3.FITZ_DIR.glob("*.jpg")), "extra": extra, "hygiene": hygiene}
+
+
+def subsample_pad_adv(pad_adv, frac, seed=0):
+    """Patient-stratified subsample of pad_adv that preserves class mix (approx.).
+
+    One fixed draw per (frac, seed); default seed 0 as in decisions/paperB_r7_t2.md.
+    frac=1.0 returns a copy unchanged. pad_heldout is never touched here.
+    The returned frame feeds both the adversarial and the context branch (same CombinedTrainDataset rows).
+    """
+    frac = float(frac)
+    out = pad_adv.copy().reset_index(drop=True)
+    if abs(frac - 1.0) < 1e-12:
+        meta = {"frac": 1.0, "seed": int(seed), "n_images": int(len(out)), "n_patients": None,
+                "class_counts": {LABELS[i]: int((out.label_idx == i).sum()) for i in range(8)}}
+        return out, meta
+    if not (0.0 < frac < 1.0):
+        raise ValueError("pad_adv_frac must be in (0, 1], got {}".format(frac))
+    pids = []
+    for p in out.path.astype(str):
+        m = PAD_PAT.search(p)
+        if not m:
+            raise RuntimeError("Cannot parse patient_id from {}".format(p))
+        pids.append(m.group(1))
+    out = out.assign(patient_id=pids)
+    # patient-level majority class for stratification
+    pat = (out.groupby("patient_id")
+             .agg(label_idx=("label_idx", lambda s: int(s.mode().iloc[0])), n=("label_idx", "size"))
+             .reset_index())
+    rng = np.random.default_rng(int(seed))
+    keep = []
+    for lab, g in pat.groupby("label_idx"):
+        n_keep = max(1, int(round(len(g) * frac))) if len(g) else 0
+        n_keep = min(n_keep, len(g))
+        chosen = rng.choice(g.patient_id.to_numpy(), size=n_keep, replace=False)
+        keep.extend(chosen.tolist())
+    sub = out[out.patient_id.isin(set(keep))].drop(columns=["patient_id"]).reset_index(drop=True)
+    meta = {"frac": frac, "seed": int(seed), "n_images": int(len(sub)), "n_patients": int(len(keep)),
+            "class_counts": {LABELS[i]: int((sub.label_idx == i).sum()) for i in range(8)},
+            "full_class_counts": {LABELS[i]: int((out.label_idx == i).sum()) for i in range(8)},
+            "patient_ids": sorted(keep)}
+    return sub, meta
 
 
 def class_weights(labels, n_classes):
