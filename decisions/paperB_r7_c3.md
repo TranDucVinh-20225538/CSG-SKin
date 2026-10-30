@@ -14,3 +14,5 @@ Committed before the C3 job. Deviations appended at the end.
 `results/paperB/r7/c3/{coverage.json,REPORT.md}`.
 
 ## Deviations
+
+- 2026-10-30: atlas host www.dermaamin.com returns HTTP 406 for HEAD and Range-GET probes; missing-image reason table is therefore host-refusal rather than 404/unreachable. Kept=3887 matched by md5hash.jpg; TV reported for raw label, ISIC-mapped label, and fitzpatrick_scale.
