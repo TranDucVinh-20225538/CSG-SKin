@@ -57,11 +57,17 @@ def mix(series):
 
 
 def head_status(url, timeout=8):
+    """Prefer HEAD; on 405/406 fall back to GET with Range: bytes=0-0 (still no image body download)."""
+    import urllib.error
     import urllib.request
-    try:
-        req = urllib.request.Request(url, method="HEAD")
+
+    def _one(method, headers=None):
+        req = urllib.request.Request(url, method=method, headers=headers or {})
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return int(resp.status), "ok"
+
+    try:
+        return _one("HEAD")
     except Exception as e:
         msg = str(e)
         if "404" in msg:
@@ -70,7 +76,20 @@ def head_status(url, timeout=8):
             return 403, "forbidden"
         if "timed out" in msg.lower() or "Name or service" in msg or "Network is unreachable" in msg:
             return None, "host_unreachable"
-        return None, "error:" + msg[:80]
+        # retry as ranged GET (many atlas hosts reject HEAD with 406)
+        try:
+            return _one("GET", {"Range": "bytes=0-0"})
+        except urllib.error.HTTPError as he:
+            if he.code == 404:
+                return 404, "removed_or_missing"
+            if he.code == 403:
+                return 403, "forbidden"
+            return he.code, "http_{}".format(he.code)
+        except Exception as e2:
+            msg2 = str(e2)
+            if "timed out" in msg2.lower() or "Name or service" in msg2 or "unreachable" in msg2.lower():
+                return None, "host_unreachable"
+            return None, "error:" + msg2[:80]
 
 
 def main():
@@ -86,24 +105,26 @@ def main():
     import train_phase3_sweep as p3
     kept_paths = {p.name for p in p3.FITZ_DIR.glob("*.jpg")} if p3.FITZ_DIR.exists() else set()
     # try url / md5 / filename columns
-    name_col = next((c for c in df.columns if c.lower() in ("filename", "file", "image", "md5hash", "md5")), None)
-    url_col = next((c for c in df.columns if "url" in c.lower()), None)
-    label_col = next((c for c in df.columns if c.lower() in ("label", "nine_partition_label", "three_partition_label",
-                                                             "diagnosis", "dx")), None)
-    fitz_col = next((c for c in df.columns if "fitzpatrick" in c.lower() or c.lower() == "skin_tone"), None)
-
-    if name_col and kept_paths:
-        df["_kept"] = df[name_col].astype(str).map(lambda x: Path(x).name in kept_paths or x in kept_paths)
+    url_col = next((c for c in ("url",) if c in df.columns), None) or next(
+        (c for c in df.columns if "url" in c.lower() and "alphanum" not in c.lower()), None)
+    label_col = "label" if "label" in df.columns else next(
+        (c for c in df.columns if c.lower() in ("nine_partition_label", "diagnosis", "dx")), None)
+    fitz_col = "fitzpatrick_scale" if "fitzpatrick_scale" in df.columns else next(
+        (c for c in df.columns if "fitzpatrick" in c.lower()), None)
+    # on-disk files are {md5hash}.jpg
+    if "md5hash" in df.columns and kept_paths:
+        df["_fname"] = df["md5hash"].astype(str) + ".jpg"
+        df["_kept"] = df["_fname"].isin(kept_paths)
     else:
-        # fallback: count jpg on disk vs csv rows
-        df["_kept"] = False
-        n_kept_disk = len(kept_paths)
-        (OUT / "note.json").write_text(json.dumps({
-            "csv": str(csv_path), "n_full": n_full, "n_disk_jpg": n_kept_disk,
-            "name_col": name_col, "url_col": url_col, "label_col": label_col, "fitz_col": fitz_col,
-            "columns": list(df.columns)[:40]}, indent=2) + "\n")
+        name_col = next((c for c in df.columns if c.lower() in ("filename", "file", "image")), None)
+        df["_kept"] = df[name_col].astype(str).map(lambda x: Path(x).name in kept_paths) if name_col else False
 
-    n_kept = int(df["_kept"].sum()) if df["_kept"].any() else len(kept_paths)
+    n_kept = int(df["_kept"].sum()) if hasattr(df["_kept"], "sum") else 0
+    (OUT / "note.json").write_text(json.dumps({
+        "csv": str(csv_path), "n_full": n_full, "n_disk_jpg": len(kept_paths), "n_kept_matched": n_kept,
+        "url_col": url_col, "label_col": label_col, "fitz_col": fitz_col,
+        "columns": list(df.columns)[:40]}, indent=2) + "\n")
+
     # atlas host from URL
     atlas = Counter()
     missing_status = Counter()
@@ -121,20 +142,36 @@ def main():
             header_sample.append({"url": u, "host": host, "status": code, "reason": reason})
 
     # class / fitz mix TV
-    kept_df = df[df["_kept"]] if df["_kept"].any() else df.iloc[0:0]
+    kept_df = df[df["_kept"]] if bool(df["_kept"].any()) else df.iloc[0:0]
     tv_rows = []
+    map_path = csv_path.parent / "fitzpatrick17k_label_map.json"
+    isic_map = {}
+    if map_path.exists():
+        isic_map = {k.lower(): v for k, v in json.loads(map_path.read_text()).get("mapping_rule", {}).items()}
+
+    def to_isic(series):
+        return series.astype(str).str.lower().map(lambda x: isic_map.get(x, "UNMAPPED"))
+
     if label_col and len(kept_df):
         p_full, _ = mix(df[label_col])
         p_kept, _ = mix(kept_df[label_col])
         keys = sorted(set(p_full) | set(p_kept))
-        tv_rows.append({"variable": "class_label ({})".format(label_col), "tv": tv(p_full, p_kept, keys),
-                        "n_full": n_full, "n_kept": len(kept_df)})
+        tv_rows.append({"variable": "raw_label ({})".format(label_col), "tv": tv(p_full, p_kept, keys),
+                        "n_full": n_full, "n_kept": int(len(kept_df))})
+        if isic_map:
+            p_full, _ = mix(to_isic(df[label_col]))
+            p_kept, _ = mix(to_isic(kept_df[label_col]))
+            keys = sorted(set(p_full) | set(p_kept))
+            tv_rows.append({"variable": "isic_mapped_label", "tv": tv(p_full, p_kept, keys),
+                            "n_full": n_full, "n_kept": int(len(kept_df)),
+                            "full_mix": p_full, "kept_mix": p_kept})
     if fitz_col and len(kept_df):
         p_full, _ = mix(df[fitz_col])
         p_kept, _ = mix(kept_df[fitz_col])
         keys = sorted(set(p_full) | set(p_kept))
         tv_rows.append({"variable": "fitzpatrick ({})".format(fitz_col), "tv": tv(p_full, p_kept, keys),
-                        "n_full": n_full, "n_kept": len(kept_df)})
+                        "n_full": n_full, "n_kept": int(len(kept_df)),
+                        "full_mix": p_full, "kept_mix": p_kept})
 
     coverage = {
         "csv": str(csv_path), "n_full_csv": n_full, "n_kept": n_kept, "n_disk_jpg": len(kept_paths),

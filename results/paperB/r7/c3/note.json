@@ -1,0 +1,22 @@
+{
+  "csv": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/phase11_third_domain/fitzpatrick17k.csv",
+  "n_full": 16577,
+  "n_disk_jpg": 3887,
+  "n_kept_matched": 3887,
+  "url_col": "url",
+  "label_col": "label",
+  "fitz_col": "fitzpatrick_scale",
+  "columns": [
+    "md5hash",
+    "fitzpatrick_scale",
+    "fitzpatrick_centaur",
+    "label",
+    "nine_partition_label",
+    "three_partition_label",
+    "qc",
+    "url",
+    "url_alphanum",
+    "_fname",
+    "_kept"
+  ]
+}
