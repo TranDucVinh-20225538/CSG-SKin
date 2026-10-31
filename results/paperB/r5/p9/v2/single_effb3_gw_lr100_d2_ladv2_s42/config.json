@@ -1,0 +1,69 @@
+{
+  "tag": "single_effb3_gw_lr100_d2_ladv2_s42",
+  "item": "p9",
+  "stage": "v2",
+  "architecture": "single_encoder_dann_effb3",
+  "split": "lesion-level (R2 item 4)",
+  "config": "gw_lr100_d2",
+  "config_source": "P9 v2 grid",
+  "toolbox": {
+    "grl_schedule": "ganin",
+    "adv_warmup_epochs": 2,
+    "head_specs": [
+      [
+        2,
+        1.0
+      ]
+    ],
+    "adv_lr_multiplier": 100.0,
+    "adv_inner_steps": 0,
+    "reinit_every_steps": 0,
+    "max_epochs": 40
+  },
+  "max_epochs": 40,
+  "model_kwargs": {
+    "backbone": "effb3",
+    "n_classes": 8,
+    "n_domains": 2,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "lambda_adv": 2.0,
+    "toolbox": {
+      "grl_schedule": "ganin",
+      "adv_warmup_epochs": 2,
+      "head_specs": [
+        [
+          2,
+          1.0
+        ]
+      ],
+      "adv_lr_multiplier": 100.0
+    },
+    "cls_weight": null,
+    "penalty": "none",
+    "penalty_weight": 0.0,
+    "total_steps": 20240
+  },
+  "scoring_space": "z_norm (BN of pooled backbone features)",
+  "recipe": {
+    "lesion_latent_dim": 16,
+    "context_latent_dim": 64,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "adv_lr_multiplier": 30.0,
+    "max_epochs": 40,
+    "batch_size": 32,
+    "lambda_orth": 1.0,
+    "lambda_ctx": 1.0,
+    "class_balance": "none"
+  },
+  "recipe_source": "current (Phase 3 / R2 item 4 values)",
+  "recipe_not_applicable": [
+    "context_latent_dim",
+    "lambda_ctx",
+    "lambda_orth",
+    "lesion_latent_dim"
+  ]
+}

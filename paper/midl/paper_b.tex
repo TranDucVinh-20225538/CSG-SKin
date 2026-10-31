@@ -10,7 +10,6 @@
 \jmlrworkshop{Clinical Translation \& Validation -- MIDL 2027 submission}
 \editors{Under Review for MIDL 2027}
 
-\newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
 \newcommand{\lam}{\lambda_{\mathrm{adv}}}
 \newcommand{\xdomHalf}{0.270\,$\pm$\,0.034}
 \newcommand{\xdomOne}{0.258\,$\pm$\,0.012}
@@ -20,7 +19,6 @@
 \newcommand{\nAK}{202}
 \newcommand{\nSCC}{66}
 \newcommand{\nMEL}{9}
-\newcommand{\repolink}{\url{https://github.com/TranDucVinh-20225538/CSG-SKin}}
 
 \title[DANN Can Silently Invert OOD Detection]{Domain-Adversarial Training Under Label
 Shift Can Silently Invert Out-of-Distribution Detection}
@@ -38,8 +36,8 @@ Shift Can Silently Invert Out-of-Distribution Detection}
 Domain-adversarial training (DANN) is often used to remove site and device shortcuts in
 medical imaging models, and deployed models are expected to have an out-of-distribution
 (OOD) monitor that flags unfamiliar inputs. We study how DANN affects such monitors in skin
-lesion classification, using a lesion-disjoint ISIC~2019 split and smartphone images as the
-second domain. With gradient reversal, Mahalanobis OOD detection drops from AUROC $0.825$ to
+lesion classification, using a lesion-disjoint ISIC~2019 split, smartphone images as the
+second domain and a dual-encoder model with two backbone families (EfficientNet-B3 and DINOv2-S/14). With gradient reversal, Mahalanobis OOD detection drops from AUROC $0.825$ to
 $0.381$ ($95\%$ CI $[0.358, 0.404]$) on held-out smartphone images, which then look more
 in-distribution than the model's own test images. The same happens on three clinical datasets that were not used in
 training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
@@ -50,15 +48,12 @@ mix that the adversary sees, AUROC on the external datasets changes by $0.24$--$
 association remains after adjusting for measured domain leakage. Multi-kernel MMD alignment at similar
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
-although the domain can still be read within each class. In the same models, the share of
-melanomas from unseen sources predicted as benign nevus with confidence above $0.9$
-increases from $13\%$ to $51$--$81\%$. Importance-weighted alignment with class priors
-estimated online from unlabelled target data recovers $66$--$76\%$ of the AUROC lost in this setting on the
-smartphone images, Fitzpatrick17k and SD-198 at $\lam=0.5$ without loss of in-distribution
-accuracy, but only $32$--$45\%$ at $\lam=2$, and MED-NODE stays inverted. In a
-post hoc analysis, with priors from $50$ labelled target images the point estimates on the
-external datasets approach those obtained with the true priors, but in-distribution balanced accuracy drops from
-$0.48$ to $0.39$. We recommend checking OOD detection again after domain adaptation and
+although the domain can still be read within each class. The clinical cost is concrete: in the same models, the share of melanomas from unseen sources
+that the classifier calls benign nevus with confidence above $0.9$ increases from $13\%$ to
+$51$--$81\%$, and the monitor accepts almost all of these images with or without adaptation.
+Correcting for the class priors during training recovers detection only in part when the
+priors are estimated without labels; in a post hoc analysis, priors from $50$ labelled target images bring detection
+to the level obtained with the true priors, at a cost in in-distribution accuracy. A single-encoder DANN did not reach domain invariance, so these results do not show that every DANN inverts detection. We recommend checking OOD detection again after domain adaptation and
 measuring domain leakage within class.
 \end{abstract}
 
@@ -82,7 +77,7 @@ training affects this monitor.
 We find that it can invert the monitor. When the adversarial weight increases, OOD detection does
 not just get worse but falls below chance, so held-out images from the aligned domain and images from external sources
 get scores that look more in-distribution than the model's own test images. Standard
-evaluation does not show this. In-distribution accuracy and calibration change little, and the domain-leakage probe, which the method is
+evaluation does not show this (Section~\ref{sec:lesionsplit}), and the domain-leakage probe, which the method is
 supposed to reduce, goes down. In the same models, melanomas from external sources are
 predicted as benign nevus with confidence above $0.9$ four to six times more often than
 without adaptation; the monitor accepts almost all of these images with or without
@@ -100,8 +95,8 @@ end up in feature space.
 \begin{enumerate}
 \item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
 held-out smartphone images and on three clinical datasets that were not used in training.
-In-distribution accuracy and calibration change little. This holds for two training
-recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split.
+This holds for two training
+recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split, and for a dual-encoder model with a DINOv2-S/14 backbone. All models showing this are dual-encoder models; a single-encoder DANN did not reach invariance and was not tested.
 \item When the class mix seen by the adversary is set to that of the target domain, the
 inversion on external domains disappears (AUROC difference $0.24$--$0.37$). In a regression
 that adjusts for measured domain leakage, the label-shift effect remains, so it is not only a
@@ -114,6 +109,21 @@ leakage within class.
 $\lam=0.5$ without loss of in-distribution accuracy, less at $\lam=2$, and not on MED-NODE. In a post hoc analysis, priors from $50$ labelled target images give point estimates close to
 those with the true priors, but in-distribution accuracy drops.
 \end{enumerate}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_mechanism.pdf}
+\caption{What DANN does to unfamiliar images (main recipe, last checkpoint, measured data).
+(a) Share of OOD images whose nearest ISIC-train class centroid (class-conditional
+Mahalanobis on $z_\ell^{\mathrm{norm}}$) is nevus, mean $\pm$ s.d.\ over seeds of the
+label-shift runs (Table~\ref{tab:shift}; five seeds, four for $\lam=2$ without label shift
+after excluding the degraded run). Dashed line: the same share for ISIC test images
+($0.55$). (b) Share of melanomas from external datasets predicted nevus with confidence above
+$0.9$, with bootstrap $95\%$ intervals, from the sweep runs (Table~\ref{tab:clinical}); the
+separately retrained runs of Table~\ref{tab:shift} give $53.0\%$ and $83.2\%$ at $\lam=2$. With label shift, DANN
+moves OOD images into the nevus region; without it, they move away.}
+\label{fig:mech}
+\end{figure}
 \section{Related work}
 
 \paragraph{Shortcuts and invariance in dermatology.}
@@ -149,8 +159,8 @@ the mechanism.
 \subsection{Data and splits}
 
 \textbf{ISIC~2019}~\cite{isic2019} (25{,}331 dermoscopic images, eight classes: MEL, NV,
-BCC, AK, BKL, DF, VASC, SCC) is the in-distribution source. We split it $60/20/20$ into
-train, validation and test \emph{grouped by} \texttt{lesion\_id} (16{,}211 / 4{,}053 /
+BCC, AK, BKL, DF, VASC, SCC) is the in-distribution source. We split it $64/16/20$ into
+train, validation and test \emph{grouped by} \texttt{lesion\_id} ($20\%$ held out for test, then $20\%$ of the remainder for validation; 16{,}211 / 4{,}053 /
 5{,}067 images), because $60\%$ of test images in the image-level split share a lesion with
 training~\cite{leakagepaper}. \textbf{PAD-UFES-20}~\cite{pacheco2020} (2{,}298 smartphone
 photographs, six of the eight classes) is the domain the adversary aligns against. Its
@@ -195,9 +205,10 @@ picks early epochs by noise. Best-validation values are given for comparison.
 
 \paragraph{Competence.} In-distribution balanced accuracy at $\lam=0$ is $0.481$ (main
 recipe, last checkpoint) and $0.520$ (A4), $0.04$--$0.08$ below a standard single-encoder ERM on the same
-split ($0.558\pm0.022$, five seeds) and about four times chance ($0.125$).
-Lesion-disjoint eight-class ISIC~2019 is hard; the image-level split inflates the same
-model's balanced accuracy by $0.20$~\cite{leakagepaper}.
+split ($0.558\pm0.022$, five seeds). Most of the gap to published ISIC numbers comes from the
+honest split: separating lesions lowers balanced accuracy by about $0.20$, and on the
+image-level split, where test images share lesions with training, the same model reaches
+$0.69$ (Table~\ref{tab:imagelevel}, leaky split; Appendix~\ref{app:imagelevel})~\cite{leakagepaper}.
 
 \subsection{Interventions on label shift}
 
@@ -224,20 +235,16 @@ fit on ISIC train. AUROC treats OOD as the positive class, so $0.5$ is chance an
 below $0.5$ mean OOD images score as more familiar than ID test images. The five scores
 are functions of the same latent, so they are not independent evidence.
 
-\paragraph{Inversion.} We call a cell inverted when the cluster-bootstrap $95\%$ CI of the
-seed-mean Mahalanobis AUROC lies below $0.5$ and at least three seeds' own intervals do
-(all three in cells with three seeds). Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
-patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k) or case (SCIN);
-MED-NODE and SD-198 carry no patient identifiers and are resampled by image, so their
-intervals may be too narrow. Runs with in-distribution
-balanced accuracy below $0.25$ are excluded as degraded and reported.
+\paragraph{Inversion.} A cell is inverted when the $95\%$ cluster-bootstrap interval of the
+seed-mean Mahalanobis AUROC, and the intervals of at least three seeds, lie below $0.5$
+(resampling details in Appendix~\ref{app:measure}). Runs with in-distribution balanced
+accuracy below $0.25$ are excluded as degraded and reported.
 
-\paragraph{Domain leakage.} Balanced accuracy (chance $0.5$) of a logistic probe for the
-source dataset on frozen $z_\ell^{\mathrm{norm}}$. The probe used in earlier work scores
-ISIC test against all of PAD, including images the adversary trained on. We therefore also
-report probes on held-out images only (linear, one-hidden-layer MLP, $k$-NN), a
-class-balanced probe that reweights both domains to a common class mix, and a within-class
-probe averaged over classes.
+\paragraph{Domain leakage.} Leakage is the balanced accuracy (chance $0.5$) of a probe for the
+source dataset on frozen $z_\ell^{\mathrm{norm}}$, read in three ways: the linear probe of
+earlier work, scored against all of PAD; probes on held-out images only (linear, MLP,
+$k$-NN); and class-balanced and within-class probes that remove the effect of class mix
+(Appendix~\ref{app:measure}).
 
 \paragraph{Calibration and diagnosis.} Expected calibration error (15 bins) on ISIC test and
 on \texttt{pad\_heldout} (six shared classes), and zero-shot balanced accuracy on
@@ -285,24 +292,22 @@ $\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k &
 mean $\pm$ s.d.). Held-out domain leakage falls to chance and in-distribution balanced accuracy
 stays flat, while Mahalanobis AUROC on \texttt{pad\_heldout} and Fitzpatrick17k falls below
 $0.5$ and out-of-domain calibration error rises. Monitoring accuracy and leakage alone would show
-no problem}
+no problem.}
 \label{fig:dial}
 \end{figure}
 
 \paragraph{The sweep.} At the last checkpoint, Mahalanobis AUROC on \texttt{pad\_heldout}
 falls from $0.825$ at $\lam=0$ to $0.445$ at $\lam=0.25$ and stays between $0.381$ and $0.445$
 at every larger weight, meeting the inversion criterion at all six non-zero weights; on
-Fitzpatrick17k it falls from $0.712$ to $0.354$--$0.405$ (Table~\ref{tab:dial}). At
+Fitzpatrick17k it falls from $0.712$ to $0.354$--$0.405$ (Table~\ref{tab:dial}, Figure~\ref{fig:dial}). At
 $\lam=2$ the seed-mean interval is $[0.358, 0.404]$ on \texttt{pad\_heldout} and
 $[0.392, 0.419]$ on Fitzpatrick17k. In-distribution balanced accuracy stays within
 $0.472$--$0.484$ (paired $\lam=2$ minus $\lam=0$: $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and
 in-distribution ECE within $0.202$--$0.210$, while out-of-domain ECE on \texttt{pad\_heldout}
 rises from $0.305$ to $0.724$--$0.762$.
-All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ ($k$-NN $0.427$,
-cosine $0.420$, MSP $0.455$, energy $0.468$; best-validation checkpoint); the standard
-$k$-th-neighbour $k$-NN gives the same values within $0.01$. The best-validation checkpoint
-gives the same picture from $\lam=0.5$ on, but at $\lam=0.25$ it selects an earlier epoch and
-the inversion is not yet visible ($0.525$, seed s.d.\ $0.121$; an observation made after the sweep).
+All five scores fall below $0.5$ on \texttt{pad\_heldout} at $\lam=2$ (seed means: $k$-NN $0.400$,
+cosine $0.396$, MSP $0.411$, energy $0.425$); at the best-validation checkpoint the standard
+$k$-th-neighbour $k$-NN gives the same values as our mean-of-$k$ variant within $0.01$. Checkpoint selection is discussed in Section~\ref{sec:discussion-ckpt}.
 
 \paragraph{Unseen domains.} The inversion is not confined to the domain the adversary was
 trained against (Table~\ref{tab:unseen}). On three clinical datasets that entered no part of
@@ -313,20 +318,23 @@ leaves every interval and verdict unchanged. On SCIN, whose images are mostly in
 conditions outside the ISIC label space, detection falls from $0.723$ to $0.551$ without
 inverting.
 
-\paragraph{Other splits.} On three further lesion-disjoint splits of ISIC (three seeds each),
-Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.83$ at $\lam=0$ to
-$0.39$--$0.43$ at $\lam=2$ (interval below $0.5$ in all nine runs), Fitzpatrick17k and SD-198 fall below $0.5$ in every split
-($0.34$--$0.41$), and MED-NODE drops from $0.49$--$0.57$ to $0.24$--$0.36$; in one split
-MED-NODE is already at chance before adaptation (Appendix~\ref{app:splits}).
+\paragraph{Second backbone.} With DINOv2-S/14 in place of EfficientNet-B3 (dual encoder, five
+seeds), Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.831\pm0.029$ at $\lam=0$ to
+$0.448\pm0.045$ at $\lam=2$, with leakage $0.576\pm0.034$; Fitzpatrick17k falls from $0.778\pm0.016$
+to $0.472\pm0.067$, and the inversion criterion is met on \texttt{pad\_heldout} and on all three
+labelled unseen datasets (Appendix~\ref{app:dino}). This run does not rule out low competence as an
+explanation: at $\lam=0$ the dual model reaches $0.470\pm0.015$ balanced accuracy against $0.565\pm0.015$
+for ERM with the same backbone, a gap of $0.095$, above our $0.03$ margin. Selecting the backbone
+learning rate on validation did not close the gap (Appendix~\ref{app:limits}). ERM with DINOv2 is
+already below $0.5$ on MED-NODE ($0.452\pm0.033$), so MED-NODE is the weakest of the three.
 
-\paragraph{A second recipe.} With a $64$-dimensional latent, unweighted cross-entropy replaced
-by a class-weighted loss and the last checkpoint (A4), detection again inverts at
-$\lam=0.5$ and $\lam=2$ on \texttt{pad\_heldout} ($0.468$ $[0.440, 0.495]$; $0.452$
-$[0.425, 0.478]$) and Fitzpatrick17k ($0.444$; $0.458$), with in-distribution balanced
-accuracy unchanged ($0.520$, $0.520$, $0.510$). On \texttt{pad\_heldout} all five scores'
-intervals lie below $0.5$; on Fitzpatrick17k $k$-NN ($0.521$) and energy ($0.516$) only
-collapse. A plain single-encoder DANN collapses to chance ($0.51$--$0.56$) without inverting
-(Appendix~\ref{app:single}).
+\paragraph{Other splits and recipes.} On three further lesion-disjoint splits of ISIC,
+Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.83$ at $\lam=0$ to
+$0.39$--$0.43$ at $\lam=2$, and the unseen datasets fall below $0.5$ as well
+(Appendix~\ref{app:splits}). A second recipe (A4) also inverts at $\lam=0.5$ and $\lam=2$
+(Table~\ref{tab:unseen}), while a plain single-encoder DANN collapses to chance
+without inverting ($0.51$--$0.56$ on the image-level split, best-validation checkpoint;
+Appendix~\ref{app:single}; see also Appendix~\ref{app:limits}).
 
 \begin{table}[t]
 \centering
@@ -357,36 +365,21 @@ A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
 \label{sec:site}
 
 \paragraph{Intervention.} Changing only the class mix of the ISIC images the adversary sees
-switches the inversion on unseen domains on and off (Table~\ref{tab:shift}). At $\lam=2$, with
-the adversary's ISIC images resampled to PAD's class mix (shift $0\%$), Mahalanobis AUROC is
-$0.691$ on Fitzpatrick17k, $0.541$ on MED-NODE and $0.694$ on SD-198, none inverted; with
-ISIC's own mix (shift $100\%$) it is $0.340$, $0.298$ and $0.325$, inverted in every seed.
-Paired by seed, removing the label shift raises AUROC by $0.361$, $0.243$ and $0.372$. The
-intermediate level falls between the two on Fitzpatrick17k ($0.482$ at $\lam=0.5$, $0.441$ at
-$\lam=2$) and SD-198 ($0.451$, $0.414$); on MED-NODE it is already as low as full shift
-($0.303$, $0.299$). On \texttt{pad\_heldout}, the adversary's own target domain, a mild inversion
-remains without label shift ($0.458$; paired difference $+0.093$). One of five shift-$0\%$
-runs collapsed (in-distribution balanced accuracy $0.139$) and is excluded.
+switches the inversion on unseen domains on and off (Table~\ref{tab:shift}): paired by seed,
+removing the label shift raises AUROC at $\lam=2$ by $0.361$ (Fitzpatrick17k), $0.243$
+(MED-NODE) and $0.372$ (SD-198); per-level results are in Appendix~\ref{app:shift}.
 
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
-latent (leakage $0.791$ vs $0.634$), so the intervention alone does not separate label shift
-from depth of invariance. A regression of unseen-domain AUROC on label-shift level and
-leakage, with recipe as a covariate (variance inflation $\approx1.04$), gives label-shift
-coefficients of $-0.166$ $[-0.217, -0.115]$ (Fitzpatrick17k), $-0.107$ $[-0.148, -0.065]$
-(MED-NODE) and $-0.172$ $[-0.221, -0.123]$ (SD-198) for a change from no shift to full shift
-at fixed leakage (shift coded $0$, $0.5$, $1$; wild cluster bootstrap with Webb weights over
-recipe $\times$ $\lam$ $\times$ shift cells, $2{,}000$ draws). On \texttt{pad\_heldout}
-the coefficient is $+0.041$ $[-0.033, +0.110]$. Comparing runs at equal leakage across recipes
-(A4 at shift $100\%$, leakage $0.78$, against the main recipe at shift $0\%$, leakage $0.79$)
-gives the same direction ($+0.23$ to $+0.26$).
+latent (leakage $0.791$ vs $0.634$), but a regression of unseen-domain AUROC on label-shift
+level and leakage keeps a label-shift coefficient of $-0.107$ to $-0.172$ at fixed leakage on
+all three unseen datasets (Appendix~\ref{app:shift}).
 
 \paragraph{A natural example without DANN.} Label shift alone can invert a class-conditional
-Mahalanobis score. Training on BCN and treating HAM as OOD, Mahalanobis AUROC is already
-$0.369$ $[0.336, 0.401]$ at $\lam=0$, while $k$-NN gives $0.658$. HAM-heldout is $67\%$ nevus
-against $31\%$ in BCN test; reweighting HAM to BCN's class mix gives $0.489$ $[0.453, 0.524]$,
-and no class-matched AUROC differs from $0.5$ (post hoc). In the main setting the OOD sets
-are \emph{less} nevus-heavy than ISIC, so detection works at $\lam=0$; DANN creates the
-condition by moving them toward nevus.
+Mahalanobis score: training on BCN and treating the more nevus-heavy HAM as OOD gives AUROC
+$0.369$ at $\lam=0$, and reweighting HAM to BCN's class mix brings it to $0.489$ (post hoc;
+Appendix~\ref{app:site}). In the main setting the OOD sets are \emph{less} nevus-heavy than
+ISIC, so detection works at $\lam=0$, and DANN creates the condition by moving them toward
+nevus (Figure~\ref{fig:mech}a).
 
 \paragraph{Other alignment objectives.} The inversion is not specific to gradient reversal.
 Replacing the adversary with a multi-kernel MMD penalty~\cite{long2015} on the same model, at
@@ -428,9 +421,9 @@ $\lam$ & shift & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & S
 \label{sec:mechanism}
 \label{sec:nonmediation}
 
-\paragraph{Unfamiliar images move to the majority class.} At $\lam=2$ with full label shift,
+\paragraph{Unfamiliar images move to the majority class.} At $\lam=2$ with full label shift (Figure~\ref{fig:mech}a),
 the share of \texttt{pad\_heldout} images whose nearest class centroid is nevus rises from
-$0.28$ to $0.63$, and to $0.75$--$0.85$ on the unseen sets; without label shift it stays at
+$0.36$ to $0.63$, and to $0.75$--$0.85$ on the unseen sets; without label shift it stays at
 $0.12$ and $0.39$--$0.49$. Images of non-nevus classes are pulled into the nevus region:
 split by true class, non-nevus OOD images fall to AUROC $0.42$ (main recipe) and $0.47$ (A4),
 whereas images still nearest a non-nevus centroid stay at $0.62$ and $0.64$. Let $\mathrm{AUROC}_c$ compare all OOD images with the ID test images of
@@ -452,8 +445,9 @@ on all five).
 \paragraph{Chance-level leakage hides the misalignment.} The domain probe of
 Table~\ref{tab:shift} (as in earlier work) is scored partly on images the adversary trained on,
 which is why it reads $0.928$ at $\lam=0$ against $0.842$ for the held-out probe of Table~\ref{tab:dial}. On held-out images
-a linear probe reads the domain at chance from $\lam=0.5$ on ($0.502$--$0.506$), but a $k$-NN
-probe still reads it ($0.55$--$0.61$), and under label shift an unweighted probe misreports
+a linear probe reads the domain at about chance from $\lam=0.25$ on ($0.502$--$0.527$ at the
+last checkpoint, Table~\ref{tab:dial}), but a $k$-NN probe still reads it ($0.55$--$0.61$ from
+$\lam=0.5$ on; best-validation checkpoint, Appendix~\ref{app:probes}), and under label shift an unweighted probe misreports
 invariance (Table~\ref{tab:probes}). With full label shift DANN reaches $0.510$ on an
 unweighted held-out probe, yet within each class the domain remains decodable ($0.618$),
 more so than in any other condition. Correcting the class mix the adversary aligns (shift
@@ -477,44 +471,25 @@ $[8.8, 17.2]$ to $81.4\%$ $[75.9, 86.5]$ on SD-198 ($n=113$) between $\lam=0$ an
 $\lam=2$). Removing the label shift seen by the adversary (shift $0\%$) lowers the melanoma
 share at $\lam=2$ from $53.0\%$ to $21.4\%$ on Fitzpatrick17k and from $83.2\%$ to $33.8\%$
 on SD-198 (retrained runs of Table~\ref{tab:shift}).
+For \texttt{pad\_heldout} as a whole, the Mahalanobis monitor already accepts $91.1\%$ of images as
+in-distribution at $\lam=0$; at $\lam=2$ it accepts $96.1\%$ (Appendix~\ref{app:clinical}).
 
 \paragraph{No reliable scoring-side fix among the variants tested.} Reversing the sign of the
 score is not a remedy: at
 $\lam\ge0.5$ it reaches only $0.55$--$0.63$ on \texttt{pad\_heldout} and Fitzpatrick17k with a
 false-positive rate of $0.84$--$0.98$ at $95\%$ true-positive rate across datasets, and at $\lam=0$ it would
 turn $0.808$ into $0.192$. Relative Mahalanobis~\cite{ren2021relative} and per-class
-standardised distances stay below $0.5$ on all three unseen datasets at $\lam=2$.
+standardised distances stay below $0.5$ on all three unseen datasets at $\lam=2$. Reversing the score would also require knowing in advance
+that the model is inverted. Among the variants we tried, only changes during training,
+through the class priors used by the adversary, improved detection.
 
-\paragraph{Importance-weighted alignment.} IWDAN reweights the source in the adversarial loss
-by estimated target class priors, and how well it works depends on the estimate.
-With weights updated online from unlabelled target predictions, as in the original method,
-the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
-down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
-\texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
-($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the online priors are closer to the truth (total variation $0.38$--$0.47$,
-mean $0.428$) and the same method recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
-the gap), at leakage $0.665$ against $0.628$ for DANN, and SD-198 recovers to $0.607$ ($71\%$);
-MED-NODE improves from $0.310$ to $0.447$ but stays inverted. Unlike the variants with known
-priors, this costs no in-distribution accuracy ($0.482$ against $0.483$), and the within-class
-probe is lower than under DANN ($0.588$ against $0.618$). \emph{EM} estimation was unstable:
-in two of five seeds it placed mass on classes absent from PAD, so we treat it as not
-having run correctly. With priors from \emph{$50$ labelled target images} (total variation
-$0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
-priors (Fitzpatrick17k $0.741$ vs $0.717$, SD-198 $0.734$ vs $0.693$, MED-NODE $0.606$ vs $0.563$;
-\texttt{pad\_heldout} $0.619$ vs $0.647$), and within-class leakage is lower than under DANN
-($0.58$ vs $0.62$). This is a promising but post hoc mitigation: neither the 50-label nor the true-prior
-variant meets our leakage criterion, because unweighted leakage rises ($0.81$ and $0.78$
-against $0.63$), and both cost in-distribution balanced accuracy ($0.39$--$0.40$, against
-$0.48$ both under DANN and before adaptation). Read descriptively, detection improves as the prior error falls ($0.52$:
-partial; $0.10$--$0.14$: oracle level; $0$: oracle), but our planned rank-correlation test
-across estimators was not supported (Spearman $-0.33$, $[-0.80, +0.28]$), with EM
-contributing invalid priors. As a diagnostic, black-box shift estimates computed on the final checkpoints were further
-from the truth ($0.65$--$0.76$): their assumption of unchanged class-conditional predictions
-fails across these domains, with target BCC and AK images predicted as MEL or NV. Label-free
-prior estimates thus remain about $0.5$ total variation off and recover detection only in part;
-$50$ labels bring the error to $0.10$--$0.14$ and detection to the oracle level.
-Conditional alignment does not help: CDAN ($0.378$ on \texttt{pad\_heldout}, $0.420$ on
-Fitzpatrick17k) and IWCDAN ($0.360$, $0.384$) stay inverted at $\lam=2$ (Appendix~\ref{app:prior}).
+\paragraph{Importance-weighted alignment.} With target class priors estimated online without
+labels, as in the original IWDAN, the estimate stays about $0.5$ total variation from the truth
+and detection recovers only in part ($32$--$45\%$ of the lost AUROC at $\lam=2$, $66$--$76\%$
+at $\lam=0.5$; MED-NODE stays inverted). With priors from $50$ labelled target images,
+detection on the unseen domains returns to the level obtained with the true priors, but
+in-distribution balanced accuracy drops from $0.48$ to $0.39$--$0.40$ (post hoc). CDAN and
+IWCDAN stay inverted at $\lam=2$; details are in Appendix~\ref{app:prior}.
 
 \begin{table}[t]
 \centering
@@ -560,7 +535,11 @@ the ID set can invert such a score even without DANN. In the main setting the OO
 fewer nevi than ISIC, and DANN creates the problem by moving them toward nevus. Without label
 shift the inversion is only seen on the adversary's target domain, where a smaller
 within-class pull remains. This misplacement is also why the unweighted domain probe reaches
-chance level, since it measures marginal rather than class-conditional alignment.
+chance level, since it measures marginal rather than class-conditional alignment. Our
+experiments do not establish why a plain single-encoder DANN collapses detection to chance
+instead of inverting it. Our hypothesis is that it never reaches the depth of invariance at
+which classes are misaligned: even with a stronger adversary its held-out leakage stayed at
+$0.70$ (Appendix~\ref{app:limits}).
 
 \paragraph{Checkpoint selection.}\label{sec:discussion-ckpt}
 We noticed after the sweep that at $\lam=0.25$ the last checkpoint is inverted on both
@@ -569,68 +548,45 @@ epochs where the seeds still disagree (seed s.d.\ $0.121$). Validation accuracy 
 separate these checkpoints, so a model selected in the usual way may look safe only because
 training was stopped early.
 
-\paragraph{Fixes at scoring time.}
-Reversing the score only helps if one already knows that the model is inverted. At $\lam=0$
-it would break a working monitor, and at $\lam\ge0.5$ most OOD images are still accepted at a
-$95\%$ ID-acceptance threshold. Relative Mahalanobis, which is less sensitive to class
-structure, also stays below chance. Among the variants we tried, only changes during training,
-through the class priors used by the adversary, improved detection.
 
-\paragraph{Recommendations.}
-After a domain-alignment step, we recommend that practitioners (i) check OOD detection again on images from
-unseen sources, per class and pooled, (ii) report domain leakage within class and not only
-unweighted, (iii) compare the class priors of the aligned domains and correct for them if
-they differ, which in our case required a small labelled sample from the target domain, and
-(iv) report results for more than one checkpoint.
+
+\medskip
+\noindent\fbox{\begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+\textbf{Recommendations.} After a domain-alignment step:
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\item[(i)] check OOD detection again on images from unseen sources, per class and pooled;
+\item[(ii)] report domain leakage within class and not only unweighted;
+\item[(iii)] compare the class priors of the aligned domains and correct for them if they differ: online IWDAN without labels recovered $66$--$76\%$ of the lost AUROC on \texttt{pad\_heldout} and Fitzpatrick17k at $\lam=0.5$ without loss of in-distribution accuracy (MED-NODE stayed inverted), and a small labelled sample from the target domain brought detection to the true-prior level in a post hoc analysis;
+\item[(iv)] report results for more than one checkpoint.
+\end{itemize}
+\end{minipage}}
 
 \section{Limitations}
 \label{sec:limitations}
 
-\textbf{Scope.} The inversion is shown in dermatology only, and its spread to unseen domains
-is shown for gradient reversal; multi-kernel MMD inverts detection on the target domain but
-only collapses it on the unseen datasets. We attempted two other
-modalities and neither experiment took place: on Camelyon17 no adversarial setting we tried
-removed hospital information while preserving the classifier, and on chest radiographs the
-detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
-nothing to invert. \textbf{Architecture.} The main results use a dual-encoder model; the A4
-recipe changes the latent size and loss, but a plain single-encoder DANN collapses detection
-to chance without inverting, and whether deeper invariance would invert it is untested: with a stronger adversary
-(warm-up, higher adversary learning rate, deeper head) its held-out leakage stayed at
-$0.70$, above our target of $0.55$, and detection stayed near chance ($0.52$ on
-\texttt{pad\_heldout}, $0.62$ on Fitzpatrick17k). Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
-of five runs; in that run detection on the unseen datasets did not invert, which is consistent
-with label shift being necessary but rests on a single model. \textbf{Competence.} In-distribution balanced accuracy is $0.04$--$0.08$
-below a standard ERM on the same lesion-disjoint split. \textbf{Statistics.} MED-NODE and
-SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
-narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
-The five OOD scores are functions of one latent and are not independent evidence.
-\textbf{Mechanism.} A two-domain Gaussian toy model with label shift did not reproduce the
-inversion, so the conditions we identify may not be sufficient in general. \textbf{Warning
-signals.} No statistic computed on in-distribution data alone flagged the inverted runs; the
-share of deployment images predicted as the majority class tracked inversion
-(Spearman $-0.77$ and $-0.75$ over $64$ runs) but needs unlabelled target data. \textbf{Mitigation.} The few-label
-remedy is a post hoc analysis, costs in-distribution accuracy, and did not meet our leakage
-criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images.
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\item Scope: dermatology only; the spread to unseen domains is shown for gradient reversal.
+\item Other modalities: could not be tested; DANN did not remove hospital information on Camelyon17 while preserving the classifier, and the chest-radiograph OOD set was near chance before adaptation ($0.522$).
+\item Architecture: single-encoder DANN did not reach invariance with EfficientNet-B3 or DINOv2-S/14, so the inversion is untested there.
+\item Competence: in-distribution accuracy is $0.04$--$0.08$ below ERM on the same split ($0.095$ for DINOv2).
+\item Statistics: MED-NODE and SD-198 are resampled by image; the five scores share one latent.
+\item Mechanism: a Gaussian toy model with label shift did not reproduce the inversion.
+\item Warning signals: none computed on in-distribution data alone flagged inverted runs.
+\item Mitigation: the few-label remedy is post hoc and costs in-distribution accuracy.
+\item Data: we obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images; the inversion holds within each skin-type group.
+\end{itemize}
+Each point is given in full in Appendix~\ref{app:limits}.
 
 \section{Conclusion}
 We showed that domain-adversarial training can make an OOD monitor rank held-out images from the aligned domain and from external sources as more
-in-distribution than the model's own test images, while in-distribution accuracy changes
-little. In our experiments (one dermatology task, one main architecture), this is driven mainly by label shift between the
+in-distribution than the model's own test images. In our experiments (one dermatology task, a dual-encoder model with EfficientNet-B3 and DINOv2-S/14 backbones), this is driven mainly by label shift between the
 domains that the adversary aligns. The adversary moves unfamiliar images toward the majority
 class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
 on unseen sources after adaptation, measuring leakage within class and correcting for class
 priors are cheap steps. With a small labelled sample from the target domain, the last of
 these also reduced the problem in a post hoc analysis.
-
-\section*{Data and code availability}
-\repolink. ISIC 2019 CC~BY-NC~4.0; PAD-UFES-20 CC~BY~4.0;
-Fitzpatrick17k annotations CC~BY-NC-SA~3.0 with images used for evaluation
-only and not redistributed.
-
-\section*{Declaration of competing interest}
-The authors declare no competing interests.
-
-% ------------------------------------------------------------
 
 \bibliography{paper_b}
 
@@ -697,6 +653,14 @@ classifier intact. On the dual-encoder model at matched held-out leakage, multi-
 does invert detection on \texttt{pad\_heldout} (Section~\ref{sec:site}). IRM's low MSP and energy
 values reflect a classifier that has collapsed (balanced accuracy $0.167$ at weight $100$),
 not an inversion of the feature scores.
+
+\paragraph{The A4 recipe.} With a $64$-dimensional latent, unweighted cross-entropy replaced
+by a class-weighted loss and the last checkpoint (A4), detection again inverts at
+$\lam=0.5$ and $\lam=2$ on \texttt{pad\_heldout} ($0.468$ $[0.440, 0.495]$; $0.452$
+$[0.425, 0.478]$) and Fitzpatrick17k ($0.444$; $0.458$), with in-distribution balanced
+accuracy unchanged ($0.520$, $0.520$, $0.510$). On \texttt{pad\_heldout} all five scores'
+intervals lie below $0.5$; on Fitzpatrick17k $k$-NN ($0.521$) and energy ($0.516$) only
+collapse. A plain single-encoder DANN collapses to chance ($0.51$--$0.56$, Table~\ref{tab:single}) without inverting.
 
 \FloatBarrier
 \section{Label-shift intervention: full results}
@@ -774,6 +738,30 @@ SD-198 & 75 & -0.172 & [-0.221, -0.123] & yes & 1.04 & 1.03 & yes \\
 \end{tabular}
 \end{table}
 
+\paragraph{Intervention by level.} Changing only the class mix of the ISIC images the adversary sees
+switches the inversion on unseen domains on and off (Table~\ref{tab:shift}). At $\lam=2$, with
+the adversary's ISIC images resampled to PAD's class mix (shift $0\%$), Mahalanobis AUROC is
+$0.691$ on Fitzpatrick17k, $0.541$ on MED-NODE and $0.694$ on SD-198, none inverted; with
+ISIC's own mix (shift $100\%$) it is $0.340$, $0.298$ and $0.325$, inverted in every seed.
+Paired by seed, removing the label shift raises AUROC by $0.361$, $0.243$ and $0.372$. The
+intermediate level falls between the two on Fitzpatrick17k ($0.482$ at $\lam=0.5$, $0.441$ at
+$\lam=2$) and SD-198 ($0.451$, $0.414$); on MED-NODE it is already as low as full shift
+($0.303$, $0.299$). On \texttt{pad\_heldout}, the adversary's own target domain, a mild inversion
+remains without label shift ($0.458$; paired difference $+0.093$). One of five shift-$0\%$
+runs collapsed (in-distribution balanced accuracy $0.139$) and is excluded.
+
+\paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
+latent (leakage $0.791$ vs $0.634$), so the intervention alone does not separate label shift
+from depth of invariance. A regression of unseen-domain AUROC on label-shift level and
+leakage, with recipe as a covariate (variance inflation $\approx1.04$), gives label-shift
+coefficients of $-0.166$ $[-0.217, -0.115]$ (Fitzpatrick17k), $-0.107$ $[-0.148, -0.065]$
+(MED-NODE) and $-0.172$ $[-0.221, -0.123]$ (SD-198) for a change from no shift to full shift
+at fixed leakage (shift coded $0$, $0.5$, $1$; wild cluster bootstrap with Webb weights over
+recipe $\times$ $\lam$ $\times$ shift cells, $2{,}000$ draws). On \texttt{pad\_heldout}
+the coefficient is $+0.041$ $[-0.033, +0.110]$. Comparing runs at equal leakage across recipes
+(A4 at shift $100\%$, leakage $0.78$, against the main recipe at shift $0\%$, leakage $0.79$)
+gives the same direction ($+0.23$ to $+0.26$).
+
 \FloatBarrier
 \section{BCN$\to$HAM: label shift without DANN (post hoc)}
 \label{app:site}
@@ -813,6 +801,14 @@ Reweighting HAM to BCN's class mix recovers $92\%$ of the distance to $0.5$, no 
 interval excludes $0.5$, and dispersion ratios are close to one. The inversion is therefore
 a label-shift effect on the pooled score; we cannot exclude a small within-class
 contribution.
+
+\paragraph{Main-text summary.} Label shift alone can invert a class-conditional
+Mahalanobis score. Training on BCN and treating HAM as OOD, Mahalanobis AUROC is already
+$0.369$ $[0.336, 0.401]$ at $\lam=0$, while $k$-NN gives $0.658$. HAM-heldout is $67\%$ nevus
+against $31\%$ in BCN test; reweighting HAM to BCN's class mix gives $0.489$ $[0.453, 0.524]$,
+and no class-matched AUROC differs from $0.5$ (post hoc). In the main setting the OOD sets
+are \emph{less} nevus-heavy than ISIC, so detection works at $\lam=0$; DANN creates the
+condition by moving them toward nevus.
 
 \FloatBarrier
 \section{Domain-direction analysis}
@@ -910,14 +906,39 @@ IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & $0.562$ & $0.680$ & $0.742$ & $0.
 \end{tabular}}
 \end{table}
 
-EM estimation~\cite{saerens2002} failed as implemented, including after a bug fix: in two of
-five seeds it placed mass on DF and VASC, which are absent from PAD, and its results are not
-used in any comparison. Black-box shift estimates computed on the final IWDAN checkpoints are a
-diagnostic, not a separate method (TV $0.65$--$0.76$). Conditional variants stay inverted
+Conditional variants stay inverted
 (last checkpoint, five seeds unless noted): CDAN $0.378$ / $0.420$ (\texttt{pad\_heldout} /
 Fitzpatrick17k) at $\lam=2$ and $0.372$ / $0.403$ at $\lam=0.5$; IWCDAN $0.360$ /
-$0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$ At $\lam=0.5$, IWDAN (online) reaches $0.667$ / $0.633$ and IWDAN with the true priors $0.680$ /
-$0.742$.
+$0.384$ at $\lam=2$ and $0.389$ / $0.410$ at $\lam=0.5$.
+
+\paragraph{Full account.} IWDAN reweights the source in the adversarial loss
+by estimated target class priors, and how well it works depends on the estimate.
+With weights updated online from unlabelled target predictions, as in the original method,
+the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
+down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
+\texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
+($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the online priors are closer to the truth (total variation $0.38$--$0.47$,
+mean $0.428$) and the same method recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
+the gap), at leakage $0.665$ against $0.628$ for DANN, and SD-198 recovers to $0.607$ ($71\%$);
+MED-NODE improves from $0.310$ to $0.447$ but stays inverted. Unlike the variants with known
+priors, this costs no in-distribution accuracy ($0.482$ against $0.483$), and the within-class
+probe is lower than under DANN ($0.588$ against $0.618$). \emph{EM} estimation~\cite{saerens2002} failed as implemented, including after a bug fix:
+in two of five seeds it placed mass on DF and VASC, which are absent from PAD, so its results
+are not used in any comparison. With priors from \emph{$50$ labelled target images} (total variation
+$0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
+priors (Fitzpatrick17k $0.741$ vs $0.717$, SD-198 $0.734$ vs $0.693$, MED-NODE $0.606$ vs $0.563$;
+\texttt{pad\_heldout} $0.619$ vs $0.647$), and within-class leakage is lower than under DANN
+($0.58$ vs $0.62$). This is a promising but post hoc mitigation: neither the 50-label nor the true-prior
+variant meets our leakage criterion, because unweighted leakage rises ($0.81$ and $0.78$
+against $0.63$), and both cost in-distribution balanced accuracy ($0.39$--$0.40$, against
+$0.48$ both under DANN and before adaptation). Read descriptively, detection improves as the prior error falls ($0.52$:
+partial; $0.10$--$0.14$: close to the true-prior level; $0$: true priors), but a rank-correlation test
+across estimators did not support this (Spearman $-0.33$, $[-0.80, +0.28]$), with EM
+contributing invalid priors. As a diagnostic, black-box shift estimates computed on the final checkpoints were further
+from the truth ($0.65$--$0.76$): their assumption of unchanged class-conditional predictions
+fails across these domains, with target BCC and AK images predicted as MEL or NV. Label-free
+prior estimates thus remain about $0.5$ total variation off and recover detection only in part;
+$50$ labels bring the error to $0.10$--$0.14$ and detection close to the true-prior level.
 
 \FloatBarrier
 \section{Sign reversal and scoring-side variants}
@@ -931,6 +952,78 @@ Mahalanobis at $\lam=2$: Fitzpatrick17k $0.443$, MED-NODE $0.376$, SD-198 $0.427
 \texttt{pad\_heldout} $0.439$; per-class standardised Mahalanobis: $0.478$, $0.340$, $0.447$,
 $0.424$.
 
+\paragraph{Discussion.} Reversing the score only helps if one already knows that the model is inverted. At $\lam=0$
+it would break a working monitor, and at $\lam\ge0.5$ most OOD images are still accepted at a
+$95\%$ ID-acceptance threshold. Relative Mahalanobis, which is less sensitive to class
+structure, also stays below chance. Among the variants we tried, only changes during training,
+through the class priors used by the adversary, improved detection.
+
+\FloatBarrier
+\section{Second backbone: dual-encoder DINOv2-S/14}
+\label{app:dino}
+
+Same split, recipe and last-checkpoint rule as Table~\ref{tab:dial}; five seeds; mean $\pm$ s.d.
+Columns after ID bal.\ acc are Mahalanobis AUROC.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Dual-encoder DINOv2-S/14 and ERM with the same backbone. Bold: inversion criterion met.}
+\label{tab:dino}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrccccccc}
+\toprule
+model & $\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
+\midrule
+ERM DINOv2 & 0 & $0.983\pm0.002$ & $0.565\pm0.015$ & $0.591\pm0.060$ & $0.704\pm0.059$ & $\mathbf{0.452\pm0.033}$ & $0.702\pm0.053$ & $0.781\pm0.074$ \\
+dual DINOv2 & 0 & $0.947\pm0.007$ & $0.470\pm0.015$ & $0.831\pm0.029$ & $0.778\pm0.016$ & $0.580\pm0.030$ & $0.790\pm0.005$ & $0.716\pm0.041$ \\
+dual DINOv2 & 2 & $0.576\pm0.034$ & $0.462\pm0.022$ & $\mathbf{0.448\pm0.045}$ & $\mathbf{0.472\pm0.067}$ & $\mathbf{0.363\pm0.045}$ & $\mathbf{0.461\pm0.066}$ & $0.551\pm0.064$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Single-encoder DANN with DINOv2-S/14, $\lam=2$, five seeds. Leakage stays above the
+invariance threshold ($0.60$), so this run does not test the inversion.}
+\label{tab:single-dino}
+\begin{tabular}{cccc}
+\toprule
+leakage & ID bal.\ acc & \texttt{pad\_heldout} & Fitzpatrick17k \\
+\midrule
+$0.884\pm0.019$ & $0.555\pm0.023$ & $0.546\pm0.033$ & $0.476\pm0.069$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+\section{Size of the adversary's smartphone set}
+\label{app:padadv}
+
+We subsampled \texttt{pad\_adv} to $25\%$ and $50\%$ (three seeds each; \texttt{pad\_heldout} unchanged)
+as a sensitivity analysis. As \texttt{pad\_adv} gets smaller, AUROC on \texttt{pad\_heldout} moves
+toward $0.5$, but leakage rises at the same time, so the two factors cannot be separated. At $25\%$ the
+inversion criterion is not met with three seeds. Fitzpatrick17k stays inverted in every setting.
+This is not evidence of a dose-response relation.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{\texttt{pad\_adv} size (Mahalanobis AUROC; mean $\pm$ s.d.). The $100\%$ row is Table~\ref{tab:dial}.}
+\label{tab:padadv}
+\begin{tabular}{lrccccc}
+\toprule
+\texttt{pad\_adv} & $\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & Fitzpatrick17k & criterion (\texttt{pad}) \\
+\midrule
+$25\%$ ($407$ images) & 0 & $0.898\pm0.032$ & $0.472\pm0.019$ & $0.819\pm0.022$ & $0.724\pm0.043$ & above \\
+$25\%$ & 2 & $0.632\pm0.007$ & $0.477\pm0.002$ & $0.479\pm0.013$ & $0.407\pm0.011$ & not met \\
+$50\%$ ($802$ images) & 2 & $0.575\pm0.030$ & $0.459\pm0.022$ & $0.415\pm0.043$ & $0.397\pm0.069$ & met \\
+$100\%$ (five seeds) & 2 & $0.507$ & & $0.381$ & $0.405$ & met \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{Clinical consequence}
 \label{app:clinical}
@@ -941,6 +1034,13 @@ to MEL, BCC, SCC, AK; SD-198 Malignant\_Melanoma and Lentigo\_Maligna\_Melanoma 
 Basal\_Cell\_Carcinoma to BCC, Bowen's disease and Keratoacanthoma to SCC, and
 Actinic\_solar\_Damage (actinic keratosis) to AK; other SD-198 classes are excluded.
 \texttt{pad\_heldout} has nine melanomas and is not used.
+
+\textbf{FPR@95TPR on \texttt{pad\_heldout}.} With the threshold at the $95$th percentile of ISIC test
+scores (Mahalanobis, last checkpoint, five seeds), the share of \texttt{pad\_heldout} images accepted
+as in-distribution is $0.911\pm0.060$ (CI $[0.882, 0.940]$) at $\lam=0$ and $0.961\pm0.007$
+(CI $[0.951, 0.970]$) at $\lam=2$. The detector is therefore weak before adaptation. After
+adaptation it flags $0.039$ of these images, fewer than the $5\%$ of in-distribution images it
+flags by construction.
 
 \begin{table}[h]
 \centering
@@ -1030,6 +1130,12 @@ split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k
 \end{table}
 
 
+\paragraph{Summary.} On three further lesion-disjoint splits of ISIC (three seeds each),
+Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.82$--$0.83$ at $\lam=0$ to
+$0.39$--$0.43$ at $\lam=2$ (interval below $0.5$ in all nine runs), Fitzpatrick17k and SD-198 fall below $0.5$ in every split
+($0.34$--$0.41$), and MED-NODE drops from $0.49$--$0.57$ to $0.24$--$0.36$; in one split
+MED-NODE is already at chance before adaptation.
+
 \FloatBarrier
 \section{Image-level split (lesion leakage; for reference only)}
 \label{app:imagelevel}
@@ -1065,6 +1171,74 @@ $\lam$ & $n$ & Leakage $\downarrow$ & ID bal.\ acc $\uparrow$ & ID ECE
 \bottomrule
 \end{tabular}}
 \end{table}
+
+
+\FloatBarrier
+\section{Measurement details}
+\label{app:measure}
+
+\paragraph{Inversion.} We call a cell inverted when the cluster-bootstrap $95\%$ CI of the
+seed-mean Mahalanobis AUROC lies below $0.5$ and at least three seeds' own intervals do
+(all three in cells with three seeds). Bootstrap draws ($2{,}000$) resample ISIC test by lesion and OOD sets by
+patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k) or case (SCIN);
+MED-NODE and SD-198 carry no patient identifiers and are resampled by image, so their
+intervals may be too narrow. Runs with in-distribution
+balanced accuracy below $0.25$ are excluded as degraded and reported.
+
+\paragraph{Domain leakage.} Balanced accuracy (chance $0.5$) of a logistic probe for the
+source dataset on frozen $z_\ell^{\mathrm{norm}}$. The probe used in earlier work scores
+ISIC test against all of PAD, including images the adversary trained on. We therefore also
+report probes on held-out images only (linear, one-hidden-layer MLP, $k$-NN), a
+class-balanced probe that reweights both domains to a common class mix, and a within-class
+probe averaged over classes.
+
+The best-validation checkpoint gives the same picture as the last checkpoint from $\lam=0.5$
+on, but at $\lam=0.25$ it selects an earlier epoch and the inversion is not yet visible
+($0.525$, seed s.d.\ $0.121$; an observation made after the sweep).
+
+\FloatBarrier
+\section{Limitations in detail}
+\label{app:limits}
+
+\textbf{Scope.} The inversion is shown in dermatology only, and its spread to unseen domains
+is shown for gradient reversal; multi-kernel MMD inverts detection on the target domain but
+only collapses it on the unseen datasets. We attempted two other
+modalities and neither experiment took place: on Camelyon17 no adversarial setting we tried
+removed hospital information while preserving the classifier, and on chest radiographs the
+detector was near chance on the OOD set before any adaptation (AUROC $0.522$), so there was
+nothing to invert. \textbf{Architecture.} The main results use a dual-encoder model; the A4
+recipe changes the latent size and loss, but a plain single-encoder DANN collapses detection
+to chance without inverting, and whether deeper invariance would invert it is untested: with a stronger adversary
+(warm-up, higher adversary learning rate, deeper head) its held-out leakage stayed at
+$0.70$, above our target of $0.55$, and detection stayed low without inverting ($0.52$ on
+\texttt{pad\_heldout}, $0.62$ on Fitzpatrick17k). Without label shift, raising $\lam$ to $8$ brought held-out leakage to chance in only one
+of five runs; in that run detection on the unseen datasets did not invert, which is consistent
+with label shift being necessary but rests on a single model. A single-encoder DANN with DINOv2-S/14 at $\lam=2$ (five seeds) also stayed above our invariance
+threshold of $0.60$ (leakage $0.884\pm0.019$; ID $0.555\pm0.023$, \texttt{pad\_heldout}
+$0.546\pm0.033$, Fitzpatrick17k $0.476\pm0.069$), so the test did not take place for this model either (Table~\ref{tab:single-dino}).
+\textbf{Competence.} In-distribution balanced accuracy is $0.04$--$0.08$
+below a standard ERM on the same lesion-disjoint split, and $0.095$ below ERM for the DINOv2-S/14 model.
+To check whether the backbone learning rate caused this gap, we selected it on validation (seed $42$):
+validation balanced accuracy at $\times0.1$, $\times0.3$ and $\times1.0$ was $0.444$, $0.402$ and $0.236$
+for the dual model at $\lam=0$ and $0.516$, $0.504$ and $0.418$ for ERM. Both chose $\times0.1$, the setting
+already used, so the gap is not due to the learning rate. \textbf{Statistics.} MED-NODE and
+SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
+narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
+The five OOD scores are functions of one latent and are not independent evidence.
+\textbf{Mechanism.} A two-domain Gaussian toy model with label shift did not reproduce the
+inversion, so the conditions we identify may not be sufficient in general. \textbf{Warning
+signals.} No statistic computed on in-distribution data alone flagged the inverted runs; the
+share of deployment images predicted as the majority class tracked inversion
+(Spearman $-0.77$ and $-0.75$ over $64$ runs) but needs unlabelled target data. \textbf{Mitigation.} The few-label
+remedy is a post hoc analysis, costs in-distribution accuracy, and did not meet our leakage
+criterion. \textbf{Data.} We obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images. The host refused
+the remaining downloads (HTTP 406), so we cannot tell removed images from an unavailable host, and the
+subset differs from the full set by Fitzpatrick type (total variation $0.257$; $0.063$ by ISIC-mapped
+class). As a robustness check, Mahalanobis AUROC by skin type (types 1--2, 3--4 and 5--6; $n=819$,
+$2{,}078$, $837$) is $0.733$, $0.711$ and $0.695$ at $\lam=0$ and $0.423$, $0.390$ and $0.411$ at $\lam=2$;
+reweighting to the full type mix gives $0.719$ and $0.415$, and reweighting by type and class gives
+$0.714$ and $0.424$. At $\lam=2$ all three groups and both reweighted versions meet the inversion
+criterion; the $153$ images of unknown type ($0.479$) do not.
 
 \FloatBarrier
 \end{document}

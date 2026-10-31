@@ -1,0 +1,14 @@
+{
+  "dual_lambda2_V1_z_lesion_norm_per_seed": {
+    "42": 0.5,
+    "52": 0.5010934313918176,
+    "62": 0.5074163020699775,
+    "72": 0.49968000979033006,
+    "82": 0.5015220700152206
+  },
+  "dual_lambda2_V1_mean": 0.5019423626534691,
+  "margin": 0.05,
+  "target": 0.5519423626534692,
+  "source": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p6/per_run",
+  "commit": "930a427"
+}

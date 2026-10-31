@@ -1,0 +1,106 @@
+{
+  "tasks": [
+    {
+      "config": "gw_lr10_d1",
+      "lambda": 2.0
+    },
+    {
+      "config": "gw_lr10_d3",
+      "lambda": 2.0
+    },
+    {
+      "config": "gw_lr10_d1",
+      "lambda": 4.0
+    },
+    {
+      "config": "gw_lr10_d3",
+      "lambda": 4.0
+    },
+    {
+      "config": "gw_lr30_d1",
+      "lambda": 8.0
+    },
+    {
+      "config": "gw_lr30_d3",
+      "lambda": 8.0
+    }
+  ],
+  "basis": {
+    "2.0": {
+      "lr": 10,
+      "v1": 0.706503615181989,
+      "all_flagged": false,
+      "candidates": [
+        {
+          "config": "gw_lr100_d2",
+          "v1": 0.777605114571478,
+          "id_bal_acc": 0.5420670734025019,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr10_d2",
+          "v1": 0.706503615181989,
+          "id_bal_acc": 0.5392905656825506,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr30_d2",
+          "v1": 0.9482145486447425,
+          "id_bal_acc": 0.4063809898433057,
+          "degraded": true
+        }
+      ]
+    },
+    "4.0": {
+      "lr": 10,
+      "v1": 0.7000287725719283,
+      "all_flagged": false,
+      "candidates": [
+        {
+          "config": "gw_lr100_d2",
+          "v1": 0.8147340462179317,
+          "id_bal_acc": 0.5623429385294596,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr10_d2",
+          "v1": 0.7000287725719283,
+          "id_bal_acc": 0.5304420220162404,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr30_d2",
+          "v1": 0.72960775479507,
+          "id_bal_acc": 0.5614080169588316,
+          "degraded": false
+        }
+      ]
+    },
+    "8.0": {
+      "lr": 30,
+      "v1": 0.7272962947184897,
+      "all_flagged": false,
+      "candidates": [
+        {
+          "config": "gw_lr100_d2",
+          "v1": 0.8047350123394894,
+          "id_bal_acc": 0.5545775959062069,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr10_d2",
+          "v1": 0.7404942791986109,
+          "id_bal_acc": 0.5429965847610632,
+          "degraded": false
+        },
+        {
+          "config": "gw_lr30_d2",
+          "v1": 0.7272962947184897,
+          "id_bal_acc": 0.5316747274483715,
+          "degraded": false
+        }
+      ]
+    }
+  },
+  "commit": "7695913"
+}

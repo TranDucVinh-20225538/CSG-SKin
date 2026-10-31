@@ -1,0 +1,25 @@
+{
+  "best": {
+    "config": "gw_lr10_d2",
+    "lambda": 4.0,
+    "v1": 0.7000287725719283,
+    "degraded": false,
+    "all_flagged": false,
+    "n_pilot": 15,
+    "commit": "cc216b7"
+  },
+  "target": 0.5519423626534692,
+  "seeds": [
+    42,
+    52,
+    62
+  ],
+  "v1_per_seed": {
+    "42": 0.7000287725719283,
+    "52": 0.6908985799642696,
+    "62": 0.7073607022552686
+  },
+  "mean_v1": 0.6994293515971556,
+  "commit": "cc216b7",
+  "reason": "3-seed mean V1 above the target"
+}
