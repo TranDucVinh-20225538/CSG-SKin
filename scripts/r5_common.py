@@ -39,6 +39,7 @@ from src.utils import ood_metrics  # noqa: E402
 PAPERB = Path("/data2/cmdir/home/toandq/CSG-Skin-paperB")
 R5 = PAPERB / "results" / "paperB" / "r5"
 R7 = PAPERB / "results" / "paperB" / "r7"
+R7B = PAPERB / "results" / "paperB" / "r7b"
 PREREG = PAPERB / "results" / "paperB" / "PREREGISTER_BOOTSTRAP.json"
 PAD_PAT = re.compile(r"PAT_(\d+)_(\d+)_(\d+)")
 P7A_SETS = R5 / "p7a" / "sets"
