@@ -1,6 +1,6 @@
 # Paper B R7b T1c: higher backbone LR
 
-Design: `decisions/paperB_r7b_t1c.md`. Commit `99ccbd0`.
+Design: `decisions/paperB_r7b_t1c.md`. Commit `91cdd4a`.
 
 ## Reading-rule case (computed first)
 

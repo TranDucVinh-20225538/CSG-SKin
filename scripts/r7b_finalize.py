@@ -13,15 +13,19 @@ import r5_common as R  # noqa: E402
 OUT = R.R7B
 
 
-def run(cmd):
+def run(cmd, ok_codes=(0,)):
     print("+", " ".join(cmd), flush=True)
-    subprocess.check_call(cmd, cwd=str(R.PAPERB))
+    rc = subprocess.call(cmd, cwd=str(R.PAPERB))
+    if rc not in ok_codes:
+        raise SystemExit(rc)
+    return rc
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    if (OUT / "t1c" / "SELECTION.json").exists():
-        run([sys.executable, "scripts/r7b_t1c_select.py"])
+    if (OUT / "t1c" / "SELECTION.json").exists() or (OUT / "t1c" / "runs").exists():
+        # exit 2 = stop_after_selection (dual chose ×0.1); still OK
+        run([sys.executable, "scripts/r7b_t1c_select.py"], ok_codes=(0, 2))
     if (OUT / "t1c" / "runs").exists() or (OUT / "t1c" / "SELECTION.json").exists():
         run([sys.executable, "scripts/r7b_t1c_report.py"])
 
