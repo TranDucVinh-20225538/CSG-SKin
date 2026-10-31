@@ -279,8 +279,11 @@ class AdversaryBank(nn.Module):
 
 def grl_alpha_schedule(step, total, kind):
     """'current' = Paper B schedule (gamma 20, p^0.5, floor 0.2): α ≥ 0.2 from step 0.
-    'ganin'   = Ganin & Lempitsky 2015: α = 2/(1+exp(-10 p)) - 1, starts at 0."""
+    'ganin'   = Ganin & Lempitsky 2015: α = 2/(1+exp(-10 p)) - 1, starts at 0.
+    'fixed'   = α = 1 from step 0 (no schedule; use with adv_warmup_epochs=0)."""
     p = max(0.0, min(1.0, float(step) / float(max(int(total) - 1, 1))))
+    if kind == "fixed":
+        return 1.0, p
     if kind == "ganin":
         return float(2.0 / (1.0 + math.exp(-10.0 * p)) - 1.0), p
     a = 2.0 / (1.0 + math.exp(-20.0 * p ** 0.5)) - 1.0

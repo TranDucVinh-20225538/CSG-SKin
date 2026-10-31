@@ -40,6 +40,7 @@ PAPERB = Path("/data2/cmdir/home/toandq/CSG-Skin-paperB")
 R5 = PAPERB / "results" / "paperB" / "r5"
 R7 = PAPERB / "results" / "paperB" / "r7"
 R7B = PAPERB / "results" / "paperB" / "r7b"
+R8 = PAPERB / "results" / "paperB" / "r8"
 PREREG = PAPERB / "results" / "paperB" / "PREREGISTER_BOOTSTRAP.json"
 PAD_PAT = re.compile(r"PAT_(\d+)_(\d+)_(\d+)")
 P7A_SETS = R5 / "p7a" / "sets"
@@ -271,8 +272,12 @@ def isic_extra_labels(frame):
     return np.array([LABELS.index(m) if m in LABELS else -1 for m in frame.mapped], int)
 
 
-def eval_isic(forward, D, device, out_dir, workers=4, batch=64, n_classes=8):
-    """Collect every ISIC-task set, write features/<set>.npz, scores.npz and return the summary block."""
+def eval_isic(forward, D, device, out_dir, workers=4, batch=64, n_classes=8, mode="full"):
+    """Collect ISIC-task sets, write features/<set>.npz, scores.npz and return the summary block.
+
+    mode='full': Table 1 OOD detectors (default).
+    mode='d1': R8 D1 blind — save features (incl. OOD packs for D2) + ID metrics only; no OOD AUROC/scores.
+    """
     tf = build_val_transform_robust()
     out_dir = Path(out_dir)
     (out_dir / "features").mkdir(parents=True, exist_ok=True)
@@ -292,8 +297,6 @@ def eval_isic(forward, D, device, out_dir, workers=4, batch=64, n_classes=8):
         np.savez_compressed(out_dir / "features" / "{}.npz".format(name), **P[name])
         print("features", name, P[name]["z"].shape, flush=True)
     tr, te = P["isic_train"], P["isic_test"]
-    det = Detectors(tr["z"], tr["labels"], n_classes)
-    sc_id, _ = det.scores(te["z"], te["logits"])
     y_id = te["labels"].astype(int)
     pred = te["logits"].argmax(1)
     from sklearn.metrics import accuracy_score, balanced_accuracy_score
@@ -301,6 +304,23 @@ def eval_isic(forward, D, device, out_dir, workers=4, batch=64, n_classes=8):
     id_ece, id_conf = ece_from_logits(te["logits"], y_id)
     h = P["pad_heldout"]
     hold_ece, hold_conf = ece_from_logits(h["logits"], h["labels"])
+    va = P["isic_val"]
+    summ = {"val_balanced_acc": float(balanced_accuracy_score(va["labels"].astype(int), va["logits"].argmax(1))),
+            "id_acc": float(accuracy_score(y_id, pred)), "id_balanced_acc": float(balanced_accuracy_score(y_id, pred)),
+            "id_ece": id_ece, "id_mean_confidence": id_conf, "ood_ece_pad_heldout": hold_ece,
+            "ood_mean_confidence_pad_heldout": hold_conf,
+            "xfer_pad_heldout_6class": six_class_xfer(h["logits"], h["labels"]),
+            "id_class_mix": {LABELS[c]: int((y_id == c).sum()) for c in range(n_classes)}, "ood": {},
+            "eval_mode": mode}
+    if mode == "d1":
+        # Minimal leakage stub for adversary_gate; V1 comes from r5_p9v2.heldout_probe afterwards.
+        summ["leakage"] = {"test_vs_pad_full": {"bal_acc_mean": None, "note": "d1_blind_skipped"},
+                           "primary": "d1_blind: use heldout_probe.json V1", "z_dim": int(te["z"].shape[1])}
+        print("eval_mode=d1: skipped OOD detectors; features saved for D2", flush=True)
+        return summ
+
+    det = Detectors(tr["z"], tr["labels"], n_classes)
+    sc_id, _ = det.scores(te["z"], te["logits"])
 
     def probe(a, b):
         return leakage_probe(np.concatenate([a["z"], b["z"]]), np.r_[np.zeros(len(a["z"])), np.ones(len(b["z"]))])
@@ -314,13 +334,7 @@ def eval_isic(forward, D, device, out_dir, workers=4, batch=64, n_classes=8):
         pca = PCA(n_components=16, random_state=0).fit(tr["z"])
         leak["test_vs_pad_full_pca16"] = probe({"z": pca.transform(te["z"])}, {"z": pca.transform(P["pad_full"]["z"])})
         leak["pca16_note"] = "probe on the 16 leading ISIC-train principal components (dimension-matched to z_lesion_norm)"
-    va = P["isic_val"]
-    summ = {"val_balanced_acc": float(balanced_accuracy_score(va["labels"].astype(int), va["logits"].argmax(1))),
-            "id_acc": float(accuracy_score(y_id, pred)), "id_balanced_acc": float(balanced_accuracy_score(y_id, pred)),
-            "id_ece": id_ece, "id_mean_confidence": id_conf, "ood_ece_pad_heldout": hold_ece,
-            "ood_mean_confidence_pad_heldout": hold_conf, "leakage": leak,
-            "xfer_pad_heldout_6class": six_class_xfer(h["logits"], h["labels"]),
-            "id_class_mix": {LABELS[c]: int((y_id == c).sum()) for c in range(n_classes)}, "ood": {}}
+    summ["leakage"] = leak
     scores = {"id__{}".format(k): v for k, v in sc_id.items()}
     for name in ("pad_heldout", "pad_full", "fitzpatrick17k") + tuple(D["extra"]):
         if name in ("pad_heldout", "pad_full"):

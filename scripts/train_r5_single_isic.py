@@ -72,6 +72,8 @@ def parse():
                     help="-1 = 0.1 for ViT backbones (DINOv2), 1.0 otherwise")
     ap.add_argument("--cap_gpu_h", type=float, default=0.0, help="stage-wide GPU-h cap (0 = none)")
     ap.add_argument("--ladder", action="store_true", help="apply the P9 stop rule / budget cap before training")
+    ap.add_argument("--eval_mode", default="full", choices=("full", "d1"),
+                    help="d1 = R8 D1 blind (features + ID only; V1 via heldout_probe)")
     ap.add_argument("--results_dir", default="",
                     help="If set, write under this dir/<stage>/<tag>. Else r5/<item>/<stage>.")
     ap.add_argument("--tag_prefix", default="", help="e.g. r7_t1_")
@@ -85,15 +87,33 @@ def parse():
 
 
 def gw_config(name):
-    """gw_lr<L>_d<D> -> Ganin schedule, 2 adversary warm-up epochs, one head of depth D, adversary LR ×L."""
-    lr, d = name[len("gw_lr"):].split("_d")
-    return {"grl_schedule": "ganin", "adv_warmup_epochs": 2, "head_specs": [[int(d), 1.0]],
+    """gw_lr<L>_d<D>[_k<K>] -> Ganin schedule, 2 adversary warm-up epochs, one head of depth D, adversary LR ×L.
+    Optional _kK = adv_inner_steps K on z.detach()."""
+    body = name[len("gw_lr"):]
+    k = 0
+    if "_k" in body:
+        body, ks = body.rsplit("_k", 1)
+        k = int(ks)
+    lr, d = body.split("_d")
+    out = {"grl_schedule": "ganin", "adv_warmup_epochs": 2, "head_specs": [[int(d), 1.0]],
+           "adv_lr_multiplier": float(lr)}
+    if k:
+        out["adv_inner_steps"] = k
+    return out
+
+
+def fix_config(name):
+    """fix_lr<L>_d<D> -> fixed α=1 from step 0, no warm-up, one head of depth D, adversary LR ×L."""
+    lr, d = name[len("fix_lr"):].split("_d")
+    return {"grl_schedule": "fixed", "adv_warmup_epochs": 0, "head_specs": [[int(d), 1.0]],
             "adv_lr_multiplier": float(lr)}
 
 
 def resolve_config(name, backbone, recipe):
     if name.startswith("gw_lr"):
-        return name, gw_config(name), "P9 v2 grid"
+        return name, gw_config(name), "P9/R8 ganin grid"
+    if name.startswith("fix_lr"):
+        return name, fix_config(name), "R8 fixed-GRL grid"
     if name == "selected":
         p = Path(str(SELECTED).format(backbone, r5_recipe.tag(recipe)))
         if p.exists():
@@ -216,26 +236,42 @@ def main():
         ev = M.SingleEncToolboxLit(pretrained=False, **kw)
         ev.load_state_dict(torch.load(str(ckpt), map_location="cpu")["state_dict"])
         net = ev.net.to(device).eval()
-        return R.eval_isic(lambda x: net(x), D, device, out_dir, workers=a.num_workers)
+        return R.eval_isic(lambda x: net(x), D, device, out_dir, workers=a.num_workers, mode=a.eval_mode)
 
     # Primary = last.ckpt (decisions/paperB_r5_p8.md, deviation 2026-10-15 21:57); best-val is secondary.
     summ = evaluate(last, run_dir)
-    sec = evaluate(best, run_dir / "bestval")
+    if a.eval_mode != "d1":
+        sec = evaluate(best, run_dir / "bestval")
+        summ["secondary_bestval"] = {"checkpoint": str(best), "epoch": ckpt_epoch(best),
+                                     "out_dir": str(run_dir / "bestval"),
+                                     **{k: sec[k] for k in ("id_balanced_acc", "leakage", "ood",
+                                                            "xfer_pad_heldout_6class") if k in sec}}
     summ["checkpoint_policy"] = "last"
     summ["primary_checkpoint"], summ["primary_epoch"] = str(last), ckpt_epoch(last)
     summ["best_epoch"] = ckpt_epoch(best)
-    summ["secondary_bestval"] = {"checkpoint": str(best), "epoch": summ["best_epoch"], "out_dir": str(run_dir / "bestval"),
-                                 **{k: sec[k] for k in ("id_balanced_acc", "leakage", "ood", "xfer_pad_heldout_6class") if k in sec}}
     rows = [json.loads(l) for l in adv_log.read_text().splitlines() if l.strip()] if adv_log.exists() else []
+    leak_bal = summ.get("leakage", {}).get("test_vs_pad_full", {}).get("bal_acc_mean")
+    if leak_bal is None:
+        leak_bal = 1.0  # d1_blind: gate uses placeholder; V1 is authoritative
     summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone, "config": cname,
                  "penalty": a.penalty, "penalty_weight": a.penalty_weight, "max_epochs": epochs,
+                 "backbone_lr_mult": float(bb_mult), "eval_mode": a.eval_mode,
                  "best_checkpoint": str(best), "recipe": a.recipe,
-                 "gate": adversary_gate(rows, M.LN2, a.lambda_adv,
-                                        leakage_bal=summ["leakage"]["test_vs_pad_full"]["bal_acc_mean"], floor=0.5),
+                 "gate": adversary_gate(rows, M.LN2, a.lambda_adv, leakage_bal=leak_bal, floor=0.5),
                  "gpu_hours": (time.time() - t0) / 3600.0, "commit": R.git_head()})
+    if a.eval_mode == "d1":
+        import r5_p9v2 as V  # noqa: WPS433
+        probe = V.heldout_probe(run_dir)
+        summ["v1"] = probe["V1"]["bal_acc_mean"]
+        summ["v1_sd"] = probe["V1"]["bal_acc_sd"]
+        summ["heldout_probe"] = "heldout_probe.json"
+        summ["degraded"] = bool(summ["id_balanced_acc"] < 0.25)
     (run_dir / "summary.json").write_text(json.dumps(summ, indent=2) + "\n")
-    print("saved", run_dir / "summary.json", "leak", summ["leakage"]["test_vs_pad_full"]["bal_acc_mean"],
-          "maha pad_heldout", summ["ood"]["pad_heldout"]["mahalanobis_classcond"], flush=True)
+    if a.eval_mode == "d1":
+        print("saved", run_dir / "summary.json", "V1", summ["v1"], "id_bal", summ["id_balanced_acc"], flush=True)
+    else:
+        print("saved", run_dir / "summary.json", "leak", summ["leakage"]["test_vs_pad_full"]["bal_acc_mean"],
+              "maha pad_heldout", summ["ood"]["pad_heldout"]["mahalanobis_classcond"], flush=True)
 
 
 if __name__ == "__main__":
