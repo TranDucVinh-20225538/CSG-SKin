@@ -62,6 +62,8 @@ def parse():
 
 def run_tag(a, epochs_override):
     t = "{}dual_{}_ladv{}_s{}".format(a.tag_prefix, a.backbone, R.lam_tag(a.lambda_adv), a.seed)
+    if float(a.backbone_lr_mult) > 0:
+        t += "_bb{}".format(R.lam_tag(a.backbone_lr_mult))
     if abs(float(a.pad_adv_frac) - 1.0) > 1e-12:
         t += "_pad{}".format(R.lam_tag(a.pad_adv_frac))
     if a.penalty != "none":
@@ -151,7 +153,8 @@ def main():
     rows = [json.loads(l) for l in adv_log.read_text().splitlines() if l.strip()] if adv_log.exists() else []
     ep_last = int(torch.load(str(last), map_location="cpu", weights_only=False)["epoch"])
     ep_best = int(torch.load(str(best), map_location="cpu", weights_only=False)["epoch"])
-    summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone, "penalty": a.penalty,
+    summ.update({"tag": tag, "seed": a.seed, "lambda_adv": a.lambda_adv, "backbone": a.backbone,
+                 "backbone_lr_mult": float(bb_mult), "penalty": a.penalty,
                  "penalty_weight": a.penalty_weight, "max_epochs": epochs, "checkpoint_policy": "last",
                  "pad_adv_frac": float(a.pad_adv_frac), "pad_adv_subsample": pad_meta,
                  "primary_checkpoint": str(last), "primary_epoch": ep_last, "best_checkpoint": str(best),

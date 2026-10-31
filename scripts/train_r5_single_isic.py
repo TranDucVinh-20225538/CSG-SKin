@@ -127,6 +127,8 @@ def main():
     epochs = a.max_epochs or int(rec["max_epochs"]) * int(tb.pop("epoch_mult", 1))
     tb["adv_lr_multiplier"] = float(tb.get("adv_lr_multiplier", rec["adv_lr_multiplier"]))
     tag = "{}single_{}_{}_ladv{}_s{}".format(a.tag_prefix, a.backbone, cname, R.lam_tag(a.lambda_adv), a.seed)
+    if float(a.backbone_lr_mult) > 0:
+        tag += "_bb{}".format(R.lam_tag(a.backbone_lr_mult))
     if a.penalty != "none":
         tag += "_{}{}".format(a.penalty, R.lam_tag(a.penalty_weight))
     if a.max_epochs:
