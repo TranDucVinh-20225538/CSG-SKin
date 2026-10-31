@@ -1,0 +1,55 @@
+{
+  "status": "stop_after_selection",
+  "tie_eps": 0.005,
+  "dual_chosen_mult": 0.1,
+  "dual_chosen_val_bal": 0.44437398210326895,
+  "erm_chosen_mult": 0.1,
+  "erm_chosen_val_bal": 0.5156994881621352,
+  "dual_candidates": [
+    {
+      "mult": 0.1,
+      "val_balanced_acc": 0.44437398210326895,
+      "id_balanced_acc": 0.4449064213270877,
+      "tag": "r7_t1_dual_dinov2_vits14_ladv0_s42",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7/t1/runs/r7_t1_dual_dinov2_vits14_ladv0_s42/summary.json"
+    },
+    {
+      "mult": 0.3,
+      "val_balanced_acc": 0.4024956517025965,
+      "id_balanced_acc": 0.4157347838214971,
+      "tag": "r7b_t1c_dual_dinov2_vits14_ladv0_s42_bb0p3",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7b/t1c/runs/r7b_t1c_dual_dinov2_vits14_ladv0_s42_bb0p3/summary.json"
+    },
+    {
+      "mult": 1.0,
+      "val_balanced_acc": 0.2357994917732677,
+      "id_balanced_acc": 0.22508902649371065,
+      "tag": "r7b_t1c_dual_dinov2_vits14_ladv0_s42_bb1",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7b/t1c/runs/r7b_t1c_dual_dinov2_vits14_ladv0_s42_bb1/summary.json"
+    }
+  ],
+  "erm_candidates": [
+    {
+      "mult": 0.1,
+      "val_balanced_acc": 0.5156994881621352,
+      "id_balanced_acc": 0.5877167607125546,
+      "tag": "r7_t1_single_dinov2_vits14_baseline_ladv0_s42",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7/t1/erm/r7_t1_single_dinov2_vits14_baseline_ladv0_s42/summary.json"
+    },
+    {
+      "mult": 0.3,
+      "val_balanced_acc": 0.504191971530445,
+      "id_balanced_acc": 0.5085053289019461,
+      "tag": "r7b_t1c_single_dinov2_vits14_baseline_ladv0_s42_bb0p3",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7b/t1c/erm/r7b_t1c_single_dinov2_vits14_baseline_ladv0_s42_bb0p3/summary.json"
+    },
+    {
+      "mult": 1.0,
+      "val_balanced_acc": 0.41803537377018235,
+      "id_balanced_acc": 0.4248765044124731,
+      "tag": "r7b_t1c_single_dinov2_vits14_baseline_ladv0_s42_bb1",
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r7b/t1c/erm/r7b_t1c_single_dinov2_vits14_baseline_ladv0_s42_bb1/summary.json"
+    }
+  ],
+  "note": "If dual chooses \u00d70.1, T1c stops after selection (T1 is the result). Test-set numbers reported but not used for choice."
+}

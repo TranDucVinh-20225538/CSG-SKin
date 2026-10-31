@@ -122,7 +122,7 @@ def auroc_cell(sid, sood, w_ood=None):
 
 def bootstrap_auroc(per_seed, id_groups, ood_groups, rng, n_boot, w_per_seed=None):
     """per_seed: {seed: (sid, sood)}; optional w_per_seed: {seed: w_ood aligned to sood}.
-    OOD resampled by ood_groups (index lists into sood)."""
+    OOD resampled by ood_groups (index lists into sood). Unweighted draws use R._fast_auroc."""
     gi = list(id_groups)
     go = list(ood_groups)
     if not go or not per_seed:
@@ -130,15 +130,17 @@ def bootstrap_auroc(per_seed, id_groups, ood_groups, rng, n_boot, w_per_seed=Non
     di = [np.concatenate([gi[j] for j in rng.integers(0, len(gi), len(gi))]) for _ in range(n_boot)]
     do = [np.concatenate([go[j] for j in rng.integers(0, len(go), len(go))]) for _ in range(n_boot)]
     draws, per = {}, {}
+    weighted = w_per_seed is not None
     for s, (sid, so) in per_seed.items():
-        w = None if w_per_seed is None else w_per_seed[s]
-        pts = []
-        for b in range(n_boot):
-            ww = None if w is None else w[do[b]]
-            pts.append(R.auroc(sid[di[b]], so[do[b]], ww))
+        w = None if not weighted else w_per_seed[s]
+        if weighted:
+            pts = [R.auroc(sid[di[b]], so[do[b]], w[do[b]]) for b in range(n_boot)]
+            pt = auroc_cell(sid, so, w)
+        else:
+            pts = [R._fast_auroc(sid[di[b]], so[do[b]]) for b in range(n_boot)]
+            pt = float(R.auroc(sid, so))
         draws[s] = np.asarray(pts, float)
         lo, hi = np.quantile(draws[s], [0.025, 0.975])
-        pt = auroc_cell(sid, so, None if w is None else w)
         per[str(s)] = {"point": pt, "ci_lo": float(lo), "ci_hi": float(hi),
                        "ci_entirely_below_0.5": bool(hi < 0.5)}
     pooled = np.mean(np.stack(list(draws.values())), 0)
@@ -188,8 +190,9 @@ def main():
             "n_full": meta["n_full"], "n_kept": meta["n_kept"],
             "cells": {}}
 
-    for lam in sorted(by_lam):
+    for li, lam in enumerate(sorted(by_lam)):
         seeds = by_lam[lam]
+        print("lambda", lam, "({}/{})".format(li + 1, len(by_lam)), flush=True)
         for det in DETS:
             # per group
             for gname, _ in GROUPS:
@@ -258,20 +261,22 @@ def main():
           "| λ | setting | n_img | n_P13 | mean±sd | pooled CI | k_below | rule |",
           "|---:|---|---:|---:|---|---|---:|---|"]
     for _, r in df[df.detector == "mahalanobis_classcond"].iterrows():
-        mean = "—" if pd.isna(r.auroc_mean) else "{:.3f} ± {:.3f}".format(r.auroc_mean, r.auroc_sd)
-        ci = "—" if pd.isna(r.pooled_ci_lo) else "[{:.3f}, {:.3f}]".format(r.pooled_ci_lo, r.pooled_ci_hi)
+        mean = "—" if pd.isna(r["auroc_mean"]) else "{:.3f} ± {:.3f}".format(r["auroc_mean"], r["auroc_sd"])
+        ci = "—" if pd.isna(r["pooled_ci_lo"]) else "[{:.3f}, {:.3f}]".format(r["pooled_ci_lo"], r["pooled_ci_hi"])
         L.append("| {:g} | {} | {} | {} | {} | {} | {} | {} |".format(
-            r.lambda, r.setting, int(r.n_images), int(r.n_p13_clusters), mean, ci,
-            "—" if pd.isna(r.k_below) else int(r.k_below), r.rule if isinstance(r.rule, str) else "—"))
+            r["lambda"], r["setting"], int(r["n_images"]), int(r["n_p13_clusters"]), mean, ci,
+            "—" if pd.isna(r["k_below"]) else int(r["k_below"]),
+            r["rule"] if isinstance(r["rule"], str) else "—"))
     L += ["", "## AUROC (kNN)", "",
           "| λ | setting | mean±sd | pooled CI | k_below | rule |",
           "|---:|---|---|---|---:|---|"]
     for _, r in df[df.detector == "knn_k50"].iterrows():
-        mean = "—" if pd.isna(r.auroc_mean) else "{:.3f} ± {:.3f}".format(r.auroc_mean, r.auroc_sd)
-        ci = "—" if pd.isna(r.pooled_ci_lo) else "[{:.3f}, {:.3f}]".format(r.pooled_ci_lo, r.pooled_ci_hi)
+        mean = "—" if pd.isna(r["auroc_mean"]) else "{:.3f} ± {:.3f}".format(r["auroc_mean"], r["auroc_sd"])
+        ci = "—" if pd.isna(r["pooled_ci_lo"]) else "[{:.3f}, {:.3f}]".format(r["pooled_ci_lo"], r["pooled_ci_hi"])
         L.append("| {:g} | {} | {} | {} | {} | {} |".format(
-            r.lambda, r.setting, mean, ci,
-            "—" if pd.isna(r.k_below) else int(r.k_below), r.rule if isinstance(r.rule, str) else "—"))
+            r["lambda"], r["setting"], mean, ci,
+            "—" if pd.isna(r["k_below"]) else int(r["k_below"]),
+            r["rule"] if isinstance(r["rule"], str) else "—"))
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print("wrote", OUT / "REPORT.md", "rows", len(df))
 
