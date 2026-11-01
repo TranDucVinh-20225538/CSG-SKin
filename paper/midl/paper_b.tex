@@ -43,8 +43,8 @@ in-distribution than the model's own test images. The same happens on three clin
 training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
 accuracy changes little (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and in-distribution
 ECE stays at $0.20$--$0.21$. Our
-interventions point to label shift between the two domains as the main driver in this setting. When we change only the class
-mix that the adversary sees, AUROC on the external datasets changes by $0.24$--$0.37$, and the
+interventions point to label shift between the two domains as the main driver in this setting. When we change the class mix that the adversary sees (at the
+extreme setting this also drops two classes absent from the target domain), AUROC on the external datasets changes by $0.24$--$0.37$, and the
 association remains after adjusting for measured domain leakage. Multi-kernel MMD alignment at similar
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
@@ -88,7 +88,7 @@ In our experiments, label shift between the aligned domains is the main driver. 
 second domain are $12.3\%$ nevus. When two domains have different class priors, matching
 their marginal feature distributions forces the model to misplace the classes of one
 domain~\cite{zhao2019invariant,tachet2020domain}. We test what this does to OOD monitoring by
-changing only the class mix that the adversary sees, and we look at where the OOD images
+changing the class mix that the adversary sees, and we look at where the OOD images
 end up in feature space.
 
 \paragraph{Contributions.}
@@ -392,8 +392,8 @@ A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
 \subsection{Label shift between the aligned domains drives the inversion in this setting}
 \label{sec:site}
 
-\paragraph{Intervention.} Changing only the class mix of the ISIC images the adversary sees
-switches the inversion on unseen domains on and off (Table~\ref{tab:shift}): paired by seed,
+\paragraph{Intervention.} Changing the class mix of the ISIC images the adversary sees
+(Section~\ref{sec:interventions}) switches the inversion on unseen domains on and off (Table~\ref{tab:shift}): paired by seed,
 removing the label shift raises AUROC at $\lam=2$ by $0.361$ (Fitzpatrick17k), $0.243$
 (MED-NODE) and $0.372$ (SD-198); per-level results are in Appendix~\ref{app:shift}.
 
@@ -773,7 +773,7 @@ SD-198 & 75 & -0.172 & [-0.221, -0.123] & yes & 1.04 & 1.03 & yes \\
 \end{tabular}}
 \end{table}
 
-\paragraph{Intervention by level.} Changing only the class mix of the ISIC images the adversary sees
+\paragraph{Intervention by level.} Changing the class mix of the ISIC images the adversary sees
 switches the inversion on unseen domains on and off (Table~\ref{tab:shift}). At $\lam=2$, with
 the adversary's ISIC images resampled to PAD's class mix (shift $0\%$), Mahalanobis AUROC is
 $0.691$ on Fitzpatrick17k, $0.541$ on MED-NODE and $0.694$ on SD-198, none inverted; with
