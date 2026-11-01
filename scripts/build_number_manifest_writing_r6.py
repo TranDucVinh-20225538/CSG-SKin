@@ -440,6 +440,28 @@ def build_store():
 
     STORE.parent.mkdir(parents=True, exist_ok=True)
     STORE.write_text(json.dumps(store, indent=2) + "\n")
+    # Class support of the shift-0% adversary stream (R1 run config: ISIC train mix, PAD adv mix).
+    import csv as _csv
+    rc = load(RES / "r6/r1/cur/runs/r1_cur_shift0_ladv2_s42/config.json")
+    isic, pad = rc["isic_train_mix"], rc["pad_adv_mix_for_resampling_only"]
+    tv = lambda p, q: 0.5 * sum(abs(x - y) for x, y in zip(p, q))
+    absent = [i for i, v in enumerate(pad) if v == 0]
+    keep = sum(v for i, v in enumerate(isic) if i not in absent)
+    isic6 = [0.0 if i in absent else v / keep for i, v in enumerate(isic)]
+    put(store, ["support", "absent_share_pct"], 100 * sum(isic[i] for i in absent))
+    put(store, ["support", "tv_isic_pad"], tv(isic, pad))
+    put(store, ["support", "tv_drop_absent"], tv(isic, isic6))
+    put(store, ["support", "tv_isic6_pad"], tv(isic6, pad))
+    # Leakage-matched regression: units and clusters (pool.csv)
+    pool = list(_csv.DictReader(open(RES / "r6/r1/cur/leakage_matched/pool.csv")))
+    ok = [r for r in pool if r["degraded"].lower() != "true"]
+    cells = {(r["recipe"], r["lambda"], r["shift_level"]) for r in ok}
+    r1 = [r for r in ok if r["recipe"] == "R1"]
+    put(store, ["regression", "n_runs_all"], len(pool))
+    put(store, ["regression", "n_runs"], len(ok))
+    put(store, ["regression", "n_clusters"], len(cells))
+    put(store, ["regression", "n_r1_cells"], len({c for c in cells if c[0] == "R1"}))
+    put(store, ["regression", "n_r1_runs"], len(r1))
     return store
 
 
@@ -574,6 +596,17 @@ def build_manifest(store):
                    ["values", "p8", "a4_l0", "id_bal", "mean"],
                    note="A4 ID bal at λ=0"))
     erm = "r5/p8/erm_ref/REFERENCE.json"
+    for eid, written, key in [
+        ("support_absent_pct", "1.9", ["values", "support", "absent_share_pct"]),
+        ("support_tv_isic_pad", "0.583", ["values", "support", "tv_isic_pad"]),
+        ("support_tv_drop", "0.019", ["values", "support", "tv_drop_absent"]),
+        ("support_tv_isic6_pad", "0.579", ["values", "support", "tv_isic6_pad"]),
+        ("reg_n_runs_all", "76", ["values", "regression", "n_runs_all"]),
+        ("reg_n_clusters", "16", ["values", "regression", "n_clusters"]),
+        ("reg_n_r1_cells", "6", ["values", "regression", "n_r1_cells"]),
+        ("reg_n_r1_runs", "25", ["values", "regression", "n_r1_runs"]),
+    ]:
+        E.append(entry(eid, written, store_f, key, optional="." not in written))
     E.append(entry("competence_erm_mean", "0.558", erm,
                    ["last_ckpt_test_bal_acc", "mean"],
                    note="single-encoder ERM reference"))

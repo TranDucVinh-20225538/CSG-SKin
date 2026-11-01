@@ -1400,6 +1400,90 @@
   "note": "A4 ID bal at \u03bb=0"
  },
  {
+  "id": "support_absent_pct",
+  "written": "1.9",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "support",
+   "absent_share_pct"
+  ]
+ },
+ {
+  "id": "support_tv_isic_pad",
+  "written": "0.583",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "support",
+   "tv_isic_pad"
+  ]
+ },
+ {
+  "id": "support_tv_drop",
+  "written": "0.019",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "support",
+   "tv_drop_absent"
+  ]
+ },
+ {
+  "id": "support_tv_isic6_pad",
+  "written": "0.579",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "support",
+   "tv_isic6_pad"
+  ]
+ },
+ {
+  "id": "reg_n_runs_all",
+  "written": "76",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "regression",
+   "n_runs_all"
+  ],
+  "optional": true
+ },
+ {
+  "id": "reg_n_clusters",
+  "written": "16",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "regression",
+   "n_clusters"
+  ],
+  "optional": true
+ },
+ {
+  "id": "reg_n_r1_cells",
+  "written": "6",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "regression",
+   "n_r1_cells"
+  ],
+  "optional": true
+ },
+ {
+  "id": "reg_n_r1_runs",
+  "written": "25",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "regression",
+   "n_r1_runs"
+  ],
+  "optional": true
+ },
+ {
   "id": "competence_erm_mean",
   "written": "0.558",
   "file": "r5/p8/erm_ref/REFERENCE.json",

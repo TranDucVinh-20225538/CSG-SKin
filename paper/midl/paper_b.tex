@@ -48,7 +48,7 @@ mix that the adversary sees, AUROC on the external datasets changes by $0.24$--$
 association remains after adjusting for measured domain leakage. Multi-kernel MMD alignment at similar
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
-although the domain can still be read within each class. The clinical cost is concrete: in the same models, the share of melanomas from unseen sources
+although the domain can still be read within each class. In the same models, which reach in-distribution balanced accuracy of about $0.48$ on eight classes (ERM: $0.558$), we see a safety-relevant error pattern, not evidence of clinical impact: the share of melanomas from unseen sources
 that the classifier calls benign nevus with confidence above $0.9$ increases from $13\%$ to
 $51$--$81\%$, and the monitor accepts almost all of these images with or without adaptation.
 Correcting for the class priors during training recovers detection only in part when the
@@ -163,8 +163,11 @@ BCC, AK, BKL, DF, VASC, SCC) is the in-distribution source. We split it $64/16/2
 train, validation and test \emph{grouped by} \texttt{lesion\_id} ($20\%$ held out for test, then $20\%$ of the remainder for validation; 16{,}211 / 4{,}053 /
 5{,}067 images), because $60\%$ of test images in the image-level split share a lesion with
 training~\cite{leakagepaper}. \textbf{PAD-UFES-20}~\cite{pacheco2020} (2{,}298 smartphone
-photographs, six of the eight classes) is the domain the adversary aligns against. Its
-labels are never used in any loss. We split it by patient into \texttt{pad\_adv} (1{,}582
+photographs, six of the eight classes) is the domain the adversary aligns against. No
+per-image PAD label is used as a target in any loss. PAD class proportions enter training in
+two places only: to resample the ISIC images seen by the adversary (Section~\ref{sec:interventions})
+and as importance weights in the IWDAN variants with true or $50$-label priors. PAD labels are
+also used at evaluation, for the class-aware probes and the clinical analysis. We split it by patient into \texttt{pad\_adv} (1{,}582
 images, 961 patients), seen by the adversarial and context branches, and
 \texttt{pad\_heldout} (716 images, 412 patients), never seen.
 
@@ -211,11 +214,18 @@ image-level split, where test images share lesions with training, the same model
 $0.69$ (Table~\ref{tab:imagelevel}, leaky split; Appendix~\ref{app:imagelevel})~\cite{leakagepaper}.
 
 \subsection{Interventions on label shift}
+\label{sec:interventions}
 
 \textbf{Class mix seen by the adversary.} Keeping the classification loss on all of ISIC,
 we resample only the ISIC images fed to the adversarial branch so that their class mix is
 ISIC's own ($100\%$, the default), halfway to PAD's ($50\%$), or PAD's ($0\%$, no label
 shift between the aligned domains), at $\lam\in\{0.5,2\}$ with five seeds (three at $50\%$).
+Because PAD has no DF or VASC, shift $0\%$ also removes these two classes from the adversary's
+ISIC stream, so it changes the class set as well as the priors. The change in support is
+small: DF and VASC are $1.9\%$ of ISIC train, removing them alone moves the class mix by total
+variation $0.019$, and the renormalised six-class ISIC mix is still $0.579$ from PAD's (against
+$0.583$ for all eight classes). Shift $50\%$ keeps all eight classes, and its AUROC on
+Fitzpatrick17k and SD-198 lies between the other two levels (Appendix~\ref{app:shift}).
 
 \textbf{Importance-weighted alignment.} IWDAN and IWCDAN~\cite{tachet2020domain} reweight
 the source in the adversarial loss by target class priors. In the original method the
@@ -390,7 +400,8 @@ removing the label shift raises AUROC at $\lam=2$ by $0.361$ (Fitzpatrick17k), $
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
 latent (leakage $0.791$ vs $0.634$), but a regression of unseen-domain AUROC on label-shift
 level and leakage keeps a label-shift coefficient of $-0.107$ to $-0.172$ at fixed leakage on
-all three unseen datasets (Appendix~\ref{app:shift}).
+all three unseen datasets (one point per run; the coefficient rests on $6$ cells and $25$ runs,
+Appendix~\ref{app:shift}). This supports the label-shift explanation in the settings tried.
 
 \paragraph{A natural example without DANN.} Label shift alone can invert a class-conditional
 Mahalanobis score: training on BCN and treating the more nevus-heavy HAM as OOD gives AUROC
@@ -600,8 +611,8 @@ Each point is given in full in Appendix~\ref{app:limits}.
 
 \section{Conclusion}
 We showed that domain-adversarial training can make an OOD monitor rank held-out images from the aligned domain and from external sources as more
-in-distribution than the model's own test images. In our experiments (one dermatology task, a dual-encoder model with EfficientNet-B3 and DINOv2-S/14 backbones), this is driven mainly by label shift between the
-domains that the adversary aligns. The adversary moves unfamiliar images toward the majority
+in-distribution than the model's own test images. In our experiments (one dermatology task, a dual-encoder model with EfficientNet-B3 and DINOv2-S/14 backbones), the interventions support label shift between the
+domains that the adversary aligns as the explanation in the settings tried. Single-encoder DANN did not reach invariance in our screen, so the effect is untested there. The adversary moves unfamiliar images toward the majority
 class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
 on unseen sources after adaptation, measuring leakage within class and correcting for class
 priors are cheap steps. With a small labelled sample from the target domain, the last of
@@ -736,9 +747,13 @@ SCIN & 0\% & 2 & 0.732\,$\pm$\,0.035 & [0.722, 0.742] & 0/4 & not met \\
 \end{tabular}
 \end{table}
 
-The regression uses one point per run ($n=75$): Mahalanobis AUROC on label-shift level
+The regression uses one point per run ($n=75$; $76$ runs with one degraded run excluded): Mahalanobis AUROC on label-shift level
 (coded $0$, $0.5$, $1$), unweighted leakage and recipe. Intervals come from a wild cluster
-bootstrap with Webb weights over recipe $\times$ $\lam$ $\times$ shift cells ($2{,}000$ draws).
+bootstrap with Webb weights over the $16$ recipe $\times$ $\lam$ $\times$ shift cells ($2{,}000$ draws).
+The shift coefficient is identified only from the $6$ R1 cells ($2$ values of $\lam$ $\times$ $3$ shift
+levels, $25$ runs); A4 and the Table~\ref{tab:dial} runs only extend the leakage range at shift $100\%$.
+The regression therefore supports the label-shift explanation in the settings tried and is not
+an independent causal test.
 
 \begin{table}[h]
 \centering

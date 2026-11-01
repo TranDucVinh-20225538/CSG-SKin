@@ -1313,6 +1313,19 @@
         }
       }
     },
+    "support": {
+      "absent_share_pct": 1.9369563876380238,
+      "tv_isic_pad": 0.5828925529410233,
+      "tv_drop_absent": 0.019369563876380252,
+      "tv_isic6_pad": 0.5791360979224109
+    },
+    "regression": {
+      "n_runs_all": 76.0,
+      "n_runs": 75.0,
+      "n_clusters": 16.0,
+      "n_r1_cells": 6.0,
+      "n_r1_runs": 25.0
+    },
     "bcnham": {
       "MEL": {
         "maha": {
