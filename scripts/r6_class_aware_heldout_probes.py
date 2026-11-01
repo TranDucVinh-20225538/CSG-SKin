@@ -43,6 +43,10 @@ CELLS = (
      r"r1_cur_shift0_ladv2_s(\d+)$"),
     ("r1_shift100_l2", "R1 shift100% λ=2", R.R6 / "r1" / "cur" / "features",
      r"r1_cur_shift100_ladv2_s(\d+)$"),
+    ("r9_e1_6cls_l2", "R9 E1 six-class λ=2", R.RES / "r9" / "e1" / "features",
+     r"e1_6cls_ladv2_s(\d+)$"),
+    ("r9_e1_6cls_l05", "R9 E1 six-class λ=0.5", R.RES / "r9" / "e1" / "features",
+     r"e1_6cls_ladv0p5_s(\d+)$"),
 )
 
 

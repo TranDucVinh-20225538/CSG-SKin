@@ -747,6 +747,11 @@ def eval_datasets(data, mode):
     sets = {"isic_val": SkinDataset(data["val"], transform=tf)}
     if mode == "val":
         return sets
+    # R9 E2 stage S: ID val/test (+ train for Scorer layout) only; no leakage / OOD features.
+    if mode == "id":
+        for name, key in (("isic_train", "train"), ("isic_test", "test")):
+            sets[name] = SkinDataset(data[key], transform=tf)
+        return sets
     for name, key in (("isic_train", "train"), ("isic_test", "test"), ("pad_full", "pad_full"), ("pad_adv", "pad_adv"),
                       ("pad_heldout", "pad_heldout")):
         sets[name] = SkinDataset(data[key], transform=tf)
