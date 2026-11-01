@@ -1,0 +1,121 @@
+{
+  "val_balanced_acc": 0.48936996886196743,
+  "id_acc": 0.7323860272350503,
+  "id_balanced_acc": 0.5533772010819401,
+  "id_ece": 0.19511566868848484,
+  "id_mean_confidence": 0.9269917607307434,
+  "ood_ece_pad_heldout": 0.6489958961665963,
+  "ood_mean_confidence_pad_heldout": 0.9045824408531189,
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2569832402234637,
+    "balanced_accuracy": 0.2720495491578143,
+    "per_class_recall": {
+      "MEL": 0.2222222222222222,
+      "NV": 0.8977272727272727,
+      "BCC": 0.3007246376811594,
+      "AK": 0.034653465346534656,
+      "BKL": 0.14666666666666667,
+      "SCC": 0.030303030303030304
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "id_class_mix": {
+    "MEL": 904,
+    "NV": 2575,
+    "BCC": 664,
+    "AK": 174,
+    "BKL": 525,
+    "DF": 48,
+    "VASC": 51,
+    "SCC": 126
+  },
+  "ood": {},
+  "eval_mode": "d1",
+  "leakage": {
+    "test_vs_pad_full": {
+      "bal_acc_mean": null,
+      "note": "d1_blind_skipped"
+    },
+    "primary": "d1_blind: use heldout_probe.json V1",
+    "z_dim": 384
+  },
+  "checkpoint_policy": "last",
+  "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_mkmmd10/last.ckpt",
+  "primary_epoch": 39,
+  "best_epoch": 3,
+  "tag": "r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_mkmmd10",
+  "seed": 42,
+  "lambda_adv": 0.0,
+  "backbone": "dinov2_vits14",
+  "config": "baseline",
+  "penalty": "mkmmd",
+  "penalty_weight": 10.0,
+  "max_epochs": 40,
+  "backbone_lr_mult": 0.1,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_mkmmd10/best-03.ckpt",
+  "recipe": "current",
+  "gate": {
+    "leakage_bal_acc": 1.0,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "grl_alpha": 0.9187856458934036,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.762171371887795,
+      "acc_adv": 0.4982707509881423,
+      "loss_cls": 1.1292674006680725,
+      "penalty": 0.010098995292864569,
+      "inner_ce": null
+    },
+    "best_epoch": {
+      "epoch": 26,
+      "grl_alpha": 0.9999998013590201,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.7608736663938982,
+      "acc_adv": 0.5020689229249012,
+      "loss_cls": 0.16612956449094968,
+      "penalty": 0.0005881113080238849,
+      "inner_ce": null
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "grl_alpha": 0.9999999958776926,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.762184224934446,
+      "acc_adv": 0.4983325098814229,
+      "loss_cls": 0.10848893750120293,
+      "penalty": 0.0004179895574053503,
+      "inner_ce": null
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 0.0,
+    "status": "valid_control",
+    "reason": "\u03bb=0 control. Adversary loss weight is zero, so the head is not trained. Not a null experiment."
+  },
+  "gpu_hours": 0.6830158874723646,
+  "commit": "2b4ecab",
+  "v1": 0.6182705225286044,
+  "v1_sd": 0.015632266062106655,
+  "heldout_probe": "heldout_probe.json",
+  "degraded": false
+}

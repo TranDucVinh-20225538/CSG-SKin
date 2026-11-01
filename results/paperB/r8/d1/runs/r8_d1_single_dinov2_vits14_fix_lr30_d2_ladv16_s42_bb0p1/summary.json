@@ -1,0 +1,123 @@
+{
+  "val_balanced_acc": 0.4860757823635636,
+  "id_acc": 0.6858101440694692,
+  "id_balanced_acc": 0.5075251099214687,
+  "id_ece": 0.12354795822665281,
+  "id_mean_confidence": 0.8090848326683044,
+  "ood_ece_pad_heldout": 0.3746991560029584,
+  "ood_mean_confidence_pad_heldout": 0.6917383074760437,
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.3254189944134078,
+    "balanced_accuracy": 0.32159713072756546,
+    "per_class_recall": {
+      "MEL": 0.1111111111111111,
+      "NV": 0.9090909090909091,
+      "BCC": 0.42028985507246375,
+      "AK": 0.0,
+      "BKL": 0.41333333333333333,
+      "SCC": 0.07575757575757576
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "id_class_mix": {
+    "MEL": 904,
+    "NV": 2575,
+    "BCC": 664,
+    "AK": 174,
+    "BKL": 525,
+    "DF": 48,
+    "VASC": 51,
+    "SCC": 126
+  },
+  "ood": {},
+  "eval_mode": "d1",
+  "leakage": {
+    "test_vs_pad_full": {
+      "bal_acc_mean": null,
+      "note": "d1_blind_skipped"
+    },
+    "primary": "d1_blind: use heldout_probe.json V1",
+    "z_dim": 384
+  },
+  "checkpoint_policy": "last",
+  "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_fix_lr30_d2_ladv16_s42_bb0p1/last.ckpt",
+  "primary_epoch": 39,
+  "best_epoch": 35,
+  "tag": "r8_d1_single_dinov2_vits14_fix_lr30_d2_ladv16_s42_bb0p1",
+  "seed": 42,
+  "lambda_adv": 16.0,
+  "backbone": "dinov2_vits14",
+  "config": "fix_lr30_d2",
+  "penalty": "none",
+  "penalty_weight": 0.0,
+  "max_epochs": 40,
+  "backbone_lr_mult": 0.1,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_fix_lr30_d2_ladv16_s42_bb0p1/best-35.ckpt",
+  "recipe": "current",
+  "gate": {
+    "leakage_bal_acc": 1.0,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "grl_alpha": 1.0,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.799317375532252,
+      "acc_adv": 0.4384572628458498,
+      "loss_cls": 1.9328170991226619,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "best_epoch": {
+      "epoch": 11,
+      "grl_alpha": 1.0,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.6930289754990061,
+      "acc_adv": 0.5122900197628458,
+      "loss_cls": 1.029077573256059,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "grl_alpha": 1.0,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.6994499414570247,
+      "acc_adv": 0.4940093873517787,
+      "loss_cls": 0.7241162043432945,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 16.0,
+    "status": "inconclusive",
+    "reason": "adversary never left chance: best-epoch CE 0.6930 is not below ln K \u2212 0.02 = 0.6731. Null experiment, not a scientific negative.",
+    "learned": false,
+    "returned_to_chance": false
+  },
+  "gpu_hours": 0.6789510558048885,
+  "commit": "2b4ecab",
+  "v1": 0.9298257959548947,
+  "v1_sd": 0.008954219685659787,
+  "heldout_probe": "heldout_probe.json",
+  "degraded": false
+}

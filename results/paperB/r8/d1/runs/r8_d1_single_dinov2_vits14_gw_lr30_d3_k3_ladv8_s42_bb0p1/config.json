@@ -1,0 +1,74 @@
+{
+  "tag": "r8_d1_single_dinov2_vits14_gw_lr30_d3_k3_ladv8_s42_bb0p1",
+  "item": "d1",
+  "stage": "runs",
+  "architecture": "single_encoder_dann_dinov2_vits14",
+  "split": "lesion-level (R2 item 4)",
+  "config": "gw_lr30_d3_k3",
+  "config_source": "P9/R8 ganin grid",
+  "toolbox": {
+    "grl_schedule": "ganin",
+    "adv_warmup_epochs": 2,
+    "head_specs": [
+      [
+        3,
+        1.0
+      ]
+    ],
+    "adv_lr_multiplier": 30.0,
+    "adv_inner_steps": 3,
+    "reinit_every_steps": 0,
+    "max_epochs": 40
+  },
+  "max_epochs": 40,
+  "model_kwargs": {
+    "backbone": "dinov2_vits14",
+    "n_classes": 8,
+    "n_domains": 2,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "lambda_adv": 8.0,
+    "toolbox": {
+      "grl_schedule": "ganin",
+      "adv_warmup_epochs": 2,
+      "head_specs": [
+        [
+          3,
+          1.0
+        ]
+      ],
+      "adv_lr_multiplier": 30.0,
+      "adv_inner_steps": 3
+    },
+    "cls_weight": null,
+    "penalty": "none",
+    "penalty_weight": 0.0,
+    "total_steps": 20240,
+    "backbone_lr_mult": 0.1
+  },
+  "weights": "/data2/cmdir/home/toandq/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+  "backbone_lr_mult": 0.1,
+  "erm_note": null,
+  "scoring_space": "z_norm (BN of pooled backbone features)",
+  "recipe": {
+    "lesion_latent_dim": 16,
+    "context_latent_dim": 64,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "cls_lr_multiplier": 0.2,
+    "adv_lr_multiplier": 30.0,
+    "max_epochs": 40,
+    "batch_size": 32,
+    "lambda_orth": 1.0,
+    "lambda_ctx": 1.0,
+    "class_balance": "none"
+  },
+  "recipe_source": "current (Phase 3 / R2 item 4 values)",
+  "recipe_not_applicable": [
+    "context_latent_dim",
+    "lambda_ctx",
+    "lambda_orth",
+    "lesion_latent_dim"
+  ]
+}

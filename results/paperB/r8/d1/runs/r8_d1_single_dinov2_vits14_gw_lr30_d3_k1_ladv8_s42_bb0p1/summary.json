@@ -1,0 +1,123 @@
+{
+  "val_balanced_acc": 0.4969939697563218,
+  "id_acc": 0.7152161042036708,
+  "id_balanced_acc": 0.5016820268153053,
+  "id_ece": 0.19631875837039775,
+  "id_mean_confidence": 0.9110501408576965,
+  "ood_ece_pad_heldout": 0.650801630940434,
+  "ood_mean_confidence_pad_heldout": 0.8868060111999512,
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.2388268156424581,
+    "balanced_accuracy": 0.31701265054041633,
+    "per_class_recall": {
+      "MEL": 0.4444444444444444,
+      "NV": 0.6818181818181818,
+      "BCC": 0.23550724637681159,
+      "AK": 0.01485148514851485,
+      "BKL": 0.48,
+      "SCC": 0.045454545454545456
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "id_class_mix": {
+    "MEL": 904,
+    "NV": 2575,
+    "BCC": 664,
+    "AK": 174,
+    "BKL": 525,
+    "DF": 48,
+    "VASC": 51,
+    "SCC": 126
+  },
+  "ood": {},
+  "eval_mode": "d1",
+  "leakage": {
+    "test_vs_pad_full": {
+      "bal_acc_mean": null,
+      "note": "d1_blind_skipped"
+    },
+    "primary": "d1_blind: use heldout_probe.json V1",
+    "z_dim": 384
+  },
+  "checkpoint_policy": "last",
+  "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_gw_lr30_d3_k1_ladv8_s42_bb0p1/last.ckpt",
+  "primary_epoch": 39,
+  "best_epoch": 7,
+  "tag": "r8_d1_single_dinov2_vits14_gw_lr30_d3_k1_ladv8_s42_bb0p1",
+  "seed": 42,
+  "lambda_adv": 8.0,
+  "backbone": "dinov2_vits14",
+  "config": "gw_lr30_d3_k1",
+  "penalty": "none",
+  "penalty_weight": 0.0,
+  "max_epochs": 40,
+  "backbone_lr_mult": 0.1,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_gw_lr30_d3_k1_ladv8_s42_bb0p1/best-07.ckpt",
+  "recipe": "current",
+  "gate": {
+    "leakage_bal_acc": 1.0,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "grl_alpha": 0.12435908245477467,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": true,
+      "loss_adv": 0.08302351167994246,
+      "acc_adv": 0.9690896739130435,
+      "loss_cls": 0.9356130273210201,
+      "penalty": 0.0,
+      "inner_ce": 0.07630181381029809
+    },
+    "best_epoch": {
+      "epoch": 2,
+      "grl_alpha": 0.24493027379761356,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": true,
+      "loss_adv": 0.04510404970432473,
+      "acc_adv": 0.9847764328063241,
+      "loss_cls": 0.7708840237069036,
+      "penalty": 0.0,
+      "inner_ce": 0.04263288573488012
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "grl_alpha": 0.9999092042625952,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.6930950137937493,
+      "acc_adv": 0.5009263833992095,
+      "loss_cls": 0.09257239724689793,
+      "penalty": 0.0,
+      "inner_ce": 0.6930876291787671
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 8.0,
+    "status": "valid",
+    "reason": "encoder won: best-epoch CE 0.0451 (epoch 2) is below ln K, and the head is back at chance by epoch 40. That is the intended outcome.",
+    "learned": true,
+    "returned_to_chance": true
+  },
+  "gpu_hours": 0.7201974885993534,
+  "commit": "2b4ecab",
+  "v1": 0.8207599422562669,
+  "v1_sd": 0.0172809831821725,
+  "heldout_probe": "heldout_probe.json",
+  "degraded": false
+}

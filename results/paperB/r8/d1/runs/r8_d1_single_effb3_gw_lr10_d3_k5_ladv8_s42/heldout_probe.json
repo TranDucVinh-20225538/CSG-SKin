@@ -1,0 +1,42 @@
+{
+  "V1": {
+    "bal_acc_mean": 0.6932561762729416,
+    "bal_acc_sd": 0.032230407175944324,
+    "auroc_mean": 0.813787629816741,
+    "per_probe_seed": [
+      {
+        "bal_acc": 0.707656684915601,
+        "auroc": 0.8128272464365746
+      },
+      {
+        "bal_acc": 0.656336094229169,
+        "auroc": 0.7956407836357381
+      },
+      {
+        "bal_acc": 0.7157757496740548,
+        "auroc": 0.8328948593779103
+      }
+    ]
+  },
+  "V1_pca16": {
+    "bal_acc_mean": 0.5,
+    "bal_acc_sd": 0.0,
+    "auroc_mean": 0.6275595015944457,
+    "per_probe_seed": [
+      {
+        "bal_acc": 0.5,
+        "auroc": 0.5932431919176574
+      },
+      {
+        "bal_acc": 0.5,
+        "auroc": 0.6151622871625694
+      },
+      {
+        "bal_acc": 0.5,
+        "auroc": 0.6742730257031104
+      }
+    ]
+  },
+  "z_dim": 1536,
+  "protocol": "P6 V1: ISIC test \u222a pad_heldout, 70/30 GroupShuffleSplit (lesion / patient), probe seeds 42/52/62"
+}

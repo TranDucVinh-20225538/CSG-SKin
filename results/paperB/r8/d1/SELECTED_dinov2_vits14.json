@@ -1,0 +1,14 @@
+{
+  "backbone": "dinov2_vits14",
+  "tag": "r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_mkmmd30",
+  "config": "baseline",
+  "lambda_adv": 0.0,
+  "penalty": "mkmmd",
+  "penalty_weight": 30.0,
+  "v1": 0.599530174212317,
+  "id_balanced_acc": 0.555435125341734,
+  "family": "align",
+  "n_passing": 1,
+  "n_passing_grl": 0,
+  "note": "D2 tests single-encoder alignment, not DANN"
+}

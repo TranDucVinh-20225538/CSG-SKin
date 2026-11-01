@@ -1,0 +1,123 @@
+{
+  "val_balanced_acc": 0.5249911274590018,
+  "id_acc": 0.7262680086836393,
+  "id_balanced_acc": 0.5414684501734485,
+  "id_ece": 0.18888477842871762,
+  "id_mean_confidence": 0.9149943590164185,
+  "ood_ece_pad_heldout": 0.6668255268986332,
+  "ood_mean_confidence_pad_heldout": 0.918222188949585,
+  "xfer_pad_heldout_6class": {
+    "subset": "pad_heldout",
+    "n_images": 716,
+    "n_patients": 412,
+    "accuracy": 0.25558659217877094,
+    "balanced_accuracy": 0.33339339006364405,
+    "per_class_recall": {
+      "MEL": 0.5555555555555556,
+      "NV": 0.8636363636363636,
+      "BCC": 0.2644927536231884,
+      "AK": 0.04455445544554455,
+      "BKL": 0.22666666666666666,
+      "SCC": 0.045454545454545456
+    },
+    "class_counts": {
+      "MEL": 9,
+      "NV": 88,
+      "BCC": 276,
+      "AK": 202,
+      "BKL": 75,
+      "SCC": 66
+    },
+    "restriction": "6-class softmax/argmax over MEL,NV,BCC,AK,BKL,SCC"
+  },
+  "id_class_mix": {
+    "MEL": 904,
+    "NV": 2575,
+    "BCC": 664,
+    "AK": 174,
+    "BKL": 525,
+    "DF": 48,
+    "VASC": 51,
+    "SCC": 126
+  },
+  "ood": {},
+  "eval_mode": "d1",
+  "leakage": {
+    "test_vs_pad_full": {
+      "bal_acc_mean": null,
+      "note": "d1_blind_skipped"
+    },
+    "primary": "d1_blind: use heldout_probe.json V1",
+    "z_dim": 384
+  },
+  "checkpoint_policy": "last",
+  "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_gw_lr30_d2_ladv4_s42_bb0p1/last.ckpt",
+  "primary_epoch": 39,
+  "best_epoch": 29,
+  "tag": "r8_d1_single_dinov2_vits14_gw_lr30_d2_ladv4_s42_bb0p1",
+  "seed": 42,
+  "lambda_adv": 4.0,
+  "backbone": "dinov2_vits14",
+  "config": "gw_lr30_d2",
+  "penalty": "none",
+  "penalty_weight": 0.0,
+  "max_epochs": 40,
+  "backbone_lr_mult": 0.1,
+  "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r8_d1/runs/r8_d1_single_dinov2_vits14_gw_lr30_d2_ladv4_s42_bb0p1/best-29.ckpt",
+  "recipe": "current",
+  "gate": {
+    "leakage_bal_acc": 1.0,
+    "chance_floor": 0.5,
+    "ln_k": 0.6931471805599453,
+    "ce_margin": 0.02,
+    "first_batch": null,
+    "epoch1": {
+      "epoch": 1,
+      "grl_alpha": 0.12435908245477467,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": true,
+      "loss_adv": 0.09437836325458682,
+      "acc_adv": 0.9640254446640316,
+      "loss_cls": 0.9349352577222666,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "best_epoch": {
+      "epoch": 2,
+      "grl_alpha": 0.24493027379761356,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": true,
+      "loss_adv": 0.04771178296726683,
+      "acc_adv": 0.9813796936758893,
+      "loss_cls": 0.7650271185890959,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "last_epoch": {
+      "epoch": 40,
+      "grl_alpha": 0.9999092042625952,
+      "lnK": 0.6931471805599453,
+      "n_reinit": 0,
+      "warmup": false,
+      "loss_adv": 0.6933091071990167,
+      "acc_adv": 0.5083374505928854,
+      "loss_cls": 0.11423247927439072,
+      "penalty": 0.0,
+      "inner_ce": null
+    },
+    "n_epochs_logged": 40,
+    "lambda_adv": 4.0,
+    "status": "valid",
+    "reason": "encoder won: best-epoch CE 0.0477 (epoch 2) is below ln K, and the head is back at chance by epoch 40. That is the intended outcome.",
+    "learned": true,
+    "returned_to_chance": true
+  },
+  "gpu_hours": 0.6865803882148531,
+  "commit": "2b4ecab",
+  "v1": 0.789192040588086,
+  "v1_sd": 0.007902580722700114,
+  "heldout_probe": "heldout_probe.json",
+  "degraded": false
+}
