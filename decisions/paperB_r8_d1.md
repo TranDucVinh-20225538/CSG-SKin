@@ -44,3 +44,7 @@ No run passes for a backbone → no D2 for that backbone; write "W1 not addresse
 `results/paperB/r8/d1/runs/<tag>/`, `results/paperB/r8/d1/{summary.csv,SELECTED_effb3.json,SELECTED_dinov2_vits14.json,REPORT.md}`.
 
 ## Deviations
+
+### 2026-11-01 (after D1; before D2)
+
+Only one run passed: DINOv2-S `baseline` + MK-MMD w = 30 (V1 = 0.600, ID test = 0.555). No GRL/DANN configuration passed for either backbone. EffB3: no pass (best V1 = 0.685). Per the locked selection rule, D2 for DINOv2 tests **single-encoder alignment (MK-MMD), not DANN**. Written to `SELECTED_dinov2_vits14.json` before D2.
