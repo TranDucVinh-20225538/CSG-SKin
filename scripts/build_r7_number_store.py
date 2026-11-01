@@ -82,7 +82,37 @@ def build():
         "best_fitz": b["best"]["fitzpatrick17k"]["mahalanobis_classcond"]["mean"],
         "control_pad": b["control_lambda0"]["pad_heldout"]["mahalanobis_classcond"]["mean"],
         "leakage": json.loads((RES / "r5/p9/v2/NO_GO5.json").read_text())["mean_v1"],
+        "control_pad_ci_lo": b["control_lambda0"]["pad_heldout"]["mahalanobis_classcond"]["pooled_ci"][0],
+        "control_pad_ci_hi": b["control_lambda0"]["pad_heldout"]["mahalanobis_classcond"]["pooled_ci"][1],
+        "target": json.loads((RES / "r5/p9/v2/TARGET.json").read_text())["target"],
     }
+    d4 = json.loads((RES / "r8/d4/D4.json").read_text())
+    s["d4"] = {bb: {k: {"mean": x["mean"], "ci_lo": x["ci_lo"], "ci_hi": x["ci_hi"]} for k, x in d4[bb].items()}
+               for bb in ("effb3_dual", "dinov2_dual")}
+
+    # R8 D1 screen (seed 42): V1 range and pass count per backbone x objective; D2 five-seed means
+    d1 = list(csv.DictReader(open(RES / "r8/d1/summary.csv")))
+    s["r8_d1"] = {"n_runs": len(d1), "gpu_hours": sum(float(r["gpu_hours"]) for r in d1)}
+    for r in d1:
+        g = s["r8_d1"].setdefault("{}|{}".format(r["backbone"], r["penalty"] if r["family"] == "align" else "grl"),
+                                  {"v1": [], "n_pass": 0})
+        g["v1"].append(float(r["v1"]))
+        g["n_pass"] += r["pass_flag"] == "True"
+        s["r8_d1"]["run|" + r["tag"]] = {"v1": float(r["v1"]), "id_bal_acc": float(r["id_balanced_acc"])}
+    for k, g in s["r8_d1"].items():
+        if isinstance(g, dict) and "v1" in g and isinstance(g["v1"], list):
+            g.update(n=len(g["v1"]), v1_min=min(g["v1"]), v1_max=max(g["v1"]))
+    d2 = defaultdict(list)
+    for r in csv.DictReader(open(RES / "r8/d2/summary.csv")):
+        d2[r["arm"]].append(r)
+    s["r8_d2"] = {}
+    for arm, rs in d2.items():
+        for c in ("v1", "leakage", "id_bal_acc", "ood_auroc", "fitz_auroc"):
+            v = [float(r[c]) for r in rs if r[c] != ""]
+            if len(v) > 1:
+                s["r8_d2"].setdefault(arm, {})[c] = {"mean": statistics.mean(v), "sd": statistics.stdev(v)}
+    s["r8_d2"]["outcome"] = json.loads((RES / "r8/d2/OUTCOME.json").read_text())
+    s["r8_d2"]["gpu_hours_align"] = sum(float(r["gpu_hours"]) for r in d2["align MK-MMD w30"])
     return s
 
 
@@ -165,7 +195,43 @@ def entries():
     add("p9_fitz_2dp", "0.62", ["p9", "best_fitz"])
     for k, w in (("best_pad", "0.524"), ("best_pad_ci_lo", "0.498"), ("best_pad_ci_hi", "0.550"),
                  ("leakage", "0.699"), ("control_pad", "0.686")):
-        add("p9_" + k, w, ["p9", k], optional=True, note="for the planned Section 4.1 sentence")
+        add("p9_" + k, w, ["p9", k])
+    for k, w in (("control_pad_ci_lo", "0.665"), ("control_pad_ci_hi", "0.706"), ("target", "0.552")):
+        add("p9_" + k, w, ["p9", k])
+
+    # D4 (paired lambda = 2 minus lambda = 0); signed values are matched without the sign
+    d4 = {"effb3_dual": {"id_bal_acc": ("-0.009", "-0.026", "+0.006"), "pad_heldout": ("-0.444", "-0.465", "-0.417"),
+                         "fitzpatrick17k": ("-0.307", "-0.334", "-0.275")},
+          "dinov2_dual": {"id_bal_acc": ("-0.008", "-0.014", "-0.002"), "pad_heldout": ("-0.383", "-0.428", "-0.329"),
+                          "fitzpatrick17k": ("-0.306", "-0.361", "-0.244"), "mednode": ("-0.218", "-0.253", "-0.183"),
+                          "sd198": ("-0.329", "-0.372", "-0.270")}}
+    for bb, qs in d4.items():
+        for q, ws in qs.items():
+            for stat, w in zip(("mean", "ci_lo", "ci_hi"), ws):
+                add("d4_{}_{}_{}".format(bb, q, stat), w, ["d4", bb, q, stat], optional=False,
+                    note="Appendix Competence (D4)")
+
+    # R8 D1 screen (tab:r8 and §4.1) and D2 follow-up (App. r8)
+    add("r8_d1_gpu", "18.95", ["r8_d1", "gpu_hours"])
+    for g, (lo, hi) in {"effb3|grl": ("0.685", "0.727"), "effb3|mkmmd": ("0.810", "0.894"),
+                        "effb3|coral": ("0.981", "0.993"), "dinov2_vits14|grl": ("0.772", "0.930"),
+                        "dinov2_vits14|mkmmd": ("0.600", "0.665"), "dinov2_vits14|coral": ("0.616", "0.990")}.items():
+        add("r8_d1_{}_v1_min".format(g), lo, ["r8_d1", g, "v1_min"])
+        add("r8_d1_{}_v1_max".format(g), hi, ["r8_d1", g, "v1_max"])
+    pre = "r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_"
+    add("r8_d1_coral10_v1", "0.650", ["r8_d1", "run|" + pre + "coral10", "v1"])
+    add("r8_d1_coral_degraded_id", "0.125", ["r8_d1", "run|" + pre + "coral30", "id_bal_acc"])
+    add("r8_d1_mkmmd30_id", "0.555", ["r8_d1", "run|" + pre + "mkmmd30", "id_bal_acc"])
+    for arm, cols in {"align MK-MMD w30": {"v1": ("0.604", "0.018"), "leakage": ("0.691", "0.030"),
+                                           "id_bal_acc": ("0.547", None), "ood_auroc": ("0.540", "0.017"),
+                                           "fitz_auroc": ("0.519", "0.028")}}.items():
+        for c, (m, sd) in cols.items():
+            add("r8_d2_align_{}_mean".format(c), m, ["r8_d2", arm, c, "mean"])
+            if sd:
+                add("r8_d2_align_{}_sd".format(c), sd, ["r8_d2", arm, c, "sd"], optional=True,
+                    note="sd follows \\pm and is not tokenized")
+    add("r8_d2_gap", "0.018", ["r8_d2", "outcome", "gap"])
+    add("r8_d2_gpu", "3.64", ["r8_d2", "gpu_hours_align"])
     return e
 
 

@@ -12128,9 +12128,7 @@
   "key": [
    "p9",
    "best_pad"
-  ],
-  "optional": true,
-  "note": "for the planned Section 4.1 sentence"
+  ]
  },
  {
   "id": "r7_p9_best_pad_ci_lo",
@@ -12139,9 +12137,7 @@
   "key": [
    "p9",
    "best_pad_ci_lo"
-  ],
-  "optional": true,
-  "note": "for the planned Section 4.1 sentence"
+  ]
  },
  {
   "id": "r7_p9_best_pad_ci_hi",
@@ -12150,9 +12146,7 @@
   "key": [
    "p9",
    "best_pad_ci_hi"
-  ],
-  "optional": true,
-  "note": "for the planned Section 4.1 sentence"
+  ]
  },
  {
   "id": "r7_p9_leakage",
@@ -12161,9 +12155,7 @@
   "key": [
    "p9",
    "leakage"
-  ],
-  "optional": true,
-  "note": "for the planned Section 4.1 sentence"
+  ]
  },
  {
   "id": "r7_p9_control_pad",
@@ -12172,8 +12164,606 @@
   "key": [
    "p9",
    "control_pad"
+  ]
+ },
+ {
+  "id": "r7_p9_control_pad_ci_lo",
+  "written": "0.665",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "p9",
+   "control_pad_ci_lo"
+  ]
+ },
+ {
+  "id": "r7_p9_control_pad_ci_hi",
+  "written": "0.706",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "p9",
+   "control_pad_ci_hi"
+  ]
+ },
+ {
+  "id": "r7_p9_target",
+  "written": "0.552",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "p9",
+   "target"
+  ]
+ },
+ {
+  "id": "r7_d4_effb3_dual_id_bal_acc_mean",
+  "written": "-0.009",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "id_bal_acc",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_id_bal_acc_ci_lo",
+  "written": "-0.026",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "id_bal_acc",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_id_bal_acc_ci_hi",
+  "written": "+0.006",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "id_bal_acc",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_pad_heldout_mean",
+  "written": "-0.444",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "pad_heldout",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_pad_heldout_ci_lo",
+  "written": "-0.465",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "pad_heldout",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_pad_heldout_ci_hi",
+  "written": "-0.417",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "pad_heldout",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_fitzpatrick17k_mean",
+  "written": "-0.307",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "fitzpatrick17k",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_fitzpatrick17k_ci_lo",
+  "written": "-0.334",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "fitzpatrick17k",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_effb3_dual_fitzpatrick17k_ci_hi",
+  "written": "-0.275",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "effb3_dual",
+   "fitzpatrick17k",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_id_bal_acc_mean",
+  "written": "-0.008",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "id_bal_acc",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_id_bal_acc_ci_lo",
+  "written": "-0.014",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "id_bal_acc",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_id_bal_acc_ci_hi",
+  "written": "-0.002",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "id_bal_acc",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_pad_heldout_mean",
+  "written": "-0.383",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "pad_heldout",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_pad_heldout_ci_lo",
+  "written": "-0.428",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "pad_heldout",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_pad_heldout_ci_hi",
+  "written": "-0.329",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "pad_heldout",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_fitzpatrick17k_mean",
+  "written": "-0.306",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "fitzpatrick17k",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_fitzpatrick17k_ci_lo",
+  "written": "-0.361",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "fitzpatrick17k",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_fitzpatrick17k_ci_hi",
+  "written": "-0.244",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "fitzpatrick17k",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_mednode_mean",
+  "written": "-0.218",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "mednode",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_mednode_ci_lo",
+  "written": "-0.253",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "mednode",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_mednode_ci_hi",
+  "written": "-0.183",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "mednode",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_sd198_mean",
+  "written": "-0.329",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "sd198",
+   "mean"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_sd198_ci_lo",
+  "written": "-0.372",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "sd198",
+   "ci_lo"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_d4_dinov2_dual_sd198_ci_hi",
+  "written": "-0.270",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "d4",
+   "dinov2_dual",
+   "sd198",
+   "ci_hi"
+  ],
+  "note": "Appendix Competence (D4)"
+ },
+ {
+  "id": "r7_r8_d1_gpu",
+  "written": "18.95",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "gpu_hours"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|grl_v1_min",
+  "written": "0.685",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|grl",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|grl_v1_max",
+  "written": "0.727",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|grl",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|mkmmd_v1_min",
+  "written": "0.810",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|mkmmd",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|mkmmd_v1_max",
+  "written": "0.894",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|mkmmd",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|coral_v1_min",
+  "written": "0.981",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|coral",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_effb3|coral_v1_max",
+  "written": "0.993",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "effb3|coral",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|grl_v1_min",
+  "written": "0.772",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|grl",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|grl_v1_max",
+  "written": "0.930",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|grl",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|mkmmd_v1_min",
+  "written": "0.600",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|mkmmd",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|mkmmd_v1_max",
+  "written": "0.665",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|mkmmd",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|coral_v1_min",
+  "written": "0.616",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|coral",
+   "v1_min"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_dinov2_vits14|coral_v1_max",
+  "written": "0.990",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "dinov2_vits14|coral",
+   "v1_max"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_coral10_v1",
+  "written": "0.650",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "run|r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_coral10",
+   "v1"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_coral_degraded_id",
+  "written": "0.125",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "run|r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_coral30",
+   "id_bal_acc"
+  ]
+ },
+ {
+  "id": "r7_r8_d1_mkmmd30_id",
+  "written": "0.555",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d1",
+   "run|r8_d1_single_dinov2_vits14_baseline_ladv0_s42_bb0p1_mkmmd30",
+   "id_bal_acc"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_v1_mean",
+  "written": "0.604",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "v1",
+   "mean"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_v1_sd",
+  "written": "0.018",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "v1",
+   "sd"
   ],
   "optional": true,
-  "note": "for the planned Section 4.1 sentence"
+  "note": "sd follows \\pm and is not tokenized"
+ },
+ {
+  "id": "r7_r8_d2_align_leakage_mean",
+  "written": "0.691",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "leakage",
+   "mean"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_leakage_sd",
+  "written": "0.030",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "leakage",
+   "sd"
+  ],
+  "optional": true,
+  "note": "sd follows \\pm and is not tokenized"
+ },
+ {
+  "id": "r7_r8_d2_align_id_bal_acc_mean",
+  "written": "0.547",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "id_bal_acc",
+   "mean"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_ood_auroc_mean",
+  "written": "0.540",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "ood_auroc",
+   "mean"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_ood_auroc_sd",
+  "written": "0.017",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "ood_auroc",
+   "sd"
+  ],
+  "optional": true,
+  "note": "sd follows \\pm and is not tokenized"
+ },
+ {
+  "id": "r7_r8_d2_align_fitz_auroc_mean",
+  "written": "0.519",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "fitz_auroc",
+   "mean"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_align_fitz_auroc_sd",
+  "written": "0.028",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "align MK-MMD w30",
+   "fitz_auroc",
+   "sd"
+  ],
+  "optional": true,
+  "note": "sd follows \\pm and is not tokenized"
+ },
+ {
+  "id": "r7_r8_d2_gap",
+  "written": "0.018",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "outcome",
+   "gap"
+  ]
+ },
+ {
+  "id": "r7_r8_d2_gpu",
+  "written": "3.64",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r8_d2",
+   "gpu_hours_align"
+  ]
  }
 ]
