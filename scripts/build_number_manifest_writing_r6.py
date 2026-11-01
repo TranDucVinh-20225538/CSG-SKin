@@ -226,6 +226,8 @@ def build_store():
         "dann_l2": "DANN (R1 shift100 last.ckpt)|2",
         "iwdan_l2": "IWDAN|2",
         "iwcdan_l2": "IWCDAN|2",
+        "iwdan_l05": "IWDAN|0.5",
+        "oracle_l05": "IWDAN_ORACLE|0.5",
     }
     # optional l05 iwdan / oracle may live only in other packs; skip if absent
     for alias, ck in r2_alias.items():
@@ -243,6 +245,21 @@ def build_store():
         im, _ = mean_sd(ids)
         put(store, ["r2", alias, "leakage", "mean"], lm)
         put(store, ["r2", alias, "id_bal", "mean"], im)
+
+    # IWDAN gap recovered (locked formula: mean over seeds of (method-DANN)/(lam0-DANN)), in percent
+    for gk, gv in r2.get("gap_recovered", {}).items():
+        meth, lam, ood = gk.split("|")
+        if meth == "IWDAN":
+            put(store, ["r2", "iwdan_l" + lam.replace(".", ""), "gap_pct", ood], 100 * gv["mean"])
+    # IWDAN online prior estimate: total variation from true pad_adv priors (per seed)
+    for lam in ("0.5", "2"):
+        est = r2.get("label_shift_estimates", {}).get(f"IWDAN|{lam}")
+        if est and est.get("iw_est"):
+            tvs = [0.5 * sum(abs(x - y) for x, y in zip(e, est["true_pad_adv"])) for e in est["iw_est"]]
+            alias = "iwdan_l" + lam.replace(".", "")
+            put(store, ["r2", alias, "tv", "mean"], sum(tvs) / len(tvs))
+            put(store, ["r2", alias, "tv", "min"], min(tvs))
+            put(store, ["r2", alias, "tv", "max"], max(tvs))
 
     # class-aware heldout probes → tab:probes columns a/b/c
     ca = load(RES / "r6/class_aware_heldout/cells.json")
@@ -946,8 +963,32 @@ def build_manifest(store):
         ("prior_oracle_leak", "0.780", ["values", "r2_prior", "oracle", "leakage", "mean"]),
         ("prior_dann_l05_pad", "0.361", ["values", "r2", "dann_l05", "pad_heldout", "mean"]),
         ("prior_dann_l05_fitz", "0.385", ["values", "r2", "dann_l05", "fitzpatrick17k", "mean"]),
+        ("prior_dann_l05_leak", "0.628", ["values", "r2", "dann_l05", "leakage", "mean"]),
+        ("prior_dann_l05_med", "0.310", ["values", "r2", "dann_l05", "mednode", "mean"]),
+        ("prior_dann_l05_sd", "0.365", ["values", "r2", "dann_l05", "sd198", "mean"]),
+        ("prior_dann_l05_id", "0.483", ["values", "r2", "dann_l05", "id_bal", "mean"]),
+        ("prior_iwdan_l05_leak", "0.665", ["values", "r2", "iwdan_l05", "leakage", "mean"]),
+        ("prior_iwdan_l05_pad", "0.667", ["values", "r2", "iwdan_l05", "pad_heldout", "mean"]),
+        ("prior_iwdan_l05_fitz", "0.633", ["values", "r2", "iwdan_l05", "fitzpatrick17k", "mean"]),
+        ("prior_iwdan_l05_med", "0.447", ["values", "r2", "iwdan_l05", "mednode", "mean"]),
+        ("prior_iwdan_l05_sd", "0.607", ["values", "r2", "iwdan_l05", "sd198", "mean"]),
+        ("prior_iwdan_l05_id", "0.482", ["values", "r2", "iwdan_l05", "id_bal", "mean"]),
+        ("prior_iwdan_l05_tv", "0.428", ["values", "r2", "iwdan_l05", "tv", "mean"]),
+        ("prior_iwdan_l05_tv_min", "0.38", ["values", "r2", "iwdan_l05", "tv", "min"]),
+        ("prior_iwdan_l05_tv_max", "0.47", ["values", "r2", "iwdan_l05", "tv", "max"]),
+        ("prior_iwdan_l05_gap_pad", "66", ["values", "r2", "iwdan_l05", "gap_pct", "pad_heldout"]),
+        ("prior_iwdan_l05_gap_fitz", "75", ["values", "r2", "iwdan_l05", "gap_pct", "fitzpatrick17k"]),
+        ("prior_iwdan_l05_gap_sd", "71", ["values", "r2", "iwdan_l05", "gap_pct", "sd198"]),
+        ("prior_iwdan_l2_gap_pad", "32", ["values", "r2", "iwdan_l2", "gap_pct", "pad_heldout"]),
+        ("prior_iwdan_l2_gap_fitz", "43", ["values", "r2", "iwdan_l2", "gap_pct", "fitzpatrick17k"]),
+        ("prior_oracle_l05_leak", "0.760", ["values", "r2", "oracle_l05", "leakage", "mean"]),
+        ("prior_oracle_l05_pad", "0.680", ["values", "r2", "oracle_l05", "pad_heldout", "mean"]),
+        ("prior_oracle_l05_fitz", "0.742", ["values", "r2", "oracle_l05", "fitzpatrick17k", "mean"]),
+        ("prior_oracle_l05_med", "0.622", ["values", "r2", "oracle_l05", "mednode", "mean"]),
+        ("prior_oracle_l05_sd", "0.741", ["values", "r2", "oracle_l05", "sd198", "mean"]),
     ]:
-        E.append(entry(eid, written, store_f, key))
+        # integer percentages are scanned only with --ints; keep them optional so the default run passes
+        E.append(entry(eid, written, store_f, key, optional="_gap_" in eid))
 
     # ========== tab:clinical + prose (clinical_t1last / last.ckpt; 0ef248b) ==========
     clin = "r5/posthoc/clinical_t1last/results.json"

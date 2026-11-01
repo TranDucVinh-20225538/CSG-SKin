@@ -6764,6 +6764,287 @@
   ]
  },
  {
+  "id": "prior_dann_l05_leak",
+  "written": "0.628",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "dann_l05",
+   "leakage",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_dann_l05_med",
+  "written": "0.310",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "dann_l05",
+   "mednode",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_dann_l05_sd",
+  "written": "0.365",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "dann_l05",
+   "sd198",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_dann_l05_id",
+  "written": "0.483",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "dann_l05",
+   "id_bal",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_leak",
+  "written": "0.665",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "leakage",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_pad",
+  "written": "0.667",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "pad_heldout",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_fitz",
+  "written": "0.633",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "fitzpatrick17k",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_med",
+  "written": "0.447",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "mednode",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_sd",
+  "written": "0.607",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "sd198",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_id",
+  "written": "0.482",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "id_bal",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_tv",
+  "written": "0.428",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "tv",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_tv_min",
+  "written": "0.38",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "tv",
+   "min"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_tv_max",
+  "written": "0.47",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "tv",
+   "max"
+  ]
+ },
+ {
+  "id": "prior_iwdan_l05_gap_pad",
+  "written": "66",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "gap_pct",
+   "pad_heldout"
+  ],
+  "optional": true
+ },
+ {
+  "id": "prior_iwdan_l05_gap_fitz",
+  "written": "75",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "gap_pct",
+   "fitzpatrick17k"
+  ],
+  "optional": true
+ },
+ {
+  "id": "prior_iwdan_l05_gap_sd",
+  "written": "71",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l05",
+   "gap_pct",
+   "sd198"
+  ],
+  "optional": true
+ },
+ {
+  "id": "prior_iwdan_l2_gap_pad",
+  "written": "32",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l2",
+   "gap_pct",
+   "pad_heldout"
+  ],
+  "optional": true
+ },
+ {
+  "id": "prior_iwdan_l2_gap_fitz",
+  "written": "43",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "iwdan_l2",
+   "gap_pct",
+   "fitzpatrick17k"
+  ],
+  "optional": true
+ },
+ {
+  "id": "prior_oracle_l05_leak",
+  "written": "0.760",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "oracle_l05",
+   "leakage",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_oracle_l05_pad",
+  "written": "0.680",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "oracle_l05",
+   "pad_heldout",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_oracle_l05_fitz",
+  "written": "0.742",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "oracle_l05",
+   "fitzpatrick17k",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_oracle_l05_med",
+  "written": "0.622",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "oracle_l05",
+   "mednode",
+   "mean"
+  ]
+ },
+ {
+  "id": "prior_oracle_l05_sd",
+  "written": "0.741",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "r2",
+   "oracle_l05",
+   "sd198",
+   "mean"
+  ]
+ },
+ {
   "id": "clin_fitzpatrick17k_MEL_acc_l0",
   "written": "0.961",
   "file": "r5/posthoc/clinical_t1last/results.json",

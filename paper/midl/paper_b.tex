@@ -53,7 +53,7 @@ that the classifier calls benign nevus with confidence above $0.9$ increases fro
 $51$--$81\%$, and the monitor accepts almost all of these images with or without adaptation.
 Correcting for the class priors during training recovers detection only in part when the
 priors are estimated without labels; in a post hoc analysis, priors from $50$ labelled target images bring detection
-to the level obtained with the true priors, at a cost in in-distribution accuracy. In a pre-specified sweep of 27 single-encoder configurations, no gradient-reversal model reached domain invariance, so these results do not show that every DANN inverts detection. We recommend checking OOD detection again after domain adaptation and
+to the level obtained with the true priors, at a cost in in-distribution accuracy. In a sweep of 27 single-encoder configurations, no gradient-reversal model reached domain invariance, so these results do not show that every DANN inverts detection. We recommend checking OOD detection again after domain adaptation and
 measuring domain leakage within class.
 \end{abstract}
 
@@ -96,7 +96,7 @@ end up in feature space.
 \item Under a lesion-disjoint split, gradient reversal inverts Mahalanobis OOD detection on
 held-out smartphone images and on three clinical datasets that were not used in training.
 This holds for two training
-recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split, and for a dual-encoder model with a DINOv2-S/14 backbone. All models showing this are dual-encoder models; no single-encoder DANN reached invariance in 27 configurations on two backbones, so the inversion was not tested there.
+recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split, and for a dual-encoder model with a DINOv2-S/14 backbone. All models showing this are dual-encoder models; none of $15$ single-encoder gradient-reversal configurations on two backbones reached invariance, so the inversion was not tested there.
 \item When the class mix seen by the adversary is set to that of the target domain, the
 inversion on external domains disappears (AUROC difference $0.24$--$0.37$). In a regression
 that adjusts for measured domain leakage, the label-shift effect remains, so it is not only a
@@ -106,7 +106,7 @@ majority class. Under label shift, an unweighted domain probe gives chance-level
 even though a within-class probe can still read the domain, so we recommend measuring
 leakage within class.
 \item Importance weighting with label-free prior estimates recovers most of the lost AUROC at
-$\lam=0.5$ without loss of in-distribution accuracy, less at $\lam=2$, and not on MED-NODE. In a post hoc analysis, priors from $50$ labelled target images give point estimates close to
+$\lam=0.5$ without loss of in-distribution accuracy, less at $\lam=2$; MED-NODE stays inverted. In a post hoc analysis, priors from $50$ labelled target images give point estimates close to
 those with the true priors, but in-distribution accuracy drops.
 \end{enumerate}
 
@@ -341,11 +341,11 @@ lesion-level split: in its best configuration ($\lam=4$, three seeds, last check
 $0.699$, above our target of $0.552$ (the dual-encoder leakage at $\lam=2$, $0.502$, plus $0.05$), and Mahalanobis AUROC on \texttt{pad\_heldout} was $0.524$
 $[0.498, 0.550]$, with no seed below $0.5$ ($0.686$ $[0.665, 0.706]$ for the $\lam=0$ control).
 The inversion is therefore untested for this model (Appendix~\ref{app:limits}).
-We then ran a screen fixed before any run (seed $42$, held-out leakage blind to OOD scores) of
+We then screened (seed $42$, held-out leakage computed without OOD scores)
 $27$ single-encoder configurations on EfficientNet-B3 and DINOv2-S/14, covering gradient
 reversal with warm-up, fixed $\lam$ and extra adversary steps, and MK-MMD and CORAL penalties
 (Appendix~\ref{app:r8}). A run passed if held-out leakage was at most $0.60$ and in-distribution
-balanced accuracy stayed within $0.05$ of ERM. No gradient-reversal configuration passed
+balanced accuracy stayed within $0.05$ of ERM without degrading (balanced accuracy below $0.25$). No gradient-reversal configuration passed
 (leakage $0.685$--$0.727$ for EfficientNet-B3 and $0.772$--$0.930$ for DINOv2-S/14). The one
 passing run, MK-MMD at weight $30$ on DINOv2-S/14 (leakage $0.600$), did not hold over five
 seeds ($0.604\pm0.018$), so the detection test did not take place for single-encoder models.
@@ -503,7 +503,7 @@ through the class priors used by the adversary, improved detection.
 
 \paragraph{Importance-weighted alignment.} With target class priors estimated online without
 labels, as in the original IWDAN, the estimate stays about $0.5$ total variation from the truth
-and detection recovers only in part ($32$--$45\%$ of the lost AUROC at $\lam=2$, $66$--$76\%$
+and detection recovers only in part ($32$--$43\%$ of the lost AUROC at $\lam=2$, $66$--$75\%$
 at $\lam=0.5$; MED-NODE stays inverted). With priors from $50$ labelled target images,
 detection on the unseen domains returns to the level obtained with the true priors, but
 in-distribution balanced accuracy drops from $0.48$ to $0.39$--$0.40$ (post hoc). CDAN and
@@ -576,7 +576,7 @@ training was stopped early.
 \setlength{\itemsep}{0pt}
 \item[(i)] check OOD detection again on images from unseen sources, per class and pooled;
 \item[(ii)] report domain leakage within class and not only unweighted;
-\item[(iii)] compare the class priors of the aligned domains and correct for them if they differ: online IWDAN without labels recovered $66$--$76\%$ of the lost AUROC on \texttt{pad\_heldout} and Fitzpatrick17k at $\lam=0.5$ without loss of in-distribution accuracy (MED-NODE stayed inverted), and a small labelled sample from the target domain brought detection to the true-prior level in a post hoc analysis;
+\item[(iii)] compare the class priors of the aligned domains and correct for them if they differ: online IWDAN without labels recovered $66$--$75\%$ of the lost AUROC on \texttt{pad\_heldout} and Fitzpatrick17k at $\lam=0.5$ without loss of in-distribution accuracy (MED-NODE stayed inverted), and a small labelled sample from the target domain brought detection to the true-prior level in a post hoc analysis;
 \item[(iv)] report results for more than one checkpoint.
 \end{itemize}
 \end{minipage}}
@@ -906,7 +906,7 @@ four seeds at chance invert on all four, and one inverts only on MED-NODE.
 \scriptsize
 \caption{IWDAN at $\lam=2$ (main recipe, last checkpoint, five seeds) by how the target class
 priors are obtained. TV: total variation from the true \texttt{pad\_adv} priors. Leakage:
-unweighted linear probe on ISIC test against all of PAD; within-class: held-out within-class probe.}
+unweighted linear probe on ISIC test against all of PAD; within-class: held-out within-class probe (not computed at $\lam=0.5$).}
 \label{tab:prior}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccc}
@@ -914,14 +914,14 @@ unweighted linear probe on ISIC test against all of PAD; within-class: held-out 
 priors & TV & ID bal.\ acc & leakage & within-class & \texttt{pad} & Fitz & MED & SD \\
 \midrule
 DANN (no weighting) & -- & $0.48$ & $0.634$ & $0.618$ & $0.368$ & $0.340$ & $0.298$ & $0.325$ \\
-IWDAN (online) & $0.43$--$0.55$ & $0.48$ & $0.642$ & $0.596$ & $0.513$ & $0.508$ & $0.350$ & $0.488$ \\
+IWDAN (online) & $0.43$--$0.55$ & $0.48$ & $0.642$ & $0.597$ & $0.513$ & $0.508$ & $0.350$ & $0.488$ \\
 IWDAN (50 labels) & $0.10$--$0.14$ & $0.39$ & $0.806$ & $0.583$ & $0.619$ & $0.741$ & $0.606$ & $0.734$ \\
 IWDAN (true priors) & $0$ & $0.40$ & $0.780$ & $0.576$ & $0.647$ & $0.717$ & $0.563$ & $0.693$ \\
 \midrule
 \multicolumn{9}{l}{$\lam=0.5$} \\
-DANN (no weighting) & -- & $0.48$ & $0.628$ & $0.618$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
-IWDAN (online) & $0.38$--$0.47$ & $0.48$ & $0.665$ & $0.588$ & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
-IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & $0.562$ & $0.680$ & $0.742$ & $0.622$ & $0.741$ \\
+DANN (no weighting) & -- & $0.48$ & $0.628$ & -- & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
+IWDAN (online) & $0.38$--$0.47$ & $0.48$ & $0.665$ & -- & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
+IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & -- & $0.680$ & $0.742$ & $0.622$ & $0.741$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -936,13 +936,12 @@ by estimated target class priors, and how well it works depends on the estimate.
 With weights updated online from unlabelled target predictions, as in the original method,
 the implied target priors end $0.43$--$0.55$ (total variation; mean $0.515$) from the truth: nevus is
 down-weighted from $0.51$ toward $0.23$--$0.28$, against a true $0.10$. IWDAN then keeps leakage at the DANN level ($0.642$ vs $0.634$) and recovers $32\%$ of the lost AUROC on
-\texttt{pad\_heldout} ($0.513$) and $45\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
+\texttt{pad\_heldout} ($0.513$) and $43\%$ on Fitzpatrick17k ($0.508$), while MED-NODE
 ($0.350$) and SD-198 ($0.488$) stay at or below chance. At $\lam=0.5$ the online priors are closer to the truth (total variation $0.38$--$0.47$,
-mean $0.428$) and the same method recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $76\%$ of
+mean $0.428$) and the same method recovers more: $0.667$ on \texttt{pad\_heldout} and $0.633$ on Fitzpatrick17k ($66\%$ and $75\%$ of
 the gap), at leakage $0.665$ against $0.628$ for DANN, and SD-198 recovers to $0.607$ ($71\%$);
 MED-NODE improves from $0.310$ to $0.447$ but stays inverted. Unlike the variants with known
-priors, this costs no in-distribution accuracy ($0.482$ against $0.483$), and the within-class
-probe is lower than under DANN ($0.588$ against $0.618$). \emph{EM} estimation~\cite{saerens2002} failed as implemented, including after a bug fix:
+priors, this costs no in-distribution accuracy ($0.482$ against $0.483$). \emph{EM} estimation~\cite{saerens2002} failed as implemented, including after a bug fix:
 in two of five seeds it placed mass on DF and VASC, which are absent from PAD, so its results
 are not used in any comparison. With priors from \emph{$50$ labelled target images} (total variation
 $0.10$--$0.14$), detection on the unseen domains returns to the level obtained with the true
@@ -1108,7 +1107,7 @@ near $0.5$--$0.58$, so it may not reproduce the conditions of the real data.
 \section{Single-encoder invariance screen}
 \label{app:r8}
 
-The design, pass criterion and selection rule were written down before the first run. Each
+Each
 configuration was trained once (seed $42$) on the lesion-disjoint split and evaluated at the last checkpoint, and only held-out
 leakage and in-distribution balanced accuracy were computed; no OOD score was seen at this
 stage. A run passed if held-out leakage was at most $0.60$, in-distribution test balanced
@@ -1145,7 +1144,7 @@ degraded classifier (balanced accuracy $0.125$). The single passing run was MK-M
 selection rule took this run forward, so the five-seed follow-up tests feature alignment in
 general and says nothing direct about DANN. Over five seeds its leakage was $0.604\pm0.018$, above
 the $0.60$ gate, while the gap to ERM in balanced accuracy was $0.018$ ($0.565$ against $0.547$),
-within the $0.03$ allowed. By the rule fixed in advance, the detection test therefore did not take
+within the $0.03$ allowed. The detection test therefore did not take
 place. For completeness, the five-seed means were: leakage $0.691\pm0.030$ (ERM
 $0.983\pm0.002$), Mahalanobis AUROC on \texttt{pad\_heldout} $0.540\pm0.017$ (ERM
 $0.591\pm0.060$) and on Fitzpatrick17k $0.519\pm0.028$ (ERM $0.704\pm0.059$). These numbers are
