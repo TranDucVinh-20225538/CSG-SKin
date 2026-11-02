@@ -24,6 +24,12 @@ LABELLED = ("fitzpatrick17k", "mednode", "sd198")
 ALL_OODS = ("pad_heldout", "fitzpatrick17k", "mednode", "sd198", "scin")
 DRAWS, RNG = 2000, 20261005
 DET = "mahalanobis_classcond"
+# Paper alignment: R1 shift 0% λ=2 seed 52 is degraded (ID bal < 0.25) but older summary.json
+# omitted the flag; force it here so means / paired CIs / Rule A exclude it (as R1).
+FORCE_DEGRADED = (
+    # (arm_key, lambda, seed) — arm_key in {"six", "s100", "s0"}
+    ("s0", 2.0, 52),
+)
 
 
 def load_cell(root, fmt, lam):
@@ -69,10 +75,11 @@ def seed_means(ms, key_fn, skip_degraded=True):
 def paired_delta(a_ms, b_ms, key_fn, skip_degraded=True):
     """mean(a−b) over matched seeds; seed-bootstrap CI."""
     seeds = sorted(set(a_ms) & set(b_ms))
-    d = []
+    used, d = [], []
     for s in seeds:
         if skip_degraded and (a_ms[s].get("degraded") or b_ms[s].get("degraded")):
             continue
+        used.append(s)
         d.append(float(key_fn(a_ms[s])) - float(key_fn(b_ms[s])))
     if not d:
         return None
@@ -82,7 +89,7 @@ def paired_delta(a_ms, b_ms, key_fn, skip_degraded=True):
     lo, hi = np.percentile(boot, [2.5, 97.5])
     return {"mean": float(d.mean()), "sd": float(d.std(ddof=1)) if len(d) > 1 else 0.0,
             "ci_lo": float(lo), "ci_hi": float(hi), "n": int(len(d)),
-            "per_seed": {str(s): float(x) for s, x in zip(seeds, d)}}
+            "per_seed": {str(s): float(x) for s, x in zip(used, d)}}
 
 
 def recovery(six, sh100, sh0):
@@ -161,13 +168,22 @@ def main():
         cells_src.append(("shift 0%", lam, {s: (s0_f[s], R1 / "runs" / "r1_cur_shift0_ladv{}_s{}".format(R.lam_tag(lam), s))
                                             for s in s0_f}))
 
+    for arm, lam, seed in FORCE_DEGRADED:
+        ms = store.get((arm, lam))
+        if ms is not None and seed in ms:
+            ms[seed] = dict(ms[seed], degraded=True)
+
     missing = [k for k, v in store.items() if len(v) < 5]
     if missing:
         raise SystemExit("incomplete cells: {}".format(missing))
 
+    arm_lab = {"six": "six-class", "s100": "shift 100%", "s0": "shift 0%"}
     excl = {}
-    for lab, lam, ms in (("six-class", 2.0, store[("six", 2.0)]), ("six-class", 0.5, store[("six", 0.5)])):
-        excl[(lab, lam)] = {s for s, m in ms.items() if m.get("degraded")}
+    for (arm, lam), ms in store.items():
+        lab = arm_lab[arm]
+        deg = {s for s, m in ms.items() if m.get("degraded")}
+        if deg:
+            excl[(lab, lam)] = deg
 
     boots = {} if a.no_boot else RR.boots_for(cells_src, list(ALL_OODS), data, idg, exclude_by_cell=excl)
 
@@ -218,7 +234,9 @@ def main():
     }
 
     outcome = {"case": case, "detail": case_detail, "commit": R.C.git_head(), "pi_6cls": pi_info,
-               "rows": rows, "extras": extras}
+               "rows": rows, "extras": extras,
+               "force_degraded": [{"arm": a, "lambda": lam, "seed": s} for a, lam, s in FORCE_DEGRADED],
+               "excluded_degraded": {("{}|{:g}".format(k[0], k[1])): sorted(v) for k, v in excl.items()}}
     (OUT / "OUTCOME.json").write_text(json.dumps(outcome, indent=1, default=float) + "\n")
 
     L = ["# Paper B R9 E1: six-class control", "",
@@ -228,6 +246,9 @@ def main():
          "Detail: recovery (labelled) = {}; Rule A (six-class) = {}.".format(
              {k: (None if v is None else round(v, 3)) for k, v in recov2.items()},
              {k: ("met" if v else "not met") if v is not None else None for k, v in ra2.items()}),
+         "",
+         "Degraded excluded from means (as R1): R1 shift 0% λ=2 seed 52 "
+         "(ID bal < 0.25; forced in report because the run summary omitted the flag).",
          "",
          "π_6cls (run config): {}; TV→ISIC={:.3f}, TV→PAD={:.3f} (ref 0.019 / 0.579).".format(
              [round(x, 3) for x in (pi_info["pi_6cls"] or [])],

@@ -647,8 +647,10 @@
     "nv_nearest_frac": 0.14261003267345762
    }
   },
-  "id_nv_nearest_frac": 0.2612985987763963
+  "id_nv_nearest_frac": 0.2612985987763963,
+  "degraded": true
  },
  "shift_pct": 0,
- "lambda0_reused": false
+ "lambda0_reused": false,
+ "degraded_note": "flagged degraded (ID bal 0.139 < 0.25) for R9 E1 paper alignment"
 }
