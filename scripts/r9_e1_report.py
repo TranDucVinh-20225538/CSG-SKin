@@ -27,20 +27,27 @@ DET = "mahalanobis_classcond"
 
 
 def load_cell(root, fmt, lam):
-    """{seed: metrics} from summary.json (+ features for boot)."""
+    """{seed: metrics} from summary.json (+ features for boot).
+
+    If summary.json is missing but features exist (known R1 shift0 λ=0.5 s82 hole),
+    recompute metrics from features so the reference cell still has 5 seeds.
+    """
     ms, feats = {}, {}
     for s in R.SEEDS:
         tag = fmt.format(lam=R.lam_tag(lam), s=s)
         sp = root / "runs" / tag / "summary.json"
         fp = root / "features" / tag
-        if not sp.exists():
+        if not (fp / "isic_test.npz").exists():
             continue
-        m, _ = R.metrics_for(fp, root / "runs" / tag)
+        run = root / "runs" / tag if sp.exists() else None
+        m, _ = R.metrics_for(fp, run)
+        if m is None or "ood" not in m:
+            if (fp / "isic_train.npz").exists():
+                m = R.run_metrics(R.load_feats(fp))
+            else:
+                continue
         if m is None or "ood" not in m:
             continue
-        if m.get("degraded"):
-            # report but exclude from means (R1)
-            pass
         ms[s] = m
         feats[s] = fp
     return ms, feats
