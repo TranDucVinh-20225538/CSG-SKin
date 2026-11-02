@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=paperB-r9-e2c-fin
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=64G
 #SBATCH --time=1:00:00
 #SBATCH --output=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r9e2c_fin_%j.out
 #SBATCH --error=/data2/cmdir/home/toandq/CSG-Skin-paperB/logs/r9e2c_fin_%j.err
