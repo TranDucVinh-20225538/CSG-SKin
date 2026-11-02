@@ -1,0 +1,89 @@
+{
+ "rule": "higher mean val bal acc over seeds 42/52; ties within 0.005 \u2192 A4",
+ "per_recipe": {
+  "A4": {
+   "val_mean": 0.465667677210617,
+   "val": [
+    0.4723149876921925,
+    0.45902036672904156
+   ],
+   "id_test_mean": 0.49593068014884223,
+   "id_test": [
+    0.4867686434428435,
+    0.5050927168548409
+   ]
+  },
+  "A7": {
+   "val_mean": 0.47835248125226226,
+   "val": [
+    0.48383058140063323,
+    0.47287438110389124
+   ],
+   "id_test_mean": 0.5217070898538685,
+   "id_test": [
+    0.5388426555929786,
+    0.5045715241147585
+   ]
+  }
+ },
+ "within_tie": [
+  "A7"
+ ],
+ "winner": "A7",
+ "winner_recipe": {
+  "latent": 128,
+  "cls_lr_mult": 1.0,
+  "balance": "loss",
+  "name": "A7_e80",
+  "max_epochs": 80,
+  "grid_id": "A7"
+ },
+ "rows": [
+  {
+   "recipe": "A4",
+   "tag": "A4_e80_ladv0_s42",
+   "seed": 42,
+   "val_bal_acc": 0.4723149876921925,
+   "id_bal_acc": 0.4867686434428435,
+   "degraded": false
+  },
+  {
+   "recipe": "A4",
+   "tag": "A4_e80_ladv0_s52",
+   "seed": 52,
+   "val_bal_acc": 0.45902036672904156,
+   "id_bal_acc": 0.5050927168548409,
+   "degraded": false
+  },
+  {
+   "recipe": "A7",
+   "tag": "A7_e80_ladv0_s42",
+   "seed": 42,
+   "val_bal_acc": 0.48383058140063323,
+   "id_bal_acc": 0.5388426555929786,
+   "degraded": false
+  },
+  {
+   "recipe": "A7",
+   "tag": "A7_e80_ladv0_s52",
+   "seed": 52,
+   "val_bal_acc": 0.47287438110389124,
+   "id_bal_acc": 0.5045715241147585,
+   "degraded": false
+  }
+ ],
+ "erm": {
+  "erm_40_ref": 0.558,
+  "erm_80_seed_mean": 0.5574695446676556,
+  "erm_80_per_seed": [
+   0.5570342350720402,
+   0.5579048542632712
+  ],
+  "erm_reference": 0.558,
+  "source": "max(0.558, mean of 80ep seeds 42/52)"
+ },
+ "gate_S_threshold": 0.528,
+ "gate_S_id_test_mean": 0.5217070898538685,
+ "gate_S_met": false,
+ "stop_message": "competence gap not closed by an 80-epoch schedule"
+}

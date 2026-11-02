@@ -1,0 +1,22 @@
+{
+ "tag": "erm80_s52",
+ "seed": 52,
+ "lambda_adv": 0.0,
+ "max_epochs": 80,
+ "checkpoint_policy": "last",
+ "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r9_e2/erm_ref/single_dann_ladv0_s52/last.ckpt",
+ "primary_epoch": 79,
+ "metrics": {
+  "val": {
+   "bal_acc": 0.5154869797125425,
+   "acc": 0.7293362941031335
+  },
+  "id": {
+   "bal_acc": 0.5579048542632712,
+   "acc": 0.7315966054864812
+  },
+  "degraded": false
+ },
+ "id_balanced_acc": 0.5579048542632712,
+ "note": "R9 E2 stage S: ID only (no leakage / OOD)"
+}

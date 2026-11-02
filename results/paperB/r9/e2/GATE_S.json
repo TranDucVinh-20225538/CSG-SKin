@@ -1,0 +1,8 @@
+{
+ "met": false,
+ "id_test_mean": 0.5217070898538685,
+ "threshold": 0.528,
+ "erm_reference": 0.558,
+ "winner": "A7",
+ "message": "competence gap not closed by an 80-epoch schedule"
+}

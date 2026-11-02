@@ -1,0 +1,147 @@
+{
+  "item": "r9_e1",
+  "tag": "e1_6cls_ladv0p5_s62",
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "lam": 0.5,
+  "seed": 62,
+  "mode": "three",
+  "align": "dann",
+  "adv_mix": [
+    0.18210983204378184,
+    0.5183367931056174,
+    0.1338617349185381,
+    0.03484934264326602,
+    0.10561741209033151,
+    0.0,
+    0.0,
+    0.02522488519846512
+  ],
+  "eval": "full",
+  "reuse_ckpt": null,
+  "extra": {
+    "mix": "pi_6cls",
+    "pi_6cls_ref": [
+      0.182,
+      0.518,
+      0.134,
+      0.035,
+      0.106,
+      0.0,
+      0.0,
+      0.025
+    ],
+    "pi_6cls": [
+      0.18210983204378184,
+      0.5183367931056174,
+      0.1338617349185381,
+      0.03484934264326602,
+      0.10561741209033151,
+      0.0,
+      0.0,
+      0.02522488519846512
+    ],
+    "tv_to_pi_isic": 0.019369563876380252,
+    "tv_to_pi_pad": 0.5791360979224109,
+    "isic_train_mix": [
+      0.17858244401949294,
+      0.50829683548208,
+      0.13126889149343038,
+      0.03417432607488742,
+      0.10357164888038986,
+      0.009376349392387885,
+      0.009993214483992352,
+      0.02473629017333909
+    ],
+    "pad_labels_used": false,
+    "note": "PAD labels not used at all in E1; \u03c0_6cls from ISIC train only"
+  },
+  "adv_shift": null,
+  "out_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r9/e1",
+  "ckpt_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r9_e1/e1_6cls_ladv0p5_s62",
+  "streams": [
+    {
+      "name": "isic_cls",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": true,
+      "adv_domain": -1,
+      "ctx_domain": -1,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "isic_adv",
+      "n": 16211,
+      "sampling": "weighted",
+      "classifier": false,
+      "adv_domain": 0,
+      "ctx_domain": 0,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.18210983204378065,
+        0.5183367931056301,
+        0.13386173491853723,
+        0.03484934264326581,
+        0.10561741209033085,
+        0.0,
+        0.0,
+        0.025224885198465025
+      ]
+    },
+    {
+      "name": "pad_adv",
+      "n": 1582,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 1,
+      "ctx_domain": 1,
+      "labels_loaded": false,
+      "expected_mix": null
+    }
+  ],
+  "class_weights": null,
+  "isic_train_mix": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "pad_adv_mix_for_resampling_only": [
+    0.02718078381795196,
+    0.0986093552465234,
+    0.35967130214917825,
+    0.33375474083438683,
+    0.1011378002528445,
+    0.0,
+    0.0,
+    0.07964601769911504
+  ],
+  "n": {
+    "train": 16211,
+    "val": 4053,
+    "test": 5067,
+    "pad_full": 2298,
+    "pad_adv": 1582,
+    "pad_heldout": 716
+  },
+  "commit": "07e0a29"
+}

@@ -1,0 +1,132 @@
+{
+ "gpu_hours": 26.72,
+ "rows": [
+  {
+   "job": "71492_0",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:30:35",
+   "hours": 1.51,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_1",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:30:13",
+   "hours": 1.504,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_2",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:03",
+   "hours": 1.518,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_3",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:30:37",
+   "hours": 1.51,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_4",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:04",
+   "hours": 1.518,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_5",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:13",
+   "hours": 1.52,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_6",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:09",
+   "hours": 1.519,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_7",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:30:51",
+   "hours": 1.514,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_8",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:06",
+   "hours": 1.518,
+   "kind": "gpu"
+  },
+  {
+   "job": "71492_9",
+   "name": "paperB-r9-e1",
+   "elapsed": "01:31:06",
+   "hours": 1.518,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_0",
+   "name": "paperB-r9-e2s",
+   "elapsed": "02:14:20",
+   "hours": 2.239,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_1",
+   "name": "paperB-r9-e2s",
+   "elapsed": "02:09:34",
+   "hours": 2.159,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_2",
+   "name": "paperB-r9-e2s",
+   "elapsed": "02:11:37",
+   "hours": 2.194,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_3",
+   "name": "paperB-r9-e2s",
+   "elapsed": "02:14:13",
+   "hours": 2.237,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_4",
+   "name": "paperB-r9-e2s",
+   "elapsed": "01:22:48",
+   "hours": 1.38,
+   "kind": "gpu"
+  },
+  {
+   "job": "71494_5",
+   "name": "paperB-r9-e2s",
+   "elapsed": "01:22:01",
+   "hours": 1.367,
+   "kind": "gpu"
+  },
+  {
+   "job": "71540",
+   "name": "paperB-r9-e1-fin",
+   "elapsed": "00:59:42",
+   "hours": 0.995,
+   "kind": "cpu"
+  },
+  {
+   "job": "71551",
+   "name": "paperB-r9-e2s-fin",
+   "elapsed": "00:00:25",
+   "hours": 0.007,
+   "kind": "cpu"
+  }
+ ],
+ "note": "E1 10 three-stream + E2S 4 dual + 2 ERM; finalize CPU excluded from gpu_hours"
+}

@@ -1,0 +1,125 @@
+{
+ "tag": "A7_e80_ladv0_s42",
+ "item": "r9_e2",
+ "recipe": {
+  "latent": 128,
+  "cls_lr_mult": 1.0,
+  "balance": "loss",
+  "name": "A7_e80",
+  "max_epochs": 80,
+  "grid_id": "A7"
+ },
+ "lambda_adv": 0.0,
+ "seed": 42,
+ "mode": "two",
+ "align": "dann",
+ "adv_shift": null,
+ "adv_mix": null,
+ "checkpoint_policy": "last",
+ "primary_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r9_e2/S/A7_e80_ladv0_s42/last.ckpt",
+ "primary_epoch": 79,
+ "best_checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r9_e2/S/A7_e80_ladv0_s42/best-05.ckpt",
+ "best_epoch": 5,
+ "secondary_bestval": {
+  "checkpoint": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r9_e2/S/A7_e80_ladv0_s42/best-05.ckpt",
+  "epoch": 5,
+  "metrics": {
+   "val": {
+    "bal_acc": 0.5380796929958358,
+    "acc": 0.6415001233654083,
+    "ece": 0.03507795080619772,
+    "recall": {
+     "MEL": 0.5214384508990318,
+     "NV": 0.7266990291262136,
+     "BCC": 0.687382297551789,
+     "AK": 0.5251798561151079,
+     "BKL": 0.5142857142857142,
+     "DF": 0.5128205128205128,
+     "VASC": 0.5,
+     "SCC": 0.31683168316831684
+    }
+   },
+   "id": {
+    "bal_acc": 0.559627565265717,
+    "acc": 0.6268008683639235,
+    "ece": 0.035706663989846656,
+    "recall": {
+     "MEL": 0.547566371681416,
+     "NV": 0.6885436893203883,
+     "BCC": 0.6325301204819277,
+     "AK": 0.5114942528735632,
+     "BKL": 0.5542857142857143,
+     "DF": 0.5416666666666666,
+     "VASC": 0.5882352941176471,
+     "SCC": 0.4126984126984127
+    },
+    "mean_conf": 0.657784104347229
+   },
+   "ood": {},
+   "id_nv_nearest_frac": 0.46477205447010067,
+   "id_nearest_class_share": {
+    "MEL": 0.15531872903098481,
+    "NV": 0.46477205447010067,
+    "BCC": 0.14229327017959345,
+    "AK": 0.05210183540556542,
+    "BKL": 0.12847838957963292,
+    "DF": 0.009078350108545491,
+    "VASC": 0.017169923031379514,
+    "SCC": 0.03078744819419775
+   },
+   "degraded": false
+  },
+  "features": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r9/e2/S/features_bestval/A7_e80_ladv0_s42"
+ },
+ "reused_checkpoint": false,
+ "eval": "id",
+ "metrics": {
+  "val": {
+   "bal_acc": 0.48383058140063323,
+   "acc": 0.6888724401677769,
+   "ece": 0.21951227954088126,
+   "recall": {
+    "MEL": 0.4467496542185339,
+    "NV": 0.8587378640776699,
+    "BCC": 0.7156308851224106,
+    "AK": 0.3669064748201439,
+    "BKL": 0.5095238095238095,
+    "DF": 0.23076923076923078,
+    "VASC": 0.475,
+    "SCC": 0.26732673267326734
+   }
+  },
+  "id": {
+   "bal_acc": 0.5388426555929786,
+   "acc": 0.679692125518058,
+   "ece": 0.22900376134378,
+   "recall": {
+    "MEL": 0.46017699115044247,
+    "NV": 0.8411650485436893,
+    "BCC": 0.6310240963855421,
+    "AK": 0.40804597701149425,
+    "BKL": 0.5314285714285715,
+    "DF": 0.6041666666666666,
+    "VASC": 0.5490196078431373,
+    "SCC": 0.2857142857142857
+   },
+   "mean_conf": 0.9086959362030029
+  },
+  "ood": {},
+  "id_nv_nearest_frac": 0.6041049930925597,
+  "id_nearest_class_share": {
+   "MEL": 0.14189855930530887,
+   "NV": 0.6041049930925597,
+   "BCC": 0.13834616143674758,
+   "AK": 0.01026248273139925,
+   "BKL": 0.0905861456483126,
+   "DF": 0.0031576869942766925,
+   "VASC": 0.004736530491415038,
+   "SCC": 0.0069074402999802645
+  },
+  "degraded": false
+ },
+ "stage": "S",
+ "grid_id": "A7",
+ "epochs": 80
+}
