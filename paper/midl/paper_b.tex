@@ -43,8 +43,7 @@ in-distribution than the model's own test images. The same happens on three clin
 training (Fitzpatrick17k $0.405$, MED-NODE $0.288$, SD-198 $0.376$), while in-distribution balanced
 accuracy changes little (paired change $-0.009$, $95\%$ CI $[-0.026, +0.006]$) and in-distribution
 ECE stays at $0.20$--$0.21$. Our
-interventions point to label shift between the two domains as the main driver in this setting. When we change the class mix that the adversary sees (at the
-extreme setting this also drops two classes absent from the target domain), AUROC on the external datasets changes by $0.24$--$0.37$, and the
+interventions point to label shift between the two domains as the main driver in this setting. When we change the class mix that the adversary sees, AUROC on the external datasets changes by $0.24$--$0.37$; removing only the two classes absent from the target domain changes it by at most $0.022$, and the
 association remains after adjusting for measured domain leakage. Multi-kernel MMD alignment at similar
 leakage also inverts detection on the smartphone images, while CORAL does not. DANN moves unfamiliar images toward the
 majority class. Under label shift, a standard domain probe then shows chance-level leakage,
@@ -98,7 +97,7 @@ held-out smartphone images and on three clinical datasets that were not used in 
 This holds for two training
 recipes, both within $0.08$ balanced accuracy of a standard ERM baseline on the same split, and for a dual-encoder model with a DINOv2-S/14 backbone. All models showing this are dual-encoder models; none of $15$ single-encoder gradient-reversal configurations on two backbones reached invariance, so the inversion was not tested there.
 \item When the class mix seen by the adversary is set to that of the target domain, the
-inversion on external domains disappears (AUROC difference $0.24$--$0.37$). In a regression
+inversion on external domains disappears (AUROC difference $0.24$--$0.37$); removing only the two classes absent from the target domain does not remove it. In a regression
 that adjusts for measured domain leakage, the label-shift effect remains, so it is not only a
 matter of deeper invariance.
 \item DANN moves images that differ from the source along the domain direction toward the
@@ -221,10 +220,10 @@ we resample only the ISIC images fed to the adversarial branch so that their cla
 ISIC's own ($100\%$, the default), halfway to PAD's ($50\%$), or PAD's ($0\%$, no label
 shift between the aligned domains), at $\lam\in\{0.5,2\}$ with five seeds (three at $50\%$).
 Because PAD has no DF or VASC, shift $0\%$ also removes these two classes from the adversary's
-ISIC stream, so it changes the class set as well as the priors. The change in support is
-small: DF and VASC are $1.9\%$ of ISIC train, removing them alone moves the class mix by total
-variation $0.019$, and the renormalised six-class ISIC mix is still $0.579$ from PAD's (against
-$0.583$ for all eight classes). Shift $50\%$ keeps all eight classes, and its AUROC on
+ISIC stream, so it changes the class set as well as the priors. A six-class control separates the two:
+it removes only DF and VASC ($1.9\%$ of ISIC train) from the adversary's ISIC stream and keeps ISIC's
+priors over the other six classes (total variation $0.019$ from ISIC's mix and $0.579$ from PAD's), at
+$\lam\in\{0.5,2\}$ with five seeds. Shift $50\%$ keeps all eight classes, and its AUROC on
 Fitzpatrick17k and SD-198 lies between the other two levels (Appendix~\ref{app:shift}).
 
 \textbf{Importance-weighted alignment.} IWDAN and IWCDAN~\cite{tachet2020domain} reweight
@@ -395,7 +394,10 @@ A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
 \paragraph{Intervention.} Changing the class mix of the ISIC images the adversary sees
 (Section~\ref{sec:interventions}) switches the inversion on unseen domains on and off (Table~\ref{tab:shift}): paired by seed,
 removing the label shift raises AUROC at $\lam=2$ by $0.361$ (Fitzpatrick17k), $0.243$
-(MED-NODE) and $0.372$ (SD-198); per-level results are in Appendix~\ref{app:shift}.
+(MED-NODE) and $0.372$ (SD-198); per-level results are in Appendix~\ref{app:shift}. The six-class control
+stays inverted on all three at $\lam=2$ ($0.362$, $0.312$, $0.339$) and recovers only $0.063$, $0.058$ and
+$0.037$ of the AUROC gap between shift $100\%$ and $0\%$ (Appendix~\ref{app:sixclass}), so the change in class
+support does not explain the effect.
 
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
 latent (leakage $0.791$ vs $0.634$), but a regression of unseen-domain AUROC on label-shift
@@ -600,7 +602,7 @@ training was stopped early.
 \item Scope: dermatology only; the spread to unseen domains is shown for gradient reversal.
 \item Other modalities: could not be tested; DANN did not remove hospital information on Camelyon17 while preserving the classifier, and the chest-radiograph OOD set was near chance before adaptation ($0.522$).
 \item Architecture: no single-encoder DANN reached invariance with EfficientNet-B3 or DINOv2-S/14 in 27 screened configurations, so the inversion is untested there.
-\item Competence: in-distribution accuracy is $0.04$--$0.08$ below ERM on the same split ($0.095$ for DINOv2).
+\item Competence: in-distribution accuracy is $0.04$--$0.08$ below ERM on the same split ($0.095$ for DINOv2); an 80-epoch schedule did not close the gap.
 \item Statistics: MED-NODE and SD-198 are resampled by image; the five scores share one latent.
 \item Mechanism: a Gaussian toy model with label shift did not reproduce the inversion.
 \item Warning signals: none computed on in-distribution data alone flagged inverted runs.
@@ -796,6 +798,42 @@ recipe $\times$ $\lam$ $\times$ shift cells, $2{,}000$ draws). On \texttt{pad\_h
 the coefficient is $+0.041$ $[-0.033, +0.110]$. Comparing runs at equal leakage across recipes
 (A4 at shift $100\%$, leakage $0.78$, against the main recipe at shift $0\%$, leakage $0.79$)
 gives the same direction ($+0.23$ to $+0.26$).
+
+\FloatBarrier
+\section{Six-class control}
+\label{app:sixclass}
+Shift $0\%$ removes DF and VASC from the adversary's ISIC stream as well as changing the priors. The
+six-class control removes only DF and VASC and renormalises ISIC's priors over the six shared classes
+(MEL $0.182$, NV $0.518$, BCC $0.134$, AK $0.035$, BKL $0.106$, SCC $0.025$); the classification loss still uses
+all eight classes and PAD labels are not used. Recovery is (six-class $-$ shift $100\%$) / (shift $0\%$ $-$
+shift $100\%$) from the seed means. The reading rule was written before the runs: class support is not the
+driver if, at $\lam=2$, the inversion criterion is met on at least two of the three labelled external
+datasets and recovery is below $0.25$ on each of them. It is met on all three, with recovery $0.037$--$0.063$;
+$\lam=0.5$ points the same way. No six-class run was degraded (in-distribution balanced accuracy
+$0.467\pm0.010$ at $\lam=2$, $0.470\pm0.010$ at $\lam=0.5$).
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Six-class control: Mahalanobis AUROC (mean $\pm$ sd over seeds $42$, $52$, $62$, $72$, $82$; main recipe,
+last checkpoint). References are the runs of Table~\ref{tab:shift}; shift $0\%$ at $\lam=2$ has four seeds after
+excluding the degraded run. \texttt{pad\_heldout} is reported but not counted.}
+\label{tab:sixclass}
+\begin{tabular}{rlcccc}
+\toprule
+$\lam$ & OOD set & six-class & shift $100\%$ & shift $0\%$ & recovery \\
+\midrule
+2 & \texttt{pad\_heldout} & $0.372\pm0.034$ & $0.368\pm0.017$ & $0.458\pm0.003$ & $0.050$ \\
+2 & Fitzpatrick17k & $0.362\pm0.032$ & $0.340\pm0.065$ & $0.691\pm0.031$ & $0.063$ \\
+2 & MED-NODE & $0.312\pm0.050$ & $0.298\pm0.032$ & $0.541\pm0.027$ & $0.058$ \\
+2 & SD-198 & $0.339\pm0.039$ & $0.325\pm0.069$ & $0.694\pm0.031$ & $0.037$ \\
+0.5 & \texttt{pad\_heldout} & $0.374\pm0.037$ & $0.361\pm0.029$ & $0.498\pm0.025$ & $0.101$ \\
+0.5 & Fitzpatrick17k & $0.394\pm0.043$ & $0.385\pm0.023$ & $0.672\pm0.046$ & $0.031$ \\
+0.5 & MED-NODE & $0.332\pm0.036$ & $0.310\pm0.055$ & $0.525\pm0.050$ & $0.103$ \\
+0.5 & SD-198 & $0.384\pm0.051$ & $0.365\pm0.029$ & $0.664\pm0.058$ & $0.063$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \FloatBarrier
 \section{BCN$\to$HAM: label shift without DANN (post hoc)}
@@ -1312,7 +1350,9 @@ below a standard ERM on the same lesion-disjoint split, and $0.095$ below ERM fo
 To check whether the backbone learning rate caused this gap, we selected it on validation (seed $42$):
 validation balanced accuracy at $\times0.1$, $\times0.3$ and $\times1.0$ was $0.444$, $0.402$ and $0.236$
 for the dual model at $\lam=0$ and $0.516$, $0.504$ and $0.418$ for ERM. Both chose $\times0.1$, the setting
-already used, so the gap is not due to the learning rate. \textbf{Statistics.} MED-NODE and
+already used, so the gap is not due to the learning rate. An 80-epoch schedule did not close it either: of two
+dual recipes at $\lam=0$ (two seeds each), the one selected on validation (A7) reached $0.522$ on the test set,
+below ERM minus $0.03$ ($0.528$); ERM at 80 epochs reached $0.557$. \textbf{Statistics.} MED-NODE and
 SD-198 carry no patient identifiers and are resampled by image, so their intervals may be too
 narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
 The five OOD scores are functions of one latent and are not independent evidence.
