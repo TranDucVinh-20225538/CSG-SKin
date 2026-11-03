@@ -48,14 +48,41 @@ axa.set_ylim(0, 1)
 axa.tick_params(labelsize=7)
 axa.set_title("(a) OOD images by nearest class centroid", fontsize=7.5)
 
-# (b) from Table tab:clinical (MEL rows): (mean, lo, hi) in %
-mel = {"Fitzpatrick17k": [(12.5, 7.5, 17.6), (51.1, 41.4, 61.0)],
-       "SD-198": [(12.9, 8.8, 17.2), (81.4, 75.9, 86.5)]}
-for i, (name, vals) in enumerate(mel.items()):
-    for j, ((m, lo, hi), col) in enumerate(zip(vals, ["#9a9a9a", "#D55E00"])):
+# (b) MEL rows from clinical_t1last (share_pred_nv_conf09 with bootstrap CI), in %
+# R10 C6: was hard-coded; now reads results/paperB/r5/posthoc/clinical_t1last/summary.csv
+import csv
+clin = Path(__file__).resolve().parents[3] / "results/paperB/r5/posthoc/clinical_t1last/summary.csv"
+mel = {}  # name -> [(mean, lo, hi) for λ=0, λ=2] in percent
+ood_lab = {"fitzpatrick17k": "Fitzpatrick17k", "sd198": "SD-198"}
+with clin.open() as f:
+    for row in csv.DictReader(f):
+        if row["class"] != "MEL" or not row["cell"].startswith("main_last"):
+            continue
+        ood = row["ood"]
+        if ood not in ood_lab:
+            continue
+        cell = row["cell"]
+        if "λ=0" in cell:
+            lam = 0
+        elif "λ=2" in cell:
+            lam = 2
+        else:
+            continue
+        vals = (100.0 * float(row["share_pred_nv_conf09"]),
+                100.0 * float(row["nv09_ci_lo"]),
+                100.0 * float(row["nv09_ci_hi"]))
+        mel.setdefault(ood_lab[ood], [None, None])
+        mel[ood_lab[ood]][0 if lam == 0 else 1] = vals
+order = ["Fitzpatrick17k", "SD-198"]
+for name in order:
+    if name not in mel or any(v is None for v in mel[name]):
+        raise SystemExit("missing clinical MEL rows for {}".format(name))
+for i, name in enumerate(order):
+    for j, ((m, lo, hi), col) in enumerate(zip(mel[name], ["#9a9a9a", "#D55E00"])):
         x = i + (j - 0.5) * 0.35
         axb.bar(x, m, 0.35, color=col, yerr=[[m - lo], [hi - m]], capsize=2, error_kw={"lw": 0.7})
-axb.set_xticks([0, 1], list(mel), fontsize=7)
+        print("panel_b", name, "lam", (0, 2)[j], [round(m, 1), round(lo, 1), round(hi, 1)])
+axb.set_xticks([0, 1], order, fontsize=7)
 axb.set_ylabel("melanomas called nevus, conf. $>0.9$ (%)", fontsize=7)
 axb.set_ylim(0, 100)
 axb.tick_params(labelsize=7)
