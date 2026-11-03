@@ -111,6 +111,12 @@ def build():
             v = [float(r[c]) for r in rs if r[c] != ""]
             if len(v) > 1:
                 s["r8_d2"].setdefault(arm, {})[c] = {"mean": statistics.mean(v), "sd": statistics.stdev(v)}
+    # R1 retrained runs: share of melanomas predicted nevus with confidence > 0.9 (r5/posthoc/clinical)
+    s["clin_r1"] = {}
+    for r in csv.DictReader(open(RES / "r5/posthoc/clinical/summary.csv")):
+        v = list(r.values())
+        if v[0].startswith("R1 shift") and v[2] == "MEL":
+            s["clin_r1"]["{}|{}".format(v[0], v[1])] = 100.0 * float(v[7])
     s["r8_d2"]["outcome"] = json.loads((RES / "r8/d2/OUTCOME.json").read_text())
     s["r8_d2"]["gpu_hours_align"] = sum(float(r["gpu_hours"]) for r in d2["align MK-MMD w30"])
     return s
@@ -230,6 +236,10 @@ def entries():
             if sd:
                 add("r8_d2_align_{}_sd".format(c), sd, ["r8_d2", arm, c, "sd"], optional=True,
                     note="sd follows \\pm and is not tokenized")
+    for cell, ds, w in (("R1 shift 100% λ=2", "fitzpatrick17k", "53.0"), ("R1 shift 0% λ=2", "fitzpatrick17k", "21.4"),
+                        ("R1 shift 100% λ=2", "sd198", "83.2"), ("R1 shift 0% λ=2", "sd198", "33.8")):
+        add("clin_r1_{}_{}".format(cell.split()[2].rstrip("%"), ds), w, ["clin_r1", "{}|{}".format(cell, ds)],
+            note="§4.4 and Fig. 1 caption; MEL predicted NV conf > 0.9, %")
     add("r8_d2_gap", "0.018", ["r8_d2", "outcome", "gap"])
     add("r8_d2_gpu", "3.64", ["r8_d2", "gpu_hours_align"])
     return e
