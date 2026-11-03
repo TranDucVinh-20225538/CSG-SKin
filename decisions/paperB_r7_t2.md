@@ -29,3 +29,5 @@ Rule A for "inverts": pooled CI upper < 0.5 and at least 3 seeds with their own 
 `results/paperB/r7/t2/runs/<tag>/`, subsample manifests with class counts, `results/paperB/r7/t2/{summary.csv,BOOTSTRAP.json,REPORT.md}`.
 
 ## Deviations
+
+- 2026-11-03 (R10 G2): add λ = 0 at pad_adv 50 %, seeds 42, 52, 62 (3 runs), same fixed 802-image subsample (seed 0) as the existing λ = 2 pad 50 % cells. Completes the no-adversary control at 50 % for Table tab:padadv; design otherwise unchanged.

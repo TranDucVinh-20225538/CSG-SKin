@@ -18,6 +18,7 @@ import r6_common as R  # noqa: E402
 
 SHIFTS = {100: 1.0, 50: 0.5, 0: 0.0}
 # Remaining-work order: λ=2 at 0% and 100% (5 seeds), then shift 50% and λ=0.5, then λ=0 eval.
+# R10 G1: shift 50% uses all five seeds (was 3); existing runs reused via --skip_done.
 ORDER = ((2.0, 0), (2.0, 100), (2.0, 50), (0.5, 0), (0.5, 100), (0.5, 50), (0.0, 100))
 
 
@@ -26,13 +27,19 @@ def jobs(recipe_name):
     rt = R.recipe_tag(r)
     out = []
     for lam, sh in ORDER:
-        for s in (R.SEEDS[:3] if sh == 50 else R.SEEDS):
+        for s in R.SEEDS:
             reuse = str(R.lambda0_ckpt_dir(r, s)) if lam == 0.0 else None
             out.append({"item": "r6_r1", "out_root": str(R.RES / "r6" / "r1" / rt), "ckpt_root": str(R.CKPT / "r6_r1" / rt),
                         "tag": "r1_{}_shift{}_ladv{}_s{}".format(rt, sh, R.lam_tag(lam), s), "recipe": r, "lam": lam,
                         "seed": s, "mode": "three", "align": "dann", "adv_shift": SHIFTS[sh], "eval": "full",
                         "reuse_ckpt": reuse, "extra": {"shift_pct": sh, "lambda0_reused": reuse is not None}})
     return out
+
+
+def r10_g1_jobs(recipe_name="current"):
+    """Only the four new shift-50% seeds (72, 82) × λ ∈ {0.5, 2} for R10 G1."""
+    return [j for j in jobs(recipe_name)
+            if int(j["extra"]["shift_pct"]) == 50 and int(j["seed"]) in (72, 82) and float(j["lam"]) in (0.5, 2.0)]
 
 
 def main():

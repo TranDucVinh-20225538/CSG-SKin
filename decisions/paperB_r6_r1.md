@@ -157,6 +157,7 @@ in `REPORT.md`. CPU only after the pooled runs exist.
 
 ## Deviations
 
+- 2026-11-03 (R10 G1): shift 50 % cells extended from 3 seeds (42, 52, 62) to 5 seeds by adding seeds 72 and 82 at λ ∈ {0.5, 2} (4 new runs). Design otherwise unchanged. `scripts/train_r6_dose.py` now enumerates all five seeds at shift 50 %; existing three-seed runs are reused via `--skip_done`.
 - 2026-10-16 10:05 (UTC+7), user-directed, after seed 52 at shift 0% λ = 2 finished with ID bal acc 0.139
   (chance = 1/8 = 0.125) and before further seeds are summarised. **Degraded-run rule for R1.** A run is degraded if
   its primary-checkpoint ID test balanced accuracy is &lt; 0.25 (2× chance). Degraded runs are reported and flagged and

@@ -30,6 +30,8 @@ PSEEDS = (42, 52, 62)
 BOOT_N, BOOT_SEED = 2000, 20261017
 MIN_PER_SIDE = 20
 NEED = ("isic_test.npz", "pad_heldout.npz")
+# R10 C0: exclude degraded runs (ID test bal acc < 0.25) from cell means (as R1).
+DEGRADED_ID_BAL = 0.25
 
 # (cell_key, family_label, feat_root, tag_regex)
 CELLS = (
@@ -200,6 +202,24 @@ def run_available():
     return inv
 
 
+def id_bal_from_run(feat_root: Path, tag: str):
+    """Primary-checkpoint ID test bal acc from sibling runs/<tag>/summary.json, if present."""
+    sp = Path(feat_root).parent / "runs" / tag / "summary.json"
+    if not sp.is_file():
+        return None, None
+    s = json.loads(sp.read_text())
+    m = s.get("metrics") or {}
+    idb = None
+    if isinstance(m.get("id"), dict) and "bal_acc" in m["id"]:
+        idb = float(m["id"]["bal_acc"])
+    elif "id_balanced_acc" in s:
+        idb = float(s["id_balanced_acc"])
+    deg = m.get("degraded")
+    if deg is None and idb is not None:
+        deg = bool(idb < DEGRADED_ID_BAL)
+    return idb, deg
+
+
 def _load_rows():
     return [json.loads(p.read_text()) for p in sorted((OUT / "per_run").glob("*.json"))]
 
@@ -220,15 +240,29 @@ def report(require_oracle_complete=False):
         return False
     flat = []
     for r in rows:
+        idb, deg = id_bal_from_run(Path(r["feat_root"]), r["tag"])
+        # R1 shift0 λ2 seed 52: known degraded (0.139) even if summary flag was late.
+        if r.get("cell") == "r1_shift0_l2" and int(r["seed"]) == 52:
+            deg = True
+            if idb is None:
+                idb = 0.139
         flat.append({
             "cell": r["cell"], "family": r["family"], "tag": r["tag"], "seed": r["seed"],
             "a": r["unweighted_a"]["bal_acc_mean"],
             "b": r["class_balanced_b"]["bal_acc_mean"],
             "c": r["within_class_c"]["bal_acc_mean"],
             "n_elig": r["within_class_c"].get("n_eligible_classes"),
+            "id_bal_acc": idb,
+            "degraded": bool(deg) if deg is not None else False,
         })
     df = pd.DataFrame(flat)
     df.to_csv(OUT / "summary.csv", index=False)
+    deg_rows = df[df.degraded]
+    (OUT / "DEGRADED_EXCLUDED.json").write_text(json.dumps({
+        "rule": "ID test bal acc < {}".format(DEGRADED_ID_BAL),
+        "n_excluded": int(len(deg_rows)),
+        "rows": deg_rows[["cell", "family", "tag", "seed", "id_bal_acc", "a", "b", "c"]].to_dict(orient="records"),
+    }, indent=1) + "\n")
 
     oracle_seeds = sorted(df[df.cell == "r2_oracle_l2"].seed.unique())
     oracle_complete = set(oracle_seeds) >= {42, 52, 62, 72, 82}
@@ -244,25 +278,38 @@ def report(require_oracle_complete=False):
         "**(a)** unweighted (P6 V1); **(b)** class-balanced (P6 V3); **(c)** within-class "
         f"(≥{MIN_PER_SIDE}/side), class-size-weighted mean.",
         "",
+        "Degraded runs (ID test bal acc < {:.2f}) are **reported then excluded from cell means** "
+        "(R10 C0 / R1 rule).".format(DEGRADED_ID_BAL),
+        "",
         f"Oracle λ=2 seeds on disk: {oracle_seeds}; complete={oracle_complete}.",
         "",
-        "| cell | n | (a) unweighted | (b) class-balanced V3 | (c) within-class |",
-        "|---|---:|---|---|---|",
+        "| cell | n (excl. degraded) | (a) unweighted | (b) class-balanced V3 | (c) within-class | excluded |",
+        "|---|---:|---|---|---|---|",
     ]
     cells_out = []
     for cell, fam, _root, _pat in CELLS:
-        g = df[df.cell == cell]
-        if g.empty:
-            lines.append(f"| {fam} | 0 | — | — | — |")
+        g_all = df[df.cell == cell]
+        if g_all.empty:
+            lines.append(f"| {fam} | 0 | — | — | — | — |")
             continue
+        g = g_all[~g_all.degraded]
+        excl = g_all[g_all.degraded]
+        excl_s = ",".join(str(int(s)) for s in sorted(excl.seed.tolist())) if len(excl) else "—"
         sa, sb, sc = seed_mean_ci(g["a"]), seed_mean_ci(g["b"]), seed_mean_ci(g["c"])
         note = ""
         if cell == "r2_oracle_l2" and not oracle_complete:
             note = " *(partial — waiting s82)*"
-        lines.append("| {}{} | {} | {} | {} | {} |".format(
-            fam, note, len(g), _fmt(sa), _fmt(sb), _fmt(sc)))
-        cells_out.append({"cell": cell, "family": fam, "n": int(len(g)),
+        lines.append("| {}{} | {} | {} | {} | {} | {} |".format(
+            fam, note, len(g), _fmt(sa), _fmt(sb), _fmt(sc), excl_s))
+        cells_out.append({"cell": cell, "family": fam, "n": int(len(g)), "n_all": int(len(g_all)),
+                          "excluded_seeds": [int(s) for s in excl.seed.tolist()],
                           "a": sa, "b": sb, "c": sc, "oracle_complete": oracle_complete})
+    if len(deg_rows):
+        lines += ["", "## Degraded runs (excluded from means)", "",
+                  "| cell | seed | ID bal | (a) | (b) | (c) |", "|---|---:|---:|---:|---:|---:|"]
+        for _, r in deg_rows.sort_values(["cell", "seed"]).iterrows():
+            lines.append("| {} | {} | {:.3f} | {:.3f} | {:.3f} | {:.3f} |".format(
+                r.family, int(r.seed), float(r.id_bal_acc or float("nan")), r.a, r.b, r.c))
 
     # per-seed oracle table when any exist
     go = df[df.cell == "r2_oracle_l2"].sort_values("seed")

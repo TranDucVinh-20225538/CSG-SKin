@@ -1,0 +1,16 @@
+{
+ "rule": "ID test bal acc < 0.25",
+ "n_excluded": 1,
+ "rows": [
+  {
+   "cell": "r1_shift0_l2",
+   "family": "R1 shift0% \u03bb=2",
+   "tag": "r1_cur_shift0_ladv2_s52",
+   "seed": 52,
+   "id_bal_acc": 0.1387742347789771,
+   "a": 0.6245485278336721,
+   "b": 0.6062571895040018,
+   "c": 0.5819059839809125
+  }
+ ]
+}
