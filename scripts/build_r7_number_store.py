@@ -117,6 +117,14 @@ def build():
         v = list(r.values())
         if v[0].startswith("R1 shift") and v[2] == "MEL":
             s["clin_r1"]["{}|{}".format(v[0], v[1])] = 100.0 * float(v[7])
+    # R10b bootstrap CIs: B1 shift 50% (tab:shiftfull), B3 A4 rows (tab:unseen), B4 SCIN splits (tab:splits)
+    s["r10b"] = {}
+    for f, keyf in (("B1_shift50_boots", lambda r: "b1|{}|{}".format(r["lambda"], r["set"])),
+                    ("B3_a4_ci", lambda r: "b3|{}|{}".format(r["lambda"], r["set"])),
+                    ("B4_splits_scin", lambda r: "b4|{}|{}".format(r["split"], r["lambda"]))):
+        for r in json.loads((RES / "r10b" / (f + ".json")).read_text())["rows"]:
+            s["r10b"][keyf(r)] = {"mean": r["mean"], "sd": r["sd"], "ci_lo": r["ci"][0], "ci_hi": r["ci"][1],
+                                  "k_below": int(r["k"].split("/")[0]), "rule_a": bool(r["rule_A"])}
     s["r8_d2"]["outcome"] = json.loads((RES / "r8/d2/OUTCOME.json").read_text())
     s["r8_d2"]["gpu_hours_align"] = sum(float(r["gpu_hours"]) for r in d2["align MK-MMD w30"])
     return s
@@ -165,7 +173,7 @@ def entries():
         "frac0.25|lam2": ["0.632", "0.007", "0.477", "0.002", "0.479", "0.013", "0.407", "0.011"],
         "frac0.5|lam2": ["0.575", "0.030", "0.459", "0.022", "0.415", "0.043", "0.397", "0.069"],
     }
-    t2_rows = {"frac0.25|lam0": "25%(407images)", "frac0.25|lam2": "25%", "frac0.5|lam2": "50%(802images)"}
+    t2_rows = {"frac0.25|lam0": "25%(407images)", "frac0.25|lam2": "25%", "frac0.5|lam2": "50%"}
     for arm, w in t2.items():
         for i, c in enumerate(["leakage", "id_bal_acc", "ood_auroc", "fitz_auroc"]):
             for j, stat in enumerate(("mean", "sd")):
@@ -240,6 +248,13 @@ def entries():
                         ("R1 shift 100% λ=2", "sd198", "83.2"), ("R1 shift 0% λ=2", "sd198", "33.8")):
         add("clin_r1_{}_{}".format(cell.split()[2].rstrip("%"), ds), w, ["clin_r1", "{}|{}".format(cell, ds)],
             note="§4.4 and Fig. 1 caption; MEL predicted NV conf > 0.9, %")
+    r10b = json.loads(STORE.read_text())["r10b"] if STORE.exists() else build()["r10b"]
+    for k, v in r10b.items():
+        tag = k.replace("|", "_").replace(".", "p")
+        # tab:unseen prints A4 at λ=0 as a mean only (no interval column)
+        for stat in (("mean",) if k.startswith("b3|0.0|") else ("mean", "ci_lo", "ci_hi")):
+            add("r10b_{}_{}".format(tag, stat), "{:.3f}".format(v[stat]), ["r10b", k, stat],
+                note="R10b bootstrap (2,000 draws, rng 20261005)")
     add("r8_d2_gap", "0.018", ["r8_d2", "outcome", "gap"])
     add("r8_d2_gpu", "3.64", ["r8_d2", "gpu_hours_align"])
     return e

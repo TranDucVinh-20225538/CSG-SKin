@@ -218,7 +218,7 @@ $0.69$ (Table~\ref{tab:imagelevel}, leaky split; Appendix~\ref{app:imagelevel})~
 \textbf{Class mix seen by the adversary.} Keeping the classification loss on all of ISIC,
 we resample only the ISIC images fed to the adversarial branch so that their class mix is
 ISIC's own ($100\%$, the default), halfway to PAD's ($50\%$), or PAD's ($0\%$, no label
-shift between the aligned domains), at $\lam\in\{0.5,2\}$ with five seeds (three at $50\%$).
+shift between the aligned domains), at $\lam\in\{0.5,2\}$ with five seeds.
 Because PAD has no DF or VASC, shift $0\%$ also removes these two classes from the adversary's
 ISIC stream, so it changes the class set as well as the priors. A six-class control separates the two:
 it removes only DF and VASC ($1.9\%$ of ISIC train) from the adversary's ISIC stream and keeps ISIC's
@@ -275,20 +275,20 @@ these are views of one phenomenon.
 checkpoint). Mean $\pm$ s.d.\ over five seeds per $\lam$ ($\{42,52,62,72,82\}$ at $\lam\in\{0,2\}$,
 $\{42,\ldots,46\}$ otherwise). Leakage: linear domain probe on held-out images (chance $0.5$). ID: balanced
 accuracy, eight classes (chance $0.125$). Mahalanobis AUROC, OOD positive; $k$: seeds whose
-interval lies below $0.5$. Best-val: the best-validation checkpoint, for comparison.}
+interval lies below $0.5$. Bold: inversion criterion met. Best-validation values: Appendix~\ref{app:bestval}.}
 \label{tab:dial}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{rccccccc}
+\begin{tabular}{rccccccccccccc}
 \toprule
-$\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k & $k$ & \texttt{pad\_heldout} (best-val) \\
+$\lam$ & leakage & ID bal.\ acc & \texttt{pad\_heldout} & $k$ & Fitzpatrick17k & $k$ & MED-NODE & $k$ & SD-198 & $k$ & SCIN & $k$ \\
 \midrule
-0    & $0.842\pm0.050$ & $0.481\pm0.016$ & $0.825\pm0.022$ & 0/5 & $0.712\pm0.013$ & 0/5 & $0.808\pm0.027$ \\
-0.25 & $0.502\pm0.002$ & $0.481\pm0.010$ & $\mathbf{0.445\pm0.022}$ & 4/5 & $\mathbf{0.396\pm0.032}$ & 5/5 & $0.525\pm0.121$ \\
-0.5  & $0.508\pm0.010$ & $0.484\pm0.005$ & $\mathbf{0.415\pm0.016}$ & 5/5 & $\mathbf{0.377\pm0.046}$ & 5/5 & $0.426\pm0.008$ \\
-1    & $0.505\pm0.005$ & $0.482\pm0.017$ & $\mathbf{0.390\pm0.022}$ & 5/5 & $\mathbf{0.388\pm0.039}$ & 5/5 & $0.387\pm0.016$ \\
-2    & $0.507\pm0.009$ & $0.472\pm0.018$ & $\mathbf{0.381\pm0.023}$ & 5/5 & $\mathbf{0.405\pm0.031}$ & 5/5 & $0.403\pm0.028$ \\
-4    & $0.527\pm0.035$ & $0.480\pm0.016$ & $\mathbf{0.416\pm0.034}$ & 5/5 & $\mathbf{0.354\pm0.066}$ & 5/5 & $0.433\pm0.020$ \\
-8    & $0.520\pm0.028$ & $0.480\pm0.018$ & $\mathbf{0.439\pm0.020}$ & 5/5 & $\mathbf{0.383\pm0.036}$ & 5/5 & $0.454\pm0.044$ \\
+0    & $0.842\pm0.050$ & $0.481\pm0.016$ & $0.825\pm0.022$ & 0/5 & $0.712\pm0.013$ & 0/5 & $0.559\pm0.019$ & 0/5 & $0.708\pm0.019$ & 0/5 & $0.723\pm0.018$ & 0/5 \\
+0.25 & $0.502\pm0.002$ & $0.481\pm0.010$ & $\mathbf{0.445\pm0.022}$ & 4/5 & $\mathbf{0.396\pm0.032}$ & 5/5 & $\mathbf{0.308\pm0.029}$ & 5/5 & $\mathbf{0.383\pm0.036}$ & 5/5 & $0.547\pm0.027$ & 0/5 \\
+0.5  & $0.508\pm0.010$ & $0.484\pm0.005$ & $\mathbf{0.415\pm0.016}$ & 5/5 & $\mathbf{0.377\pm0.046}$ & 5/5 & $\mathbf{0.309\pm0.031}$ & 5/5 & $\mathbf{0.351\pm0.039}$ & 5/5 & $0.529\pm0.038$ & 0/5 \\
+1    & $0.505\pm0.005$ & $0.482\pm0.017$ & $\mathbf{0.390\pm0.022}$ & 5/5 & $\mathbf{0.388\pm0.039}$ & 5/5 & $\mathbf{0.319\pm0.018}$ & 5/5 & $\mathbf{0.368\pm0.046}$ & 5/5 & $0.528\pm0.037$ & 0/5 \\
+2    & $0.507\pm0.009$ & $0.472\pm0.018$ & $\mathbf{0.381\pm0.023}$ & 5/5 & $\mathbf{0.405\pm0.031}$ & 5/5 & $\mathbf{0.288\pm0.027}$ & 5/5 & $\mathbf{0.376\pm0.026}$ & 5/5 & $0.551\pm0.039$ & 0/5 \\
+4    & $0.527\pm0.035$ & $0.480\pm0.016$ & $\mathbf{0.416\pm0.034}$ & 5/5 & $\mathbf{0.354\pm0.066}$ & 5/5 & $\mathbf{0.300\pm0.039}$ & 5/5 & $\mathbf{0.330\pm0.049}$ & 5/5 & $0.499\pm0.046$ & 3/5 \\
+8    & $0.520\pm0.028$ & $0.480\pm0.018$ & $\mathbf{0.439\pm0.020}$ & 5/5 & $\mathbf{0.383\pm0.036}$ & 5/5 & $\mathbf{0.294\pm0.043}$ & 5/5 & $\mathbf{0.347\pm0.030}$ & 5/5 & $0.536\pm0.028$ & 0/5 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -369,7 +369,7 @@ as the matched-competence comparison above.
 \caption{Unseen domains: Mahalanobis AUROC at $\lam=0$ and $\lam=2$ (seed mean, $95\%$ interval at
 $\lam=2$) and the number of seeds whose interval lies below $0.5$. Last checkpoint. Intervals:
 patient (\texttt{pad\_heldout}), near-duplicate cluster (Fitzpatrick17k, SD-198), case (SCIN),
-image (MED-NODE).}
+image (MED-NODE). DINOv2: dual-encoder DINOv2-S/14.}
 \label{tab:unseen}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{llcccc}
@@ -384,6 +384,15 @@ main & SCIN & $0.723$ & $0.551$ $[0.538, 0.564]$ & 0/5 & no \\
 \midrule
 A4 & \texttt{pad\_heldout} & $0.786$ & $0.452$ $[0.425, 0.478]$ & 4/5 & yes \\
 A4 & Fitzpatrick17k & $0.821$ & $0.458$ $[0.445, 0.471]$ & 3/5 & yes \\
+A4 & MED-NODE & $0.560$ & $0.298$ $[0.271, 0.326]$ & 5/5 & yes \\
+A4 & SD-198 & $0.799$ & $0.430$ $[0.419, 0.441]$ & 5/5 & yes \\
+A4 & SCIN & $0.822$ & $0.659$ $[0.648, 0.670]$ & 0/5 & no \\
+\midrule
+DINOv2 & \texttt{pad\_heldout} & $0.831$ & $0.448$ $[0.425, 0.471]$ & 4/5 & yes \\
+DINOv2 & Fitzpatrick17k & $0.778$ & $0.472$ $[0.459, 0.486]$ & 3/5 & yes \\
+DINOv2 & MED-NODE & $0.580$ & $0.363$ $[0.335, 0.389]$ & 5/5 & yes \\
+DINOv2 & SD-198 & $0.790$ & $0.461$ $[0.449, 0.474]$ & 4/5 & yes \\
+DINOv2 & SCIN & $0.716$ & $0.551$ $[0.538, 0.565]$ & 1/5 & no \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -401,8 +410,8 @@ support does not explain the effect.
 
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
 latent (leakage $0.791$ vs $0.634$), but a regression of unseen-domain AUROC on label-shift
-level and leakage keeps a label-shift coefficient of $-0.107$ to $-0.172$ at fixed leakage on
-all three unseen datasets (one point per run; the coefficient rests on $6$ cells and $25$ runs,
+level and leakage keeps a label-shift coefficient of $-0.108$ to $-0.173$ at fixed leakage on
+all three unseen datasets (one point per run; the coefficient rests on $6$ cells and $29$ runs,
 Appendix~\ref{app:shift}). This supports the label-shift explanation in the settings tried.
 
 \paragraph{A natural example without DANN.} Label shift alone can invert a class-conditional
@@ -428,22 +437,22 @@ enough.
 \caption{Label-shift intervention: Mahalanobis AUROC (main recipe, last checkpoint) by the
 class mix the adversary sees. Shift $100\%$: ISIC's own mix; $0\%$: PAD's mix. Leakage: linear
 probe on ISIC test against all of PAD, as in earlier work. Shift $0\%$ at $\lam=2$: four seeds after excluding one degraded run (in-distribution
-balanced accuracy $0.139<0.25$); shift $50\%$: three seeds. These runs are trained separately from the sweep with the same recipe and seeds, so shift
+balanced accuracy $0.139<0.25$). These runs are trained separately from the sweep with the same recipe and seeds, so shift
 $100\%$ differs from Table~\ref{tab:dial} by run-to-run variation (e.g.\ $0.368$ vs $0.381$ on
 \texttt{pad\_heldout} at $\lam=2$).}
 \label{tab:shift}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{rcccccc}
+\begin{tabular}{rccccccc}
 \toprule
-$\lam$ & shift & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 \\
+$\lam$ & shift & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
 \midrule
-0 & -- & $0.928$ & $0.825$ & $0.712$ & $0.559$ & $0.708$ \\
-0.5 & $0\%$ & $0.783$ & $0.498$ & $0.672$ & $0.525$ & $0.664$ \\
-0.5 & $50\%$ & $0.629$ & $0.490$ & $0.482$ & $0.303$ & $0.451$ \\
-0.5 & $100\%$ & $0.628$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
-2 & $0\%$ & $0.791$ & $0.458$ & $0.691$ & $0.541$ & $0.694$ \\
-2 & $50\%$ & $0.658$ & $0.454$ & $0.441$ & $0.299$ & $0.414$ \\
-2 & $100\%$ & $0.634$ & $0.368$ & $0.340$ & $0.298$ & $0.325$ \\
+0 & -- & $0.928$ & $0.825$ & $0.712$ & $0.559$ & $0.708$ & $0.723$ \\
+0.5 & $0\%$ & $0.783$ & $0.498$ & $0.672$ & $0.525$ & $0.664$ & $0.718$ \\
+0.5 & $50\%$ & $0.637$ & $0.486$ & $0.455$ & $0.312$ & $0.428$ & $0.567$ \\
+0.5 & $100\%$ & $0.628$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ & $0.534$ \\
+2 & $0\%$ & $0.791$ & $0.458$ & $0.691$ & $0.541$ & $0.694$ & $0.732$ \\
+2 & $50\%$ & $0.647$ & $0.469$ & $0.457$ & $0.322$ & $0.432$ & $0.583$ \\
+2 & $100\%$ & $0.634$ & $0.368$ & $0.340$ & $0.298$ & $0.325$ & $0.519$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -535,9 +544,9 @@ per-class probes. Fitz: Mahalanobis AUROC on Fitzpatrick17k.}
 condition & unweighted & class-balanced & within-class & Fitz \\
 \midrule
 DANN, shift $100\%$ & $0.510$ & $0.602$ & $0.618$ & $0.340$ \\
-DANN, shift $0\%$ & $0.629$ & $0.539$ & $0.560$ & $0.691$ \\
+DANN, shift $0\%$ & $0.630$ & $0.522$ & $0.555$ & $0.691$ \\
 IWDAN (online) & $0.534$ & $0.562$ & $0.597$ & $0.508$ \\
-IWDAN (50 labels) & $0.653$ & $0.545$ & $0.583$ & $0.741$ \\
+IWDAN (50 labels) & $0.652$ & $0.545$ & $0.583$ & $0.741$ \\
 IWDAN (true priors) & $0.645$ & $0.549$ & $0.576$ & $0.717$ \\
 \bottomrule
 \end{tabular}
@@ -695,6 +704,30 @@ intervals lie below $0.5$; on Fitzpatrick17k $k$-NN ($0.521$) and energy ($0.516
 collapse. A plain single-encoder DANN collapses to chance ($0.51$--$0.56$, Table~\ref{tab:single}) without inverting.
 
 \FloatBarrier
+\section{Best-validation checkpoint}
+\label{app:bestval}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Mahalanobis AUROC on \texttt{pad\_heldout} at the best-validation checkpoint for the runs of Table~\ref{tab:dial} (mean $\pm$ s.d., five seeds), for comparison; the main tables use the last checkpoint.}
+\label{tab:bestval}
+\begin{tabular}{rc}
+\toprule
+$\lam$ & \texttt{pad\_heldout} (best-val) \\
+\midrule
+0 & $0.808\pm0.027$ \\
+0.25 & $0.525\pm0.121$ \\
+0.5 & $0.426\pm0.008$ \\
+1 & $0.387\pm0.016$ \\
+2 & $0.403\pm0.028$ \\
+4 & $0.433\pm0.020$ \\
+8 & $0.454\pm0.044$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
 \section{Label-shift intervention: full results}
 \label{app:shift}
 
@@ -704,7 +737,7 @@ $0.139$) is excluded. $k/n$: seeds whose interval lies below $0.5$.
 \begin{table}[h]
 \centering
 \scriptsize
-\caption{Mahalanobis AUROC by the class mix seen by the adversary.}
+\caption{Mahalanobis AUROC by the class mix seen by the adversary. Shift $50\%$: five seeds.}
 \label{tab:shiftfull}
 \begin{tabular}{llrccll}
 \toprule
@@ -712,48 +745,48 @@ set & shift & $\lam$ & mean $\pm$ s.d. & $95\%$ CI & $k/n$ & inverted \\
 \midrule
 \texttt{pad\_heldout} & 100\% & 0 & 0.825\,$\pm$\,0.022 & [0.810, 0.839] & 0/5 & not met \\
 \texttt{pad\_heldout} & 100\% & 0.5 & 0.361\,$\pm$\,0.029 & [0.338, 0.383] & 5/5 & met \\
-\texttt{pad\_heldout} & 50\% & 0.5 & 0.490\,$\pm$\,0.058 & [0.466, 0.512] & 2/3 & not met \\
+\texttt{pad\_heldout} & 50\% & 0.5 & 0.486\,$\pm$\,0.047 & [0.463, 0.508] & 3/5 & not met \\
 \texttt{pad\_heldout} & 0\% & 0.5 & 0.498\,$\pm$\,0.025 & [0.478, 0.517] & 0/5 & not met \\
 \texttt{pad\_heldout} & 100\% & 2 & 0.368\,$\pm$\,0.017 & [0.344, 0.391] & 5/5 & met \\
-\texttt{pad\_heldout} & 50\% & 2 & 0.454\,$\pm$\,0.009 & [0.432, 0.476] & 3/3 & met \\
+\texttt{pad\_heldout} & 50\% & 2 & 0.469\,$\pm$\,0.027 & [0.448, 0.490] & 4/5 & met \\
 \texttt{pad\_heldout} & 0\% & 2 & 0.458\,$\pm$\,0.003 & [0.438, 0.477] & 4/4 & met \\
 Fitzpatrick17k & 100\% & 0 & 0.712\,$\pm$\,0.013 & [0.698, 0.725] & 0/5 & not met \\
 Fitzpatrick17k & 100\% & 0.5 & 0.385\,$\pm$\,0.023 & [0.373, 0.398] & 5/5 & met \\
-Fitzpatrick17k & 50\% & 0.5 & 0.482\,$\pm$\,0.143 & [0.469, 0.494] & 2/3 & not met \\
+Fitzpatrick17k & 50\% & 0.5 & 0.455\,$\pm$\,0.115 & [0.443, 0.468] & 4/5 & met \\
 Fitzpatrick17k & 0\% & 0.5 & 0.672\,$\pm$\,0.046 & [0.661, 0.684] & 0/5 & not met \\
 Fitzpatrick17k & 100\% & 2 & 0.340\,$\pm$\,0.065 & [0.328, 0.352] & 5/5 & met \\
-Fitzpatrick17k & 50\% & 2 & 0.441\,$\pm$\,0.076 & [0.428, 0.454] & 2/3 & not met \\
+Fitzpatrick17k & 50\% & 2 & 0.457\,$\pm$\,0.062 & [0.444, 0.470] & 3/5 & met \\
 Fitzpatrick17k & 0\% & 2 & 0.691\,$\pm$\,0.031 & [0.680, 0.702] & 0/4 & not met \\
 MED-NODE & 100\% & 0 & 0.559\,$\pm$\,0.019 & [0.531, 0.587] & 0/5 & not met \\
 MED-NODE & 100\% & 0.5 & 0.310\,$\pm$\,0.055 & [0.284, 0.337] & 5/5 & met \\
-MED-NODE & 50\% & 0.5 & 0.303\,$\pm$\,0.054 & [0.272, 0.336] & 3/3 & met \\
+MED-NODE & 50\% & 0.5 & 0.312\,$\pm$\,0.051 & [0.282, 0.344] & 5/5 & met \\
 MED-NODE & 0\% & 0.5 & 0.525\,$\pm$\,0.050 & [0.497, 0.554] & 1/5 & not met \\
 MED-NODE & 100\% & 2 & 0.298\,$\pm$\,0.032 & [0.271, 0.326] & 5/5 & met \\
-MED-NODE & 50\% & 2 & 0.299\,$\pm$\,0.052 & [0.269, 0.331] & 3/3 & met \\
+MED-NODE & 50\% & 2 & 0.322\,$\pm$\,0.054 & [0.294, 0.353] & 5/5 & met \\
 MED-NODE & 0\% & 2 & 0.541\,$\pm$\,0.027 & [0.512, 0.572] & 0/4 & not met \\
 SD-198 & 100\% & 0 & 0.708\,$\pm$\,0.019 & [0.695, 0.722] & 0/5 & not met \\
 SD-198 & 100\% & 0.5 & 0.365\,$\pm$\,0.029 & [0.353, 0.377] & 5/5 & met \\
-SD-198 & 50\% & 0.5 & 0.451\,$\pm$\,0.133 & [0.439, 0.461] & 2/3 & not met \\
+SD-198 & 50\% & 0.5 & 0.428\,$\pm$\,0.104 & [0.417, 0.439] & 4/5 & met \\
 SD-198 & 0\% & 0.5 & 0.664\,$\pm$\,0.058 & [0.653, 0.675] & 0/5 & not met \\
 SD-198 & 100\% & 2 & 0.325\,$\pm$\,0.069 & [0.315, 0.336] & 5/5 & met \\
-SD-198 & 50\% & 2 & 0.414\,$\pm$\,0.047 & [0.402, 0.425] & 3/3 & met \\
+SD-198 & 50\% & 2 & 0.432\,$\pm$\,0.047 & [0.421, 0.444] & 4/5 & met \\
 SD-198 & 0\% & 2 & 0.694\,$\pm$\,0.031 & [0.683, 0.704] & 0/4 & not met \\
 SCIN & 100\% & 0 & 0.723\,$\pm$\,0.018 & [0.710, 0.736] & 0/5 & not met \\
 SCIN & 100\% & 0.5 & 0.534\,$\pm$\,0.015 & [0.521, 0.547] & 0/5 & not met \\
-SCIN & 50\% & 0.5 & 0.586\,$\pm$\,0.101 & [0.575, 0.599] & 1/3 & not met \\
+SCIN & 50\% & 0.5 & 0.567\,$\pm$\,0.080 & [0.555, 0.579] & 1/5 & not met \\
 SCIN & 0\% & 0.5 & 0.718\,$\pm$\,0.036 & [0.708, 0.729] & 0/5 & not met \\
 SCIN & 100\% & 2 & 0.519\,$\pm$\,0.073 & [0.507, 0.532] & 1/5 & not met \\
-SCIN & 50\% & 2 & 0.566\,$\pm$\,0.051 & [0.553, 0.578] & 0/3 & not met \\
+SCIN & 50\% & 2 & 0.583\,$\pm$\,0.043 & [0.571, 0.595] & 0/5 & not met \\
 SCIN & 0\% & 2 & 0.732\,$\pm$\,0.035 & [0.722, 0.742] & 0/4 & not met \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The regression uses one point per run ($n=75$; $76$ runs with one degraded run excluded): Mahalanobis AUROC on label-shift level
+The regression uses one point per run ($n=79$; $80$ runs with one degraded run excluded): Mahalanobis AUROC on label-shift level
 (coded $0$, $0.5$, $1$), unweighted leakage and recipe. Intervals come from a wild cluster
 bootstrap with Webb weights over the $16$ recipe $\times$ $\lam$ $\times$ shift cells ($2{,}000$ draws).
 The shift coefficient is identified only from the $6$ R1 cells ($2$ values of $\lam$ $\times$ $3$ shift
-levels, $25$ runs); A4 and the Table~\ref{tab:dial} runs only extend the leakage range at shift $100\%$.
+levels, $29$ runs); A4 and the Table~\ref{tab:dial} runs only extend the leakage range at shift $100\%$.
 The regression therefore supports the label-shift explanation in the settings tried and is not
 an independent causal test.
 
@@ -767,10 +800,10 @@ an independent causal test.
 \toprule
 set & $n$ & coefficient & $95\%$ CI & excludes 0 & VIF (leakage) & VIF (recipe) & identifiable \\
 \midrule
-Fitzpatrick17k & 75 & -0.166 & [-0.217, -0.115] & yes & 1.04 & 1.03 & yes \\
-MED-NODE & 75 & -0.107 & [-0.148, -0.065] & yes & 1.04 & 1.03 & yes \\
-SD-198 & 75 & -0.172 & [-0.221, -0.123] & yes & 1.04 & 1.03 & yes \\
-\texttt{pad\_heldout} (not counted) & 75 & 0.041 & [-0.033, 0.110] & no & 1.04 & 1.03 & yes \\
+Fitzpatrick17k & 79 & -0.167 & [-0.217, -0.116] & yes & 1.03 & 1.03 & yes \\
+MED-NODE & 79 & -0.108 & [-0.150, -0.065] & yes & 1.03 & 1.03 & yes \\
+SD-198 & 79 & -0.173 & [-0.222, -0.124] & yes & 1.03 & 1.03 & yes \\
+\texttt{pad\_heldout} (not counted) & 79 & 0.034 & [-0.062, 0.126] & no & 1.03 & 1.03 & yes \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -781,21 +814,21 @@ the adversary's ISIC images resampled to PAD's class mix (shift $0\%$), Mahalano
 $0.691$ on Fitzpatrick17k, $0.541$ on MED-NODE and $0.694$ on SD-198, none inverted; with
 ISIC's own mix (shift $100\%$) it is $0.340$, $0.298$ and $0.325$, inverted in every seed.
 Paired by seed, removing the label shift raises AUROC by $0.361$, $0.243$ and $0.372$. The
-intermediate level falls between the two on Fitzpatrick17k ($0.482$ at $\lam=0.5$, $0.441$ at
-$\lam=2$) and SD-198 ($0.451$, $0.414$); on MED-NODE it is already as low as full shift
-($0.303$, $0.299$). On \texttt{pad\_heldout}, the adversary's own target domain, a mild inversion
+intermediate level falls between the two on Fitzpatrick17k ($0.455$ at $\lam=0.5$, $0.457$ at
+$\lam=2$) and SD-198 ($0.428$, $0.432$); on MED-NODE it is already as low as full shift
+($0.312$, $0.322$). On \texttt{pad\_heldout}, the adversary's own target domain, a mild inversion
 remains without label shift ($0.458$; paired difference $+0.093$). One of five shift-$0\%$
 runs collapsed (in-distribution balanced accuracy $0.139$) and is excluded.
 
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
 latent (leakage $0.791$ vs $0.634$), so the intervention alone does not separate label shift
 from depth of invariance. A regression of unseen-domain AUROC on label-shift level and
-leakage, with recipe as a covariate (variance inflation $\approx1.04$), gives label-shift
-coefficients of $-0.166$ $[-0.217, -0.115]$ (Fitzpatrick17k), $-0.107$ $[-0.148, -0.065]$
-(MED-NODE) and $-0.172$ $[-0.221, -0.123]$ (SD-198) for a change from no shift to full shift
+leakage, with recipe as a covariate (variance inflation $\approx1.03$), gives label-shift
+coefficients of $-0.167$ $[-0.217, -0.116]$ (Fitzpatrick17k), $-0.108$ $[-0.150, -0.065]$
+(MED-NODE) and $-0.173$ $[-0.222, -0.124]$ (SD-198) for a change from no shift to full shift
 at fixed leakage (shift coded $0$, $0.5$, $1$; wild cluster bootstrap with Webb weights over
 recipe $\times$ $\lam$ $\times$ shift cells, $2{,}000$ draws). On \texttt{pad\_heldout}
-the coefficient is $+0.041$ $[-0.033, +0.110]$. Comparing runs at equal leakage across recipes
+the coefficient is $+0.034$ $[-0.062, +0.126]$. Comparing runs at equal leakage across recipes
 (A4 at shift $100\%$, leakage $0.78$, against the main recipe at shift $0\%$, leakage $0.79$)
 gives the same direction ($+0.23$ to $+0.26$).
 
@@ -817,7 +850,7 @@ $0.467\pm0.010$ at $\lam=2$, $0.470\pm0.010$ at $\lam=0.5$).
 \small
 \caption{Six-class control: Mahalanobis AUROC (mean $\pm$ sd over seeds $42$, $52$, $62$, $72$, $82$; main recipe,
 last checkpoint). References are the runs of Table~\ref{tab:shift}; shift $0\%$ at $\lam=2$ has four seeds after
-excluding the degraded run. \texttt{pad\_heldout} is reported but not counted.}
+excluding the degraded run. \texttt{pad\_heldout} and SCIN are reported but not counted.}
 \label{tab:sixclass}
 \begin{tabular}{rlcccc}
 \toprule
@@ -827,10 +860,12 @@ $\lam$ & OOD set & six-class & shift $100\%$ & shift $0\%$ & recovery \\
 2 & Fitzpatrick17k & $0.362\pm0.032$ & $0.340\pm0.065$ & $0.691\pm0.031$ & $0.063$ \\
 2 & MED-NODE & $0.312\pm0.050$ & $0.298\pm0.032$ & $0.541\pm0.027$ & $0.058$ \\
 2 & SD-198 & $0.339\pm0.039$ & $0.325\pm0.069$ & $0.694\pm0.031$ & $0.037$ \\
+2 & SCIN & $0.496\pm0.045$ & $0.519\pm0.073$ & $0.732\pm0.035$ & $-0.108$ \\
 0.5 & \texttt{pad\_heldout} & $0.374\pm0.037$ & $0.361\pm0.029$ & $0.498\pm0.025$ & $0.101$ \\
 0.5 & Fitzpatrick17k & $0.394\pm0.043$ & $0.385\pm0.023$ & $0.672\pm0.046$ & $0.031$ \\
 0.5 & MED-NODE & $0.332\pm0.036$ & $0.310\pm0.055$ & $0.525\pm0.050$ & $0.103$ \\
 0.5 & SD-198 & $0.384\pm0.051$ & $0.365\pm0.029$ & $0.664\pm0.058$ & $0.063$ \\
+0.5 & SCIN & $0.557\pm0.034$ & $0.534\pm0.015$ & $0.718\pm0.036$ & $0.121$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -926,7 +961,7 @@ specific to the cross-modality setting.
 \begin{table}[h]
 \centering
 \scriptsize
-\caption{Domain probes (main recipe, best-validation checkpoint, five seeds). The first column
+\caption{Domain probes (main recipe, best-validation checkpoint, five seeds; the main tables use the last checkpoint). The first column
 includes PAD images the adversary trained on.}
 \label{tab:probesfull}
 \begin{tabular}{rcccc}
@@ -957,9 +992,9 @@ four seeds at chance invert on all four, and one inverts only on MED-NODE.
 \begin{table}[h]
 \centering
 \scriptsize
-\caption{IWDAN at $\lam=2$ (main recipe, last checkpoint, five seeds) by how the target class
+\caption{IWDAN at $\lam=2$ and $\lam=0.5$ (main recipe, last checkpoint, five seeds) by how the target class
 priors are obtained. TV: total variation from the true \texttt{pad\_adv} priors. Leakage:
-unweighted linear probe on ISIC test against all of PAD; within-class: held-out within-class probe (not computed at $\lam=0.5$).}
+unweighted linear probe on ISIC test against all of PAD; within-class: held-out within-class probe.}
 \label{tab:prior}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccc}
@@ -972,9 +1007,10 @@ IWDAN (50 labels) & $0.10$--$0.14$ & $0.39$ & $0.806$ & $0.583$ & $0.619$ & $0.7
 IWDAN (true priors) & $0$ & $0.40$ & $0.780$ & $0.576$ & $0.647$ & $0.717$ & $0.563$ & $0.693$ \\
 \midrule
 \multicolumn{9}{l}{$\lam=0.5$} \\
-DANN (no weighting) & -- & $0.48$ & $0.628$ & -- & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
-IWDAN (online) & $0.38$--$0.47$ & $0.48$ & $0.665$ & -- & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
-IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & -- & $0.680$ & $0.742$ & $0.622$ & $0.741$ \\
+DANN (no weighting) & -- & $0.48$ & $0.628$ & $0.618$ & $0.361$ & $0.385$ & $0.310$ & $0.365$ \\
+IWDAN (online) & $0.38$--$0.47$ & $0.48$ & $0.665$ & $0.588$ & $0.667$ & $0.633$ & $0.447$ & $0.607$ \\
+IWDAN (50 labels) & $0.10$--$0.14$ & $0.39$ & $0.790$ & $0.584$ & $0.665$ & $0.741$ & $0.642$ & $0.714$ \\
+IWDAN (true priors) & $0$ & $0.40$ & $0.760$ & $0.562$ & $0.680$ & $0.742$ & $0.622$ & $0.741$ \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -1060,13 +1096,17 @@ dual DINOv2 & 2 & $0.576\pm0.034$ & $0.462\pm0.022$ & $\mathbf{0.448\pm0.045}$ &
 \caption{Single-encoder DANN with DINOv2-S/14, $\lam=2$, five seeds. Leakage stays above the
 invariance threshold ($0.60$), so this run does not test the inversion.}
 \label{tab:single-dino}
-\begin{tabular}{cccc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ccccccc}
 \toprule
-leakage & ID bal.\ acc & \texttt{pad\_heldout} & Fitzpatrick17k \\
+leakage & ID bal.\ acc & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
 \midrule
-$0.884\pm0.019$ & $0.555\pm0.023$ & $0.546\pm0.033$ & $0.476\pm0.069$ \\
+$0.884\pm0.019$ & $0.555\pm0.023$ & $0.546\pm0.033$ & $0.476\pm0.069$ & $0.348\pm0.047$ & $0.489\pm0.065$ & $0.539\pm0.056$ \\
+\midrule
+\multicolumn{7}{l}{ERM DINOv2-S/14 (reference, $\lam=0$, same seeds)} \\
+$0.983\pm0.002$ & $0.565\pm0.015$ & $0.591\pm0.060$ & $0.704\pm0.059$ & $0.452\pm0.033$ & $0.702\pm0.053$ & $0.781\pm0.074$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \FloatBarrier
@@ -1090,7 +1130,8 @@ This is not evidence of a dose-response relation.
 \midrule
 $25\%$ ($407$ images) & 0 & $0.898\pm0.032$ & $0.472\pm0.019$ & $0.819\pm0.022$ & $0.724\pm0.043$ & above \\
 $25\%$ & 2 & $0.632\pm0.007$ & $0.477\pm0.002$ & $0.479\pm0.013$ & $0.407\pm0.011$ & not met \\
-$50\%$ ($802$ images) & 2 & $0.575\pm0.030$ & $0.459\pm0.022$ & $0.415\pm0.043$ & $0.397\pm0.069$ & met \\
+$50\%$ ($802$ images) & 0 & $0.912\pm0.030$ & $0.482\pm0.010$ & $0.832\pm0.010$ & $0.713\pm0.026$ & above \\
+$50\%$ & 2 & $0.575\pm0.030$ & $0.459\pm0.022$ & $0.415\pm0.043$ & $0.397\pm0.069$ & met \\
 $100\%$ (five seeds) & 2 & $0.507$ & & $0.381$ & $0.405$ & met \\
 \bottomrule
 \end{tabular}
@@ -1230,20 +1271,20 @@ Table~\ref{tab:splits} repeats the main comparison ($\lam = 0$ vs.\ $\lam = 2$) 
 \caption{Three further lesion-disjoint ISIC splits (main recipe, last checkpoint, three seeds
 each). ID and leakage: mean $\pm$ s.d.; AUROC: seed mean with pooled $95\%$ interval (lesion groups
 rebuilt per split; patient, cluster or image resampling as in the main tables). No run met the degraded-model criterion. At $\lam=2$
-every interval lies below $0.5$ and all three seeds' intervals do in every cell. Leakage: linear
+every interval lies below $0.5$ and all three seeds' intervals do in every cell except SCIN, where no cell meets the criterion ($1/3$ seeds). Leakage: linear
 probe on held-out images.}
 \label{tab:splits}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{rrcccccc}
+\begin{tabular}{rrccccccc}
 \toprule
-split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 \\
+split & $\lam$ & ID bal.\ acc & leakage & \texttt{pad\_heldout} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
 \midrule
-7 & 0 & $0.443\pm0.008$ & $0.845\pm0.034$ & $0.835$ $[0.820, 0.848]$ & $0.713$ $[0.699, 0.726]$ & $0.491$ $[0.457, 0.525]$ & $0.724$ $[0.712, 0.737]$ \\
-7 & 2 & $0.440\pm0.008$ & $0.509\pm0.007$ & $0.406$ $[0.383, 0.430]$ & $0.344$ $[0.330, 0.358]$ & $0.245$ $[0.220, 0.271]$ & $0.338$ $[0.327, 0.349]$ \\
-123 & 0 & $0.449\pm0.011$ & $0.840\pm0.028$ & $0.822$ $[0.807, 0.835]$ & $0.739$ $[0.725, 0.751]$ & $0.569$ $[0.535, 0.600]$ & $0.745$ $[0.733, 0.757]$ \\
-123 & 2 & $0.452\pm0.025$ & $0.512\pm0.010$ & $0.431$ $[0.407, 0.454]$ & $0.408$ $[0.395, 0.422]$ & $0.324$ $[0.294, 0.354]$ & $0.392$ $[0.380, 0.404]$ \\
-2027 & 0 & $0.460\pm0.023$ & $0.831\pm0.039$ & $0.827$ $[0.813, 0.841]$ & $0.715$ $[0.701, 0.729]$ & $0.544$ $[0.512, 0.575]$ & $0.706$ $[0.693, 0.720]$ \\
-2027 & 2 & $0.482\pm0.007$ & $0.514\pm0.014$ & $0.393$ $[0.369, 0.415]$ & $0.376$ $[0.362, 0.390]$ & $0.357$ $[0.326, 0.385]$ & $0.348$ $[0.337, 0.360]$ \\
+7 & 0 & $0.443\pm0.008$ & $0.845\pm0.034$ & $0.835$ $[0.820, 0.848]$ & $0.713$ $[0.699, 0.726]$ & $0.491$ $[0.457, 0.525]$ & $0.724$ $[0.712, 0.737]$ & $0.733$ $[0.720, 0.745]$ \\
+7 & 2 & $0.440\pm0.008$ & $0.509\pm0.007$ & $0.406$ $[0.383, 0.430]$ & $0.344$ $[0.330, 0.358]$ & $0.245$ $[0.220, 0.271]$ & $0.338$ $[0.327, 0.349]$ & $0.498$ $[0.486, 0.511]$ \\
+123 & 0 & $0.449\pm0.011$ & $0.840\pm0.028$ & $0.822$ $[0.807, 0.835]$ & $0.739$ $[0.725, 0.751]$ & $0.569$ $[0.535, 0.600]$ & $0.745$ $[0.733, 0.757]$ & $0.700$ $[0.686, 0.712]$ \\
+123 & 2 & $0.452\pm0.025$ & $0.512\pm0.010$ & $0.431$ $[0.407, 0.454]$ & $0.408$ $[0.395, 0.422]$ & $0.324$ $[0.294, 0.354]$ & $0.392$ $[0.380, 0.404]$ & $0.508$ $[0.494, 0.521]$ \\
+2027 & 0 & $0.460\pm0.023$ & $0.831\pm0.039$ & $0.827$ $[0.813, 0.841]$ & $0.715$ $[0.701, 0.729]$ & $0.544$ $[0.512, 0.575]$ & $0.706$ $[0.693, 0.720]$ & $0.734$ $[0.721, 0.746]$ \\
+2027 & 2 & $0.482\pm0.007$ & $0.514\pm0.014$ & $0.393$ $[0.369, 0.415]$ & $0.376$ $[0.362, 0.390]$ & $0.357$ $[0.326, 0.385]$ & $0.348$ $[0.337, 0.360]$ & $0.541$ $[0.529, 0.554]$ \\
 \bottomrule
 \end{tabular}}
 \end{table}

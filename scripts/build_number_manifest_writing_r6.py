@@ -519,7 +519,9 @@ def build_manifest(store):
     }
     for lam in ("0", "0.25", "0.5", "1", "2", "4", "8"):
         for col, (name, cname) in dial_cols.items():
-            mean, sd = from_table(tables, "tab:dial", lam, col)
+            # best-val moved to its own appendix table (v14): tab:bestval, col 1
+            tbl, tcol = ("tab:bestval", 1) if name == "maha_pad_best" else ("tab:dial", col)
+            mean, sd = from_table(tables, tbl, lam, tcol)
             if mean is None:
                 continue
             if name == "leakage":
@@ -561,12 +563,12 @@ def build_manifest(store):
                 key = f"{lam}|best|pad_heldout"
                 E.append(entry(f"dial_maha_pad_best_l{lam}", mean, bs,
                                [key, "mahalanobis_classcond", "mean"],
-                               cell=cell_pin("tab:dial", lam, col, cname, "mean"),
-                               note="best-val checkpoint column"))
+                               cell=cell_pin("tab:bestval", lam, 1, cname, "mean"),
+                               note="best-val checkpoint (Appendix B table)"))
                 if sd:
                     E.append(entry(f"dial_maha_pad_best_sd_l{lam}", sd, bs,
                                    [key, "mahalanobis_classcond", "sd"],
-                                   cell=cell_pin("tab:dial", lam, col, cname, "sd")))
+                                   cell=cell_pin("tab:bestval", lam, 1, cname, "sd")))
 
     # ========== Abstract + headline CIs (t1last) ==========
     # No dataset labels here: multi-dataset tables break nearest-label checks.
@@ -601,10 +603,10 @@ def build_manifest(store):
         ("support_tv_isic_pad", "0.583", ["values", "support", "tv_isic_pad"]),
         ("support_tv_drop", "0.019", ["values", "support", "tv_drop_absent"]),
         ("support_tv_isic6_pad", "0.579", ["values", "support", "tv_isic6_pad"]),
-        ("reg_n_runs_all", "76", ["values", "regression", "n_runs_all"]),
+        ("reg_n_runs_all", "80", ["values", "regression", "n_runs_all"]),
         ("reg_n_clusters", "16", ["values", "regression", "n_clusters"]),
         ("reg_n_r1_cells", "6", ["values", "regression", "n_r1_cells"]),
-        ("reg_n_r1_runs", "25", ["values", "regression", "n_r1_runs"]),
+        ("reg_n_r1_runs", "29", ["values", "regression", "n_r1_runs"]),
     ]:
         E.append(entry(eid, written, store_f, key, optional="." not in written))
     E.append(entry("competence_erm_mean", "0.558", erm,
@@ -666,38 +668,38 @@ def build_manifest(store):
         # (set_label, shift, lam, mean, sd, ci_lo, ci_hi, store_alias, ood_key, ds_label)
         ("pad_heldout", "100%", "0", "0.825", "0.022", "0.810", "0.839", "lam0_shift100", "pad_heldout", "pad_heldout"),
         ("pad_heldout", "100%", "0.5", "0.361", "0.029", "0.338", "0.383", "shift100_l05", "pad_heldout", "pad_heldout"),
-        ("pad_heldout", "50%", "0.5", "0.490", "0.058", "0.466", "0.512", "shift50_l05", "pad_heldout", "pad_heldout"),
+        ("pad_heldout", "50%", "0.5", "0.486", "0.047", "0.463", "0.508", "shift50_l05", "pad_heldout", "pad_heldout"),
         ("pad_heldout", "0%", "0.5", "0.498", "0.025", "0.478", "0.517", "shift0_l05", "pad_heldout", "pad_heldout"),
         ("pad_heldout", "100%", "2", "0.368", "0.017", "0.344", "0.391", "shift100_l2", "pad_heldout", "pad_heldout"),
-        ("pad_heldout", "50%", "2", "0.454", "0.009", "0.432", "0.476", "shift50_l2", "pad_heldout", "pad_heldout"),
+        ("pad_heldout", "50%", "2", "0.469", "0.027", "0.448", "0.490", "shift50_l2", "pad_heldout", "pad_heldout"),
         ("pad_heldout", "0%", "2", "0.458", "0.003", "0.438", "0.477", "shift0_l2", "pad_heldout", "pad_heldout"),
         ("fitzpatrick17k", "100%", "0", "0.712", "0.013", "0.698", "0.725", "lam0_shift100", "fitzpatrick17k", "fitzpatrick"),
         ("fitzpatrick17k", "100%", "0.5", "0.385", "0.023", "0.373", "0.398", "shift100_l05", "fitzpatrick17k", "fitzpatrick"),
-        ("fitzpatrick17k", "50%", "0.5", "0.482", "0.143", "0.469", "0.494", "shift50_l05", "fitzpatrick17k", "fitzpatrick"),
+        ("fitzpatrick17k", "50%", "0.5", "0.455", "0.115", "0.443", "0.468", "shift50_l05", "fitzpatrick17k", "fitzpatrick"),
         ("fitzpatrick17k", "0%", "0.5", "0.672", "0.046", "0.661", "0.684", "shift0_l05", "fitzpatrick17k", "fitzpatrick"),
         ("fitzpatrick17k", "100%", "2", "0.340", "0.065", "0.328", "0.352", "shift100_l2", "fitzpatrick17k", "fitzpatrick"),
-        ("fitzpatrick17k", "50%", "2", "0.441", "0.076", "0.428", "0.454", "shift50_l2", "fitzpatrick17k", "fitzpatrick"),
+        ("fitzpatrick17k", "50%", "2", "0.457", "0.062", "0.444", "0.470", "shift50_l2", "fitzpatrick17k", "fitzpatrick"),
         ("fitzpatrick17k", "0%", "2", "0.691", "0.031", "0.680", "0.702", "shift0_l2", "fitzpatrick17k", "fitzpatrick"),
         ("mednode", "100%", "0", "0.559", "0.019", "0.531", "0.587", "lam0_shift100", "mednode", "mednode"),
         ("mednode", "100%", "0.5", "0.310", "0.055", "0.284", "0.337", "shift100_l05", "mednode", "mednode"),
-        ("mednode", "50%", "0.5", "0.303", "0.054", "0.272", "0.336", "shift50_l05", "mednode", "mednode"),
+        ("mednode", "50%", "0.5", "0.312", "0.051", "0.282", "0.344", "shift50_l05", "mednode", "mednode"),
         ("mednode", "0%", "0.5", "0.525", "0.050", "0.497", "0.554", "shift0_l05", "mednode", "mednode"),
         ("mednode", "100%", "2", "0.298", "0.032", "0.271", "0.326", "shift100_l2", "mednode", "mednode"),
-        ("mednode", "50%", "2", "0.299", "0.052", "0.269", "0.331", "shift50_l2", "mednode", "mednode"),
+        ("mednode", "50%", "2", "0.322", "0.054", "0.294", "0.353", "shift50_l2", "mednode", "mednode"),
         ("mednode", "0%", "2", "0.541", "0.027", "0.512", "0.572", "shift0_l2", "mednode", "mednode"),
         ("sd198", "100%", "0", "0.708", "0.019", "0.695", "0.722", "lam0_shift100", "sd198", "sd198"),
         ("sd198", "100%", "0.5", "0.365", "0.029", "0.353", "0.377", "shift100_l05", "sd198", "sd198"),
-        ("sd198", "50%", "0.5", "0.451", "0.133", "0.439", "0.461", "shift50_l05", "sd198", "sd198"),
+        ("sd198", "50%", "0.5", "0.428", "0.104", "0.417", "0.439", "shift50_l05", "sd198", "sd198"),
         ("sd198", "0%", "0.5", "0.664", "0.058", "0.653", "0.675", "shift0_l05", "sd198", "sd198"),
         ("sd198", "100%", "2", "0.325", "0.069", "0.315", "0.336", "shift100_l2", "sd198", "sd198"),
-        ("sd198", "50%", "2", "0.414", "0.047", "0.402", "0.425", "shift50_l2", "sd198", "sd198"),
+        ("sd198", "50%", "2", "0.432", "0.047", "0.421", "0.444", "shift50_l2", "sd198", "sd198"),
         ("sd198", "0%", "2", "0.694", "0.031", "0.683", "0.704", "shift0_l2", "sd198", "sd198"),
         ("scin", "100%", "0", "0.723", "0.018", "0.710", "0.736", "lam0_shift100", "scin", "scin"),
         ("scin", "100%", "0.5", "0.534", "0.015", "0.521", "0.547", "shift100_l05", "scin", "scin"),
-        ("scin", "50%", "0.5", "0.586", "0.101", "0.575", "0.599", "shift50_l05", "scin", "scin"),
+        ("scin", "50%", "0.5", "0.567", "0.080", "0.555", "0.579", "shift50_l05", "scin", "scin"),
         ("scin", "0%", "0.5", "0.718", "0.036", "0.708", "0.729", "shift0_l05", "scin", "scin"),
         ("scin", "100%", "2", "0.519", "0.073", "0.507", "0.532", "shift100_l2", "scin", "scin"),
-        ("scin", "50%", "2", "0.566", "0.051", "0.553", "0.578", "shift50_l2", "scin", "scin"),
+        ("scin", "50%", "2", "0.583", "0.043", "0.571", "0.595", "shift50_l2", "scin", "scin"),
         ("scin", "0%", "2", "0.732", "0.035", "0.722", "0.742", "shift0_l2", "scin", "scin"),
     ]
     for set_name, shift, lam, mean, sd, lo, hi, alias, ood, lab in shiftfull_rows:
@@ -714,10 +716,10 @@ def build_manifest(store):
     for lam, shift, pad, fitz, med, sd in [
         ("0", "--", "0.825", "0.712", "0.559", "0.708"),
         ("0.5", "0%", "0.498", "0.672", "0.525", "0.664"),
-        ("0.5", "50%", "0.490", "0.482", "0.303", "0.451"),
+        ("0.5", "50%", "0.486", "0.455", "0.312", "0.428"),
         ("0.5", "100%", "0.361", "0.385", "0.310", "0.365"),
         ("2", "0%", "0.458", "0.691", "0.541", "0.694"),
-        ("2", "50%", "0.454", "0.441", "0.299", "0.414"),
+        ("2", "50%", "0.469", "0.457", "0.322", "0.432"),
         ("2", "100%", "0.368", "0.340", "0.298", "0.325"),
     ]:
         alias = {
@@ -728,8 +730,8 @@ def build_manifest(store):
         tag = f"shift_l{lam}_s{shift.replace('%','pct').replace('--','na')}"
         # Written leakages from tab:shift (may disagree with seed-mean bal_acc_mean).
         leak_written = {
-            ("0", "--"): "0.928", ("0.5", "0%"): "0.783", ("0.5", "50%"): "0.629",
-            ("0.5", "100%"): "0.628", ("2", "0%"): "0.791", ("2", "50%"): "0.658",
+            ("0", "--"): "0.928", ("0.5", "0%"): "0.783", ("0.5", "50%"): "0.637",
+            ("0.5", "100%"): "0.628", ("2", "0%"): "0.791", ("2", "50%"): "0.647",
             ("2", "100%"): "0.634",
         }[(lam, shift)]
         E.append(entry(f"{tag}_leak", leak_written, store_f,
@@ -752,10 +754,10 @@ def build_manifest(store):
     # ========== tab:reg ==========
     reg = "r6/r1/cur/leakage_matched/regression.json"
     for set_name, lab, coef, lo, hi in [
-        ("fitzpatrick17k", "fitzpatrick", "-0.166", "-0.217", "-0.115"),
-        ("mednode", "mednode", "-0.107", "-0.148", "-0.065"),
-        ("sd198", "sd198", "-0.172", "-0.221", "-0.123"),
-        ("pad_heldout", "pad_heldout", "0.041", "-0.033", "0.110"),
+        ("fitzpatrick17k", "fitzpatrick", "-0.167", "-0.217", "-0.116"),
+        ("mednode", "mednode", "-0.108", "-0.150", "-0.065"),
+        ("sd198", "sd198", "-0.173", "-0.222", "-0.124"),
+        ("pad_heldout", "pad_heldout", "0.034", "-0.062", "0.126"),
     ]:
         rowkey = {
             "fitzpatrick17k": "Fitzpatrick17k",
@@ -763,7 +765,7 @@ def build_manifest(store):
             "sd198": "SD-198",
             "pad_heldout": "textttpad_heldout(notcounted)",
         }[set_name]
-        E.append(entry(f"reg_{set_name}_n", "75", reg, [set_name, "n"],
+        E.append(entry(f"reg_{set_name}_n", "79", reg, [set_name, "n"],
                        cell=cell_pin("tab:reg", rowkey, 1, "n", "mean"),
                        note="regression n"))
         # signed coefs: no cell pin (cell_values strips minus)
@@ -773,7 +775,7 @@ def build_manifest(store):
                        [set_name, "coefs", "shift_level", "ci_lo"]))
         E.append(entry(f"reg_{set_name}_hi", hi, reg,
                        [set_name, "coefs", "shift_level", "ci_hi"]))
-        E.append(entry(f"reg_{set_name}_vif_leak", "1.04", reg,
+        E.append(entry(f"reg_{set_name}_vif_leak", "1.03", reg,
                        [set_name, "vif_shift_vs_leakage"], optional=True))
 
     # ========== tab:probes ==========
@@ -786,11 +788,11 @@ def build_manifest(store):
          "DANN,shift100%", 3),
         ("probes_dann_s100_fitz", "0.340", ["values", "r1", "shift100_l2", "fitzpatrick17k", "mean"],
          "DANN,shift100%", 4),
-        ("probes_dann_s0_a", "0.629", ["values", "class_aware", "r1_shift0_l2", "a", "mean"],
+        ("probes_dann_s0_a", "0.630", ["values", "class_aware", "r1_shift0_l2", "a", "mean"],
          "DANN,shift0%", 1),
-        ("probes_dann_s0_b", "0.539", ["values", "class_aware", "r1_shift0_l2", "b", "mean"],
+        ("probes_dann_s0_b", "0.522", ["values", "class_aware", "r1_shift0_l2", "b", "mean"],
          "DANN,shift0%", 2),
-        ("probes_dann_s0_c", "0.560", ["values", "class_aware", "r1_shift0_l2", "c", "mean"],
+        ("probes_dann_s0_c", "0.555", ["values", "class_aware", "r1_shift0_l2", "c", "mean"],
          "DANN,shift0%", 3),
         ("probes_dann_s0_fitz", "0.691", ["values", "r1", "shift0_l2", "fitzpatrick17k", "mean"],
          "DANN,shift0%", 4),
