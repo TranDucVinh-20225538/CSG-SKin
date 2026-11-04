@@ -14733,6 +14733,116 @@
   "note": "R10b bootstrap (2,000 draws, rng 20261005)"
  },
  {
+  "id": "r7_r2_scin_IWCDAN_l2_mean",
+  "written": "0.478",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|2",
+   "mean"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l2_ci_lo",
+  "written": "0.464",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|2",
+   "ci_lo"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l2_ci_hi",
+  "written": "0.491",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|2",
+   "ci_hi"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l2_k_below",
+  "written": "3",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|2",
+   "k_below"
+  ],
+  "optional": true,
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_DANN_ci_hi",
+  "written": "0.532",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "DANN (R1 shift100 last.ckpt)|2",
+   "ci_hi"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_CDAN_l2_ci_hi",
+  "written": "0.522",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "CDAN|2",
+   "ci_hi"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l0p5_mean",
+  "written": "0.536",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|0.5",
+   "mean"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l0p5_ci_lo",
+  "written": "0.523",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|0.5",
+   "ci_lo"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_IWCDAN_l0p5_ci_hi",
+  "written": "0.550",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "IWCDAN|0.5",
+   "ci_hi"
+  ],
+  "note": "Appendix H, SCIN"
+ },
+ {
+  "id": "r7_r2_scin_n_cells",
+  "written": "11",
+  "file": "r7/r7_number_store.json",
+  "key": [
+   "r2_scin",
+   "n_cells"
+  ],
+  "optional": true
+ },
+ {
   "id": "r7_r8_d2_gap",
   "written": "0.018",
   "file": "r7/r7_number_store.json",

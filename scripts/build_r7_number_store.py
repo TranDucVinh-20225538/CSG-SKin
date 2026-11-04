@@ -125,6 +125,11 @@ def build():
         for r in json.loads((RES / "r10b" / (f + ".json")).read_text())["rows"]:
             s["r10b"][keyf(r)] = {"mean": r["mean"], "sd": r["sd"], "ci_lo": r["ci"][0], "ci_hi": r["ci"][1],
                                   "k_below": int(r["k"].split("/")[0]), "rule_a": bool(r["rule_A"])}
+    # R2 SCIN with bootstrap (R10b B2; Appendix H sentence)
+    sc = json.loads((RES / "r6/r2/cur/scin_report.json").read_text())["bootstrap"]
+    s["r2_scin"] = {k: {x: v["mahalanobis_classcond"][x] for x in ("mean", "ci_lo", "ci_hi", "k_below")}
+                    for k, v in sc.items()}
+    s["r2_scin"]["n_cells"] = len(sc)
     s["r8_d2"]["outcome"] = json.loads((RES / "r8/d2/OUTCOME.json").read_text())
     s["r8_d2"]["gpu_hours_align"] = sum(float(r["gpu_hours"]) for r in d2["align MK-MMD w30"])
     return s
@@ -255,6 +260,14 @@ def entries():
         for stat in (("mean",) if k.startswith("b3|0.0|") else ("mean", "ci_lo", "ci_hi")):
             add("r10b_{}_{}".format(tag, stat), "{:.3f}".format(v[stat]), ["r10b", k, stat],
                 note="R10b bootstrap (2,000 draws, rng 20261005)")
+    for k, stats in (("IWCDAN|2", (("mean", "0.478"), ("ci_lo", "0.464"), ("ci_hi", "0.491"), ("k_below", "3"))),
+                     ("DANN (R1 shift100 last.ckpt)|2", (("ci_hi", "0.532"),)),
+                     ("CDAN|2", (("ci_hi", "0.522"),)),
+                     ("IWCDAN|0.5", (("mean", "0.536"), ("ci_lo", "0.523"), ("ci_hi", "0.550")))):
+        for stat, w in stats:
+            add("r2_scin_{}_{}".format(k.split()[0].replace("|", "_l").replace(".", "p"), stat), w,
+                ["r2_scin", k, stat], optional=(stat == "k_below"), note="Appendix H, SCIN")
+    add("r2_scin_n_cells", "11", ["r2_scin", "n_cells"], optional=True)
     add("r8_d2_gap", "0.018", ["r8_d2", "outcome", "gap"])
     add("r8_d2_gpu", "3.64", ["r8_d2", "gpu_hours_align"])
     return e
