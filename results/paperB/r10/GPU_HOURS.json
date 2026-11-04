@@ -1,0 +1,90 @@
+{
+ "gpu_hours": 15.53,
+ "rows": [
+  {
+   "job": "72282_0",
+   "name": "paperB-r10-g1",
+   "elapsed": "01:31:03",
+   "hours": 1.517,
+   "kind": "gpu"
+  },
+  {
+   "job": "72282_1",
+   "name": "paperB-r10-g1",
+   "elapsed": "01:32:10",
+   "hours": 1.536,
+   "kind": "gpu"
+  },
+  {
+   "job": "72282_2",
+   "name": "paperB-r10-g1",
+   "elapsed": "01:32:59",
+   "hours": 1.55,
+   "kind": "gpu"
+  },
+  {
+   "job": "72282_3",
+   "name": "paperB-r10-g1",
+   "elapsed": "01:32:00",
+   "hours": 1.533,
+   "kind": "gpu"
+  },
+  {
+   "job": "72283_0",
+   "name": "paperB-r10-g2",
+   "elapsed": "01:09:59",
+   "hours": 1.166,
+   "kind": "gpu"
+  },
+  {
+   "job": "72283_1",
+   "name": "paperB-r10-g2",
+   "elapsed": "01:09:50",
+   "hours": 1.164,
+   "kind": "gpu"
+  },
+  {
+   "job": "72283_2",
+   "name": "paperB-r10-g2",
+   "elapsed": "01:10:05",
+   "hours": 1.168,
+   "kind": "gpu"
+  },
+  {
+   "job": "72284_0",
+   "name": "paperB-r10-g3",
+   "elapsed": "01:10:52",
+   "hours": 1.181,
+   "kind": "gpu"
+  },
+  {
+   "job": "72284_1",
+   "name": "paperB-r10-g3",
+   "elapsed": "01:11:17",
+   "hours": 1.188,
+   "kind": "gpu"
+  },
+  {
+   "job": "72284_2",
+   "name": "paperB-r10-g3",
+   "elapsed": "01:10:48",
+   "hours": 1.18,
+   "kind": "gpu"
+  },
+  {
+   "job": "72284_3",
+   "name": "paperB-r10-g3",
+   "elapsed": "01:09:40",
+   "hours": 1.161,
+   "kind": "gpu"
+  },
+  {
+   "job": "72284_4",
+   "name": "paperB-r10-g3",
+   "elapsed": "01:11:22",
+   "hours": 1.189,
+   "kind": "gpu"
+  }
+ ],
+ "note": "G1 4 + G2 3 + G3 5 COMPLETED; CPU follow-up job 72288 FAILED on C5 KeyError (C2/C3 already written)"
+}

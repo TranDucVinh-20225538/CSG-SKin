@@ -1,0 +1,159 @@
+{
+  "commit": "dba39c7",
+  "design": "decisions/paperB_r6_r2_scin.md",
+  "ood": "scin",
+  "unit_ood": "P7a group column",
+  "mapping": {
+    "n_images": 10406,
+    "n_mapped_isic": 64,
+    "frac_mapped_isic": 0.006150297905054776,
+    "n_groups_case": 5033,
+    "mapped_counts": {
+      "SCC": 16,
+      "VASC": 13,
+      "AK": 11,
+      "BCC": 10,
+      "DF": 7,
+      "NV": 7
+    }
+  },
+  "bootstrap": {
+    "\u03bb=0 (R1 shift100 last.ckpt)|0": null,
+    "DANN (R1 shift100 last.ckpt)|0.5": null,
+    "CDAN|0.5": null,
+    "IWDAN|0.5": null,
+    "IWCDAN|0.5": null,
+    "IWDAN_ORACLE|0.5": null,
+    "DANN (R1 shift100 last.ckpt)|2": null,
+    "CDAN|2": null,
+    "IWDAN|2": null,
+    "IWCDAN|2": null,
+    "IWDAN_ORACLE|2": null
+  },
+  "paired_delta_vs_dann": {},
+  "gap_recovered": {},
+  "cells_present": [
+    [
+      "\u03bb=0 (R1 shift100 last.ckpt)",
+      0.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "DANN (R1 shift100 last.ckpt)",
+      0.5,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "CDAN",
+      0.5,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWDAN",
+      0.5,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWCDAN",
+      0.5,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWDAN_ORACLE",
+      0.5,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "DANN (R1 shift100 last.ckpt)",
+      2.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "CDAN",
+      2.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWDAN",
+      2.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWCDAN",
+      2.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ],
+    [
+      "IWDAN_ORACLE",
+      2.0,
+      [
+        42,
+        52,
+        62,
+        72,
+        82
+      ]
+    ]
+  ],
+  "note": "Secondary; 0.615% ISIC-mapped; excluded from R2 fix reading"
+}

@@ -218,3 +218,6 @@ Post-hoc row is **not** a locked criterion (EM estimation is unreliable: TV≈1 
 
 Prediction (decisions, written before results): EM TV between BBSE and oracle; Spearman ρ ≈ −0.6 to −0.9 if prior quality drives detection; else ρ ≈ 0.
 
+## R10 G3: n50 λ=0.5
+
+See `results/paperB/r10/G3_n50_l05.md` (commit dba39c7). Pad Maha 0.665 ± 0.060; TV 0.118 ± 0.017; (c) 0.584 ± 0.023.

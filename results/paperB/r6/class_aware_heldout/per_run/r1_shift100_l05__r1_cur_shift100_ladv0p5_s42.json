@@ -1,0 +1,140 @@
+{
+  "cell": "r1_shift100_l05",
+  "family": "R1 shift100% \u03bb=0.5",
+  "tag": "r1_cur_shift100_ladv0p5_s42",
+  "seed": 42,
+  "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features",
+  "rep": "z_lesion_norm",
+  "unweighted_a": {
+    "bal_acc_mean": 0.5008966246658543,
+    "bal_acc_sd": 0.002398198717716298,
+    "bal_acc_per_probe_seed": [
+      0.503659734241982,
+      0.4993560849967804,
+      0.4996740547588005
+    ]
+  },
+  "class_balanced_b": {
+    "bal_acc_mean": 0.5675603370224159,
+    "bal_acc_sd": 0.004578501265052646,
+    "bal_acc_per_probe_seed": [
+      0.5665152144267891,
+      0.5725710452545633,
+      0.5635947513858953
+    ]
+  },
+  "within_class_c": {
+    "bal_acc_mean": 0.6133509673132658,
+    "bal_acc_sd": 0.1495140198039954,
+    "bal_acc_per_probe_seed": [
+      0.6342578717635742,
+      0.6042962178993493,
+      0.6014988122768735
+    ],
+    "n_eligible_classes": 5,
+    "eligible_classes": [
+      1,
+      2,
+      3,
+      4,
+      7
+    ]
+  },
+  "per_class": {
+    "0": {
+      "n_isic": 904,
+      "n_pad": 9,
+      "eligible": false
+    },
+    "1": {
+      "n_isic": 2575,
+      "n_pad": 88,
+      "eligible": true,
+      "bal_acc_mean": 0.5,
+      "bal_acc_sd": 0.0,
+      "bal_acc_per_probe_seed": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "weight": 2663.0
+    },
+    "2": {
+      "n_isic": 664,
+      "n_pad": 276,
+      "eligible": true,
+      "bal_acc_mean": 0.8343153165193374,
+      "bal_acc_sd": 0.01867384282326847,
+      "bal_acc_per_probe_seed": [
+        0.8479638009049775,
+        0.813034188034188,
+        0.8419479606188467
+      ],
+      "weight": 940.0
+    },
+    "3": {
+      "n_isic": 174,
+      "n_pad": 202,
+      "eligible": true,
+      "bal_acc_mean": 0.8473392977159852,
+      "bal_acc_sd": 0.02743562800148599,
+      "bal_acc_per_probe_seed": [
+        0.875,
+        0.8468834688346883,
+        0.8201344243132671
+      ],
+      "weight": 376.0
+    },
+    "4": {
+      "n_isic": 525,
+      "n_pad": 75,
+      "eligible": true,
+      "bal_acc_mean": 0.5722818999785041,
+      "bal_acc_sd": 0.08669920862941281,
+      "bal_acc_per_probe_seed": [
+        0.671875,
+        0.5312980452448934,
+        0.5136726546906187
+      ],
+      "weight": 600.0
+    },
+    "5": {
+      "n_isic": 48,
+      "n_pad": 0,
+      "eligible": false
+    },
+    "6": {
+      "n_isic": 51,
+      "n_pad": 0,
+      "eligible": false
+    },
+    "7": {
+      "n_isic": 126,
+      "n_pad": 66,
+      "eligible": true,
+      "bal_acc_mean": 0.7738143312244806,
+      "bal_acc_sd": 0.09164679366407252,
+      "bal_acc_per_probe_seed": [
+        0.8611111111111112,
+        0.7819693094629157,
+        0.6783625730994152
+      ],
+      "weight": 192.0
+    }
+  },
+  "class_names": [
+    "MEL",
+    "NV",
+    "BCC",
+    "AK",
+    "BKL",
+    "DF",
+    "VASC",
+    "SCC"
+  ],
+  "min_per_side": 20,
+  "n": {
+    "isic_test": 5067,
+    "pad_heldout": 716
+  }
+}

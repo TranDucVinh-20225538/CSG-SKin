@@ -1,5 +1,5 @@
 {
-  "n": 35,
+  "n": 70,
   "runs": [
     {
       "cell": "r2_iwdan_l2",
@@ -107,6 +107,146 @@
       "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
     },
     {
+      "cell": "r2_iwdan_l05",
+      "family": "R2 IWDAN \u03bb=0.5",
+      "tag": "r2_cur_iwdan_ladv0p5_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l05",
+      "family": "R2 IWDAN \u03bb=0.5",
+      "tag": "r2_cur_iwdan_ladv0p5_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l05",
+      "family": "R2 IWDAN \u03bb=0.5",
+      "tag": "r2_cur_iwdan_ladv0p5_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l05",
+      "family": "R2 IWDAN \u03bb=0.5",
+      "tag": "r2_cur_iwdan_ladv0p5_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_iwdan_l05",
+      "family": "R2 IWDAN \u03bb=0.5",
+      "tag": "r2_cur_iwdan_ladv0p5_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l05",
+      "family": "R2 IWDAN_ORACLE \u03bb=0.5",
+      "tag": "r2_cur_iwdan_oracle_ladv0p5_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l05",
+      "family": "R2 IWDAN_ORACLE \u03bb=0.5",
+      "tag": "r2_cur_iwdan_oracle_ladv0p5_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l05",
+      "family": "R2 IWDAN_ORACLE \u03bb=0.5",
+      "tag": "r2_cur_iwdan_oracle_ladv0p5_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l05",
+      "family": "R2 IWDAN_ORACLE \u03bb=0.5",
+      "tag": "r2_cur_iwdan_oracle_ladv0p5_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2_oracle_l05",
+      "family": "R2 IWDAN_ORACLE \u03bb=0.5",
+      "tag": "r2_cur_iwdan_oracle_ladv0p5_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l2",
+      "family": "R2-prior n50 \u03bb=2",
+      "tag": "r2p_cur_iwdan_n50_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l2",
+      "family": "R2-prior n50 \u03bb=2",
+      "tag": "r2p_cur_iwdan_n50_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l2",
+      "family": "R2-prior n50 \u03bb=2",
+      "tag": "r2p_cur_iwdan_n50_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l2",
+      "family": "R2-prior n50 \u03bb=2",
+      "tag": "r2p_cur_iwdan_n50_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l2",
+      "family": "R2-prior n50 \u03bb=2",
+      "tag": "r2p_cur_iwdan_n50_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l05",
+      "family": "R2-prior n50 \u03bb=0.5",
+      "tag": "r2p_cur_iwdan_n50_ladv0p5_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l05",
+      "family": "R2-prior n50 \u03bb=0.5",
+      "tag": "r2p_cur_iwdan_n50_ladv0p5_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l05",
+      "family": "R2-prior n50 \u03bb=0.5",
+      "tag": "r2p_cur_iwdan_n50_ladv0p5_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l05",
+      "family": "R2-prior n50 \u03bb=0.5",
+      "tag": "r2p_cur_iwdan_n50_ladv0p5_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
+      "cell": "r2p_n50_l05",
+      "family": "R2-prior n50 \u03bb=0.5",
+      "tag": "r2p_cur_iwdan_n50_ladv0p5_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r2_prior/cur/features"
+    },
+    {
       "cell": "r1_shift0_l2",
       "family": "R1 shift0% \u03bb=2",
       "tag": "r1_cur_shift0_ladv2_s42",
@@ -138,6 +278,111 @@
       "cell": "r1_shift0_l2",
       "family": "R1 shift0% \u03bb=2",
       "tag": "r1_cur_shift0_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l05",
+      "family": "R1 shift50% \u03bb=0.5",
+      "tag": "r1_cur_shift50_ladv0p5_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l05",
+      "family": "R1 shift50% \u03bb=0.5",
+      "tag": "r1_cur_shift50_ladv0p5_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l05",
+      "family": "R1 shift50% \u03bb=0.5",
+      "tag": "r1_cur_shift50_ladv0p5_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l05",
+      "family": "R1 shift50% \u03bb=0.5",
+      "tag": "r1_cur_shift50_ladv0p5_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l05",
+      "family": "R1 shift50% \u03bb=0.5",
+      "tag": "r1_cur_shift50_ladv0p5_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l2",
+      "family": "R1 shift50% \u03bb=2",
+      "tag": "r1_cur_shift50_ladv2_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l2",
+      "family": "R1 shift50% \u03bb=2",
+      "tag": "r1_cur_shift50_ladv2_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l2",
+      "family": "R1 shift50% \u03bb=2",
+      "tag": "r1_cur_shift50_ladv2_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l2",
+      "family": "R1 shift50% \u03bb=2",
+      "tag": "r1_cur_shift50_ladv2_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift50_l2",
+      "family": "R1 shift50% \u03bb=2",
+      "tag": "r1_cur_shift50_ladv2_s82",
+      "seed": 82,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l05",
+      "family": "R1 shift100% \u03bb=0.5",
+      "tag": "r1_cur_shift100_ladv0p5_s42",
+      "seed": 42,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l05",
+      "family": "R1 shift100% \u03bb=0.5",
+      "tag": "r1_cur_shift100_ladv0p5_s52",
+      "seed": 52,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l05",
+      "family": "R1 shift100% \u03bb=0.5",
+      "tag": "r1_cur_shift100_ladv0p5_s62",
+      "seed": 62,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l05",
+      "family": "R1 shift100% \u03bb=0.5",
+      "tag": "r1_cur_shift100_ladv0p5_s72",
+      "seed": 72,
+      "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
+    },
+    {
+      "cell": "r1_shift100_l05",
+      "family": "R1 shift100% \u03bb=0.5",
+      "tag": "r1_cur_shift100_ladv0p5_s82",
       "seed": 82,
       "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features"
     },
@@ -247,5 +492,5 @@
       "feat_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r9/e1/features"
     }
   ],
-  "commit": "d0acd3c"
+  "commit": "dba39c7"
 }

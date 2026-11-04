@@ -138,6 +138,18 @@ def c3_unseen():
     return out
 
 
+def _alias_dino_z(Fs):
+    """DINOv2 single-stream packs store `z`; Scorer expects `z_lesion_norm`."""
+    out = {}
+    for name, pack in Fs.items():
+        if "z_lesion_norm" not in pack and "z" in pack:
+            pack = dict(pack)
+            pack["z_lesion_norm"] = pack["z"]
+            pack.setdefault("z_lesion", pack["z"])
+        out[name] = pack
+    return out
+
+
 def c5_single_dino():
     """Score MED-NODE/SD-198/SCIN on r7/t1b features."""
     root = R.RES / "r7" / "t1b" / "runs"
@@ -150,12 +162,10 @@ def c5_single_dino():
         need = ("isic_train", "isic_test", "pad_heldout", "fitzpatrick17k") + OODS
         if not all((feat / "{}.npz".format(n)).exists() for n in need):
             continue
-        Fs = R.load_feats(feat, need + ("pad_full",) if (feat / "pad_full.npz").exists() else need)
-        # ensure pad_full for leakage if present
         names = list(need)
         if (feat / "pad_full.npz").exists():
             names.append("pad_full")
-        Fs = R.load_feats(feat, names)
+        Fs = _alias_dino_z(R.load_feats(feat, names))
         met = R.run_metrics(Fs, ood_names=list(OODS) + ["pad_heldout", "fitzpatrick17k"])
         if met.get("degraded") or met["id"]["bal_acc"] < R.DEGRADED_ID_BAL:
             continue

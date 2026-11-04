@@ -510,7 +510,7 @@ def run_clinical(out_name="clinical", recipes=None):
             rows.append(r)
         elif r["recipe"] == "a4" and r["lambda"] in (0.0, 2.0):
             rows.append(r)
-        elif r["recipe"] == "r1" and r["shift"] in (0, 100) and r["lambda"] == 2.0:
+        elif r["recipe"] == "r1" and r["shift"] in (0, 50, 100) and r["lambda"] == 2.0:
             rows.append(r)
     print("clinical runs", len(rows), "->", out_dir, flush=True)
 

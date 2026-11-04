@@ -1,6 +1,6 @@
 # Paper B R6 R1 — leakage-matched test (label shift vs invariance depth)
 
-Design: `decisions/paperB_r6_r1.md` (committed `94e2399`). Analysis commit `dbe0c8d`. Pool: R1 (shift×λ∈{0.5,2}) + Table 1 + A4 (λ∈{0,0.5,2}). Leakage = pad_full probe **bal_acc_mean**. Degraded R1 (ID bal < 0.25) excluded from (a)/(b); marked on (c) plots.
+Design: `decisions/paperB_r6_r1.md` (committed `94e2399`). Analysis commit `dba39c7`. Pool: R1 (shift×λ∈{0.5,2}) + Table 1 + A4 (λ∈{0,0.5,2}). Leakage = pad_full probe **bal_acc_mean**. Degraded R1 (ID bal < 0.25) excluded from (a)/(b); marked on (c) plots.
 
 The shift coefficient is identified from variation within R1; A4 and Table 1 only extend the leakage range at shift = 100%.
 
@@ -12,10 +12,10 @@ Wild cluster bootstrap (Webb weights), cluster = (recipe, λ, shift), 2000 draws
 
 | set | n | shift coef | 95% CI | excludes 0 | direction (−) | VIF shift|leak | VIF shift|recipe | identifiable |
 |---|---:|---:|---|:---:|:---:|---:|---:|:---:|
-| fitzpatrick17k | 75 | -0.166 | [-0.217, -0.115] | yes | yes | 1.04 | 1.03 | yes |
-| mednode | 75 | -0.107 | [-0.148, -0.065] | yes | yes | 1.04 | 1.03 | yes |
-| sd198 | 75 | -0.172 | [-0.221, -0.123] | yes | yes | 1.04 | 1.03 | yes |
-| pad_heldout (not counted) | 75 | 0.041 | [-0.033, 0.110] | no | no | 1.04 | 1.03 | yes |
+| fitzpatrick17k | 79 | -0.167 | [-0.217, -0.116] | yes | yes | 1.03 | 1.03 | yes |
+| mednode | 79 | -0.108 | [-0.150, -0.065] | yes | yes | 1.03 | 1.03 | yes |
+| sd198 | 79 | -0.173 | [-0.222, -0.124] | yes | yes | 1.03 | 1.03 | yes |
+| pad_heldout (not counted) | 79 | 0.034 | [-0.062, 0.126] | no | no | 1.03 | 1.03 | yes |
 
 ## (b) Matched comparison (cross-recipe) — R1 shift 0% λ=2 vs A4 λ=2
 
@@ -42,5 +42,3 @@ Mahalanobis AUROC vs pad_full leakage; colour = shift level; marker = recipe; re
 ## Reading
 
 label shift lowers Mahalanobis AUROC at matched leakage on the unseen primary sets (prediction).
-
-**On origin/paperb/reviewer-r1:** `e61e99f`.

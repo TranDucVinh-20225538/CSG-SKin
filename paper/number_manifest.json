@@ -10937,838 +10937,6 @@
   }
  },
  {
-  "id": "r9_e1_lam2_pad_heldout_six_mean",
-  "written": "0.372",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_six_sd",
-  "written": "0.034",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_shift100_mean",
-  "written": "0.368",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_shift100_sd",
-  "written": "0.017",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_shift0_mean",
-  "written": "0.458",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_shift0_sd",
-  "written": "0.003",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_pad_heldout_recovery",
-  "written": "0.050",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "pad_heldout",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_six_mean",
-  "written": "0.362",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_six_sd",
-  "written": "0.032",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_shift100_mean",
-  "written": "0.340",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_shift100_sd",
-  "written": "0.065",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_shift0_mean",
-  "written": "0.691",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_shift0_sd",
-  "written": "0.031",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_fitzpatrick17k_recovery",
-  "written": "0.063",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "fitzpatrick17k",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_six_mean",
-  "written": "0.312",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_six_sd",
-  "written": "0.050",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_shift100_mean",
-  "written": "0.298",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_shift100_sd",
-  "written": "0.032",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_shift0_mean",
-  "written": "0.541",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_shift0_sd",
-  "written": "0.027",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_mednode_recovery",
-  "written": "0.058",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "mednode",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_six_mean",
-  "written": "0.339",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_six_sd",
-  "written": "0.039",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_shift100_mean",
-  "written": "0.325",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_shift100_sd",
-  "written": "0.069",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_shift0_mean",
-  "written": "0.694",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_shift0_sd",
-  "written": "0.031",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam2_sd198_recovery",
-  "written": "0.037",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "sd198",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_six_mean",
-  "written": "0.374",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_six_sd",
-  "written": "0.037",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_shift100_mean",
-  "written": "0.361",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_shift100_sd",
-  "written": "0.029",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_shift0_mean",
-  "written": "0.498",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_shift0_sd",
-  "written": "0.025",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_pad_heldout_recovery",
-  "written": "0.101",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "pad_heldout",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_six_mean",
-  "written": "0.394",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_six_sd",
-  "written": "0.043",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_shift100_mean",
-  "written": "0.385",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_shift100_sd",
-  "written": "0.023",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_shift0_mean",
-  "written": "0.672",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_shift0_sd",
-  "written": "0.046",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_fitzpatrick17k_recovery",
-  "written": "0.031",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "fitzpatrick17k",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_six_mean",
-  "written": "0.332",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_six_sd",
-  "written": "0.036",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_shift100_mean",
-  "written": "0.310",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_shift100_sd",
-  "written": "0.055",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_shift0_mean",
-  "written": "0.525",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_shift0_sd",
-  "written": "0.050",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_mednode_recovery",
-  "written": "0.103",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "mednode",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_six_mean",
-  "written": "0.384",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "six",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_six_sd",
-  "written": "0.051",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "six",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_shift100_mean",
-  "written": "0.365",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "shift100",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_shift100_sd",
-  "written": "0.029",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "shift100",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_shift0_mean",
-  "written": "0.664",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "shift0",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_shift0_sd",
-  "written": "0.058",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "shift0",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam0.5_sd198_recovery",
-  "written": "0.063",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "sd198",
-   "recovery"
-  ]
- },
- {
-  "id": "r9_e1_lam2_id_mean",
-  "written": "0.467",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "id_bal_acc",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam2_id_sd",
-  "written": "0.010",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "id_bal_acc",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_lam05_id_mean",
-  "written": "0.470",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "id_bal_acc",
-   "mean"
-  ]
- },
- {
-  "id": "r9_e1_lam05_id_sd",
-  "written": "0.010",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam0.5",
-   "id_bal_acc",
-   "sd"
-  ]
- },
- {
-  "id": "r9_e1_max_delta",
-  "written": "0.022",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "lam2",
-   "max_delta_labelled"
-  ]
- },
- {
-  "id": "r9_e1_pi_MEL",
-  "written": "0.182",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "MEL"
-  ]
- },
- {
-  "id": "r9_e1_pi_NV",
-  "written": "0.518",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "NV"
-  ]
- },
- {
-  "id": "r9_e1_pi_BCC",
-  "written": "0.134",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "BCC"
-  ]
- },
- {
-  "id": "r9_e1_pi_AK",
-  "written": "0.035",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "AK"
-  ]
- },
- {
-  "id": "r9_e1_pi_BKL",
-  "written": "0.106",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "BKL"
-  ]
- },
- {
-  "id": "r9_e1_pi_SCC",
-  "written": "0.025",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "pi_6cls",
-   "SCC"
-  ]
- },
- {
-  "id": "r9_e1_tv_isic",
-  "written": "0.019",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "tv_isic"
-  ]
- },
- {
-  "id": "r9_e1_tv_pad",
-  "written": "0.579",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e1",
-   "tv_pad"
-  ]
- },
- {
-  "id": "r9_e2_a7_test",
-  "written": "0.522",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e2",
-   "a7_test_mean"
-  ]
- },
- {
-  "id": "r9_e2_gate_mean",
-  "written": "0.522",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e2",
-   "gate_mean"
-  ]
- },
- {
-  "id": "r9_e2_threshold",
-  "written": "0.528",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e2",
-   "threshold"
-  ]
- },
- {
-  "id": "r9_e2_erm80",
-  "written": "0.557",
-  "file": "r9/r9_number_store.json",
-  "key": [
-   "e2",
-   "erm80_test_mean"
-  ]
- },
- {
   "id": "r7_t1_erm_lam0_leakage_mean",
   "written": "0.983",
   "file": "r7/r7_number_store.json",
@@ -14001,6 +13169,838 @@
   "key": [
    "r8_d2",
    "gpu_hours_align"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_six_mean",
+  "written": "0.372",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_six_sd",
+  "written": "0.034",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_shift100_mean",
+  "written": "0.368",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_shift100_sd",
+  "written": "0.017",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_shift0_mean",
+  "written": "0.458",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_shift0_sd",
+  "written": "0.003",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_pad_heldout_recovery",
+  "written": "0.050",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "pad_heldout",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_six_mean",
+  "written": "0.362",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_six_sd",
+  "written": "0.032",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_shift100_mean",
+  "written": "0.340",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_shift100_sd",
+  "written": "0.065",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_shift0_mean",
+  "written": "0.691",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_shift0_sd",
+  "written": "0.031",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_fitzpatrick17k_recovery",
+  "written": "0.063",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "fitzpatrick17k",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_six_mean",
+  "written": "0.312",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_six_sd",
+  "written": "0.050",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_shift100_mean",
+  "written": "0.298",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_shift100_sd",
+  "written": "0.032",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_shift0_mean",
+  "written": "0.541",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_shift0_sd",
+  "written": "0.027",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_mednode_recovery",
+  "written": "0.058",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "mednode",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_six_mean",
+  "written": "0.339",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_six_sd",
+  "written": "0.039",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_shift100_mean",
+  "written": "0.325",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_shift100_sd",
+  "written": "0.069",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_shift0_mean",
+  "written": "0.694",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_shift0_sd",
+  "written": "0.031",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_sd198_recovery",
+  "written": "0.037",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "sd198",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_six_mean",
+  "written": "0.374",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_six_sd",
+  "written": "0.037",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_shift100_mean",
+  "written": "0.361",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_shift100_sd",
+  "written": "0.029",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_shift0_mean",
+  "written": "0.498",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_shift0_sd",
+  "written": "0.025",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_pad_heldout_recovery",
+  "written": "0.101",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "pad_heldout",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_six_mean",
+  "written": "0.394",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_six_sd",
+  "written": "0.043",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_shift100_mean",
+  "written": "0.385",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_shift100_sd",
+  "written": "0.023",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_shift0_mean",
+  "written": "0.672",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_shift0_sd",
+  "written": "0.046",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_fitzpatrick17k_recovery",
+  "written": "0.031",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "fitzpatrick17k",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_six_mean",
+  "written": "0.332",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_six_sd",
+  "written": "0.036",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_shift100_mean",
+  "written": "0.310",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_shift100_sd",
+  "written": "0.055",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_shift0_mean",
+  "written": "0.525",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_shift0_sd",
+  "written": "0.050",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_mednode_recovery",
+  "written": "0.103",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "mednode",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_six_mean",
+  "written": "0.384",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "six",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_six_sd",
+  "written": "0.051",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "six",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_shift100_mean",
+  "written": "0.365",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "shift100",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_shift100_sd",
+  "written": "0.029",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "shift100",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_shift0_mean",
+  "written": "0.664",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "shift0",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_shift0_sd",
+  "written": "0.058",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "shift0",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam0.5_sd198_recovery",
+  "written": "0.063",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "sd198",
+   "recovery"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_id_mean",
+  "written": "0.467",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "id_bal_acc",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam2_id_sd",
+  "written": "0.010",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "id_bal_acc",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_lam05_id_mean",
+  "written": "0.470",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "id_bal_acc",
+   "mean"
+  ]
+ },
+ {
+  "id": "r9_e1_lam05_id_sd",
+  "written": "0.010",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam0.5",
+   "id_bal_acc",
+   "sd"
+  ]
+ },
+ {
+  "id": "r9_e1_max_delta",
+  "written": "0.022",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "lam2",
+   "max_delta_labelled"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_MEL",
+  "written": "0.182",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "MEL"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_NV",
+  "written": "0.518",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "NV"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_BCC",
+  "written": "0.134",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "BCC"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_AK",
+  "written": "0.035",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "AK"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_BKL",
+  "written": "0.106",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "BKL"
+  ]
+ },
+ {
+  "id": "r9_e1_pi_SCC",
+  "written": "0.025",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "pi_6cls",
+   "SCC"
+  ]
+ },
+ {
+  "id": "r9_e1_tv_isic",
+  "written": "0.019",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "tv_isic"
+  ]
+ },
+ {
+  "id": "r9_e1_tv_pad",
+  "written": "0.579",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e1",
+   "tv_pad"
+  ]
+ },
+ {
+  "id": "r9_e2_a7_test",
+  "written": "0.522",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e2",
+   "a7_test_mean"
+  ]
+ },
+ {
+  "id": "r9_e2_gate_mean",
+  "written": "0.522",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e2",
+   "gate_mean"
+  ]
+ },
+ {
+  "id": "r9_e2_threshold",
+  "written": "0.528",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e2",
+   "threshold"
+  ]
+ },
+ {
+  "id": "r9_e2_erm80",
+  "written": "0.557",
+  "file": "r9/r9_number_store.json",
+  "key": [
+   "e2",
+   "erm80_test_mean"
   ]
  }
 ]

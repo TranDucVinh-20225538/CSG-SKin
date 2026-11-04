@@ -1,23 +1,19 @@
 {
- "case": "Support not the driver",
+ "case": "reported as found; it settles neither reading",
  "detail": {
-  "met_sets": [
-   "fitzpatrick17k",
-   "mednode",
-   "sd198"
-  ],
+  "reason": "missing recovery or Rule A on a labelled set",
   "recovery": {
    "fitzpatrick17k": 0.06297526593595627,
    "mednode": 0.05794240336297226,
    "sd198": 0.037445850333868845
   },
   "rule_A": {
-   "fitzpatrick17k": true,
-   "mednode": true,
-   "sd198": true
+   "fitzpatrick17k": null,
+   "mednode": null,
+   "sd198": null
   }
  },
- "commit": "e7e28fd",
+ "commit": "dba39c7",
  "pi_6cls": {
   "pi_6cls": [
    0.18210983204378184,
@@ -119,7 +115,7 @@
     }
    },
    "recovery": 0.050035713034724545,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 2.0,
@@ -187,7 +183,7 @@
     }
    },
    "recovery": 0.06297526593595627,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 2.0,
@@ -255,7 +251,7 @@
     }
    },
    "recovery": 0.05794240336297226,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 2.0,
@@ -323,7 +319,7 @@
     }
    },
    "recovery": 0.037445850333868845,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 2.0,
@@ -391,7 +387,7 @@
     }
    },
    "recovery": -0.10849721294381207,
-   "rule_A_six": false
+   "rule_A_six": null
   },
   {
    "lambda": 0.5,
@@ -461,7 +457,7 @@
     }
    },
    "recovery": 0.10080033649557615,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 0.5,
@@ -531,7 +527,7 @@
     }
    },
    "recovery": 0.030784690570544927,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 0.5,
@@ -601,7 +597,7 @@
     }
    },
    "recovery": 0.1031043796924313,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 0.5,
@@ -671,7 +667,7 @@
     }
    },
    "recovery": 0.0625754893867849,
-   "rule_A_six": true
+   "rule_A_six": null
   },
   {
    "lambda": 0.5,
@@ -741,7 +737,7 @@
     }
    },
    "recovery": 0.12068136034891923,
-   "rule_A_six": false
+   "rule_A_six": null
   }
  ],
  "extras": {

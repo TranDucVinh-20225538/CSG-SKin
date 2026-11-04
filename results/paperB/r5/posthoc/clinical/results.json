@@ -1,5 +1,5 @@
 {
- "commit": "1ea63f0",
+ "commit": "dba39c7",
  "decision": "decisions/paperB_r5_posthoc_scoring.md",
  "label": "post hoc",
  "label_maps": {
@@ -25,8 +25,8 @@
    "label": "a4 \u03bb=0",
    "n_seeds": 5,
    "tau": {
-    "mean": 110.9966957920478,
-    "sd": 3.0576249097909662,
+    "mean": 110.99669579204776,
+    "sd": 3.057624909791028,
     "n": 5
    },
    "pad_heldout_n": {
@@ -226,8 +226,8 @@
    "label": "a4 \u03bb=2",
    "n_seeds": 5,
    "tau": {
-    "mean": 109.85141277617674,
-    "sd": 3.9472408038307067,
+    "mean": 109.85141277617683,
+    "sd": 3.947240803830994,
     "n": 5
    },
    "pad_heldout_n": {
@@ -427,8 +427,8 @@
    "label": "old_recipe \u03bb=0",
    "n_seeds": 5,
    "tau": {
-    "mean": 53.344027822035045,
-    "sd": 6.386515623743725,
+    "mean": 53.34402782203519,
+    "sd": 6.386515623743937,
     "n": 5
    },
    "pad_heldout_n": {
@@ -628,8 +628,8 @@
    "label": "old_recipe \u03bb=2",
    "n_seeds": 5,
    "tau": {
-    "mean": 53.32470906955407,
-    "sd": 4.115260271359389,
+    "mean": 53.32470906955409,
+    "sd": 4.115260271359508,
     "n": 5
    },
    "pad_heldout_n": {
@@ -829,8 +829,8 @@
    "label": "R1 shift 0% \u03bb=2",
    "n_seeds": 4,
    "tau": {
-    "mean": 51.524674806418346,
-    "sd": 2.688494860357813,
+    "mean": 51.524674806418375,
+    "sd": 2.688494860357765,
     "n": 4
    },
    "pad_heldout_n": {
@@ -1030,8 +1030,8 @@
    "label": "R1 shift 100% \u03bb=2",
    "n_seeds": 5,
    "tau": {
-    "mean": 60.48795573429486,
-    "sd": 3.322589060985029,
+    "mean": 60.487955734294744,
+    "sd": 3.322589060984927,
     "n": 5
    },
    "pad_heldout_n": {
@@ -1226,6 +1226,207 @@
      }
     }
    }
+  },
+  "R1 shift 50% \u03bb=2": {
+   "label": "R1 shift 50% \u03bb=2",
+   "n_seeds": 5,
+   "tau": {
+    "mean": 58.67228711291254,
+    "sd": 3.8158734681167155,
+    "n": 5
+   },
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "n_unmapped": 3301,
+     "n_mapped": 586,
+     "classes": {
+      "MEL": {
+       "n": 83,
+       "share_accepted_id": {
+        "mean": 0.980722891566265,
+        "sd": 0.013737053314447436,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.49638554216867475,
+        "sd": 0.11631343022792454,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9604938271604938,
+        0.9953488372093023
+       ],
+       "nv09_ci": [
+        0.40476190476190477,
+        0.5902468410226271
+       ]
+      },
+      "BCC": {
+       "n": 257,
+       "share_accepted_id": {
+        "mean": 0.9750972762645915,
+        "sd": 0.019954679229506764,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.6529182879377432,
+        "sd": 0.13204943887864556,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9657554109922178,
+        0.9844357976653697
+       ],
+       "nv09_ci": [
+        0.6101167315175098,
+        0.6957198443579766
+       ]
+      },
+      "SCC": {
+       "n": 212,
+       "share_accepted_id": {
+        "mean": 0.929245283018868,
+        "sd": 0.008170050979098476,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.42075471698113204,
+        "sd": 0.12078603662234069,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9085714285714286,
+        0.9481132075471699
+       ],
+       "nv09_ci": [
+        0.367768675242609,
+        0.47368421052631576
+       ]
+      },
+      "AK": {
+       "n": 24,
+       "share_accepted_id": {
+        "mean": 0.9666666666666668,
+        "sd": 0.034860834438919824,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.5833333333333333,
+        "sd": 0.12842529172852035,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.925,
+        1.0
+       ],
+       "nv09_ci": [
+        0.4416666666666667,
+        0.725
+       ]
+      }
+     }
+    },
+    "sd198": {
+     "n_unmapped": 5548,
+     "n_mapped": 1036,
+     "classes": {
+      "MEL": {
+       "n": 113,
+       "share_accepted_id": {
+        "mean": 0.9893805309734514,
+        "sd": 0.007404071031275016,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7946902654867256,
+        "sd": 0.12614888269879973,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9752212389380531,
+        1.0
+       ],
+       "nv09_ci": [
+        0.7433628318584071,
+        0.8442477876106196
+       ]
+      },
+      "BCC": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 1.0,
+        "sd": 0.0,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.8166666666666667,
+        "sd": 0.10865337342004415,
+        "n": 5
+       },
+       "accepted_ci": [
+        1.0,
+        1.0
+       ],
+       "nv09_ci": [
+        0.7565833333333333,
+        0.8800000000000001
+       ]
+      },
+      "SCC": {
+       "n": 119,
+       "share_accepted_id": {
+        "mean": 0.946218487394958,
+        "sd": 0.025626807868868756,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.6857142857142857,
+        "sd": 0.10164246799467942,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9176470588235294,
+        0.9747899159663864
+       ],
+       "nv09_ci": [
+        0.6218487394957983,
+        0.7495798319327731
+       ]
+      },
+      "AK": {
+       "n": 60,
+       "share_accepted_id": {
+        "mean": 0.9666666666666666,
+        "sd": 0.02357022603955156,
+        "n": 5
+       },
+       "share_pred_nv_conf09": {
+        "mean": 0.7633333333333333,
+        "sd": 0.11983785341498364,
+        "n": 5
+       },
+       "accepted_ci": [
+        0.9433333333333334,
+        0.9866666666666667
+       ],
+       "nv09_ci": [
+        0.6866666666666665,
+        0.8399999999999999
+       ]
+      }
+     }
+    }
+   }
   }
  },
  "per_run": [
@@ -1234,7 +1435,7 @@
    "lambda": 0.0,
    "seed": 42,
    "shift": null,
-   "tau_95_val": 55.710144013913315,
+   "tau_95_val": 55.71014401391349,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1298,7 +1499,7 @@
    "lambda": 0.0,
    "seed": 52,
    "shift": null,
-   "tau_95_val": 59.73650071200382,
+   "tau_95_val": 59.73650071200401,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s52",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1362,7 +1563,7 @@
    "lambda": 0.0,
    "seed": 62,
    "shift": null,
-   "tau_95_val": 49.29173731039875,
+   "tau_95_val": 49.2917373103985,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1426,7 +1627,7 @@
    "lambda": 0.0,
    "seed": 72,
    "shift": null,
-   "tau_95_val": 44.3128387698964,
+   "tau_95_val": 44.31283876989639,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1490,7 +1691,7 @@
    "lambda": 0.0,
    "seed": 82,
    "shift": null,
-   "tau_95_val": 57.668918303962904,
+   "tau_95_val": 57.66891830396351,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv0_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1554,7 +1755,7 @@
    "lambda": 2.0,
    "seed": 42,
    "shift": null,
-   "tau_95_val": 58.22738347149635,
+   "tau_95_val": 58.227383471496424,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1618,7 +1819,7 @@
    "lambda": 2.0,
    "seed": 52,
    "shift": null,
-   "tau_95_val": 51.27671303067792,
+   "tau_95_val": 51.27671303067784,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s52",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1682,7 +1883,7 @@
    "lambda": 2.0,
    "seed": 62,
    "shift": null,
-   "tau_95_val": 48.25565408542362,
+   "tau_95_val": 48.25565408542354,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1746,7 +1947,7 @@
    "lambda": 2.0,
    "seed": 72,
    "shift": null,
-   "tau_95_val": 52.04821178889478,
+   "tau_95_val": 52.04821178889473,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1810,7 +2011,7 @@
    "lambda": 2.0,
    "seed": 82,
    "shift": null,
-   "tau_95_val": 56.81558297127768,
+   "tau_95_val": 56.81558297127795,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r2/item4/features/runB_orth1_ladv2_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1874,7 +2075,7 @@
    "lambda": 0.0,
    "seed": 42,
    "shift": null,
-   "tau_95_val": 114.08998247764039,
+   "tau_95_val": 114.08998247764022,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -1938,7 +2139,7 @@
    "lambda": 0.0,
    "seed": 52,
    "shift": null,
-   "tau_95_val": 112.51475743682025,
+   "tau_95_val": 112.51475743681992,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s52",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2002,7 +2203,7 @@
    "lambda": 0.0,
    "seed": 62,
    "shift": null,
-   "tau_95_val": 111.54640755870858,
+   "tau_95_val": 111.54640755870899,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2066,7 +2267,7 @@
    "lambda": 0.0,
    "seed": 72,
    "shift": null,
-   "tau_95_val": 105.97660707542073,
+   "tau_95_val": 105.97660707542042,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2130,7 +2331,7 @@
    "lambda": 0.0,
    "seed": 82,
    "shift": null,
-   "tau_95_val": 110.85572441164912,
+   "tau_95_val": 110.85572441164929,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv0_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2194,7 +2395,7 @@
    "lambda": 2.0,
    "seed": 42,
    "shift": null,
-   "tau_95_val": 110.39928373958354,
+   "tau_95_val": 110.39928373958314,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2258,7 +2459,7 @@
    "lambda": 2.0,
    "seed": 52,
    "shift": null,
-   "tau_95_val": 114.01376905548013,
+   "tau_95_val": 114.01376905548058,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s52",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2322,7 +2523,7 @@
    "lambda": 2.0,
    "seed": 62,
    "shift": null,
-   "tau_95_val": 106.69993125283912,
+   "tau_95_val": 106.69993125283946,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2386,7 +2587,7 @@
    "lambda": 2.0,
    "seed": 72,
    "shift": null,
-   "tau_95_val": 113.16781747176212,
+   "tau_95_val": 113.16781747176262,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2450,7 +2651,7 @@
    "lambda": 2.0,
    "seed": 82,
    "shift": null,
-   "tau_95_val": 104.9762623612188,
+   "tau_95_val": 104.97626236121833,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/main/features/main_ladv2_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2514,7 +2715,7 @@
    "lambda": 2.0,
    "seed": 42,
    "shift": 0,
-   "tau_95_val": 55.525699541577694,
+   "tau_95_val": 55.52569954157766,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2578,7 +2779,7 @@
    "lambda": 2.0,
    "seed": 62,
    "shift": 0,
-   "tau_95_val": 50.58240357784755,
+   "tau_95_val": 50.58240357784749,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2642,7 +2843,7 @@
    "lambda": 2.0,
    "seed": 72,
    "shift": 0,
-   "tau_95_val": 50.22976909177066,
+   "tau_95_val": 50.229769091770706,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2706,7 +2907,7 @@
    "lambda": 2.0,
    "seed": 82,
    "shift": 0,
-   "tau_95_val": 49.760827014477485,
+   "tau_95_val": 49.76082701447763,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift0_ladv2_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2770,7 +2971,7 @@
    "lambda": 2.0,
    "seed": 42,
    "shift": 100,
-   "tau_95_val": 64.86028659301844,
+   "tau_95_val": 64.8602865930185,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s42",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2834,7 +3035,7 @@
    "lambda": 2.0,
    "seed": 52,
    "shift": 100,
-   "tau_95_val": 62.985989779758214,
+   "tau_95_val": 62.985989779757524,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s52",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2898,7 +3099,7 @@
    "lambda": 2.0,
    "seed": 62,
    "shift": 100,
-   "tau_95_val": 58.02766373863935,
+   "tau_95_val": 58.02766373863946,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s62",
    "pad_heldout_n": {
     "MEL": 9,
@@ -2962,7 +3163,7 @@
    "lambda": 2.0,
    "seed": 72,
    "shift": 100,
-   "tau_95_val": 57.05338017753973,
+   "tau_95_val": 57.05338017753959,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s72",
    "pad_heldout_n": {
     "MEL": 9,
@@ -3026,7 +3227,7 @@
    "lambda": 2.0,
    "seed": 82,
    "shift": 100,
-   "tau_95_val": 59.51245838251856,
+   "tau_95_val": 59.512458382518645,
    "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift100_ladv2_s82",
    "pad_heldout_n": {
     "MEL": 9,
@@ -3081,6 +3282,326 @@
       "n": 60,
       "share_accepted_id": 1.0,
       "share_pred_nv_conf09": 0.95
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 42,
+   "shift": 50,
+   "tau_95_val": 64.457278719475,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift50_ladv2_s42",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9759036144578314,
+      "share_pred_nv_conf09": 0.4819277108433735
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9610894941634242,
+      "share_pred_nv_conf09": 0.6848249027237354
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9245283018867925,
+      "share_pred_nv_conf09": 0.4056603773584906
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.625
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.8230088495575221
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7833333333333333
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.957983193277311,
+      "share_pred_nv_conf09": 0.6722689075630253
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.8
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 52,
+   "shift": 50,
+   "tau_95_val": 59.90729489276283,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift50_ladv2_s52",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.963855421686747,
+      "share_pred_nv_conf09": 0.37349397590361444
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9766536964980544,
+      "share_pred_nv_conf09": 0.5992217898832685
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9245283018867925,
+      "share_pred_nv_conf09": 0.2971698113207547
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9583333333333334,
+      "share_pred_nv_conf09": 0.5
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9911504424778761,
+      "share_pred_nv_conf09": 0.6460176991150443
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7166666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.907563025210084,
+      "share_pred_nv_conf09": 0.5378151260504201
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9333333333333333,
+      "share_pred_nv_conf09": 0.5833333333333334
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 62,
+   "shift": 50,
+   "tau_95_val": 58.449254918305876,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift50_ladv2_s62",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.6867469879518072
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9961089494163424,
+      "share_pred_nv_conf09": 0.867704280155642
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9433962264150944,
+      "share_pred_nv_conf09": 0.6226415094339622
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.75
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.9292035398230089
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 1.0
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.8235294117647058
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.9166666666666666
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 72,
+   "shift": 50,
+   "tau_95_val": 55.500810489749,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift50_ladv2_s72",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9879518072289156,
+      "share_pred_nv_conf09": 0.4457831325301205
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9494163424124513,
+      "share_pred_nv_conf09": 0.5330739299610895
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9292452830188679,
+      "share_pred_nv_conf09": 0.38207547169811323
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 0.9166666666666666,
+      "share_pred_nv_conf09": 0.4166666666666667
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.6814159292035398
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.7666666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9663865546218487,
+      "share_pred_nv_conf09": 0.6974789915966386
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.95,
+      "share_pred_nv_conf09": 0.75
+     }
+    }
+   }
+  },
+  {
+   "recipe": "r1",
+   "lambda": 2.0,
+   "seed": 82,
+   "shift": 50,
+   "tau_95_val": 55.04679654427005,
+   "feat_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r6/r1/cur/features/r1_cur_shift50_ladv2_s82",
+   "pad_heldout_n": {
+    "MEL": 9,
+    "NV": 88,
+    "BCC": 276,
+    "AK": 202,
+    "BKL": 75,
+    "DF": 0,
+    "VASC": 0,
+    "SCC": 66
+   },
+   "sets": {
+    "fitzpatrick17k": {
+     "MEL": {
+      "n": 83,
+      "share_accepted_id": 0.9759036144578314,
+      "share_pred_nv_conf09": 0.4939759036144578
+     },
+     "BCC": {
+      "n": 257,
+      "share_accepted_id": 0.9922178988326849,
+      "share_pred_nv_conf09": 0.5797665369649806
+     },
+     "SCC": {
+      "n": 212,
+      "share_accepted_id": 0.9245283018867925,
+      "share_pred_nv_conf09": 0.39622641509433965
+     },
+     "AK": {
+      "n": 24,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.625
+     }
+    },
+    "sd198": {
+     "MEL": {
+      "n": 113,
+      "share_accepted_id": 0.9823008849557522,
+      "share_pred_nv_conf09": 0.8938053097345132
+     },
+     "BCC": {
+      "n": 60,
+      "share_accepted_id": 1.0,
+      "share_pred_nv_conf09": 0.8166666666666667
+     },
+     "SCC": {
+      "n": 119,
+      "share_accepted_id": 0.9327731092436975,
+      "share_pred_nv_conf09": 0.6974789915966386
+     },
+     "AK": {
+      "n": 60,
+      "share_accepted_id": 0.9833333333333333,
+      "share_pred_nv_conf09": 0.7666666666666667
      }
     }
    }

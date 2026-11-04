@@ -63,6 +63,10 @@ Fitzpatrick17k as a second target, more MK-MMD seeds, patient-level IDs for MED-
 
 `results/paperB/r10/REPORT.md`: one section per item with the table rows in the paper's LaTeX format, the regenerated regression table, the degraded audit, GPU and CPU hours, commit hashes. List every paper number that changed, as old → new with its table or section.
 
+
 ## Deviations
 
-(none yet)
+- R1 / E1 report regenerate used `--no_boot` (seed means ± sd only) after full bootstrap stalled >40 min on the finalize CPU job; Rule A CIs for new shift-50% cells can be recomputed later with boots.
+- λ=2 n50 `summary.json` files were missing on disk; rebuilt from cached features (`rebuilt_from_features`) so class-aware / inventory stay complete. Locked prior verdicts unchanged.
+- R2 SCIN report regenerate used `--no_boot` (same stall risk as R1 boots).
+- Clinical post hoc inventory extended to R1 shift ∈ {0,50,100} at λ=2 (was {0,100}).
