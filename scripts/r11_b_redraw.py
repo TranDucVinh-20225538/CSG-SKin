@@ -31,9 +31,25 @@ TOL = 1e-9
 DET = "mahalanobis_classcond"
 
 
+def _jsonable(o):
+    if isinstance(o, dict):
+        return {k: _jsonable(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_jsonable(v) for v in o]
+    if isinstance(o, (np.integer,)):
+        return int(o)
+    if isinstance(o, (np.floating,)):
+        return float(o)
+    if isinstance(o, np.ndarray):
+        return o.tolist()
+    if isinstance(o, (np.bool_,)):
+        return bool(o)
+    return o
+
+
 def wjson(p, obj):
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(obj, indent=2) + "\n")
+    p.write_text(json.dumps(_jsonable(obj), indent=2) + "\n")
 
 
 def near(a, b, tol=TOL):
