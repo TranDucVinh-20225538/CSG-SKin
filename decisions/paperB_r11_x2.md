@@ -32,3 +32,5 @@ Report every run and every number as found, nulls included. No wording beyond th
 
 _(append only)_
 - Seed pairing at λ = 0.5: only seed 42 has a matching M2 checkpoint; report n for that cell as found.
+- M3 has no skin classifier head: MSP / Energy not scored (null); Mahalanobis / kNN / cosine only.
+- SD-198 bootstrap unit = P7a `group` column (image-level, as r5/p7a); decision text "cluster_union (SD-198)" follows shared R11 boilerplate (Fitz uses P13 `cluster_union`).
