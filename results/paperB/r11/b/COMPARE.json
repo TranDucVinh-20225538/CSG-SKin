@@ -1,0 +1,38 @@
+{
+  "tol": 1e-09,
+  "cpu_hours": 2.089343736105495,
+  "table": [
+    {
+      "file": "r5/t1last/BOOTSTRAP.json",
+      "n_compared": 448,
+      "n_differing": 0
+    },
+    {
+      "file": "r5/t1last/UNSEEN_ECE.json",
+      "n_compared": 210,
+      "n_differing": 0
+    },
+    {
+      "file": "r10b/B1_shift50_boots.json",
+      "n_compared": 60,
+      "n_differing": 0
+    },
+    {
+      "file": "r10b/B3_a4_ci.json",
+      "n_compared": 60,
+      "n_differing": 0
+    },
+    {
+      "file": "r10b/B4_splits_scin.json",
+      "n_compared": 90,
+      "n_differing": 0
+    },
+    {
+      "file": "r6/r2/cur/scin_report.json",
+      "n_compared": 176,
+      "n_differing": 0
+    }
+  ],
+  "diffs": [],
+  "ok": true
+}
