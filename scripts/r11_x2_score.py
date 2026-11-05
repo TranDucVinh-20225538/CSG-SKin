@@ -6,6 +6,7 @@ Design: decisions/paperB_r11_x2.md. CPU after forwards.
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -15,6 +16,13 @@ import pandas as pd
 sys.path.insert(0, "/data2/cmdir/home/toandq/CSG-Skin-paperB/scripts")
 import r6_common as R  # noqa: E402
 import r5_posthoc_scoring as PH  # noqa: E402
+
+
+def git_head():
+    return subprocess.run(
+        ["git", "-C", str(R.PAPERB), "rev-parse", "--short", "HEAD"],
+        capture_output=True, text=True, check=False,
+    ).stdout.strip() or "unknown"
 
 OUT = R.RES / "r11" / "x2"
 DUAL_FEAT = R.RES / "r5" / "t1last" / "features_last"
@@ -181,7 +189,7 @@ def write_report(cells, clinical, id_bal):
     L = [
         "# Paper B R11 X2 — OOD monitors M1 / M2 / M3",
         "",
-        "Design: `decisions/paperB_r11_x2.md`. Commit `{}`.".format(R.git_head()),
+        "Design: `decisions/paperB_r11_x2.md`. Commit `{}`.".format(git_head()),
         "",
         "Monitors: **M1** dual latent; **M2** ERM EffB3 (same seed); **M3** ImageNet EffB3 frozen "
         "(MSP/Energy N/A — no skin head). Primary = Mahalanobis. Rule A = pooled CI upper < 0.5 and k≥3.",
@@ -348,6 +356,21 @@ def main():
                 if mon == "M3":
                     m3_cache[ood] = pooled
 
+    # Checkpoint cells (no draws) before clinical — survive late failures.
+    cells_ckpt = {}
+    for k, v in cells.items():
+        if v is None:
+            cells_ckpt[k] = None
+            continue
+        cells_ckpt[k] = {kk: vv for kk, vv in v.items() if kk != "per_seed"}
+        ps = {}
+        for s, blk in v.get("per_seed", {}).items():
+            ps[s] = {det: {x: blk[det][x] for x in ("point", "ci_lo", "ci_hi", "below_chance_entire_ci")
+                           if x in blk[det]} for det in blk}
+        cells_ckpt[k]["per_seed"] = ps
+    (OUT / "CELLS_CKPT.json").write_text(json.dumps(_jsonable(cells_ckpt), indent=2) + "\n")
+    print("wrote", OUT / "CELLS_CKPT.json", flush=True)
+
     # Clinical: λ=2 classifier logits × each monitor
     clinical = {}
     lam = 2.0
@@ -405,10 +428,10 @@ def main():
 
     payload = {
         "design": "decisions/paperB_r11_x2.md",
-        "commit": R.git_head(),
+        "commit": git_head(),
         "cells": cells_out,
         "clinical": clinical,
-        "id_bal": { "{}|{}".format(l, s): v for (l, s), v in id_bal.items()},
+        "id_bal": {"{}|{}".format(l, s): v for (l, s), v in id_bal.items()},
         "ood_units": ood_units,
     }
     (OUT / "RESULTS.json").write_text(json.dumps(_jsonable(payload), indent=2) + "\n")
