@@ -40,11 +40,11 @@ Implication: inversion is **not** because OOD is outside the ISIC label space �
 
 ## X2 — OOD monitor on untouched features
 
-Decisions: `decisions/paperB_r11_x2.md`. Opened after level b.
+Decisions: `decisions/paperB_r11_x2.md`. Forwards 72821 + score 72926 COMPLETED. Full: `results/paperB/r11/x2/REPORT.md`.
 
-- Forwards job `72821` (`slurm/r11_x2_fwd.sbatch`): M2 fill mednode/sd198/scin × 5 seeds + M3 ImageNet EffB3 all sets. No M2 retrain (ckpts on disk).
-- Score job `72822` (`slurm/r11_x2_score.sbatch`, `afterok:72821`): AUROC / Rule A / FPR@95TPR / clinical MEL→NV@0.9 flag share.
-- Queued behind current GPU QOS (`QOSMaxGRESPerUser`); results land in `results/paperB/r11/x2/` when done.
+- **M1**: Rule A hits = ['pad_heldout', 'fitzpatrick17k', 'mednode', 'sd198']; |AUROC_λ2−λ0|≤0.03 on labelled = False; avoids_inversion = False. (pad_heldout Δ=0.444, fitzpatrick17k Δ=0.307, mednode Δ=0.271, sd198 Δ=0.333)
+- **M2**: Rule A hits = none; |AUROC_λ2−λ0|≤0.03 on labelled = True; avoids_inversion = True. (pad_heldout Δ=0.000, fitzpatrick17k Δ=0.000, mednode Δ=0.000, sd198 Δ=0.000)
+- **M3**: Rule A on labelled = none; avoids_inversion = True (λ-independent by construction).
 
 ## X3 — adversary on head over frozen ERM
 
