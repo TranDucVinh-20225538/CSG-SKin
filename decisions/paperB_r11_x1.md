@@ -90,3 +90,4 @@ Every other `source_label` among the 198 classes.
 ## Deviations
 
 _(append only)_
+- Reading (post-run, λ=2): both Fitzpatrick17k and SD-198 → **Not label space** (Rule A met on in-ISIC and on out-of-ISIC). The inversion is not carried by label-space membership. Drop any paper claim of the form “SCIN fails to invert because it is out-of-label / only 0.6% ISIC-mappable.”

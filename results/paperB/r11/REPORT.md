@@ -25,7 +25,7 @@ Decisions: `decisions/paperB_r11_x1.md`. Commit `6a7cb62`. CPU h 0.434.
 - Fitzpatrick17k: **Not label space** (Rule A met on both in-ISIC and out-of-ISIC)
 - SD-198: **Not label space** (Rule A met on both subsets)
 
-Full tables: `results/paperB/r11/x1/X1.md`.
+Implication: inversion is **not** because OOD is outside the ISIC label space — drop “SCIN because out-of-label.” Full tables: `results/paperB/r11/x1/X1.md`.
 
 ## X2 — OOD monitor on untouched features
 
