@@ -12,7 +12,18 @@ checked 174 cells; 0 mismatch(es)
 
 ## Level b — bootstrap redrawn from cached features
 
-_(re-running after JSON `int64` serialize fix; first attempt FAILED at write of `BOOTSTRAP.json`)_
+ok=True. CPU h 2.089. Tolerance 1e-9.
+
+| file | n compared | n differing |
+|---|---:|---:|
+| `r5/t1last/BOOTSTRAP.json` | 448 | 0 |
+| `r5/t1last/UNSEEN_ECE.json` | 210 | 0 |
+| `r10b/B1_shift50_boots.json` | 60 | 0 |
+| `r10b/B3_a4_ci.json` | 60 | 0 |
+| `r10b/B4_splits_scin.json` | 90 | 0 |
+| `r6/r2/cur/scin_report.json` | 176 | 0 |
+
+Differing values: **None**. `reproduce_rule_a.py` on redrawn scratch also: `checked 174 cells; 0 mismatch(es)`.
 
 ## X1 — OOD split by label space
 
@@ -29,7 +40,7 @@ Implication: inversion is **not** because OOD is outside the ISIC label space �
 
 ## X2 — OOD monitor on untouched features
 
-_(pending; decisions locked)_
+_(pending; decisions locked; waiting to open after level b)_
 
 ## X3 — adversary on head over frozen ERM
 
@@ -45,11 +56,13 @@ _(pending; decisions locked)_
 
 ## GPU / CPU hours and commit hashes
 
-| item | hash | note |
-|---|---|---|
-| launch + a + X1 decisions + GPU est | `9c16f39` | |
-| X2–X5 decisions | `1b86d07` | |
-| X1 results | `6a7cb62` | |
-| level b | _(pending retry)_ | |
+| item | hash | CPU h |
+|---|---|---:|
+| launch + a + X1 decisions + GPU est | `9c16f39` | — |
+| X2–X5 decisions | `1b86d07` | — |
+| X1 results | `6a7cb62` | 0.434 |
+| X1 reading note | `ec1e2f2` | — |
+| level b | `7b6ccde` | 2.089 |
+| REPORT update | tip after this commit | — |
 
 See `results/paperB/r11/GPU_ESTIMATE.md` (≈26–31 GPU-h total; issued before first GPU job).
