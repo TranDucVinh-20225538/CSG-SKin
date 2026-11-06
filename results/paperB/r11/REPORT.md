@@ -56,7 +56,9 @@ Decisions: `decisions/paperB_r11_x3.md`. Opened after X2.
 
 ## X4 — BCN → HAM
 
-_(pending; decisions locked)_
+Decisions: `decisions/paperB_r11_x4.md`. GPU train queued.
+
+- Train `73068` (15× %2, ~1.4 GPU-h/run); score `73069` afterok. Dual CSG BCN→HAM.
 
 ## X5 — semi-synthetic controlled label shift
 

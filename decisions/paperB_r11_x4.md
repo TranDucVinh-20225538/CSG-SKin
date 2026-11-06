@@ -35,3 +35,5 @@ Report every run and every number as found, nulls included. No wording beyond th
 ## Deviations
 
 _(append only)_
+- Dual CSG main recipe (r6 CURRENT), three-stream bcn_cls+bcn_adv+ham_adv; split seed 42; ham_heldout_frac=0.30.
+- V1 = BCN-test ∪ HAM-heldout GroupShuffleSplit (analogous to Table 1 held-out V1).
