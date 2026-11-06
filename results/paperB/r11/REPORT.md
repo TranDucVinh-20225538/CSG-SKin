@@ -60,7 +60,9 @@ _(pending; decisions locked)_
 
 ## X5 — semi-synthetic controlled label shift
 
-_(pending; decisions locked)_
+Decisions: `decisions/paperB_r11_x5.md`. Queued after X3 score (`73000`).
+
+- Synth fwd `73027` → train `73028` (30× %4) → score `73029`; dose–response + reproduces_inversion.
 
 ## GPU / CPU hours and commit hashes
 

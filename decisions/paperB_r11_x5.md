@@ -25,3 +25,6 @@ Report every run and every number as found, nulls included. No wording beyond th
 ## Deviations
 
 _(append only)_
+- Three seeds = {42, 52, 62}. Head MLP hidden = 512 (same as X3).
+- Synth features: ERM last.ckpt forward on smartphone-corrupted ISIC (blur σ=1.5, +10% R / −10% B, JPEG q=40) then ImageNet normalize + center crop.
+- Target-stream mix = `(1−t)·ISIC + t·PAD` via `dose_mix(1−t, …)` on synth ISIC-train features (labels for resampling only).
