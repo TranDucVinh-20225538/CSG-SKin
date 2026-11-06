@@ -48,11 +48,10 @@ Decisions: `decisions/paperB_r11_x2.md`. Forwards 72821 + score 72926 COMPLETED.
 
 ## X3 — adversary on head over frozen ERM
 
-Decisions: `decisions/paperB_r11_x3.md`. Opened after X2.
+Decisions: `decisions/paperB_r11_x3.md`. Train 72999 + score 73000 COMPLETED. Full: `results/paperB/r11/x3/REPORT.md`.
 
-- Cache: `results/paperB/r11/x3/cache/` (symlinks to erm_ref; no aug).
-- Train array `72999` (25× %4); score `73000` afterok.
-- Reading: Cases A/B/C vs ERM ref 0.558; full tables in `results/paperB/r11/x3/` when done.
+- **Case C**: invariance not reached; settles nothing. Stop after λ grid..
+- competent=None; invariant=False; ID bal=None; V1=None.
 
 ## X4 — BCN → HAM
 
