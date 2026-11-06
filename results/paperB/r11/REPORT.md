@@ -55,9 +55,12 @@ Decisions: `decisions/paperB_r11_x3.md`. Train 72999 + score 73000 COMPLETED. Fu
 
 ## X4 — BCN → HAM
 
-Decisions: `decisions/paperB_r11_x4.md`. GPU train queued.
+Decisions: `decisions/paperB_r11_x4.md`. Train 73068 + score 73069 COMPLETED. Full: `results/paperB/r11/x4/REPORT.md`.
 
-- Train `73068` (15× %2, ~1.4 GPU-h/run); score `73069` afterok. Dual CSG BCN→HAM.
+- TV(BCN train, HAM adv) = 0.361; TV(BCN, HAM heldout) = 0.352.
+- λ=2 shift100: ID bal 0.366 ± 0.017; V1 0.599 ± 0.041 (invariant ≤0.60).
+- Rule A on labelled unseen (Fitz/med/SD): **none** at shift100 and shift0. ham_heldout Rule A True (not counted).
+- **Verdict: not_reproduced** — inversion not reproduced in BCN→HAM.
 
 ## X5 — semi-synthetic controlled label shift
 

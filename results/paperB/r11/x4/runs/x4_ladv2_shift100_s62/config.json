@@ -1,0 +1,99 @@
+{
+  "tag": "x4_ladv2_shift100_s62",
+  "lam": 2.0,
+  "seed": 62,
+  "shift": 1.0,
+  "split_seed": 42,
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "streams": [
+    {
+      "name": "bcn_cls",
+      "n": 9929,
+      "sampling": "uniform",
+      "classifier": true,
+      "adv_domain": -1,
+      "ctx_domain": -1,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.23587471044415348,
+        0.33759693826165776,
+        0.22741464397220265,
+        0.056299728069291975,
+        0.09134857488165979,
+        0.009366502165374156,
+        0.00846006647195085,
+        0.033638835733709335
+      ]
+    },
+    {
+      "name": "bcn_adv",
+      "n": 9929,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 0,
+      "ctx_domain": 0,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.23587471044415348,
+        0.33759693826165776,
+        0.22741464397220265,
+        0.056299728069291975,
+        0.09134857488165979,
+        0.009366502165374156,
+        0.00846006647195085,
+        0.033638835733709335
+      ]
+    },
+    {
+      "name": "ham_adv",
+      "n": 6975,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 1,
+      "ctx_domain": 1,
+      "labels_loaded": false,
+      "expected_mix": null
+    }
+  ],
+  "bcn_mix": [
+    0.23587471044415348,
+    0.33759693826165776,
+    0.22741464397220265,
+    0.056299728069291975,
+    0.09134857488165979,
+    0.009366502165374156,
+    0.00846006647195085,
+    0.033638835733709335
+  ],
+  "ham_adv_mix": [
+    0.10795698924731183,
+    0.6705376344086021,
+    0.051039426523297494,
+    0.014050179211469534,
+    0.11039426523297491,
+    0.011182795698924731,
+    0.015483870967741935,
+    0.01935483870967742
+  ],
+  "adv_mix": null,
+  "support_note": null,
+  "split_meta": {
+    "seed": 42,
+    "ham_heldout_frac": 0.3,
+    "n_bcn_train": 9929,
+    "n_bcn_val": 1219,
+    "n_bcn_test": 1265,
+    "n_ham_adv": 6975,
+    "n_ham_heldout": 3040,
+    "lesion_disjoint": true
+  },
+  "architecture": "dual_encoder_csg_effb3",
+  "design": "decisions/paperB_r11_x4.md",
+  "commit": "28042bc"
+}
