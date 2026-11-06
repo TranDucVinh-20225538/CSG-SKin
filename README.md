@@ -11,3 +11,5 @@ The repo at `/data2/hpcshared/Vinh/CSG-Skin` is owned by `anhnv` and is **not wr
 
 Phase 0: **all gates PASS**. See `results/paperB/PHASE0_CHECKS.md`.
 Phase 1: submitted via `scripts/submit_phase1.sh`. Log: `logs/phase1_ood.log`.
+
+Manuscript numbers (free scan and the pinned manifest, including R11 X1–X5) are checked with `scripts/verify_manuscript_numbers.py`. See `paper/midl/VERIFY.md`.
