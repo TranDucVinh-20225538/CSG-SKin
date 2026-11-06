@@ -322,9 +322,9 @@ trained against (Table~\ref{tab:unseen}). On three clinical datasets that entere
 training, Mahalanobis AUROC falls from $0.712$ to $0.405$ (Fitzpatrick17k), $0.559$ to $0.288$
 (MED-NODE) and $0.708$ to $0.376$ (SD-198) at $\lam=2$, inverted in all five seeds and at every
 $\lam\ge0.25$ on MED-NODE and SD-198. Clustering near-duplicate SD-198 images ($6{,}016$ clusters)
-leaves every interval and verdict unchanged. On SCIN, whose images are mostly inflammatory
-conditions outside the ISIC label space, detection falls from $0.723$ to $0.551$ without
-inverting.
+leaves every interval and verdict unchanged. On SCIN, detection falls from $0.723$ to $0.551$
+without inverting. Label space does not explain this: when Fitzpatrick17k and SD-198 are split
+by whether a condition maps to an ISIC class, both parts invert at $\lam=2$ (Appendix~\ref{app:r11}).
 
 \paragraph{Second backbone.} With DINOv2-S/14 in place of EfficientNet-B3 (dual encoder, five
 seeds), Mahalanobis AUROC on \texttt{pad\_heldout} falls from $0.831\pm0.029$ at $\lam=0$ to
@@ -569,8 +569,14 @@ reported together with the accuracy on the same inputs.
 distributions cannot keep the classes of both domains in place. Our results show the effect
 of this on a distance-based monitor. OOD images that differ from the source along the domain
 direction are moved into the region of the majority class, and a class-conditional score
-then treats them as typical. The BCN$\to$HAM case shows that an OOD set with more nevi than
-the ID set can invert such a score even without DANN. In the main setting the OOD sets have
+then treats them as typical. A monitor on features the adversary never sees does not invert:
+on an ERM EfficientNet-B3 or a frozen ImageNet EfficientNet-B3, no labelled OOD set meets the
+inversion criterion, while the dual latent of the same $\lam=2$ models does (Appendix~\ref{app:r11}).
+The BCN$\to$HAM case shows that an OOD set with more nevi than
+the ID set can invert such a score even without DANN. A DANN trained from BCN against HAM
+(prior total variation $0.36$) reached held-out leakage $0.599$ at $\lam=2$ but did not invert
+detection on Fitzpatrick17k, MED-NODE or SD-198, so the inversion under DANN rests on one
+source--target pair (ISIC$\to$PAD-UFES-20). In the main setting the OOD sets have
 fewer nevi than ISIC, and DANN creates the problem by moving them toward nevus. Without label
 shift the inversion is only seen on the adversary's target domain, where a smaller
 within-class pull remains. This misplacement is also why the unweighted domain probe reaches
@@ -607,12 +613,12 @@ training was stopped early.
 
 \begin{itemize}
 \setlength{\itemsep}{0pt}
-\item Scope: dermatology only; the spread to unseen domains is shown for gradient reversal.
+\item Scope: dermatology only, one source--target pair; the spread to unseen domains is shown for gradient reversal. BCN$\to$HAM did not reproduce it.
 \item Other modalities: could not be tested; DANN did not remove hospital information on Camelyon17 while preserving the classifier, and the chest-radiograph OOD set was near chance before adaptation ($0.522$).
 \item Architecture: no single-encoder DANN reached invariance with EfficientNet-B3 or DINOv2-S/14 in 27 screened configurations, so the inversion is untested there.
 \item Competence: in-distribution accuracy is $0.04$--$0.08$ below ERM on the same split ($0.095$ for DINOv2); an 80-epoch schedule did not close the gap.
 \item Statistics: MED-NODE and SD-198 are resampled by image; the five scores share one latent.
-\item Mechanism: a Gaussian toy model with label shift did not reproduce the inversion.
+\item Mechanism: a Gaussian toy model, a semi-synthetic label-shift dose--response, and an adversary on a frozen ERM head (never invariant) did not reproduce or test the inversion.
 \item Warning signals: none computed on in-distribution data alone flagged inverted runs.
 \item Mitigation: the few-label remedy is post hoc and costs in-distribution accuracy.
 \item Data: we obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images; the inversion holds within each skin-type group.
@@ -1356,6 +1362,43 @@ on, but at $\lam=0.25$ it selects an earlier epoch and the inversion is not yet 
 ($0.525$, seed s.d.\ $0.121$; an observation made after the sweep).
 
 \FloatBarrier
+\section{Additional checks: label space, monitor features, second pair}
+\label{app:r11}
+
+Mahalanobis AUROC, five seeds unless stated, inversion criterion as in the main text.
+
+\textbf{Label space.} Fitzpatrick17k and SD-198 images were split by whether the condition maps
+to an ISIC class (in: $586$ and $525$; out: $3{,}241$ and $5{,}950$; ambiguous: $60$ and $109$).
+At $\lam=0$ in/out AUROC is $0.755$/$0.706$ (Fitzpatrick17k) and $0.723$/$0.708$ (SD-198). At
+$\lam=2$ it is $0.341$ $[0.322, 0.362]$/$0.417$ $[0.403, 0.431]$ and $0.302$ $[0.283, 0.323]$/$0.382$
+$[0.368, 0.395]$; both parts meet the criterion in $5/5$ seeds on both datasets. The in-label part
+inverts more strongly (paired in$-$out $-0.075$ and $-0.079$).
+
+\textbf{Monitor features.} M1 is the dual latent; M2 an ERM EfficientNet-B3 with the same seed;
+M3 a frozen ImageNet EfficientNet-B3 (one feature bank, independent of $\lam$). At $\lam=2$, M1
+meets the criterion on \texttt{pad\_heldout}, Fitzpatrick17k, MED-NODE and SD-198 ($0.381$, $0.405$,
+$0.288$, $0.376$). M2 meets it on none ($0.708$, $0.802$, $0.518$, $0.785$), nor does M3 ($0.792$,
+$0.953$, $0.740$, $0.943$). Of melanomas the $\lam=2$ classifier calls nevus with confidence above
+$0.9$, M1 flags $0.000$ (Fitzpatrick17k) and $0.002$ (SD-198) at $95\%$ TPR, M2 $0.046$ and $0.037$,
+M3 $0.382$ and $0.335$.
+
+\textbf{Adversary on a frozen ERM head.} A two-layer head ($16$-d) with a domain adversary on
+frozen ERM EfficientNet-B3 features (ERM ID balanced accuracy $0.558$). Held-out leakage stayed
+above $0.60$ in every cell ($0.613\pm0.043$ at $\lam=0$; $0.767\pm0.033$ at $\lam=2$), and no
+OOD set met the criterion. Invariance was not reached, so this test did not take place.
+
+\textbf{BCN$\to$HAM with DANN.} Total variation of class priors between BCN training and HAM
+adversary images is $0.361$. At $\lam=2$ with full label shift, ID balanced accuracy is
+$0.366\pm0.017$ and leakage $0.599\pm0.041$; no labelled unseen dataset (Fitzpatrick17k, MED-NODE,
+SD-198) meets the criterion at shift $100\%$ or $0\%$. HAM-heldout meets it but is the aligned
+domain and is not counted.
+
+\textbf{Semi-synthetic label shift.} Frozen ERM features, head as above, and a synthetic
+smartphone target (blur, colour shift, JPEG) built from ISIC and PAD-UFES-20 images mixed at
+$t\in\{0, 0.25, 0.5, 0.75, 1\}$ (three seeds). At $\lam=2$ no unseen dataset met the criterion at
+any $t$ (Fitzpatrick17k $0.672$--$0.707$, SD-198 $0.668$--$0.698$).
+
+\FloatBarrier
 \section{Limitations in detail}
 \label{app:limits}
 
@@ -1397,7 +1440,12 @@ SD-198 carry no patient identifiers and are resampled by image, so their interva
 narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
 The five OOD scores are functions of one latent and are not independent evidence.
 \textbf{Mechanism.} A two-domain Gaussian toy model with label shift did not reproduce the
-inversion, so the conditions we identify may not be sufficient in general. \textbf{Warning
+inversion, so the conditions we identify may not be sufficient in general. Two further routes
+did not settle the mechanism (Appendix~\ref{app:r11}): an adversary on a head over frozen ERM
+features never reached invariance (leakage $\ge0.613$ in every cell), and a semi-synthetic
+target with controlled label shift produced no inversion at any mixing level.
+\textbf{Second pair.} A DANN trained from BCN against HAM did not reproduce the inversion on
+the labelled unseen datasets, so the effect is shown for one source--target pair only. \textbf{Warning
 signals.} No statistic computed on in-distribution data alone flagged the inverted runs; the
 share of deployment images predicted as the majority class tracked inversion
 (Spearman $-0.77$ and $-0.75$ over $64$ runs) but needs unlabelled target data. \textbf{Mitigation.} The few-label
