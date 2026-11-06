@@ -1,0 +1,57 @@
+{
+  "design": "decisions/paperB_r11_x3.md",
+  "note": "Frozen ERM EffB3 last.ckpt features; val transform only \u2014 no augmentation. Symlinks to r5/p8/erm_ref/features (filled by R5 P8 + R11 X2 M2 forwards).",
+  "in_dim": 1536,
+  "seeds": [
+    42,
+    52,
+    62,
+    72,
+    82
+  ],
+  "sets": [
+    "isic_train",
+    "isic_val",
+    "isic_test",
+    "pad_adv",
+    "pad_heldout",
+    "pad_full",
+    "fitzpatrick17k",
+    "mednode",
+    "sd198",
+    "scin"
+  ],
+  "rows": [
+    {
+      "seed": 42,
+      "src": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/erm_ref/features/single_dann_ladv0_s42",
+      "dst": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s42",
+      "missing": []
+    },
+    {
+      "seed": 52,
+      "src": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/erm_ref/features/single_dann_ladv0_s52",
+      "dst": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s52",
+      "missing": []
+    },
+    {
+      "seed": 62,
+      "src": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/erm_ref/features/single_dann_ladv0_s62",
+      "dst": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s62",
+      "missing": []
+    },
+    {
+      "seed": 72,
+      "src": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/erm_ref/features/single_dann_ladv0_s72",
+      "dst": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s72",
+      "missing": []
+    },
+    {
+      "seed": 82,
+      "src": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r5/p8/erm_ref/features/single_dann_ladv0_s82",
+      "dst": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s82",
+      "missing": []
+    }
+  ],
+  "commit": "f9b8c39"
+}

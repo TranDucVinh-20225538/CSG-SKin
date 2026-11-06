@@ -35,3 +35,6 @@ Report every run and every number as found, nulls included. No wording beyond th
 ## Deviations
 
 _(append only)_
+- Feature cache = symlinks to `r5/p8/erm_ref/features/` (val transform only; no augmentation). Stated in `results/paperB/r11/x3/cache/CACHE.md`.
+- Head MLP hidden width = 512 (2-layer: 1536→512→16 + BN); not fixed in the lock text.
+- Train is feature-level three-stream (isic_cls + isic_adv ± dose_mix + pad_adv); image encoder never updated.
