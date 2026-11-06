@@ -1,0 +1,13 @@
+{
+  "design": "decisions/paperB_r11_x5.md",
+  "blur_sigma": 1.5,
+  "jpeg_quality": 40,
+  "colour_cast": {
+    "R": 1.1,
+    "B": 0.9
+  },
+  "seeds": [
+    62
+  ],
+  "commit": "4c237fd"
+}

@@ -61,9 +61,9 @@ Decisions: `decisions/paperB_r11_x4.md`. GPU train queued.
 
 ## X5 — semi-synthetic controlled label shift
 
-Decisions: `decisions/paperB_r11_x5.md`. Queued after X3 score (`73000`).
+Decisions: `decisions/paperB_r11_x5.md`. Jobs 73027–73029 COMPLETED. Full: `results/paperB/r11/x5/REPORT.md`.
 
-- Synth fwd `73027` → train `73028` (30× %4) → score `73029`; dose–response + reproduces_inversion.
+- **reproduces_inversion = False** (t=1 hits []; t=0 hits []).
 
 ## GPU / CPU hours and commit hashes
 
