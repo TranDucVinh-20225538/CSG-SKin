@@ -166,8 +166,8 @@ train, validation and test \emph{grouped by} \texttt{\detokenize{lesion_id}} ($2
 training~\cite{leakagepaper}. \textbf{PAD-UFES-20}~\cite{pacheco2020} (2{,}298 smartphone
 photographs, six of the eight classes) is the domain the adversary aligns against. No
 per-image PAD label is used as a target in any loss. PAD class proportions enter training in
-two places only: to resample the ISIC images seen by the adversary (Section~\ref{sec:interventions})
-and as importance weights in the IWDAN variants with true or $50$-label priors. PAD labels are
+two places only: to resample or reweight the ISIC images seen by the adversary (Section~\ref{sec:interventions},
+Appendix~\ref{app:reweight}) and as importance weights in the IWDAN variants with true or $50$-label priors. PAD labels are
 also used at evaluation, for the class-aware probes and the clinical analysis. We split it by patient into \texttt{\detokenize{pad_adv}} (1{,}582
 images, 961 patients), seen by the adversarial and context branches, and
 \texttt{\detokenize{pad_heldout}} (716 images, 412 patients), never seen.
@@ -407,7 +407,12 @@ removing the label shift raises AUROC at $\lam=2$ by $0.361$ (Fitzpatrick17k), $
 (MED-NODE) and $0.372$ (SD-198); per-level results are in Appendix~\ref{app:shift}. The six-class control
 stays inverted on all three at $\lam=2$ ($0.362$, $0.312$, $0.339$) and recovers only $0.063$, $0.058$ and
 $0.037$ of the AUROC gap between shift $100\%$ and $0\%$ (Appendix~\ref{app:sixclass}), so the change in class
-support does not explain the effect.
+support does not explain the effect. Resampling also changes which ISIC images the adversary sees. When
+the adversary keeps the unchanged ISIC stream and only its domain loss is reweighted to PAD's class mix,
+no set meets the inversion criterion at either $\lam$; paired by seed, AUROC at $\lam=2$ rises by $0.321$
+(Fitzpatrick17k), $0.211$ (MED-NODE), $0.332$ (SD-198) and $0.227$ (\texttt{\detokenize{pad_heldout}})
+(Appendix~\ref{app:reweight}). In this protocol the effect follows the class priors the adversary aligns,
+not the images it sees; leakage rises here as well ($0.757$ vs $0.634$).
 
 \paragraph{Matched leakage.} Removing label shift also leaves more domain information in the
 latent (leakage $0.791$ vs $0.634$), but a regression of unseen-domain AUROC on label-shift
@@ -876,6 +881,91 @@ $\lam$ & OOD set & six-class & shift $100\%$ & shift $0\%$ & recovery \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\FloatBarrier
+\section{Fixed images, reweighted adversary loss}
+\label{app:reweight}
+
+Resampling the adversary's ISIC stream (Table~\ref{tab:shift}) changes both the class priors the
+adversary aligns and the images it sees. To separate the two, we kept the image schedule of every
+stream unchanged for each seed and reweighted only the ISIC term of the domain loss, by
+$w_c=\pi^{\mathrm{req}}_c/\pi^{\mathrm{ISIC}}_c$ normalised to mean one over the stream. The requested
+mix $\pi^{\mathrm{req}}$ is ISIC's own (prior $100\%$), PAD's (prior $0\%$, computed from the
+\texttt{\detokenize{pad_adv}} labels at the start of training) or their midpoint (prior $50\%$). PAD has
+no DF or VASC, so these two classes get weight zero at prior $0\%$. The classification loss is
+unchanged and no per-image PAD label enters any loss. The implementation differs from the IWDAN runs of
+Appendix~\ref{app:prior}, so the two sets of results are not directly comparable. Main recipe, last
+checkpoint, seeds $\{42,52,62,72,82\}$ in every cell; no run was degraded. At prior $100\%$ every weight
+is one, so these runs repeat the shift-$100\%$ runs of Table~\ref{tab:shift}; per-seed results agree
+exactly at $\lam\in\{0.5,2\}$. The $\lam=0$ models were retrained for this comparison and differ from
+the $\lam=0$ row of Table~\ref{tab:shift} by run-to-run variation (Fitzpatrick17k $0.728$ against $0.712$);
+they serve as the reference for all three prior levels.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Fixed images, reweighted adversary loss: Mahalanobis AUROC, mean $\pm$ s.d.\ over five seeds.
+Prior: class mix the ISIC term of the domain loss is reweighted to ($100\%$: ISIC's; $0\%$: PAD's).
+Leakage: linear probe on ISIC test against all of PAD, as in Table~\ref{tab:shift}. ID: in-distribution
+balanced accuracy. Bold: inversion criterion met (intervals in Table~\ref{tab:reweightci}).}
+\label{tab:reweight}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{rlccccccc}
+\toprule
+$\lam$ & prior & leakage & ID bal.\ acc & \texttt{\detokenize{pad_heldout}} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
+\midrule
+0 & -- & $0.911$ & $0.490\pm0.009$ & $0.806\pm0.035$ & $0.728\pm0.050$ & $0.589\pm0.025$ & $0.722\pm0.055$ & $0.714\pm0.046$ \\
+0.5 & 100\% & $0.628$ & $0.483\pm0.013$ & $\mathbf{0.361\pm0.029}$ & $\mathbf{0.385\pm0.023}$ & $\mathbf{0.310\pm0.055}$ & $\mathbf{0.365\pm0.029}$ & $0.534\pm0.015$ \\
+0.5 & 50\% & $0.621$ & $0.486\pm0.007$ & $0.488\pm0.032$ & $\mathbf{0.458\pm0.076}$ & $\mathbf{0.332\pm0.050}$ & $\mathbf{0.447\pm0.070}$ & $0.572\pm0.070$ \\
+0.5 & 0\% & $0.758$ & $0.483\pm0.005$ & $0.592\pm0.026$ & $0.657\pm0.031$ & $0.505\pm0.074$ & $0.640\pm0.034$ & $0.678\pm0.049$ \\
+2 & 100\% & $0.634$ & $0.486\pm0.012$ & $\mathbf{0.368\pm0.017}$ & $\mathbf{0.340\pm0.065}$ & $\mathbf{0.298\pm0.032}$ & $\mathbf{0.325\pm0.069}$ & $0.519\pm0.073$ \\
+2 & 50\% & $0.630$ & $0.473\pm0.020$ & $0.494\pm0.025$ & $\mathbf{0.434\pm0.055}$ & $\mathbf{0.323\pm0.048}$ & $\mathbf{0.436\pm0.067}$ & $0.548\pm0.066$ \\
+2 & 0\% & $0.757$ & $0.476\pm0.010$ & $0.595\pm0.019$ & $0.661\pm0.032$ & $0.510\pm0.034$ & $0.657\pm0.035$ & $0.689\pm0.030$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Intervals for Table~\ref{tab:reweight}: $95\%$ cluster-bootstrap interval of the seed-mean
+Mahalanobis AUROC and the number of seeds whose own interval lies below $0.5$. The intervals reflect
+image sampling, not variation between seeds.}
+\label{tab:reweightci}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{rlccccc}
+\toprule
+$\lam$ & prior & \texttt{\detokenize{pad_heldout}} & Fitzpatrick17k & MED-NODE & SD-198 & SCIN \\
+\midrule
+0 & -- & [0.791, 0.820] 0/5 & [0.715, 0.741] 0/5 & [0.561, 0.617] 0/5 & [0.709, 0.735] 0/5 & [0.701, 0.727] 0/5 \\
+0.5 & 100\% & [0.338, 0.383] 5/5 & [0.373, 0.398] 5/5 & [0.284, 0.337] 5/5 & [0.353, 0.377] 5/5 & [0.521, 0.547] 0/5 \\
+0.5 & 50\% & [0.466, 0.510] 1/5 & [0.446, 0.471] 4/5 & [0.304, 0.360] 5/5 & [0.436, 0.459] 4/5 & [0.559, 0.585] 0/5 \\
+0.5 & 0\% & [0.574, 0.611] 0/5 & [0.644, 0.669] 0/5 & [0.476, 0.533] 2/5 & [0.628, 0.653] 0/5 & [0.666, 0.690] 0/5 \\
+2 & 100\% & [0.344, 0.391] 5/5 & [0.328, 0.352] 5/5 & [0.271, 0.326] 5/5 & [0.315, 0.336] 5/5 & [0.507, 0.532] 1/5 \\
+2 & 50\% & [0.472, 0.516] 1/5 & [0.421, 0.447] 4/5 & [0.296, 0.353] 5/5 & [0.424, 0.447] 5/5 & [0.536, 0.560] 1/5 \\
+2 & 0\% & [0.578, 0.613] 0/5 & [0.649, 0.673] 0/5 & [0.479, 0.541] 1/5 & [0.645, 0.669] 0/5 & [0.677, 0.701] 0/5 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+With PAD's priors no set meets the inversion criterion at either $\lam$. Paired by seed, AUROC rises
+over prior $100\%$ by $0.272\pm0.046$ and $0.321\pm0.079$ on Fitzpatrick17k ($\lam=0.5$ and $2$),
+$0.194\pm0.041$ and $0.211\pm0.041$ on MED-NODE, $0.275\pm0.056$ and $0.332\pm0.085$ on SD-198, and
+$0.232\pm0.036$ and $0.227\pm0.024$ on \texttt{\detokenize{pad_heldout}}. MED-NODE only reaches chance
+($0.505$ and $0.510$). The midpoint falls in between, and Fitzpatrick17k, MED-NODE and SD-198 still meet
+the criterion there, as at shift $50\%$. Unlike resampling, reweighting also brings
+\texttt{\detokenize{pad_heldout}} above chance ($0.592$ and $0.595$, against $0.498$ and $0.458$ at
+shift $0\%$). Leakage is higher with PAD's priors ($0.758$ and $0.757$ against $0.628$ and $0.634$), as
+it is under resampling, so these runs do not separate the priors from the depth of invariance.
+Reweighting also changes the variance of the adversary's gradients, so the two protocols are not
+equivalent; the conclusion that the priors rather than the images matter holds within this protocol.
+
+\paragraph{Initialisation from ERM.} To ask whether a more accurate model still inverts, we also
+initialised both encoders of the dual model from the seed-matched ERM EfficientNet-B3 backbone (heads
+random; $\lam\in\{0,2\}$, prior $100\%$, same five seeds). Accuracy did not improve: in-distribution
+balanced accuracy was $0.491\pm0.008$ at $\lam=0$ and $0.484\pm0.014$ at $\lam=2$, below ERM minus $0.03$
+($0.528$), with leakage $0.921\pm0.008$ and $0.649\pm0.021$ on the probe of Table~\ref{tab:reweight}.
+These runs therefore do not answer the question, and we do not interpret their detection results.
 
 \FloatBarrier
 \section{BCN$\to$HAM: label shift without DANN (post hoc)}

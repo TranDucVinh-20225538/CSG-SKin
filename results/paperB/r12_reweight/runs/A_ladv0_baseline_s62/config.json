@@ -1,0 +1,117 @@
+{
+  "tag": "A_ladv0_baseline_s62",
+  "block": "A",
+  "role": "baseline",
+  "init": "scratch",
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "lambda_adv": 0.0,
+  "seed": 62,
+  "prior": "prior100",
+  "prior_shift": 1.0,
+  "pi_requested": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "pi_source": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "pi_pad_adv": [
+    0.02718078381795196,
+    0.0986093552465234,
+    0.35967130214917825,
+    0.33375474083438683,
+    0.1011378002528445,
+    0.0,
+    0.0,
+    0.07964601769911504
+  ],
+  "oracle_w": null,
+  "mean_stream_w": 1.0,
+  "align": "dann",
+  "iw_cls": false,
+  "adv_mix": null,
+  "mode": "three",
+  "ckpt_policy": "last",
+  "streams": [
+    {
+      "name": "isic_cls",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": true,
+      "adv_domain": -1,
+      "ctx_domain": -1,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "isic_adv",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 0,
+      "ctx_domain": 0,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "pad_adv",
+      "n": 1582,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 1,
+      "ctx_domain": 1,
+      "labels_loaded": false,
+      "expected_mix": null
+    }
+  ],
+  "commit": "0684d42",
+  "disclosure": "\u03c0_pad_adv from pad_adv labels at start only; never in task loss; not label-free",
+  "protocol": "fixed-image adversary reweight (\u2260 R1 resampling; \u2260 R2 IWDAN)",
+  "out_root": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r12_reweight",
+  "ckpt_dir": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r12_reweight/A_ladv0_baseline_s62",
+  "n": {
+    "train": 16211,
+    "val": 4053,
+    "test": 5067,
+    "pad_full": 2298,
+    "pad_adv": 1582,
+    "pad_heldout": 716
+  }
+}

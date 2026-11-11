@@ -15692,5 +15692,2628 @@
    "ham"
   ],
   "note": "X4 seed s.d. of held-out leakage"
+ },
+ {
+  "id": "r12_tab_l0_pad_heldout_mean",
+  "written": "0.806",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 4,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_l0_pad_heldout_sd",
+  "written": "0.035",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 4,
+   "stat": "sd"
+  },
+  "note": "tab:reweight lambda0 pad_heldout sd"
+ },
+ {
+  "id": "r12_tab_l0_fitzpatrick17k_mean",
+  "written": "0.728",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 5,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_l0_fitzpatrick17k_sd",
+  "written": "0.050",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 5,
+   "stat": "sd"
+  },
+  "note": "tab:reweight lambda0 fitzpatrick17k sd"
+ },
+ {
+  "id": "r12_tab_l0_mednode_mean",
+  "written": "0.589",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 6,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 mednode"
+ },
+ {
+  "id": "r12_tab_l0_mednode_sd",
+  "written": "0.025",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 6,
+   "stat": "sd"
+  },
+  "note": "tab:reweight lambda0 mednode sd"
+ },
+ {
+  "id": "r12_tab_l0_sd198_mean",
+  "written": "0.722",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 7,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 sd198"
+ },
+ {
+  "id": "r12_tab_l0_sd198_sd",
+  "written": "0.055",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 7,
+   "stat": "sd"
+  },
+  "note": "tab:reweight lambda0 sd198 sd"
+ },
+ {
+  "id": "r12_tab_l0_scin_mean",
+  "written": "0.714",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 8,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 scin"
+ },
+ {
+  "id": "r12_tab_l0_scin_sd",
+  "written": "0.046",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 8,
+   "stat": "sd"
+  },
+  "note": "tab:reweight lambda0 scin sd"
+ },
+ {
+  "id": "r12_tab_l0_leak",
+  "written": "0.911",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 2,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 leakage"
+ },
+ {
+  "id": "r12_tab_l0_id",
+  "written": "0.490",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:reweight",
+   "row": "0",
+   "col": 3,
+   "stat": "mean"
+  },
+  "note": "tab:reweight lambda0 ID"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_pad_heldout_mean_pooled",
+  "written": "0.361",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_pad_heldout_sd_pooled",
+  "written": "0.029",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_pad_heldout_ci_lo",
+  "written": "0.338",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_pad_heldout_ci_hi",
+  "written": "0.383",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_fitzpatrick17k_mean_pooled",
+  "written": "0.385",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_fitzpatrick17k_sd_pooled",
+  "written": "0.023",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_fitzpatrick17k_ci_lo",
+  "written": "0.373",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_fitzpatrick17k_ci_hi",
+  "written": "0.398",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_mednode_mean_pooled",
+  "written": "0.310",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_mednode_sd_pooled",
+  "written": "0.055",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_mednode_ci_lo",
+  "written": "0.284",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_mednode_ci_hi",
+  "written": "0.337",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_sd198_mean_pooled",
+  "written": "0.365",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_sd198_sd_pooled",
+  "written": "0.029",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_sd198_ci_lo",
+  "written": "0.353",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_sd198_ci_hi",
+  "written": "0.377",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_scin_mean_pooled",
+  "written": "0.534",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_scin_sd_pooled",
+  "written": "0.015",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_scin_ci_lo",
+  "written": "0.521",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_scin_ci_hi",
+  "written": "0.547",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior100 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_leak",
+  "written": "0.628",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior100 leakage"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_id",
+  "written": "0.483",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior100 ID"
+ },
+ {
+  "id": "r12_tab_0p5_prior100_id_sd",
+  "written": "0.013",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda0.5 prior100 ID sd"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_pad_heldout_mean_pooled",
+  "written": "0.488",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_pad_heldout_sd_pooled",
+  "written": "0.032",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_pad_heldout_ci_lo",
+  "written": "0.466",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_pad_heldout_ci_hi",
+  "written": "0.510",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_fitzpatrick17k_mean_pooled",
+  "written": "0.458",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_fitzpatrick17k_sd_pooled",
+  "written": "0.076",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_fitzpatrick17k_ci_lo",
+  "written": "0.446",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_fitzpatrick17k_ci_hi",
+  "written": "0.471",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_mednode_mean_pooled",
+  "written": "0.332",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_mednode_sd_pooled",
+  "written": "0.050",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_mednode_ci_lo",
+  "written": "0.304",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_mednode_ci_hi",
+  "written": "0.360",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_sd198_mean_pooled",
+  "written": "0.447",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_sd198_sd_pooled",
+  "written": "0.070",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_sd198_ci_lo",
+  "written": "0.436",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_sd198_ci_hi",
+  "written": "0.459",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_scin_mean_pooled",
+  "written": "0.572",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_scin_sd_pooled",
+  "written": "0.070",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_scin_ci_lo",
+  "written": "0.559",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_scin_ci_hi",
+  "written": "0.585",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior50 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_leak",
+  "written": "0.621",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior50 leakage"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_id",
+  "written": "0.486",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior50 ID"
+ },
+ {
+  "id": "r12_tab_0p5_prior50_id_sd",
+  "written": "0.007",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda0.5 prior50 ID sd"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_pad_heldout_mean_pooled",
+  "written": "0.592",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_pad_heldout_sd_pooled",
+  "written": "0.026",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_pad_heldout_ci_lo",
+  "written": "0.574",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_pad_heldout_ci_hi",
+  "written": "0.611",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_fitzpatrick17k_mean_pooled",
+  "written": "0.657",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_fitzpatrick17k_sd_pooled",
+  "written": "0.031",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_fitzpatrick17k_ci_lo",
+  "written": "0.644",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_fitzpatrick17k_ci_hi",
+  "written": "0.669",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_mednode_mean_pooled",
+  "written": "0.505",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_mednode_sd_pooled",
+  "written": "0.074",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_mednode_ci_lo",
+  "written": "0.476",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_mednode_ci_hi",
+  "written": "0.533",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_sd198_mean_pooled",
+  "written": "0.640",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_sd198_sd_pooled",
+  "written": "0.034",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_sd198_ci_lo",
+  "written": "0.628",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_sd198_ci_hi",
+  "written": "0.653",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_scin_mean_pooled",
+  "written": "0.678",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_scin_sd_pooled",
+  "written": "0.049",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_scin_ci_lo",
+  "written": "0.666",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_scin_ci_hi",
+  "written": "0.690",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda0.5 prior0 scin"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_leak",
+  "written": "0.758",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior0 leakage"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_id",
+  "written": "0.483",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda0.5 prior0 ID"
+ },
+ {
+  "id": "r12_tab_0p5_prior0_id_sd",
+  "written": "0.005",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0p5_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda0.5 prior0 ID sd"
+ },
+ {
+  "id": "r12_tab_2_prior100_pad_heldout_mean_pooled",
+  "written": "0.368",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior100_pad_heldout_sd_pooled",
+  "written": "0.017",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior100_pad_heldout_ci_lo",
+  "written": "0.344",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior100_pad_heldout_ci_hi",
+  "written": "0.391",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior100_fitzpatrick17k_mean_pooled",
+  "written": "0.340",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior100_fitzpatrick17k_sd_pooled",
+  "written": "0.065",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior100_fitzpatrick17k_ci_lo",
+  "written": "0.328",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior100_fitzpatrick17k_ci_hi",
+  "written": "0.352",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior100_mednode_mean_pooled",
+  "written": "0.298",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior100_mednode_sd_pooled",
+  "written": "0.032",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior100_mednode_ci_lo",
+  "written": "0.271",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior100_mednode_ci_hi",
+  "written": "0.326",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior100_sd198_mean_pooled",
+  "written": "0.325",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior100_sd198_sd_pooled",
+  "written": "0.069",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior100_sd198_ci_lo",
+  "written": "0.315",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior100_sd198_ci_hi",
+  "written": "0.336",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior100_scin_mean_pooled",
+  "written": "0.519",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 scin"
+ },
+ {
+  "id": "r12_tab_2_prior100_scin_sd_pooled",
+  "written": "0.073",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 scin"
+ },
+ {
+  "id": "r12_tab_2_prior100_scin_ci_lo",
+  "written": "0.507",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 scin"
+ },
+ {
+  "id": "r12_tab_2_prior100_scin_ci_hi",
+  "written": "0.532",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior100 scin"
+ },
+ {
+  "id": "r12_tab_2_prior100_leak",
+  "written": "0.634",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda2 prior100 leakage"
+ },
+ {
+  "id": "r12_tab_2_prior100_id",
+  "written": "0.486",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda2 prior100 ID"
+ },
+ {
+  "id": "r12_tab_2_prior100_id_sd",
+  "written": "0.012",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda2 prior100 ID sd"
+ },
+ {
+  "id": "r12_tab_2_prior50_pad_heldout_mean_pooled",
+  "written": "0.494",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior50_pad_heldout_sd_pooled",
+  "written": "0.025",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior50_pad_heldout_ci_lo",
+  "written": "0.472",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior50_pad_heldout_ci_hi",
+  "written": "0.516",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior50_fitzpatrick17k_mean_pooled",
+  "written": "0.434",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior50_fitzpatrick17k_sd_pooled",
+  "written": "0.055",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior50_fitzpatrick17k_ci_lo",
+  "written": "0.421",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior50_fitzpatrick17k_ci_hi",
+  "written": "0.447",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior50_mednode_mean_pooled",
+  "written": "0.323",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior50_mednode_sd_pooled",
+  "written": "0.048",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior50_mednode_ci_lo",
+  "written": "0.296",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior50_mednode_ci_hi",
+  "written": "0.353",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior50_sd198_mean_pooled",
+  "written": "0.436",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior50_sd198_sd_pooled",
+  "written": "0.067",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior50_sd198_ci_lo",
+  "written": "0.424",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior50_sd198_ci_hi",
+  "written": "0.447",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior50_scin_mean_pooled",
+  "written": "0.548",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 scin"
+ },
+ {
+  "id": "r12_tab_2_prior50_scin_sd_pooled",
+  "written": "0.066",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 scin"
+ },
+ {
+  "id": "r12_tab_2_prior50_scin_ci_lo",
+  "written": "0.536",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 scin"
+ },
+ {
+  "id": "r12_tab_2_prior50_scin_ci_hi",
+  "written": "0.560",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior50 scin"
+ },
+ {
+  "id": "r12_tab_2_prior50_leak",
+  "written": "0.630",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda2 prior50 leakage"
+ },
+ {
+  "id": "r12_tab_2_prior50_id",
+  "written": "0.473",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda2 prior50 ID"
+ },
+ {
+  "id": "r12_tab_2_prior50_id_sd",
+  "written": "0.020",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior50_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda2 prior50 ID sd"
+ },
+ {
+  "id": "r12_tab_2_prior0_pad_heldout_mean_pooled",
+  "written": "0.595",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior0_pad_heldout_sd_pooled",
+  "written": "0.019",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior0_pad_heldout_ci_lo",
+  "written": "0.578",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior0_pad_heldout_ci_hi",
+  "written": "0.613",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "pad_heldout",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 pad_heldout"
+ },
+ {
+  "id": "r12_tab_2_prior0_fitzpatrick17k_mean_pooled",
+  "written": "0.661",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior0_fitzpatrick17k_sd_pooled",
+  "written": "0.032",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior0_fitzpatrick17k_ci_lo",
+  "written": "0.649",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior0_fitzpatrick17k_ci_hi",
+  "written": "0.673",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 fitzpatrick17k"
+ },
+ {
+  "id": "r12_tab_2_prior0_mednode_mean_pooled",
+  "written": "0.510",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior0_mednode_sd_pooled",
+  "written": "0.034",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "mednode",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior0_mednode_ci_lo",
+  "written": "0.479",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior0_mednode_ci_hi",
+  "written": "0.541",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "mednode",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 mednode"
+ },
+ {
+  "id": "r12_tab_2_prior0_sd198_mean_pooled",
+  "written": "0.657",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior0_sd198_sd_pooled",
+  "written": "0.035",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "sd198",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior0_sd198_ci_lo",
+  "written": "0.645",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior0_sd198_ci_hi",
+  "written": "0.669",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "sd198",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 sd198"
+ },
+ {
+  "id": "r12_tab_2_prior0_scin_mean_pooled",
+  "written": "0.689",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "mean"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 scin"
+ },
+ {
+  "id": "r12_tab_2_prior0_scin_sd_pooled",
+  "written": "0.030",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "scin",
+   "pooled",
+   "sd"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 scin"
+ },
+ {
+  "id": "r12_tab_2_prior0_scin_ci_lo",
+  "written": "0.677",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_lo"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 scin"
+ },
+ {
+  "id": "r12_tab_2_prior0_scin_ci_hi",
+  "written": "0.701",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "scin",
+   "bootstrap",
+   "mahalanobis_classcond",
+   "ci_hi"
+  ],
+  "note": "tab:reweight(ci) lambda2 prior0 scin"
+ },
+ {
+  "id": "r12_tab_2_prior0_leak",
+  "written": "0.757",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "note": "tab:reweight lambda2 prior0 leakage"
+ },
+ {
+  "id": "r12_tab_2_prior0_id",
+  "written": "0.476",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "note": "tab:reweight lambda2 prior0 ID"
+ },
+ {
+  "id": "r12_tab_2_prior0_id_sd",
+  "written": "0.010",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "note": "tab:reweight lambda2 prior0 ID sd"
+ },
+ {
+  "id": "r12_delta_0p5_fitzpatrick17k",
+  "written": "0.272",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "0",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda0p5 fitzpatrick17k"
+ },
+ {
+  "id": "r12_delta_0p5_fitzpatrick17k_sd",
+  "written": "0.046",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "0",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda0p5 fitzpatrick17k"
+ },
+ {
+  "id": "r12_delta_0p5_mednode",
+  "written": "0.194",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "1",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda0p5 mednode"
+ },
+ {
+  "id": "r12_delta_0p5_mednode_sd",
+  "written": "0.041",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "1",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda0p5 mednode"
+ },
+ {
+  "id": "r12_delta_0p5_sd198",
+  "written": "0.275",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "2",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda0p5 sd198"
+ },
+ {
+  "id": "r12_delta_0p5_sd198_sd",
+  "written": "0.056",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "2",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda0p5 sd198"
+ },
+ {
+  "id": "r12_delta_0p5_pad_heldout",
+  "written": "0.232",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "3",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda0p5 pad_heldout"
+ },
+ {
+  "id": "r12_delta_0p5_pad_heldout_sd",
+  "written": "0.036",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "3",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda0p5 pad_heldout"
+ },
+ {
+  "id": "r12_delta_2_fitzpatrick17k",
+  "written": "0.321",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "4",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda2 fitzpatrick17k"
+ },
+ {
+  "id": "r12_delta_2_fitzpatrick17k_sd",
+  "written": "0.079",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "4",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda2 fitzpatrick17k"
+ },
+ {
+  "id": "r12_delta_2_mednode",
+  "written": "0.211",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "5",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda2 mednode"
+ },
+ {
+  "id": "r12_delta_2_mednode_sd",
+  "written": "0.041",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "5",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda2 mednode"
+ },
+ {
+  "id": "r12_delta_2_sd198",
+  "written": "0.332",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "6",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda2 sd198"
+ },
+ {
+  "id": "r12_delta_2_sd198_sd",
+  "written": "0.085",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "6",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda2 sd198"
+ },
+ {
+  "id": "r12_delta_2_pad_heldout",
+  "written": "0.227",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "7",
+   "diff_mean"
+  ],
+  "context": "[Pp]aired by seed",
+  "note": "paired prior0-prior100 lambda2 pad_heldout"
+ },
+ {
+  "id": "r12_delta_2_pad_heldout_sd",
+  "written": "0.024",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "7",
+   "diff_sd"
+  ],
+  "context": "rises\\s+over prior",
+  "note": "paired sd lambda2 pad_heldout"
+ },
+ {
+  "id": "r12_main_delta_2_fitzpatrick17k",
+  "written": "0.321",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "4",
+   "diff_mean"
+  ],
+  "context": "at \\$?\\\\?l?.{0,40}2.{0,10}rises by",
+  "label": "fitzpatrick",
+  "note": "main text delta lambda2 fitzpatrick17k"
+ },
+ {
+  "id": "r12_main_delta_2_mednode",
+  "written": "0.211",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "5",
+   "diff_mean"
+  ],
+  "context": "at \\$?\\\\?l?.{0,40}2.{0,10}rises by",
+  "label": "mednode",
+  "note": "main text delta lambda2 mednode"
+ },
+ {
+  "id": "r12_main_delta_2_sd198",
+  "written": "0.332",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "6",
+   "diff_mean"
+  ],
+  "context": "at \\$?\\\\?l?.{0,40}2.{0,10}rises by",
+  "label": "sd198",
+  "note": "main text delta lambda2 sd198"
+ },
+ {
+  "id": "r12_main_delta_2_pad_heldout",
+  "written": "0.227",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "paired_contrasts",
+   "7",
+   "diff_mean"
+  ],
+  "context": "at \\$?\\\\?l?.{0,40}2.{0,10}rises by",
+  "label": "pad_heldout",
+  "note": "main text delta lambda2 pad_heldout"
+ },
+ {
+  "id": "r12_main_leak_p0_l2",
+  "written": "0.757",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv2_prior0_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "context": "vs \\$?0\\.634|against \\$?0\\.628",
+  "note": "main/app leakage prior0 l2"
+ },
+ {
+  "id": "r12_l0_fitz_retrained",
+  "written": "0.728",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "A_ladv0_prior100_initscratch",
+   "agg",
+   "fitzpatrick17k",
+   "pooled",
+   "mean"
+  ],
+  "context": "0\\.728\\$? against \\$?0\\.712",
+  "label": "fitzpatrick",
+  "note": "app: retrained lambda0 Fitz"
+ },
+ {
+  "id": "r12_erminit_id_l0",
+  "written": "0.491",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv0_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "context": "Initialisation from ERM|Accuracy did not",
+  "note": "ERM-init ID lambda0"
+ },
+ {
+  "id": "r12_erminit_id_sd_l0",
+  "written": "0.008",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv0_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "context": "Accuracy did not",
+  "note": "ERM-init ID sd lambda0"
+ },
+ {
+  "id": "r12_erminit_leak_l0",
+  "written": "0.921",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv0_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "context": "leakage",
+  "note": "ERM-init leakage lambda0"
+ },
+ {
+  "id": "r12_erminit_id_l2",
+  "written": "0.484",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv2_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "mean"
+  ],
+  "context": "Initialisation from ERM|Accuracy did not",
+  "note": "ERM-init ID lambda2"
+ },
+ {
+  "id": "r12_erminit_id_sd_l2",
+  "written": "0.014",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv2_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "id_bal",
+   "sd"
+  ],
+  "context": "Accuracy did not",
+  "note": "ERM-init ID sd lambda2"
+ },
+ {
+  "id": "r12_erminit_leak_l2",
+  "written": "0.649",
+  "file": "r12_reweight/CELLS.json",
+  "key": [
+   "cells",
+   "B_ladv2_prior100_initerm",
+   "agg",
+   "fitzpatrick17k",
+   "leakage_v1_mean"
+  ],
+  "context": "leakage",
+  "note": "ERM-init leakage lambda2"
+ },
+ {
+  "id": "r12_erminit_leak_sd_l0",
+  "written": "0.008",
+  "file": "r12_reweight/CELLS.json",
+  "list": [
+   "cells",
+   "B_ladv0_prior100_initerm",
+   "per_seed"
+  ],
+  "leaf": [
+   "leakage_v1",
+   "bal_acc_mean"
+  ],
+  "stat": "sd",
+  "n": 5,
+  "context": "leakage",
+  "note": "ERM-init leakage seed sd lambda0"
+ },
+ {
+  "id": "r12_erminit_leak_sd_l2",
+  "written": "0.021",
+  "file": "r12_reweight/CELLS.json",
+  "list": [
+   "cells",
+   "B_ladv2_prior100_initerm",
+   "per_seed"
+  ],
+  "leaf": [
+   "leakage_v1",
+   "bal_acc_mean"
+  ],
+  "stat": "sd",
+  "n": 5,
+  "context": "leakage",
+  "note": "ERM-init leakage seed sd lambda2"
  }
 ]

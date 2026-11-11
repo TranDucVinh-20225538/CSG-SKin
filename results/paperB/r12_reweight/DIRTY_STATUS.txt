@@ -1,0 +1,16 @@
+?? decisions/paperB_r12_reweight.md
+?? results/paperB/r10b/job_ids.txt
+?? results/paperB/r11/b/B1_shift50_boots.md
+?? results/paperB/r11/b/B3_a4_ci.md
+?? results/paperB/r11/b/B4_splits_scin.md
+?? results/paperB/r11/b/C3_unseen_with_ci.json
+?? results/paperB/r11/b/_rule_a_scratch/
+?? results/paperB/r11/b/_unseen_scratch/
+?? results/paperB/r12_reweight/
+?? scripts/r12_reweight_common.py
+?? scripts/r12_reweight_pilot.py
+?? scripts/r12_reweight_progress.sh
+?? scripts/r12_reweight_score.py
+?? scripts/r12_reweight_train.py
+?? slurm/r12_reweight_score.sbatch
+?? slurm/r12_reweight_train.sbatch
