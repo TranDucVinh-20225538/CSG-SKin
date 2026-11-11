@@ -1,0 +1,9 @@
+{
+  "erm_path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/checkpoints/r5_p8/erm_ref/single_dann_ladv0_s62/last.ckpt",
+  "n_erm_tensors": 595,
+  "n_mapped": 1144,
+  "n_skipped_erm_non_backbone": 23,
+  "load_missing_count": 33,
+  "load_unexpected_count": 0,
+  "note": "both lesion_backbone and context_backbone from same ERM; heads random"
+}
