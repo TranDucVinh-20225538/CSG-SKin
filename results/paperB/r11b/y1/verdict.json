@@ -1,0 +1,48 @@
+{
+ "n_seeds": 5,
+ "n_hit": 5,
+ "collapse_confirmed": true,
+ "rule": "(1)\u22480.5 and (3)\u22650.70 in \u22654 of 5 seeds at X3 \u03bb=2 shift100",
+ "detail": [
+  {
+   "tag": "x3_ladv2_shift100_s42",
+   "c1": true,
+   "c3": true,
+   "hit": true,
+   "acc_adv": 0.5,
+   "fresh": 0.7658654677503026
+  },
+  {
+   "tag": "x3_ladv2_shift100_s52",
+   "c1": true,
+   "c3": true,
+   "hit": true,
+   "acc_adv": 0.4999384842519685,
+   "fresh": 0.8540549887601591
+  },
+  {
+   "tag": "x3_ladv2_shift100_s62",
+   "c1": true,
+   "c3": true,
+   "hit": true,
+   "acc_adv": 0.5009534940944882,
+   "fresh": 0.8488673698772263
+  },
+  {
+   "tag": "x3_ladv2_shift100_s72",
+   "c1": true,
+   "c3": true,
+   "hit": true,
+   "acc_adv": 0.5014148622047244,
+   "fresh": 0.853882068130728
+  },
+  {
+   "tag": "x3_ladv2_shift100_s82",
+   "c1": true,
+   "c3": true,
+   "hit": true,
+   "acc_adv": 0.499753937007874,
+   "fresh": 0.7956078160124502
+  }
+ ]
+}

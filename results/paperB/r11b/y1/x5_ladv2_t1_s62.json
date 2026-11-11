@@ -1,0 +1,17 @@
+{
+ "item": "x5",
+ "tag": "x5_ladv2_t1_s62",
+ "lam": 2.0,
+ "seed": 62,
+ "t": 1.0,
+ "final_acc_adv": 0.5021838090551181,
+ "final_loss_adv": 0.693014670310058,
+ "dead_relu": {
+  "relu0": 0.0625,
+  "relu1": 0.9375
+ },
+ "fresh_adv_heldout_acc": 0.6930658827598133,
+ "grl_grad_cosine": -1.0000001192092896,
+ "latent": 16,
+ "n_epochs": 40
+}

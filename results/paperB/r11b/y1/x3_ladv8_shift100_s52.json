@@ -1,0 +1,17 @@
+{
+ "item": "x3",
+ "tag": "x3_ladv8_shift100_s52",
+ "lam": 8.0,
+ "seed": 52,
+ "shift": 1.0,
+ "final_acc_adv": 0.500123031496063,
+ "final_loss_adv": 0.6931422521748881,
+ "dead_relu": {
+  "relu0": 0.125,
+  "relu1": 1.0
+ },
+ "fresh_adv_heldout_acc": 0.859588448901954,
+ "grl_grad_cosine": 0.0,
+ "latent": 16,
+ "n_epochs": 40
+}

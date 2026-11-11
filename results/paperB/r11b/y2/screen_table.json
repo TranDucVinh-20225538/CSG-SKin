@@ -1,0 +1,291 @@
+{
+ "locked_at_utc": "2026-11-11T11:52:27Z",
+ "table": [
+  {
+   "cfg": "A",
+   "latent": 16,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.7114651628950637,
+   "id_val_mean_lam2": 0.45980458263352564,
+   "admissible": false,
+   "notes": [
+    "y2A_lat16_ladv2_shift100_s42 id_val=0.473<0.528",
+    "y2A_lat16_ladv2_shift100_s52 id_val=0.447<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2A_lat16_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.5413078248031497,
+     "loss_adv": 0.6882727660062745,
+     "collapsed": false,
+     "V1": 0.6607616611173062,
+     "id_val": 0.47305634302629296,
+     "id_test": 0.5153854382597501
+    },
+    {
+     "tag": "y2A_lat16_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.6098056102362205,
+     "loss_adv": 0.6651976596652054,
+     "collapsed": false,
+     "V1": 0.7621686646728211,
+     "id_val": 0.4465528222407583,
+     "id_test": 0.4873145184223665
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s42",
+     "id_val": 0.46762401073403215,
+     "id_test": 0.5316161019548993
+    },
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s52",
+     "id_val": 0.4886078457264179,
+     "id_test": 0.5214605191874222
+    }
+   ]
+  },
+  {
+   "cfg": "B",
+   "latent": 16,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.9192841131533321,
+   "id_val_mean_lam2": 0.47763765890515153,
+   "admissible": false,
+   "notes": [
+    "y2B_lat16_ladv2_shift100_s42 id_val=0.482<0.528",
+    "y2B_lat16_ladv2_shift100_s52 id_val=0.474<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2B_lat16_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.5136257381889764,
+     "loss_adv": 0.6957030359684951,
+     "collapsed": false,
+     "V1": 0.9353197801393817,
+     "id_val": 0.48150627110579863,
+     "id_test": 0.5488831619392114
+    },
+    {
+     "tag": "y2B_lat16_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.4991695374015748,
+     "loss_adv": 0.691408097978652,
+     "collapsed": false,
+     "V1": 0.9032484461672826,
+     "id_val": 0.4737690467045045,
+     "id_test": 0.5172246813118465
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s42",
+     "id_val": 0.46762401073403215,
+     "id_test": 0.5316161019548993
+    },
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s52",
+     "id_val": 0.4886078457264179,
+     "id_test": 0.5214605191874222
+    }
+   ]
+  },
+  {
+   "cfg": "C",
+   "latent": 16,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.6771247515135308,
+   "id_val_mean_lam2": 0.45953887888141376,
+   "admissible": false,
+   "notes": [
+    "y2C_lat16_ladv2_shift100_s42 id_val=0.447<0.528",
+    "y2C_lat16_ladv2_shift100_s52 id_val=0.472<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2C_lat16_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.5703125,
+     "loss_adv": 0.6811947841343917,
+     "collapsed": false,
+     "V1": 0.6493621416097289,
+     "id_val": 0.44704103866474076,
+     "id_test": 0.48736687261490186
+    },
+    {
+     "tag": "y2C_lat16_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.5602546751968503,
+     "loss_adv": 0.6807239257444547,
+     "collapsed": false,
+     "V1": 0.7048873614173327,
+     "id_val": 0.4720367190980868,
+     "id_test": 0.5067449675606273
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s42",
+     "id_val": 0.46762401073403215,
+     "id_test": 0.5316161019548993
+    },
+    {
+     "tag": "y2A_lat16_ladv0_shift100_s52",
+     "id_val": 0.4886078457264179,
+     "id_test": 0.5214605191874222
+    }
+   ]
+  },
+  {
+   "cfg": "A",
+   "latent": 128,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.7400870817600136,
+   "id_val_mean_lam2": 0.4773524025327614,
+   "admissible": false,
+   "notes": [
+    "y2A_lat128_ladv2_shift100_s42 id_val=0.486<0.528",
+    "y2A_lat128_ladv2_shift100_s52 id_val=0.469<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2A_lat128_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.5544106791338582,
+     "loss_adv": 0.6867894971464562,
+     "collapsed": false,
+     "V1": 0.7707998307741573,
+     "id_val": 0.486132975474983,
+     "id_test": 0.5367878301177237
+    },
+    {
+     "tag": "y2A_lat128_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.5651451771653543,
+     "loss_adv": 0.6811369516718107,
+     "collapsed": false,
+     "V1": 0.70937433274587,
+     "id_val": 0.4685718295905398,
+     "id_test": 0.4937979195961677
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s42",
+     "id_val": 0.47811135695812734,
+     "id_test": 0.5240676401236279
+    },
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s52",
+     "id_val": 0.4852730022620707,
+     "id_test": 0.5262322667091486
+    }
+   ]
+  },
+  {
+   "cfg": "B",
+   "latent": 128,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.8849460448346771,
+   "id_val_mean_lam2": 0.4774405534466636,
+   "admissible": false,
+   "notes": [
+    "y2B_lat128_ladv2_shift100_s42 id_val=0.495<0.528",
+    "y2B_lat128_ladv2_shift100_s52 id_val=0.460<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2B_lat128_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.5346026082677166,
+     "loss_adv": 0.6928031770732459,
+     "collapsed": false,
+     "V1": 0.892652795978921,
+     "id_val": 0.4951967116011041,
+     "id_test": 0.5290095472275176
+    },
+    {
+     "tag": "y2B_lat128_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.5412463090551181,
+     "loss_adv": 0.6839688633839915,
+     "collapsed": false,
+     "V1": 0.8772392936904332,
+     "id_val": 0.4596843952922231,
+     "id_test": 0.5035264802888522
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s42",
+     "id_val": 0.47811135695812734,
+     "id_test": 0.5240676401236279
+    },
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s52",
+     "id_val": 0.4852730022620707,
+     "id_test": 0.5262322667091486
+    }
+   ]
+  },
+  {
+   "cfg": "C",
+   "latent": 128,
+   "n_lam2": 2,
+   "v1_mean_lam2": 0.735650639476414,
+   "id_val_mean_lam2": 0.42721520504197996,
+   "admissible": false,
+   "notes": [
+    "y2C_lat128_ladv2_shift100_s42 id_val=0.437<0.528",
+    "y2C_lat128_ladv2_shift100_s52 id_val=0.418<0.528"
+   ],
+   "lam2": [
+    {
+     "tag": "y2C_lat128_ladv2_shift100_s42",
+     "seed": 42,
+     "acc_adv": 0.6648314468503937,
+     "loss_adv": 0.6125116909113456,
+     "collapsed": false,
+     "V1": 0.751314542571758,
+     "id_val": 0.43680087545555857,
+     "id_test": 0.48196494402883727
+    },
+    {
+     "tag": "y2C_lat128_ladv2_shift100_s52",
+     "seed": 52,
+     "acc_adv": 0.6423474409448819,
+     "loss_adv": 0.6308390148512022,
+     "collapsed": false,
+     "V1": 0.71998673638107,
+     "id_val": 0.4176295346284013,
+     "id_test": 0.4611272837177317
+    }
+   ],
+   "lam0": [
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s42",
+     "id_val": 0.47811135695812734,
+     "id_test": 0.5240676401236279
+    },
+    {
+     "tag": "y2A_lat128_ladv0_shift100_s52",
+     "id_val": 0.4852730022620707,
+     "id_test": 0.5262322667091486
+    }
+   ]
+  }
+ ],
+ "admissible": [],
+ "selected": null,
+ "verdict": "adversary collapse not resolved",
+ "reason": "No admissible configuration at \u03bb=2 (both seeds). Admissible requires: (i) not collapsed on either seed (collapse = acc within 0.005 of 0.5 AND loss within 0.001 of ln 2); (ii) ID val balanced accuracy \u2265 0.528 on both seeds. Stop Y2 main and Y3; do not submit further jobs.",
+ "rules": {
+  "collapse": "acc within 0.005 of 0.5 AND loss within 0.001 of ln 2, both seeds at \u03bb=2",
+  "competence": "ID val balanced accuracy \u2265 0.528 (validation, not test), both seeds",
+  "select": "lowest two-seed mean V1 at \u03bb=2; ties within 0.01 \u2192 smaller latent, then A < B < C",
+  "no_admissible": "stop Y2 and Y3; do not submit main"
+ }
+}

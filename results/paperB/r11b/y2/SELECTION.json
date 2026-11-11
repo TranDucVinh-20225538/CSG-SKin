@@ -1,0 +1,14 @@
+{
+ "locked_at_utc": "2026-11-11T11:52:27Z",
+ "selected": null,
+ "verdict": "adversary collapse not resolved",
+ "reason": "No admissible configuration at \u03bb=2 (both seeds). Admissible requires: (i) not collapsed on either seed (collapse = acc within 0.005 of 0.5 AND loss within 0.001 of ln 2); (ii) ID val balanced accuracy \u2265 0.528 on both seeds. Stop Y2 main and Y3; do not submit further jobs.",
+ "rules": {
+  "collapse": "acc within 0.005 of 0.5 AND loss within 0.001 of ln 2, both seeds at \u03bb=2",
+  "competence": "ID val balanced accuracy \u2265 0.528 (validation, not test), both seeds",
+  "select": "lowest two-seed mean V1 at \u03bb=2; ties within 0.01 \u2192 smaller latent, then A < B < C",
+  "no_admissible": "stop Y2 and Y3; do not submit main"
+ },
+ "admissible": [],
+ "design": "decisions/paperB_r11b.md"
+}

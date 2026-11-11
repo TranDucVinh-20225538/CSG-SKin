@@ -1,0 +1,20 @@
+{
+  "tag": "y2A_lat128_ladv2_shift100_s42",
+  "phase": "screen",
+  "cfg": "A",
+  "latent": 128,
+  "lam": 2.0,
+  "seed": 42,
+  "shift": 1.0,
+  "adv_lr_mult": 30.0,
+  "adv_inner_steps": 1,
+  "alpha_fn": "recipe",
+  "max_epochs": 40,
+  "batch": 64,
+  "lr": 0.0002,
+  "cls_lr_mult": 0.2,
+  "adversary": "LeakyReLU(0.2), no dropout",
+  "cache": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/r11/x3/cache/s42",
+  "commit": "59079ef",
+  "design": "decisions/paperB_r11b.md"
+}
