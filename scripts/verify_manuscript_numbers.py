@@ -826,7 +826,7 @@ def table_index(paths):
                 if not r:
                     continue
                 cells = [c.strip() for c in re.split(r"(?<!\\)&", r)]
-                key = re.sub(r"[\\$\{\}]|textbf|mathbf|\s", "", cells[0])
+                key = re.sub(r"[\\$\{\}]|textbf|mathbf|detokenize|\s", "", cells[0])
                 rows.setdefault(key, cells)
             out[lab.group(1)] = {"rows": rows, "line": s.count("\n", 0, m.start()) + 1, "file": p}
     return out

@@ -53,6 +53,11 @@ def table_rows(tex, label):
     return rows
 
 
+def plain(cell):
+    """Cell text with \\detokenize{x} and \\_ normalised, so both spellings of pad_heldout match."""
+    return re.sub(r"\\detokenize\{([^}]*)\}", r"\1", cell).replace("\\_", "_")
+
+
 def nums(cell):
     return re.findall(r"\d+\.\d+", cell)
 
@@ -105,7 +110,7 @@ def main():
     a4 = {(str(int(r["lambda"])), r["set"]): r for r in load("r10b/B3_a4_ci.json")["rows"]}
     for r in table_rows(tex, "tab:unseen"):
         recipe = r[0]
-        s = next((k for k, t in SET_TEX.items() if t == r[1]), None)
+        s = next((k for k, t in SET_TEX.items() if plain(t) == plain(r[1])), None)
         if recipe not in ("main", "A4") or s is None:
             continue
         if recipe == "main":
@@ -131,7 +136,7 @@ def main():
         k = int(b["k"].split("/")[0])
         want = [f3(b["mean"]), f3(b["sd"]), f3(b["ci"][0]), f3(b["ci"][1])]
         hit = [r for r in rows_sf if r[1].replace("$", "").replace("\\", "") == "50%" and r[2] == lam
-               and SET_TEX[b["set"]] in r[0]]
+               and plain(SET_TEX[b["set"]]) in plain(r[0])]
         w = "tab:shiftfull 50% λ={} {}".format(lam, b["set"])
         if not hit:
             check(w, False, "row not found")
