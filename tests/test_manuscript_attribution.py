@@ -96,10 +96,6 @@ def test_r11_appendix_attachments():
         ("$0.366\\pm0.017$", "0.017", "bcn"),
         ("leakage $0.599\\pm0.041$", "0.599", None),
         ("$0.599\\pm0.041$", "0.041", None),
-        ("Fitzpatrick17k $0.672$--$0.707$", "0.672", "fitzpatrick"),
-        ("$0.672$--$0.707$", "0.707", "fitzpatrick"),
-        ("SD-198 $0.668$--$0.698$", "0.668", "sd198"),
-        ("$0.668$--$0.698$", "0.698", "sd198"),
     ]
     for snippet, token, lab in expect:
         got = at(app, snippet, token)

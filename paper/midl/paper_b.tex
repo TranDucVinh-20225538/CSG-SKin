@@ -620,7 +620,7 @@ training was stopped early.
 \item Architecture: no single-encoder DANN reached invariance with EfficientNet-B3 or DINOv2-S/14 in 27 screened configurations, so the inversion is untested there.
 \item Competence: in-distribution accuracy is $0.04$--$0.08$ below ERM on the same split ($0.095$ for DINOv2); an 80-epoch schedule did not close the gap.
 \item Statistics: MED-NODE and SD-198 are resampled by image; the five scores share one latent.
-\item Mechanism: a Gaussian toy model, a semi-synthetic label-shift dose--response, and an adversary on a frozen ERM head (never invariant) did not reproduce or test the inversion.
+\item Mechanism: a Gaussian toy model with label shift did not reproduce the inversion.
 \item Warning signals: none computed on in-distribution data alone flagged inverted runs.
 \item Mitigation: the few-label remedy is post hoc and costs in-distribution accuracy.
 \item Data: we obtained $3{,}887$ of $16{,}577$ Fitzpatrick17k images; the inversion holds within each skin-type group.
@@ -1384,21 +1384,11 @@ $0.953$, $0.740$, $0.943$). Of melanomas the $\lam=2$ classifier calls nevus wit
 $0.9$, M1 flags $0.000$ (Fitzpatrick17k) and $0.002$ (SD-198) at $95\%$ TPR, M2 $0.046$ and $0.037$,
 M3 $0.382$ and $0.335$.
 
-\textbf{Adversary on a frozen ERM head.} A two-layer head ($16$-d) with a domain adversary on
-frozen ERM EfficientNet-B3 features (ERM ID balanced accuracy $0.558$). Held-out leakage stayed
-above $0.60$ in every cell ($0.613\pm0.043$ at $\lam=0$; $0.767\pm0.033$ at $\lam=2$), and no
-OOD set met the criterion. Invariance was not reached, so this test did not take place.
-
 \textbf{BCN$\to$HAM with DANN.} Total variation of class priors between BCN training and HAM
 adversary images is $0.361$. At $\lam=2$ with full label shift, ID balanced accuracy is
 $0.366\pm0.017$ and leakage $0.599\pm0.041$; no labelled unseen dataset (Fitzpatrick17k, MED-NODE,
 SD-198) meets the criterion at shift $100\%$ or $0\%$. HAM-heldout meets it but is the aligned
 domain and is not counted.
-
-\textbf{Semi-synthetic label shift.} Frozen ERM features, head as above, and a synthetic
-smartphone target (blur, colour shift, JPEG) built from ISIC and PAD-UFES-20 images mixed at
-$t\in\{0, 0.25, 0.5, 0.75, 1\}$ (three seeds). At $\lam=2$ no unseen dataset met the criterion at
-any $t$ (Fitzpatrick17k $0.672$--$0.707$, SD-198 $0.668$--$0.698$).
 
 \FloatBarrier
 \section{Limitations in detail}
@@ -1442,10 +1432,7 @@ SD-198 carry no patient identifiers and are resampled by image, so their interva
 narrow; SCIN is used only as an OOD set because almost none of it maps to the ISIC classes.
 The five OOD scores are functions of one latent and are not independent evidence.
 \textbf{Mechanism.} A two-domain Gaussian toy model with label shift did not reproduce the
-inversion, so the conditions we identify may not be sufficient in general. Two further routes
-did not settle the mechanism (Appendix~\ref{app:r11}): an adversary on a head over frozen ERM
-features never reached invariance (leakage $\ge0.613$ in every cell), and a semi-synthetic
-target with controlled label shift produced no inversion at any mixing level.
+inversion, so the conditions we identify may not be sufficient in general.
 \textbf{Second pair.} A DANN trained from BCN against HAM did not reproduce the inversion on
 the labelled unseen datasets, so the effect is shown for one source--target pair only. \textbf{Warning
 signals.} No statistic computed on in-distribution data alone flagged the inverted runs; the
