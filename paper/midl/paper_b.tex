@@ -52,7 +52,7 @@ that the classifier calls benign nevus with confidence above $0.9$ increases fro
 $51$--$81\%$, and the monitor accepts almost all of these images with or without adaptation.
 Correcting for the class priors during training recovers detection only in part when the
 priors are estimated without labels; in a post hoc analysis, priors from $50$ labelled target images bring detection
-to the level obtained with the true priors, at a cost in in-distribution accuracy. In a sweep of 27 single-encoder configurations, no gradient-reversal model reached domain invariance, so these results do not show that every DANN inverts detection. We recommend checking OOD detection again after domain adaptation and
+to the level obtained with the true priors, at a cost in in-distribution accuracy. In a sweep of 27 single-encoder configurations, no gradient-reversal model reached domain invariance, so these results do not show that every DANN inverts detection. The inversion is shown for one dermatology source--target pair (ISIC$\to$PAD-UFES-20); a second pair (BCN$\to$HAM) did not reproduce it. We recommend checking OOD detection again after domain adaptation and
 measuring domain leakage within class.
 \end{abstract}
 
@@ -627,8 +627,8 @@ Each point is given in full in Appendix~\ref{app:limits}.
 
 \section{Conclusion}
 We showed that domain-adversarial training can make an OOD monitor rank held-out images from the aligned domain and from external sources as more
-in-distribution than the model's own test images. In our experiments (one dermatology task, a dual-encoder model with EfficientNet-B3 and DINOv2-S/14 backbones), the interventions support label shift between the
-domains that the adversary aligns as the explanation in the settings tried. Single-encoder DANN did not reach invariance in our screen, so the effect is untested there. The adversary moves unfamiliar images toward the majority
+in-distribution than the model's own test images. In our experiments (one dermatology source--target pair, ISIC$\to$PAD-UFES-20, with a dual-encoder model with EfficientNet-B3 and DINOv2-S/14 backbones), the interventions support label shift between the
+domains that the adversary aligns as the explanation in the settings tried. A DANN trained from BCN against HAM did not reproduce the inversion. Single-encoder DANN did not reach invariance in our screen, so the effect is untested there. The adversary moves unfamiliar images toward the majority
 class, and the usual leakage probe does not detect this misalignment. Checking OOD detection
 on unseen sources after adaptation, measuring leakage within class and correcting for class
 priors are cheap steps. With a small labelled sample from the target domain, the last of
