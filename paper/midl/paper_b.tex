@@ -846,7 +846,7 @@ Shift $0\%$ removes DF and VASC from the adversary's ISIC stream as well as chan
 six-class control removes only DF and VASC and renormalises ISIC's priors over the six shared classes
 (MEL $0.182$, NV $0.518$, BCC $0.134$, AK $0.035$, BKL $0.106$, SCC $0.025$); the classification loss still uses
 all eight classes and PAD labels are not used. Recovery is (six-class $-$ shift $100\%$) / (shift $0\%$ $-$
-shift $100\%$) from the seed means. The reading rule was written before the runs: class support is not the
+shift $100\%$) from the seed means. The reading rule is: class support is not the
 driver if, at $\lam=2$, the inversion criterion is met on at least two of the three labelled external
 datasets and recovery is below $0.25$ on each of them. It is met on all three, with recovery $0.037$--$0.063$;
 $\lam=0.5$ points the same way. No six-class run was degraded (in-distribution balanced accuracy
@@ -1150,9 +1150,9 @@ $100\%$ (five seeds) & 2 & $0.507$ & & $0.381$ & $0.405$ & met \\
 
 Threshold: $95\%$ acceptance of ISIC validation images, set per model. Label map:
 Fitzpatrick17k melanoma, basal cell carcinoma, squamous cell carcinoma and actinic keratosis
-to MEL, BCC, SCC, AK; SD-198 Malignant\_Melanoma and Lentigo\_Maligna\_Melanoma to MEL,
-Basal\_Cell\_Carcinoma to BCC, Bowen's disease and Keratoacanthoma to SCC, and
-Actinic\_solar\_Damage (actinic keratosis) to AK; other SD-198 classes are excluded.
+to MEL, BCC, SCC, AK; SD-198 \texttt{\detokenize{Malignant_Melanoma}} and \texttt{\detokenize{Lentigo_Maligna_Melanoma}} to MEL,
+\texttt{\detokenize{Basal_Cell_Carcinoma}} to BCC, Bowen's disease and Keratoacanthoma to SCC, and
+\texttt{\detokenize{Actinic_solar_Damage}} (actinic keratosis) to AK; other SD-198 classes are excluded.
 \texttt{\detokenize{pad_heldout}} has nine melanomas and is not used.
 
 \textbf{FPR@95TPR on \texttt{\detokenize{pad_heldout}}.} With the threshold at the $95$th percentile of ISIC test
