@@ -14860,5 +14860,1034 @@
    "r8_d2",
    "gpu_hours_align"
   ]
+ },
+ {
+  "id": "r11_x1_n_fitz_in",
+  "written": "586",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "counts",
+   "in-ISIC"
+  ],
+  "label": "fitzpatrick",
+  "context": "ISIC class",
+  "note": "X1 split size, in-ISIC"
+ },
+ {
+  "id": "r11_x1_n_sd_in",
+  "written": "525",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "counts",
+   "in-ISIC"
+  ],
+  "label": "sd198",
+  "context": "ISIC class",
+  "note": "X1 split size, in-ISIC"
+ },
+ {
+  "id": "r11_x1_n_fitz_out",
+  "written": "3{,}241",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "counts",
+   "out-of-ISIC"
+  ],
+  "label": "fitzpatrick",
+  "context": "ISIC class",
+  "note": "X1 split size, out-of-ISIC"
+ },
+ {
+  "id": "r11_x1_n_sd_out",
+  "written": "5{,}950",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "counts",
+   "out-of-ISIC"
+  ],
+  "label": "sd198",
+  "context": "ISIC class",
+  "note": "X1 split size, out-of-ISIC"
+ },
+ {
+  "id": "r11_x1_n_fitz_amb",
+  "written": "60",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "counts",
+   "ambiguous"
+  ],
+  "label": "fitzpatrick",
+  "context": "ISIC class",
+  "note": "X1 split size, ambiguous"
+ },
+ {
+  "id": "r11_x1_n_sd_amb",
+  "written": "109",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "counts",
+   "ambiguous"
+  ],
+  "label": "sd198",
+  "context": "ISIC class",
+  "note": "X1 split size, ambiguous"
+ },
+ {
+  "id": "r11_x1_l0_fitz_in",
+  "written": "0.755",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "0.0",
+   "subsets",
+   "in-ISIC",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "in/out AUROC",
+  "note": "X1 Mahalanobis mean, \u03bb=0 in-ISIC"
+ },
+ {
+  "id": "r11_x1_l0_fitz_out",
+  "written": "0.706",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "0.0",
+   "subsets",
+   "out-of-ISIC",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "in/out AUROC",
+  "note": "X1 Mahalanobis mean, \u03bb=0 out-of-ISIC"
+ },
+ {
+  "id": "r11_x1_l0_sd_in",
+  "written": "0.723",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "0.0",
+   "subsets",
+   "in-ISIC",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "in/out AUROC",
+  "note": "X1 Mahalanobis mean, \u03bb=0 in-ISIC"
+ },
+ {
+  "id": "r11_x1_l0_sd_out",
+  "written": "0.708",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "0.0",
+   "subsets",
+   "out-of-ISIC",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "in/out AUROC",
+  "note": "X1 Mahalanobis mean, \u03bb=0 out-of-ISIC"
+ },
+ {
+  "id": "r11_x1_l2_fitz_in",
+  "written": "0.341",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC mean"
+ },
+ {
+  "id": "r11_x1_l2_fitz_in_lo",
+  "written": "0.322",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "ci_lo"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC ci_lo"
+ },
+ {
+  "id": "r11_x1_l2_fitz_in_hi",
+  "written": "0.362",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "ci_hi"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC ci_hi"
+ },
+ {
+  "id": "r11_x1_l2_fitz_out",
+  "written": "0.417",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 out-of-ISIC mean"
+ },
+ {
+  "id": "r11_x1_l2_fitz_out_lo",
+  "written": "0.403",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "ci_lo"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 out-of-ISIC ci_lo"
+ },
+ {
+  "id": "r11_x1_l2_fitz_out_hi",
+  "written": "0.431",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "ci_hi"
+  ],
+  "label": "fitzpatrick",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 out-of-ISIC ci_hi"
+ },
+ {
+  "id": "r11_x1_l2_sd_in",
+  "written": "0.302",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC mean"
+ },
+ {
+  "id": "r11_x1_l2_sd_in_lo",
+  "written": "0.283",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "ci_lo"
+  ],
+  "label": "sd198",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC ci_lo"
+ },
+ {
+  "id": "r11_x1_l2_sd_in_hi",
+  "written": "0.323",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "ci_hi"
+  ],
+  "label": "sd198",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 in-ISIC ci_hi"
+ },
+ {
+  "id": "r11_x1_l2_sd_out",
+  "written": "0.382",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "/\\$0\\.382",
+  "note": "X1 \u03bb=2 out-of-ISIC mean"
+ },
+ {
+  "id": "r11_x1_l2_sd_out_lo",
+  "written": "0.368",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "ci_lo"
+  ],
+  "label": "sd198",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 out-of-ISIC ci_lo"
+ },
+ {
+  "id": "r11_x1_l2_sd_out_hi",
+  "written": "0.395",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "ci_hi"
+  ],
+  "label": "sd198",
+  "context": "\\\\lam=2\\$ it is",
+  "note": "X1 \u03bb=2 out-of-ISIC ci_hi"
+ },
+ {
+  "id": "r11_x1_l2_paired_fitz",
+  "written": "-0.075",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "paired_in_minus_out",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "paired in",
+  "note": "X1 paired in\u2212out at \u03bb=2, Fitzpatrick17k"
+ },
+ {
+  "id": "r11_x1_l2_paired_sd",
+  "written": "-0.079",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "paired_in_minus_out",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "paired in",
+  "note": "X1 paired in\u2212out at \u03bb=2, SD-198"
+ },
+ {
+  "id": "r11_x1_l2_fitz_in_k_below",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "k_below"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 fitzpatrick17k in-ISIC k_below"
+ },
+ {
+  "id": "r11_x1_l2_fitz_in_n_seeds",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "n_seeds"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 fitzpatrick17k in-ISIC n_seeds"
+ },
+ {
+  "id": "r11_x1_l2_fitz_out_k_below",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "k_below"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 fitzpatrick17k out-of-ISIC k_below"
+ },
+ {
+  "id": "r11_x1_l2_fitz_out_n_seeds",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "fitzpatrick17k",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "n_seeds"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 fitzpatrick17k out-of-ISIC n_seeds"
+ },
+ {
+  "id": "r11_x1_l2_sd19_in_k_below",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "k_below"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 sd198 in-ISIC k_below"
+ },
+ {
+  "id": "r11_x1_l2_sd19_in_n_seeds",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "in-ISIC",
+   "n_seeds"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 sd198 in-ISIC n_seeds"
+ },
+ {
+  "id": "r11_x1_l2_sd19_out_k_below",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "k_below"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 sd198 out-of-ISIC k_below"
+ },
+ {
+  "id": "r11_x1_l2_sd19_out_n_seeds",
+  "written": "5",
+  "file": "r11/x1/X1.json",
+  "key": [
+   "sd198",
+   "by_lambda",
+   "2.0",
+   "subsets",
+   "out-of-ISIC",
+   "n_seeds"
+  ],
+  "context": "both parts meet the criterion",
+  "note": "X1 \u03bb=2 sd198 out-of-ISIC n_seeds"
+ },
+ {
+  "id": "r11_x2_m1_pad",
+  "written": "0.381",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M1|lam2|pad_heldout",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "pad_heldout",
+  "context": "M1\\s+meets the criterion",
+  "note": "X2 M1 \u03bb=2 Mahalanobis pad_heldout"
+ },
+ {
+  "id": "r11_x2_m1_fitz",
+  "written": "0.405",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M1|lam2|fitzpatrick17k",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "M1\\s+meets the criterion",
+  "note": "X2 M1 \u03bb=2 Mahalanobis fitzpatrick17k"
+ },
+ {
+  "id": "r11_x2_m1_med",
+  "written": "0.288",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M1|lam2|mednode",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "mednode",
+  "context": "M1\\s+meets the criterion",
+  "note": "X2 M1 \u03bb=2 Mahalanobis mednode"
+ },
+ {
+  "id": "r11_x2_m1_sd",
+  "written": "0.376",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M1|lam2|sd198",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "M1\\s+meets the criterion",
+  "note": "X2 M1 \u03bb=2 Mahalanobis sd198"
+ },
+ {
+  "id": "r11_x2_m2_pad",
+  "written": "0.708",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M2|lam2|pad_heldout",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "pad_heldout",
+  "context": "M2 meets it on none",
+  "note": "X2 M2 \u03bb=2 Mahalanobis pad_heldout"
+ },
+ {
+  "id": "r11_x2_m2_fitz",
+  "written": "0.802",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M2|lam2|fitzpatrick17k",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "M2 meets it on none",
+  "note": "X2 M2 \u03bb=2 Mahalanobis fitzpatrick17k"
+ },
+ {
+  "id": "r11_x2_m2_med",
+  "written": "0.518",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M2|lam2|mednode",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "mednode",
+  "context": "M2 meets it on none",
+  "note": "X2 M2 \u03bb=2 Mahalanobis mednode"
+ },
+ {
+  "id": "r11_x2_m2_sd",
+  "written": "0.785",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M2|lam2|sd198",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "M2 meets it on none",
+  "note": "X2 M2 \u03bb=2 Mahalanobis sd198"
+ },
+ {
+  "id": "r11_x2_m3_pad",
+  "written": "0.792",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M3|lam2|pad_heldout",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "pad_heldout",
+  "context": "nor does M3",
+  "note": "X2 M3 \u03bb=2 Mahalanobis pad_heldout"
+ },
+ {
+  "id": "r11_x2_m3_fitz",
+  "written": "0.953",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M3|lam2|fitzpatrick17k",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "nor does M3",
+  "note": "X2 M3 \u03bb=2 Mahalanobis fitzpatrick17k"
+ },
+ {
+  "id": "r11_x2_m3_med",
+  "written": "0.740",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M3|lam2|mednode",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "mednode",
+  "context": "nor does M3",
+  "note": "X2 M3 \u03bb=2 Mahalanobis mednode"
+ },
+ {
+  "id": "r11_x2_m3_sd",
+  "written": "0.943",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "cells",
+   "M3|lam2|sd198",
+   "mahalanobis_classcond",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "nor does M3",
+  "note": "X2 M3 \u03bb=2 Mahalanobis sd198"
+ },
+ {
+  "id": "r11_x2_flag_m1_fitz",
+  "written": "0.000",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M1|fitzpatrick17k",
+   "share_mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "M1 flags",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x2_flag_m1_sd",
+  "written": "0.002",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M1|sd198",
+   "share_mean"
+  ],
+  "label": "sd198",
+  "context": "M1 flags",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x2_flag_m2_fitz",
+  "written": "0.046",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M2|fitzpatrick17k",
+   "share_mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "TPR, M2",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x2_flag_m2_sd",
+  "written": "0.037",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M2|sd198",
+   "share_mean"
+  ],
+  "label": "sd198",
+  "context": "TPR, M2",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x2_flag_m3_fitz",
+  "written": "0.382",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M3|fitzpatrick17k",
+   "share_mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "M3 \\$0\\.382",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x2_flag_m3_sd",
+  "written": "0.335",
+  "file": "r11/x2/RESULTS.json",
+  "key": [
+   "clinical",
+   "M3|sd198",
+   "share_mean"
+  ],
+  "label": "sd198",
+  "context": "M3 \\$0\\.382",
+  "note": "X2 share of MEL\u2192NV (conf>0.9) flagged at 95% TPR"
+ },
+ {
+  "id": "r11_x3_latent",
+  "written": "16",
+  "file": "r11/x3/runs/x3_ladv2_shift100_s42/config.json",
+  "key": [
+   "latent"
+  ],
+  "context": "two-layer head",
+  "note": "X3 head width, latent in the run config"
+ },
+ {
+  "id": "r11_x3_erm_ref",
+  "written": "0.558",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "erm_ref"
+  ],
+  "context": "ERM ID balanced accuracy|ERM:",
+  "note": "X3 ERM reference ID balanced accuracy; same figure as the main-text ERM"
+ },
+ {
+  "id": "r11_x3_invariant_thr",
+  "written": "0.60",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "invariant_v1"
+  ],
+  "context": "stayed above",
+  "note": "X3 invariance threshold recorded with the run"
+ },
+ {
+  "id": "r11_x3_v1_l0",
+  "written": "0.613",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "cells",
+   "lam0|shift100",
+   "v1",
+   "mean"
+  ],
+  "context": "every cell",
+  "note": "X3 held-out leakage at \u03bb=0, shift 100%; also the minimum cell mean"
+ },
+ {
+  "id": "r11_x3_v1_l0_sd",
+  "written": "0.043",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "cells",
+   "lam0|shift100",
+   "v1",
+   "sd"
+  ],
+  "context": "0\\.613",
+  "note": "X3 seed s.d. of that leakage"
+ },
+ {
+  "id": "r11_x3_v1_l2",
+  "written": "0.767",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "v1",
+   "mean"
+  ],
+  "context": "0\\.767",
+  "note": "X3 held-out leakage at \u03bb=2, shift 100%"
+ },
+ {
+  "id": "r11_x3_v1_l2_sd",
+  "written": "0.033",
+  "file": "r11/x3/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "v1",
+   "sd"
+  ],
+  "context": "0\\.767",
+  "note": "X3 seed s.d. at \u03bb=2"
+ },
+ {
+  "id": "r11_x4_tv",
+  "written": "0.361",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "tv_priors",
+   "tv_bcn_train_vs_ham_adv"
+  ],
+  "label": "ham",
+  "context": "between BCN",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "TV of class priors, BCN train vs HAM adversary"
+ },
+ {
+  "id": "r11_x4_tv_2dp",
+  "written": "0.36",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "tv_priors",
+   "tv_bcn_train_vs_ham_adv"
+  ],
+  "label": "ham",
+  "context": "prior total variation",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "same TV rounded to two decimals in the discussion"
+ },
+ {
+  "id": "r11_x4_id",
+  "written": "0.366",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "id_bal",
+   "mean"
+  ],
+  "label": "bcn",
+  "context": "ID balanced accuracy",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "X4 ID balanced accuracy, \u03bb=2, full label shift"
+ },
+ {
+  "id": "r11_x4_id_sd",
+  "written": "0.017",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "id_bal",
+   "sd"
+  ],
+  "label": "bcn",
+  "context": "ID balanced accuracy",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "X4 seed s.d. of ID balanced accuracy"
+ },
+ {
+  "id": "r11_x4_v1",
+  "written": "0.599",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "v1",
+   "mean"
+  ],
+  "context": "leakage",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "X4 held-out leakage V1 at \u03bb=2; discussion and appendix"
+ },
+ {
+  "id": "r11_x4_v1_sd",
+  "written": "0.041",
+  "file": "r11/x4/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|shift100",
+   "v1",
+   "sd"
+  ],
+  "context": "0\\.599",
+  "near": [
+   "bcn",
+   "ham"
+  ],
+  "note": "X4 seed s.d. of held-out leakage"
+ },
+ {
+  "id": "r11_x5_t_0",
+  "written": "0",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "t_levels",
+   "0"
+  ],
+  "context": "t\\\\in",
+  "note": "X5 mixing grid t=0"
+ },
+ {
+  "id": "r11_x5_t_0p25",
+  "written": "0.25",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "t_levels",
+   "1"
+  ],
+  "context": "t\\\\in",
+  "note": "X5 mixing grid t=0.25"
+ },
+ {
+  "id": "r11_x5_t_0p5",
+  "written": "0.5",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "t_levels",
+   "2"
+  ],
+  "context": "t\\\\in",
+  "note": "X5 mixing grid t=0.5"
+ },
+ {
+  "id": "r11_x5_t_0p75",
+  "written": "0.75",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "t_levels",
+   "3"
+  ],
+  "context": "t\\\\in",
+  "note": "X5 mixing grid t=0.75"
+ },
+ {
+  "id": "r11_x5_t_1",
+  "written": "1",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "t_levels",
+   "4"
+  ],
+  "context": "t\\\\in",
+  "note": "X5 mixing grid t=1"
+ },
+ {
+  "id": "r11_x5_fitz_lo",
+  "written": "0.672",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|t1",
+   "point_maha",
+   "fitzpatrick17k",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "Fitzpatrick17k \\$0\\.672",
+  "note": "X5 min over t of Fitzpatrick17k Mahalanobis at \u03bb=2 (attained at t=1)"
+ },
+ {
+  "id": "r11_x5_fitz_hi",
+  "written": "0.707",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|t0.5",
+   "point_maha",
+   "fitzpatrick17k",
+   "mean"
+  ],
+  "label": "fitzpatrick",
+  "context": "0\\.672\\$--\\$0\\.707",
+  "note": "X5 max over t of Fitzpatrick17k Mahalanobis at \u03bb=2 (attained at t=0.5)"
+ },
+ {
+  "id": "r11_x5_sd_lo",
+  "written": "0.668",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|t1",
+   "point_maha",
+   "sd198",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "SD-198 \\$0\\.668",
+  "note": "X5 min over t of SD-198 Mahalanobis at \u03bb=2 (attained at t=1)"
+ },
+ {
+  "id": "r11_x5_sd_hi",
+  "written": "0.698",
+  "file": "r11/x5/RESULTS.json",
+  "key": [
+   "cells",
+   "lam2|t0.25",
+   "point_maha",
+   "sd198",
+   "mean"
+  ],
+  "label": "sd198",
+  "context": "0\\.668\\$--\\$0\\.698",
+  "note": "X5 max over t of SD-198 Mahalanobis at \u03bb=2 (attained at t=0.25)"
  }
 ]

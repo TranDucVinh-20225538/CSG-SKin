@@ -26,7 +26,17 @@ Report only; never edits the manuscript. Categories per number:
 Flags on matches: lambda-source (every matching source carries a λ not mentioned in the sentence),
 pad_full-only (every matching source is pad_full), pair (mean ± s.d. both found in one source group).
 
-Usage: python scripts/verify_manuscript_numbers.py [--paper-root DIR] [--out results/paperB/manuscript_number_check.md]
+Usage:
+  python scripts/verify_manuscript_numbers.py \\
+      --manifest paper/number_manifest.json \\
+      --allowlist paper/number_allowlist.json \\
+      --out results/paperB/manuscript_number_check.md
+
+See paper/midl/VERIFY.md. Manifest entries may set `context` (regex over a
+window around the number), `label` (dataset that number is attached to) and
+`near` (dataset names that must appear in that window). Context-scoped
+entries are checked at every matching site; entries without `context` still
+pass when any site carries the declared label.
 """
 
 from __future__ import annotations
@@ -249,6 +259,8 @@ def tex_numbers(path):
         s = re.sub(re.escape(k) + r"(?![A-Za-z])", lambda _m, v=mac[k]: v, s)
     s = SKIP_CMD.sub(lambda m: " " * len(m.group(0)), s)
     s = re.sub(r"\\begin\{(?:tabular|figure|table)\}\{?[^}\n]*\}?", lambda m: " " * len(m.group(0)), s)
+    # Keep offsets stable and let the s.d. after \pm be its own number.
+    s = s.replace("\\pm", "@@@")
     in_math = _math_mask(s)
     _PROC[str(path)] = s
     for m in NUM.finditer(s):
@@ -399,25 +411,41 @@ def paragraph_lambda_outliers(rows):
 # name them in the .tex. Kept separate from CONCEPTS: these must be exclusive,
 # because pad_full satisfying a pad_heldout claim is the circularity this paper
 # already corrected once.
+# BCN is its own site in the BCN→HAM checks. ham10000 stays under isic;
+# a bare HAM / HAM-heldout is the ham label. mednode, sd198 and scin are
+# named in the manuscript and were previously invisible to this check.
 MANIFEST_DS = {
     "pad_heldout": (r"pad\\?_heldout", r"held-out pad"),
     "pad_adv": (r"pad\\?_adv",),
     "pad_full": (r"pad\\?_full",),
-    "fitzpatrick": (r"fitzpatrick", r"fitz17k"),
-    "isic": (r"\bisic\b", r"ham10000", r"\bbcn\b"),
+    "fitzpatrick": (r"fitzpatrick(?:17k)?", r"fitz17k"),
+    "mednode": (r"med-?node",),
+    "sd198": (r"sd-?198",),
+    "scin": (r"\bscin\b",),
+    "ham": (r"ham-?heldout", r"ham\\?_heldout", r"\bham\b"),
+    "bcn": (r"\bbcn\b",),
+    "isic": (r"\bisic\b", r"ham10000"),
     "camelyon": (r"camelyon", r"hospital"),
     "iwildcam": (r"iwildcam",),
 }
 
 
 def ds_positions(text):
-    out = []
+    raw = []
     low = text.lower()
     for name, pats in MANIFEST_DS.items():
         for pat in pats:
             for m in re.finditer(pat, low):
-                out.append((m.start(), m.end(), name))
-    return sorted(out)
+                raw.append((m.start(), m.end(), name))
+    # Prefer the longer span so ham-heldout wins over the bare "ham" inside it,
+    # and pad_heldout is not also reported as a shorter overlapping name.
+    raw.sort(key=lambda t: (-(t[1] - t[0]), t[0], t[2]))
+    kept = []
+    for span in raw:
+        if any(span[0] < k[1] and k[0] < span[1] for k in kept):
+            continue
+        kept.append(span)
+    return sorted(kept)
 
 
 def nearest_label(mentions, start, end, limit=200):
@@ -438,6 +466,323 @@ def nearest_label(mentions, start, end, limit=200):
         elif before[1] is None or d < before[1]:
             before = (tag, d)
     return after[0] if after[0] is not None else before[0]
+
+
+_BIND = {}  # processed tex -> {number start: dataset or None}
+
+
+def _glue(s):
+    """True when s is only TeX punctuation between a dataset name and its number."""
+    t = re.sub(r"\\[A-Za-z]+", "", s)
+    return re.fullmatch(r"[\s$\\{}]*", t or "") is not None
+
+
+def _inherit_kind(gap):
+    g = gap.strip()
+    if "@@@" in g or re.fullmatch(r"\\pm", g) or re.fullmatch(r"\$?\s*\\pm\s*\$?", gap.strip()):
+        return "pm"
+    if re.fullmatch(r"[\s$]*--+[\s$]*", gap) or re.fullmatch(r"[\s$]*[–—][\s$]*", gap):
+        return "range"
+    if re.fullmatch(r"[\s$]*/[\s$]*", gap):
+        return "slash"
+    if re.fullmatch(r"[\s$]*\[[\s$]*", gap):
+        return "ci"
+    return None
+
+
+def _inside_brackets(text, pos):
+    seg = text[max(0, pos - 80):pos]
+    return seg.rfind("[") > seg.rfind("]")
+
+
+def _split_sentences(text):
+    """Split on sentence periods, including 'SD-198. At', and not on '0.755'."""
+    bounds = [0]
+    for m in re.finditer(r"(?:(?<!\d)\.(?=\s|$)|(?<=\d)\.(?=\s+[A-Za-z\\]))", text):
+        bounds.append(m.end())
+    bounds.append(len(text))
+    return list(zip(bounds, bounds[1:]))
+
+
+def bind_datasets(text):
+    """Dataset each printed number is attached to, where the prose names one.
+
+    Returns {number start offset: label or None}. None means the number was
+    recognised as a leakage / other figure that the sentence does not attach
+    to an OOD set (so a later dataset in the same sentence must not claim it).
+    Missing keys are unresolved and fall back to nearest_label.
+
+    The patterns this knows, because they are how the manuscript writes numbers:
+
+    - ``0.988 on Fitzpatrick17k`` binds forward through on/for.
+    - ``Fitzpatrick17k $0.553$`` binds backward across TeX glue only.
+    - ``0.755/$0.706$ (Fitzpatrick17k)`` shares the parenthetical dataset,
+      including a slash chain and a following confidence interval.
+    - ``Fitzpatrick17k and SD-198 ... (in: 586 and 525; out: ...)`` zips the
+      introducer pair onto each semicolon group.
+    - ``pad_heldout, Fitzpatrick17k, MED-NODE and SD-198 ($0.381$, ...)``
+      zips the list onto that parenthesis and onto later number-only
+      parentheses before the next dataset name.
+    - A following ``num and num`` after ``num (A) and num (B)`` repeats A, B.
+    - The next sentence that is itself ``group and group`` repeats the pair
+      the previous sentence just established (λ = 0 in/out, then λ = 2).
+    - ``between BCN ... and HAM ... is 0.361`` and ``HAM (prior total
+      variation $0.36$)`` bind to the second dataset.
+    - ``held-out leakage $0.599$`` is sealed so it is not attributed to the
+      next OOD set named in the same sentence. ``ID balanced accuracy`` after
+      a ``BCN→HAM`` header binds to BCN.
+    """
+    text = text.replace("\\pm", "@@@")
+    mentions = ds_positions(text)
+    numbers = [n for n in NUM.finditer(text)
+               if not any(m[0] <= n.start() < m[1] for m in mentions)]
+    resolved = {}
+
+    def prev_number_end(start):
+        end = 0
+        for n in numbers:
+            if n.end() <= start:
+                end = n.end()
+            else:
+                break
+        return end
+
+    # --- direct attachments
+    for i, n in enumerate(numbers):
+        after = text[n.end():n.end() + 80]
+        mon = re.match(r"\s*(?:\$\s*)?(?:on|for)\b", after, flags=re.I)
+        if mon:
+            nxt = next((m for m in mentions if m[0] >= n.end()), None)
+            if nxt and nxt[0] - n.end() < 60 and "[" not in text[n.end():nxt[0]]:
+                resolved[n.start()] = nxt[2]
+                continue
+        paren = re.match(r"\s*(?:\$\s*)?\(\s*(?:\$\s*)?", after)
+        if paren:
+            interior = n.end() + paren.end()
+            nxt = next((m for m in mentions if m[0] >= interior - 1), None)
+            if nxt and nxt[0] - interior < 40 and not any(
+                    interior <= q.start() < nxt[0] for q in numbers):
+                # the parenthesis holds a dataset, not a list of numbers
+                if ")" in text[nxt[1]:nxt[1] + 12] or re.match(r"\s*\)", text[nxt[1]:nxt[1] + 8]):
+                    resolved[n.start()] = nxt[2]
+                    continue
+        limit = max(n.start() - 24, prev_number_end(n.start()))
+        cands = [m for m in mentions if limit <= m[1] <= n.start()]
+        if cands:
+            m = cands[-1]
+            gap = text[m[1]:n.start()]
+            if "(" not in gap and _glue(gap):
+                resolved[n.start()] = m[2]
+                continue
+        # HAM (prior total variation $0.36$) — dataset immediately before '('
+        pre = text[max(0, n.start() - 80):n.start()]
+        lp = pre.rfind("(")
+        if lp >= 0 and "[" not in pre[lp:]:
+            abs_lp = n.start() - len(pre) + lp
+            close = text.find(")", abs_lp)
+            inner = [q for q in numbers if abs_lp < q.start() < close] if close > abs_lp else []
+            before = [m for m in mentions if m[1] <= abs_lp and abs_lp - m[1] <= 8]
+            # Only the "HAM (prior total variation $0.36$)" shape: one number
+            # in the parenthesis. A list "SD-198 ($0.381$, $0.405$, ...)" is a zip.
+            if (len(inner) == 1 and inner[0].start() == n.start() and before
+                    and not any(abs_lp < q.start() < n.start() for q in numbers)):
+                gap = text[before[-1][1]:abs_lp]
+                if _glue(gap) or re.fullmatch(r"[\s$]*", gap):
+                    resolved[n.start()] = before[-1][2]
+                    continue
+        # between D1 and D2 ... is NUMBER
+        window = text[max(0, n.start() - 220):n.start()]
+        bpos = window.lower().rfind("between")
+        if bpos >= 0 and re.search(r"\bis\s*(?:\$\s*)?$", window, flags=re.I):
+            abs_b = n.start() - len(window) + bpos
+            pair = [m for m in mentions if abs_b <= m[0] < n.start()]
+            if (len(pair) >= 2 and n.start() - pair[1][1] < 60
+                    and re.search(r"\band\b", text[pair[0][1]:pair[1][0]], flags=re.I)
+                    and re.search(r"\bis\s*(?:\$\s*)?$", text[pair[1][1]:n.start()], flags=re.I)):
+                resolved[n.start()] = pair[1][2]
+                continue
+        # leakage figure: do not let a later "on Fitzpatrick" claim it
+        leak = re.search(r"leakage", text[max(0, n.start() - 140):n.start()], flags=re.I)
+        if leak:
+            abs_leak = max(0, n.start() - 140) + leak.start()
+            if not any(abs_leak < m[0] < n.start() for m in mentions):
+                resolved[n.start()] = None
+                continue
+        # ID balanced accuracy after a BCN→HAM (or from BCN against HAM) header
+        if re.search(r"ID balanced accuracy is\s*(?:\$\s*)?$", text[max(0, n.start() - 48):n.start()]):
+            para = text.rfind("\n\n", 0, n.start())
+            chunk_m = [m for m in mentions if para < m[0] < n.start()]
+            for a, b in zip(chunk_m, chunk_m[1:]):
+                gap = text[a[1]:b[0]]
+                if a[2] == "bcn" and b[2] == "ham" and re.search(r"\\to|against", gap, flags=re.I):
+                    resolved[n.start()] = "bcn"
+                    break
+
+    def propagate():
+        changed = True
+        while changed:
+            changed = False
+            for i, n in enumerate(numbers):
+                if n.start() in resolved:
+                    continue
+                if i > 0:
+                    prev = numbers[i - 1]
+                    gap = text[prev.end():n.start()]
+                    kind = _inherit_kind(gap)
+                    if prev.start() in resolved and kind in ("pm", "range", "ci"):
+                        resolved[n.start()] = resolved[prev.start()]
+                        changed = True
+                        continue
+                    if prev.start() in resolved and kind is None and gap.strip() == "," and _inside_brackets(text, n.start()):
+                        resolved[n.start()] = resolved[prev.start()]
+                        changed = True
+                        continue
+                if i + 1 < len(numbers):
+                    nxt = numbers[i + 1]
+                    gap = text[n.end():nxt.start()]
+                    if nxt.start() in resolved and _inherit_kind(gap) == "slash":
+                        resolved[n.start()] = resolved[nxt.start()]
+                        changed = True
+
+    propagate()
+
+    # Fitzpatrick17k and SD-198 ... (in: 586 and 525; out: 3,241 and 5,950; ...)
+    for m in re.finditer(r"\(([^()]*)\)", text):
+        body = m.group(1)
+        if body.count(";") < 1 or not re.search(r"\band\b", body, flags=re.I):
+            continue
+        groups = [g for g in body.split(";") if re.search(r"\band\b", g, flags=re.I)]
+        nums_g = [list(NUM.finditer(g)) for g in groups]
+        if not groups or any(len(ns) != 2 for ns in nums_g):
+            continue
+        intro = None
+        cands = [d for d in mentions if d[1] <= m.start() and m.start() - d[1] < 450]
+        for i in range(len(cands) - 1, 0, -1):
+            a, b = cands[i - 1], cands[i]
+            if re.fullmatch(r"\s*and\s*", text[a[1]:b[0]], flags=re.I) and not any(
+                    b[1] <= q.start() < m.start() for q in numbers):
+                intro = (a[2], b[2])
+                break
+        if not intro:
+            continue
+        for g, ns in zip(groups, nums_g):
+            # group may not start at cursor if we filtered; search
+            at = body.find(g)
+            base = m.start() + 1 + at
+            for slot, q in enumerate(ns):
+                resolved[base + q.start()] = intro[slot]
+
+    # dataset list followed by ($n$, $n$, ...) and later number-only parens
+    i = 0
+    ments = mentions
+    while i < len(ments):
+        run = [ments[i]]
+        j = i
+        while j + 1 < len(ments):
+            gap = text[ments[j][1]:ments[j + 1][0]]
+            if any(ments[j][1] <= q.start() < ments[j + 1][0] for q in numbers):
+                break
+            if re.fullmatch(r"[\s$\\{}]*(?:,|and)[\s$\\{}]*", gap, flags=re.I):
+                run.append(ments[j + 1])
+                j += 1
+            else:
+                break
+        if len(run) >= 2:
+            tail = text[run[-1][1]:run[-1][1] + 40]
+            pm = re.match(r"\s*\(", tail)
+            if pm:
+                abs_p = run[-1][1] + pm.end() - 1
+                close = text.find(")", abs_p)
+                if close > 0:
+                    inner_nums = [q for q in numbers if abs_p < q.start() < close]
+                    if len(inner_nums) == len(run) and not any(abs_p < d[0] < close for d in ments):
+                        for slot, q in enumerate(inner_nums):
+                            resolved[q.start()] = run[slot][2]
+                        # later number-only parentheses of the same length, until a dataset
+                        scan = close
+                        next_ds = next((d[0] for d in ments if d[0] > close), len(text))
+                        while True:
+                            p2 = text.find("(", scan)
+                            if p2 < 0 or p2 > next_ds:
+                                break
+                            c2 = text.find(")", p2)
+                            if c2 < 0:
+                                break
+                            inner = [q for q in numbers if p2 < q.start() < c2]
+                            if (len(inner) == len(run) and not any(p2 < d[0] < c2 for d in ments)
+                                    and all(q.start() not in resolved for q in inner)):
+                                for slot, q in enumerate(inner):
+                                    resolved[q.start()] = run[slot][2]
+                            scan = c2 + 1
+        i = j + 1
+
+    propagate()
+
+    # sentence-level pair: explicit "n (A) and n (B)" then later "n and n",
+    # and a carried pair for the following "group and group" sentence.
+    carry = None
+    for a, b in _split_sentences(text):
+        sent_nums = [q for q in numbers if a <= q.start() < b]
+        # local continuation after an explicit parenthetical pair
+        local = None
+        for k, q in enumerate(sent_nums):
+            if q.start() not in resolved or resolved[q.start()] is None:
+                continue
+            if k + 1 >= len(sent_nums):
+                break
+            r = sent_nums[k + 1]
+            gap = text[q.end():r.start()]
+            if r.start() in resolved and resolved[r.start()] not in (None, resolved[q.start()]):
+                if re.search(r"\(\s*" + re.escape(text[q.end():q.end() + 1]), text[q.end():q.end() + 3]) or "(" in text[q.end():r.start()]:
+                    if re.search(r"\band\b", gap, flags=re.I):
+                        local = (resolved[q.start()], resolved[r.start()])
+        if local:
+            k = 0
+            while k < len(sent_nums) - 1:
+                q, r = sent_nums[k], sent_nums[k + 1]
+                gap = text[q.end():r.start()]
+                if (q.start() not in resolved and r.start() not in resolved
+                        and re.fullmatch(r"[\s$]*and[\s$]*", gap, flags=re.I)):
+                    resolved[q.start()] = local[0]
+                    resolved[r.start()] = local[1]
+                    k += 2
+                else:
+                    k += 1
+        m_and = None
+        if len(re.findall(r"\band\b", text[a:b], flags=re.I)) == 1:
+            m_and = re.search(r"\band\b", text[a:b], flags=re.I)
+        if m_and:
+            cut = a + m_and.start()
+            # λ written as \lam=2 is not a measurement and must not split the pair.
+            def _measured(q):
+                pre = text[max(0, q.start() - 16):q.start()]
+                return re.search(r"\\lam(?:bda)?\s*=\s*(?:\$\s*)?$", pre) is None
+            left = [q for q in sent_nums if q.end() <= cut and _measured(q)]
+            right = [q for q in sent_nums if q.start() >= a + m_and.end() and _measured(q)]
+            no_ds = not any(a <= d[0] < b for d in mentions)
+            if (carry and no_ds and left and right
+                    and all(q.start() not in resolved for q in left + right)):
+                for q in left:
+                    resolved[q.start()] = carry[0]
+                for q in right:
+                    resolved[q.start()] = carry[1]
+            labs_l = [resolved[q.start()] for q in left if q.start() in resolved and resolved[q.start()]]
+            labs_r = [resolved[q.start()] for q in right if q.start() in resolved and resolved[q.start()]]
+            if (left and right and labs_l and labs_r and len(set(labs_l)) == 1
+                    and len(set(labs_r)) == 1 and labs_l[0] != labs_r[0]
+                    and len(labs_l) == len(left) and len(labs_r) == len(right)):
+                carry = (labs_l[0], labs_r[0])
+    propagate()
+    return resolved
+
+
+def bound_label(text, start):
+    table = _BIND.get(text)
+    if table is None:
+        table = _BIND[text] = bind_datasets(text)
+    if start in table:
+        return table[start], True
+    return None, False
 
 
 def resolve_path(data, keypath):
@@ -597,21 +942,68 @@ def check_manifest(path, results, numbers):
             probs += check_cell(e["cell"], written, tables)
         elif not occ:
             (warns if e.get("optional") else probs).append("not present in the manuscript")
-        elif e.get("label"):
-            seen = [(nearest_label(ds_positions(_PROC[str(n["file"])]), n["pos"], n["end"]), n["line"])
-                    for n in occ]
-            labelled = [x for x in seen if x[0] is not None]
-            if any(t == e["label"] for t, _ in seen):
-                pass
-            elif not labelled:
-                warns.append("appears only where no dataset label is nearby (line(s) {}); "
-                             "a table cell takes its label from the column header, which "
-                             "this check cannot read"
-                             .format(", ".join(str(l) for _, l in seen)))
-            else:
-                (warns if e.get("optional") else probs).append("appears at line(s) {} but the nearest label is {}, not {}"
-                             .format(", ".join(str(l) for _, l in labelled),
-                                     ", ".join(sorted({t for t, _ in labelled})), e["label"]))
+        else:
+            ctx = e.get("context")
+            considered = []
+            for n in occ:
+                if ctx:
+                    w = _PROC[str(n["file"])]
+                    win = w[max(0, n["pos"] - 500): n["end"] + 500]
+                    if not re.search(ctx, win, flags=re.I | re.S):
+                        continue
+                considered.append(n)
+            if ctx and not considered:
+                (warns if e.get("optional") else probs).append(
+                    "value occurs, but not in the declared context {!r}".format(ctx))
+            elif e.get("label") or e.get("near"):
+                seen = []
+                for n in (considered if ctx else occ):
+                    w = _PROC[str(n["file"])]
+                    bound, known = bound_label(w, n["pos"])
+                    if known:
+                        lab = bound
+                    else:
+                        lab = nearest_label(ds_positions(w), n["pos"], n["end"])
+                    seen.append((lab, n["line"], n, w))
+                # Entries that name a context are checked on every occurrence in
+                # that context. Older entries keep the any-occurrence rule so a
+                # repeated value still passes when one of its sites is right.
+                scope = seen if ctx else seen
+                if e.get("label"):
+                    if ctx:
+                        bad = [(lab, line) for lab, line, _, _ in scope if lab != e["label"]]
+                        if bad:
+                            probs.append("in context, line(s) {} attach to {}, not {}".format(
+                                ", ".join(str(line) for _, line in bad),
+                                ", ".join(sorted({str(lab) for lab, _ in bad})), e["label"]))
+                        elif not any(lab == e["label"] for lab, _, _, _ in scope):
+                            probs.append("no occurrence attached to {}".format(e["label"]))
+                    else:
+                        labelled = [(lab, line) for lab, line, _, _ in scope if lab is not None]
+                        if any(lab == e["label"] for lab, _, _, _ in scope):
+                            pass
+                        elif not labelled:
+                            warns.append("appears only where no dataset label is nearby (line(s) {}); "
+                                         "a table cell takes its label from the column header, which "
+                                         "this check cannot read"
+                                         .format(", ".join(str(line) for _, line, _, _ in scope)))
+                        else:
+                            (warns if e.get("optional") else probs).append(
+                                "appears at line(s) {} but the nearest label is {}, not {}".format(
+                                    ", ".join(str(line) for _, line in labelled),
+                                    ", ".join(sorted({lab for lab, _ in labelled})), e["label"]))
+                if e.get("near") and not probs:
+                    need = list(e["near"])
+                    ok = False
+                    for lab, line, n, w in scope:
+                        win = w[max(0, n["pos"] - 500): n["end"] + 500]
+                        tags = {t for _, _, t in ds_positions(win)}
+                        if all(x in tags for x in need):
+                            ok = True
+                            break
+                    if not ok:
+                        (warns if e.get("optional") else probs).append(
+                            "no occurrence whose neighbourhood names {}".format(", ".join(need)))
         out.append((eid, written, e.get("label", ""), got, probs, warns))
     return out
 
@@ -647,11 +1039,16 @@ def main():
     idx = build_index()
     print("index: {} values".format(len(idx.v)), file=sys.stderr)
     rows = []
+    manifest_numbers = []
     for t in TEX:
         p = Path(a.paper_root) / t
         if not p.exists():
             continue
         for n in tex_numbers(p):
+            # Manifest entries may pin a count (586, 5/5). The free scan still
+            # skips small bare integers unless --ints, so a count is not drowned
+            # in the free-scan table, but it remains visible to the manifest.
+            manifest_numbers.append(n)
             if n["d"] == 0 and not a.ints and "{,}" not in n["text"] and n["val"] < 1000:
                 continue
             st, best, nex, flags = check(n, idx)
@@ -688,7 +1085,7 @@ def main():
             bs.replace("|", "/"), nex, "; ".join(flags), n["ctx"].replace("|", "/")))
     man_bad = 0
     if a.manifest:
-        res = check_manifest(a.manifest, RESULTS, [r[1] for r in rows])
+        res = check_manifest(a.manifest, RESULTS, manifest_numbers)
         man_bad = sum(1 for r in res if r[4])
         M = ["", "## Manifest check ({} entries, {} failing)".format(len(res), man_bad), "",
              "Each entry is checked against one declared source key and against the dataset "
