@@ -14,6 +14,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+
 ROOT = Path(__file__).resolve().parents[3] / "results/paperB/r6/r1/cur/runs"
 SETS = [("pad_heldout", "pad_heldout"), ("fitzpatrick17k", "Fitzpatrick17k"),
         ("mednode", "MED-NODE"), ("sd198", "SD-198")]

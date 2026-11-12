@@ -118,9 +118,11 @@ def plot_series(ax, xpos, means, stds, slot: int, label: str, direct_label=False
 
 
 def save_figure(fig, stem: str):
+    import os
     from pathlib import Path
 
-    out = Path(ROOT_FIG)
+    # PAPERB_FIG_OUT overrides results/…/figures (used for Type-42 re-exports).
+    out = Path(os.environ.get("PAPERB_FIG_OUT", ROOT_FIG))
     out.mkdir(parents=True, exist_ok=True)
     fig.savefig(out / f"{stem}.pdf", bbox_inches="tight")
     fig.savefig(out / f"{stem}.png", bbox_inches="tight")
