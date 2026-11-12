@@ -47,15 +47,29 @@ In-training adversary was mostly *not* at chance (acc ~0.51–0.66); gate failed
 
 Stopped with Y2 (no admissible config).
 
-## Y4 — in progress
+## Y4 — X4 stronger λ screen (STOPPED)
 
-BCN → HAM at λ ∈ {4, 8}.
+Screen job `73520` COMPLETED (λ ∈ {4, 8} × seeds {42, 52}, shift 100 %). Gate: smaller λ with two-seed mean V1 ≤ 0.55.
+
+| λ | seed | ID bal | V1 |
+|--:|-----:|-------:|---:|
+| 4 | 42 | 0.379 | 0.629 |
+| 4 | 52 | 0.390 | 0.556 |
+| 4 | mean | 0.385 | **0.593** |
+| 8 | 42 | 0.368 | 0.665 |
+| 8 | 52 | 0.358 | 0.619 |
+| 8 | mean | 0.363 | **0.642** |
+
+**Verdict: neither λ meets V1 ≤ 0.55 → stop Y4 main.** `y4/SELECTION.json` locked with `selected: null`.
+
+Context (R11 X4, 5-seed): λ=2 shift100 V1 0.599±0.041, ID bal 0.366±0.017; λ=0 ID bal 0.362±0.007. Stronger λ did not reach the X4 invariance gate (and ID stays ~0.36–0.39, far below competence 0.528).
 
 ## GPU / CPU hours
 
-See `GPU_ESTIMATE.md`. Actuals to be filled at close.
+See `GPU_ESTIMATE.md`. Y4 screen ≈ 4 × 55 min GPU.
 
 ## Commit hashes
 
 - Base: `59079ef`
-- R11b work: _(pending)_
+- R11b Y1+Y2 selection: `aecd2dd`
+- R11b Y4 selection: _(this commit)_

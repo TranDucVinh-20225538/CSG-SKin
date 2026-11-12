@@ -1,0 +1,8 @@
+{
+ "locked_at_utc": "2026-11-12T07:33:12Z",
+ "lam": null,
+ "selected": null,
+ "verdict": "neither \u03bb meets two-seed mean V1 \u2264 0.55; stop",
+ "reason": "Neither \u03bb=4 nor \u03bb=8 has two-seed mean V1 \u2264 0.55. Stop Y4 main.",
+ "rule": "smaller \u03bb with two-seed mean V1 \u2264 0.55; commit SELECTION before main"
+}

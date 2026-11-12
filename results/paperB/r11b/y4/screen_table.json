@@ -1,0 +1,46 @@
+{
+ "locked_at_utc": "2026-11-12T07:33:12Z",
+ "table": [
+  {
+   "lam": 4.0,
+   "n": 2,
+   "v1_mean": 0.5925378849973078,
+   "ok": false,
+   "runs": [
+    {
+     "tag": "y4_ladv4_shift100_s42",
+     "V1": 0.6289008221191398,
+     "id_bal": 0.37891302617559497
+    },
+    {
+     "tag": "y4_ladv4_shift100_s52",
+     "V1": 0.5561749478754758,
+     "id_bal": 0.39039174193791715
+    }
+   ]
+  },
+  {
+   "lam": 8.0,
+   "n": 2,
+   "v1_mean": 0.6416318166827999,
+   "ok": false,
+   "runs": [
+    {
+     "tag": "y4_ladv8_shift100_s42",
+     "V1": 0.6647080206210476,
+     "id_bal": 0.3683170229150855
+    },
+    {
+     "tag": "y4_ladv8_shift100_s52",
+     "V1": 0.6185556127445521,
+     "id_bal": 0.3579722529032294
+    }
+   ]
+  }
+ ],
+ "selected_lam": null,
+ "selected": null,
+ "verdict": "neither \u03bb meets two-seed mean V1 \u2264 0.55; stop",
+ "reason": "Neither \u03bb=4 nor \u03bb=8 has two-seed mean V1 \u2264 0.55. Stop Y4 main.",
+ "rule": "smaller \u03bb with two-seed mean V1 \u2264 0.55; commit SELECTION before main"
+}

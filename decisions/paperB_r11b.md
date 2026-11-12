@@ -66,3 +66,5 @@ Reading: as R11 X4, with invariant = V1 ≤ 0.55 required at both shift levels; 
 _(append only)_
 
 - 2026-11-11: Y2 screen completed (job 73478). No admissible configuration (all six fail ID val ≥ 0.528 at λ=2 both seeds; adversaries mostly not collapsed). Verdict **adversary collapse not resolved**. Stop Y2 main and Y3. SELECTION.json locked with `selected: null` before any main submit. Watchers must not auto-submit main; selection is committed/pushed first.
+
+- 2026-11-12: Y4 screen completed (job 73520, 4/4). Two-seed mean V1: λ=4 → 0.5925; λ=8 → 0.6416. Neither ≤ 0.55. `y4/SELECTION.json` locked with `selected: null`. **Stop Y4 main.** Watcher was select-only (no auto-submit).
