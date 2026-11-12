@@ -14,6 +14,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
+
 ROOT = Path(__file__).resolve().parents[3] / "results/paperB/r6/r1/cur/runs"
 SETS = [("pad_heldout", "pad_heldout"), ("fitzpatrick17k", "Fitzpatrick17k"),
         ("mednode", "MED-NODE"), ("sd198", "SD-198")]
@@ -93,6 +96,9 @@ for a in (axa, axb):
 h, l = axa.get_legend_handles_labels()
 fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.04))
 fig.tight_layout(rect=(0, 0.06, 1, 1))
-out = Path(__file__).resolve().parent
+# Type-42 re-export: write only to figures_type42/; leave figures/ untouched.
+out = Path(__file__).resolve().parent.parent / "figures_type42"
+out.mkdir(parents=True, exist_ok=True)
 fig.savefig(out / "fig_mechanism.pdf", bbox_inches="tight")
 fig.savefig(out / "fig_mechanism.png", bbox_inches="tight")
+print("wrote", out / "fig_mechanism.pdf")

@@ -1,0 +1,163 @@
+{
+  "figures": [
+    {
+      "label": "paperB/fig_mechanism",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures/fig_mechanism.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig_mechanism.pdf",
+      "old_t3": 2,
+      "new_t3": 0,
+      "old_size": "511.136 x 195.558 pts",
+      "new_size": "511.136 x 195.558 pts",
+      "mean_abs": 0.402,
+      "max_abs": 255.0,
+      "frac_gt30": 0.0043,
+      "status": "REPLACE_OK"
+    },
+    {
+      "label": "paperB/fig1_intervention",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig1_intervention.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig1_intervention.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "699.6 x 213.6 pts",
+      "new_size": "699.6 x 213.6 pts",
+      "mean_abs": 0.0,
+      "max_abs": 0.0,
+      "frac_gt30": 0.0,
+      "status": "REPLACE_OK"
+    },
+    {
+      "label": "paperB/fig2_confidence",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig2_confidence.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig2_confidence.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "231.205 x 197.388 pts",
+      "new_size": "231.205 x 197.388 pts",
+      "mean_abs": 13.405,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1651,
+      "status": "BEYOND_FONT"
+    },
+    {
+      "label": "paperB/fig3_detectors",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig3_detectors.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig3_detectors.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "231.205 x 197.388 pts",
+      "new_size": "231.205 x 197.388 pts",
+      "mean_abs": 11.004,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1389,
+      "status": "BEYOND_FONT"
+    },
+    {
+      "label": "paperB/fig4_generalises",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig4_generalises.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig4_generalises.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "256.688 x 197.388 pts",
+      "new_size": "256.688 x 197.388 pts",
+      "mean_abs": 0.48,
+      "max_abs": 255.0,
+      "frac_gt30": 0.0072,
+      "status": "REPLACE_OK"
+    },
+    {
+      "label": "paperB/fig5_leakage_no_mediation",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig5_leakage_no_mediation.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig5_leakage_no_mediation.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "507.485 x 187.846 pts",
+      "new_size": "507.485 x 187.846 pts",
+      "mean_abs": 4.357,
+      "max_abs": 255.0,
+      "frac_gt30": 0.0669,
+      "status": "REPLACE_OK"
+    },
+    {
+      "label": "paperB/fig6_site_shift",
+      "old": "/data2/cmdir/home/toandq/CSG-Skin-paperB/results/paperB/figures/fig6_site_shift.pdf",
+      "new": "/data2/cmdir/home/toandq/CSG-Skin-paperB/paper/midl/figures_type42/fig6_site_shift.pdf",
+      "old_t3": 0,
+      "new_t3": 0,
+      "old_size": "507.485 x 201.958 pts",
+      "new_size": "507.485 x 201.958 pts",
+      "mean_abs": 0.0,
+      "max_abs": 0.0,
+      "frac_gt30": 0.0,
+      "status": "REPLACE_OK"
+    },
+    {
+      "label": "leakage/fig1_main",
+      "old": "/data2/cmdir/home/toandq/scratch/v19_baseline_figs/fig1_main.pdf",
+      "new": "/data2/cmdir/home/toandq/scratch/group-overlap-ood-paper/figures_type42/fig1_main.pdf",
+      "old_t3": 5,
+      "new_t3": 0,
+      "old_size": "537.544 x 208.647 pts",
+      "new_size": "537.6 x 208.8 pts",
+      "mean_abs": 15.763,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1,
+      "status": "BEYOND_FONT"
+    },
+    {
+      "label": "leakage/fig1_side",
+      "old": "/data2/cmdir/home/toandq/scratch/v19_baseline_figs/fig1_side.pdf",
+      "new": "/data2/cmdir/home/toandq/scratch/group-overlap-ood-paper/figures_type42/fig1_side.pdf",
+      "old_t3": 5,
+      "new_t3": 0,
+      "old_size": "537.028 x 165.351 pts",
+      "new_size": "537.12 x 165.36 pts",
+      "mean_abs": 18.354,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1201,
+      "status": "BEYOND_FONT"
+    },
+    {
+      "label": "leakage/fig_alarms",
+      "old": "/data2/cmdir/home/toandq/scratch/v19_baseline_figs/fig_alarms.pdf",
+      "new": "/data2/cmdir/home/toandq/scratch/group-overlap-ood-paper/figures_type42/fig_alarms.pdf",
+      "old_t3": 2,
+      "new_t3": 0,
+      "old_size": "463.348 x 164.245 pts",
+      "new_size": "463.44 x 164.4 pts",
+      "mean_abs": 19.391,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1349,
+      "status": "BEYOND_FONT"
+    },
+    {
+      "label": "leakage/fig_epochs",
+      "old": "/data2/cmdir/home/toandq/scratch/v19_baseline_figs/fig_epochs.pdf",
+      "new": "/data2/cmdir/home/toandq/scratch/group-overlap-ood-paper/figures_type42/fig_epochs.pdf",
+      "old_t3": 2,
+      "new_t3": 0,
+      "old_size": "452.88 x 169.922 pts",
+      "new_size": "453.12 x 170.16 pts",
+      "mean_abs": 21.063,
+      "max_abs": 255.0,
+      "frac_gt30": 0.1552,
+      "status": "BEYOND_FONT"
+    }
+  ],
+  "replace_ok": [
+    "paperB/fig_mechanism",
+    "paperB/fig1_intervention",
+    "paperB/fig4_generalises",
+    "paperB/fig5_leakage_no_mediation",
+    "paperB/fig6_site_shift"
+  ],
+  "do_not_replace": [
+    "paperB/fig2_confidence",
+    "paperB/fig3_detectors",
+    "leakage/fig1_main",
+    "leakage/fig1_side",
+    "leakage/fig_alarms",
+    "leakage/fig_epochs"
+  ],
+  "note": "Only REPLACE_OK may be swapped into the manuscript. Old files untouched."
+}
