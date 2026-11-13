@@ -10221,9 +10221,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "mean"
   },
@@ -10240,9 +10240,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "sd"
   }
@@ -10258,9 +10258,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "mean"
   },
@@ -10277,9 +10277,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "sd"
   }
@@ -10295,9 +10295,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "mean"
   },
@@ -10314,9 +10314,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "sd"
   }
@@ -10426,9 +10426,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "mean"
   },
@@ -10445,9 +10445,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "sd"
   }
@@ -10463,9 +10463,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "mean"
   },
@@ -10482,9 +10482,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "sd"
   }
@@ -10500,9 +10500,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "mean"
   },
@@ -10519,9 +10519,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "0.25",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "sd"
   }
@@ -10631,9 +10631,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "mean"
   },
@@ -10650,9 +10650,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "sd"
   }
@@ -10668,9 +10668,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "mean"
   },
@@ -10687,9 +10687,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "sd"
   }
@@ -10705,9 +10705,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "mean"
   },
@@ -10724,9 +10724,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "1",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "sd"
   }
@@ -10836,9 +10836,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "mean"
   },
@@ -10855,9 +10855,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 6,
+   "col": 1,
    "col_name": "OOD AUROC",
    "stat": "sd"
   }
@@ -10873,9 +10873,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "mean"
   },
@@ -10892,9 +10892,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 7,
+   "col": 2,
    "col_name": "Fitz AUROC",
    "stat": "sd"
   }
@@ -10910,9 +10910,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "mean"
   },
@@ -10929,9 +10929,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:imagelevel",
+   "table": "tab:imagelevel-b",
    "row": "2",
-   "col": 8,
+   "col": 3,
    "col_name": "X-dom bal acc",
    "stat": "sd"
   }
@@ -11915,9 +11915,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 6,
+   "col": 2,
    "stat": "mean"
   }
  },
@@ -11932,9 +11932,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 6,
+   "col": 2,
    "stat": "sd"
   }
  },
@@ -11949,9 +11949,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 7,
+   "col": 3,
    "stat": "mean"
   }
  },
@@ -11966,9 +11966,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 7,
+   "col": 3,
    "stat": "sd"
   }
  },
@@ -11983,9 +11983,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 8,
+   "col": 4,
    "stat": "mean"
   }
  },
@@ -12000,9 +12000,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "ERMDINOv2",
-   "col": 8,
+   "col": 4,
    "stat": "sd"
   }
  },
@@ -12153,9 +12153,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 6,
+   "col": 2,
    "stat": "mean"
   }
  },
@@ -12170,9 +12170,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 6,
+   "col": 2,
    "stat": "sd"
   }
  },
@@ -12187,9 +12187,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 7,
+   "col": 3,
    "stat": "mean"
   }
  },
@@ -12204,9 +12204,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 7,
+   "col": 3,
    "stat": "sd"
   }
  },
@@ -12221,9 +12221,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 8,
+   "col": 4,
    "stat": "mean"
   }
  },
@@ -12238,9 +12238,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:dino",
+   "table": "tab:dino-b",
    "row": "dualDINOv2",
-   "col": 8,
+   "col": 4,
    "stat": "sd"
   }
  },
@@ -12424,9 +12424,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 0,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 2,
    "stat": "mean"
   }
  },
@@ -12440,9 +12440,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 0,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 2,
    "stat": "sd"
   }
  },
@@ -12456,9 +12456,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 1,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 3,
    "stat": "mean"
   }
  },
@@ -12472,9 +12472,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 1,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 3,
    "stat": "sd"
   }
  },
@@ -12488,9 +12488,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 2,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 4,
    "stat": "mean"
   }
  },
@@ -12504,9 +12504,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 2,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 4,
    "stat": "sd"
   }
  },
@@ -12520,9 +12520,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 3,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 5,
    "stat": "mean"
   }
  },
@@ -12536,9 +12536,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:single-dino",
-   "row": "0.884pm0.019",
-   "col": 3,
+   "table": "tab:dino",
+   "row": "singleDINOv2",
+   "col": 5,
    "stat": "sd"
   }
  },
@@ -12554,7 +12554,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 2,
    "stat": "mean"
   }
@@ -12571,7 +12571,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 2,
    "stat": "sd"
   }
@@ -12588,7 +12588,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 3,
    "stat": "mean"
   }
@@ -12605,7 +12605,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 3,
    "stat": "sd"
   }
@@ -12622,7 +12622,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 4,
    "stat": "mean"
   }
@@ -12639,7 +12639,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 4,
    "stat": "sd"
   }
@@ -12656,7 +12656,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 5,
    "stat": "mean"
   }
@@ -12673,7 +12673,7 @@
   ],
   "cell": {
    "table": "tab:padadv",
-   "row": "25%(407images)",
+   "row": "25%(407)",
    "col": 5,
    "stat": "sd"
   }
@@ -15786,9 +15786,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 6,
+   "col": 2,
    "stat": "mean"
   },
   "note": "tab:reweight lambda0 mednode"
@@ -15806,9 +15806,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 6,
+   "col": 2,
    "stat": "sd"
   },
   "note": "tab:reweight lambda0 mednode sd"
@@ -15826,9 +15826,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 7,
+   "col": 3,
    "stat": "mean"
   },
   "note": "tab:reweight lambda0 sd198"
@@ -15846,9 +15846,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 7,
+   "col": 3,
    "stat": "sd"
   },
   "note": "tab:reweight lambda0 sd198 sd"
@@ -15866,9 +15866,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 8,
+   "col": 4,
    "stat": "mean"
   },
   "note": "tab:reweight lambda0 scin"
@@ -15886,9 +15886,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:reweight",
+   "table": "tab:reweight-b",
    "row": "0",
-   "col": 8,
+   "col": 4,
    "stat": "sd"
   },
   "note": "tab:reweight lambda0 scin sd"
@@ -18449,9 +18449,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:reweightmacro",
+   "table": "tab:reweightmacro-b",
    "row": "0",
-   "col": 5,
+   "col": 2,
    "stat": "mean"
   },
   "note": "tab:reweightmacro lambda0 sd198"
@@ -18469,9 +18469,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:reweightmacro",
+   "table": "tab:reweightmacro-b",
    "row": "0",
-   "col": 5,
+   "col": 2,
    "stat": "sd"
   },
   "note": "tab:reweightmacro lambda0 sd198"
@@ -18489,9 +18489,9 @@
    "mean"
   ],
   "cell": {
-   "table": "tab:reweightmacro",
+   "table": "tab:reweightmacro-b",
    "row": "0",
-   "col": 6,
+   "col": 3,
    "stat": "mean"
   },
   "note": "tab:reweightmacro lambda0 scin"
@@ -18509,9 +18509,9 @@
    "sd"
   ],
   "cell": {
-   "table": "tab:reweightmacro",
+   "table": "tab:reweightmacro-b",
    "row": "0",
-   "col": 6,
+   "col": 3,
    "stat": "sd"
   },
   "note": "tab:reweightmacro lambda0 scin"
