@@ -9067,32 +9067,6 @@
   "note": "Other splits: pad_heldout \u03bb=2 range hi"
  },
  {
-  "id": "ss_fitz_sd_l2_lo",
-  "written": "0.34",
-  "file": "r6/writing_r6_number_store.json",
-  "key": [
-   "values",
-   "split_stability",
-   "range",
-   "fitz_sd_l2",
-   "min"
-  ],
-  "note": "Other splits: Fitz+SD \u03bb=2 joint range lo"
- },
- {
-  "id": "ss_fitz_sd_l2_hi",
-  "written": "0.41",
-  "file": "r6/writing_r6_number_store.json",
-  "key": [
-   "values",
-   "split_stability",
-   "range",
-   "fitz_sd_l2",
-   "max"
-  ],
-  "note": "Other splits: Fitz+SD \u03bb=2 joint range hi"
- },
- {
   "id": "ss_med_l0_lo",
   "written": "0.49",
   "file": "r6/writing_r6_number_store.json",
@@ -19572,5 +19546,97 @@
   ],
   "context": "brings the macro value|comes back to",
   "note": "macro range endpoint"
+ },
+ {
+  "id": "bcnham_VASC_bcn_share",
+  "written": "0.008",
+  "file": "r5/audit/bcnham_maha0/class_mix.json",
+  "key": [
+   "pi_bcn_test",
+   "VASC"
+  ],
+  "cell": {
+   "table": "tab:bcnham",
+   "row": "VASC",
+   "col": 1,
+   "col_name": "BCN test share",
+   "stat": "mean"
+  }
+ },
+ {
+  "id": "bcnham_VASC_ham_share",
+  "written": "0.011",
+  "file": "r5/audit/bcnham_maha0/class_mix.json",
+  "key": [
+   "pi_ham_heldout",
+   "VASC"
+  ],
+  "cell": {
+   "table": "tab:bcnham",
+   "row": "VASC",
+   "col": 2,
+   "col_name": "HAM share",
+   "stat": "mean"
+  }
+ },
+ {
+  "id": "bcnham_VASC_maha",
+  "written": "0.616",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "bcnham",
+   "VASC",
+   "maha",
+   "mean"
+  ]
+ },
+ {
+  "id": "bcnham_VASC_knn",
+  "written": "0.325",
+  "file": "r6/writing_r6_number_store.json",
+  "key": [
+   "values",
+   "bcnham",
+   "VASC",
+   "knn",
+   "mean"
+  ]
+ },
+ {
+  "id": "imagelevel_r50_fitz",
+  "written": "0.994",
+  "file": "phase2_5/phase25_aggregate.json",
+  "key": [
+   "methods",
+   "baseline_soft",
+   "fitz_maha",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:imagelevel-b",
+   "row": "ResNet-50",
+   "col": 2,
+   "col_name": "Fitz AUROC",
+   "stat": "mean"
+  }
+ },
+ {
+  "id": "imagelevel_effb3_fitz",
+  "written": "0.649",
+  "file": "phase2_5/phase25_aggregate.json",
+  "key": [
+   "methods",
+   "effb3_control",
+   "fitz_maha",
+   "mean"
+  ],
+  "cell": {
+   "table": "tab:imagelevel-b",
+   "row": "EffNet-B3",
+   "col": 2,
+   "col_name": "Fitz AUROC",
+   "stat": "mean"
+  }
  }
 ]
