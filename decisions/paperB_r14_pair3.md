@@ -117,3 +117,13 @@ _(append only)_
 - 2026-11-18: CPU diagnosis (DIAG_cpu_20261118.md): no I/O or light_extract bug. R14 λ0/prior0 diverge (loss_cls↑ loss_ctx↑); R12 λ0 and R14 λ2 prior100 healthy on same recipe/MILK files. Before any GPU rerun: schedule one determinism redo of r14_ladv0_prior100_s42 only; if ID bal still <0.25 → stop R14 as "pipeline unstable on this pair, not a test". Thresholds unchanged.
 
 - 2026-11-18: Determinism redo λ0 s42 job **74376**: ID bal **0.475** (first run 0.185), traj matches R12 (loss_cls/ctx↓). Not degenerate → STAGE1 **CONTINUE**. Thresholds unchanged. Archived first λ0 + degraded prior0_s42; submitting remaining train array %2.
+
+- 2026-11-18 (locked **before** reading train array 74399 or score job 74400; jobs not cancelled):
+
+  1. **Rerun rule (every run in the 20-run grid).** Any run with ID test balanced accuracy < 0.25 is rerun exactly once with the same seed. Decision uses ID only — never V1 or OOD. Report both attempts (first marked "degenerate, superseded"). If the rerun is also < 0.25, exclude under the degraded rule; that cell then has 4 seeds and Rule A still needs k ≥ 3. Explicitly under this rule: `r14_ladv0_prior100_s42` (0.185 → 0.475) and `r14_ladv2_prior0_s42` (0.152, archived; retrained by the `--skip_done` array). Do not rerun any run for any other reason.
+
+  2. **Determinism.** Same seed does not give the same result on this cluster (λ0 s42: 0.185 vs 0.475). REPORT.md must include: "Seeds are not bitwise reproducible (GPU non-determinism)." Report the first-attempt degenerate count over the whole grid (stage 1: 2 of 4) and, for each degenerate run, whether it diverged (loss_ctx/loss_cls trajectory).
+
+  3. **Honest stage-1 stop.** REPORT.md must say: the stage-1 STOP-degenerate rule triggered; R14 continued only under the 2026-11-18 deviation after a CPU diagnosis and a determinism redo. Thresholds unchanged. Do not describe stage 1 as passed.
+
+  4. **Reading order (strict).** Verdict by reading rules in this order only: (a) V1 at λ=0; (b) invariance at λ=2 prior100 (seed mean ≤ 0.60, else Case C, no reading of AUROC); (c) V1 at prior0 for the "label shift necessary" clause; (d) Rule A. Report every run as found.
