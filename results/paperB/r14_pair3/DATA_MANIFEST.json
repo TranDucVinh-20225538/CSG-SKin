@@ -1,0 +1,31 @@
+{
+  "created_utc": "2026-11-18T03:29:47.362659+00:00",
+  "commit": "d079beb",
+  "sources": {
+    "s3_prefix": "https://isic-archive.s3.amazonaws.com/dois/10.34970-648456",
+    "doi": "10.34970/648456",
+    "note": "Do not redistribute images. CC-BY-NC 4.0."
+  },
+  "files": {
+    "milk10k.zip": {
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/data/r14_pair3/raw/milk10k.zip",
+      "sha256": "47cfe0870997657429d3578e40d22900521a7e0194b1e03fa946bfc4a3e93b58",
+      "bytes": 361486216
+    },
+    "milk10k.csv": {
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/data/r14_pair3/raw/milk10k.csv",
+      "sha256": "347c3a386331c1a8948f4d87a952be9aff3e859b668ddb2d08f35321addc2ebf",
+      "bytes": 2129778
+    },
+    "training_gt.csv": {
+      "path": "/data2/cmdir/home/toandq/CSG-Skin-paperB/data/r14_pair3/raw/training_gt.csv",
+      "sha256": "1d85ce6087728cb92d944f8884a0a680964f9006e5f7b7495511d750ce9b49a8",
+      "bytes": 188730
+    }
+  },
+  "filter": {
+    "image_type": "dermoscopic",
+    "n_images_expected": 5240
+  },
+  "dermoscopic_extracted": 5240
+}
