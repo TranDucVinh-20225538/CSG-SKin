@@ -113,3 +113,5 @@ _(append only)_
 - 2026-11-18: Prepare job 74360 (after cancelled 74344). ISIC API overlap exact match to box check (859 / 1895 / remaining counts). Parallel cache fill ≤2 req/s (ThreadPool 4). pHash dropped 67 additional MILK dermoscopic images vs ISIC 2019 (227 hash hits); listed 7 PAD / 0 Fitz / 0 MED / 6 SD-198. PRIORS refreshed after pHash drops. TV(ISIC train, milk_adv)=0.563. attribution uniform — no per-site AUROC. Stage-1 array 74361.
 
 - 2026-11-18: Stage-1 array 74361 COMPLETED. Gate **STOP-degenerate**: λ=0 prior100 s42 ID bal 0.185 < 0.25 (also prior0 s42 ID 0.152). λ=2 prior100 s42/s52 ID≈0.45, V1≈0.616 (no STOP-gap). No further jobs. REPORT/CELLS/RESULTS written for abort.
+
+- 2026-11-18: CPU diagnosis (DIAG_cpu_20261118.md): no I/O or light_extract bug. R14 λ0/prior0 diverge (loss_cls↑ loss_ctx↑); R12 λ0 and R14 λ2 prior100 healthy on same recipe/MILK files. Before any GPU rerun: schedule one determinism redo of r14_ladv0_prior100_s42 only; if ID bal still <0.25 → stop R14 as "pipeline unstable on this pair, not a test". Thresholds unchanged.
