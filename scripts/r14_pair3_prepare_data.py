@@ -207,28 +207,55 @@ def collect_isic_ids(payload: dict) -> list:
 
 def api_overlap(kept: pd.DataFrame, all_derm: pd.DataFrame):
     """Query every dermoscopic lesion_id (5,240); remove overlaps from mapped kept."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
+
     isic2019 = C.isic_image_set()
     lesions = sorted(all_derm["lesion_id"].astype(str).unique())
     print("API overlap query n_lesions", len(lesions), "rate", C.API_RATE, "/s", flush=True)
     overlap_rows = []
     min_interval = 1.0 / C.API_RATE
-    last = 0.0
-    n_cache = 0
-    n_net = 0
-    for i, lid in enumerate(lesions):
+    lock = threading.Lock()
+    last = [0.0]
+    n_cache = [0]
+    n_net = [0]
+    n_done = [0]
+
+    def rate_limited_fetch(lid: str):
         cache = C.CACHE_API / "{}.json".format(lid)
         if cache.exists():
-            n_cache += 1
-            payload = json.loads(cache.read_text())
-        else:
-            # rate limit only for network
+            with lock:
+                n_cache[0] += 1
+            return lid, json.loads(cache.read_text())
+        with lock:
             now = time.monotonic()
-            wait = min_interval - (now - last)
+            wait = min_interval - (now - last[0])
             if wait > 0:
                 time.sleep(wait)
-            payload = fetch_lesion(lid)
-            last = time.monotonic()
-            n_net += 1
+            last[0] = time.monotonic()
+            n_net[0] += 1
+        payload = fetch_lesion(lid)
+        return lid, payload
+
+    # fill missing via small pool; cache hits are instant
+    missing = [lid for lid in lesions if not (C.CACHE_API / "{}.json".format(lid)).exists()]
+    print("api missing", len(missing), "cached", len(lesions) - len(missing), flush=True)
+    if missing:
+        with ThreadPoolExecutor(max_workers=4) as ex:
+            futs = [ex.submit(rate_limited_fetch, lid) for lid in missing]
+            for fut in as_completed(futs):
+                fut.result()
+                with lock:
+                    n_done[0] += 1
+                    if n_done[0] % 200 == 0 or n_done[0] == 1:
+                        print("api fetch progress", n_done[0], "/", len(missing),
+                              "cache", n_cache[0], "net", n_net[0], flush=True)
+
+    # scan all cached payloads for overlap
+    for i, lid in enumerate(lesions):
+        cache = C.CACHE_API / "{}.json".format(lid)
+        payload = json.loads(cache.read_text())
+        n_cache[0] += 1
         ids = collect_isic_ids(payload)
         hit = [x for x in ids if x in isic2019]
         if hit:
@@ -237,11 +264,9 @@ def api_overlap(kept: pd.DataFrame, all_derm: pd.DataFrame):
                 "n_isic_ids": len(ids),
                 "n_isic2019": len(hit),
                 "isic2019_ids": ";".join(hit),
-                "ham_prefix": all(x.startswith("ISIC_") is False or True for x in hit),  # filled below
             })
-        if (i + 1) % 200 == 0 or i == 0:
-            print("api progress", i + 1, "/", len(lesions), "cache", n_cache, "net", n_net,
-                  "overlap_so_far", len(overlap_rows), flush=True)
+        if (i + 1) % 1000 == 0 or i == 0:
+            print("api scan", i + 1, "/", len(lesions), "overlap_so_far", len(overlap_rows), flush=True)
     # refine HAM: lesion_id starts with HAM_ or linked images historically from HAM10000
     ov = pd.DataFrame(overlap_rows)
     if len(ov):
