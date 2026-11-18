@@ -1,0 +1,12 @@
+{
+  "hamming_max": 6,
+  "n_drop_isic": 67,
+  "counts": {
+    "isic2019": 227,
+    "pad_ufes20": 7,
+    "fitzpatrick17k": 0,
+    "mednode": 0,
+    "sd198": 6
+  },
+  "commit": "b48d29d"
+}

@@ -1,0 +1,52 @@
+{
+  "n_dermoscopic_input": 5137,
+  "n_overlap_lesions": 859,
+  "n_overlap_isic2019_images": 1895,
+  "all_ham10000_flag_true": 859,
+  "n_remaining": 4278,
+  "remaining_counts": {
+    "MEL": 230,
+    "NV": 347,
+    "BCC": 2429,
+    "AK": 293,
+    "BKL": 442,
+    "DF": 33,
+    "VASC": 31,
+    "SCC": 473
+  },
+  "expected_box_check_2026_11_16": {
+    "n_overlap_lesions": 859,
+    "n_overlap_isic2019_images": 1895,
+    "remaining_counts": {
+      "MEL": 230,
+      "NV": 347,
+      "BCC": 2429,
+      "AK": 293,
+      "BKL": 442,
+      "DF": 33,
+      "VASC": 31,
+      "SCC": 473
+    }
+  },
+  "diff_from_expected": {
+    "n_overlap_lesions": 0,
+    "n_overlap_isic2019_images": 0,
+    "remaining_counts": {
+      "MEL": 0,
+      "NV": 0,
+      "BCC": 0,
+      "AK": 0,
+      "BKL": 0,
+      "DF": 0,
+      "VASC": 0,
+      "SCC": 0
+    }
+  },
+  "api_cache_hits": [
+    5240
+  ],
+  "api_network_calls": [
+    3684
+  ],
+  "commit": "b48d29d"
+}
