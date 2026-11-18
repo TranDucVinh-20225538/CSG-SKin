@@ -13,25 +13,25 @@ import math
 import sys
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
-import pytorch_lightning as pl
-import torch
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import balanced_accuracy_score
-from sklearn.model_selection import GroupShuffleSplit
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from torch.utils.data import DataLoader
-
 sys.path.insert(0, "/data2/cmdir/home/toandq/CSG-Skin-paperB/scripts")
-import r6_common as R  # noqa: E402
+import r6_common as R  # noqa: E402  # installs transformers stub before lightning
 import r14_pair3_common as C  # noqa: E402
 import train_phase2_pad_holdout as p2  # noqa: E402
 import extract_phase13_features as x13  # noqa: E402
 from src.datasets.skin_dataset import SkinDataset, build_train_transform_robust, build_val_transform_robust  # noqa: E402
 from src.utils.seed import seed_everything  # noqa: E402
 from eval_fitz_domain_axis import FolderJpegDataset  # noqa: E402
+
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+import pytorch_lightning as pl  # noqa: E402
+import torch  # noqa: E402
+from sklearn.linear_model import LogisticRegression  # noqa: E402
+from sklearn.metrics import balanced_accuracy_score  # noqa: E402
+from sklearn.model_selection import GroupShuffleSplit  # noqa: E402
+from sklearn.pipeline import make_pipeline  # noqa: E402
+from sklearn.preprocessing import StandardScaler  # noqa: E402
+from torch.utils.data import DataLoader  # noqa: E402
 
 
 class NanGuardCallback(pl.Callback):
