@@ -136,8 +136,24 @@ def train_one(lam, prior, seed, skip_done=True, batch_size=32, num_workers=4, li
     if skip_done and summary_path.exists():
         old = json.loads(summary_path.read_text())
         if old.get("checkpoint_policy") == "last" and (feat_dir / "isic_test.npz").exists():
-            print("skip_done", summary_path, flush=True)
-            return
+            # stage-1 used light_extract — backfill missing OOD packs if needed
+            need = ("pad_ufes20", "scin")
+            missing = [n for n in need if not (feat_dir / "{}.npz".format(n)).exists()]
+            if not missing and not old.get("degenerate"):
+                print("skip_done", summary_path, flush=True)
+                return
+            if missing and not old.get("degenerate"):
+                print("backfill_features", tag, missing, flush=True)
+                device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                primary = Path(old.get("primary_checkpoint") or (ckpt_dir / "last.ckpt"))
+                if primary.exists():
+                    net = R.load_net(primary, device)
+                    data = C.load_data()
+                    extract_all(net, data, feat_dir, num_workers, device, light=False)
+                    print("skip_done_after_backfill", summary_path, flush=True)
+                    return
+                print("skip_done_missing_ckpt_for_backfill", primary, flush=True)
+                return
 
     seed_everything(seed)
     pl.seed_everything(seed, workers=True)
