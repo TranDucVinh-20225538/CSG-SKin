@@ -109,3 +109,5 @@ Scope: rebuttal / camera-ready / arXiv; submitted r12c manuscript is not edited.
 ## Deviations
 
 _(append only)_
+
+- 2026-11-18: Prepare job 74360 (after cancelled 74344). ISIC API overlap exact match to box check (859 / 1895 / remaining counts). Parallel cache fill ≤2 req/s (ThreadPool 4). pHash dropped 67 additional MILK dermoscopic images vs ISIC 2019 (227 hash hits); listed 7 PAD / 0 Fitz / 0 MED / 6 SD-198. PRIORS refreshed after pHash drops. TV(ISIC train, milk_adv)=0.563. attribution uniform — no per-site AUROC. Stage-1 array 74361.

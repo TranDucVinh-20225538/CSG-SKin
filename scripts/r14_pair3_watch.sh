@@ -7,8 +7,8 @@ export GIT_AUTHOR_NAME='vinhtranduc' GIT_AUTHOR_EMAIL='vinhtran9969@gmail.com'
 export GIT_COMMITTER_NAME='vinhtranduc' GIT_COMMITTER_EMAIL='vinhtran9969@gmail.com'
 export PYTHONPATH=/data2/hpcshared/Vinh/CSG-Skin:${ROOT}/scripts
 
-PREP=74344
-S1=74345
+PREP=74360
+S1=74361
 LOG=logs/r14_pair3_watch.log
 exec >>"$LOG" 2>&1
 echo "WATCH_START $(date) prep=$PREP s1=$S1"
