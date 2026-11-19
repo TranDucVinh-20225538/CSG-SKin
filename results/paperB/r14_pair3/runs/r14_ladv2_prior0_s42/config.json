@@ -94,6 +94,6 @@
   "tv_isic_milk_adv": 0.5626643219930246,
   "architecture": "dual_encoder_csg_effb3",
   "design": "decisions/paperB_r14_pair3.md",
-  "commit": "4a8b823",
-  "light_extract": true
+  "commit": "0c49904",
+  "light_extract": false
 }

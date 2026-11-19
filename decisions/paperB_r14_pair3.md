@@ -127,3 +127,5 @@ _(append only)_
   3. **Honest stage-1 stop.** REPORT.md must say: the stage-1 STOP-degenerate rule triggered; R14 continued only under the 2026-11-18 deviation after a CPU diagnosis and a determinism redo. Thresholds unchanged. Do not describe stage 1 as passed.
 
   4. **Reading order (strict).** Verdict by reading rules in this order only: (a) V1 at λ=0; (b) invariance at λ=2 prior100 (seed mean ≤ 0.60, else Case C, no reading of AUROC); (c) V1 at prior0 for the "label shift necessary" clause; (d) Rule A. Report every run as found.
+
+- 2026-11-19: Backfill λ0 s42 pad_ufes20/scin (job 74481); full rescore → λ=0 cell n=5. REPORT includes honest stage-1 stop, determinism, rerun rule (prior0 s42 0.152→0.480), reading order (a–d). Verdict Case C unchanged.

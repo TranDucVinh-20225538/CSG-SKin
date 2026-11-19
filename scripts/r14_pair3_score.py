@@ -312,42 +312,126 @@ def verdict(cells):
 
 
 def write_report(cells, per_run, verd, job_meta):
+    """REPORT per decisions/paperB_r14_pair3.md (incl. 2026-11-18 locked deviations)."""
     L = [
         "# REPORT — Paper B R14 ISIC 2019 → MILK10k dermoscopic",
         "",
         "Generated: {}".format(datetime.now(timezone.utc).isoformat()),
         "Commit: `{}`".format(C.git_head()),
         "",
+        "## Stage-1 stop (honest)",
+        "",
+        "The stage-1 STOP-degenerate rule triggered (λ0 prior100 s42 first attempt ID bal 0.185 < 0.25; "
+        "also λ2 prior0 s42 first attempt 0.152). R14 continued only under the 2026-11-18 deviation "
+        "after a CPU diagnosis and a determinism redo. Thresholds unchanged. Stage 1 did **not** pass.",
+        "",
+        "## Determinism",
+        "",
+        "Seeds are not bitwise reproducible (GPU non-determinism).",
+        "",
+        "First-attempt degenerate count over the whole 20-run grid: **2 of 20** "
+        "(`r14_ladv0_prior100_s42`, `r14_ladv2_prior0_s42`). Both diverged "
+        "(`loss_ctx`/`loss_cls` rose across epochs; see DIAG_cpu_20261118.md). "
+        "No other first attempt in the grid had ID bal < 0.25.",
+        "",
+        "### Rerun rule (ID only)",
+        "",
+        "| tag | first ID | rerun ID | status |",
+        "|---|---:|---:|---|",
+        "| r14_ladv0_prior100_s42 | 0.185 | 0.475 | first: degenerate, superseded; rerun kept |",
+        "| r14_ladv2_prior0_s42 | 0.152 | {:.3f} | first: degenerate, superseded; rerun kept |".format(
+            next((r["id_balanced_acc"] for r in per_run
+                  if r.get("tag") == "r14_ladv2_prior0_s42" and r.get("status") == "ok"), float("nan"))),
+        "",
+        "Do not rerun any run for any reason other than ID bal < 0.25.",
+        "",
     ]
-    if verd.get("small_gap"):
-        L += [
-            "## Small-gap check",
-            "",
-            "V1 at λ = 0 (seed mean) is already ≤ 0.60. The invariance gate says nothing about what "
-            "the adversary did in this pair; the verdict below is still computed.",
-            "",
-        ]
+    # (a) V1 at λ=0
+    c_l0 = cells.get("ladv0_prior100")
+    v0 = c_l0["V1"]["mean"] if c_l0 and c_l0.get("V1") else None
+    L += [
+        "## Reading (locked order)",
+        "",
+        "### (a) V1 at λ = 0",
+        "",
+    ]
+    if v0 is None:
+        L.append("λ=0 cell missing.")
+    elif v0 <= C.INVARIANCE_V1_MAX:
+        L.append(
+            "V1 at λ = 0 (seed mean) = **{:.3f}** ≤ 0.60. The invariance gate says nothing about what "
+            "the adversary did in this pair; the verdict below is still computed.".format(v0))
+    else:
+        L.append(
+            "V1 at λ = 0 (seed mean) = **{:.3f}** > 0.60 (n={}). Not a small-gap case.".format(
+                v0, c_l0["V1"]["n"]))
+    L.append("")
+
+    # (b) invariance
+    c100 = cells.get("ladv2_prior100")
+    v100 = c100["V1"]["mean"] if c100 and c100.get("V1") else None
+    L += ["### (b) Invariance at λ = 2 prior100", ""]
+    if v100 is None:
+        L.append("λ=2 prior100 cell missing.")
+        case_c = True
+    elif v100 <= C.INVARIANCE_V1_MAX:
+        L.append("V1 seed mean = **{:.3f}** ≤ 0.60 → invariant. Proceed to (c)/(d).".format(v100))
+        case_c = False
+    else:
+        L.append(
+            "V1 seed mean = **{:.3f}** > 0.60 → **Case C**, settles nothing. "
+            "No reading of AUROC / Rule A for the verdict.".format(v100))
+        case_c = True
+    L.append("")
+
+    # (c)(d) — always show numbers; mark not read if Case C
+    c0 = cells.get("ladv2_prior0")
+    c50 = cells.get("ladv2_prior50")
+    L += ["### (c) V1 at λ = 2 prior0 (label-shift-necessary clause)", ""]
+    if c0 and c0.get("V1"):
+        note = " — **not read (Case C at prior100)**" if case_c else ""
+        L.append("V1 prior0 seed mean = **{:.3f}** (n={}).{}".format(
+            c0["V1"]["mean"], c0["V1"]["n"], note))
+    else:
+        L.append("prior0 cell missing.")
+    L.append("")
+
+    L += ["### (d) Rule A", ""]
+    if case_c:
+        L.append("**Not read (Case C at prior100).** Descriptive table only:")
+    L.append("")
+
     L += ["## Verdict", "", verd.get("text") or "—", "",
           "```json", json.dumps(verd, indent=2, default=float), "```", ""]
 
-    L += ["## Cells (λ=2 Mahalanobis / V1)", "",
-          "| cell | ID bal | V1 | Fitz Rule A | MED Rule A | SD Rule A |",
-          "|---|---:|---:|---|---|---|"]
+    L += ["## Cells (Mahalanobis / V1)", "",
+          "| cell | ID bal | V1 | n | Fitz Rule A | MED Rule A | SD Rule A | note |",
+          "|---|---:|---:|---:|---|---|---|---|"]
+    notes = {
+        "ladv0_prior100": "for (a) + competence only",
+        "ladv2_prior100": "decides invariance / Case C",
+        "ladv2_prior50": "not read (Case C at prior100)" if case_c else "dose step",
+        "ladv2_prior0": "not read (Case C at prior100)" if case_c else "necessity clause",
+    }
     for key in ("ladv0_prior100", "ladv2_prior100", "ladv2_prior50", "ladv2_prior0"):
         c = cells.get(key)
         if not c:
-            L.append("| {} | — | — | — | — | — |".format(key))
+            L.append("| {} | — | — | — | — | — | — | {} |".format(key, notes.get(key, "")))
             continue
+
         def ra(o):
             v = c["ood"].get(o, {}).get("rule_A")
             return "—" if v is None else ("met" if v else "not")
-        ib = c["id_bal"]
-        v1 = c["V1"]
-        L.append("| {} | {} | {} | {} | {} | {} |".format(
+
+        ib, v1 = c["id_bal"], c["V1"]
+        n = (v1 or {}).get("n") or (ib or {}).get("n") or "—"
+        L.append("| {} | {} | {} | {} | {} | {} | {} | {} |".format(
             key,
             "—" if not ib else "{:.3f}±{:.3f}".format(ib["mean"], ib["sd"] or 0),
             "—" if not v1 else "{:.3f}±{:.3f}".format(v1["mean"], v1["sd"] or 0),
+            n,
             ra("fitzpatrick17k"), ra("mednode"), ra("sd198"),
+            notes.get(key, ""),
         ))
 
     L += ["", "## Per-run rows", "",
@@ -363,7 +447,8 @@ def write_report(cells, per_run, verd, job_meta):
 
     L += ["", "## Job / compute meta", "",
           "```json", json.dumps(job_meta, indent=2, default=float), "```", "",
-          "milk_heldout, PAD-UFES-20 and SCIN reported, not counted. prior50 = dose step.",
+          "milk_heldout, PAD-UFES-20 and SCIN reported, not counted. prior50 = dose step "
+          "(shown above; not read under Case C).",
           "No wording beyond reading rules in decisions/paperB_r14_pair3.md.",
           ""]
     (C.OUT / "REPORT.md").write_text("\n".join(L) + "\n")

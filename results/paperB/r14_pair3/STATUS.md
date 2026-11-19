@@ -1,6 +1,7 @@
 # R14 STATUS
 
-phase: stage1_continue
-decision: CONTINUE
-note: first λ0 s42 collapsed (ID 0.185); CPU diag found no I/O bug; determinism redo job 74376 ID 0.475 healthy. STOP-gap/headroom not met. Submitting remaining grid array %2.
-redo_l0_job: 74376
+phase: scored_complete
+verdict: Case C — Not invariant (V1=0.604 > 0.60 at λ=2 prior100). Settles nothing.
+lambda0_cell_n: 5
+first_attempt_degenerate_grid: 2 of 20
+backfill_rescore_job: 74481

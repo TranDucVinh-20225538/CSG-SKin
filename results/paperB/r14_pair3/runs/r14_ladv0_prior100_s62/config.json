@@ -1,0 +1,90 @@
+{
+  "tag": "r14_ladv0_prior100_s62",
+  "lam": 0.0,
+  "seed": 62,
+  "prior": "prior100",
+  "shift": 1.0,
+  "recipe": {
+    "name": "current",
+    "latent": 16,
+    "cls_lr_mult": 0.2,
+    "max_epochs": 40,
+    "balance": "none"
+  },
+  "streams": [
+    {
+      "name": "isic_cls",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": true,
+      "adv_domain": -1,
+      "ctx_domain": -1,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "isic_adv",
+      "n": 16211,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 0,
+      "ctx_domain": 0,
+      "labels_loaded": true,
+      "expected_mix": [
+        0.17858244401949294,
+        0.50829683548208,
+        0.13126889149343038,
+        0.03417432607488742,
+        0.10357164888038986,
+        0.009376349392387885,
+        0.009993214483992352,
+        0.02473629017333909
+      ]
+    },
+    {
+      "name": "milk_adv",
+      "n": 2946,
+      "sampling": "uniform",
+      "classifier": false,
+      "adv_domain": 1,
+      "ctx_domain": 1,
+      "labels_loaded": false,
+      "expected_mix": null
+    }
+  ],
+  "isic_mix": [
+    0.17858244401949294,
+    0.50829683548208,
+    0.13126889149343038,
+    0.03417432607488742,
+    0.10357164888038986,
+    0.009376349392387885,
+    0.009993214483992352,
+    0.02473629017333909
+  ],
+  "milk_adv_mix": [
+    0.051934826883910386,
+    0.07705363204344874,
+    0.5668703326544468,
+    0.0726408689748812,
+    0.10692464358452139,
+    0.009164969450101833,
+    0.005431093007467753,
+    0.109979633401222
+  ],
+  "adv_mix": null,
+  "tv_isic_milk_adv": 0.5626643219930246,
+  "architecture": "dual_encoder_csg_effb3",
+  "design": "decisions/paperB_r14_pair3.md",
+  "commit": "9aba1f3",
+  "light_extract": false
+}
