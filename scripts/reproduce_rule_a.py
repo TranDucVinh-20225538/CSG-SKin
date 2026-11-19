@@ -10,7 +10,7 @@ bound is below 0.5). It recomputes Rule A (pooled CI upper < 0.5 and k >= 3), fo
 paper prints it, and checks mean, interval, k and verdict against the .tex. It does not redraw the
 bootstrap; that needs the cached features (level (b), HPC).
 
-Tables: tab:dial (Table 1), tab:unseen (main and A4 rows), tab:shiftfull (shift 50%), tab:splits (SCIN).
+Tables: tab:dial and tab:dialrest (Table 1), tab:unseen (main and A4 rows), tab:shiftfull (shift 50%), tab:splits (SCIN).
 """
 import argparse
 import json
@@ -94,11 +94,20 @@ def main():
     src = cell_sources()
 
     # ---- Table 1 (tab:dial): mean, k, bold = Rule A ----
+    # Either one wide table (leakage, ID, then five set/k pairs) or tab:dial (pad_heldout, Fitzpatrick17k)
+    # plus tab:dialrest (MED-NODE, SD-198, SCIN).
     rows = {r[0]: r for r in table_rows(tex, "tab:dial")}
+    split = "\\label{tab:dialrest}" in tex
+    rest = {r[0]: r for r in table_rows(tex, "tab:dialrest")} if split else {}
     for lam in LAMS:
-        r = rows[lam]
         for j, s in enumerate(SETS):
-            c, kcell = r[3 + 2 * j], r[4 + 2 * j]
+            if not split:
+                r, col = rows[lam], 3 + 2 * j
+            elif j < 2:
+                r, col = rows[lam], 3 + 2 * j
+            else:
+                r, col = rest[lam], 1 + 2 * (j - 2)
+            c, kcell = r[col], r[col + 1]
             v = src[lam, s]
             ra = rule_a(v["ci_hi"], v["k"])
             w = "tab:dial λ={} {}".format(lam, s)
@@ -148,7 +157,8 @@ def main():
             r[6], rule_a(b["ci"][1], k)))
 
     # ---- tab:splits SCIN column (R10b B4) ----
-    rows_sp = {(r[0], r[1]): r for r in table_rows(tex, "tab:splits")}
+    sp_label = "tab:splits-b" if "\\label{tab:splits-b}" in tex else "tab:splits"  # SCIN is the last column
+    rows_sp = {(r[0], r[1]): r for r in table_rows(tex, sp_label)}
     for b in load("r10b/B4_splits_scin.json")["rows"]:
         lam = "0" if b["lambda"] == 0 else "2"
         r = rows_sp.get((str(b["split"]), lam))
